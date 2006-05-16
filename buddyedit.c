@@ -3,7 +3,7 @@
  * by Martijn van Oosterhout <kleptog@svana.org> (C) April 2006
  * Licenced under the GNU General Public Licence version 2.
  *
- * A GAIM plugin that adds an edit to to buddies allowing you to change
+ * A Gaim plugin that adds an edit to to buddies allowing you to change
  * various details you can't normally change. It also provides a mechanism
  * for subsequent plugins to add themselves to that dialog.
  *************************************************************************/
@@ -13,7 +13,6 @@
 
 #include <glib.h>
 #include <string.h>
-#include <ctype.h>
 
 #include "notify.h"
 #include "plugin.h"
@@ -31,30 +30,57 @@ buddyedit_editcomplete_cb(GaimBlistNode * data, GaimRequestFields * fields)
     gboolean buddy_destroy = FALSE;
 
     /* Account detail stuff */
-    if(GAIM_BLIST_NODE_IS_BUDDY(data))
+    switch (data->type)
     {
-        GaimBuddy *buddy = (GaimBuddy *) data;
-        GaimAccount *account = gaim_request_fields_get_account(fields, "account");
-        const char *name = gaim_request_fields_get_string(fields, "name");
-        const char *alias = gaim_request_fields_get_string(fields, "alias");
-
-        /* If any details changes, create the buddy */
-        if((account != buddy->account) || strcmp(name, buddy->name))
+        case GAIM_BLIST_BUDDY_NODE:
         {
-            GHashTable *tmp;
-            GaimBuddy *newbuddy = gaim_buddy_new(account, name, alias);
-            gaim_blist_add_buddy(newbuddy, NULL, NULL, data);   /* Copy it to correct location */
+            GaimBuddy *buddy = (GaimBuddy *) data;
+            GaimAccount *account = gaim_request_fields_get_account(fields, "account");
+            const char *name = gaim_request_fields_get_string(fields, "name");
+            const char *alias = gaim_request_fields_get_string(fields, "alias");
 
-            /* Now this is ugly, but we want to copy the settings and avoid issues with memory management */
-            tmp = ((GaimBlistNode *) buddy)->settings;
-            ((GaimBlistNode *) buddy)->settings = ((GaimBlistNode *) newbuddy)->settings;
-            ((GaimBlistNode *) newbuddy)->settings = tmp;
+            /* If any details changes, create the buddy */
+            if((account != buddy->account) || strcmp(name, buddy->name))
+            {
+                GHashTable *tmp;
+                GaimBuddy *newbuddy = gaim_buddy_new(account, name, alias);
+                gaim_blist_add_buddy(newbuddy, NULL, NULL, data);       /* Copy it to correct location */
 
-            buddy_destroy = TRUE;
-            data = (GaimBlistNode *) newbuddy;
+                /* Now this is ugly, but we want to copy the settings and avoid issues with memory management */
+                tmp = ((GaimBlistNode *) buddy)->settings;
+                ((GaimBlistNode *) buddy)->settings = ((GaimBlistNode *) newbuddy)->settings;
+                ((GaimBlistNode *) newbuddy)->settings = tmp;
+
+                buddy_destroy = TRUE;
+                data = (GaimBlistNode *) newbuddy;
+            }
+            else
+                gaim_blist_alias_buddy(buddy, alias);
+            break;
         }
-        else
-            gaim_blist_alias_buddy(buddy, alias);
+        case GAIM_BLIST_CONTACT_NODE:
+        {
+            GaimContact *contact = (GaimContact *) data;
+            const char *alias = gaim_request_fields_get_string(fields, "alias");
+            gaim_contact_set_alias(contact, alias);
+            break;
+        }
+        case GAIM_BLIST_GROUP_NODE:
+        {
+            GaimGroup *group = (GaimGroup *) data;
+            const char *alias = gaim_request_fields_get_string(fields, "alias");
+            gaim_blist_rename_group(group, alias);
+            break;
+        }
+        case GAIM_BLIST_CHAT_NODE:
+        {
+            GaimChat *chat = (GaimChat *) data;
+            const char *alias = gaim_request_fields_get_string(fields, "alias");
+            gaim_blist_alias_chat(chat, alias);
+            break;
+        }
+        case GAIM_BLIST_OTHER_NODE:
+            break;
     }
 
     gaim_signal_emit(gaim_blist_get_handle(), PLUGIN "-submit-fields", fields, data);
@@ -73,31 +99,76 @@ buddy_edit_cb(GaimBlistNode * node, gpointer data)
     GaimRequestFields *fields;
     GaimRequestField *field;
     GaimRequestFieldGroup *group;
+    char *request_title = NULL;
 
     fields = gaim_request_fields_new();
 
-    /* First group: Account details */
-    if(GAIM_BLIST_NODE_IS_BUDDY(node))
+    switch (node->type)
     {
-        GaimBuddy *buddy = (GaimBuddy *) node;
-        group = gaim_request_field_group_new("Buddy Details");
-        gaim_request_fields_add_group(fields, group);
+        case GAIM_BLIST_BUDDY_NODE:
+        {
+            GaimBuddy *buddy = (GaimBuddy *) node;
+            group = gaim_request_field_group_new("Buddy Details");
+            gaim_request_fields_add_group(fields, group);
 
-        field = gaim_request_field_account_new("account", "Account", buddy->account);
-        gaim_request_field_account_set_show_all(field, TRUE);
-        gaim_request_field_group_add_field(group, field);
+            field = gaim_request_field_account_new("account", "Account", buddy->account);
+            gaim_request_field_account_set_show_all(field, TRUE);
+            gaim_request_field_group_add_field(group, field);
 
-        field = gaim_request_field_string_new("name", "Name", buddy->name, FALSE);
-        gaim_request_field_group_add_field(group, field);
+            field = gaim_request_field_string_new("name", "Name", buddy->name, FALSE);
+            gaim_request_field_group_add_field(group, field);
 
-        field = gaim_request_field_string_new("alias", "Alias", buddy->alias, FALSE);
-        gaim_request_field_group_add_field(group, field);
+            field = gaim_request_field_string_new("alias", "Alias", buddy->alias, FALSE);
+            gaim_request_field_group_add_field(group, field);
+
+            request_title = "Edit Buddy";
+            break;
+        }
+        case GAIM_BLIST_CONTACT_NODE:
+        {
+            GaimContact *contact = (GaimContact *) node;
+            group = gaim_request_field_group_new("Contact Details");
+            gaim_request_fields_add_group(fields, group);
+
+            field = gaim_request_field_string_new("alias", "Alias", contact->alias, FALSE);
+            gaim_request_field_group_add_field(group, field);
+
+            request_title = "Edit Contact";
+            break;
+        }
+        case GAIM_BLIST_GROUP_NODE:
+        {
+            GaimGroup *grp = (GaimGroup *) node;
+            group = gaim_request_field_group_new("Group Details");
+            gaim_request_fields_add_group(fields, group);
+
+            field = gaim_request_field_string_new("alias", "Name", grp->name, FALSE);
+            gaim_request_field_group_add_field(group, field);
+
+            request_title = "Edit Group";
+            break;
+        }
+        case GAIM_BLIST_CHAT_NODE:
+        {
+            GaimChat *chat = (GaimChat *) node;
+            group = gaim_request_field_group_new("Chat Details");
+            gaim_request_fields_add_group(fields, group);
+
+            field = gaim_request_field_string_new("alias", "Alias", chat->alias, FALSE);
+            gaim_request_field_group_add_field(group, field);
+
+            request_title = "Edit Chat";
+            break;
+        }
+        default:
+            request_title = "Edit";
+            break;
     }
 
     gaim_signal_emit(gaim_blist_get_handle(), PLUGIN "-create-fields", fields, node);
 
     gaim_request_fields(plugin_self,
-                        "Edit Contact", NULL, NULL,
+                        request_title, NULL, NULL,
                         fields, "OK", G_CALLBACK(buddyedit_editcomplete_cb), "Cancel", NULL, node);
 }
 
@@ -110,8 +181,19 @@ buddy_menu_cb(GaimBlistNode * node, GList ** menu, void *data)
     GaimMenuAction *action;
 #endif
 
-    if(!GAIM_BLIST_NODE_IS_BUDDY(node) && !GAIM_BLIST_NODE_IS_CONTACT(node))
-        return;
+    switch (node->type)
+    {
+            /* These are the types we handle */
+        case GAIM_BLIST_BUDDY_NODE:
+        case GAIM_BLIST_CONTACT_NODE:
+        case GAIM_BLIST_GROUP_NODE:
+        case GAIM_BLIST_CHAT_NODE:
+            break;
+
+        case GAIM_BLIST_OTHER_NODE:
+        default:
+            return;
+    }
 
 #if GAIM_MAJOR_VERSION < 2
     action = gaim_blist_node_action_new("Edit...", buddy_edit_cb, NULL);
@@ -129,12 +211,12 @@ plugin_load(GaimPlugin * plugin)
 
     void *blist_handle = gaim_blist_get_handle();
 
-    gaim_signal_register(blist_handle, PLUGIN "-create-fields",       /* Called when about to create dialog */
+    gaim_signal_register(blist_handle, PLUGIN "-create-fields", /* Called when about to create dialog */
                          gaim_marshal_VOID__POINTER_POINTER, NULL, 2,   /* (FieldList*,BlistNode*) */
                          gaim_value_new(GAIM_TYPE_SUBTYPE, GAIM_TYPE_POINTER),  /* FieldList */
                          gaim_value_new(GAIM_TYPE_SUBTYPE, GAIM_SUBTYPE_BLIST));
 
-    gaim_signal_register(blist_handle, PLUGIN "-submit-fields",       /* Called when dialog submitted */
+    gaim_signal_register(blist_handle, PLUGIN "-submit-fields", /* Called when dialog submitted */
                          gaim_marshal_VOID__POINTER_POINTER, NULL, 2,   /* (FieldList*,BlistNode*) */
                          gaim_value_new(GAIM_TYPE_SUBTYPE, GAIM_TYPE_POINTER),  /* FieldList */
                          gaim_value_new(GAIM_TYPE_SUBTYPE, GAIM_SUBTYPE_BLIST));
@@ -162,7 +244,7 @@ static GaimPluginInfo info = {
 
     "Enable editing of buddy properties",
     "A plugin that adds an edit to to buddies allowing you to change various details you can't normally change. "
-    "It also provides a mechanism for subsequent plugins to add themselves to that dialog. ",
+        "It also provides a mechanism for subsequent plugins to add themselves to that dialog. ",
     "Martijn van Oosterhout <kleptog@svana.org>",
     "http://svana.org/kleptog/gaim/",
 

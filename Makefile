@@ -4,19 +4,33 @@
 #* Licenced under the GNU General Public Licence version 2.
 #*************************************************************************/
 
-VERSION=0.2
+VERSION=0.3
+# yes or no
+PRIVATE_TZLIB=yes
 
 CFLAGS=-O2 -g -Wall `pkg-config --cflags glib-2.0 gaim` -DPLUGIN_VERSION=$(VERSION)
 LDFLAGS=`pkg-config --libs glib-2.0 gaim`
 CC=gcc
 
-all: buddyedit.so buddytimezone.so buddynotes.so buddylang.so timetest recursetest
+ifeq ($(PRIVATE_TZLIB),yes)
+CFLAGS += -DPRIVATE_TZLIB
+PRIVATE_TZLIB_OBJS=localtime.o
+endif
+
+all: buddyedit.so buddytimezone.so buddynotes.so buddylang.so timetest recursetest gtktimezonetest
 
 recursetest: recurse.o recursetest.o
 
 timetest: timetest.o localtime.o
 
-buddytimezone.so: buddytimezone.o localtime.o recurse.o
+gtktimezonetest.o: gtktimezonetest.c
+	gcc -c $(CFLAGS) `pkg-config --cflags gtk+-2.0` -o $@ $<
+
+gtktimezonetest: gtktimezonetest.o recurse.o
+	gcc $(LDFLAGS) -lgtk-x11-2.0 -lgdk-x11-2.0 -o $@ $^
+
+
+buddytimezone.so: buddytimezone.o $(PRIVATE_TZLIB_OBJS) recurse.o
 	gcc -shared $(LDFLAGS) -o $@ $^
 
 buddyedit.so: buddyedit.o

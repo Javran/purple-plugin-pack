@@ -1,4 +1,4 @@
-This package contains GAIM modules created by 
+This package contains Gaim modules created by 
 
 Martijn van Oosterhout <kleptog@svana.org>
 http://svana.org/kleptog/
@@ -17,23 +17,23 @@ The modules are:
  *************************************************************************
  * Buddy Edit Module
  *
- * A GAIM plugin that adds an edit to to buddies allowing you to change
+ * A Gaim plugin that adds an edit to to buddies allowing you to change
  * various details you can't normally change. It also provides a mechanism
  * for subsequent plugins to add themselves to that dialog.
  *************************************************************************
  * Buddy Language Module
  *
- * A GAIM plugin that allows you to configure the language of the spelling
+ * A Gaim plugin that allows you to configure the language of the spelling
  * control on the conversation screen on a per-contact basis.
  *************************************************************************
  * Buddy Notes Module
  *
- * A GAIM plugin the allows you to add notes to contacts which will be
+ * A Gaim plugin the allows you to add notes to contacts which will be
  * displayed in the conversation screen as well as the hover tooltip.
  *************************************************************************
  * Buddy Timezone Module
  *
- * A GAIM plugin that allows you to configure a timezone on a per-contact
+ * A Gaim plugin that allows you to configure a timezone on a per-contact
  * basis so it can display the localtime of your contact when a conversation
  * starts. Convenient if you deal with contacts from many parts of the
  * world.
@@ -45,4 +45,4 @@ in the gaim-dev package. For the spelling control module you will also need
 gtkspell-dev and gtk2-dev.
 
 This will install the module in ~/.gaim/plugins and they will be available
-next time you start GAIM.
+next time you start Gaim.

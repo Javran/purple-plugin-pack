@@ -1,7 +1,17 @@
+version 0.3
+	* Now have editing for all node types, but Chat is a bit lame so far
+	* Have made gtkwidget to will be successor to huge list box for
+	  timezone, now just need to add it somehow.
+	* Groups can now have default timezones and languages.
+	* You can now select Disabled as well as Default, if you don't want
+	  to display and spellcheck anything ever.
+	* You can now optionally use the system timezone code.
+
 version 0.2 (4 Apr 2006)
 	* Patches and improvements by rlaager. It should now compile and run
 	  with Gaim 2.0.0 (can't test it myself though).
 	* Several suggestions on IRC regard naming of modules and signals.
+	* Changed signals to names including the plugin name.
 
 version 0.1 (4 Apr 2006)
 	* Initial release with all 4 modules in good working order.

@@ -3,15 +3,16 @@
  * by Martijn van Oosterhout <kleptog@svana.org> (C) April 2006
  * Licenced under the GNU General Public Licence version 2.
  *
- * A GAIM plugin the allows you to add notes to contacts which will be
+ * A Gaim plugin the allows you to add notes to contacts which will be
  * displayed in the conversation screen as well as the hover tooltip.
  *************************************************************************/
 
 #define GAIM_PLUGINS
 #define PLUGIN "core-kleptog-buddynotes"
+#define SETTING_NAME "notes"
+#define CONTROL_NAME PLUGIN "-" SETTING_NAME
 
 #include <glib.h>
-#include <ctype.h>
 
 #include "notify.h"
 #include "plugin.h"
@@ -46,7 +47,7 @@ buddy_get_notes(GaimBlistNode * node)
             return NULL;
     }
 
-    return gaim_blist_node_get_string((GaimBlistNode *) contact, "notes");
+    return gaim_blist_node_get_string((GaimBlistNode *) contact, SETTING_NAME);
 }
 
 static void
@@ -107,18 +108,26 @@ buddynotes_submitfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
 
     /* buddynotes stuff */
     gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddynotes_submitfields_cb(%p,%p)\n", fields, data);
-    if(GAIM_BLIST_NODE_IS_BUDDY(data))
-        contact = gaim_buddy_get_contact((GaimBuddy *) data);
-    else                        /* Contact */
-        contact = (GaimContact *) data;
+    switch (data->type)
+    {
+        case GAIM_BLIST_BUDDY_NODE:
+            contact = gaim_buddy_get_contact((GaimBuddy *) data);
+            break;
+        case GAIM_BLIST_CONTACT_NODE:
+            contact = (GaimContact *) data;
+            break;
+        default:
+            /* Not applicable */
+            return;
+    }
 
-    notes = gaim_request_fields_get_string(fields, "notes");
+    notes = gaim_request_fields_get_string(fields, CONTROL_NAME);
 
     /* Otherwise, it's fixed value and this means deletion */
     if(notes && notes[0])
-        gaim_blist_node_set_string((GaimBlistNode *) contact, "notes", notes);
+        gaim_blist_node_set_string((GaimBlistNode *) contact, SETTING_NAME, notes);
     else
-        gaim_blist_node_remove_setting((GaimBlistNode *) contact, "notes");
+        gaim_blist_node_remove_setting((GaimBlistNode *) contact, SETTING_NAME);
 }
 
 /* Node is either a contact or a buddy */
@@ -130,12 +139,22 @@ buddynotes_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
     GaimRequestFieldGroup *group;
     const char *notes;
 
+    switch (data->type)
+    {
+        case GAIM_BLIST_BUDDY_NODE:
+        case GAIM_BLIST_CONTACT_NODE:
+            /* Continue, code works for either */
+            break;
+        default:
+            /* Not applicable */
+            return;
+    }
     group = gaim_request_field_group_new(NULL);
     gaim_request_fields_add_group(fields, group);
 
     notes = buddy_get_notes(data);
 
-    field = gaim_request_field_string_new("notes", "Notes:", notes, FALSE);
+    field = gaim_request_field_string_new(CONTROL_NAME, "Notes", notes, FALSE);
 
     gaim_request_field_group_add_field(group, field);
 }

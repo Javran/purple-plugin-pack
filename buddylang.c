@@ -3,15 +3,16 @@
  * by Martijn van Oosterhout <kleptog@svana.org> (C) April 2006
  * Licenced under the GNU General Public Licence version 2.
  *
- * A GAIM plugin that allows you to configure the language of the spelling
+ * A Gaim plugin that allows you to configure the language of the spelling
  * control on the conversation screen on a per-contact basis.
  *************************************************************************/
 
 #define GAIM_PLUGINS
 #define PLUGIN "core-kleptog-buddylang"
+#define SETTING_NAME "language"
+#define CONTROL_NAME PLUGIN "-" SETTING_NAME
 
 #include <glib.h>
-#include <ctype.h>
 #include <string.h>
 
 #include "notify.h"
@@ -33,23 +34,57 @@ static GaimPlugin *plugin_self;
 #define LANGUAGE_FLAG ((void*)1)
 #define DISABLED_FLAG ((void*)2)
 
+/* Resolve specifies what the return value should mean:
+ *
+ * If TRUE, it's for display, we want to know the *effect* thus hiding the
+ * "none" value and going to going level to find the default
+ *
+ * If false, we only want what the user enter, thus the string "none" if
+ * that's what it is
+ */
 static const char *
-buddy_get_language(GaimBlistNode * node)
+buddy_get_language(GaimBlistNode * node, gboolean resolve)
 {
-    GaimContact *contact = NULL;
+    GaimBlistNode *datanode = NULL;
+    const char *language;
+
     switch (node->type)
     {
         case GAIM_BLIST_BUDDY_NODE:
-            contact = gaim_buddy_get_contact((GaimBuddy *) node);
+            datanode = (GaimBlistNode *) gaim_buddy_get_contact((GaimBuddy *) node);
             break;
         case GAIM_BLIST_CONTACT_NODE:
-            contact = (GaimContact *) node;
+            datanode = node;
+            break;
+        case GAIM_BLIST_GROUP_NODE:
+            datanode = node;
             break;
         default:
             return NULL;
     }
 
-    return gaim_blist_node_get_string((GaimBlistNode *) contact, "language");
+    language = gaim_blist_node_get_string(datanode, SETTING_NAME);
+
+    if(!resolve)
+        return language;
+
+    if(language && strcmp(language, "none") == 0)
+        return NULL;
+
+    if(language)
+        return language;
+
+    if(datanode->type == GAIM_BLIST_CONTACT_NODE)
+    {
+        /* There is no gaim_blist_contact_get_group(), though there probably should be */
+        datanode = datanode->parent;
+        language = gaim_blist_node_get_string(datanode, SETTING_NAME);
+    }
+
+    if(language && strcmp(language, "none") == 0)
+        return NULL;
+
+    return language;
 }
 
 static void
@@ -76,7 +111,7 @@ buddylang_createconv_cb(GaimConversation * conv, void *data)
     if(!buddy)
         return;
 
-    language = buddy_get_language((GaimBlistNode *) buddy);
+    language = buddy_get_language((GaimBlistNode *) buddy, TRUE);
 
     if(!language)
         return;
@@ -87,8 +122,8 @@ buddylang_createconv_cb(GaimConversation * conv, void *data)
     if(!gtkspell)
         return;
 
-    if( strcmp( language, "none" ) )
-    	gtkspell_detach( gtkspell );
+    if(strcmp(language, "none"))
+        gtkspell_detach(gtkspell);
     else if(!gtkspell_set_language(gtkspell, language, &error) && error)
     {
         gaim_debug_warning(PLUGIN, "Failed to configure GtkSpell for language %s: %s\n",
@@ -103,50 +138,81 @@ buddylang_createconv_cb(GaimConversation * conv, void *data)
 static void
 buddylang_submitfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
 {
-    GaimContact *contact;
+    GaimBlistNode *node;
     GaimRequestField *list;
     const GList *sellist;
     void *seldata = NULL;
 
-    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddylang_submitfields_cb(%p,%p)\n", fields,
-               data);
-    if(GAIM_BLIST_NODE_IS_BUDDY(data))
-        contact = gaim_buddy_get_contact((GaimBuddy *) data);
-    else                        /* Contact */
-        contact = (GaimContact *) data;
+    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddylang_submitfields_cb(%p,%p)\n", fields, data);
 
-    list = gaim_request_fields_get_field(fields, "language");
+    switch (data->type)
+    {
+        case GAIM_BLIST_BUDDY_NODE:
+            node = (GaimBlistNode *) gaim_buddy_get_contact((GaimBuddy *) data);
+            break;
+        case GAIM_BLIST_CONTACT_NODE:
+        case GAIM_BLIST_GROUP_NODE:
+            /* code handles either case */
+            node = data;
+            break;
+        case GAIM_BLIST_CHAT_NODE:
+        case GAIM_BLIST_OTHER_NODE:
+        default:
+            /* Not applicable */
+            return;
+    }
+
+    list = gaim_request_fields_get_field(fields, CONTROL_NAME);
     sellist = gaim_request_field_list_get_selected(list);
-    if( sellist )
-    	seldata = gaim_request_field_list_get_data(list, sellist->data);
+    if(sellist)
+        seldata = gaim_request_field_list_get_data(list, sellist->data);
 
     /* Otherwise, it's fixed value and this means deletion */
     if(seldata == LANGUAGE_FLAG)
-        gaim_blist_node_set_string((GaimBlistNode *) contact, "language", sellist->data);
-    else if( seldata == DISABLED_FLAG)
-    	gaim_blist_node_set_string((GaimBlistNode *) contact, "language", "none");
+        gaim_blist_node_set_string(node, SETTING_NAME, sellist->data);
+    else if(seldata == DISABLED_FLAG)
+        gaim_blist_node_set_string(node, SETTING_NAME, "none");
     else
-        gaim_blist_node_remove_setting((GaimBlistNode *) contact, "language");
+        gaim_blist_node_remove_setting(node, SETTING_NAME);
 }
 
 /* Node is either a contact or a buddy */
 static void
 buddylang_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
 {
-    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddylang_createfields_cb(%p,%p)\n", fields,
-               data);
+    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddylang_createfields_cb(%p,%p)\n", fields, data);
     GaimRequestField *field;
     GaimRequestFieldGroup *group;
     const char *language;
+    gboolean is_default;
 
     struct AspellConfig *aspellconfig;
     struct AspellDictInfoList *dictinfolist;
     struct AspellDictInfoEnumeration *dictinfoenumeration;
 
+    switch (data->type)
+    {
+        case GAIM_BLIST_BUDDY_NODE:
+        case GAIM_BLIST_CONTACT_NODE:
+            is_default = FALSE;
+            break;
+        case GAIM_BLIST_GROUP_NODE:
+            is_default = TRUE;
+            break;
+        case GAIM_BLIST_CHAT_NODE:
+        case GAIM_BLIST_OTHER_NODE:
+        default:
+            /* Not applicable */
+            return;
+    }
+
     group = gaim_request_field_group_new(NULL);
     gaim_request_fields_add_group(fields, group);
 
-    field = gaim_request_field_list_new("language", "Spellcheck language");
+    field =
+        gaim_request_field_list_new(CONTROL_NAME,
+                                    is_default ? "Default spellcheck language for group" :
+                                    "Spellcheck language");
     gaim_request_field_list_set_multi_select(field, FALSE);
     gaim_request_field_list_add(field, "<Default>", "");
     gaim_request_field_list_add(field, "<Disabled>", DISABLED_FLAG);
@@ -161,8 +227,7 @@ buddylang_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
     dictinfolist = get_aspell_dict_info_list(aspellconfig);
     if(!dictinfolist)
     {
-        gaim_debug(GAIM_DEBUG_INFO, PLUGIN,
-                   "get_aspell_dict_info_list() returned NULL\n");
+        gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "get_aspell_dict_info_list() returned NULL\n");
         return;
     }
     gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "dictinfo size = %d\n",
@@ -170,8 +235,7 @@ buddylang_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
     dictinfoenumeration = aspell_dict_info_list_elements(dictinfolist);
     if(!dictinfoenumeration)
     {
-        gaim_debug(GAIM_DEBUG_INFO, PLUGIN,
-                   "aspell_dict_info_list_elements() returned NULL\n");
+        gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "aspell_dict_info_list_elements() returned NULL\n");
         return;
     }
 
@@ -190,9 +254,16 @@ buddylang_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
     delete_aspell_dict_info_enumeration(dictinfoenumeration);
     delete_aspell_config(aspellconfig);
 
-    language = buddy_get_language(data);
+    language = buddy_get_language(data, FALSE);
     if(language)
-        gaim_request_field_list_add_selected(field, language);
+    {
+        if(strcmp(language, "none") == 0)
+            gaim_request_field_list_add_selected(field, "<Disabled>");
+        else
+            gaim_request_field_list_add_selected(field, language);
+    }
+    else
+        gaim_request_field_list_add_selected(field, "<Default>");
 
     gaim_request_field_group_add_field(group, field);
 }
