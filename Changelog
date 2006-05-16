@@ -1,6 +1,13 @@
+version 0.4pre2 (9 Apr 2006)
+	* Fix compilation issues for Gaim 2 (kleptog)
+	* Update Makefile to allow compilation against multiple versions of
+	  gaim easily. New compiletest target.
+	* Integrate custom GTK widget (optional) for timezone selection (kleptog)
+
 version 0.4pre1 (7 Apr 2006)
 	* Various cleanups (rlaager)
 	* Fix so time only displays when different from system time
+	* Display time difference as well as time.
 	* Attach copyright notices and clarify GPLv2+
 	* Makefile cleanups (rlaager)
 

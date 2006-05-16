@@ -26,7 +26,13 @@
  *************************************************************************/
 
 #define GAIM_PLUGINS
+
+#ifdef CUSTOM_GTK
+#define PLUGIN "gtk-kleptog-buddytimezone"
+#else
 #define PLUGIN "core-kleptog-buddytimezone"
+#endif
+
 #define SETTING_NAME "timezone"
 #define CONTROL_NAME PLUGIN "-" SETTING_NAME
 
@@ -50,6 +56,11 @@
 
 void *gaim_gtk_blist_get_handle();
 
+#if defined(CUSTOM_GTK) && (GAIM_MAJOR_VERSION < 2)
+//#error Custom GTK Widget only works in Gaim 2
+#undef CUSTOM_GTK
+#endif
+
 //#include "gtkblist.h"   /* gaim_gtk_blist_get_handle */  Requires gtk-dev
 
 #define TIMEZONE_FLAG  ((void*)1)
@@ -60,6 +71,8 @@ void *gaim_gtk_blist_get_handle();
 //#define TIME_FORMAT  "%H:%M"
 
 static GaimPlugin *plugin_self;
+void *make_timezone_menu(const char *selected);
+const char *get_timezone_menu_selection( void *widget );
 
 /* Resolve specifies what the return value should mean:
  *
@@ -270,7 +283,7 @@ buddytimezone_tooltip_cb(GaimBlistNode * node, char **text, void *data)
     else if( ret == 0 )
     {
 #if GAIM_MAJOR_VERSION > 1
-        char *timetext = gaim_date_format_short(tm);
+        const char *timetext = gaim_time_format(&tm);
 #else
         char timetext[64];
         strftime(timetext, sizeof(timetext), TIME_FORMAT, &tm);
@@ -290,8 +303,6 @@ buddytimezone_submitfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
 {
     GaimBlistNode *node;
     GaimRequestField *list;
-    const GList *sellist;
-    void *seldata = NULL;
 
     /* timezone stuff */
     gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddytimezone_submitfields_cb(%p,%p)\n", fields, data);
@@ -314,6 +325,15 @@ buddytimezone_submitfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
     }
 
     list = gaim_request_fields_get_field(fields, CONTROL_NAME);
+#ifdef CUSTOM_GTK
+    const char *seldata = get_timezone_menu_selection( list->ui_data );
+    if( seldata == NULL )
+        gaim_blist_node_remove_setting(node, SETTING_NAME);
+    else
+        gaim_blist_node_set_string(node, SETTING_NAME, seldata);
+#else
+    const GList *sellist;
+    void *seldata = NULL;
     sellist = gaim_request_field_list_get_selected(list);
     if(sellist)
         seldata = gaim_request_field_list_get_data(list, sellist->data);
@@ -325,8 +345,10 @@ buddytimezone_submitfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
         gaim_blist_node_set_string(node, SETTING_NAME, "none");
     else
         gaim_blist_node_remove_setting(node, SETTING_NAME);
+#endif
 }
 
+#ifndef CUSTOM_GTK
 static int
 buddy_add_timezone_cb(char *filename, void *data)
 {
@@ -335,6 +357,7 @@ buddy_add_timezone_cb(char *filename, void *data)
         gaim_request_field_list_add(field, filename, TIMEZONE_FLAG);
     return 0;
 }
+#endif
 
 static void
 buddytimezone_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
@@ -364,6 +387,12 @@ buddytimezone_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
     group = gaim_request_field_group_new(NULL);
     gaim_request_fields_add_group(fields, group);
 
+    timezone = buddy_get_timezone(data, FALSE);
+
+#ifdef CUSTOM_GTK
+    field = gaim_request_field_new( CONTROL_NAME, "Timezone", GAIM_REQUEST_FIELD_LIST );
+    field->ui_data = make_timezone_menu(timezone);
+#else
     field =
         gaim_request_field_list_new(CONTROL_NAME,
                                     is_default ? "Default timezone for group" :
@@ -374,7 +403,6 @@ buddytimezone_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
 
     recurse_directory("/usr/share/zoneinfo/", buddy_add_timezone_cb, field);
 
-    timezone = buddy_get_timezone(data, FALSE);
     if(timezone)
     {
         if(strcmp(timezone, "none") == 0)
@@ -384,6 +412,7 @@ buddytimezone_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
     }
     else
         gaim_request_field_list_add_selected(field, "<Default>");
+#endif
 
     gaim_request_field_group_add_field(group, field);
 }
