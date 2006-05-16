@@ -48,7 +48,7 @@ menu_get_first_menuitem(GtkWidget * menu)
 static int
 menu_select_cb(GtkMenuItem * menuitem, GtkWidget * menu)
 {
-    const char *label = menuitem_get_label( menuitem );
+    const char *label = menuitem_get_label(menuitem);
 
 //      printf( "menuitem = %s(%p), menu = %s(%p)\n", G_OBJECT_TYPE_NAME(menuitem), menuitem, G_OBJECT_TYPE_NAME(menu), menu );
 
@@ -105,8 +105,9 @@ menu_select_cb(GtkMenuItem * menuitem, GtkWidget * menu)
             gtk_label_set_text(label, str);
             gtk_widget_show(GTK_WIDGET(selection));
             gtk_option_menu_set_history(optionmenu, 0);
-            
-            printf("optionmenu=%p, menu=%p, menuitem=%p, label=%p\n", optionmenu, menu, selection, label );
+
+            printf("optionmenu=%p, menu=%p, menuitem=%p, label=%p\n", optionmenu, menu, selection,
+                   label);
             g_free(str);
         }
     }
@@ -174,9 +175,9 @@ make_timezone_menu(const char *selected)
     GtkWidget *menu;
     GtkWidget *optionmenu, *menuitem, *selection;
 
-    if( selected == NULL )
+    if(selected == NULL)
         selected = "";
-        
+
     menu = gtk_menu_new();
     menuitem = gtk_menu_item_new_with_label(selected);
     gtk_menu_append(menu, menuitem);
@@ -197,7 +198,7 @@ make_timezone_menu(const char *selected)
 
     state.currdepth = 0;
 
-    recurse_directory("/usr/share/zoneinfo", (DirRecurseMatch)make_menu_cb, &state);
+    recurse_directory("/usr/share/zoneinfo", (DirRecurseMatch) make_menu_cb, &state);
 
     for (i = 0; i < state.currdepth; i++)
         g_free(state.stack[i].string);
@@ -225,15 +226,15 @@ make_timezone_menu(const char *selected)
 }
 
 const char *
-get_timezone_menu_selection( void *widget )
+get_timezone_menu_selection(void *widget)
 {
     GtkOptionMenu *menu = GTK_OPTION_MENU(widget);
-    
-    int sel = gtk_option_menu_get_history( menu );
-    if( sel == 2 )  /* Default */
-    	return NULL;
-    if( sel == 1 )  /* Disabled */
-    	return "none";
+
+    int sel = gtk_option_menu_get_history(menu);
+    if(sel == 2)                /* Default */
+        return NULL;
+    if(sel == 1)                /* Disabled */
+        return "none";
 
 //    GtkMenu *m = GTK_MENU( gtk_option_menu_get_menu(menu) );
 //    GtkMenuItem *mi = GTK_MENU_ITEM( gtk_menu_get_active( m ));

@@ -1,3 +1,7 @@
+version 0.5 (9 Apr 2006)
+	* Add initial "Edit Chat" functionality. Works at least for IRC. (kleptog)
+	* The usual bug fixes
+
 version 0.4pre2 (9 Apr 2006)
 	* Fix compilation issues for Gaim 2 (kleptog)
 	* Update Makefile to allow compilation against multiple versions of

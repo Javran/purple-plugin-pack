@@ -72,7 +72,7 @@ void *gaim_gtk_blist_get_handle();
 
 static GaimPlugin *plugin_self;
 void *make_timezone_menu(const char *selected);
-const char *get_timezone_menu_selection( void *widget );
+const char *get_timezone_menu_selection(void *widget);
 
 /* Resolve specifies what the return value should mean:
  *
@@ -129,22 +129,25 @@ buddy_get_timezone(GaimBlistNode * node, gboolean resolve)
 }
 
 /* Calcuates the difference between two struct tm's. */
-static float timezone_calc_difference( struct tm *remote_tm, struct tm *local_tm )
+static float
+timezone_calc_difference(struct tm *remote_tm, struct tm *local_tm)
 {
     int datediff = 0, diff;
-    
+
     /* Tries to calculate the difference. Note this only works because the
      * times are with 24 hours of eachother! */
-    if( remote_tm->tm_mday != local_tm->tm_mday )
+    if(remote_tm->tm_mday != local_tm->tm_mday)
     {
         datediff = remote_tm->tm_year - local_tm->tm_year;
-        if( datediff == 0 )
+        if(datediff == 0)
             datediff = remote_tm->tm_mon - local_tm->tm_mon;
-        if( datediff == 0 )
+        if(datediff == 0)
             datediff = remote_tm->tm_mday - local_tm->tm_mday;
-    }    
-    diff = datediff*24*60 + (remote_tm->tm_hour - local_tm->tm_hour)*60 + (remote_tm->tm_min - local_tm->tm_min);
-    
+    }
+    diff =
+        datediff * 24 * 60 + (remote_tm->tm_hour - local_tm->tm_hour) * 60 + (remote_tm->tm_min -
+                                                                              local_tm->tm_min);
+
     return (float)diff / 60.0;
 }
 
@@ -155,7 +158,7 @@ timezone_get_time(const char *timezone, struct tm *tm, float *diff)
     struct state *tzinfo = timezone_load(timezone);
     struct tm *local_tm;
     time_t now;
-    
+
     if(!tzinfo)
         return -1;
 
@@ -165,11 +168,11 @@ timezone_get_time(const char *timezone, struct tm *tm, float *diff)
 
     /* Calculate user's localtime, and compare. If same, no output */
     local_tm = localtime(&now);
-    
-    if( local_tm->tm_hour == tm->tm_hour && local_tm->tm_min == tm->tm_min )
+
+    if(local_tm->tm_hour == tm->tm_hour && local_tm->tm_min == tm->tm_min)
         return 1;
-    
-    *diff = timezone_calc_difference( tm, local_tm );
+
+    *diff = timezone_calc_difference(tm, local_tm);
     return 0;
 }
 #else
@@ -187,21 +190,21 @@ timezone_get_time(const char *timezone, struct tm *tm, float *diff)
 
     time(&now);
     tm_tmp = localtime(&now);
-    *tm = *tm_tmp;         /* Must copy, localtime uses local buffer */
+    *tm = *tm_tmp;              /* Must copy, localtime uses local buffer */
 
     /* Reset the old TZ value. */
     if(old_tz == NULL)
         g_unsetenv("TZ");
     else
         g_setenv("TZ", old_tz, TRUE);
-        
+
     /* Calculate user's localtime, and compare. If same, no output */
     tm_tmp = localtime(&now);
-    
-    if( tm_tmp->tm_hour == tm->tm_hour && tm_tmp->tm_min == tm->tm_min )
+
+    if(tm_tmp->tm_hour == tm->tm_hour && tm_tmp->tm_min == tm->tm_min)
         return 1;
 
-    *diff = timezone_calc_difference( tm, tm_tmp );
+    *diff = timezone_calc_difference(tm, tm_tmp);
     return 0;
 }
 #endif
@@ -245,7 +248,8 @@ timezone_createconv_cb(GaimConversation * conv, void *data)
         strftime(text, sizeof(text), TIME_FORMAT, &tm);
 #endif
 
-        char *str = g_strdup_printf("Remote Local Time: %s (%g hours %s)", text, fabs(diff), (diff<0)?"behind":"ahead");
+        char *str = g_strdup_printf("Remote Local Time: %s (%g hours %s)", text, fabs(diff),
+                                    (diff < 0) ? "behind" : "ahead");
 
         gaim_conversation_write(conv, PLUGIN, str, GAIM_MESSAGE_SYSTEM, time(NULL));
 
@@ -280,7 +284,7 @@ buddytimezone_tooltip_cb(GaimBlistNode * node, char **text, void *data)
     ret = timezone_get_time(timezone, &tm, &diff);
     if(ret < 0)
         newtext = g_strdup_printf("%s\n<b>Timezone:</b> %s (error)", *text, timezone);
-    else if( ret == 0 )
+    else if(ret == 0)
     {
 #if GAIM_MAJOR_VERSION > 1
         const char *timetext = gaim_time_format(&tm);
@@ -289,10 +293,12 @@ buddytimezone_tooltip_cb(GaimBlistNode * node, char **text, void *data)
         strftime(timetext, sizeof(timetext), TIME_FORMAT, &tm);
 #endif
 
-        newtext = g_strdup_printf("%s\n<b>Local Time:</b> %s (%g hours %s)", *text, timetext, fabs(diff), (diff<0)?"behind":"ahead");
+        newtext =
+            g_strdup_printf("%s\n<b>Local Time:</b> %s (%g hours %s)", *text, timetext, fabs(diff),
+                            (diff < 0) ? "behind" : "ahead");
     }
     else
-    	return;
+        return;
 
     g_free(*text);
     *text = newtext;
@@ -326,8 +332,8 @@ buddytimezone_submitfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
 
     list = gaim_request_fields_get_field(fields, CONTROL_NAME);
 #ifdef CUSTOM_GTK
-    const char *seldata = get_timezone_menu_selection( list->ui_data );
-    if( seldata == NULL )
+    const char *seldata = get_timezone_menu_selection(list->ui_data);
+    if(seldata == NULL)
         gaim_blist_node_remove_setting(node, SETTING_NAME);
     else
         gaim_blist_node_set_string(node, SETTING_NAME, seldata);
@@ -390,7 +396,10 @@ buddytimezone_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
     timezone = buddy_get_timezone(data, FALSE);
 
 #ifdef CUSTOM_GTK
-    field = gaim_request_field_new( CONTROL_NAME, "Timezone", GAIM_REQUEST_FIELD_LIST );
+    field =
+        gaim_request_field_new(CONTROL_NAME,
+                               is_default ? "Default timezone for group" : "Timezone of contact",
+                               GAIM_REQUEST_FIELD_LIST);
     field->ui_data = make_timezone_menu(timezone);
 #else
     field =

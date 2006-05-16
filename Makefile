@@ -4,7 +4,7 @@
 #* Licenced under the GNU General Public Licence version 2.
 #*************************************************************************/
 
-VERSION=0.4pre2
+VERSION=0.5
 
 # Use internal timezone library rather than system one: yes or no
 PRIVATE_TZLIB ?= yes
@@ -15,7 +15,7 @@ CUSTOM_GTK ?= yes
 # For choosing which version to compile against
 # This is name of the pkgconfig file to use
 
-GAIM_NAME ?= gaim
+GAIM_NAME ?= gaim2
 
 # Where to install the modules
 INSTALL_PATH=$(HOME)/.$(GAIM_NAME)/plugins/
@@ -86,7 +86,6 @@ bundle:
 # - Martijn
 compiletest:
 	for i in gaim gaim2 ; do for j in yes no ; do for k in yes no ; do \
-		if [ $$i = gaim -a $$j = yes ] ; then continue ; fi ; \
 		make clean ; \
 		make all GAIM_NAME=$$i CUSTOM_GTK=$$j PRIVATE_TZLIB=$$k ; \
 	done ; done ; done

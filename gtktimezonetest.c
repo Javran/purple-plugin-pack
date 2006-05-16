@@ -250,7 +250,7 @@ make_menu2(char *selected)
 #endif
     state.currdepth = 0;
 
-    recurse_directory("/usr/share/zoneinfo", (DirRecurseMatch)make_menu_cb, &state);
+    recurse_directory("/usr/share/zoneinfo", (DirRecurseMatch) make_menu_cb, &state);
 
     for (i = 0; i < state.currdepth; i++)
         g_free(state.stack[i].string);
