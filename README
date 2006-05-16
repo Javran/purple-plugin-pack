@@ -1,0 +1,48 @@
+This package contains GAIM modules created by 
+
+Martijn van Oosterhout <kleptog@svana.org>
+http://svana.org/kleptog/
+
+All the files in this package are licenced under the GNU General Public
+Licence version 2, with the exception of the files:
+
+localtime.c
+tzfile.h
+private.h
+
+These files, although modified, were copied from the Olson Timezone code
+(http://www.twinsun.com/tz/tz-link.htm) and remain under the public domain.
+
+The modules are:
+ *************************************************************************
+ * Buddy Edit Module
+ *
+ * A GAIM plugin that adds an edit to to buddies allowing you to change
+ * various details you can't normally change. It also provides a mechanism
+ * for subsequent plugins to add themselves to that dialog.
+ *************************************************************************
+ * Buddy Language Module
+ *
+ * A GAIM plugin that allows you to configure the language of the spelling
+ * control on the conversation screen on a per-contact basis.
+ *************************************************************************
+ * Buddy Notes Module
+ *
+ * A GAIM plugin the allows you to add notes to contacts which will be
+ * displayed in the conversation screen as well as the hover tooltip.
+ *************************************************************************
+ * Buddy Timezone Module
+ *
+ * A GAIM plugin that allows you to configure a timezone on a per-contact
+ * basis so it can display the localtime of your contact when a conversation
+ * starts. Convenient if you deal with contacts from many parts of the
+ * world.
+ *************************************************************************
+
+To build them, just unpack this package and run "make && make install". You
+will need the gaim header files, which for major distributions are shipped
+in the gaim-dev package. For the spelling control module you will also need
+gtkspell-dev and gtk2-dev.
+
+This will install the module in ~/.gaim/plugins and they will be available
+next time you start GAIM.
