@@ -8,9 +8,11 @@
  *************************************************************************/
 
 #define GAIM_PLUGINS
+#define PLUGIN "core-kleptog-buddylang"
 
 #include <glib.h>
 #include <ctype.h>
+#include <string.h>
 
 #include "notify.h"
 #include "plugin.h"
@@ -29,6 +31,7 @@
 static GaimPlugin *plugin_self;
 
 #define LANGUAGE_FLAG ((void*)1)
+#define DISABLED_FLAG ((void*)2)
 
 static const char *
 buddy_get_language(GaimBlistNode * node)
@@ -60,8 +63,13 @@ buddylang_createconv_cb(GaimConversation * conv, void *data)
     char *str;
     GError *error = NULL;
 
+#if GAIM_MAJOR_VERSION < 2
     if(gaim_conversation_get_type(conv) != GAIM_CONV_IM)
         return;
+#else
+    if(gaim_conversation_get_type(conv) != GAIM_CONV_TYPE_IM)
+        return;
+#endif
 
     name = gaim_conversation_get_name(conv);
     buddy = gaim_find_buddy(gaim_conversation_get_account(conv), name);
@@ -79,14 +87,16 @@ buddylang_createconv_cb(GaimConversation * conv, void *data)
     if(!gtkspell)
         return;
 
-    if(!gtkspell_set_language(gtkspell, language, &error) && error)
+    if( strcmp( language, "none" ) )
+    	gtkspell_detach( gtkspell );
+    else if(!gtkspell_set_language(gtkspell, language, &error) && error)
     {
-        gaim_debug_warning("buddylang", "Failed to configure GtkSpell for language %s: %s\n",
+        gaim_debug_warning(PLUGIN, "Failed to configure GtkSpell for language %s: %s\n",
                            language, error->message);
         g_error_free(error);
     }
     str = g_strdup_printf("Spellcheck language: %s", language);
-    gaim_conversation_write(conv, "gaim-buddylang", str, GAIM_MESSAGE_SYSTEM, time(NULL));
+    gaim_conversation_write(conv, PLUGIN, str, GAIM_MESSAGE_SYSTEM, time(NULL));
     g_free(str);
 }
 
@@ -96,9 +106,9 @@ buddylang_submitfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
     GaimContact *contact;
     GaimRequestField *list;
     const GList *sellist;
-    gboolean is_language;
+    void *seldata = NULL;
 
-    gaim_debug(GAIM_DEBUG_INFO, "gaim-buddylang", "buddylang_submitfields_cb(%p,%p)\n", fields,
+    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddylang_submitfields_cb(%p,%p)\n", fields,
                data);
     if(GAIM_BLIST_NODE_IS_BUDDY(data))
         contact = gaim_buddy_get_contact((GaimBuddy *) data);
@@ -107,12 +117,14 @@ buddylang_submitfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
 
     list = gaim_request_fields_get_field(fields, "language");
     sellist = gaim_request_field_list_get_selected(list);
-    is_language = (sellist
-                   && gaim_request_field_list_get_data(list, sellist->data) == LANGUAGE_FLAG);
+    if( sellist )
+    	seldata = gaim_request_field_list_get_data(list, sellist->data);
 
     /* Otherwise, it's fixed value and this means deletion */
-    if(is_language)
+    if(seldata == LANGUAGE_FLAG)
         gaim_blist_node_set_string((GaimBlistNode *) contact, "language", sellist->data);
+    else if( seldata == DISABLED_FLAG)
+    	gaim_blist_node_set_string((GaimBlistNode *) contact, "language", "none");
     else
         gaim_blist_node_remove_setting((GaimBlistNode *) contact, "language");
 }
@@ -121,7 +133,7 @@ buddylang_submitfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
 static void
 buddylang_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
 {
-    gaim_debug(GAIM_DEBUG_INFO, "gaim-buddylang", "buddylang_createfields_cb(%p,%p)\n", fields,
+    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddylang_createfields_cb(%p,%p)\n", fields,
                data);
     GaimRequestField *field;
     GaimRequestFieldGroup *group;
@@ -136,28 +148,29 @@ buddylang_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
 
     field = gaim_request_field_list_new("language", "Spellcheck language");
     gaim_request_field_list_set_multi_select(field, FALSE);
-    gaim_request_field_list_add(field, "<Disabled>", "");
+    gaim_request_field_list_add(field, "<Default>", "");
+    gaim_request_field_list_add(field, "<Disabled>", DISABLED_FLAG);
 
     /* I'd love to be able to access the gtkspell one, but it's hidden, so we create our own */
     aspellconfig = new_aspell_config();
     if(!aspellconfig)
     {
-        gaim_debug(GAIM_DEBUG_INFO, "gaim-buddylang", "new_aspell_config() returned NULL\n");
+        gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "new_aspell_config() returned NULL\n");
         return;
     }
     dictinfolist = get_aspell_dict_info_list(aspellconfig);
     if(!dictinfolist)
     {
-        gaim_debug(GAIM_DEBUG_INFO, "gaim-buddylang",
+        gaim_debug(GAIM_DEBUG_INFO, PLUGIN,
                    "get_aspell_dict_info_list() returned NULL\n");
         return;
     }
-    gaim_debug(GAIM_DEBUG_INFO, "gaim-buddylang", "dictinfo size = %d\n",
+    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "dictinfo size = %d\n",
                aspell_dict_info_list_size(dictinfolist));
     dictinfoenumeration = aspell_dict_info_list_elements(dictinfolist);
     if(!dictinfoenumeration)
     {
-        gaim_debug(GAIM_DEBUG_INFO, "gaim-buddylang",
+        gaim_debug(GAIM_DEBUG_INFO, PLUGIN,
                    "aspell_dict_info_list_elements() returned NULL\n");
         return;
     }
@@ -190,9 +203,9 @@ plugin_load(GaimPlugin * plugin)
 
     plugin_self = plugin;
 
-    gaim_signal_connect(gaim_blist_get_handle(), "buddyedit-create-fields", plugin,
+    gaim_signal_connect(gaim_blist_get_handle(), "core-kleptog-buddyedit-create-fields", plugin,
                         GAIM_CALLBACK(buddylang_createfields_cb), NULL);
-    gaim_signal_connect(gaim_blist_get_handle(), "buddyedit-submit-fields", plugin,
+    gaim_signal_connect(gaim_blist_get_handle(), "core-kleptog-buddyedit-submit-fields", plugin,
                         GAIM_CALLBACK(buddylang_submitfields_cb), NULL);
     gaim_signal_connect(gaim_conversations_get_handle(), "conversation-created", plugin,
                         GAIM_CALLBACK(buddylang_createconv_cb), NULL);
@@ -210,9 +223,9 @@ static GaimPluginInfo info = {
     NULL,
     GAIM_PRIORITY_DEFAULT,
 
-    "core-kleptog-buddylang",
+    PLUGIN,
     "Buddy Language Module",
-    "0.1",
+    G_STRINGIFY(PLUGIN_VERSION),
 
     "Configure spell-check language per buddy",
     "This plugin allows you to configure the language of the spelling control on the conversation screen on a per-contact basis.",

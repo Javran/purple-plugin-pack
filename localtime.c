@@ -186,11 +186,6 @@ static struct state	gmtmem;
 //static int		lcl_is_set;
 static int		gmt_is_set;
 
-static char *			tzname[2] = {
-	wildabbr,
-	wildabbr
-};
-
 /*
 ** Section 4.12.3 of X3.159-1989 requires that
 **	Except for the strftime function, these functions [asctime,

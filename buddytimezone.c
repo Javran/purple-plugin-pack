@@ -10,6 +10,7 @@
  *************************************************************************/
 
 #define GAIM_PLUGINS
+#define PLUGIN "core-kleptog-buddytimezone"
 
 #include <glib.h>
 #include <ctype.h>
@@ -79,8 +80,13 @@ timezone_createconv_cb(GaimConversation * conv, void *data)
     const char *timezone;
     int ret;
 
+#if GAIM_MAJOR_VERSION < 2
     if(gaim_conversation_get_type(conv) != GAIM_CONV_IM)
         return;
+#else
+    if(gaim_conversation_get_type(conv) != GAIM_CONV_TYPE_IM)
+        return;
+#endif
 
     name = gaim_conversation_get_name(conv);
     buddy = gaim_find_buddy(gaim_conversation_get_account(conv), name);
@@ -98,21 +104,31 @@ timezone_createconv_cb(GaimConversation * conv, void *data)
     {
         char *str = g_strdup_printf("Remote Local Time: %d:%02d", tm.tm_hour, tm.tm_min);
 
-        gaim_conversation_write(conv, "gaim-timezone", str, GAIM_MESSAGE_SYSTEM, time(NULL));
+        gaim_conversation_write(conv, PLUGIN, str, GAIM_MESSAGE_SYSTEM, time(NULL));
 
         g_free(str);
     }
 }
 
+#if GAIM_MAJOR_VERSION > 1
+static void
+buddytimezone_tooltip_cb(GaimBlistNode * node, char **text, gboolean full, void *data);
+#else
 static void
 buddytimezone_tooltip_cb(GaimBlistNode * node, char **text, void *data)
+#endif
 {
     char *newtext;
     const char *timezone;
     struct tm tm;
     int ret;
 
-    gaim_debug(GAIM_DEBUG_INFO, "gaim-timezone", "type %d\n", node->type);
+#if GAIM_MAJOR_VERSION > 1
+    if (!full)
+        return;
+#endif
+            
+    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "type %d\n", node->type);
     timezone = buddy_get_timezone(node);
     if(!timezone)
         return;
@@ -136,7 +152,7 @@ buddyedit_submitfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
     int is_timezone;
 
     /* timezone stuff */
-    gaim_debug(GAIM_DEBUG_INFO, "gaim-timezone", "buddyedit_submitfields_cb(%p,%p)\n", fields,
+    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddyedit_submitfields_cb(%p,%p)\n", fields,
                data);
     if(GAIM_BLIST_NODE_IS_BUDDY(data))
         contact = gaim_buddy_get_contact((GaimBuddy *) data);
@@ -169,7 +185,7 @@ buddy_add_timezone_cb(char *filename, void *data)
 static void
 buddyedit_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
 {
-    gaim_debug(GAIM_DEBUG_INFO, "gaim-timezone", "buddyedit_createfields_cb(%p,%p)\n", fields,
+    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddyedit_createfields_cb(%p,%p)\n", fields,
                data);
     GaimRequestField *field;
     GaimRequestFieldGroup *group;
@@ -199,9 +215,9 @@ plugin_load(GaimPlugin * plugin)
 
     plugin_self = plugin;
 
-    gaim_signal_connect(gaim_blist_get_handle(), "buddyedit-create-fields", plugin,
+    gaim_signal_connect(gaim_blist_get_handle(), "core-kleptog-buddyedit-create-fields", plugin,
                         GAIM_CALLBACK(buddyedit_createfields_cb), NULL);
-    gaim_signal_connect(gaim_blist_get_handle(), "buddyedit-submit-fields", plugin,
+    gaim_signal_connect(gaim_blist_get_handle(), "core-kleptog-buddyedit-submit-fields", plugin,
                         GAIM_CALLBACK(buddyedit_submitfields_cb), NULL);
     gaim_signal_connect(gaim_gtk_blist_get_handle(), "drawing-tooltip", plugin,
                         GAIM_CALLBACK(buddytimezone_tooltip_cb), NULL);
@@ -210,7 +226,7 @@ plugin_load(GaimPlugin * plugin)
 
     zoneinfo_dir = gaim_prefs_get_string("/plugins/timezone/zoneinfo_dir");
     if(tz_init(zoneinfo_dir) < 0)
-        gaim_debug_error("gaim-timezone", "Problem opening zoneinfo dir (%s): %s\n", zoneinfo_dir,
+        gaim_debug_error(PLUGIN, "Problem opening zoneinfo dir (%s): %s\n", zoneinfo_dir,
                          strerror(errno));
 
     return TRUE;
@@ -226,9 +242,9 @@ static GaimPluginInfo info = {
     NULL,
     GAIM_PRIORITY_DEFAULT,
 
-    "core-kleptog-buddytimezone",
+    PLUGIN,
     "Buddy Timezone Module",
-    "0.1",
+    G_STRINGIFY(PLUGIN_VERSION),
 
     "Quickly see the local time of a buddy",
     "A GAIM plugin that allows you to configure a timezone on a per-contact "

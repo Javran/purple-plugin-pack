@@ -4,7 +4,7 @@ Martijn van Oosterhout <kleptog@svana.org>
 http://svana.org/kleptog/
 
 All the files in this package are licenced under the GNU General Public
-Licence version 2, with the exception of the files:
+Licence version 2 (see COPYING file), with the exception of the files:
 
 localtime.c
 tzfile.h

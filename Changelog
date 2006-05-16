@@ -1,0 +1,7 @@
+version 0.2 (4 Apr 2006)
+	* Patches and improvements by rlaager. It should now compile and run
+	  with Gaim 2.0.0 (can't test it myself though).
+	* Several suggestions on IRC regard naming of modules and signals.
+
+version 0.1 (4 Apr 2006)
+	* Initial release with all 4 modules in good working order.

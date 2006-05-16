@@ -4,9 +4,10 @@
 #* Licenced under the GNU General Public Licence version 2.
 #*************************************************************************/
 
+VERSION=0.2
 
-CFLAGS=-O2 -g -Wall -I/usr/include/gaim `pkg-config --cflags glib-2.0`
-LDFLAGS=`pkg-config --libs glib-2.0`
+CFLAGS=-O2 -g -Wall `pkg-config --cflags glib-2.0 gaim` -DPLUGIN_VERSION=$(VERSION)
+LDFLAGS=`pkg-config --libs glib-2.0 gaim`
 CC=gcc
 
 all: buddyedit.so buddytimezone.so buddynotes.so buddylang.so timetest recursetest
@@ -40,4 +41,7 @@ install: all
 	install -m 644 buddylang.so $(HOME)/.gaim/plugins/
 
 bundle:
-	tar cvzf ../buddyedit.tar.gz *.c *.h Makefile README
+	ln -s . buddyedit-$(VERSION)
+	tar cvzf ../buddyedit-$(VERSION).tar.gz buddyedit-$(VERSION)/{*.c,*.h,Makefile,README,COPYING,Changelog}
+	rm buddyedit-$(VERSION)
+

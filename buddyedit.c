@@ -9,6 +9,7 @@
  *************************************************************************/
 
 #define GAIM_PLUGINS
+#define PLUGIN "core-kleptog-buddyedit"
 
 #include <glib.h>
 #include <string.h>
@@ -16,6 +17,7 @@
 
 #include "notify.h"
 #include "plugin.h"
+#include "util.h"
 #include "version.h"
 
 #include "debug.h"              /* Debug output functions */
@@ -55,7 +57,7 @@ buddyedit_editcomplete_cb(GaimBlistNode * data, GaimRequestFields * fields)
             gaim_blist_alias_buddy(buddy, alias);
     }
 
-    gaim_signal_emit(gaim_blist_get_handle(), "buddyedit-submit-fields", fields, data);
+    gaim_signal_emit(gaim_blist_get_handle(), PLUGIN "-submit-fields", fields, data);
 
     if(buddy_destroy)
         gaim_blist_remove_buddy((GaimBuddy *) data);
@@ -67,7 +69,7 @@ buddyedit_editcomplete_cb(GaimBlistNode * data, GaimRequestFields * fields)
 static void
 buddy_edit_cb(GaimBlistNode * node, gpointer data)
 {
-    gaim_debug(GAIM_DEBUG_INFO, "gaim-edit", "buddy_edit_cb(%p)\n", node);
+    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddy_edit_cb(%p)\n", node);
     GaimRequestFields *fields;
     GaimRequestField *field;
     GaimRequestFieldGroup *group;
@@ -92,7 +94,7 @@ buddy_edit_cb(GaimBlistNode * node, gpointer data)
         gaim_request_field_group_add_field(group, field);
     }
 
-    gaim_signal_emit(gaim_blist_get_handle(), "buddyedit-create-fields", fields, node);
+    gaim_signal_emit(gaim_blist_get_handle(), PLUGIN "-create-fields", fields, node);
 
     gaim_request_fields(plugin_self,
                         "Edit Contact", NULL, NULL,
@@ -102,13 +104,20 @@ buddy_edit_cb(GaimBlistNode * node, gpointer data)
 static void
 buddy_menu_cb(GaimBlistNode * node, GList ** menu, void *data)
 {
+#if GAIM_MAJOR_VERSION < 2
     GaimBlistNodeAction *action;
+#else
+    GaimMenuAction *action;
+#endif
 
     if(!GAIM_BLIST_NODE_IS_BUDDY(node) && !GAIM_BLIST_NODE_IS_CONTACT(node))
         return;
 
+#if GAIM_MAJOR_VERSION < 2
     action = gaim_blist_node_action_new("Edit...", buddy_edit_cb, NULL);
-
+#else
+    action = gaim_menu_action_new("Edit...", buddy_edit_cb, NULL, NULL);
+#endif
     *menu = g_list_append(*menu, action);
 }
 
@@ -120,12 +129,12 @@ plugin_load(GaimPlugin * plugin)
 
     void *blist_handle = gaim_blist_get_handle();
 
-    gaim_signal_register(blist_handle, "buddyedit-create-fields",       /* Called when about to create dialog */
+    gaim_signal_register(blist_handle, PLUGIN "-create-fields",       /* Called when about to create dialog */
                          gaim_marshal_VOID__POINTER_POINTER, NULL, 2,   /* (FieldList*,BlistNode*) */
                          gaim_value_new(GAIM_TYPE_SUBTYPE, GAIM_TYPE_POINTER),  /* FieldList */
                          gaim_value_new(GAIM_TYPE_SUBTYPE, GAIM_SUBTYPE_BLIST));
 
-    gaim_signal_register(blist_handle, "buddyedit-submit-fields",       /* Called when dialog submitted */
+    gaim_signal_register(blist_handle, PLUGIN "-submit-fields",       /* Called when dialog submitted */
                          gaim_marshal_VOID__POINTER_POINTER, NULL, 2,   /* (FieldList*,BlistNode*) */
                          gaim_value_new(GAIM_TYPE_SUBTYPE, GAIM_TYPE_POINTER),  /* FieldList */
                          gaim_value_new(GAIM_TYPE_SUBTYPE, GAIM_SUBTYPE_BLIST));
@@ -147,9 +156,9 @@ static GaimPluginInfo info = {
     NULL,
     GAIM_PRIORITY_DEFAULT,
 
-    "core-kleptog-buddyedit",
+    PLUGIN,
     "Buddy Edit Module",
-    "0.1",
+    G_STRINGIFY(PLUGIN_VERSION),
 
     "Enable editing of buddy properties",
     "A plugin that adds an edit to to buddies allowing you to change various details you can't normally change. "

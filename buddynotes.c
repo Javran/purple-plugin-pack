@@ -8,6 +8,7 @@
  *************************************************************************/
 
 #define GAIM_PLUGINS
+#define PLUGIN "core-kleptog-buddynotes"
 
 #include <glib.h>
 #include <ctype.h>
@@ -56,8 +57,13 @@ buddynotes_createconv_cb(GaimConversation * conv, void *data)
     const char *notes;
     char *str;
 
+#if GAIM_MAJOR_VERSION < 2
     if(gaim_conversation_get_type(conv) != GAIM_CONV_IM)
         return;
+#else
+    if(gaim_conversation_get_type(conv) != GAIM_CONV_TYPE_IM)
+        return;
+#endif
 
     name = gaim_conversation_get_name(conv);
     buddy = gaim_find_buddy(gaim_conversation_get_account(conv), name);
@@ -71,7 +77,7 @@ buddynotes_createconv_cb(GaimConversation * conv, void *data)
 
     str = g_strdup_printf("Notes: %s", notes);
 
-    gaim_conversation_write(conv, "gaim-notes", str, GAIM_MESSAGE_SYSTEM, time(NULL));
+    gaim_conversation_write(conv, PLUGIN, str, GAIM_MESSAGE_SYSTEM, time(NULL));
 
     g_free(str);
 }
@@ -82,7 +88,7 @@ buddy_tooltip_cb(GaimBlistNode * node, char **text, void *data)
     char *newtext;
     const char *notes;
 
-    gaim_debug(GAIM_DEBUG_INFO, "gaim-notes", "type %d\n", node->type);
+    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "type %d\n", node->type);
     notes = buddy_get_notes(node);
     if(!notes)
         return;
@@ -100,7 +106,7 @@ buddynotes_submitfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
     const char *notes;
 
     /* buddynotes stuff */
-    gaim_debug(GAIM_DEBUG_INFO, "gaim-notes", "buddynotes_submitfields_cb(%p,%p)\n", fields, data);
+    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddynotes_submitfields_cb(%p,%p)\n", fields, data);
     if(GAIM_BLIST_NODE_IS_BUDDY(data))
         contact = gaim_buddy_get_contact((GaimBuddy *) data);
     else                        /* Contact */
@@ -119,7 +125,7 @@ buddynotes_submitfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
 static void
 buddynotes_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
 {
-    gaim_debug(GAIM_DEBUG_INFO, "gaim-notes", "buddynotes_createfields_cb(%p,%p)\n", fields, data);
+    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddynotes_createfields_cb(%p,%p)\n", fields, data);
     GaimRequestField *field;
     GaimRequestFieldGroup *group;
     const char *notes;
@@ -140,9 +146,9 @@ plugin_load(GaimPlugin * plugin)
 
     plugin_self = plugin;
 
-    gaim_signal_connect(gaim_blist_get_handle(), "buddyedit-create-fields", plugin,
+    gaim_signal_connect(gaim_blist_get_handle(), "core-kleptog-buddyedit-create-fields", plugin,
                         GAIM_CALLBACK(buddynotes_createfields_cb), NULL);
-    gaim_signal_connect(gaim_blist_get_handle(), "buddyedit-submit-fields", plugin,
+    gaim_signal_connect(gaim_blist_get_handle(), "core-kleptog-buddyedit-submit-fields", plugin,
                         GAIM_CALLBACK(buddynotes_submitfields_cb), NULL);
     gaim_signal_connect(gaim_gtk_blist_get_handle(), "drawing-tooltip", plugin,
                         GAIM_CALLBACK(buddy_tooltip_cb), NULL);
@@ -162,9 +168,9 @@ static GaimPluginInfo info = {
     NULL,
     GAIM_PRIORITY_DEFAULT,
 
-    "core-kleptog-buddynotes",
+    PLUGIN,
     "Buddy Notes Module",
-    "0.1",
+    G_STRINGIFY(PLUGIN_VERSION),
 
     "Store notes about your buddy",
     "This plugin allows you to set a notes field for each buddy and will display it at various points",
