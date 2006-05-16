@@ -15,7 +15,7 @@ CUSTOM_GTK ?= yes
 # For choosing which version to compile against
 # This is name of the pkgconfig file to use
 
-GAIM_NAME ?= gaim2
+GAIM_NAME ?= gaim
 
 # Where to install the modules
 INSTALL_PATH=$(HOME)/.$(GAIM_NAME)/plugins/
@@ -89,3 +89,4 @@ compiletest:
 		make clean ; \
 		make all GAIM_NAME=$$i CUSTOM_GTK=$$j PRIVATE_TZLIB=$$k ; \
 	done ; done ; done
+
