@@ -18,6 +18,7 @@
 #include <errno.h>
 #include <ctype.h>
 #include <string.h>
+#include <math.h>
 
 #include "notify.h"
 #include "plugin.h"
@@ -37,6 +38,10 @@ void *gaim_gtk_blist_get_handle();
 
 #define TIMEZONE_FLAG  ((void*)1)
 #define DISABLED_FLAG ((void*)2)
+
+#define TIME_FORMAT "%X"
+/* Another possible format (hides seconds) */
+//#define TIME_FORMAT  "%H:%M"
 
 static GaimPlugin *plugin_self;
 
@@ -94,41 +99,80 @@ buddy_get_timezone(GaimBlistNode * node, gboolean resolve)
     return timezone;
 }
 
+/* Calcuates the difference between two struct tm's. */
+static float timezone_calc_difference( struct tm *remote_tm, struct tm *local_tm )
+{
+    int datediff = 0, diff;
+    
+    /* Tries to calculate the difference. Note this only works because the
+     * times are with 24 hours of eachother! */
+    if( remote_tm->tm_mday != local_tm->tm_mday )
+    {
+        datediff = remote_tm->tm_year - local_tm->tm_year;
+        if( datediff == 0 )
+            datediff = remote_tm->tm_mon - local_tm->tm_mon;
+        if( datediff == 0 )
+            datediff = remote_tm->tm_mday - local_tm->tm_mday;
+    }    
+    diff = datediff*24*60 + (remote_tm->tm_hour - local_tm->tm_hour)*60 + (remote_tm->tm_min - local_tm->tm_min);
+    
+    return (float)diff / 60.0;
+}
+
 #ifdef PRIVATE_TZLIB
 static int
-timezone_get_time(const char *timezone, struct tm *tm)
+timezone_get_time(const char *timezone, struct tm *tm, float *diff)
 {
     struct state *tzinfo = timezone_load(timezone);
+    struct tm *local_tm;
+    time_t now;
+    
     if(!tzinfo)
         return -1;
-    else
-    {
-        time_t now = time(NULL);
-        localsub(&now, 0, tm, tzinfo);
-        free(tzinfo);
-    }
+
+    time(&now);
+    localsub(&now, 0, tm, tzinfo);
+    free(tzinfo);
+
+    /* Calculate user's localtime, and compare. If same, no output */
+    local_tm = localtime(&now);
+    
+    if( local_tm->tm_hour == tm->tm_hour && local_tm->tm_min == tm->tm_min )
+        return 1;
+    
+    *diff = timezone_calc_difference( tm, local_tm );
     return 0;
 }
 #else
 static int
-timezone_get_time(const char *timezone, struct tm *tm_in)
+timezone_get_time(const char *timezone, struct tm *tm, float *diff)
 {
     time_t now;
-    struct tm *tm;
+    struct tm *tm_tmp;
     const gchar *old_tz;
 
     /* Store the current TZ value. */
     old_tz = g_getenv("TZ");
+
     g_setenv("TZ", timezone, TRUE);
-    now = time(NULL);
-    tm = localtime(&now);
-    memcpy(tm_in, tm, sizeof(*tm));
+
+    time(&now);
+    tm_tmp = localtime(&now);
+    *tm = *tm_tmp;         /* Must copy, localtime uses local buffer */
 
     /* Reset the old TZ value. */
     if(old_tz == NULL)
         g_unsetenv("TZ");
     else
         g_setenv("TZ", old_tz, TRUE);
+        
+    /* Calculate user's localtime, and compare. If same, no output */
+    tm_tmp = localtime(&now);
+    
+    if( tm_tmp->tm_hour == tm->tm_hour && tm_tmp->tm_min == tm->tm_min )
+        return 1;
+
+    *diff = timezone_calc_difference( tm, tm_tmp );
     return 0;
 }
 #endif
@@ -140,6 +184,7 @@ timezone_createconv_cb(GaimConversation * conv, void *data)
     GaimBuddy *buddy;
     struct tm tm;
     const char *timezone;
+    float diff;
     int ret;
 
 #if GAIM_MAJOR_VERSION < 2
@@ -160,18 +205,18 @@ timezone_createconv_cb(GaimConversation * conv, void *data)
     if(!timezone)
         return;
 
-    ret = timezone_get_time(timezone, &tm);
+    ret = timezone_get_time(timezone, &tm, &diff);
 
     if(ret == 0)
     {
 #if GAIM_MAJOR_VERSION > 1
-        char *text = gaim_date_format_short(tm);
+        const char *text = gaim_time_format(&tm);
 #else
         char text[64];
-        strftime(text, sizeof(text), "%X", &tm);
+        strftime(text, sizeof(text), TIME_FORMAT, &tm);
 #endif
 
-        char *str = g_strdup_printf("Remote Local Time: %s", text);
+        char *str = g_strdup_printf("Remote Local Time: %s (%g hours %s)", text, fabs(diff), (diff<0)?"behind":"ahead");
 
         gaim_conversation_write(conv, PLUGIN, str, GAIM_MESSAGE_SYSTEM, time(NULL));
 
@@ -180,7 +225,8 @@ timezone_createconv_cb(GaimConversation * conv, void *data)
 }
 
 #if GAIM_MAJOR_VERSION > 1
-static void buddytimezone_tooltip_cb(GaimBlistNode * node, char **text, gboolean full, void *data);
+static void
+buddytimezone_tooltip_cb(GaimBlistNode * node, char **text, gboolean full, void *data)
 #else
 static void
 buddytimezone_tooltip_cb(GaimBlistNode * node, char **text, void *data)
@@ -189,6 +235,7 @@ buddytimezone_tooltip_cb(GaimBlistNode * node, char **text, void *data)
     char *newtext;
     const char *timezone;
     struct tm tm;
+    float diff;
     int ret;
 
 #if GAIM_MAJOR_VERSION > 1
@@ -201,11 +248,22 @@ buddytimezone_tooltip_cb(GaimBlistNode * node, char **text, void *data)
     if(!timezone)
         return;
 
-    ret = timezone_get_time(timezone, &tm);
+    ret = timezone_get_time(timezone, &tm, &diff);
     if(ret < 0)
         newtext = g_strdup_printf("%s\n<b>Timezone:</b> %s (error)", *text, timezone);
+    else if( ret == 0 )
+    {
+#if GAIM_MAJOR_VERSION > 1
+        char *timetext = gaim_date_format_short(tm);
+#else
+        char timetext[64];
+        strftime(timetext, sizeof(timetext), TIME_FORMAT, &tm);
+#endif
+
+        newtext = g_strdup_printf("%s\n<b>Local Time:</b> %s (%g hours %s)", *text, timetext, fabs(diff), (diff<0)?"behind":"ahead");
+    }
     else
-        newtext = g_strdup_printf("%s\n<b>Local Time:</b> %d:%02d", *text, tm.tm_hour, tm.tm_min);
+    	return;
 
     g_free(*text);
     *text = newtext;

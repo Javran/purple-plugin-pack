@@ -4,9 +4,9 @@
 #* Licenced under the GNU General Public Licence version 2.
 #*************************************************************************/
 
-VERSION=0.3
+VERSION=0.4pre1
 # yes or no
-PRIVATE_TZLIB=yes
+PRIVATE_TZLIB ?= yes
 
 CFLAGS=-O2 -g -Wall `pkg-config --cflags glib-2.0 gaim` -DPLUGIN_VERSION=$(VERSION)
 LDFLAGS=`pkg-config --libs glib-2.0 gaim`
@@ -17,35 +17,37 @@ CFLAGS += -DPRIVATE_TZLIB
 PRIVATE_TZLIB_OBJS=localtime.o
 endif
 
-all: buddyedit.so buddytimezone.so buddynotes.so buddylang.so timetest recursetest gtktimezonetest
+LIB_TARGETS=buddyedit.so buddytimezone.so buddynotes.so buddylang.so
+EXE_TARGETS=timetest recursetest gtktimezonetest
+
+all: $(LIB_TARGETS) $(EXE_TARGETS)
 
 recursetest: recurse.o recursetest.o
 
 timetest: timetest.o localtime.o
 
 gtktimezonetest.o: gtktimezonetest.c
-	gcc -c $(CFLAGS) `pkg-config --cflags gtk+-2.0` -o $@ $<
+	$(CC) -c $(CFLAGS) `pkg-config --cflags gtk+-2.0` -o $@ $<
 
 gtktimezonetest: gtktimezonetest.o recurse.o
-	gcc $(LDFLAGS) -lgtk-x11-2.0 -lgdk-x11-2.0 -o $@ $^
-
+	$(CC) $(LDFLAGS) -lgtk-x11-2.0 -lgdk-x11-2.0 -o $@ $^
 
 buddytimezone.so: buddytimezone.o $(PRIVATE_TZLIB_OBJS) recurse.o
-	gcc -shared $(LDFLAGS) -o $@ $^
+	$(CC) -shared $(LDFLAGS) -o $@ $^
 
 buddyedit.so: buddyedit.o
-	gcc -shared $(LDFLAGS) -o $@ $^
+	$(CC) -shared $(LDFLAGS) -o $@ $^
 
 buddynotes.so: buddynotes.o
-	gcc -shared $(LDFLAGS) -o $@ $^
+	$(CC) -shared $(LDFLAGS) -o $@ $^
 
 buddylang.o: buddylang.c
-	gcc -c $(CFLAGS) `pkg-config --cflags gtkspell-2.0` -o $@ $<
+	$(CC) -c $(CFLAGS) `pkg-config --cflags gtkspell-2.0` -o $@ $<
 buddylang.so: buddylang.o
-	gcc -shared $(LDFLAGS) -lgtkspell -laspell -o $@ $^
+	$(CC) -shared $(LDFLAGS) -lgtkspell -laspell -o $@ $^
 
 clean:
-	rm -f *.o *.so
+	rm -f *.o $(LIB_TARGETS) $(EXE_TARGETS)
 
 install: all
 	install -m 755 -d $(HOME)/.gaim/plugins

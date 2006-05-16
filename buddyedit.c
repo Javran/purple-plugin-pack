@@ -198,7 +198,7 @@ buddy_menu_cb(GaimBlistNode * node, GList ** menu, void *data)
 #if GAIM_MAJOR_VERSION < 2
     action = gaim_blist_node_action_new("Edit...", buddy_edit_cb, NULL);
 #else
-    action = gaim_menu_action_new("Edit...", buddy_edit_cb, NULL, NULL);
+    action = gaim_menu_action_new("Edit...", GAIM_CALLBACK(buddy_edit_cb), NULL, NULL);
 #endif
     *menu = g_list_append(*menu, action);
 }

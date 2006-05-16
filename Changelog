@@ -1,7 +1,13 @@
-version 0.3
+version 0.4pre1 (7 Apr 2006)
+	* Various cleanups (rlaager)
+	* Fix so time only displays when different from system time
+	* Attach copyright notices and clarify GPLv2+
+	* Makefile cleanups (rlaager)
+
+version 0.3 (6 Apr 2006)
 	* Now have editing for all node types, but Chat is a bit lame so far
 	* Have made gtkwidget to will be successor to huge list box for
-	  timezone, now just need to add it somehow.
+	  timezones, now just need to add it somehow.
 	* Groups can now have default timezones and languages.
 	* You can now select Disabled as well as Default, if you don't want
 	  to display and spellcheck anything ever.
