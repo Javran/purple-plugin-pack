@@ -1,11 +1,27 @@
 /*************************************************************************
  * Buddy Edit Module
- * by Martijn van Oosterhout <kleptog@svana.org> (C) April 2006
- * Licenced under the GNU General Public Licence version 2.
  *
  * A Gaim plugin that adds an edit to to buddies allowing you to change
  * various details you can't normally change. It also provides a mechanism
  * for subsequent plugins to add themselves to that dialog.
+ *
+ * by Martijn van Oosterhout <kleptog@svana.org> (C) April 2006
+ * Some code copyright (C) 2006, Richard Laager <rlaager@users.sf.net>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
  *************************************************************************/
 
 #define GAIM_PLUGINS
