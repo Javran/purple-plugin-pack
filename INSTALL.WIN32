@@ -1,0 +1,41 @@
+Install
+=======
+
+To install the Gaim Plugin Pack, simply extract the contents of this zip file
+to your gaim install directory, which is C:\Program Files\Gaim by
+default.
+
+To Compile
+==========
+
+You need a complete Gaim build environment set up, and Gaim already compiled.
+
+Then extract the Gaim Plugin Pack source into:
+
+  gaim-source-tree/plugins/
+
+gaim-source being what ever path you extracted the gaim source tree to.
+
+For example, if your gaim source tree is in /home/user/gaim-VERSION
+you want to "cd" over to /home/user/gaim-VERSION/plugins/ and type:
+
+  tar zxvf gaim-plugin-pack-VERSION.tar.gz
+
+Then cd into the source dir
+
+  cd gaim-plugin-pack
+
+Followed by
+
+  make -f Makefile.mingw
+  make -f Makefile.mingw install
+
+When it's done building copy
+
+  win32-install-dir/plugins/*.dll
+
+to your gaim install dir, (Keeping the already defined tree structure of
+course)
+
+And you should be good to go.  Restart gaim and load 'em up.
+

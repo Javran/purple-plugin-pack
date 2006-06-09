@@ -1,0 +1,76 @@
+#
+# gaim_major_ver and gaim_minor_ver should be defined to match the minimum
+# Gaim API version _required_ to build Plugin Pack
+# Due to the way Gaim checks plugin versions, we need to also ensure that
+# the correct minimum version of Gaim is Require:'d based on what version of
+# the Gaim headers we actually build with.
+#
+
+%define gaim_major_ver 2
+%define gaim_minor_ver 0
+%define gaim_next_major_ver %(echo $((%{gaim_major_ver}+1)))
+%define gaim_build_minor_ver %(pkg-config --modversion gaim | awk -F. '{ print $2 }')
+
+Summary:    Plugin Pack for Gaim
+Name:       @PACKAGE@
+Version:    @VERSION@
+
+Release:    0%{?gaimdist:.%{gaimdist}}
+License:    GPL
+Group:      Applications/Internet
+
+URL:        http://www.guifications.org/
+Source0:    %{name}-%{version}.tar.gz
+BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
+BuildRequires: pkgconfig, libtool, gettext
+BuildRequires: gaim-devel >= 1:%{gaim_major_ver}.%{gaim_minor_ver}, gaim-devel < 1:%{gaim_next_major_ver}
+%if "%{_vendor}" == "MandrakeSoft" || "%{_vendor}" == "Mandrakesoft"
+BuildRequires: libgtk+2.0_0-devel
+%else
+BuildRequires: gtk2-devel
+%endif
+Requires: gaim >= 1:%{gaim_major_ver}.%{gaim_build_minor_ver}, gaim < 1:%{gaim_next_major_ver}
+
+%description
+All the other plugins
+
+%prep
+%setup -q
+
+%build
+%configure
+make %{?_smp_mflags}
+
+%install
+rm -rf $RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT
+
+strip $RPM_BUILD_ROOT%{_libdir}/gaim/*.so || :
+rm -f $RPM_BUILD_ROOT%{_libdir}/gaim/*.la $RPM_BUILD_ROOT%{_libdir}/gaim/*.a
+%find_lang %{name}
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files -f %{name}.lang
+%defattr(-,root,root,-)
+%doc AUTHORS ChangeLog COPYING README
+%{_datadir}/locale/*/*/*
+%{_libdir}/gaim/*.so
+
+%changelog
+* Sun Nov 11 2005 Peter Lawler <bleeter from users.sf.net>
+- Added locale to %files
+- Enabled %find_lang
+* Thu Nov 03 2005 Stu Tomlinson <stu@nosnilmot.com>
+- Fix it again
+
+* Wed Nov 02 2005 Peter Lawler <bleeter@users.sf.net>
+- Fixed up the Mandrivel .so rename
+
+* Tue Nov 01 2005 Stu Tomlinson <stu@nosnilmot.com>
+- Fix it
+
+* Tue Nov 01 2005 Peter Lawler <bleeter@users.sf.net>
+- Initial Spec File for Plugin Pack

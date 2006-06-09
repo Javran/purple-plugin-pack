@@ -1,0 +1,5 @@
+I'm not really sure if any of these are necessary, or even a good idea, but,
+here goes:
+	* Use pre-processor macros to template stuff?
+	* Make it possible to compile outside plugin-pack, maybe?
+

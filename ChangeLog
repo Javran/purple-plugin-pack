@@ -1,0 +1,33 @@
+Version 1.0:
+	Added adium_xml_logger plugin - not yet functional
+	Added autoaccept plugin
+	Added autoreply plugin
+	Added bash plugin
+	Added bit plugin - DANGEROUS!!!
+	Added blistops plugin
+	Added buddynote plugin
+	Added buzzer plugin - not yet compatible with Gaim 2.0.0Beta1 or newer
+	Added dice plugin
+	Added eight_ball plugin
+	Added flip plugin
+	Added gRIM plugin
+	Added gaim-schedule
+	Added gaim-xchat plugin
+	Added groupmsg plugin
+	Added irssidate plugin
+	Added lastseen plugin
+	Added listhandler
+	Added markerline plugin
+	Added mystatusbox plugin
+	Added newline plugin
+	Added nicksaid plugin
+	Added offlinemsg plugin
+	Added oldlogger plugin
+	Added sepandtab plugin
+	Added showoffline plugin
+	Added simfix plugin
+	Added sslinfo plugin
+	Added stocker plugin - not yet functional
+	Added template plugins
+	Added talkfilters plugin
+
