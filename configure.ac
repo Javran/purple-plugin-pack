@@ -1,4 +1,4 @@
-AC_INIT([gaim-plugin_pack], [1.0cvs], [guifications-devel@lists.sourceforge.net])
+AC_INIT([gaim-plugin_pack], [1.0svn], [guifications-devel@lists.sourceforge.net])
 AC_CANONICAL_SYSTEM
 AM_CONFIG_HEADER(pre_config.h)
 
@@ -25,7 +25,7 @@ LIBTOOL="$LIBTOOL --silent"
 dnl #######################################################################
 dnl # I'm lazy and figured config.h is the best place for this ;)
 dnl #######################################################################
-AC_DEFINE_UNQUOTED(GPP_WEBSITE, "http://guifications.sourceforge.net/PluginPack", [Plugin Pack Website]) 
+AC_DEFINE_UNQUOTED(GPP_WEBSITE, "http://gaim.guifications.org/trac", [Plugin Pack Website]) 
 
 dnl #######################################################################
 dnl # Our header
