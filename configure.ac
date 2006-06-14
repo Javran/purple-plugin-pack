@@ -174,6 +174,7 @@ AC_OUTPUT([
 	groupmsg/Makefile
 	gRIM/Makefile
 	irssidate/Makefile
+	lastlog/Makefile
 	lastseen/Makefile
 	listhandler/Makefile
 	offlinemsg/Makefile
