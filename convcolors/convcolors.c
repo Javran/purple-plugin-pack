@@ -41,6 +41,7 @@
 
 #include <conversation.h>
 #include <gtkconv.h>
+#include <gtkutils.h>
 
 /* Pack/Local headers */
 #include "../common/i18n.h"
@@ -74,6 +75,20 @@ enum
 	FONT_UNDERLINE	= 1 << 2
 };
 
+struct
+{
+	GaimMessageFlags flag;
+	char *prefix;
+	const char *text;
+} formats[] = 
+{
+	{GAIM_MESSAGE_ERROR, PREF_ERROR, N_("Error Messages")},
+	{GAIM_MESSAGE_NICK, PREF_NICK, N_("Highlighted Messages")},
+	{GAIM_MESSAGE_SYSTEM, PREF_SYSTEM, N_("System Messages")},
+	{GAIM_MESSAGE_SEND, PREF_SEND, N_("Sent Messages")},
+	{GAIM_MESSAGE_RECV, PREF_RECV, N_("Received Messages")},
+	{0, NULL, NULL}
+};
 #if 0
 typedef struct
 {
@@ -90,21 +105,8 @@ static gboolean
 displaying_msg(GaimAccount *account, const char *who, char **displaying,
 				GaimConversation *conv, GaimMessageFlags flags)
 {
-	struct
-	{
-		GaimMessageFlags flag;
-		const char *prefix;
-	} formats[] = 
-	{
-		{GAIM_MESSAGE_ERROR, PREF_ERROR},
-		{GAIM_MESSAGE_NICK, PREF_NICK},
-		{GAIM_MESSAGE_SYSTEM, PREF_SYSTEM},
-		{GAIM_MESSAGE_SEND, PREF_SEND},
-		{GAIM_MESSAGE_RECV, PREF_RECV},
-		{0, NULL}
-	};
 	int i;
-	char *tmp;
+	char tmp[128], *t;
 	gboolean bold, italic, underline;
 	int f;
 	const char *color;
@@ -116,35 +118,33 @@ displaying_msg(GaimAccount *account, const char *who, char **displaying,
 	if (!formats[i].prefix)
 		return FALSE;
 
-	tmp = g_strdup_printf("%s/color", formats[i].prefix);
+	g_snprintf(tmp, sizeof(tmp), "%s/color", formats[i].prefix);
 	color = gaim_prefs_get_string(tmp);
-	g_free(tmp);
 
-	tmp = g_strdup_printf("%s/format", formats[i].prefix);
+	g_snprintf(tmp, sizeof(tmp), "%s/format", formats[i].prefix);
 	f = gaim_prefs_get_int(tmp);
-	g_free(tmp);
 	bold = (f & FONT_BOLD);
 	italic = (f & FONT_ITALIC);
 	underline = (f & FONT_UNDERLINE);
 
 	if (color && *color)
 	{
-		tmp = *displaying;
-		*displaying = g_strdup_printf("<FONT COLOR=\"%s\">%s</FONT>", color, tmp);
-		g_free(tmp);
+		t = *displaying;
+		*displaying = g_strdup_printf("<FONT COLOR=\"%s\">%s</FONT>", color, t);
+		g_free(t);
 	}
 
-	tmp = *displaying;
+	t = *displaying;
 	*displaying = g_strdup_printf("%s%s%s%s%s%s%s",
 						bold ? "<B>" : "</B>",
 						italic ? "<I>" : "</I>",
 						underline ? "<U>" : "</U>",
-						tmp, 
+						t, 
 						bold ? "</B>" : "<B>",
 						italic ? "</I>" : "<I>",
 						underline ? "</U>" : "<U>"
 			);
-	g_free(tmp);
+	g_free(t);
 
 	return FALSE;
 }
@@ -167,33 +167,172 @@ plugin_unload(GaimPlugin *plugin)
 	return TRUE;
 }
 
+/* Ripped from GaimRC */
+static void
+color_response(GtkDialog *color_dialog, gint response, const char *data)
+{
+	if (response == GTK_RESPONSE_OK)
+	{
+		GtkWidget *colorsel = GTK_COLOR_SELECTION_DIALOG(color_dialog)->colorsel;
+		GdkColor color;
+		char colorstr[8];
+		char tmp[128];
+
+		gtk_color_selection_get_current_color(GTK_COLOR_SELECTION(colorsel), &color);
+
+		g_snprintf(colorstr, sizeof(colorstr), "#%02X%02X%02X",
+		           color.red/256, color.green/256, color.blue/256);
+
+		g_snprintf(tmp, sizeof(tmp), "%s/color", data);
+
+		gaim_prefs_set_string(tmp, colorstr);
+	}
+
+	gtk_widget_destroy(GTK_WIDGET(color_dialog));
+}
+
+static void
+set_color(GtkWidget *widget, const char *data)
+{
+	GtkWidget *color_dialog = NULL;
+	GdkColor color;
+	char title[128];
+	char tmp[128];
+
+	g_snprintf(title, sizeof(title), _("Select Color for %s"), _(data));
+	color_dialog = gtk_color_selection_dialog_new(title);
+	g_signal_connect(G_OBJECT(color_dialog), "response",
+	                 G_CALLBACK(color_response), (gpointer)data);
+
+	g_snprintf(tmp, sizeof(tmp), "%s/color", data);
+	if (gdk_color_parse(gaim_prefs_get_string(tmp), &color))
+	{
+		gtk_color_selection_set_current_color(
+				GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG(color_dialog)->colorsel), &color);
+	}
+
+	gtk_window_present(GTK_WINDOW(color_dialog));
+}
+
+static void
+toggle_something(const char *prefix, int format)
+{
+	int f;
+	char tmp[128];
+	
+	g_snprintf(tmp, sizeof(tmp), "%s/format", prefix);
+	f = gaim_prefs_get_int(tmp);
+	f ^= format;
+	gaim_prefs_set_int(tmp, f);
+}
+		
+static void
+toggle_bold(GtkWidget *widget, gpointer data)
+{
+	toggle_something(data, FONT_BOLD);
+}
+
+static void
+toggle_italic(GtkWidget *widget, gpointer data)
+{
+	toggle_something(data, FONT_ITALIC);
+}
+
+static void
+toggle_underline(GtkWidget *widget, gpointer data)
+{
+	toggle_something(data, FONT_UNDERLINE);
+}
+
+static GtkWidget *
+get_config_frame(GaimPlugin *plugin)
+{
+	GtkWidget *ret;
+	int i;
+
+	ret = gtk_vbox_new(FALSE, GAIM_HIG_CAT_SPACE);
+	gtk_container_set_border_width(GTK_CONTAINER(ret), GAIM_HIG_BORDER);
+
+	for (i = 0; formats[i].prefix; i++)
+	{
+		char tmp[128];
+		int f;
+		GtkWidget *vbox, *hbox, *button;
+		GtkWidget *frame;
+
+		g_snprintf(tmp, sizeof(tmp), "%s/format", formats[i].prefix);
+		f = gaim_prefs_get_int(tmp);
+
+		frame = gaim_gtk_make_frame(ret, _(formats[i].text));
+		vbox = gtk_vbox_new(FALSE, GAIM_HIG_BOX_SPACE);
+		gtk_box_pack_start(GTK_BOX(frame), vbox, FALSE, FALSE, 0);
+
+		hbox = gtk_hbox_new(FALSE, GAIM_HIG_BOX_SPACE);
+		gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+		gtk_box_pack_start(GTK_BOX(hbox), gtk_label_new(_("Color")), FALSE, FALSE, 0);
+
+		button = gaim_pixbuf_button_from_stock("", GTK_STOCK_SELECT_COLOR, GAIM_BUTTON_HORIZONTAL);
+		gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
+		g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(set_color), formats[i].prefix);
+
+		hbox = gtk_hbox_new(FALSE, GAIM_HIG_BOX_SPACE);
+		gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+		
+		button = gtk_check_button_new_with_label(_("Bold"));
+		gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
+		if (f & FONT_BOLD)
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
+		g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(toggle_bold), formats[i].prefix);
+		
+		button = gtk_check_button_new_with_label(_("Italic"));
+		gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
+		if (f & FONT_ITALIC)
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
+		g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(toggle_italic), formats[i].prefix);
+		
+		button = gtk_check_button_new_with_label(_("Underline"));
+		gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
+		if (f & FONT_UNDERLINE)
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
+		g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(toggle_underline), formats[i].prefix);
+	}
+
+	gtk_widget_show_all(ret);
+	return ret;
+}
+
+static GaimGtkPluginUiInfo ui_info = 
+{
+	get_config_frame
+};
+
 static GaimPluginInfo info =
 {
-	GAIM_PLUGIN_MAGIC,			/* Magic				*/
-	GAIM_MAJOR_VERSION,			/* Gaim Major Version	*/
-	GAIM_MINOR_VERSION,			/* Gaim Minor Version	*/
-	GAIM_PLUGIN_STANDARD,		/* plugin type			*/
-	GAIM_GTK_PLUGIN_TYPE,		/* ui requirement		*/
-	0,							/* flags				*/
-	NULL,						/* dependencies			*/
-	GAIM_PRIORITY_DEFAULT,		/* priority				*/
+	GAIM_PLUGIN_MAGIC,            /* Magic              */
+	GAIM_MAJOR_VERSION,           /* Gaim Major Version */
+	GAIM_MINOR_VERSION,           /* Gaim Minor Version */
+	GAIM_PLUGIN_STANDARD,         /* plugin type        */
+	GAIM_GTK_PLUGIN_TYPE,         /* ui requirement     */
+	0,                            /* flags              */
+	NULL,                         /* dependencies       */
+	GAIM_PRIORITY_DEFAULT,        /* priority           */
 
-	PLUGIN_ID,					/* plugin id			*/
-	NULL,						/* name					*/
-	GPP_VERSION,				/* version				*/
-	NULL,						/* summary				*/
-	NULL,						/* description			*/
-	PLUGIN_AUTHOR,				/* author				*/
-	GPP_WEBSITE,				/* website				*/
+	PLUGIN_ID,                    /* plugin id          */
+	NULL,                         /* name               */
+	GPP_VERSION,                  /* version            */
+	NULL,                         /* summary            */
+	NULL,                         /* description        */
+	PLUGIN_AUTHOR,                /* author             */
+	GPP_WEBSITE,                  /* website            */
 
-	plugin_load,				/* load					*/
-	plugin_unload,				/* unload				*/
-	NULL,						/* destroy				*/
+	plugin_load,                  /* load               */
+	plugin_unload,                /* unload             */
+	NULL,                         /* destroy            */
 
-	NULL,						/* ui_info				*/
-	NULL,						/* extra_info			*/
-	NULL,						/* prefs_info			*/
-	NULL						/* actions				*/
+	&ui_info,                     /* ui_info            */
+	NULL,                         /* extra_info         */
+	NULL,                         /* prefs_info         */
+	NULL                          /* actions            */
 };
 
 static void
