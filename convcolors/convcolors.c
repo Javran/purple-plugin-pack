@@ -218,7 +218,7 @@ init_plugin(GaimPlugin *plugin)
 
 	gaim_prefs_add_string(PREF_SEND_C, "#909090");
 	gaim_prefs_add_string(PREF_RECV_C, "#000000");
-	gaim_prefs_add_string(PREF_SYSTEM_C, "#80e080");
+	gaim_prefs_add_string(PREF_SYSTEM_C, "#50a050");
 	gaim_prefs_add_string(PREF_ERROR_C, "#ff0000");
 	gaim_prefs_add_string(PREF_NICK_C, "#0000dd");
 
