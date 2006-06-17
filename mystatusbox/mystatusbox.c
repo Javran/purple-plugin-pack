@@ -84,6 +84,7 @@ account_enabled_cb(GaimAccount *account, gpointer null)
 	if (gaim_account_get_enabled(account, gaim_core_get_ui()))
 	{
 		GtkWidget *box = gtk_gaim_status_box_new_with_account(account);
+		gtk_widget_set_name(box, "gaim_gtkblist_statusbox_account");
 		gtk_box_pack_start(GTK_BOX(gtkblist_statusboxbox), box, FALSE, TRUE, 0);
 		gtk_widget_show(box);
 		gtkblist_statusboxes = g_list_append(gtkblist_statusboxes, box);
