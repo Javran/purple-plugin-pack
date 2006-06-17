@@ -85,7 +85,7 @@ timeout_cb(gpointer data) {
 		if ((get_day(&t) == 1) && (get_month(&t) == 0)) {
 			const gchar *new_year = _("Happy New Year");
 			if(conv->type == GAIM_CONV_TYPE_IM)
-				gaim_conv_im_send(GAIM_CONV_IM(conv), new_year);
+				gaim_conv_im_send_with_flags(GAIM_CONV_IM(conv), new_year, GAIM_MESSAGE_ACTIVE_ONLY);
 			else if(conv->type == GAIM_CONV_TYPE_CHAT)
 				gaim_conv_chat_send(GAIM_CONV_CHAT(conv), new_year);
 		}
