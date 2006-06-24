@@ -62,8 +62,11 @@ imhtml_expose_cb(GtkWidget *widget, GdkEventExpose *event, GaimGtkConversation *
 
 	if ((type == GAIM_CONV_TYPE_CHAT && !gaim_prefs_get_bool(PREF_CHATS)) ||
 			(type == GAIM_CONV_TYPE_IM && !gaim_prefs_get_bool(PREF_IMS)))
-			return FALSE;
-				   
+	{
+		gdk_gc_unref(gc);
+		return FALSE;
+	}
+
 	gtk_text_view_get_visible_rect(GTK_TEXT_VIEW(widget), &visible_rect);
 
 	offset = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget), "markerline"));
@@ -83,7 +86,7 @@ imhtml_expose_cb(GtkWidget *widget, GdkEventExpose *event, GaimGtkConversation *
 
 	gtk_text_view_buffer_to_window_coords(GTK_TEXT_VIEW(widget), GTK_TEXT_WINDOW_TEXT,
 										0, last_y, 0, &y);
-	
+
 	if (y >= event->area.y)
 	{
 		GdkColor red = {0, 0xffff, 0, 0};
