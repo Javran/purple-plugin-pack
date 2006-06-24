@@ -154,7 +154,8 @@ stocker_init(GaimPlugin *plugin) {
 	stocker_info.name = _("Stocker");
 	stocker_info.summary = _("A stock ticker");
 	stocker_info.description =
-		_("Adds a stock ticker to the bottom of the buddy list.");
+		_("Adds a stock ticker similar to the one in the Windows AIM client to"
+			" the bottom of the buddy list.");
 
 	stocker_prefs_init();
 }
