@@ -19,30 +19,56 @@
 
 #if HAVE_CONFIG_H
 # include "../gpp_config.h"
-#endif /* HAVE_CONFIG_H */
+#endif
+
+/* this has to be defined for the plugin to work correctly */
+#define GAIM_PLUGINS
+
+/* Gaim headers */
+#include <conversation.h>
+#include <plugin.h>
+#include <version.h>
 
 static GaimPluginInfo lastlog_info =
 {
-	GAIM_PLUGIN_MAGIC,
-	GAIM_MAJOR_VERSION,                             /**< major version  */
+	GAIM_PLUGIN_MAGIC,		/* abracadabra */
+	GAIM_MAJOR_VERSION,							
 	GAIM_MINOR_VERSION,
-	GAIM_PLUGIN_STANDARD,                           /**< type           */
-	NULL,                                           /**< ui_requirement */
-	0,                                              /**< flags          */
-	NULL,                                           /**< dependencies   */
-	GAIM_PRIORITY_DEFAULT,                          /**< priority       */
-	"core-plugin_pack-lastlog",                     /**< id             */
-	NULL,                                           /**< name           */
-	VERSION,                                        /**< version        */
-	NULL,                                           /**  summary        */
-	NULL,                                           /**  description    */
-	"John Bailey<rekkanoryo@rekkanoryo.org",        /**< author         */
-	GPP_WEBSITE,                                    /**< homepage       */
-	plugin_load,                                    /**< load           */
-	NULL,                                           /**< unload         */
-	NULL,                                           /**< destroy        */
-	NULL,                                           /**< ui_info        */
-    NULL,                                           /**< extra_info     */
-	NULL,                                           /**< prefs_info     */
-	NULL                                            /**< actions        */
+	GAIM_PLUGIN_STANDARD,						
+	NULL,
+	0,
+	NULL,
+	GAIM_PRIORITY_DEFAULT,
+	"core-plugin_pack-lastlog",
+	NULL,
+	VERSION,
+	NULL,
+	NULL,
+	"John Bailey <rekkanoryo@rekkanoryo.org",
+	GPP_WEBSITE,
+	plugin_load,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
+
+static void
+lastlog_init(GaimPlugin *plugin)
+{
+#ifdef ENABLE_NLS
+	bindtextdomain(GPP_PACKAGE, LOCALEDIR);
+    bind_textdomain_codeset(GPP_PACKAGE, "UTF-8");
+#endif /* ENABLE_NLS */
+
+	lastlog_info.name = _("Lastlog");
+	lastlog_info.summary = _("A history searching plugin");
+	lastlog_info.description =
+		_("Adds the /lastlog command to allow searching through the history in"
+			"a conversation, much like the IRC client irssi has.");
+}
+
+GAIM_INIT_PLUGIN(lastlog, lastlog_init, lastlog_info)
+
