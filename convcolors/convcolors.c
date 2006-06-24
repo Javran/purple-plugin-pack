@@ -41,12 +41,16 @@
 
 #include <conversation.h>
 #include <gtkconv.h>
+#include <gtkprefs.h>
 #include <gtkutils.h>
 
 /* Pack/Local headers */
 #include "../common/i18n.h"
 
 #define	PREF_PREFIX	"/plugins/gtk/" PLUGIN_ID
+#define PREF_IGNORE	PREF_PREFIX "/ignore_incoming"
+#define PREF_CHATS	PREF_PREFIX "/chats"
+#define PREF_IMS	PREF_PREFIX "/ims"
 
 #define	PREF_SEND	PREF_PREFIX "/send"
 #define	PREF_SEND_C	PREF_SEND "/color"
@@ -89,17 +93,6 @@ struct
 	{GAIM_MESSAGE_RECV, PREF_RECV, N_("Received Messages")},
 	{0, NULL, NULL}
 };
-#if 0
-typedef struct
-{
-	int bold;
-	int italic;
-	int underline;
-	char color[16];
-} GaimMessageFormat;
-#endif
-
-/* XXX: Add preference stuff to allow customization */
 
 static gboolean
 displaying_msg(GaimAccount *account, const char *who, char **displaying,
@@ -118,6 +111,12 @@ displaying_msg(GaimAccount *account, const char *who, char **displaying,
 	if (!formats[i].prefix)
 		return FALSE;
 
+	if ((gaim_conversation_get_type(conv) == GAIM_CONV_TYPE_IM &&
+			!gaim_prefs_get_bool(PREF_IMS)) ||
+			(gaim_conversation_get_type(conv) == GAIM_CONV_TYPE_CHAT &&
+			!gaim_prefs_get_bool(PREF_CHATS)))
+		return FALSE;
+
 	g_snprintf(tmp, sizeof(tmp), "%s/color", formats[i].prefix);
 	color = gaim_prefs_get_string(tmp);
 
@@ -126,6 +125,13 @@ displaying_msg(GaimAccount *account, const char *who, char **displaying,
 	bold = (f & FONT_BOLD);
 	italic = (f & FONT_ITALIC);
 	underline = (f & FONT_UNDERLINE);
+
+	if (gaim_prefs_get_bool(PREF_IGNORE))
+	{
+		t = *displaying;
+		*displaying = gaim_markup_strip_html(t);
+		g_free(t);
+	}
 
 	if (color && *color)
 	{
@@ -248,6 +254,7 @@ static GtkWidget *
 get_config_frame(GaimPlugin *plugin)
 {
 	GtkWidget *ret;
+	GtkWidget *frame;
 	int i;
 
 	ret = gtk_vbox_new(FALSE, GAIM_HIG_CAT_SPACE);
@@ -258,7 +265,6 @@ get_config_frame(GaimPlugin *plugin)
 		char tmp[128];
 		int f;
 		GtkWidget *vbox, *hbox, *button;
-		GtkWidget *frame;
 
 		g_snprintf(tmp, sizeof(tmp), "%s/format", formats[i].prefix);
 		f = gaim_prefs_get_int(tmp);
@@ -296,6 +302,11 @@ get_config_frame(GaimPlugin *plugin)
 			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
 		g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(toggle_underline), formats[i].prefix);
 	}
+
+	frame = gaim_gtk_make_frame(ret, _("General"));
+	gaim_gtk_prefs_checkbox(_("Ignore incoming format"), PREF_IGNORE, frame);
+	gaim_gtk_prefs_checkbox(_("Apply in Chats"), PREF_CHATS, frame);
+	gaim_gtk_prefs_checkbox(_("Apply in IMs"), PREF_IMS, frame);
 
 	gtk_widget_show_all(ret);
 	return ret;
@@ -348,6 +359,10 @@ init_plugin(GaimPlugin *plugin)
 	info.description = _(PLUGIN_DESCRIPTION);
 
 	gaim_prefs_add_none(PREF_PREFIX);
+
+	gaim_prefs_add_bool(PREF_IGNORE, TRUE);
+	gaim_prefs_add_bool(PREF_CHATS, TRUE);
+	gaim_prefs_add_bool(PREF_IMS, TRUE);
 
 	gaim_prefs_add_none(PREF_SEND);
 	gaim_prefs_add_none(PREF_RECV);
