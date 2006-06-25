@@ -540,7 +540,7 @@ get_plugin_pref_frame(GaimPlugin *plugin)
 	gaim_plugin_pref_frame_add(frame, pref);
 
 	pref = gaim_plugin_pref_new_with_name_and_label(PREF_HLWORDS,
-					_("_Words to highlight on\n(seperate the words with a blank-space)"));
+					_("_Words to highlight on\n(seperate the words with a blank space)"));
 	gaim_plugin_pref_frame_add(frame, pref);
 
 	pref = gaim_plugin_pref_new_with_label(_("Number of displayed characters"));
