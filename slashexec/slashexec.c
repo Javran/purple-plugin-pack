@@ -314,8 +314,14 @@ se_load(GaimPlugin *plugin) {
 	shell = g_string_new("cmd.exe");
 #else
 	pw = getpwuid(getuid());
-	shell =
-		g_string_new(pw ? pw->pw_shell ? pw->pw_shell : "/bin/sh" : "/bin/sh");
+	
+	if(pw)
+		if(pw->shell)
+			shell = g_string_new(pw->shell);
+		else
+			shell = g_string_new("/bin/sh");
+	else
+		shell = g_string_new("/bin/sh");
 #endif /* _WIN32 */
 
 	return TRUE;
