@@ -26,6 +26,8 @@
 # include "../gpp_config.h"
 #endif
 
+#define GAIM_PLUGINS
+
 #include <cmds.h>
 #include <conversation.h>
 #include <debug.h>
@@ -343,4 +345,4 @@ static GaimPluginInfo plonkers_info = {
 	NULL											/* actions info	*/
 };
 
-GAIM_INIT_PLUGIN(Plonkers, init_plugin, plonkers_info)
+GAIM_INIT_PLUGIN(plonkers, init_plugin, plonkers_info)
