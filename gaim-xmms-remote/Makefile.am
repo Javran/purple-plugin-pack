@@ -1,5 +1,7 @@
 EXTRA_DIST = .build .plugin
 
+SUBDIRS = pixmaps
+
 xmmsremotedir = $(GAIM_LIBDIR)/gaim
 
 xmmsremote_la_LDFLAGS = -module -avoid-version $(XMMS_LIBS)
