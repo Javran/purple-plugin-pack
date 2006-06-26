@@ -55,7 +55,7 @@ cmd_func(GaimConversation *conv, const gchar *cmd, gchar **args,
 		gchar *error, void *data)
 {
 	GString *msgstr = NULL;
-	guint32 quotes = 0, quoteid;
+	guint32 quotes = 0, quoteid = 0;
 	
 	msgstr = g_string_new("");
 
