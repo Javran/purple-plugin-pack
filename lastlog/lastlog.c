@@ -21,6 +21,9 @@
 # include "../gpp_config.h"
 #endif
 
+#include "../common/i18n.h"
+#include "../common/gpp_compat.h" /* probably unnecessary here */
+
 /* this has to be defined for the plugin to work correctly */
 #define GAIM_PLUGINS
 
@@ -34,6 +37,13 @@
 
 static GaimCmdId lastlog_cmd;
 
+static GaimCmdRet
+lastlog_cmd_func(GaimConversation *conv, const gchar *cmd, gchar **args,
+		gchar *error, void *data)
+{
+	return GAIM_CMD_RET_FAILED;
+}
+
 static gboolean
 lastlog_load(GaimPlugin *plugin)
 {
@@ -43,7 +53,20 @@ lastlog_load(GaimPlugin *plugin)
 			"conversation's history that contain the text specified in "
 			"&lt;text&gt;.\n");
 
-	lastlog_cmd = gaim_cmd_register
+	lastlog_cmd = gaim_cmd_register("lastlog", "s", GAIM_CMD_P_PLUGIN,
+			GAIM_CMD_FLAG_IM | GAIM_CMD_FLAG_CHAT, NULL,
+			GAIM_CMD_FUNC(lastlog_cmd_func), help, NULL);
+
+	return TRUE;
+}
+
+static gboolean
+lastlog_unload(GaimPlugin *plugin)
+{
+	gaim_cmd_unregister(lastlog_cmd);
+
+	return TRUE;
+}
 
 static GaimPluginInfo lastlog_info =
 {
