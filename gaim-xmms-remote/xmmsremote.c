@@ -950,13 +950,9 @@ static void
 gxr_add_to_stock(const gchar *file_name, const gchar *stock_name) {
 	GtkIconSet *icon_set;
 	GdkPixbuf *pixbuf;
-	GError *e = NULL;
 	gchar *file = gxr_file_name(file_name);
 
-	gaim_debug_info("xmms-remote", "Filename is: %s\n",
-			file ? file : "NULL");
-
-	pixbuf = gdk_pixbuf_new_from_file(file, &e);
+	pixbuf = gdk_pixbuf_new_from_file(file, NULL);
 	g_free(file);
 
 	icon_set = gtk_icon_set_new_from_pixbuf(pixbuf);
