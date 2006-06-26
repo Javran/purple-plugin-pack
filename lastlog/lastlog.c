@@ -25,9 +25,25 @@
 #define GAIM_PLUGINS
 
 /* Gaim headers */
+#include <cmds.h>
 #include <conversation.h>
+#include <debug.h>
 #include <plugin.h>
+#include <util.h>
 #include <version.h>
+
+static GaimCmdId lastlog_cmd;
+
+static gboolean
+lastlog_load(GaimPlugin *plugin)
+{
+	const gchar *help;
+
+	help = _("lastlog &lt;text&gt;, shows messages in the current "
+			"conversation's history that contain the text specified in "
+			"&lt;text&gt;.\n");
+
+	lastlog_cmd = gaim_cmd_register
 
 static GaimPluginInfo lastlog_info =
 {
@@ -41,13 +57,13 @@ static GaimPluginInfo lastlog_info =
 	GAIM_PRIORITY_DEFAULT,
 	"core-plugin_pack-lastlog",
 	NULL,
-	VERSION,
+	GPP_VERSION,
 	NULL,
 	NULL,
 	"John Bailey <rekkanoryo@rekkanoryo.org",
 	GPP_WEBSITE,
-	plugin_load,
-	NULL,
+	lastlog_load,
+	lastlog_unload,
 	NULL,
 	NULL,
 	NULL,

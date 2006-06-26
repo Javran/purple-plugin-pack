@@ -172,6 +172,7 @@ AC_OUTPUT([
 	gaim-schedule/Makefile
 	gaim-xchat/Makefile
 	gaim-xmms-remote/Makefile
+	gaim-xmms-remote/pixmaps/Makefile
 	groupmsg/Makefile
 	gRIM/Makefile
 	irssidate/Makefile

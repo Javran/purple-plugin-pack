@@ -932,8 +932,8 @@ gxr_get_config_frame(GaimPlugin *plugin) {
  ******************************************************************************/
 static gchar *
 gxr_file_name(const gchar *file_name) {
-	return g_build_filename("/usr/local/share", "pixmaps", "gaim", "gxr", file_name,
-							NULL);
+	return g_build_filename(DATADIR, "pixmaps", "gaim", "plugin_pack",
+			"gaim-xmms-remote", file_name, NULL);
 }
 
 static const GtkStockItem stock_items[] =
