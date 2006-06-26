@@ -933,7 +933,7 @@ gxr_get_config_frame(GaimPlugin *plugin) {
 static gchar *
 gxr_file_name(const gchar *file_name) {
 	return g_build_filename(DATADIR, "pixmaps", "gaim", "plugin_pack",
-			"gaim-xmms-remote", file_name, NULL);
+			"xmmsremote", file_name, NULL);
 }
 
 static const GtkStockItem stock_items[] =
@@ -950,9 +950,13 @@ static void
 gxr_add_to_stock(const gchar *file_name, const gchar *stock_name) {
 	GtkIconSet *icon_set;
 	GdkPixbuf *pixbuf;
+	GError *e = NULL;
 	gchar *file = gxr_file_name(file_name);
 
-	pixbuf = gdk_pixbuf_new_from_file(file, NULL);
+	gaim_debug_info("xmms-remote", "Filename is: %s\n",
+			file ? file : "NULL");
+
+	pixbuf = gdk_pixbuf_new_from_file(file, &e);
 	g_free(file);
 
 	icon_set = gtk_icon_set_new_from_pixbuf(pixbuf);
