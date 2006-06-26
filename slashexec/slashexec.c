@@ -316,8 +316,8 @@ se_load(GaimPlugin *plugin) {
 	pw = getpwuid(getuid());
 	
 	if(pw)
-		if(pw->shell)
-			shell = g_string_new(pw->shell);
+		if(pw->pw_shell)
+			shell = g_string_new(pw->pw_shell);
 		else
 			shell = g_string_new("/bin/sh");
 	else
