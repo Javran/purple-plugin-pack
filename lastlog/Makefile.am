@@ -2,10 +2,8 @@ EXTRA_DIST = .build .plugin
 
 lastlogdir = $(GAIM_LIBDIR)/gaim
 
-lastlog_la_LDFLAGS = -module -avoid-version $(XMMS_LIBS)
+lastlog_la_LDFLAGS = -module -avoid-version 
 
-if PLUGINS
-if USE_XMMS
 lastlog_LTLIBRARIES = lastlog.la
 
 lastlog_la_LIBADD = \
@@ -13,8 +11,6 @@ lastlog_la_LIBADD = \
 
 lastlog_la_SOURCES = \
 	lastlog.c
-endif
-endif
 
 AM_CPPFLAGS = \
 	-DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
@@ -23,5 +19,4 @@ AM_CPPFLAGS = \
 	$(GTK_CFLAGS) \
 	$(GLIB_CFLAGS) \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS) \
-	$(XMMS_CFLAGS)
+	$(GAIM_CFLAGS)
