@@ -1,4 +1,7 @@
-EXTRA_DIST = .build .plugin
+EXTRA_DIST = \
+	.build \
+	.plugin \
+	chronic.wav
 
 chronicdir=$(GAIM_LIBDIR)/gaim
 
