@@ -36,6 +36,7 @@
 #define PREF_TIMESTAMP		PREF_PREFIX "/timestamp"
 #define PREF_DATESTAMP		PREF_PREFIX "/datestamp"
 #define PREF_SHOWWHO		PREF_PREFIX "/showwho"
+#define PREF_SHOWALL		PREF_PREFIX "/showall"
 
 /* System headers */
 #include <string.h>
@@ -48,6 +49,7 @@
 #include <version.h>
 
 #include <conversation.h>
+#include <notify.h>
 
 #include <gtkconv.h>
 #include <gtkimhtml.h>
@@ -80,6 +82,7 @@ struct _NickSaid
 {
 	int offset;
 	char *who;
+	char *what;
 };
 
 /* <lift src="gaim/src/util.c"> */
@@ -213,11 +216,30 @@ clear_list(GtkWidget *w, GaimGtkConversation *gtkconv)
 	{
 		NickSaid *said = list->data;
 		g_free(said->who);
+		g_free(said->what);
 		g_free(said);
 		list = list->next;
 	}
 
 	g_object_set_data(G_OBJECT(gtkconv->imhtml), "nicksaid:list", NULL);
+}
+
+static void
+show_all(GtkWidget *w, GaimGtkConversation *gtkconv)
+{
+	GList *list = g_object_get_data(G_OBJECT(gtkconv->imhtml), "nicksaid:list");
+	GString *str = g_string_new(NULL);
+
+	while (list)
+	{
+		NickSaid *said = list->data;
+		g_string_append_printf(str, "%s\n", said->what);
+		list = list->next;
+	}
+
+	gaim_notify_formatted(gtkconv, _("Nicksaid"), _("List of highlighted messages:"),
+			NULL, str->str, NULL, NULL);
+	g_string_free(str, TRUE);
 }
 
 static gboolean
@@ -281,6 +303,14 @@ generate_popup(GtkWidget *w, GdkEventButton *event, GaimGtkWindow *win)
 		gtk_widget_show(item);
 		gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
 		g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(clear_list), gtkconv);
+
+		item = gtk_menu_item_new_with_label(_("Show All"));
+		gtk_widget_show(item);
+		gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
+		if (gaim_prefs_get_bool(PREF_SHOWALL))
+			g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(show_all), gtkconv);
+		else
+			gtk_widget_set_sensitive(item, FALSE);
 	}
 
 	gtk_widget_show_all(menu);
@@ -330,22 +360,30 @@ displaying_msg_cb(GaimAccount *account, const char *name, char **buffer,
 	}
 
 	if (datestamp && timestamp) {
-		prefix = g_strdup_printf("(%s) %s",ns_date_full(), who);
+		prefix = g_strdup_printf("(%s) ", ns_date_full());
 	} else if (datestamp && !timestamp) {
-		prefix = g_strdup_printf("(%s) %s",ns_date(), who);
+		prefix = g_strdup_printf("(%s) ", ns_date());
 	} else if (!datestamp && timestamp) {
-		prefix = g_strdup_printf("(%s) %s",ns_time(), who);
+		prefix = g_strdup_printf("(%s) ", ns_time());
 	}
 
 	said = g_new0(NickSaid, 1);
 	said->offset = pos;
 
 	if (prefix != NULL) {
-		said->who = prefix;
+		said->who = g_strdup_printf("%s%s", prefix, who);
 		g_free(who);
 	} else {
 		said->who = who;
 	}
+
+	if (gaim_prefs_get_bool(PREF_SHOWALL))
+	{
+		said->what = g_strdup_printf("%s<b>%s: </b>%s",
+				prefix ? prefix : "", name, *buffer);
+	}
+
+	g_free(prefix);
 
 	list = g_list_prepend(list, said);
 	g_object_set_data(G_OBJECT(imhtml), "nicksaid:list", list);
@@ -563,6 +601,10 @@ get_plugin_pref_frame(GaimPlugin *plugin)
 					_("_Display _datestamps in the nicksaid menu"));
 	gaim_plugin_pref_frame_add(frame, pref);
 
+	pref = gaim_plugin_pref_new_with_name_and_label(PREF_SHOWALL,
+					_("Allow displaying in a separate dialog"));
+	gaim_plugin_pref_frame_add(frame, pref);
+
 	return frame;
 }
 
@@ -617,6 +659,7 @@ init_plugin(GaimPlugin *plugin)
 	gaim_prefs_add_bool(PREF_TIMESTAMP, TRUE);
 	gaim_prefs_add_bool(PREF_DATESTAMP, FALSE);
 	gaim_prefs_add_bool(PREF_SHOWWHO, TRUE);
+	gaim_prefs_add_bool(PREF_SHOWALL, FALSE);
 }
 
 GAIM_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)
