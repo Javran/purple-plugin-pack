@@ -1,4 +1,7 @@
-EXTRA_DIST = .plugin
+EXTRA_DIST = \
+	.build \
+	.plugin \
+	schedule.h
 
 gaim_scheduledir = $(GAIM_LIBDIR)/gaim
 
