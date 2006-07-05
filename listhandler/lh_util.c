@@ -34,7 +34,7 @@ lh_util_add_buddy(const gchar *group, GaimGroup *gaim_group,
 	 * easy to do. */
 	GaimBuddy *gaim_buddy = gaim_buddy_new(account, buddy, alias);
 	gaim_blist_add_buddy(gaim_buddy, NULL, gaim_group, NULL);
-	gpp_add_buddy(account, gaim_buddy); /* this is evil */
+	gaim_account_add_buddy(account, gaim_buddy); /* this is evil */
 
 	gaim_debug_info("listhandler: import",
 			"group: %s\tbuddy: %s\talias: %s\thas been added to the list\n",

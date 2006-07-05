@@ -43,7 +43,6 @@
 
 /* Pack/Local headers */
 #include "../common/i18n.h"
-#include "../common/gpp_compat.h"
 
 static guint timeout_id = 0;
 static gint lastday = 0;

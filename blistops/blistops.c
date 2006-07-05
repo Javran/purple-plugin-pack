@@ -33,7 +33,6 @@
 #include <version.h>
 
 #include "../common/i18n.h"
-#include "../common/gpp_compat.h"
 
 #define PREF_MY "/plugins/gtk/amc_grim"
 #define PREF_ROOT "/plugins/gtk/amc_grim/blistops"
@@ -78,8 +77,8 @@ plugin_load(GaimPlugin *plugin) {
 	gaim_signal_connect(gaim_gtk_blist_get_handle(), "gtkblist-created", plugin,
 						GAIM_CALLBACK(gtkblist_created_cb), NULL);
 
-	blist_id = gpp_prefs_connect_callback(plugin, PREF_LIST, pref_cb, NULL);
-	menu_id = gpp_prefs_connect_callback(plugin, PREF_MENU, pref_cb, NULL);
+	blist_id = gaim_prefs_connect_callback(plugin, PREF_LIST, pref_cb, NULL);
+	menu_id = gaim_prefs_connect_callback(plugin, PREF_MENU, pref_cb, NULL);
 
 	return TRUE;
 }

@@ -49,7 +49,6 @@
 #include <version.h>
 
 #include "../common/i18n.h"
-#include "../common/gpp_compat.h"
 
 #define	MAX_LENGTH	1024
 

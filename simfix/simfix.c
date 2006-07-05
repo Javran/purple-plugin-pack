@@ -31,7 +31,6 @@
 #include <version.h>
 
 #include "../common/i18n.h"
-#include "../common/gpp_compat.h"
 
 static gboolean
 receiving_im_msg_cb(GaimAccount *account, char **sender, char **message,

@@ -91,7 +91,7 @@ lh_migrate_target_request_cb(void *ignored, GaimRequestFields *fields)
 	lh_util_add_to_blist(buddies, groups);
 
 	/* add the buddies to the server-side list */
-	gpp_add_buddies(target_account, buddies);
+	gaim_account_add_buddies(target_account, buddies);
 
 	/* now free the lists that were created */
 	g_list_free(buddies);

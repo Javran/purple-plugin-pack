@@ -36,7 +36,6 @@
 #endif
 
 #include "../common/i18n.h"
-#include "../common/gpp_compat.h"
 
 static void
 #if GAIM_VERSION_CHECK(2,0,0)
@@ -47,7 +46,7 @@ conv_placement_sep_ims_tab_chats(GaimConversation *conv) {
 	GaimConversationType type;
 	GaimGtkWindow *win = NULL;
 
-	type = gpp_conversation_get_type(conv);
+	type = gaim_conversation_get_type(conv->active_conv);
 	win = gaim_gtk_conv_window_last_with_type(type);
 
 	if(type == GAIM_CONV_TYPE_IM) {
@@ -73,7 +72,7 @@ conv_placement_sep_chats_tab_ims(GaimConversation *conv) {
 	GaimConversationType type;
 	GaimGtkWindow *win = NULL;
 
-	type = gpp_conversation_get_type(conv);
+	type = gaim_conversation_get_type(conv->active_conv);
 	win = gaim_gtk_conv_window_last_with_type(type);
 
 	if(type == GAIM_CONV_TYPE_CHAT) {

@@ -30,7 +30,6 @@
 #include <version.h>
 
 #include "../common/i18n.h"
-#include "../common/gpp_compat.h"
 
 static void
 dont_do_it_cb(GaimBlistNode *node, const char *note)

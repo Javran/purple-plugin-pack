@@ -30,7 +30,6 @@
 #include <version.h>
 
 #include "../common/i18n.h"
-#include "../common/gpp_compat.h"
 
 static void
 showoffline_cb(GaimBlistNode *node, gpointer data)

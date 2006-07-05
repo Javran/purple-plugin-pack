@@ -41,7 +41,6 @@
 #include <xmlnode.h>
 
 #include "../common/i18n.h"
-#include "../common/gpp_compat.h" /* probably unnecessary here for now */
 
 #include "lh_util.h"
 

@@ -34,7 +34,6 @@
 #include <version.h>
 
 #include "../common/i18n.h"
-#include "../common/gpp_compat.h"
 
 static GaimCmdId dice_cmd_id = 0;
 

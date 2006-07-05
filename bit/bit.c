@@ -30,7 +30,6 @@
 #include <version.h>
 
 #include "../common/i18n.h"
-#include "../common/gpp_compat.h"
 
 GaimPlugin *bit = NULL; /* the request api prefers this for a plugin */
 static GaimBuddyList *buddies = NULL;

@@ -26,7 +26,6 @@
 #endif
 
 #include "../common/i18n.h"
-#include "../common/gpp_compat.h" /* probably unnecessary here */
 
 /* libc */
 #include <ctype.h>
