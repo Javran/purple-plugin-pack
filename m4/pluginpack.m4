@@ -23,11 +23,13 @@ AC_DEFUN([AM_BUILD_PLUGIN_LIST],
 	dnl #######################################################################
 	for d in *; do
 		if test -d $d; then
-			if test -f $d/.plugin; then
-				PP_DISTDIRS="$PP_DISTDIRS $d"
-			fi
-			if test -f $d/.build; then
-				PP_BUILDDIRS="$PP_BUILDDIRS $d"
+			if test ! -f $d/.abusive ; then
+				if test -f $d/.plugin; then
+					PP_DISTDIRS="$PP_DISTDIRS $d"
+				fi
+				if test -f $d/.build; then
+					PP_BUILDDIRS="$PP_BUILDDIRS $d"
+				fi
 			fi
 		fi
 	done;
@@ -37,12 +39,14 @@ AC_DEFUN([AM_BUILD_PLUGIN_LIST],
 	dnl #######################################################################
 	AC_ARG_WITH(plugins,
 				AC_HELP_STRING([--with-plugins], [what plugins to build]),
-				,with_plugins=all)
+				,with_plugins=default)
 
 	dnl #######################################################################
 	dnl # Now determine which ones have been selected
 	dnl #######################################################################
 	if test x$with_plugins = xall ; then
+		tmp_SUBDIRS=$PP_DISTDIRS
+	elif test x$with_plugins = xdefault ; then
 		tmp_SUBDIRS=$PP_BUILDDIRS
 	else
 		exp_plugins=`echo "$with_plugins" | sed 's/,/ /g'`
