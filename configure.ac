@@ -163,7 +163,6 @@ AC_OUTPUT([
 	bit/Makefile
 	blistops/Makefile
 	buddynote/Makefile
-	buzzer/Makefile
 	chronic/Makefile
 	convcolors/Makefile
 	dice/Makefile
