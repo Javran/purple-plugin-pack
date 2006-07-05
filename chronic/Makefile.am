@@ -12,7 +12,7 @@ chronic_LTLIBRARIES = chronic.la
 chronic_la_SOURCES = chronic.c
 
 AM_CPPFLAGS = \
-	DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
+	-DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
 	-DDATADIR=\"$(GAIM_DATADIR)\" \
 	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
 	$(GLIB_CFLAGS) \

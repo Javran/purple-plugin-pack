@@ -17,6 +17,21 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#ifdef HAVE_CONFIG_H
+# include "../gpp_config.h"
+#endif /* HAVE_CONFIG_H */
+
+#include "../common/i18n.h"
+
+/* GLib */
+#include <glib.h>
+
+/* Gaim */
+#define GAIM_PLUGINS
+#include <debug.h>
+#include <plugin.h>
+#include <version.h>
+
 static GaimPluginInfo chronic_info =
 {
 	GAIM_PLUGIN_MAGIC,		/* magic?  do you think i'm gullible enough to
@@ -25,6 +40,7 @@ static GaimPluginInfo chronic_info =
 	GAIM_MINOR_VERSION,		/* this either */
 	GAIM_PLUGIN_STANDARD,	/* and what about this? */
 	NULL,
+	0,
 	NULL,
 	GAIM_PRIORITY_DEFAULT,
 	"core-plugin_pack-chronic",
@@ -60,4 +76,4 @@ chronic_init(GaimPlugin *plugin)
 			" EvilDennisR and ancient versions of AOL.");
 }
 
-GAIM_INIT_PLUGIN(chronic, chronic_load, chronic_info)
+GAIM_INIT_PLUGIN(chronic, chronic_init, chronic_info)
