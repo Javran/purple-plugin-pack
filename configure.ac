@@ -157,7 +157,6 @@ AC_OUTPUT([
 	m4/Makefile
 	po/Makefile.in
 	VERSION
-	adium_xml_logger/Makefile
 	autoaccept/Makefile
 	autoreply/Makefile
 	bash/Makefile
