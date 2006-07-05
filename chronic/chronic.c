@@ -73,7 +73,8 @@ chronic_init(GaimPlugin *plugin)
 	chronic_info.description = _("Allows buddies to remotely trigger sound"
 			" playing in your instance of Gaim with {S &lt;sound&gt; or !sound"
 			" &lt;sound&gt;.  Inspired by #guifications channel resident"
-			" EvilDennisR and ancient versions of AOL.");
+			" EvilDennisR and ancient versions of AOL.  THIS PLUGIN IS NOT"
+			" YET FUNCTIONAL!  IT IS USELESS!");
 }
 
 GAIM_INIT_PLUGIN(chronic, chronic_init, chronic_info)
