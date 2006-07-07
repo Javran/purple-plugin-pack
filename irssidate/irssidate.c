@@ -1,5 +1,5 @@
 /*
- * irssidate - Let's you know when the day changes
+ * irssidate - Lets you know when the day changes
  * Copyright (C) 2005 Gary Kramlich <grim@reaperworld.com>
  *
  * This program is free software; you can redistribute it and/or
