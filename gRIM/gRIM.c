@@ -1,5 +1,5 @@
 /*
- * A completely stupid pluging, inspired by a dumb conversation in #gaim
+ * A completely stupid plugin, inspired by a dumb conversation in #gaim
  * and needing some light relief from 'real' work.
  * Also as a tribute to our fearless project leader.
  * Copyright (C) 2005 Peter Lawler <bleeter from users.sf.net>
@@ -209,6 +209,8 @@ rim(GaimConversation *conv, const gchar *cmd, gchar **args,
 {
 	struct timeout_data *data = g_new0(struct timeout_data, 1);
 	struct lyrics_and_info *info = g_new0(struct lyrics_and_info, 1);
+	GaimGtkConversation *gtkconv = GAIM_GTK_CONVERSATION(conv);
+	gint source;
 
 	/* XXX: Need to manually parse the arguments :-/ */
 	if (*args && *(args+1))
@@ -246,13 +248,17 @@ rim(GaimConversation *conv, const gchar *cmd, gchar **args,
 	}
 
 	info->gap = info->time / g_list_length(info->lyric);
+	if (info->gap < 5000)
+		info->gap = 5000;
 
 	data->info = info;
 	data->conv = conv;
 
 	/* XXX: make sure we stop when conv-is destroyed. */
 
-	g_timeout_add(info->gap, (GSourceFunc)timeout_func_cb, data);
+	source = g_timeout_add(info->gap, (GSourceFunc)timeout_func_cb, data);
+	g_object_set_data_full(G_OBJECT(gtkconv->imhtml), "gRim:timer",
+			GINT_TO_POINTER(source), (GDestroyNotify)g_source_remove);
 
 	return GAIM_CMD_RET_OK;
 }
@@ -273,11 +279,11 @@ plugin_load(GaimPlugin *plugin) {
 
 	/* THIS LINE IS NOT TRANSLATABLE. Patches to make it NLS capable will be
 	 * rejected without response */
-	/*help = "gRIM: Take off every 'Zig'!!";
+	help = "gRIM: Take off every 'Zig'!!";
 	rim_cmd_id = gaim_cmd_register("base", "", GAIM_CMD_P_PLUGIN,
 									GAIM_CMD_FLAG_IM | GAIM_CMD_FLAG_CHAT,
 									NULL, GAIM_CMD_FUNC(rim),
-									help, NULL);*/
+									help, NULL);
 	return TRUE;
 }
 
