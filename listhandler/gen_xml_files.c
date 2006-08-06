@@ -345,7 +345,7 @@ lh_generic_export_action_cb(GaimPluginAction *action)
 	gaim_request_field_group_add_field(group, field);
 
 	/* and finally we can create the request */
-	gaim_request_fields(gaim_get_blist(), _("Listhander - Exporting"),
+	gaim_request_fields(gaim_get_blist(), _("Listhandler - Exporting"),
 						_("Choose the account to export from:"), NULL, request,
 						_("_Export"), G_CALLBACK(lh_generic_export_cb), _("_Cancel"),
 						NULL, NULL);
