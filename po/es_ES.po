@@ -1,0 +1,524 @@
+# Spanish/ES translation of plugin_pack.
+# Copyright (C) 2006 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the plugin_pack package.
+# Máximo Castañeda <antiswen@yahoo.es>, 2006.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: plugin_pack 1.0beta3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-03-29 22:05-0600\n"
+"PO-Revision-Date: 2006-08-05 20:42+0200\n"
+"Last-Translator: Máximo Castañeda <antiswen@yahoo.es>\n"
+"Language-Team: es_ES <antiswen@yahoo.es>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: blistops/blistops.c:110
+msgid "Hide the buddy list when it is created"
+msgstr "Ocultar la lista de contactos cuando se crea"
+
+#: blistops/blistops.c:114
+msgid "Hide the menu in the buddy list window"
+msgstr "Ocultar el menú de la ventana de la lista de contactos"
+
+#: blistops/blistops.c:160
+msgid "Buddy List Options"
+msgstr "Opciones de Lista de Contactos"
+
+#: blistops/blistops.c:161 blistops/blistops.c:162
+msgid "Gives extended options to the buddy list"
+msgstr "Añade opciones para la lista de contactos"
+
+#: buddynote/buddynote.c:53
+msgid "Notes"
+msgstr "Notas"
+
+#: buddynote/buddynote.c:54
+msgid "Enter your notes below..."
+msgstr "Introduzca sus notas..."
+
+#: buddynote/buddynote.c:57
+msgid "Save"
+msgstr "Guardar"
+
+#: buddynote/buddynote.c:58 groupmsg/groupmsg.c:127
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: buddynote/buddynote.c:68
+msgid "Edit Notes..."
+msgstr "Editar Notas"
+
+#: buddynote/buddynote.c:119
+msgid "Buddy Notes"
+msgstr "Notas sobre Contactos"
+
+#: buddynote/buddynote.c:120
+msgid "Store notes on particular buddies."
+msgstr "Guarda notas sobre los contactos."
+
+#: buddynote/buddynote.c:121
+msgid "Adds the option to store notes for buddies on your buddy list."
+msgstr "Permite almacenar notas sobre los contactos de la lista."
+
+#. show it in the message window
+#: buzzer/im_buzz.c:81
+msgid "Buzz!!."
+msgstr "¡Piii!"
+
+#: buzzer/im_buzz.c:105 buzzer/im_buzz.c:125
+msgid "Please don't press this button again"
+msgstr "Por favor, no vuelva a pulsar este botón"
+
+#: buzzer/im_buzz.c:113 buzzer/im_buzz.c:138
+msgid "Buzz!!"
+msgstr "¡Piii!"
+
+#: dice/dice.c:89
+msgid "dice [dice] [sides]:  rolls dice number of sides sided dice"
+msgstr "dice [n] [c]: lanza n dados de c caras"
+
+#: dice/dice.c:143
+msgid "Dice"
+msgstr "Dados"
+
+#: dice/dice.c:144
+msgid "Rolls dice in a chat or im"
+msgstr "Lanza dados en un chat o im"
+
+#: dice/dice.c:145
+msgid ""
+"Adds a command (/dice) to roll an arbitrary number of dice with an arbitrary "
+"number of sides"
+msgstr ""
+"Añade un comando (/dice) para lanzar un número arbitrario de dados "
+"con un número arbitrario de caras"
+
+#: flip/flip.c:68
+msgid "Outputs the results of flipping a coin"
+msgstr "Lanza una moneda"
+
+#: flip/flip.c:117
+msgid "Coin Flip"
+msgstr "Cara o Cruz"
+
+#: flip/flip.c:118
+msgid "Flips a coin and outputs the result"
+msgstr "Lanza una moneda a cara o cruz"
+
+#: flip/flip.c:119
+msgid ""
+"Adds a command (/flip) to flip a coin and outputs the result in the active "
+"conversation"
+msgstr ""
+"Añade un comando (/flip) que lanza una moneda y da el resultado en la "
+"conversación activa"
+
+#. should be completely mad and see if user has only one buddy (not a chat)
+#. *  on the blist and pluralise if appropriate
+#: gRIM/gRIM.c:267
+msgid ""
+"gRIM: rim your pals\n"
+"/rim &lt;filename&gt; &lt;duration-in-secs&gt;"
+msgstr ""
+"gRIM: fastidia a tus compañeros\n"
+"/rim &lt;archivo&gt; &lt;segundos&gt;"
+
+#: gRIM/gRIM.c:329
+msgid "gRIM"
+msgstr ""
+
+#: gRIM/gRIM.c:330
+msgid "A completely stupid and pointless plugin"
+msgstr "Un plugin completamente estúpido y sin sentido"
+
+#: gRIM/gRIM.c:331
+msgid ""
+"Adds commands to annoy buddies with. Inspired by a dumb IRC convo and Red "
+"Dwarf."
+msgstr "Añade comandos para fastidiar a los contactos."
+
+#: groupmsg/groupmsg.c:111
+#, c-format
+msgid "There are no buddies online in group %s"
+msgstr "No hay ningún contacto del grupo %s conectado"
+
+#: groupmsg/groupmsg.c:119
+#, c-format
+msgid ""
+"Your message will be sent to these buddies:\n"
+"%s"
+msgstr "El mensaje se enviará a los siguientes contactos:\n%s"
+
+#: groupmsg/groupmsg.c:122
+msgid "Spam"
+msgstr "Spam"
+
+#: groupmsg/groupmsg.c:123
+msgid "Please enter the message to send"
+msgstr "Introduzca el mensaje a enviar"
+
+#: groupmsg/groupmsg.c:126
+msgid "Send"
+msgstr "Enviar"
+
+#: groupmsg/groupmsg.c:192
+msgid "Group IM"
+msgstr "Mensaje a grupo"
+
+#: groupmsg/groupmsg.c:193
+msgid "Send an IM to a group of buddies."
+msgstr "Envía un mensaje a todo un grupo de contactos."
+
+#: groupmsg/groupmsg.c:194
+msgid "Adds the option to send an IM to every online buddy in a group."
+msgstr ""
+"Permite enviar un mensaje instantáneo a todos los contactos conectados "
+"de un grupo."
+
+#: irssidate/irssidate.c:77
+#, c-format
+msgid "Day changed to %s"
+msgstr "Comienza un nuevo día: %s"
+
+#: irssidate/irssidate.c:86
+msgid "Happy New Year"
+msgstr "Feliz Año Nuevo"
+
+#. Last seen
+#. Last said
+#. Signed on
+#. Signed off
+#: lastseen/lastseen.c:176 lastseen/lastseen.c:188
+msgid ""
+"\n"
+"<b>Last Seen:</b>"
+msgstr "\n<b>Último contacto:</b>"
+
+#: lastseen/lastseen.c:177 lastseen/lastseen.c:189
+msgid ""
+"\n"
+"<b>Last Said:</b>"
+msgstr "\n<b>Última conversación:</b>"
+
+#: lastseen/lastseen.c:178 lastseen/lastseen.c:190
+msgid ""
+"\n"
+"<b>Signed On:</b>"
+msgstr "\n<b>Se conectó:</b>"
+
+#: lastseen/lastseen.c:179 lastseen/lastseen.c:191
+msgid ""
+"\n"
+"<b>Signed Off:</b>"
+msgstr "\n<b>Se desconectó:</b>"
+
+#: lastseen/lastseen.c:268
+msgid "Last Seen"
+msgstr "Último Contacto"
+
+#: lastseen/lastseen.c:269
+msgid "Record when a buddy was last seen."
+msgstr "Muestra cuándo se vio por última vez a alguien."
+
+#: lastseen/lastseen.c:270
+msgid ""
+"Logs the time of a last received message, what they said, when they logged "
+"in, and when they logged out, for buddies on your buddy list."
+msgstr ""
+"Para cada contacto de la lista, guarda el momento del último mensaje "
+"recibido, qué dijo, cuándo se conectó y cuándo se desconectó."
+
+#. create a field
+#: listhandler/aim_blt_files.c:286 listhandler/aim_blt_files.c:451
+#: listhandler/gen_xml_files.c:146 listhandler/gen_xml_files.c:336
+#: listhandler/migrate.c:125 listhandler/migrate.c:165
+msgid "Account"
+msgstr "Cuenta"
+
+#. and finally we can create the request
+#: listhandler/aim_blt_files.c:296
+msgid "Buddy List Importer"
+msgstr "Importador de Listas de Contactos"
+
+#: listhandler/aim_blt_files.c:297 listhandler/gen_xml_files.c:158
+msgid "Choose the account to import to:"
+msgstr "Elija la cuenta a la que importar:"
+
+#: listhandler/aim_blt_files.c:298 listhandler/gen_xml_files.c:159
+msgid "_Import"
+msgstr "_Importar"
+
+#: listhandler/aim_blt_files.c:300 listhandler/aim_blt_files.c:463
+#: listhandler/gen_xml_files.c:161 listhandler/gen_xml_files.c:350
+#: listhandler/migrate.c:141 listhandler/migrate.c:180
+msgid "_Cancel"
+msgstr "_Cancelar"
+
+#: listhandler/aim_blt_files.c:423
+msgid "Save AIM .blt File"
+msgstr "Guardar Archivo AIM .blt"
+
+#. and finally we can create the request
+#: listhandler/aim_blt_files.c:461
+msgid "Buddy List Exporter"
+msgstr "Exportador de Listas de Contactos"
+
+#: listhandler/aim_blt_files.c:462 listhandler/gen_xml_files.c:349
+msgid "Choose the account to export from:"
+msgstr "Elija la cuenta de la que exportar:"
+
+#: listhandler/aim_blt_files.c:463 listhandler/gen_xml_files.c:350
+msgid "_Export"
+msgstr "_Exportar"
+
+#: listhandler/aim_blt_files.c:476
+msgid "Choose An AIM .blt File To Import"
+msgstr "Elija el Archivo AIM .blt que Importar"
+
+#. and finally we can create the request
+#: listhandler/gen_xml_files.c:157
+msgid "Listhandler - Importing"
+msgstr "Listhandler - Importando"
+
+#: listhandler/gen_xml_files.c:311
+msgid "Save Generic .blist File"
+msgstr "Guardar Archivo Genérico .blist"
+
+#. and finally we can create the request
+#: listhandler/gen_xml_files.c:348
+msgid "Listhander - Exporting"
+msgstr "Listhandler - Exportando"
+
+#: listhandler/gen_xml_files.c:361
+msgid "Choose A Generic Buddy List File To Import"
+msgstr "Elija el Archivo Genérico de Contactos a Importar"
+
+#: listhandler/listhandler.c:37
+msgid "Import AIM Buddy List File"
+msgstr "Importar Archivo AIM de Contactos"
+
+#: listhandler/listhandler.c:41
+msgid "Import Generic Buddy List File"
+msgstr "Importar Archivo Genérico de Contactos"
+
+#: listhandler/listhandler.c:45
+msgid "Export AIM Buddy List File"
+msgstr "Exportar Archivo AIM de Contactos"
+
+#: listhandler/listhandler.c:49
+msgid "Export Generic Buddy List File"
+msgstr "Exportar Archivo Genérico de Contactos"
+
+#: listhandler/listhandler.c:53
+msgid "Copy Buddies From One Account to Another"
+msgstr "Copiar Contactos de una Cuenta a otra"
+
+#: listhandler/listhandler.c:96
+msgid "List Handler"
+msgstr "List Handler"
+
+#: listhandler/listhandler.c:98
+msgid "Provides numerous user-requested list-handling capabilities."
+msgstr ""
+"Provee varias acciones de manejo de listas de contactos pedidas "
+"por los usuarios."
+
+#: listhandler/listhandler.c:101
+msgid ""
+"Provides numerous user-requested list-handling capabilities, such as "
+"importing and exporting of AIM .blt files and generic protocol-agnostic XML ."
+"blist files, as well as direct copying of buddies from one account to "
+"another."
+msgstr ""
+"Provee varias acciones de manejo de listas de contactos pedidas por los "
+"usuarios, como importar y exportar archivos .blt de AIM y los XML genéricos "
+".blist, así como la copia de contactos de una cuenta a otra."
+
+#. and finally we can create the request
+#: listhandler/migrate.c:138 listhandler/migrate.c:177
+msgid "Listhandler - Copying"
+msgstr "Listhandler - Copiando"
+
+#: listhandler/migrate.c:139
+msgid "Choose the account to add buddies to:"
+msgstr "Elija la cuenta a la que añadir contactos:"
+
+#: listhandler/migrate.c:140
+msgid "_Add"
+msgstr "_Añadir"
+
+#: listhandler/migrate.c:178
+msgid "Choose the account to copy from:"
+msgstr "Elija la cuenta desde la que copiar:"
+
+#: listhandler/migrate.c:179
+msgid "C_opy"
+msgstr "C_opiar"
+
+#: newline/newline.c:102
+msgid "New Line"
+msgstr "Cambio de Línea"
+
+#: newline/newline.c:103
+msgid "Prepends a newline to displayed messages."
+msgstr "Añade una línea al principio de los mensajes."
+
+#: newline/newline.c:104
+msgid ""
+"Prepends a newline to messages so that the text of the message appears below "
+"the screen name in the conversation window."
+msgstr ""
+"Añade una línea vacía al principio de los mensajes, de forma que el texto "
+"aparezca debajo del nombre en la ventana de conversación."
+
+#: oldlogger/oldlogger.c:280
+#, c-format
+msgid "IM Sessions with %s\n"
+msgstr "Sesiones de IM con %s\n"
+
+#: oldlogger/oldlogger.c:304
+#, c-format
+msgid "(%s) %s <AUTO-REPLY>: %s\n"
+msgstr "(%s) %s <AUTO-REPLY>: %s\n"
+
+#: oldlogger/oldlogger.c:335 oldlogger/oldlogger.c:482
+msgid "Old plain text"
+msgstr "Antiguo texto simple"
+
+#: oldlogger/oldlogger.c:408
+#, c-format
+msgid "IM Sessions with %s"
+msgstr "Sesiones de IM con %s"
+
+#: oldlogger/oldlogger.c:438
+#, c-format
+msgid ""
+"<FONT COLOR=\"#16569E\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> "
+"%s<BR>\n"
+msgstr ""
+"<FONT COLOR=\"#16569E\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> "
+"%s<BR>\n"
+
+#: oldlogger/oldlogger.c:440
+#, c-format
+msgid ""
+"<FONT COLOR=\"#A82F2F\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> "
+"%s<BR>\n"
+msgstr ""
+"<FONT COLOR=\"#A82F2F\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> "
+"%s<BR>\n"
+
+#: oldlogger/oldlogger.c:466 oldlogger/oldlogger.c:487
+msgid "Old HTML"
+msgstr "Antiguo HTML"
+
+#: oldlogger/oldlogger.c:550
+msgid "Old Logger"
+msgstr "Antiguo Logger"
+
+#: oldlogger/oldlogger.c:551 oldlogger/oldlogger.c:552
+msgid "Re-implements the legacy, deficient, logging"
+msgstr "Reimplementa el logging antiguo y deficiente"
+
+#: sepandtab/sepandtab.c:95
+msgid "Separate IM, group Chats"
+msgstr "Separar IM, agrupar Chats"
+
+#: sepandtab/sepandtab.c:97
+msgid "Separate Chats, group IMs"
+msgstr "Separar Chats, agrupar IMs"
+
+#: sepandtab/sepandtab.c:146
+msgid "Separate And Tab"
+msgstr "Separar y Pestañas"
+
+#: sepandtab/sepandtab.c:147
+msgid "Adds two placement functions for separating and tabbing"
+msgstr "Añade dos funciones para separar y para agrupar en pestañas"
+
+#: sepandtab/sepandtab.c:148
+msgid ""
+"Adds two new placement functions.\n"
+"\n"
+"One separates IMs and groups chats in tabs\n"
+"The other separates chats and groups IMs in tabs"
+msgstr ""
+"Añade dos funciones.\n"
+"\n"
+"Una separa los IMs y agrupa los chats en pestañas\n"
+"La otra separa los chats y agrupa los IMs"
+
+#: sslinfo/sslinfo.c:73
+#, c-format
+msgid "<b>Name:</b> %s<br>"
+msgstr "<b>Nombre:</b> %s<br>"
+
+#: sslinfo/sslinfo.c:80
+#, c-format
+msgid "<b>Version:</b> %s<br>"
+msgstr "<b>Versión:</b> %s<br>"
+
+#: sslinfo/sslinfo.c:87
+#, c-format
+msgid "<b>Author:</b> %s<br>"
+msgstr "<b>Autor:</b> %s<br>"
+
+#: sslinfo/sslinfo.c:92 sslinfo/sslinfo.c:144
+msgid "SSL Info"
+msgstr "Información SSL"
+
+#: sslinfo/sslinfo.c:103
+msgid "Get SSL info"
+msgstr "Ver información SSL"
+
+#: sslinfo/sslinfo.c:145
+msgid "Displays info about your currently loaded SSL plugin"
+msgstr "Muestra información sobre el plugin SSL cargado en este momento"
+
+#: sslinfo/sslinfo.c:146
+msgid "Displays info about your currently loaded SSL plugin."
+msgstr "Muestra información sobre el plugin SSL cargado en este momento"
+
+#: talkfilters/talkfilters.c:187
+msgid "_Talkfilters"
+msgstr "_Talkfilters"
+
+#: talkfilters/talkfilters.c:200 talkfilters/talkfilters.c:355
+msgid "(None)"
+msgstr "(Ninguno)"
+
+#: talkfilters/talkfilters.c:349
+msgid "Talk Filters"
+msgstr "Filtros de Dialectos"
+
+#: talkfilters/talkfilters.c:352
+msgid "Active filter:"
+msgstr "Filtro activo:"
+
+#: talkfilters/talkfilters.c:403
+msgid "GNU Talk Filters"
+msgstr "Filtros de Dialectos GNU"
+
+#: talkfilters/talkfilters.c:405
+msgid "Translates text in outgoing messages into humorous dialects."
+msgstr "Traduce el texto de los mensajes salientes a dialectos humorísticos."
+
+#: talkfilters/talkfilters.c:407
+msgid ""
+"The GNU Talk Filters are filter programs that convert ordinary English text "
+"into text that mimics a stereotyped or otherwise humorous dialect. These "
+"filters have been in the public domain for many years, and have been made "
+"available as a single integrated package. The filters include austro, b1ff, "
+"brooklyn, chef, cockney, drawl, dubya, fudd, funetak, jethro, jive, kraut, "
+"pansy, pirate, postmodern, redneck, valspeak, and warez."
+msgstr ""
+"Los Filtros de Dialectos GNU son programas que convierten texto en inglés "
+"normal a dialecto humorísticos o estereotipados. Estos filtros llevan años "
+"siendo de dominio público, y están disponibles como un paquete único "
+"integrado. Los filtros incluyen austro, b1ff, "
+"brooklyn, chef, cockney, drawl, dubya, fudd, funetak, jethro, jive, kraut, "
+"pansy, pirate, postmodern, redneck, valspeak, and warez."
