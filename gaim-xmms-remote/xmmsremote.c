@@ -1010,7 +1010,7 @@ gxr_gtkblist_created_cb(void) {
 static gboolean
 gxr_load(GaimPlugin *plugin) {
 	void *conv_handle = gaim_conversations_get_handle();
-	const gchar *help = "<pre>gxr &lt;[play][pause][stop][next][prev][repeat][shuffle][show][hide][info]&gt;\n"
+	const gchar *help = "<pre>xmms &lt;[play][pause][stop][next][prev][repeat][shuffle][show][hide][info]&gt;\n"
 						"Play     Starts playback\n"
 						"Pause    Pauses playback\n"
 						"Stop     Stops playback\n"
@@ -1047,7 +1047,7 @@ gxr_load(GaimPlugin *plugin) {
 	gxr_show_buttons();
 
 	/* register our command */
-	gxr_cmd = gaim_cmd_register("gxr", "w", GAIM_CMD_P_PLUGIN,
+	gxr_cmd = gaim_cmd_register("xmms", "w", GAIM_CMD_P_PLUGIN,
 								GAIM_CMD_FLAG_IM | GAIM_CMD_FLAG_CHAT, NULL,
 								gxr_cmd_cb, help, NULL);
 

@@ -40,9 +40,9 @@ AH_BOTTOM([
 ])
 
 dnl #######################################################################
-dnl # Good o' gettext
+dnl # Good ol' gettext
 dnl #######################################################################
-ALL_LINGUAS="en_AU"
+ALL_LINGUAS="en_AU es_ES"
 AM_GNU_GETTEXT_VERSION(0.10.40)
 AM_GNU_GETTEXT
 
