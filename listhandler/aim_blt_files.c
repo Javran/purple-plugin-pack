@@ -221,7 +221,7 @@ lh_aim_list_parse(gchar **strings, guint length, guint begin, guint end)
 
 	if(buddies && groups) {
 		lh_util_add_to_blist(buddies, groups);
-		gpp_add_buddies(target_account, buddies);
+		gaim_account_add_buddies(target_account, buddies);
 	} else {
 		if(!buddies && !groups)
 			gaim_debug_info("listhandler: import", "BOTH GLISTS NULL!!!!!\n");
