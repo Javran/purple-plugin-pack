@@ -14,7 +14,6 @@ gaim-schedule/gaim-schedule.c
 gaim-schedule/schedule.c
 groupmsg/groupmsg.c
 irssidate/irssidate.c
-lastlog/lastlog.c
 lastseen/lastseen.c
 listhandler/aim_blt_files.c
 listhandler/gen_xml_files.c
