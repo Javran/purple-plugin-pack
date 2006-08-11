@@ -308,7 +308,7 @@ calculate_timestamp_for_schedule(GaimSchedule *schedule)
 		}
 		schedule->timestamp = mktime(&tm);
 	}
-	
+
 	return;
 }
 
@@ -432,7 +432,7 @@ void gaim_schedule_action_activate(ScheduleAction *action)
 void gaim_schedule_activate_actions(GaimSchedule *sch)
 {
 	GList *iter;
-	
+
 	for (iter = sch->actions; iter; iter = iter->next)
 	{
 		gaim_schedule_action_activate(iter->data);
@@ -491,7 +491,7 @@ check_and_execute(gpointer null)
 	GaimSchedule *schedule;
 	GList *iter = schedules;
 	gboolean dirty = FALSE;
-   
+
 	if (iter == NULL)
 		return TRUE;
 	schedule = iter->data;
@@ -608,22 +608,29 @@ parse_action(GaimSchedule *schedule, xmlnode *action)
 {
 	int type = atoi(xmlnode_get_attrib(action, "type"));
 	xmlnode *data = xmlnode_get_child(action, "data"), *account, *message;
+	char *tmp;
 
 	switch (type)
 	{
 		case SCHEDULE_ACTION_POPUP:
-			gaim_schedule_add_action(schedule, type, xmlnode_get_data(data));
+			tmp = xmlnode_get_data(data);
+			gaim_schedule_add_action(schedule, type, tmp);
+			g_free(tmp);
 			break;
 		case SCHEDULE_ACTION_CONV:
 			account = xmlnode_get_child(data, "account");
 			message = xmlnode_get_child(data, "message");
-			gaim_schedule_add_action(schedule, type, xmlnode_get_data(message),
+			tmp = xmlnode_get_data(message);
+			gaim_schedule_add_action(schedule, type, tmp,
 						xmlnode_get_attrib(account, "who"),
 						gaim_accounts_find(xmlnode_get_attrib(account, "name"),
 									xmlnode_get_attrib(account, "prpl")));
+			g_free(tmp);
 			break;
 		case SCHEDULE_ACTION_STATUS:
-			gaim_schedule_add_action(schedule, type, xmlnode_get_data(action));
+			tmp = xmlnode_get_data(action);
+			gaim_schedule_add_action(schedule, type, tmp);
+			g_free(tmp);
 			break;
 		default:
 			g_return_if_reached();
@@ -716,7 +723,7 @@ schedule_to_xmlnode(GaimSchedule *schedule)
 
 	child = when_to_xmlnode(schedule);
 	xmlnode_insert_child(node, child);
-	
+
 	for (iter = schedule->actions; iter; iter = iter->next)
 	{
 		xmlnode_insert_child(node, action_to_xmlnode(iter->data));
