@@ -58,6 +58,7 @@
 #define PREF_PANE	PREF_PREFIX "/pane"
 #define PREF_GLOBAL	PREF_PREFIX "/global"
 #define PREF_SHOW	PREF_PREFIX "/show"
+#define PREF_ICONS_HIDE   PREF_PREFIX   "/iconsel"
 
 static GtkWidget *gtkblist_statusboxbox;
 static GList *gtkblist_statusboxes;
@@ -84,6 +85,7 @@ account_enabled_cb(GaimAccount *account, gpointer null)
 	if (gaim_account_get_enabled(account, gaim_core_get_ui()))
 	{
 		GtkWidget *box = gtk_gaim_status_box_new_with_account(account);
+		g_object_set(box, "iconsel", !gaim_prefs_get_bool(PREF_ICONS_HIDE), NULL);
 		gtk_widget_set_name(box, "gaim_gtkblist_statusbox_account");
 		gtk_box_pack_start(GTK_BOX(gtkblist_statusboxbox), box, FALSE, TRUE, 0);
 		gtk_widget_show(box);
@@ -211,6 +213,8 @@ attach_per_account_boxes()
 	else
 		gtk_widget_show(gtkblist->statusbox);
 	
+	g_object_set(gtkblist->statusbox, "iconsel", !gaim_prefs_get_bool(PREF_ICONS_HIDE), NULL);
+
 	gaim_gtk_status_selectors_show(gaim_prefs_get_int(PREF_SHOW));
 
 	gtk_paned_set_position(GTK_PANED(vpane),																				 gaim_prefs_get_int(PREF_PANE));
@@ -340,6 +344,20 @@ show_boxes_out_of_sync(GaimPluginAction *action)
 	gaim_gtk_status_selectors_show(GAIM_STATUSBOX_OUT_SYNC);
 }
 
+static void
+toggle_icons(GaimPluginAction *action)
+{
+	gboolean v = gaim_prefs_get_bool(PREF_ICONS_HIDE);
+	gaim_prefs_set_bool(PREF_ICONS_HIDE, !v);
+}
+
+static void
+toggle_global(GaimPluginAction *action)
+{
+	gboolean v = gaim_prefs_get_bool(PREF_GLOBAL);
+	gaim_prefs_set_bool(PREF_GLOBAL, !v);
+}
+
 static GList *
 actions(GaimPlugin *plugin, gpointer context)
 {
@@ -355,7 +373,32 @@ actions(GaimPlugin *plugin, gpointer context)
 	act = gaim_plugin_action_new(_("Out of sync ones"), show_boxes_out_of_sync);
 	l = g_list_append(l, act);
 
+	l = g_list_append(l, NULL);
+	
+	act = gaim_plugin_action_new(_("Toggle icon selectors"), toggle_icons);
+	l = g_list_append(l, act);
+
+	act = gaim_plugin_action_new(_("Toggle global selector"), toggle_global);
+	l = g_list_append(l, act);
+
 	return l;
+}
+
+static void
+toggle_iconsel_cb(const char *name, GaimPrefType type, gconstpointer val, gpointer null)
+{
+	GList *iter = gtkblist_statusboxes;
+	gboolean value = !GPOINTER_TO_INT(val);
+	GaimGtkBuddyList *gtkblist;
+
+	for (; iter; iter = iter->next)
+	{
+		g_object_set(iter->data, "iconsel", value, NULL);
+	}
+
+	gtkblist = gaim_gtk_blist_get_default_gtk_blist();
+	if (gtkblist)
+		g_object_set(gtkblist->statusbox, "iconsel", value, NULL);
 }
 
 static void
@@ -414,6 +457,7 @@ plugin_load(GaimPlugin *plugin)
 				GAIM_CALLBACK(signed_on_off_cb), NULL);
 		
 	gaim_prefs_connect_callback(plugin, PREF_GLOBAL, hide_global_callback, NULL);
+	gaim_prefs_connect_callback(plugin, PREF_ICONS_HIDE, toggle_iconsel_cb, NULL);
 	gaim_prefs_connect_callback(plugin, "/core/savedstatus/current", global_status_changed_cb, NULL);
 	return TRUE;
 }
@@ -443,6 +487,9 @@ get_plugin_pref_frame(GaimPlugin *plugin)
 	frame = gaim_plugin_pref_frame_new();
 
 	pref = gaim_plugin_pref_new_with_name_and_label(PREF_GLOBAL, _("Hide global status selector"));
+	gaim_plugin_pref_frame_add(frame, pref);
+
+	pref = gaim_plugin_pref_new_with_name_and_label(PREF_ICONS_HIDE, _("Hide icon-selectors"));
 	gaim_plugin_pref_frame_add(frame, pref);
 
 	return frame;
@@ -496,6 +543,7 @@ init_plugin(GaimPlugin *plugin) {
 	gaim_prefs_add_int(PREF_PANE, 300);
 	gaim_prefs_add_bool(PREF_GLOBAL, FALSE);
 	gaim_prefs_add_int(PREF_SHOW, GAIM_STATUSBOX_ALL);
+	gaim_prefs_add_bool(PREF_ICONS_HIDE, FALSE);
 }
 
 GAIM_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)
