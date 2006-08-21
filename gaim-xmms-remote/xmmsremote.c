@@ -695,6 +695,12 @@ attach_to_window_tray(GaimConversation *conv) {
 		return TRUE;
 
 	win = gaim_gtkconv_get_window(gtkconv);
+	if(!win)
+		return TRUE;
+
+	if(!win->window)
+		return TRUE;
+
 	if(!GTK_WIDGET_VISIBLE(win->window))
 		return TRUE;
 
