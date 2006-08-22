@@ -54,7 +54,7 @@
 #include <gtkconv.h>
 #include <gtkimhtml.h>
 #include <gtkmenutray.h>
-#include <gtkstock.h>
+#include <gaimstock.h>
 #include <gtkutils.h>
 
 /* Pack/Local headers */
