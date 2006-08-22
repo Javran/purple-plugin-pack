@@ -1,12 +1,10 @@
 Version 1.0:
-	Added adium_xml_logger plugin - not yet functional
 	Added autoaccept plugin
 	Added autoreply plugin
 	Added bash plugin
 	Added bit plugin - DANGEROUS!!!
 	Added blistops plugin
 	Added buddynote plugin
-	Added buzzer plugin - not yet compatible with Gaim 2.0.0Beta1 or newer
 	Added dice plugin
 	Added eight_ball plugin
 	Added flip plugin

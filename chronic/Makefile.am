@@ -1,5 +1,4 @@
 EXTRA_DIST = \
-	.build \
 	.plugin \
 	chronic.wav
 
