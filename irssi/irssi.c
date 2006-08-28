@@ -28,7 +28,7 @@
 #define GAIM_PLUGINS
 
 /* define these so the plugin info struct way at the bottom is cleaner */
-#define PLUGIN_ID			"core-plugin_pack-irssi"
+#define PLUGIN_ID			"gtk-plugin_pack-irssi"
 #define PLUGIN_NAME			"Irssi Features"
 #define PLUGIN_STATIC_NAME	"irssi"
 #define PLUGIN_SUMMARY		"Implements features of the irssi IRC client for " \

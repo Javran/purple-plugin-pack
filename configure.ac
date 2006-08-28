@@ -174,7 +174,7 @@ AC_OUTPUT([
 	gaim-xmms-remote/pixmaps/Makefile
 	groupmsg/Makefile
 	gRIM/Makefile
-	irssidate/Makefile
+	irssi/Makefile
 	lastseen/Makefile
 	listhandler/Makefile
 	offlinemsg/Makefile
