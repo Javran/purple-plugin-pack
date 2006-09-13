@@ -130,7 +130,9 @@ irssi_datechange_timeout_cb(gpointer data) {
 static gboolean
 irssi_window_close_cb(GaimConversation *c)
 {
-	gaim_conversation_destroy(c); /* this segfaults!! */
+	/* this call has to be in a timer callback, otherwise it causes
+	 * gaim to segfault. */
+	gaim_conversation_destroy(c);
 
 	return FALSE;
 }
