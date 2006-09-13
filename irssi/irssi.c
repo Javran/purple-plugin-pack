@@ -377,7 +377,5 @@ irssi_init(GaimPlugin *plugin) { /* Gaim calls this to initialize the plugin */
 	irssi_info.description = _(PLUGIN_DESCRIPTION);
 }
 
-/* the preprocessor does some magic on the arguments supplied here to make
- * this a usable plugin */
 GAIM_INIT_PLUGIN(PLUGIN_STATIC_NAME, irssi_init, irssi_info)
 
