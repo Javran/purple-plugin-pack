@@ -2,7 +2,8 @@ EXTRA_DIST = .plugin .build Makefile.mingw
 
 flipdir = $(GAIM_LIBDIR)/gaim
 
-flip_la_LDFLAGS = -module -avoid-version $(GLIB_LIBS)
+flip_la_LDFLAGS = -module -avoid-version
+flip_la_LIBADD = $(GLIB_LIBS)
 
 if PLUGINS
 

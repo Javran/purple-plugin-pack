@@ -2,7 +2,8 @@ EXTRA_DIST = .plugin .build Makefile.mingw
 
 buddynotedir = $(GAIM_LIBDIR)/gaim
 
-buddynote_la_LDFLAGS = -module -avoid-version $(GLIB_LIBS)
+buddynote_la_LDFLAGS = -module -avoid-version
+buddynote_la_LIBADD = $(GLIB_LIBS)
 
 if PLUGINS
 

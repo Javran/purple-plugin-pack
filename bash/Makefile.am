@@ -5,7 +5,8 @@ EXTRA_DIST = \
 
 bashdir = $(GAIM_LIBDIR)/gaim
 
-bash_la_LDFLAGS = -module -avoid-version $(GLIB_LIBS)
+bash_la_LDFLAGS = -module -avoid-version
+bash_la_LIBADD = $(GLIB_LIBS)
 
 if PLUGINS
 

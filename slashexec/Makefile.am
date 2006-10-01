@@ -5,7 +5,8 @@ EXTRA_DIST = \
 
 slashexecdir = $(GAIM_LIBDIR)/gaim
 
-slashexec_la_LDFLAGS = -module -avoid-version $(GLIB_LIBS)
+slashexec_la_LDFLAGS = -module -avoid-version
+slashexec_la_LIBADD = $(GLIB_LIBS)
 
 if PLUGINS
 

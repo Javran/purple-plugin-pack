@@ -5,7 +5,8 @@ EXTRA_DIST = \
 
 eight_balldir = $(GAIM_LIBDIR)/gaim
 
-eight_ball_la_LDFLAGS = -module -avoid-version $(GLIB_LIBS)
+eight_ball_la_LDFLAGS = -module -avoid-version
+eight_ball_la_LIBADD = $(GLIB_LIBS)
 
 if PLUGINS
 

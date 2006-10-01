@@ -2,7 +2,8 @@ EXTRA_DIST = .plugin .build Makefile.mingw
 
 lastseendir = $(GAIM_LIBDIR)/gaim
 
-lastseen_la_LDFLAGS = -module -avoid-version $(GTK_LIBS)
+lastseen_la_LDFLAGS = -module -avoid-version
+lastseen_la_LIBADD = $(GTK_LIBS)
 
 if PLUGINS
 

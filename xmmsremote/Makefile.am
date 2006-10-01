@@ -4,14 +4,15 @@ SUBDIRS = pixmaps
 
 xmmsremotedir = $(GAIM_LIBDIR)/gaim
 
-xmmsremote_la_LDFLAGS = -module -avoid-version $(XMMS_LIBS)
+xmmsremote_la_LDFLAGS = -module -avoid-version
 
 if PLUGINS
 if USE_XMMS
 xmmsremote_LTLIBRARIES = xmmsremote.la
 
 xmmsremote_la_LIBADD = \
-	$(GTK_LIBS) 
+	$(GTK_LIBS) \
+	$(XMMS_LIBS)
 
 xmmsremote_la_SOURCES = \
 	xmmsremote.c
