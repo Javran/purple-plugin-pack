@@ -2,7 +2,7 @@ EXTRA_DIST = .plugin .build Makefile.mingw
 
 irssidir = $(GAIM_LIBDIR)/gaim
 
-irssi_la_LDFLAGS = -module -avoid-version
+irssi_la_LDFLAGS = -module -avoid-version $(GLIB_LIBS)
 
 if PLUGINS
 

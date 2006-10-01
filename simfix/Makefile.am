@@ -2,7 +2,7 @@ EXTRA_DIST = .build .plugin Makefile.mingw
 
 simfixdir = $(GAIM_LIBDIR)/gaim
 
-simfix_la_LDFLAGS = -module -avoid-version
+simfix_la_LDFLAGS = -module -avoid-version $(GLIB_LIBS)
 
 if PLUGINS
 

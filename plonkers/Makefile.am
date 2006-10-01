@@ -6,7 +6,8 @@ plonkersdir = $(GAIM_LIBDIR)/gaim
 
 plonkers_la_LDFLAGS = \
 	-module \
-	-avoid-version
+	-avoid-version \
+	$(GTK_LIBS)
 
 if PLUGINS
 

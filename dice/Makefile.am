@@ -2,7 +2,7 @@ EXTRA_DIST = .plugin .build Makefile.mingw
 
 dicedir = $(GAIM_LIBDIR)/gaim
 
-dice_la_LDFLAGS = -module -avoid-version
+dice_la_LDFLAGS = -module -avoid-version $(GLIB_LIBS)
 
 if PLUGINS
 

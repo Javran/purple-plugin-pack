@@ -2,7 +2,7 @@ EXTRA_DIST = .plugin Makefile.mingw
 
 groupmsgdir = $(GAIM_LIBDIR)/gaim
 
-groupmsg_la_LDFLAGS = -module -avoid-version
+groupmsg_la_LDFLAGS = -module -avoid-version $(GLIB_LIBS)
 
 if PLUGINS
 

@@ -2,7 +2,7 @@ EXTRA_DIST = .plugin Makefile.mingw
 
 mystatusboxdir = $(GAIM_LIBDIR)/gaim
 
-mystatusbox_la_LDFLAGS = -module -avoid-version
+mystatusbox_la_LDFLAGS = -module -avoid-version $(GTK_LIBS)
 
 if PLUGINS
 

@@ -6,7 +6,7 @@ EXTRA_DIST = \
 
 stockerdir = $(GAIM_LIBDIR)/gaim
 
-stocker_la_LDFLAGS = -module -avoid-version
+stocker_la_LDFLAGS = -module -avoid-version $(GTK_LIBS)
 
 if PLUGINS
 

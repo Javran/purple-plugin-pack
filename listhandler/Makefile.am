@@ -6,7 +6,7 @@ EXTRA_DIST = \
 
 listhandlerdir = $(GAIM_LIBDIR)/gaim
 
-listhandler_la_LDFLAGS = -module -avoid-version
+listhandler_la_LDFLAGS = -module -avoid-version $(GLIB_LIBS)
 
 if PLUGINS
 

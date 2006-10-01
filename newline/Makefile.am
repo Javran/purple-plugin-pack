@@ -2,7 +2,7 @@ EXTRA_DIST = .plugin .build Makefile.mingw
 
 newlinedir = $(GAIM_LIBDIR)/gaim
 
-newline_la_LDFLAGS = -module -avoid-version
+newline_la_LDFLAGS = -module -avoid-version $(GLIB_LIBS)
 
 if PLUGINS
 

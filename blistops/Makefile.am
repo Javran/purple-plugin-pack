@@ -2,7 +2,7 @@ EXTRA_DIST = .plugin .build Makefile.mingw
 
 blistopsdir = $(GAIM_LIBDIR)/gaim
 
-blistops_la_LDFLAGS = -module -avoid-version
+blistops_la_LDFLAGS = -module -avoid-version $(GTK_LIBS)
 
 if PLUGINS
 

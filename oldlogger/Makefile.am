@@ -2,7 +2,7 @@ EXTRA_DIST = .plugin .build Makefile.mingw
 
 oldloggerdir = $(GAIM_LIBDIR)/gaim
 
-oldlogger_la_LDFLAGS = -module -avoid-version
+oldlogger_la_LDFLAGS = -module -avoid-version $(GLIB_LIBS)
 
 if PLUGINS
 

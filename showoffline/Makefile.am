@@ -2,7 +2,7 @@ EXTRA_DIST = .plugin .build Makefile.mingw
 
 showofflinedir = $(GAIM_LIBDIR)/gaim
 
-showoffline_la_LDFLAGS = -module -avoid-version
+showoffline_la_LDFLAGS = -module -avoid-version $(GLIB_LIBS)
 
 if PLUGINS
 

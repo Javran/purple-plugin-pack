@@ -2,7 +2,7 @@ EXTRA_DIST = .plugin .build Makefile.mingw
 
 sslinfodir = $(GAIM_LIBDIR)/gaim
 
-sslinfo_la_LDFLAGS = -module -avoid-version
+sslinfo_la_LDFLAGS = -module -avoid-version $(GLIB_LIBS)
 
 if PLUGINS
 
