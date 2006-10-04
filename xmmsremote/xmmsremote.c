@@ -1125,7 +1125,7 @@ static GaimPluginInfo gxr_info = {
 	"XMMS Remote Control",								/* name			*/
 	GPP_VERSION,										/* version		*/
 	"Control XMMS from Gaim conversations",				/* summary		*/
-	"A small plugin that adds a menu or buttons to the"
+	"A small plugin that adds a menu or buttons to the "
 	"Gaim conversation windows' menubars, so that you "
 	"can control XMMS from within Gaim.",				/* description	*/
 
