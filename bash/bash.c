@@ -166,7 +166,7 @@ init_plugin(GaimPlugin *plugin)
 	bash_info.summary =
 					_("Generates links for quotes at bash.org");
 	bash_info.description =
-					_("Generates links for quotes at bash.org or allows the"
+					_("Generates links for quotes at bash.org or allows the "
 					"user to specify a quote.  Provides the /bash command.");
 
 	return;
