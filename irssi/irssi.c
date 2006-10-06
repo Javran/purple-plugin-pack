@@ -367,8 +367,8 @@ irssi_init(GaimPlugin *plugin) { /* Gaim calls this to initialize the plugin */
  * what package we're from and where our translations are, then set gettext
  * to use UTF-8 */
 #ifdef ENABLE_NLS
-	bindtextdomain(GPP_PACKAGE, LOCALEDIR);
-	bind_textdomain_codeset(GPP_PACKAGE, "UTF-8");
+	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
 	/* set these here to allow for translations of the strings */

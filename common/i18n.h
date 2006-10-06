@@ -24,24 +24,10 @@
 # include "../gpp_config.h"
 #endif
 
+#include <glib/gi18n-lib.h>
+
 #ifdef _WIN32
 # include <win32dep.h>
-#endif
-
-#ifdef ENABLE_NLS
-#  include <locale.h>
-#  include <libintl.h>
-#  define _(x) dgettext(GPP_PACKAGE, x)
-#  ifdef dgettext_noop
-#    define N_(String) dgettext_noop (GPP_PACKAGE, String)
-#  else
-#    define N_(String) (String)
-#  endif
-#else
-#  include <locale.h>
-#  define N_(String) (String)
-#  define _(x) (x)
-#  define ngettext(Singular, Plural, Number) ((Number == 1) ? (Singular) : (Plural))
 #endif
 
 #endif

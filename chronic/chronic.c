@@ -64,8 +64,8 @@ static void
 chronic_init(GaimPlugin *plugin)
 {
 #ifdef ENABLE_NLS
-	bindtextdomain(GPP_PACKAGE, LOCALEDIR);
-	bind_textdomain_codeset(GPP_PACKAGE, "UTF-8");
+	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
 	chronic_info.name = _("Chronic");

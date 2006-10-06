@@ -1,11 +1,9 @@
 #! /bin/sh
 PACKAGE="gaim-plugin_pack"
 
-SETUP_GETTEXT=./setup-gettext
-
-($SETUP_GETTEXT --gettext-tool) < /dev/null > /dev/null 2>&1 || {
+(intltoolize --version) < /dev/null > /dev/null 2>&1 || {
 	echo;
-	echo "You must have gettext installed to compile $PACKAGE";
+	echo "You must have intltool installed to compile $PACKAGE";
 	echo;
 	exit;
 }
@@ -34,19 +32,12 @@ SETUP_GETTEXT=./setup-gettext
 echo "Generating configuration files for $PACKAGE, please wait...."
 echo;
 
-# Backup po/ChangeLog because gettext likes to change it
-cp -p po/ChangeLog po/ChangeLog.save
-
-echo "Running gettextize, please ignore non-fatal messages...."
-$SETUP_GETTEXT
-
-#restore pl/ChangeLog
-mv po/ChangeLog.save po/ChangeLog
-
 echo "Running libtoolize, please ignore non-fatal messages...."
 echo n | libtoolize --copy --force || exit;
 echo;
 
+libtoolize -c -f --automake
+intltoolize --force --copy
 aclocal -I m4 || exit;
 autoheader || exit;
 automake --add-missing --copy

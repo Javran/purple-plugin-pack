@@ -301,8 +301,8 @@ static void
 init_plugin(GaimPlugin *plugin)
 {
 #ifdef ENABLE_NLS
-	bindtextdomain(GPP_PACKAGE, LOCALEDIR);
-	bind_textdomain_codeset(GPP_PACKAGE, "UTF-8");
+	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif
 	info.name = _("Buddy Icon Tools");
 	info.summary = _("Tools to manipulate buddy icons. *DANGEROUS*");

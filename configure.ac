@@ -42,9 +42,13 @@ AH_BOTTOM([
 dnl #######################################################################
 dnl # Good ol' gettext
 dnl #######################################################################
+AC_PROG_INTLTOOL
+
+GETTEXT_PACKAGE=plugin_pack
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, ["$GETTEXT_PACKAGE"], [Define the gettext package to be used.])
 ALL_LINGUAS="en_AU es_ES"
-AM_GNU_GETTEXT_VERSION(0.10.40)
-AM_GNU_GETTEXT
+AM_GLIB_GNU_GETTEXT
 
 dnl #######################################################################
 dnl # Look for the C compiler
@@ -153,7 +157,6 @@ AC_OUTPUT([
 	gaim-plugin_pack.spec
 	common/Makefile
 	doc/Makefile
-	intl/Makefile
 	m4/Makefile
 	po/Makefile.in
 	VERSION

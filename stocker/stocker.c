@@ -147,8 +147,8 @@ static GaimPluginInfo stocker_info =
 static void
 stocker_init(GaimPlugin *plugin) {
 #ifdef ENABLE_NLS
-	bindtextdomain(GPP_PACKAGE, LOCALEDIR);
-	bind_textdomain_codeset(GPP_PACKAGE, "UTF-8");
+	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
 	stocker_info.name = _("Stocker");

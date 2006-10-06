@@ -4,6 +4,9 @@ EXTRA_DIST = \
 	ChangeLog \
 	INSTALL \
 	INSTALL.WIN32 \
+	intltool-extract.in \
+	intltool-merge.in \
+	intltool-update.in \
 	Makefile.am \
 	Makefile.mingw \
 	NEWS \
@@ -20,7 +23,7 @@ EXTRA_DIST = \
 
 DIST_SUBDIRS = common doc intl m4 po $(PP_DISTDIRS)
 
-SUBDIRS = common doc intl m4 po $(PP_BUILDDIRS)
+SUBDIRS = common doc m4 po $(PP_BUILDDIRS)
 
 BUILT_SOURCES = gpp_config.h
 

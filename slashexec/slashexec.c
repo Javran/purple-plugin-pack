@@ -45,9 +45,9 @@
 #ifdef ENABLE_NLS
 # include <locale.h>
 # include <libintl.h>
-# define _(x) dgettext(GPP_PACKAGE, x)
+# define _(x) dgettext(GETTEXT_PACKAGE, x)
 # ifdef dgettext_noop
-#  define N_(String) dgettext_noop (GPP_PACKAGE, String)
+#  define N_(String) dgettext_noop (GETTEXT_PACKAGE, String)
 # else
 #  define N_(String) (String)
 # endif
@@ -367,8 +367,8 @@ static GaimPluginInfo se_info = {
 static void
 init_plugin(GaimPlugin *plugin) {
 #ifdef ENABLE_NLS
-	bindtextdomain(GPP_PACKAGE, LOCALEDIR);
-	bind_textdomain_codeset(GPP_PACKAGE, "UTF-8");
+	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 	se_info.summary = _("/exec a la UNIX IRC CLI");
 	se_info.description = _("A plugin that adds the /exec command line"

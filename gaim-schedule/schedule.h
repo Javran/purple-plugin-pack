@@ -18,6 +18,10 @@
  * 02111-1307, USA.
  */
 
+#ifdef HAVE_CONFIG_H
+# include "../gpp_config.h"
+#endif
+
 #include <glib.h>
 
 /* Pack/Local headers */
