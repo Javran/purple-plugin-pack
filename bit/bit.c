@@ -228,10 +228,9 @@ init_plugin(GaimPlugin *plugin)
 	info.name = _("Buddy Icon Tools");
 	info.summary = _("Tools to manipulate buddy icons. *DANGEROUS*");
 	info.description = _("Whilst working on Gaim 2.0.0, I found a need to "
-			"destroy all my buddies' buddy icons. Also, I finally got annoyed "
-			"enough that there's no \"Global Buddy Icon\", so I thought I'd "
-			"add that too. There's nothing to do these functions in Gaim, so "
-			"here they are. Completely, thoroughly untested.");
+			"destroy all my buddies' buddy icons.  There's nothing to do "
+			"these functions in Gaim, so here they are. Completely, "
+			"thoroughly untested.");
 
 	bit = plugin; /* handle needed for request API file selector */
 }
