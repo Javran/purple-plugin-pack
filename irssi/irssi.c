@@ -194,7 +194,7 @@ irssi_window_cb(GaimConversation *c, const gchar *cmd, gchar **args,
 		return GAIM_CMD_RET_OK;
 	/* the GtkNotebook stuff below was shamelessly stolen from Gaim's
 	 * Ctrl+PageUp code */
-	} else if(!strcmp(lower, "previous") || !strcmp(lower, "left")) {
+	} else if(!strcmp(lower, "previous") || !strcmp(lower, "prev") || !strcmp(lower, "left")) {
 		/* if we're in the first tab, we need to go back to the last */
 		if (!gaim_gtk_conv_window_get_gtkconv_at_index(win, curconv - 1))
 			gtk_notebook_set_current_page(GTK_NOTEBOOK(win->notebook), -1);
