@@ -38,8 +38,9 @@
 							"conversations when the day has changed, adds the " \
 							"lastlog command, adds the window command, etc.  " \
 							"The day changed message is not logged."
-#define PLUGIN_AUTHOR		"Gary Kramlich <grim@reaperworld.com> and " \
-							"John Bailey <rekkanoryo@rekkanoryo.org"
+#define PLUGIN_AUTHOR		"Gary Kramlich <grim@reaperworld.com>, " \
+							"John Bailey <rekkanoryo@rekkanoryo.org, " \
+							"Sadrul Habib Chowdhury <sadrul@users.sourceforge.net>"
 
 /* System headers */
 #include <glib.h>
