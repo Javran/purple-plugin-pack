@@ -227,6 +227,30 @@ irssi_lastlog_cb(GaimConversation *c, const gchar *cmd, gchar **args,
 	return GAIM_CMD_RET_FAILED;
 }
 
+/* these three callbacks are intended to modify text so that formatting appears
+ * similarly to how irssi would format the text */
+/* TODO: make these callbacks actually do something! */
+static gboolean
+irssi_writing_cb(GaimAccount *account, const char *who, char **message,
+		GaimConversation *conv, GaimMessageFlags flags)
+{
+	/* TODO: here we need to make sure we don't try to double format anything.
+	 *       I'm open to any suggestions. */
+	return FALSE;
+}
+
+static gboolean
+irssi_sending_im_cb(GaimAccount *account, const char *receiver, char **message)
+{
+	return FALSE;
+}
+
+static gboolean
+irssi_sending_chat_cb(GaimAccount *account, char **message, int id)
+{
+	return FALSE;
+}
+
 static gboolean
 irssi_load(GaimPlugin *plugin) { /* Gaim calls this to load the plugin */
 	const gchar *window_help, *win_help, *layout_help, *lastlog_help;
@@ -313,6 +337,17 @@ irssi_load(GaimPlugin *plugin) { /* Gaim calls this to load the plugin */
 	irssi_lastlog_cmd = gaim_cmd_register("lastlog", "s", GAIM_CMD_P_PLUGIN,
 			GAIM_CMD_FLAG_IM | GAIM_CMD_FLAG_CHAT, NULL,
 			GAIM_CMD_FUNC(irssi_lastlog_cb), lastlog_help, NULL);
+
+	/* here we connect to the {writing,sending}-{chat,im}-msg signals so
+	 * we can modify message text for stuff like *text*, /text/, and _text_ */
+	gaim_signal_connect(convhandle, "writing-im-msg", plugin,
+			GAIM_CALLBACK(irssi_writing_cb), NULL);
+	gaim_signal_connect(convhandle, "writing-chat-msg", plugin,
+			GAIM_CALLBACK(irssi_writing_cb), NULL);
+	gaim_signal_connect(convhandle, "sending-im-msg", plugin,
+			GAIM_CALLBACK(irssi_sending_im_cb), NULL);
+	gaim_signal_connect(convhandle, "sending-chat-msg", plugin,
+			GAIM_CALLBACK(irssi_sending_chat_cb), NULL);
 
 	return TRUE; /* continue loading the plugin */
 }
