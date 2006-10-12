@@ -23,6 +23,8 @@
 # include "../gpp_config.h"
 #endif
 
+#include "../common/i18n.h"
+
 #include <glib.h>
 #include <stdarg.h>
 #include <string.h>
@@ -41,22 +43,6 @@
 #include <plugin.h>
 #include <util.h>
 #include <version.h>
-
-#ifdef ENABLE_NLS
-# include <locale.h>
-# include <libintl.h>
-# define _(x) dgettext(GETTEXT_PACKAGE, x)
-# ifdef dgettext_noop
-#  define N_(String) dgettext_noop (GETTEXT_PACKAGE, String)
-# else
-#  define N_(String) (String)
-# endif
-#else
-# include <locale.h>
-# define N_(String) (String)
-# define _(x) (x)
-# define ngettext(Singular, Plural, Number) ((Number == 1) ? (Singular) : (Plural))
-#endif
 
 #ifdef _WIN32
 /* Windows 2000 and earlier only allow 2047 bytes in an argv vector for cmd.exe
