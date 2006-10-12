@@ -229,8 +229,13 @@ irssi_lastlog_cb(GaimConversation *c, const gchar *cmd, gchar **args,
 { /* callback for /lastlog */
 	GaimGtkConversation *gtkconv = c->ui_data;
 	int i;
-	GString *result = g_string_new(NULL);
-	char **lines = gtk_imhtml_get_markup_lines(GTK_IMHTML(gtkconv->imhtml));
+	GString *result;
+	char **lines;
+
+	/* let's avoid some warnings on anal C compilers like mipspro cc */
+	result = g_string_new(NULL);
+	lines = gtk_imhtml_get_markup_lines(GTK_IMHTML(gtkconv->imhtml));
+
 		/* XXX: This will include all messages, including the output of the
 		 * history plugin, system messages, timestamps etc. This might be
 		 * undesirable. A better solution will probably be considerably more
