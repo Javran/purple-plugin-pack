@@ -241,7 +241,7 @@ se_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args, gchar **error,
 	g_strfreev(cmd_argv);
 	g_free(cmd_stderr);
 
-	if(cmd_stdout && !strcmp(cmd_stdout, "") && !strcmp(cmd_stdout, "\n")) {
+	if(cmd_stdout && strcmp(cmd_stdout, "") && !strcmp(cmd_stdout, "\n")) {
 		g_strchug(cmd_stdout);
 
 		if(g_str_has_suffix(cmd_stdout, "\n"))
