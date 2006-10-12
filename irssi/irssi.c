@@ -52,8 +52,11 @@
 #include <conversation.h>
 #include <cmds.h>
 #include <gtkconv.h>
+#include <gtkimhtml.h>
 #include <gtkplugin.h>
+#include <notify.h>
 #include <plugin.h>
+#include <util.h>
 #include <version.h>
 
 /* Pack/Local headers */
@@ -223,8 +226,30 @@ static GaimCmdRet
 irssi_lastlog_cb(GaimConversation *c, const gchar *cmd, gchar **args,
 		gchar **error, void *data)
 { /* callback for /lastlog */
-	/* we're not doing anything here yet */
-	return GAIM_CMD_RET_FAILED;
+	GaimGtkConversation *gtkconv = c->ui_data;
+	int i;
+	GString *result = g_string_new(NULL);
+	char **lines = gtk_imhtml_get_markup_lines(GTK_IMHTML(gtkconv->imhtml));
+		/* XXX: This will include all messages, including the output of the
+		 * history plugin, system messages, timestamps etc. This might be
+		 * undesirable. A better solution will probably be considerably more
+		 * complex.
+		 */
+
+	for (i = 0; lines[i]; i++) {
+		char *strip = gaim_markup_strip_html(lines[i]);
+		if (strstr(strip, args[0])) {
+			result = g_string_append(result, lines[i]);
+			result = g_string_append(result, "<br>");
+		}
+		g_free(strip);
+	}
+
+	gaim_notify_formatted(gtkconv, _("Lastlog"), _("Lastlog output"), NULL, result->str, NULL, NULL);
+
+	g_string_free(result, TRUE);
+	g_free(lines);
+	return GAIM_CMD_RET_OK;
 }
 
 /* these three callbacks are intended to modify text so that formatting appears
@@ -367,6 +392,7 @@ irssi_unload(GaimPlugin *plugin) { /* Gaim calls this to unload the plugin */
 	gaim_cmd_unregister(irssi_window_cmd);
 	gaim_cmd_unregister(irssi_win_cmd);
 	gaim_cmd_unregister(irssi_layout_cmd);
+	gaim_cmd_unregister(irssi_lastlog_cmd);
 
 	return TRUE; /* continue unloading the plugin */
 }
