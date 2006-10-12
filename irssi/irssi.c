@@ -265,6 +265,11 @@ static gboolean
 irssi_writing_cb(GaimAccount *account, const char *who, char **message,
 		GaimConversation *conv, GaimMessageFlags flags)
 {
+	/* if there aren't any asterisks, slashes, or underscores in the message, don't
+	 * bother trying to do anything to the message, as there's nothing to format */
+	if(!strchr(*message, '*') && !strchr(*message, '/') && !strchr(*message, '_'))
+		return FALSE;
+
 	/* TODO: here we need to make sure we don't try to double format anything.
 	 *       I'm open to any suggestions. */
 	return FALSE;
@@ -273,12 +278,22 @@ irssi_writing_cb(GaimAccount *account, const char *who, char **message,
 static gboolean
 irssi_sending_im_cb(GaimAccount *account, const char *receiver, char **message)
 {
+	/* if there aren't any asterisks, slashes, or underscores in the message, don't
+	 * bother trying to do anything to the message, as there's nothing to format */
+	if(!strchr(*message, '*') && !strchr(*message, '/') && !strchr(*message, '_'))
+		return FALSE;
+
 	return FALSE;
 }
 
 static gboolean
 irssi_sending_chat_cb(GaimAccount *account, char **message, int id)
 {
+	/* if there aren't any asterisks, slashes, or underscores in the message, don't
+	 * bother trying to do anything to the message, as there's nothing to format */
+	if(!strchr(*message, '*') && !strchr(*message, '/') && !strchr(*message, '_'))
+		return FALSE;
+
 	return FALSE;
 }
 
