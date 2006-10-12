@@ -254,7 +254,11 @@ irssi_sending_chat_cb(GaimAccount *account, char **message, int id)
 static gboolean
 irssi_load(GaimPlugin *plugin) { /* Gaim calls this to load the plugin */
 	const gchar *window_help, *win_help, *layout_help, *lastlog_help;
-	time_t t = time(NULL);
+	void *convhandle;
+	time_t t;
+	
+	convhandle = gaim_conversations_get_handle();
+	t = time(NULL);
 	lastday = irssi_datechange_get_day(&t);
 
 	/*
