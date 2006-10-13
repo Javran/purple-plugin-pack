@@ -396,7 +396,8 @@ static GaimPluginInfo se_info = {
 	NULL,												/* description		*/
 	"Gary Kramlich <amc_grim@users.sf.net>,"
 	" Peter Lawler <bleeter from users.sf.net>,"
-	" Daniel Atallah, and"
+	" Daniel Atallah,"
+	" Sadrul Habib Chowdhury <sadrul@users.sf.net>, and"
 	" John Bailey <rekkanoryo@users.sf.net>",			/* authors			*/
 	GPP_WEBSITE,										/* homepage			*/
 	se_load,											/* load				*/
