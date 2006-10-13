@@ -216,7 +216,7 @@ irssi_window_cb(GaimConversation *c, const gchar *cmd, gchar **args,
 }
 
 static int
-get_layout_setting(GaimGtkConversation *gtkconv)
+irssi_layout_get_setting(GaimGtkConversation *gtkconv)
 {
 	GaimConversation *conv = gtkconv->active_conv;
 	GaimBlistNode *node = NULL;
@@ -363,10 +363,10 @@ irssi_layout_cb(GaimConversation *c, const gchar *cmd, gchar **args,
 			if ((count = gaim_gtk_conv_window_get_gtkconv_count(window)) > 1) {
 				int position;
 				for (position = 1; position < count; position++) {
-					pos = get_layout_setting(gtkconv = gaim_gtk_conv_window_get_gtkconv_at_index(window, position));
+					pos = irssi_layout_get_setting(gtkconv = gaim_gtk_conv_window_get_gtkconv_at_index(window, position));
 					if (pos && (pos & 0x3ff)) {
 						for (i = 0; i < position; i++) {
-							int p = get_layout_setting(gaim_gtk_conv_window_get_gtkconv_at_index(window, i));
+							int p = irssi_layout_get_setting(gaim_gtk_conv_window_get_gtkconv_at_index(window, i));
 							if (p && (p & 0x3ff) > (pos & 0x3ff)) {
 								gtk_notebook_reorder_child(GTK_NOTEBOOK(window->notebook), gtkconv->tab_cont, i);
 								break;
