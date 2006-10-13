@@ -78,18 +78,18 @@ se_replace_ending_char(gchar *string, gchar replace)
 }
 
 static gboolean
-do_action(GaimConversation *conv, gchar *args, gboolean send)
+se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 {
 	GError *parse_error = NULL, *exec_error = NULL;
 	GString *command = NULL;
 	gchar *spawn_cmd = NULL, **cmd_argv = NULL, *cmd_stdout = NULL,
 		  *cmd_stderr = NULL;
+	gint cmd_argc = 0;
 #ifdef _WIN32
 	const gchar *shell_flag = "/c";
 #else
 	const gchar *shell_flag = "-c";
 #endif
-	gint cmd_argc = 0;
 
 	command = g_string_new("");
 
@@ -278,7 +278,7 @@ se_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args, gchar **error,
 		string += 3;
 	}
 
-	if (do_action(conv, string, send))
+	if (se_do_action(conv, string, send))
 		return GAIM_CMD_RET_OK;
 	else
 		return GAIM_CMD_RET_FAILED;
@@ -328,9 +328,9 @@ se_sending_msg_helper(GaimConversation *conv, char **message)
 		send = FALSE;
 
 	if (send)
-		do_action(conv, strip + 1, send);
+		se_do_action(conv, strip + 1, send);
 	else
-		do_action(conv, strip + 2, send);
+		se_do_action(conv, strip + 2, send);
 	g_free(strip);
 }
 
