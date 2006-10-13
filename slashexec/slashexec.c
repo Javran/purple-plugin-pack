@@ -77,13 +77,11 @@ se_replace_ending_char(gchar *string, gchar replace)
 	return;
 }
 
-static GaimCmdRet
-se_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args, gchar **error,
-			gpointer data)
+static gboolean
+do_action(GaimConversation *conv, gchar *args, gboolean send)
 {
 	GError *parse_error = NULL, *exec_error = NULL;
 	GString *command = NULL;
-	gboolean send = FALSE;
 	gchar *spawn_cmd = NULL, **cmd_argv = NULL, *cmd_stdout = NULL,
 		  *cmd_stderr = NULL;
 #ifdef _WIN32
@@ -97,54 +95,52 @@ se_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args, gchar **error,
 
 	/* we can still end up with 0 "args", and we need to make sure we don't
 	 * go over the max command length */
-	if(strlen(args[0]) == 0 || strlen(args[0]) > MAX_CMD_LEN)
-		return GAIM_CMD_RET_FAILED;
+	if(strlen(args) == 0 || strlen(args) > MAX_CMD_LEN)
+		return FALSE;
 
 	/* remove trailing \ characters to prevent some nasty crashes */
-	se_replace_ending_char(args[0], '\\');
+	se_replace_ending_char(args, '\\');
 
 #ifndef _WIN32
 	/* escape remaining special characters; this is to ensure the shell gets
 	 * what the user actually typed. */
-	args[0] = g_strescape(args[0], "");
+	args = g_strescape(args, "");
 #endif
 
 	/* if we get this far with a NULL, there's a problem. */
 	if(!args) {
 		gaim_debug_info("slashexec", "bad args: %s\n",
-				args[0] ? args[0] : "null");
+				args ? args : "null");
 		
-		return GAIM_CMD_RET_FAILED;
+		return FALSE;
 	}
 
 	/* make sure the string passes the UTF8 validation in glib */
-	if(!g_utf8_validate(args[0], -1, NULL)) {
+	if(!g_utf8_validate(args, -1, NULL)) {
 		gaim_debug_info("slashexec", "invalid UTF8: %s\n",
-				args[0] ? args[0] : "null");
+				args ? args : "null");
 
-		return GAIM_CMD_RET_FAILED;
+		return FALSE;
 	}
 
 #ifdef _WIN32
 	/* check to see if the user added the -o flag to send the output of the
 	 * command to the conversation */
-	if(!strncmp(args[0], "-o", 2)) {
-		send = TRUE;
+	if (send) {
 		g_string_append_printf(command, "%s %s %s", shell->str, shell_flag,
-				args[0] + 3);
+				args + 3);
 	} else
 		g_string_append_printf(command, "%s %s %s", shell->str, shell_flag,
-				args[0]);
+				args);
 #else
 	/* check to see if the user added the -o flag to send the output of the
 	 * command to the conversation */
-	if(!strncmp(args[0], "-o", 2)) {
-		send = TRUE;
+	if (send) {
 		g_string_append_printf(command, "%s %s \"%s\"", shell->str, shell_flag,
-				args[0] + 3);
+				args + 3);
 	} else
 		g_string_append_printf(command, "%s %s \"%s\"", shell->str, shell_flag,
-				args[0]);
+				args);
 #endif
 
 	/* This is the finished command that will be executed */
@@ -180,7 +176,7 @@ se_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args, gchar **error,
 		if(cmd_argv)
 			g_strfreev(cmd_argv);
 
-		return GAIM_CMD_RET_FAILED;
+		return FALSE;
 	}
 
 	/* Now we're ready to execute the user's command.  Let the user know. */
@@ -225,7 +221,7 @@ se_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args, gchar **error,
 		g_free(cmd_stderr);
 		g_strfreev(cmd_argv);
 		
-		return GAIM_CMD_RET_FAILED;
+		return FALSE;
 	}
 
 	/* if we get this far then the command actually executed */
@@ -260,7 +256,7 @@ se_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args, gchar **error,
 					gaim_conv_chat_send(GAIM_CONV_CHAT(conv), cmd_stdout);
 					break;
 				default:
-					return GAIM_CMD_RET_FAILED;
+					return FALSE;
 			}
 		} else
 			gaim_conversation_write(conv, NULL, cmd_stdout, GAIM_MESSAGE_SYSTEM,
@@ -274,13 +270,71 @@ se_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args, gchar **error,
 		g_free(spawn_cmd);
 		g_free(cmd_stdout);
 
-		return GAIM_CMD_RET_FAILED;
+		return FALSE;
 	}
 	
 	g_free(cmd_stdout);
 	g_free(spawn_cmd);
 
-	return GAIM_CMD_RET_OK;
+	return TRUE;
+}
+
+static GaimCmdRet
+se_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args, gchar **error,
+			gpointer data)
+{
+	gboolean send = FALSE;
+	if(args[0] && !strncmp(args[0], "-o", 2)) {
+		send = TRUE;
+	}
+
+	if (do_action(conv, args[0], send))
+		return GAIM_CMD_RET_OK;
+	else
+		return GAIM_CMD_RET_FAILED;
+}
+
+static void
+sending_msg(GaimConversation *conv, char **message)
+{
+	char *string = *message, *strip;
+	gboolean send = TRUE;
+	if (conv == NULL)
+		return;
+
+	gaim_debug_fatal("slashexec", "%s\n", string);
+	strip = gaim_markup_strip_html(string);
+	if (*strip != '!' || strncmp(strip, "!!!", 3) == 0) {
+		g_free(strip);
+		return;
+	}
+	*message = NULL;
+	g_free(string);
+
+	if (*(strip + 1) == '!')
+		send = FALSE;
+
+	if (send)
+		do_action(conv, strip + 1, send);
+	else
+		do_action(conv, strip + 2, send);
+	g_free(strip);
+}
+
+static void
+sending_chat_msg(GaimAccount *account, char **message, int id)
+{
+	GaimConversation *conv;
+	conv = gaim_find_chat(account->gc, id);
+	sending_msg(conv, message);
+}
+
+static void
+sending_im_msg(GaimAccount *account, const char *who, char **message)
+{
+	GaimConversation *conv;
+	conv = gaim_find_conversation_with_account(GAIM_CONV_TYPE_IM, who, account);
+	sending_msg(conv, message);
 }
 
 static gboolean
@@ -295,6 +349,10 @@ se_load(GaimPlugin *plugin) {
 	se_cmd = gaim_cmd_register("exec", "s", GAIM_CMD_P_PLUGIN,
 								GAIM_CMD_FLAG_IM | GAIM_CMD_FLAG_CHAT, NULL,
 								se_cmd_cb, help, NULL);
+	gaim_signal_connect(gaim_conversations_get_handle(), "sending-im-msg", plugin,
+				GAIM_CALLBACK(sending_im_msg), NULL);
+	gaim_signal_connect(gaim_conversations_get_handle(), "sending-chat-msg", plugin,
+				GAIM_CALLBACK(sending_chat_msg), NULL);
 
 #ifdef _WIN32
 	shell = g_string_new("cmd.exe");
