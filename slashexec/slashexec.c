@@ -124,23 +124,11 @@ do_action(GaimConversation *conv, gchar *args, gboolean send)
 	}
 
 #ifdef _WIN32
-	/* check to see if the user added the -o flag to send the output of the
-	 * command to the conversation */
-	if (send) {
-		g_string_append_printf(command, "%s %s %s", shell->str, shell_flag,
-				args + 3);
-	} else
-		g_string_append_printf(command, "%s %s %s", shell->str, shell_flag,
-				args);
+	g_string_append_printf(command, "%s %s %s", shell->str, shell_flag,
+			args);
 #else
-	/* check to see if the user added the -o flag to send the output of the
-	 * command to the conversation */
-	if (send) {
-		g_string_append_printf(command, "%s %s \"%s\"", shell->str, shell_flag,
-				args + 3);
-	} else
-		g_string_append_printf(command, "%s %s \"%s\"", shell->str, shell_flag,
-				args);
+	g_string_append_printf(command, "%s %s \"%s\"", shell->str, shell_flag,
+			args);
 #endif
 
 	/* This is the finished command that will be executed */
@@ -284,11 +272,13 @@ se_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args, gchar **error,
 			gpointer data)
 {
 	gboolean send = FALSE;
-	if(args[0] && !strncmp(args[0], "-o", 2)) {
+	char *string = args[0];
+	if(string && !strncmp(string, "-o", 2)) {
 		send = TRUE;
+		string += 3;
 	}
 
-	if (do_action(conv, args[0], send))
+	if (do_action(conv, string, send))
 		return GAIM_CMD_RET_OK;
 	else
 		return GAIM_CMD_RET_FAILED;
@@ -302,7 +292,6 @@ sending_msg(GaimConversation *conv, char **message)
 	if (conv == NULL)
 		return;
 
-	gaim_debug_fatal("slashexec", "%s\n", string);
 	strip = gaim_markup_strip_html(string);
 	if (*strip != '!' || strncmp(strip, "!!!", 3) == 0) {
 		g_free(strip);
