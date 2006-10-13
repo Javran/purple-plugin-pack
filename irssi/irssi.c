@@ -215,12 +215,163 @@ irssi_window_cb(GaimConversation *c, const gchar *cmd, gchar **args,
 	return GAIM_CMD_RET_FAILED;
 }
 
+static int
+get_layout_setting(GaimGtkConversation *gtkconv)
+{
+	GaimConversation *conv = gtkconv->active_conv;
+	GaimBlistNode *node = NULL;
+	int ret = 0;
+
+	if (conv->type == GAIM_CONV_TYPE_CHAT) {
+		node = (GaimBlistNode*)gaim_blist_find_chat(conv->account, conv->name);
+	} else if (conv->type == GAIM_CONV_TYPE_IM) {
+		node = (GaimBlistNode*)gaim_find_buddy(conv->account, conv->name);
+	}
+
+	if (node)
+		ret = gaim_blist_node_get_int(node, "irssi::layout");
+	return ret;
+}
+
 static GaimCmdRet
 irssi_layout_cb(GaimConversation *c, const gchar *cmd, gchar **args,
 		gchar **error, void *data)
 { /* callback for /layout */
-	/* we're not doing anything here yet */
-	return GAIM_CMD_RET_FAILED;
+	if (strcmp(args[0], "save") == 0) {
+		int i, j;
+		GaimBlistNode *node = NULL;
+		GList *wins;
+
+		/* Remove all the previously saved settings */
+		node = gaim_blist_get_root();
+		for (; node; node = gaim_blist_node_next(node, TRUE))
+			gaim_blist_node_set_int(node, "irssi::layout", 0);
+		
+		wins = gaim_gtk_conv_windows_get_list();
+		for (i = 1; wins ; wins = wins->next, i++) {
+			GaimGtkWindow *win = wins->data;
+			GList *convs = gaim_gtk_conv_window_get_gtkconvs(win);
+			for (j = 1; convs; convs = convs->next, j++) {
+				GaimGtkConversation *gtkconv = convs->data;
+				GaimConversation *conv = gtkconv->active_conv;
+
+				if (conv->type == GAIM_CONV_TYPE_CHAT) {
+					node = (GaimBlistNode*)gaim_blist_find_chat(conv->account, conv->name);
+				} else {
+					node = (GaimBlistNode*)gaim_find_buddy(conv->account, conv->name);
+				}
+
+				if (node)
+					gaim_blist_node_set_int(node, "irssi::layout", (i << 10) + j); /* Just being cool */
+			}
+		}
+	} else if (strcmp(args[0], "load") == 0) {
+		GaimBuddy *buddy;
+		GaimChat *chat;
+		GaimConversation *conv = NULL;
+		GList *list = NULL;
+		GList *settings = NULL;
+		GList *wins;
+		GaimBlistNode *node;
+		GaimGtkConversation *gtkconv;
+		GaimGtkWindow *window;
+		int current;
+		
+		/* First create all the conversations that were saved. Then put them in proper places. */
+
+		node = gaim_blist_get_root();
+		for (; node; node = gaim_blist_node_next(node, FALSE)) {
+			int setting = gaim_blist_node_get_int(node, "irssi::layout");
+			if (setting) {
+				conv = NULL;
+				if (GAIM_BLIST_NODE_IS_BUDDY(node)) {
+					buddy = (GaimBuddy*)node;
+					conv = gaim_find_conversation_with_account(GAIM_CONV_TYPE_IM, buddy->name, buddy->account);
+					if (conv == NULL) {
+						if (gaim_account_is_connected(buddy->account))
+							conv = gaim_conversation_new(GAIM_CONV_TYPE_IM, buddy->account, buddy->name);
+					}
+				} else if (GAIM_BLIST_NODE_IS_CHAT(node)) {
+					chat = (GaimChat*)node;
+					conv = gaim_find_conversation_with_account(GAIM_CONV_TYPE_CHAT,
+								gaim_chat_get_name(chat), chat->account);
+					if (conv == NULL) {
+						if (gaim_account_is_connected(chat->account)) {
+							conv = gaim_conversation_new(GAIM_CONV_TYPE_CHAT,
+									chat->account, gaim_chat_get_name(chat));
+							GAIM_CONV_CHAT(conv)->left = TRUE;  /* XXX: hack */
+							serv_join_chat(chat->account->gc, chat->components);
+						}
+					}
+				}
+
+				if (conv) {
+					list = g_list_prepend(list, conv);
+					settings = g_list_prepend(settings, GINT_TO_POINTER(setting));
+				}
+			}
+		}
+
+		/* This is a little convoluted */
+		current = 1;
+		while (list) {
+			GList *iter1, *iter2;
+			for (iter1 = list, iter2 = settings; iter1; ) {
+				int win, pos;
+				int setting;
+				int count;  /* no. of tabs in a window */
+				GList *sav;
+
+				setting = GPOINTER_TO_INT(iter2->data);
+				pos = setting & 0x3ff;
+				win = setting >> 10;
+
+				if (win != current)
+					continue;
+
+				conv = iter1->data;
+				gtkconv = conv->ui_data;
+
+				/* I think the next six lines are weird */
+				sav = iter1;
+				iter1 = iter1->next;
+				list = g_list_delete_link(list, sav);
+				sav = iter2;
+				iter2 = iter2->next;
+				settings = g_list_delete_link(settings, sav);
+
+				wins = gaim_gtk_conv_windows_get_list();
+				window = g_list_nth_data(wins, win - 1);
+				if (window == NULL) {
+					/* Create the window */
+					window = gaim_gtk_conv_window_new();
+				}
+
+				if (gtkconv->win != window) {
+					gaim_gtk_conv_window_remove_gtkconv(gtkconv->win, gtkconv);
+					gaim_gtk_conv_window_add_gtkconv(window, gtkconv);
+				}
+
+				/* We have the conversation in the right window. Now, make sure
+				 * it has the correct position within the window */
+				window = gtkconv->win;
+				if ((count = gaim_gtk_conv_window_get_gtkconv_count(window)) > 1) {
+					int position = 0;
+					for (position = 0; position < count; position++) {
+						int p;
+						p = get_layout_setting(gaim_gtk_conv_window_get_gtkconv_at_index(window, position));
+						if (p && (p & 0x3ff) > pos) {
+							gtk_notebook_reorder_child(GTK_NOTEBOOK(window->notebook), gtkconv->tab_cont, position);
+							break;
+						}
+					}
+				}
+			}
+			current++;
+		}
+	} else 
+		return GAIM_CMD_RET_FAILED;
+	return GAIM_CMD_RET_OK;
 }
 
 static GaimCmdRet
