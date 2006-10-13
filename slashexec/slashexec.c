@@ -287,18 +287,42 @@ se_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args, gchar **error,
 static void
 se_sending_msg_helper(GaimConversation *conv, char **message)
 {
+	/* 'recurse' is used to detect a recursion. If the user sends "!!!command",
+	 * then it is changed to "!command" and sent to the user. We do not want to
+	 * process that in such cases. */
+	static gboolean recurse = FALSE;
 	char *string = *message, *strip;
 	gboolean send = TRUE;
+
+	if (recurse)
+		return;
 	if (conv == NULL)
 		return;
 
 	strip = gaim_markup_strip_html(string);
-	if (*strip != '!' || strncmp(strip, "!!!", 3) == 0) {
+	if (*strip != '!') {
 		g_free(strip);
 		return;
 	}
 	*message = NULL;
 	g_free(string);
+
+	if (strncmp(strip, "!!!", 3) == 0) {
+		recurse = TRUE;
+		switch(gaim_conversation_get_type(conv)) {
+			case GAIM_CONV_TYPE_IM:
+				gaim_conv_im_send(GAIM_CONV_IM(conv), strip + 2);
+				break;
+			case GAIM_CONV_TYPE_CHAT:
+				gaim_conv_chat_send(GAIM_CONV_CHAT(conv), strip + 2);
+				break;
+			default:
+				break;
+		}
+		g_free(strip);
+		recurse = FALSE;
+		return;
+	}
 
 	if (*(strip + 1) == '!')
 		send = FALSE;
