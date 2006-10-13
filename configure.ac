@@ -119,8 +119,9 @@ fi
 AM_PATH_XMMS(1.0.0, HAVE_XMMS=yes, AC_MSG_WARN([
 *** XMMS >= 1.0 is required to build Gaim-XMMS-Remote; please make sure you
 *** have the XMMS development headers installed.  The latest version of XMMS
-*** is always available at http://www.xmms.org/.]))
-
+*** is always available at http://www.xmms.org/.])
+HAVE_XMMS=no
+)
 AM_CONDITIONAL(USE_XMMS, test x"$HAVE_XMMS" = x"yes")
 
 dnl #######################################################################
