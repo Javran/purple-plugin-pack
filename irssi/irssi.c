@@ -319,7 +319,6 @@ irssi_layout_cb(GaimConversation *c, const gchar *cmd, gchar **args,
 			for (iter1 = list, iter2 = settings; iter1; ) {
 				int win, pos;
 				int setting;
-				int count;  /* no. of tabs in a window */
 				GList *sav;
 
 				setting = GPOINTER_TO_INT(iter2->data);
@@ -351,23 +350,31 @@ irssi_layout_cb(GaimConversation *c, const gchar *cmd, gchar **args,
 					gaim_gtk_conv_window_remove_gtkconv(gtkconv->win, gtkconv);
 					gaim_gtk_conv_window_add_gtkconv(window, gtkconv);
 				}
+			}
+			current++;
+		}
 
-				/* We have the conversation in the right window. Now, make sure
-				 * it has the correct position within the window */
-				window = gtkconv->win;
-				if ((count = gaim_gtk_conv_window_get_gtkconv_count(window)) > 1) {
-					int position = 0;
-					for (position = 0; position < count; position++) {
-						int p;
-						p = get_layout_setting(gaim_gtk_conv_window_get_gtkconv_at_index(window, position));
-						if (p && (p & 0x3ff) > pos) {
-							gtk_notebook_reorder_child(GTK_NOTEBOOK(window->notebook), gtkconv->tab_cont, position);
-							break;
+		/* We have the conversation in the right window. Now, make sure
+		 * it has the correct position within the window */
+		wins = gaim_gtk_conv_windows_get_list();
+		for (; wins; wins = wins->next) {
+			int count, i, pos;
+			window = wins->data;
+			if ((count = gaim_gtk_conv_window_get_gtkconv_count(window)) > 1) {
+				int position;
+				for (position = 1; position < count; position++) {
+					pos = get_layout_setting(gtkconv = gaim_gtk_conv_window_get_gtkconv_at_index(window, position));
+					if (pos && (pos & 0x3ff)) {
+						for (i = 0; i < position; i++) {
+							int p = get_layout_setting(gaim_gtk_conv_window_get_gtkconv_at_index(window, i));
+							if (p && (p & 0x3ff) > (pos & 0x3ff)) {
+								gtk_notebook_reorder_child(GTK_NOTEBOOK(window->notebook), gtkconv->tab_cont, i);
+								break;
+							}
 						}
 					}
 				}
 			}
-			current++;
 		}
 	} else 
 		return GAIM_CMD_RET_FAILED;
