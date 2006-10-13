@@ -285,7 +285,7 @@ se_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args, gchar **error,
 }
 
 static void
-sending_msg(GaimConversation *conv, char **message)
+se_sending_msg_helper(GaimConversation *conv, char **message)
 {
 	char *string = *message, *strip;
 	gboolean send = TRUE;
@@ -311,19 +311,19 @@ sending_msg(GaimConversation *conv, char **message)
 }
 
 static void
-sending_chat_msg(GaimAccount *account, char **message, int id)
+se_sending_chat_msg_cb(GaimAccount *account, char **message, int id)
 {
 	GaimConversation *conv;
 	conv = gaim_find_chat(account->gc, id);
-	sending_msg(conv, message);
+	se_sending_msg_helper(conv, message);
 }
 
 static void
-sending_im_msg(GaimAccount *account, const char *who, char **message)
+se_sending_im_msg_cb(GaimAccount *account, const char *who, char **message)
 {
 	GaimConversation *conv;
 	conv = gaim_find_conversation_with_account(GAIM_CONV_TYPE_IM, who, account);
-	sending_msg(conv, message);
+	se_sending_msg_helper(conv, message);
 }
 
 static gboolean
@@ -339,9 +339,9 @@ se_load(GaimPlugin *plugin) {
 								GAIM_CMD_FLAG_IM | GAIM_CMD_FLAG_CHAT, NULL,
 								se_cmd_cb, help, NULL);
 	gaim_signal_connect(gaim_conversations_get_handle(), "sending-im-msg", plugin,
-				GAIM_CALLBACK(sending_im_msg), NULL);
+				GAIM_CALLBACK(se_sending_im_msg_cb), NULL);
 	gaim_signal_connect(gaim_conversations_get_handle(), "sending-chat-msg", plugin,
-				GAIM_CALLBACK(sending_chat_msg), NULL);
+				GAIM_CALLBACK(se_sending_chat_msg_cb), NULL);
 
 #ifdef _WIN32
 	shell = g_string_new("cmd.exe");
