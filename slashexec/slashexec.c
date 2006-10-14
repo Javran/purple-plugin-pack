@@ -255,9 +255,17 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 			cmd_stdout[strlen(cmd_stdout) - 1] = '\0';
 
 		if(send) {
-			GaimConversationType type = gaim_conversation_get_type(conv);
+			GaimConversationType type;
+			GString *conv_sys_msg;
+			
+			type = gaim_conversation_get_type(conv);
+			conv_sys_msg = g_string_new("");
 			
 			gaim_debug_info("slashexec", "Command stdout: %s\n", cmd_stdout);
+
+			g_string_append_printf(conv_sys_msg,
+					_("The following text is the output from your command and"
+					" has been sent as a message:\n%s"), cmd_stdout);
 
 			switch(type) {
 				case GAIM_CONV_TYPE_IM:
@@ -269,6 +277,11 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 				default:
 					return FALSE;
 			}
+
+			gaim_conversation_write(conv, NULL, conv_sys_msg->str,
+					GAIM_MESSAGE_SYSTEM, time(NULL));
+
+			g_string_free(conv_sys_msg, TRUE);
 		} else
 			gaim_conversation_write(conv, NULL, cmd_stdout, GAIM_MESSAGE_SYSTEM,
 					time(NULL));
