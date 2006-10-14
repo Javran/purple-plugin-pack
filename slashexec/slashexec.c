@@ -4,6 +4,7 @@
  * Copyright (C) 2005-2006 Peter Lawler
  * Copyright (C) 2005-2006 Daniel Atallah
  * Copyright (C) 2005-2006 John Bailey
+ * Copyright (C) 2006 Sadrul Habib Chowdhury
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #if defined HAVE_CONFIG_H && !defined _WIN32
 # include "../gpp_config.h"
 #endif
@@ -63,14 +65,29 @@ static GString *shell;
 static void /* replace a character at the end of a string with' \0' */
 se_replace_ending_char(gchar *string, gchar replace)
 {
-	gint stringlen = strlen(string);
-	gchar *replace_in_string = g_utf8_strrchr(string, -1, replace);
+	gint stringlen;
+	gchar *replace_in_string;
 
+	stringlen = strlen(string);
+	replace_in_string = g_utf8_strrchr(string, -1, replace);
+
+	/* continue to replace the character at the end of the string until the
+	 * current last character in the string is not the character that needs to
+	 * be replaced. */
 	while(replace_in_string && replace_in_string == &(string[stringlen - 1])) {
 		gaim_debug_info("slashexec", "Replacing %c at position %d\n",
 				replace, stringlen - 1);
+
+		/* a \0 is the logical end of the string, even if characters exist in
+		 * the string after it.  Replacing the bad character with a \0 causes
+		 * the string to technically be shortened by one character even though
+		 * the allocated size of the string doesn't change. */
 		*replace_in_string = '\0';
+
+		/* update the string length due to the new \0 */
 		stringlen = strlen(string);
+
+		/* find, if one exists, another instance of the bad character */
 		replace_in_string = g_utf8_strrchr(string, -1, replace);
 	}
 
@@ -185,22 +202,28 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 		/* the command isn't NULL, so let the user see it */
 		if(spawn_cmd) {
 			GString *errmsg = g_string_new("");
+
 			g_string_append_printf(errmsg, _("Unable to execute \"%s\""),
 					spawn_cmd);
+
 			gaim_debug_info("slashexec", "%s\n", errmsg->str);
 			gaim_conversation_write(conv, NULL, errmsg->str,
 					GAIM_MESSAGE_SYSTEM, time(NULL));
+
 			g_string_free(errmsg, TRUE);
 		}
 
 		/* the GError isn't NULL, so let's show the user its information */
 		if(exec_error) {
 			GString *errmsg = g_string_new("");
+
 			g_string_append_printf(errmsg, _("Execute error message: %s"),
 					exec_error->message ? exec_error->message : "null");
+
 			gaim_debug_info("slashexec", "%s\n", errmsg->str);
 			gaim_conversation_write(conv, NULL, errmsg->str,
 					GAIM_MESSAGE_SYSTEM, time(NULL));
+
 			g_error_free(exec_error);
 			g_string_free(errmsg, TRUE);
 		}
@@ -273,6 +296,7 @@ se_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args, gchar **error,
 {
 	gboolean send = FALSE;
 	char *string = args[0];
+
 	if(string && !strncmp(string, "-o", 2)) {
 		send = TRUE;
 		string += 3;
@@ -294,21 +318,24 @@ se_sending_msg_helper(GaimConversation *conv, char **message)
 	char *string = *message, *strip;
 	gboolean send = TRUE;
 
-	if (recurse)
-		return;
-	if (conv == NULL)
-		return;
+	if(recurse) return;
+
+	if(conv == NULL) return;
 
 	strip = gaim_markup_strip_html(string);
-	if (*strip != '!') {
+
+	if(*strip != '!') {
 		g_free(strip);
 		return;
 	}
+
 	*message = NULL;
+
 	g_free(string);
 
-	if (strncmp(strip, "!!!", 3) == 0) {
+	if(strncmp(strip, "!!!", 3) == 0) {
 		recurse = TRUE;
+
 		switch(gaim_conversation_get_type(conv)) {
 			case GAIM_CONV_TYPE_IM:
 				gaim_conv_im_send(GAIM_CONV_IM(conv), strip + 2);
@@ -319,18 +346,22 @@ se_sending_msg_helper(GaimConversation *conv, char **message)
 			default:
 				break;
 		}
+
 		g_free(strip);
+
 		recurse = FALSE;
+
 		return;
 	}
 
-	if (*(strip + 1) == '!')
+	if(*(strip + 1) == '!')
 		send = FALSE;
 
-	if (send)
+	if(send)
 		se_do_action(conv, strip + 1, send);
 	else
 		se_do_action(conv, strip + 2, send);
+
 	g_free(strip);
 }
 
@@ -359,14 +390,19 @@ se_load(GaimPlugin *plugin) {
 						"If the -o flag is used then output is sent to the"
 						"current conversation; otherwise it is printed to the "
 						"current text box.");
+
 	se_cmd = gaim_cmd_register("exec", "s", GAIM_CMD_P_PLUGIN,
 								GAIM_CMD_FLAG_IM | GAIM_CMD_FLAG_CHAT, NULL,
 								se_cmd_cb, help, NULL);
+
+	/* these signals are needed for the bangexec features we took on */
 	gaim_signal_connect(gaim_conversations_get_handle(), "sending-im-msg", plugin,
 				GAIM_CALLBACK(se_sending_im_msg_cb), NULL);
 	gaim_signal_connect(gaim_conversations_get_handle(), "sending-chat-msg", plugin,
 				GAIM_CALLBACK(se_sending_chat_msg_cb), NULL);
 
+	/* this gets the user's shell.  If this is built on Windows, force cmd.exe,
+	 * which will make this plugin not work on Windows 98/ME */
 #ifdef _WIN32
 	shell = g_string_new("cmd.exe");
 #else
