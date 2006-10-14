@@ -309,7 +309,7 @@ se_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args, gchar **error,
 		string += 3;
 	}
 
-	if (se_do_action(conv, string, send))
+	if(se_do_action(conv, string, send))
 		return GAIM_CMD_RET_OK;
 	else
 		return GAIM_CMD_RET_FAILED;
@@ -335,7 +335,8 @@ se_sending_msg_helper(GaimConversation *conv, char **message)
 	g_free(string);
 
 	/* this is refactored quite a bit to simplify things since sending-im-msg
-	 * allows changing the text that will be sent */
+	 * allows changing the text that will be sent by simply giving *message a
+	 * new pointer */
 	if(strncmp(strip, "!!!", 3) == 0) {
 		char *new_msg, *conv_sys_msg;
 		
@@ -444,11 +445,12 @@ static GaimPluginInfo se_info = {
 	GPP_VERSION,										/* version			*/
 	NULL,												/* summary			*/
 	NULL,												/* description		*/
-	"Gary Kramlich <amc_grim@users.sf.net>,"
-	" Peter Lawler <bleeter from users.sf.net>,"
-	" Daniel Atallah,"
-	" Sadrul Habib Chowdhury <sadrul@users.sf.net>, and"
-	" John Bailey <rekkanoryo@users.sf.net>",			/* authors			*/
+
+	"Gary Kramlich <amc_grim@users.sf.net>, "
+	"Peter Lawler <bleeter from users.sf.net>, "
+	"Daniel Atallah, Sadrul Habib Chowdhury <sadrul@users.sf.net>, "
+	"John Bailey <rekkanoryo@users.sf.net>",			/* authors			*/
+
 	GPP_WEBSITE,										/* homepage			*/
 	se_load,											/* load				*/
 	se_unload,											/* unload			*/
@@ -468,7 +470,9 @@ init_plugin(GaimPlugin *plugin) {
 	se_info.summary = _("/exec a la UNIX IRC CLI");
 	se_info.description = _("A plugin that adds the /exec command line"
 							" interpreter like most UNIX/Linux IRC"
-							" clients have.\n");
+							" clients have.  Also included is the ability to"
+							" execute commands with an exclamation point"
+							" (!uptime, for instance).\n");
 }
 
 GAIM_INIT_PLUGIN(slashexec, init_plugin, se_info)
