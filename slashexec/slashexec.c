@@ -21,6 +21,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+/* XXX: Translations of strings - Several strings are NOT marked as needing to
+ * be translated.  This is because they go only to the debug window.  I only
+ * care to translate messages users will see in the main interface.  Debug
+ * window messages are not important. - rekkanoryo */
+
 #if defined HAVE_CONFIG_H && !defined _WIN32
 # include "../gpp_config.h"
 #endif
@@ -60,7 +65,7 @@
 #endif
 
 static GaimCmdId se_cmd;
-static GString *shell;
+static gchar *shell;
 
 static void /* replace a character at the end of a string with' \0' */
 se_replace_ending_char(gchar *string, gchar replace)
@@ -98,7 +103,6 @@ static gboolean
 se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 {
 	GError *parse_error = NULL, *exec_error = NULL;
-	GString *command = NULL;
 	gchar *spawn_cmd = NULL, **cmd_argv = NULL, *cmd_stdout = NULL,
 		  *cmd_stderr = NULL;
 	gint cmd_argc = 0;
@@ -107,8 +111,6 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 #else
 	const gchar *shell_flag = "-c";
 #endif
-
-	command = g_string_new("");
 
 	/* we can still end up with 0 "args", and we need to make sure we don't
 	 * go over the max command length */
@@ -126,8 +128,7 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 
 	/* if we get this far with a NULL, there's a problem. */
 	if(!args) {
-		gaim_debug_info("slashexec", "bad args: %s\n",
-				args ? args : "null");
+		gaim_debug_info("slashexec", "args NULL!\n");
 		
 		return FALSE;
 	}
@@ -141,41 +142,39 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 	}
 
 #ifdef _WIN32
-	g_string_append_printf(command, "%s %s %s", shell->str, shell_flag,
-			args);
+	spawn_cmd = g_strdup_printf("%s %s %s", shell, shell_flag, args);
 #else
-	g_string_append_printf(command, "%s %s \"%s\"", shell->str, shell_flag,
-			args);
+	spawn_cmd = g_strdup_printf("%s %s \"%s\"", shell, shell_flag, args);
 #endif
-
-	/* This is the finished command that will be executed */
-	spawn_cmd = command->str;
 
 	/* We need the command parsed into a proper argv for it to be executed */
 	if(!g_shell_parse_argv(spawn_cmd, &cmd_argc, &cmd_argv, &parse_error)) {
 		/* everything in here is error checking and information for the user */
 
+		char *errmsg = NULL;
+
 		/* the command string isn't NULL, so give it to the user */
 		if(spawn_cmd) {
-			GString *errmsg = g_string_new("");
-			g_string_append_printf(errmsg, _("Unable to parse \"%s\""),
-					spawn_cmd);
-			gaim_debug_info("slashexec", "%s\n", errmsg->str);
-			gaim_conversation_write(conv, NULL, errmsg->str,
-					GAIM_MESSAGE_SYSTEM, time(NULL));
-			g_string_free(errmsg, TRUE);
+			errmsg = g_strdup_printf(_("Unable to parse \"%s\""), spawn_cmd);
+
+			gaim_debug_info("slashexec", "%s\n", errmsg);
+			gaim_conversation_write(conv, NULL, errmsg, GAIM_MESSAGE_SYSTEM,
+					time(NULL));
+
+			g_free(errmsg);
 		}
 
 		/* the GError isn't NULL, so give its information to the user */
 		if(parse_error) {
-			GString *errmsg = g_string_new("");
-			g_string_append_printf(errmsg, _("Parse error message: %s"),
+			errmsg = g_strdup_printf(_("Parse error message: %s"),
 					parse_error->message ? parse_error->message : "null");
-			gaim_debug_info("slashexec", "%s\n", errmsg->str);
-			gaim_conversation_write(conv, NULL, errmsg->str,
-					GAIM_MESSAGE_SYSTEM, time(NULL));
+
+			gaim_debug_info("slashexec", "%s\n", errmsg);
+			gaim_conversation_write(conv, NULL, errmsg, GAIM_MESSAGE_SYSTEM,
+					time(NULL));
+
+			g_free(errmsg);
 			g_error_free(parse_error);
-			g_string_free(errmsg, TRUE);
 		}
 
 		if(cmd_argv)
@@ -186,9 +185,8 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 
 	/* Now we're ready to execute the user's command.  Let the user know. */
 	gaim_conversation_write(conv, NULL,
-			_("Executing your command.  This will cause a pause until the "
-			"command finishes executing.  This notice has not been sent."),
-			GAIM_MESSAGE_SYSTEM, time(NULL));
+			_("Executing your command.  This will pause until the command "
+			"finishes executing."), GAIM_MESSAGE_SYSTEM, time(NULL));
 
 	/* I may eventually add a pref to show this to the user; for now it's fine
 	 * going just to the debug bucket */
@@ -199,33 +197,30 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 	if(!g_spawn_sync(NULL, cmd_argv, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL,
 				&cmd_stdout, &cmd_stderr, NULL, &exec_error))
 	{
+		char *errmsg = NULL;
+
 		/* the command isn't NULL, so let the user see it */
 		if(spawn_cmd) {
-			GString *errmsg = g_string_new("");
+			errmsg = g_strdup_printf(_("Unable to execute \"%s\""),	spawn_cmd);
 
-			g_string_append_printf(errmsg, _("Unable to execute \"%s\""),
-					spawn_cmd);
+			gaim_debug_info("slashexec", "%s\n", errmsg);
+			gaim_conversation_write(conv, NULL, errmsg, GAIM_MESSAGE_SYSTEM,
+					time(NULL));
 
-			gaim_debug_info("slashexec", "%s\n", errmsg->str);
-			gaim_conversation_write(conv, NULL, errmsg->str,
-					GAIM_MESSAGE_SYSTEM, time(NULL));
-
-			g_string_free(errmsg, TRUE);
+			g_free(errmsg);
 		}
 
 		/* the GError isn't NULL, so let's show the user its information */
 		if(exec_error) {
-			GString *errmsg = g_string_new("");
+			errmsg = g_strdup_printf(_("Execute error message: %s"),
+					exec_error->message ? exec_error->message : "NULL");
 
-			g_string_append_printf(errmsg, _("Execute error message: %s"),
-					exec_error->message ? exec_error->message : "null");
+			gaim_debug_info("slashexec", "%s\n", errmsg);
+			gaim_conversation_write(conv, NULL, errmsg,	GAIM_MESSAGE_SYSTEM,
+					time(NULL));
 
-			gaim_debug_info("slashexec", "%s\n", errmsg->str);
-			gaim_conversation_write(conv, NULL, errmsg->str,
-					GAIM_MESSAGE_SYSTEM, time(NULL));
-
+			g_free(errmsg);
 			g_error_free(exec_error);
-			g_string_free(errmsg, TRUE);
 		}
 
 		g_free(cmd_stdout);
@@ -256,16 +251,15 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 
 		if(send) {
 			GaimConversationType type;
-			GString *conv_sys_msg;
+			char *conv_sys_msg;
 			
 			type = gaim_conversation_get_type(conv);
-			conv_sys_msg = g_string_new("");
 			
 			gaim_debug_info("slashexec", "Command stdout: %s\n", cmd_stdout);
 
-			g_string_append_printf(conv_sys_msg,
-					_("The following text is the output from your command and"
-					" has been sent as a message:\n%s"), cmd_stdout);
+			conv_sys_msg = g_strdup_printf(
+				_("The following text is the output from your command and has "
+				"been sent as a message:\n%s"), cmd_stdout);
 
 			switch(type) {
 				case GAIM_CONV_TYPE_IM:
@@ -278,10 +272,10 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 					return FALSE;
 			}
 
-			gaim_conversation_write(conv, NULL, conv_sys_msg->str,
+			gaim_conversation_write(conv, NULL, conv_sys_msg,
 					GAIM_MESSAGE_SYSTEM, time(NULL));
 
-			g_string_free(conv_sys_msg, TRUE);
+			g_free(conv_sys_msg);
 		} else
 			gaim_conversation_write(conv, NULL, cmd_stdout, GAIM_MESSAGE_SYSTEM,
 					time(NULL));
@@ -324,14 +318,8 @@ se_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args, gchar **error,
 static void
 se_sending_msg_helper(GaimConversation *conv, char **message)
 {
-	/* 'recurse' is used to detect a recursion. If the user sends "!!!command",
-	 * then it is changed to "!command" and sent to the user. We do not want to
-	 * process that in such cases. */
-	static gboolean recurse = FALSE;
 	char *string = *message, *strip;
 	gboolean send = TRUE;
-
-	if(recurse) return;
 
 	if(conv == NULL) return;
 
@@ -346,23 +334,23 @@ se_sending_msg_helper(GaimConversation *conv, char **message)
 
 	g_free(string);
 
+	/* this is refactored quite a bit to simplify things since sending-im-msg
+	 * allows changing the text that will be sent */
 	if(strncmp(strip, "!!!", 3) == 0) {
-		recurse = TRUE;
+		char *new_msg, *conv_sys_msg;
+		
+		new_msg = g_strdup(strip + 2);
 
-		switch(gaim_conversation_get_type(conv)) {
-			case GAIM_CONV_TYPE_IM:
-				gaim_conv_im_send(GAIM_CONV_IM(conv), strip + 2);
-				break;
-			case GAIM_CONV_TYPE_CHAT:
-				gaim_conv_chat_send(GAIM_CONV_CHAT(conv), strip + 2);
-				break;
-			default:
-				break;
-		}
+		*message = new_msg;
+
+		conv_sys_msg = g_strdup_printf(_("The following text was sent: %s"),
+				new_msg);
+
+		gaim_conversation_write(conv, NULL, conv_sys_msg, GAIM_MESSAGE_SYSTEM,
+				time(NULL));
 
 		g_free(strip);
-
-		recurse = FALSE;
+		g_free(conv_sys_msg);
 
 		return;
 	}
@@ -417,17 +405,17 @@ se_load(GaimPlugin *plugin) {
 	/* this gets the user's shell.  If this is built on Windows, force cmd.exe,
 	 * which will make this plugin not work on Windows 98/ME */
 #ifdef _WIN32
-	shell = g_string_new("cmd.exe");
+	shell = g_strdup("cmd.exe");
 #else
 	pw = getpwuid(getuid());
 	
 	if(pw)
 		if(pw->pw_shell)
-			shell = g_string_new(pw->pw_shell);
+			shell = g_strdup(pw->pw_shell);
 		else
-			shell = g_string_new("/bin/sh");
+			shell = g_strdup("/bin/sh");
 	else
-		shell = g_string_new("/bin/sh");
+		shell = g_strdup("/bin/sh");
 #endif /* _WIN32 */
 
 	return TRUE;
@@ -437,7 +425,7 @@ static gboolean
 se_unload(GaimPlugin *plugin) {
 	gaim_cmd_unregister(se_cmd);
 
-	g_string_free(shell, TRUE);
+	g_free(shell);
 
 	return TRUE;
 }
