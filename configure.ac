@@ -169,6 +169,7 @@ AC_OUTPUT([
 	chronic/Makefile
 	convcolors/Makefile
 	dice/Makefile
+	difftopic/Makefile
 	eight_ball/Makefile
 	flip/Makefile
 	gaim-schedule/Makefile
