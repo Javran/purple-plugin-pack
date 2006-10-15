@@ -344,6 +344,8 @@ se_sending_msg_helper(GaimConversation *conv, char **message)
 
 		*message = new_msg;
 
+		/* I really want to eventually make this cleaner, like by making it
+		 * change the actual message that gets printed to the conv window... */
 		conv_sys_msg = g_strdup_printf(_("The following text was sent: %s"),
 				new_msg);
 
