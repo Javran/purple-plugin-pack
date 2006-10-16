@@ -304,7 +304,7 @@ se_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args, gchar **error,
 	gboolean send = FALSE;
 	char *string = args[0];
 
-	if(string && !strncmp(string, "-o", 2)) {
+	if(string && !strncmp(string, "-o ", 3)) {
 		send = TRUE;
 		string += 3;
 	}
