@@ -412,8 +412,31 @@ irssi_lastlog_cb(GaimConversation *c, const gchar *cmd, gchar **args,
 	gaim_notify_formatted(gtkconv, _("Lastlog"), _("Lastlog output"), NULL, result->str, NULL, NULL);
 
 	g_string_free(result, TRUE);
-	g_free(lines);
+	g_strfreev(lines);
 	return GAIM_CMD_RET_OK;
+}
+
+/* these will free text, and return a newly allocated string */
+static char *
+replace_tags_text(char *text, const char *from, const char *to)
+{
+	int i;
+	char **splits = g_strsplit(text, from, 0);
+	GString *ret = g_string_new(NULL);
+
+	for (i = 0; splits[i+1] && splits[i+2]; i+=2) {
+		ret = g_string_append(ret, splits[i]);
+		g_string_append_printf(ret, "<%s>%s</%s>", to, splits[i+1], to);
+	}
+	while (splits[i]) {
+		ret = g_string_append(ret, splits[i++]);
+		if (splits[i])
+			ret = g_string_append(ret, from);
+	}
+
+	g_strfreev(splits);
+	g_free(text);
+	return g_string_free(ret, FALSE);
 }
 
 /* these three callbacks are intended to modify text so that formatting appears
@@ -425,8 +448,17 @@ irssi_writing_cb(GaimAccount *account, const char *who, char **message,
 {
 	/* if there aren't any asterisks, slashes, or underscores in the message, don't
 	 * bother trying to do anything to the message, as there's nothing to format */
+	char *text;
 	if(!strchr(*message, '*') && !strchr(*message, '/') && !strchr(*message, '_'))
 		return FALSE;
+
+	text = *message;
+	text = replace_tags_text(text, "*", "B");
+	text = replace_tags_text(text, "_", "U");
+#if 0
+	text = replace_tags_html(text, "/", "I");  /* XXX: This will cause problems for HTML tags */
+#endif
+	*message = text;
 
 	/* TODO: here we need to make sure we don't try to double format anything.
 	 *       I'm open to any suggestions. */
