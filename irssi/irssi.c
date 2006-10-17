@@ -456,6 +456,7 @@ replace_tags_html(char *html, const char *from, const char *to)
 	}
 	
 	g_free(splits);  /* Do not g_strfreev because the splits[i] are freed from _replace_tags_text */
+	g_free(html);
 	return g_string_free(ret, FALSE);
 }
 
