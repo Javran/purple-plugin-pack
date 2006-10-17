@@ -439,9 +439,28 @@ replace_tags_text(char *text, const char *from, const char *to)
 	return g_string_free(ret, FALSE);
 }
 
+static char *
+replace_tags_html(char *html, const char *from, const char *to)
+{
+	GString *ret = g_string_new(NULL);
+	char **splits;
+	int i;
+
+	splits = g_strsplit(html, "</", 0);
+	for (i = 0; splits[i]; i++) {
+		char *repl = replace_tags_text(splits[i], from, to);
+		ret = g_string_append(ret, repl);
+		if (splits[i+1])
+			ret = g_string_append(ret, "</");
+		g_free(repl);
+	}
+	
+	g_free(splits);  /* Do not g_strfreev because the splits[i] are freed from _replace_tags_text */
+	return g_string_free(ret, FALSE);
+}
+
 /* these three callbacks are intended to modify text so that formatting appears
  * similarly to how irssi would format the text */
-/* TODO: make these callbacks actually do something! */
 static gboolean
 irssi_writing_cb(GaimAccount *account, const char *who, char **message,
 		GaimConversation *conv, GaimMessageFlags flags)
@@ -455,9 +474,7 @@ irssi_writing_cb(GaimAccount *account, const char *who, char **message,
 	text = *message;
 	text = replace_tags_text(text, "*", "B");
 	text = replace_tags_text(text, "_", "U");
-#if 0
-	text = replace_tags_html(text, "/", "I");  /* XXX: This will cause problems for HTML tags */
-#endif
+	text = replace_tags_html(text, "/", "I");
 	*message = text;
 
 	/* TODO: here we need to make sure we don't try to double format anything.
