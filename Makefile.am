@@ -38,3 +38,8 @@ gpp_config.h: pre_config.h
 CLEANFILES=
 
 ACLOCAL_AMFLAGS = -I m4
+
+plugin_info:
+	@echo Building: $(PP_BUILDDIRS)
+	@echo;
+	@echo Disting: $(PP_DISTDIRS)

@@ -27,7 +27,8 @@ AC_DEFUN([AM_BUILD_PLUGIN_LIST],
 				PP_ABUSIVE="$PP_ABUSIVE $d"
 			elif test -f $d/.plugin; then
 				PP_DISTDIRS="$PP_DISTDIRS $d"
-			elif test -f $d/.build; then
+			fi
+			if test -f $d/.build; then
 				PP_BUILDDIRS="$PP_BUILDDIRS $d"
 			fi
 		fi
