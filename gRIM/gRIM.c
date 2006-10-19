@@ -37,7 +37,6 @@
 #include <gtkplugin.h>
 
 #include <glib.h>
-#include <glib/gstdio.h>
 #include <time.h>
 #include <string.h>
 #include <stdlib.h>
@@ -49,6 +48,16 @@
 #include <version.h>
 
 #include "../common/i18n.h"
+
+#if GLIB_CHECK_VERSION(2,6,0)
+#include <glib/gstdio.h>
+#else
+#include <sys/stat.h>
+#define g_fopen fopen
+#define g_rename rename
+#define g_stat stat
+#define g_unlink unlink
+#endif
 
 #define	MAX_LENGTH	1024
 
