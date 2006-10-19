@@ -1,31 +1,44 @@
-Version 1.0:
-	Added autoaccept plugin
-	Added autoreply plugin
-	Added bash plugin
-	Added bit plugin - DANGEROUS!!!
-	Added blistops plugin
-	Added buddynote plugin
-	Added dice plugin
-	Added eight_ball plugin
-	Added flip plugin
-	Added gRIM plugin
-	Added gaim-schedule
-	Added gaim-xchat plugin
-	Added groupmsg plugin
-	Added irssidate plugin
-	Added lastseen plugin
-	Added listhandler
-	Added markerline plugin
-	Added mystatusbox plugin
-	Added newline plugin
-	Added nicksaid plugin
-	Added offlinemsg plugin
-	Added oldlogger plugin
-	Added sepandtab plugin
-	Added showoffline plugin
-	Added simfix plugin
-	Added sslinfo plugin
-	Added stocker plugin - not yet functional
-	Added template plugins
-	Added talkfilters plugin
+Version 1.0beta4: 10/18/06
+	* Updated to work with Gaim 2.0Beta4
+	* Moved from gettext to intltool
+
+Version 1.0beta3.1: ??/??/??
+	* ????
+
+Version 1.0beta3: ??/??/??
+	* ????
+
+Version 1.0beta2: ??/??/??
+	* ????
+
+Version 1.0: ??/??/??
+	* Added autoaccept plugin
+	* Added autoreply plugin
+	* Added bash plugin
+	* Added bit plugin - DANGEROUS!!!
+	* Added blistops plugin
+	* Added buddynote plugin
+	* Added dice plugin
+	* Added eight_ball plugin
+	* Added flip plugin
+	* Added gRIM plugin
+	* Added gaim-schedule
+	* Added gaim-xchat plugin
+	* Added groupmsg plugin
+	* Added irssidate plugin
+	* Added lastseen plugin
+	* Added listhandler
+	* Added markerline plugin
+	* Added mystatusbox plugin
+	* Added newline plugin
+	* Added nicksaid plugin
+	* Added offlinemsg plugin
+	* Added oldlogger plugin
+	* Added sepandtab plugin
+	* Added showoffline plugin
+	* Added simfix plugin
+	* Added sslinfo plugin
+	* Added stocker plugin - not yet functional
+	* Added template plugins
+	* Added talkfilters plugin
 

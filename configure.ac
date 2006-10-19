@@ -1,4 +1,4 @@
-AC_INIT([gaim-plugin_pack], [1.0svn], [guifications-devel@lists.sourceforge.net])
+AC_INIT([gaim-plugin_pack], [1.0beta4], [guifications-devel@lists.sourceforge.net])
 AC_CANONICAL_SYSTEM
 AM_CONFIG_HEADER(pre_config.h)
 
@@ -116,13 +116,37 @@ if test x"$HAVE_TALKFILTERS" = x"yes"; then
 	AC_SUBST(TALKFILTERS_LIBS)
 fi
 
-AM_PATH_XMMS(1.0.0, HAVE_XMMS=yes, AC_MSG_WARN([
-*** XMMS >= 1.0 is required to build Gaim-XMMS-Remote; please make sure you
-*** have the XMMS development headers installed.  The latest version of XMMS
-*** is always available at http://www.xmms.org/.])
-HAVE_XMMS=no
-)
+
+XMMS_LIBS=""
+XMMS_CFLAGS=""
+HAVE_XMMS="no"
+
+AC_PATH_PROG(XMMS_CONFIG, xmms-config, no)
+if test x"$XMMS_CONFIG" != x"no" ; then
+	AC_MSG_CHECKING([for xmms >= 1.0.0])
+	# check the version of xmms config we found
+	XMMS_VERSION=`$XMMS_CONFIG --version`
+	if test x"$XMMS_VERSION" != x"" ; then
+		XMMS_MAJOR=`echo $XMMS_VERSION | cut -d. -f1`
+		XMMS_MINOR=`echo $XMMS_VERSION | cut -d. -f2`
+
+		if test $XMMS_MAJOR -ge 1 -a $XMMS_MINOR -ge 0 ; then
+			XMMS_LIBS=`$XMMS_CONFIG --libs`
+			XMMS_CFLAGS=`$XMMS_CONFIG --cflags`
+
+			HAVE_XMMS="yes"
+		fi
+	fi
+
+	if test x"$HAVE_XMMS" = x"yes" ; then
+		AC_MSG_RESULT([yes])
+	else
+		AC_MSG_RESULT([no])
+	fi
+fi
 AM_CONDITIONAL(USE_XMMS, test x"$HAVE_XMMS" = x"yes")
+AC_SUBST(XMMS_LIBS)
+AC_SUBST(XMMS_CFLAGS)
 
 dnl #######################################################################
 dnl # Run our plugin checking

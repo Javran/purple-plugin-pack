@@ -21,7 +21,7 @@ EXTRA_DIST = \
 	po/Makefile.in.in \
 	po/Makefile.mingw
 
-DIST_SUBDIRS = common doc intl m4 po $(PP_DISTDIRS)
+DIST_SUBDIRS = common doc m4 po $(PP_DISTDIRS)
 
 SUBDIRS = common doc m4 po $(PP_BUILDDIRS)
 
