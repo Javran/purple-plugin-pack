@@ -1,17 +1,32 @@
 Version 1.0beta4: 10/18/06
-	* Updated to work with Gaim 2.0Beta4
+	* Updated to work with Gaim 2.0.0beta4
 	* Moved from gettext to intltool
+	* Added difftopic plugin
+	* Added /layout and text formatting capabilities to irssi plugin
+	* Added bangexec features to slashexec plugin.  Commands can be executed
+	  by typing "!command" in the entry area for a conversation.  Check
+	  http://gaim.guifications.org/wiki/slashexec for details.
 
-Version 1.0beta3.1: ??/??/??
-	* ????
+Version 1.0beta3.1: 8/22/06
+	* Updated to work with Gaim 2.0.0beta3.1
+	* Renamed gaim-xmms-remote plugin to xmmsremote for consistency within the
+	  plugin's directory
+	* Added .abusive marking to conditional building.  Plugins with .abusive
+	  files in their directories never build automatically.
+	* Renamed irssidate plugin to irssi and added /win and /window commands.
 
-Version 1.0beta3: ??/??/??
-	* ????
+Version 1.0beta3: 3/29/06
+	* Added slashexec plugin - formerly a separate package
+	* Added gaim-xmms-remote plugin - formerly a separate package
+	* Fixed bugs in the m4 code that controls the conditional building
+	* Updated to work with Gaim 2.0.0beta3
 
-Version 1.0beta2: ??/??/??
-	* ????
+Version 1.0beta2: 1/25/06
+	* Added plonkers plugin
+	* Updated to work with Gaim 2.0.0beta2
 
-Version 1.0: ??/??/??
+Version 1.0beta1: 12/17/05
+	* Added adium_xml_logger plugin
 	* Added autoaccept plugin
 	* Added autoreply plugin
 	* Added bash plugin
@@ -27,7 +42,7 @@ Version 1.0: ??/??/??
 	* Added groupmsg plugin
 	* Added irssidate plugin
 	* Added lastseen plugin
-	* Added listhandler
+	* Added listhandler plugin
 	* Added markerline plugin
 	* Added mystatusbox plugin
 	* Added newline plugin
@@ -41,4 +56,7 @@ Version 1.0: ??/??/??
 	* Added stocker plugin - not yet functional
 	* Added template plugins
 	* Added talkfilters plugin
+	* Added conditional building - all plugins require .plugin files in their
+	  directories.  To build by default, plugins require .build files in their
+	  directories.
 
