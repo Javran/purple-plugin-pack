@@ -1,4 +1,7 @@
-EXTRA_DIST = .plugin Makefile.mingw
+EXTRA_DIST = \
+			.plugin \
+			.abusive \
+			Makefile.mingw
 
 groupmsgdir = $(GAIM_LIBDIR)/gaim
 
