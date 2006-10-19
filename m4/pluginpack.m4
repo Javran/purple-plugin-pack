@@ -23,13 +23,12 @@ AC_DEFUN([AM_BUILD_PLUGIN_LIST],
 	dnl #######################################################################
 	for d in *; do
 		if test -d $d; then
-			if test ! -f $d/.abusive ; then
-				if test -f $d/.plugin; then
-					PP_DISTDIRS="$PP_DISTDIRS $d"
-				fi
-				if test -f $d/.build; then
-					PP_BUILDDIRS="$PP_BUILDDIRS $d"
-				fi
+			if test -f $d/.abusive; then
+				PP_ABUSIVE="$PP_ABUSIVE $d"
+			elif test -f $d/.plugin; then
+				PP_DISTDIRS="$PP_DISTDIRS $d"
+			elif test -f $d/.build; then
+				PP_BUILDDIRS="$PP_BUILDDIRS $d"
 			fi
 		fi
 	done;
@@ -61,6 +60,9 @@ AC_DEFUN([AM_BUILD_PLUGIN_LIST],
 
 	dnl # remove duplicates
 	PP_BUILDDIRS=`echo $tmp_SUBDIRS | awk '{for (i = 1; i <= NF; i++) { print $i } }' | sort | uniq | xargs echo `
+
+	dnl # add the abusive plugins to the dist
+	PP_DISTDIRS="$PP_DISTDIRS $PP_ABUSIVE"
 
 	dnl #######################################################################
 	dnl # substitue our sub dirs
