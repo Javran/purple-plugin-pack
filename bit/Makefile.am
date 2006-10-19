@@ -1,4 +1,4 @@
-EXTRA_DIST = .plugin Makefile.mingw
+EXTRA_DIST = .plugin Makefile.mingw .build
 
 bitdir = $(GAIM_LIBDIR)/gaim
 

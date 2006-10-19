@@ -1,4 +1,4 @@
-EXTRA_DIST = .plugin
+EXTRA_DIST = .plugin .build
 
 autoreplydir = $(GAIM_LIBDIR)/gaim
 

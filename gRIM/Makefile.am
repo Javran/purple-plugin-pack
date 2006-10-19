@@ -1,4 +1,4 @@
-EXTRA_DIST = .plugin Makefile.mingw
+EXTRA_DIST = .plugin Makefile.mingw .build
 
 gRIMdir = $(GAIM_LIBDIR)/gaim
 

@@ -1,4 +1,4 @@
-EXTRA_DIST = .plugin
+EXTRA_DIST = .plugin .build
 
 gaim_xchatdir = $(GAIM_LIBDIR)/gaim
 

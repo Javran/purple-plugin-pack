@@ -1,4 +1,4 @@
-EXTRA_DIST = .plugin Makefile.mingw
+EXTRA_DIST = .build .plugin Makefile.mingw
 
 autoacceptdir = $(GAIM_LIBDIR)/gaim
 

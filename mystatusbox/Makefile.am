@@ -1,4 +1,4 @@
-EXTRA_DIST = .plugin Makefile.mingw
+EXTRA_DIST = .build .plugin Makefile.mingw
 
 mystatusboxdir = $(GAIM_LIBDIR)/gaim
 
