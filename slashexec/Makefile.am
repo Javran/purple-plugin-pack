@@ -1,6 +1,7 @@
 EXTRA_DIST = \
 	.plugin \
-	.build
+	.build \
+	Makefile.mingw
 
 slashexecdir = $(GAIM_LIBDIR)/gaim
 
