@@ -23,7 +23,7 @@ URL:        http://www.guifications.org/
 Source0:    %{name}-%{version}.tar.gz
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires: pkgconfig, libtool, gettext
+BuildRequires: pkgconfig, libtool, gettext, xmms-devel
 BuildRequires: gaim-devel >= 1:%{gaim_major_ver}.%{gaim_minor_ver}, gaim-devel < 1:%{gaim_next_major_ver}
 %if "%{_vendor}" == "MandrakeSoft" || "%{_vendor}" == "Mandrakesoft"
 BuildRequires: libgtk+2.0_0-devel
@@ -48,21 +48,29 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 strip $RPM_BUILD_ROOT%{_libdir}/gaim/*.so || :
 rm -f $RPM_BUILD_ROOT%{_libdir}/gaim/*.la $RPM_BUILD_ROOT%{_libdir}/gaim/*.a
-%find_lang %{name}
+%find_lang plugin_pack
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files -f %{name}.lang
+%files -f plugin_pack.lang
 %defattr(-,root,root,-)
 %doc AUTHORS ChangeLog COPYING README
-%{_datadir}/locale/*/*/*
 %{_libdir}/gaim/*.so
+%{_datadir}/pixmaps/gaim/plugin_pack
 
 %changelog
+* Thu Oct 19 2006 Stu Tomlinson <stu@nosnilmot.com>
+- Removed locale from %%files, that's what %%find_lang is for
+- Fixed finding translations
+- Fixed %%s in %%changelog
+- Package xmms pixmaps
+- Add xmms-devel buildrequires
+
 * Sun Nov 11 2005 Peter Lawler <bleeter from users.sf.net>
-- Added locale to %files
-- Enabled %find_lang
+- Added locale to %%files
+- Enabled %%find_lang
+
 * Thu Nov 03 2005 Stu Tomlinson <stu@nosnilmot.com>
 - Fix it again
 
