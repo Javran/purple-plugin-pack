@@ -481,7 +481,7 @@ static char *
 irssi_textfmt_replace_tags_html(char *html, const char *from, const char *to)
 {
 	GString *ret;
-	char **splits, *repl;
+	char **splits, *repl, *r;
 	int i;
 
 	ret = g_string_new(NULL);
@@ -501,7 +501,10 @@ irssi_textfmt_replace_tags_html(char *html, const char *from, const char *to)
 	g_free(html);
 	g_free(repl);
 
-	return g_string_free(ret, FALSE);
+	r = ret->str;
+	g_string_free(ret, FALSE);
+
+	return r;
 }
 #endif
 
