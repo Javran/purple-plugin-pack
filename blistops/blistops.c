@@ -160,8 +160,6 @@ init_plugin(GaimPlugin *plugin) {
 	info.summary = _("Gives extended options to the buddy list");
 	info.description = _("Gives extended options to the buddy list");
 
-	info.dependencies = g_list_append(info.dependencies, "gtk-docklet");
-
 	gaim_prefs_add_none(PREF_MY);
 	gaim_prefs_add_none(PREF_ROOT);
 	gaim_prefs_add_bool(PREF_LIST, TRUE);
