@@ -238,67 +238,76 @@ irssi_layout_cb(GaimConversation *c, const gchar *cmd, gchar **args,
 		gchar **error, void *data)
 { /* callback for /layout */
 	if (strcmp(args[0], "save") == 0) {
-		int i, j;
 		GaimBlistNode *node = NULL;
 		GList *wins;
+		int i, j;
 
 		/* Remove all the previously saved settings */
 		node = gaim_blist_get_root();
+
 		for (; node; node = gaim_blist_node_next(node, TRUE))
 			gaim_blist_node_set_int(node, "irssi::layout", 0);
 		
 		wins = gaim_gtk_conv_windows_get_list();
+
 		for (i = 1; wins ; wins = wins->next, i++) {
 			GaimGtkWindow *win = wins->data;
 			GList *convs = gaim_gtk_conv_window_get_gtkconvs(win);
+
 			for (j = 1; convs; convs = convs->next, j++) {
 				GaimGtkConversation *gtkconv = convs->data;
 				GaimConversation *conv = gtkconv->active_conv;
 
-				if (conv->type == GAIM_CONV_TYPE_CHAT) {
+				if (conv->type == GAIM_CONV_TYPE_CHAT)
 					node = (GaimBlistNode*)gaim_blist_find_chat(conv->account, conv->name);
-				} else {
+				else
 					node = (GaimBlistNode*)gaim_find_buddy(conv->account, conv->name);
-				}
 
 				if (node)
-					gaim_blist_node_set_int(node, "irssi::layout", (i << 10) + j); /* Just being cool */
+					/* Just being cool */
+					gaim_blist_node_set_int(node, "irssi::layout", (i << 10) + j);
 			}
 		}
 	} else if (strcmp(args[0], "load") == 0) {
 		GaimBuddy *buddy;
 		GaimChat *chat;
 		GaimConversation *conv = NULL;
-		GList *list = NULL;
-		GList *settings = NULL;
-		GList *wins;
 		GaimBlistNode *node;
 		GaimGtkConversation *gtkconv;
 		GaimGtkWindow *window;
+		GList *list = NULL, *settings = NULL, *wins;
 		int current;
 		
 		/* First create all the conversations that were saved. Then put them in proper places. */
 
 		node = gaim_blist_get_root();
+
 		for (; node; node = gaim_blist_node_next(node, FALSE)) {
 			int setting = gaim_blist_node_get_int(node, "irssi::layout");
+
 			if (setting) {
 				conv = NULL;
+
 				if (GAIM_BLIST_NODE_IS_BUDDY(node)) {
 					buddy = (GaimBuddy*)node;
-					conv = gaim_find_conversation_with_account(GAIM_CONV_TYPE_IM, buddy->name, buddy->account);
+					conv = gaim_find_conversation_with_account(GAIM_CONV_TYPE_IM,
+							buddy->name, buddy->account);
+
 					if (conv == NULL) {
 						if (gaim_account_is_connected(buddy->account))
-							conv = gaim_conversation_new(GAIM_CONV_TYPE_IM, buddy->account, buddy->name);
+							conv = gaim_conversation_new(GAIM_CONV_TYPE_IM,
+									buddy->account, buddy->name);
 					}
 				} else if (GAIM_BLIST_NODE_IS_CHAT(node)) {
 					chat = (GaimChat*)node;
 					conv = gaim_find_conversation_with_account(GAIM_CONV_TYPE_CHAT,
 								gaim_chat_get_name(chat), chat->account);
+
 					if (conv == NULL) {
 						if (gaim_account_is_connected(chat->account)) {
 							conv = gaim_conversation_new(GAIM_CONV_TYPE_CHAT,
 									chat->account, gaim_chat_get_name(chat));
+
 							GAIM_CONV_CHAT(conv)->left = TRUE;  /* XXX: hack */
 							serv_join_chat(chat->account->gc, chat->components);
 						}
@@ -314,8 +323,10 @@ irssi_layout_cb(GaimConversation *c, const gchar *cmd, gchar **args,
 
 		/* This is a little convoluted */
 		current = 1;
+
 		while (list) {
 			GList *iter1, *iter2;
+
 			for (iter1 = list, iter2 = settings; iter1; ) {
 				int win, pos;
 				int setting;
@@ -356,19 +367,28 @@ irssi_layout_cb(GaimConversation *c, const gchar *cmd, gchar **args,
 
 		/* We have the conversation in the right window. Now, make sure
 		 * it has the correct position within the window */
-		wins = gaim_gtk_conv_windows_get_list();
-		for (; wins; wins = wins->next) {
+		for (wins = gaim_gtk_conv_windows_get_list(); wins; wins = wins->next) {
 			int count, i, pos;
+
 			window = wins->data;
-			if ((count = gaim_gtk_conv_window_get_gtkconv_count(window)) > 1) {
+			count = gaim_gtk_conv_window_get_gtkconv_count(window);
+
+			if (count > 1) {
 				int position;
+
 				for (position = 1; position < count; position++) {
-					pos = irssi_layout_get_setting(gtkconv = gaim_gtk_conv_window_get_gtkconv_at_index(window, position));
+					gtkconv = gaim_gtk_conv_window_get_gtkconv_at_index(window, position);
+					pos = irssi_layout_get_setting(gtkconv);
+
 					if (pos && (pos & 0x3ff)) {
 						for (i = 0; i < position; i++) {
-							int p = irssi_layout_get_setting(gaim_gtk_conv_window_get_gtkconv_at_index(window, i));
+							int p = irssi_layout_get_setting(
+									gaim_gtk_conv_window_get_gtkconv_at_index(window, i));
+
 							if (p && (p & 0x3ff) > (pos & 0x3ff)) {
-								gtk_notebook_reorder_child(GTK_NOTEBOOK(window->notebook), gtkconv->tab_cont, i);
+								gtk_notebook_reorder_child(GTK_NOTEBOOK(window->notebook),
+										gtkconv->tab_cont, i);
+
 								break;
 							}
 						}
@@ -376,8 +396,16 @@ irssi_layout_cb(GaimConversation *c, const gchar *cmd, gchar **args,
 				}
 			}
 		}
+	} else if(!strcmp(args[0], "reset")) {
+		GaimBlistNode *node;
+
+		node = gaim_blist_get_root();
+
+		for (; node; node = gaim_blist_node_next(node, TRUE))
+			gaim_blist_node_set_int(node, "irssi::layout", 0);
 	} else 
 		return GAIM_CMD_RET_FAILED;
+
 	return GAIM_CMD_RET_OK;
 }
 
@@ -418,7 +446,7 @@ irssi_lastlog_cb(GaimConversation *c, const gchar *cmd, gchar **args,
 
 /* these will free text, and return a newly allocated string */
 static char *
-replace_tags_text(char *text, const char *from, const char *to)
+irssi_textfmt_replace_tags_text(char *text, const char *from, const char *to)
 {
 	int i;
 	char **splits = g_strsplit(text, from, 0);
@@ -440,7 +468,7 @@ replace_tags_text(char *text, const char *from, const char *to)
 }
 
 static char *
-replace_tags_html(char *html, const char *from, const char *to)
+irssi_textfmt_replace_tags_html(char *html, const char *from, const char *to)
 {
 	GString *ret = g_string_new(NULL);
 	char **splits;
@@ -448,14 +476,16 @@ replace_tags_html(char *html, const char *from, const char *to)
 
 	splits = g_strsplit(html, "</", 0);
 	for (i = 0; splits[i]; i++) {
-		char *repl = replace_tags_text(splits[i], from, to);
+		char *repl = irssi_textfmt_replace_tags_text(splits[i], from, to);
 		ret = g_string_append(ret, repl);
 		if (splits[i+1])
 			ret = g_string_append(ret, "</");
 		g_free(repl);
 	}
-	
-	g_free(splits);  /* Do not g_strfreev because the splits[i] are freed from _replace_tags_text */
+
+	/* Do not g_strfreev because the splits[i] are freed from
+	 * irssi_textfmt_replace_tags_text */
+	g_free(splits);
 	g_free(html);
 	return g_string_free(ret, FALSE);
 }
@@ -468,15 +498,12 @@ irssi_writing_cb(GaimAccount *account, const char *who, char **message,
 {
 	/* if there aren't any asterisks, slashes, or underscores in the message, don't
 	 * bother trying to do anything to the message, as there's nothing to format */
-	char *text;
 	if(!strchr(*message, '*') && !strchr(*message, '/') && !strchr(*message, '_'))
 		return FALSE;
 
-	text = *message;
-	text = replace_tags_text(text, "*", "B");
-	text = replace_tags_text(text, "_", "U");
-	text = replace_tags_html(text, "/", "I");
-	*message = text;
+	*message = irssi_textfmt_replace_tags_text(*message, "*", "B");
+	*message = irssi_textfmt_replace_tags_text(*message, "_", "U");
+	*message = irssi_textfmt_replace_tags_html(*message, "/", "I");
 
 	/* TODO: here we need to make sure we don't try to double format anything.
 	 *       I'm open to any suggestions. */
@@ -491,6 +518,10 @@ irssi_sending_im_cb(GaimAccount *account, const char *receiver, char **message)
 	if(!strchr(*message, '*') && !strchr(*message, '/') && !strchr(*message, '_'))
 		return FALSE;
 
+	*message = irssi_textfmt_replace_tags_text(*message, "*", "B");
+	*message = irssi_textfmt_replace_tags_text(*message, "_", "U");
+	*message = irssi_textfmt_replace_tags_html(*message, "/", "I");
+
 	return FALSE;
 }
 
@@ -501,6 +532,10 @@ irssi_sending_chat_cb(GaimAccount *account, char **message, int id)
 	 * bother trying to do anything to the message, as there's nothing to format */
 	if(!strchr(*message, '*') && !strchr(*message, '/') && !strchr(*message, '_'))
 		return FALSE;
+
+	*message = irssi_textfmt_replace_tags_text(*message, "*", "B");
+	*message = irssi_textfmt_replace_tags_text(*message, "_", "U");
+	*message = irssi_textfmt_replace_tags_html(*message, "/", "I");
 
 	return FALSE;
 }
