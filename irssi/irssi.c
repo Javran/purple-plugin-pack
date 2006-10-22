@@ -434,6 +434,7 @@ irssi_lastlog_cb(GaimConversation *c, const gchar *cmd, gchar **args,
 			result = g_string_append(result, lines[i]);
 			result = g_string_append(result, "<br>");
 		}
+
 		g_free(strip);
 	}
 
@@ -441,6 +442,7 @@ irssi_lastlog_cb(GaimConversation *c, const gchar *cmd, gchar **args,
 
 	g_string_free(result, TRUE);
 	g_strfreev(lines);
+
 	return GAIM_CMD_RET_OK;
 }
 
@@ -449,44 +451,55 @@ static char *
 irssi_textfmt_replace_tags_text(char *text, const char *from, const char *to)
 {
 	int i;
-	char **splits = g_strsplit(text, from, 0);
-	GString *ret = g_string_new(NULL);
+	char **splits;
+	GString *ret;
+
+	splits = g_strsplit(text, from, 0);
+	ret = g_string_new(NULL);
 
 	for (i = 0; splits[i+1] && splits[i+2]; i+=2) {
 		ret = g_string_append(ret, splits[i]);
+
 		g_string_append_printf(ret, "<%s>%s</%s>", to, splits[i+1], to);
 	}
+
 	while (splits[i]) {
 		ret = g_string_append(ret, splits[i++]);
+
 		if (splits[i])
 			ret = g_string_append(ret, from);
 	}
 
 	g_strfreev(splits);
 	g_free(text);
+
 	return g_string_free(ret, FALSE);
 }
 
 static char *
 irssi_textfmt_replace_tags_html(char *html, const char *from, const char *to)
 {
-	GString *ret = g_string_new(NULL);
-	char **splits;
+	GString *ret;
+	char **splits, *repl;
 	int i;
 
+	ret = g_string_new(NULL);
 	splits = g_strsplit(html, "</", 0);
 	for (i = 0; splits[i]; i++) {
-		char *repl = irssi_textfmt_replace_tags_text(splits[i], from, to);
+		repl = irssi_textfmt_replace_tags_text(splits[i], from, to);
+
 		ret = g_string_append(ret, repl);
+
 		if (splits[i+1])
 			ret = g_string_append(ret, "</");
-		g_free(repl);
 	}
 
 	/* Do not g_strfreev because the splits[i] are freed from
 	 * irssi_textfmt_replace_tags_text */
 	g_free(splits);
 	g_free(html);
+	g_free(repl);
+
 	return g_string_free(ret, FALSE);
 }
 
