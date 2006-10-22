@@ -476,6 +476,7 @@ irssi_textfmt_replace_tags_text(char *text, const char *from, const char *to)
 	return g_string_free(ret, FALSE);
 }
 
+#if 0
 static char *
 irssi_textfmt_replace_tags_html(char *html, const char *from, const char *to)
 {
@@ -502,6 +503,7 @@ irssi_textfmt_replace_tags_html(char *html, const char *from, const char *to)
 
 	return g_string_free(ret, FALSE);
 }
+#endif
 
 /* these three callbacks are intended to modify text so that formatting appears
  * similarly to how irssi would format the text */
