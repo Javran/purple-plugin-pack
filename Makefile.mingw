@@ -4,126 +4,36 @@
 # Description: Makefile for win32 (mingw) gaim plugin pack
 #
 
-#
-# PATHS
-#
-
-# this plugin doesn't do anything (grim hasn't finished it due to the adium
-# logging "spec" not being finished), so we shouldn't build it - rekkanoryo
-GPP_ADIUM_XML_LOGGER	:= ./adium_xml_logger
-GPP_AUTOACCEPT			:= ./autoaccept
-GPP_AUTOREPLY			:= ./autoreply
-GPP_BASH				:= ./bash
-GPP_BIT					:= ./bit
-GPP_BLISTOPS			:= ./blistops
-GPP_BUDDYNOTE			:= ./buddynote
-GPP_COMMON				:= ./common
-GPP_DICE				:= ./dice
-GPP_EIGHT_BALL			:= ./eight_ball
-GPP_FLIP				:= ./flip
-GPP_GRIM				:= ./gRIM
-# we don't build this by default - rekkanoryo
-GPP_GROUPMSG			:= ./groupmsg
-GPP_IRSSIDATE			:= ./irssidate
-GPP_LASTSEEN			:= ./lastseen
-GPP_LISTHANDLER 		:= ./listhandler
-GPP_MYSTATUSBOX			:= ./mystatusbox
-GPP_NEWLINE				:= ./newline
-GPP_OLDLOGGER			:= ./oldlogger
-GPP_PO					:= ./po
-GPP_SEPANDTAB			:= ./sepandtab
-GPP_SHOWOFFLINE			:= ./showoffline
-GPP_SIMFIX				:= ./simfix
-GPP_SSLINFO				:= ./sslinfo
-# this plugin will build, but it doesn't do anything (grim hasn't finished it);
-# no reason to build - rekkanoryo
-GPP_STOCKER				:= ./stocker
-
-##
-## VARIABLE DEFINITIONS
-##
-
-GPP_VERSION := $(shell cat ./VERSION)
-GAIM_VERSION := $(shell cat ../../VERSION)
+VERSION := $(shell cat ./VERSION)
 
 all:
-	cp gpp_config.h.mingw gpp_config.h
-	
-	# $(MAKE) -C $(GPP_ADIUM_XML_LOGGER) -f Makefile.mingw
-	$(MAKE) -C $(GPP_AUTOACCEPT) -f Makefile.mingw
-	$(MAKE) -C $(GPP_AUTOREPLY) -f Makefile.mingw
-	$(MAKE) -C $(GPP_BASH) -f Makefile.mingw
-	$(MAKE) -C $(GPP_BIT) -f Makefile.mingw
-	$(MAKE) -C $(GPP_BLISTOPS) -f Makefile.mingw
-	$(MAKE) -C $(GPP_BUDDYNOTE) -f Makefile.mingw
-	$(MAKE) -C $(GPP_DICE) -f Makefile.mingw
-	$(MAKE) -C $(GPP_EIGHT_BALL) -f Makefile.mingw
-	$(MAKE) -C $(GPP_FLIP) -f Makefile.mingw
-	$(MAKE) -C $(GPP_GRIM) -f Makefile.mingw
-	# $(MAKE) -C $(GPP_GROUPMSG) -f Makefile.mingw
-	$(MAKE) -C $(GPP_IRSSIDATE) -f Makefile.mingw
-	$(MAKE) -C $(GPP_LASTSEEN) -f Makefile.mingw
-	$(MAKE) -C $(GPP_LISTHANDLER) -f Makefile.mingw
-	$(MAKE) -C $(GPP_MYSTATUSBOX) -f Makefile.mingw
-	$(MAKE) -C $(GPP_NEWLINE) -f Makefile.mingw
-	$(MAKE) -C $(GPP_OLDLOGGER) -f Makefile.mingw
-	$(MAKE) -C $(GPP_PO) -f Makefile.mingw
-	$(MAKE) -C $(GPP_SEPANDTAB) -f Makefile.mingw
-	$(MAKE) -C $(GPP_SHOWOFFLINE) -f Makefile.mingw
-	$(MAKE) -C $(GPP_SSLINFO) -f Makefile.mingw
-	# $(MAKE) -C $(GPP_STOCKER) -f Makefile.mingw
+	list='$(shell ls -D)'; for subdir in $$list; do \
+	  if test -d $$subdir; then if test -e $$subdir/.build; then if test -e $$subdir/Makefile.mingw; then \
+	    $(MAKE) -C $$subdir -f Makefile.mingw; \
+	  fi; fi; fi; \
+	done;
 
 install: all
-	# $(MAKE) -C $(GPP_ADIUM_XML_LOGGER) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_AUTOACCEPT) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_AUTOREPLY) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_BASH) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_BIT) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_BLISTOPS) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_BUDDYNOTE) -f Makefile.mingw install
-#	$(MAKE) -C $(GPP_COMMON) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_DICE) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_EIGHT_BALL) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_FLIP) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_GRIM) -f Makefile.mingw install
-	# $(MAKE) -C $(GPP_GROUPMSG) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_IRSSIDATE) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_LASTSEEN) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_LISTHANDLER) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_MYSTATUSBOX) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_NEWLINE) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_OLDLOGGER) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_PO) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_SEPANDTAB) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_SHOWOFFLINE) -f Makefile.mingw install
-	$(MAKE) -C $(GPP_SSLINFO) -f Makefile.mingw install
-	# $(MAKE) -C $(GPP_STOCKER) -f Makefile.mingw install
-
-installer: all
-	makensis.exe /DGPP_VERSION="$(GPP_VERSION)" /DGAIM_VERSION="$(GAIM_VERSION)" gpp-installer.nsi
+	list='$(shell ls -D)'; for subdir in $$list; do \
+	  if test -d $$subdir; then if test -e $$subdir/.build; then if test -e $$subdir/Makefile.mingw; then \
+	    $(MAKE) -C $$subdir -f Makefile.mingw install; \
+	  fi; fi; fi; \
+	done;
 
 clean:
-	# $(MAKE) -C $(GPP_ADIUM_XML_LOGGER) -f Makefile.mingw clean
-	$(MAKE) -C $(GPP_AUTOACCEPT) -f Makefile.mingw clean
-	$(MAKE) -C $(GPP_AUTOREPLY) -f Makefile.mingw clean
-	$(MAKE) -C $(GPP_BASH) -f Makefile.mingw clean
-	$(MAKE) -C $(GPP_BIT) -f Makefile.mingw clean
-	$(MAKE) -C $(GPP_BLISTOPS) -f Makefile.mingw clean
-	$(MAKE) -C $(GPP_BUDDYNOTE) -f Makefile.mingw clean
-#	$(MAKE) -C $(GPP_COMMON) -f Makefile.mingw clean
-	$(MAKE) -C $(GPP_DICE) -f Makefile.mingw clean
-	$(MAKE) -C $(GPP_FLIP) -f Makefile.mingw clean
-	$(MAKE) -C $(GPP_GRIM) -f Makefile.mingw clean
-	# $(MAKE) -C $(GPP_GROUPMSG) -f Makefile.mingw clean
-	$(MAKE) -C $(GPP_IRSSIDATE) -f Makefile.mingw clean
-	$(MAKE) -C $(GPP_LASTSEEN) -f Makefile.mingw clean
-	$(MAKE) -C $(GPP_LISTHANDLER) -f Makefile.mingw clean
-	$(MAKE) -C $(GPP_MYSTATUSBOX) -f Makefile.mingw clean
-	$(MAKE) -C $(GPP_NEWLINE) -f Makefile.mingw clean
-	$(MAKE) -C $(GPP_OLDLOGGER) -f Makefile.mingw clean
-	$(MAKE) -C $(GPP_PO) -f Makefile.mingw clean
-	$(MAKE) -C $(GPP_SEPANDTAB) -f Makefile.mingw clean
-	$(MAKE) -C $(GPP_SHOWOFFLINE) -f Makefile.mingw clean
-	$(MAKE) -C $(GPP_SSLINFO) -f Makefile.mingw clean
-	# $(MAKE) -C $(GPP_STOCKER) -f Makefile.mingw clean
-	rm -f gpp_config.h gpp-*.exe
+	list='$(shell ls -D)'; for subdir in $$list; do \
+	  if test -d $$subdir; then if test -e $$subdir/.build; then if test -e $$subdir/Makefile.mingw; then \
+	    $(MAKE) -C $$subdir -f Makefile.mingw clean; \
+	  fi; fi; fi; \
+	done; \
+	rm -rf gpp_config.h win32-dist gaim-plugin_pack*.zip
+
+install_zip:
+	list='$(shell ls -D)'; for subdir in $$list; do \
+	  if test -d $$subdir; then if test -e $$subdir/.build; then if test -e $$subdir/Makefile.mingw; then \
+	    $(MAKE) -C $$subdir -f Makefile.mingw install_zip; \
+	  fi; fi; fi; \
+	done; \
+	cd win32-dist; \
+	zip ../gaim-plugin_pack-$(VERSION).zip *.dll; \
+	cd ..
