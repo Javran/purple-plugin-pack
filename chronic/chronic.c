@@ -32,6 +32,41 @@
 #include <plugin.h>
 #include <version.h>
 
+static void
+chronic_received_cb(GaimAccount *account, char *sender, char *message,
+		GaimConversation *conv, GaimMessageFlags flags)
+{
+	char *sound = NULL, *path = NULL;
+
+	if(strlen(message) > 6 ){
+		if(!strncmp(message, "!sound ", 7)) {
+			sound = (message + 8);
+			/* add code to find a matching sound */
+			/* gaim_sound_play_file(); */
+		}
+	} else if(strlen(message) > 3) {
+		if(!strncmp(message, "{S ", 3)) {
+		}
+	}
+
+	return;
+}
+
+static gboolean
+chronic_load(GaimPlugin *plugin)
+{
+	void *convhandle;
+	
+	convhandle = gaim_conversations_get_handle();
+
+	gaim_signal_connect(convhandle, "received-im-msg", plugin,
+			GAIM_CALLBACK(chronic_received_cb), NULL);
+	gaim_signal_connect(convhandle, "received-chat-msg", plugin,
+			GAIM_CALLBACK(chronic_received_cb), NULL);
+
+	return TRUE;
+}
+
 static GaimPluginInfo chronic_info =
 {
 	GAIM_PLUGIN_MAGIC,		/* magic?  do you think i'm gullible enough to
@@ -50,8 +85,8 @@ static GaimPluginInfo chronic_info =
 	NULL,
 	"John Bailey <rekkanoryo@rekkanoryo.org>",
 	GPP_WEBSITE,
-	/* comments below are temporary until i decide if i need those functions */
-	NULL, /*chronic_load,*/
+	chronic_load,
+	/* comment below is temporary until i decide if i need the function */
 	NULL, /*chronic_unload,*/
 	NULL,
 	NULL,
