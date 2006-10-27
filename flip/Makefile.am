@@ -9,6 +9,9 @@ if PLUGINS
 
 flip_LTLIBRARIES = flip.la
 
+flip_la_LIBADD = \
+	$(GAIM_LIBS)
+
 flip_la_SOURCES = \
 	flip.c
 

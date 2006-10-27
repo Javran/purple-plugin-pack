@@ -9,6 +9,9 @@ if PLUGINS
 
 sslinfo_LTLIBRARIES = sslinfo.la
 
+sslinfo_la_LIBADD = \
+	$(GAIM_LIBS)
+
 sslinfo_la_SOURCES = \
 	sslinfo.c
 

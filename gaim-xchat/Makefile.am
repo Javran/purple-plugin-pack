@@ -9,6 +9,7 @@ if PLUGINS
 gaim_xchat_LTLIBRARIES = gaim-xchat.la
 
 gaim_xchat_la_LIBADD = \
+	$(GAIM_LIBS) \
 	$(GTK_LIBS)
 
 gaim_xchat_la_SOURCES = \

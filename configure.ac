@@ -78,6 +78,7 @@ PKG_CHECK_MODULES(GAIM, gaim,
 ])
 
 AC_SUBST(GAIM_CFLAGS)
+AC_SUBST(GAIM_LIBS)
 GAIM_LIBDIR=`pkg-config --variable=libdir gaim`
 GAIM_DATADIR=`pkg-config --variable=datadir gaim`
 AC_SUBST(GAIM_LIBDIR)

@@ -12,6 +12,9 @@ if PLUGINS
 
 groupmsg_LTLIBRARIES = groupmsg.la
 
+groupmsg_la_LIBADD = \
+	$(GAIM_LIBS)
+
 groupmsg_la_SOURCES = \
 	groupmsg.c
 

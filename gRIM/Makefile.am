@@ -9,6 +9,7 @@ if PLUGINS
 gRIM_LTLIBRARIES = gRIM.la
 
 gRIM_la_LIBADD = \
+	$(GAIM_LIBS) \
 	$(GTK_LIBS)
 
 gRIM_la_SOURCES = \

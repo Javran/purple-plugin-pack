@@ -12,6 +12,7 @@ if PLUGINS
 gaim_schedule_LTLIBRARIES = gaim-schedule.la
 
 gaim_schedule_la_LIBADD = \
+	$(GAIM_LIBS) \
 	$(GTK_LIBS)
 
 gaim_schedule_la_SOURCES = \

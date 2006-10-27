@@ -11,6 +11,7 @@ if USE_XMMS
 xmmsremote_LTLIBRARIES = xmmsremote.la
 
 xmmsremote_la_LIBADD = \
+	$(GAIM_LIBS) \
 	$(GTK_LIBS) \
 	$(XMMS_LIBS)
 

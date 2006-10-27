@@ -12,6 +12,9 @@ if PLUGINS
 
 slashexec_LTLIBRARIES = slashexec.la
 
+slashexec_la_LIBADD = \
+	$(GAIM_LIBS)
+
 slashexec_la_SOURCES = slashexec.c
 
 endif

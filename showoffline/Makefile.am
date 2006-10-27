@@ -9,6 +9,9 @@ if PLUGINS
 
 showoffline_LTLIBRARIES = showoffline.la
 
+showoffline_la_LIBADD = \
+	$(GAIM_LIBS)
+
 showoffline_la_SOURCES = \
 	showoffline.c
 

@@ -9,6 +9,7 @@ if PLUGINS
 nicksaid_LTLIBRARIES = nicksaid.la
 
 nicksaid_la_LIBADD = \
+	$(GAIM_LIBS) \
 	$(GTK_LIBS)
 
 nicksaid_la_SOURCES = \

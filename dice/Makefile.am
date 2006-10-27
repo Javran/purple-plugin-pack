@@ -9,6 +9,9 @@ if PLUGINS
 
 dice_LTLIBRARIES = dice.la
 
+dice_la_LIBADD = \
+	$(GAIM_LIBS)
+
 dice_la_SOURCES = \
 	dice.c
 

@@ -13,6 +13,9 @@ if PLUGINS
 
 stocker_LTLIBRARIES = stocker.la
 
+stocker_la_LIBADD = \
+	$(GAIM_LIBS)
+
 stocker_la_SOURCES = \
 	gtkticker.c \
 	stocker.c \

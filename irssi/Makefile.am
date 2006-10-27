@@ -9,6 +9,9 @@ if PLUGINS
 
 irssi_LTLIBRARIES = irssi.la
 
+irssi_la_LIBADD = \
+	$(GAIM_LIBS)
+
 irssi_la_SOURCES = \
 	irssi.c
 

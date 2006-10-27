@@ -9,6 +9,7 @@ if PLUGINS
 markerline_LTLIBRARIES = markerline.la
 
 markerline_la_LIBADD = \
+	$(GAIM_LIBS) \
 	$(GTK_LIBS)
 
 markerline_la_SOURCES = \

@@ -9,6 +9,9 @@ if PLUGINS
 
 simfix_LTLIBRARIES = simfix.la
 
+simfix_la_LIBADD = \
+	$(GAIM_LIBS)
+
 simfix_la_SOURCES = \
 	simfix.c
 

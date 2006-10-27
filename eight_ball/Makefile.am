@@ -12,6 +12,9 @@ if PLUGINS
 
 eight_ball_LTLIBRARIES = eight_ball.la
 
+eight_ball_la_LIBADD = \
+	$(GAIM_LIBS)
+
 eight_ball_la_SOURCES = eight_ball.c
 
 endif

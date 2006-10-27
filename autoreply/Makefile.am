@@ -9,6 +9,7 @@ if PLUGINS
 autoreply_LTLIBRARIES = autoreply.la
 
 autoreply_la_LIBADD = \
+	$(GAIM_LIBS) \
 	$(GTK_LIBS)
 
 autoreply_la_SOURCES = \

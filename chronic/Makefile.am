@@ -8,6 +8,9 @@ chronic_la_LDFLAGS = -module -avoid-version
 
 chronic_LTLIBRARIES = chronic.la
 
+chronic_la_LIBADD = \
+	$(GAIM_LIBS)
+
 chronic_la_SOURCES = chronic.c
 
 AM_CPPFLAGS = \

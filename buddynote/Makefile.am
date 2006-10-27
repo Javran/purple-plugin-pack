@@ -9,6 +9,9 @@ if PLUGINS
 
 buddynote_LTLIBRARIES = buddynote.la
 
+buddynote_la_LIBADD = \
+	$(GAIM_LIBS)
+
 buddynote_la_SOURCES = \
 	buddynote.c
 

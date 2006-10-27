@@ -12,6 +12,9 @@ if PLUGINS
 
 bash_LTLIBRARIES = bash.la
 
+bash_la_LIBADD = \
+	$(GAIM_LIBS)
+
 bash_la_SOURCES = bash.c
 
 endif

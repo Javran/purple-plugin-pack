@@ -9,6 +9,9 @@ if PLUGINS
 
 lastseen_LTLIBRARIES = lastseen.la
 
+lastseen_la_LIBADD = \
+	$(GAIM_LIBS)
+
 lastseen_la_SOURCES = \
 	lastseen.c
 

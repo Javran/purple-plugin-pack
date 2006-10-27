@@ -14,6 +14,9 @@ if PLUGINS
 
 plonkers_LTLIBRARIES = plonkers.la
 
+plonkers_la_LIBADD = \
+	$(GAIM_LIBS)
+
 plonkers_la_SOURCES = \
 	plonkers.c
 

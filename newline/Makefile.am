@@ -9,6 +9,9 @@ if PLUGINS
 
 newline_LTLIBRARIES = newline.la
 
+newline_la_LIBADD = \
+	$(GAIM_LIBS)
+
 newline_la_SOURCES = \
 	newline.c
 

@@ -9,6 +9,9 @@ if PLUGINS
 
 oldlogger_LTLIBRARIES = oldlogger.la
 
+oldlogger_la_LIBADD = \
+	$(GAIM_LIBS)
+
 oldlogger_la_SOURCES = \
 	oldlogger.c
 

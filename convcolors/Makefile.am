@@ -9,6 +9,7 @@ if PLUGINS
 convcolors_LTLIBRARIES = convcolors.la
 
 convcolors_la_LIBADD = \
+	$(GAIM_LIBS) \
 	$(GTK_LIBS)
 
 convcolors_la_SOURCES = \

@@ -9,6 +9,9 @@ if PLUGINS
 
 blistops_LTLIBRARIES = blistops.la
 
+blistops_la_LIBADD = \
+	$(GAIM_LIBS)
+
 blistops_la_SOURCES = \
 	blistops.c
 

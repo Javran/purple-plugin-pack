@@ -13,6 +13,9 @@ if PLUGINS
 
 listhandler_LTLIBRARIES = listhandler.la
 
+listhandler_la_LIBADD = \
+	$(GAIM_LIBS)
+
 listhandler_la_SOURCES = \
 	aim_blt_files.c \
 	gen_xml_files.c \
