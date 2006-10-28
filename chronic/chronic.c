@@ -23,11 +23,15 @@
 
 #include "../common/i18n.h"
 
+/* libc */
+#include <string.h>
+
 /* GLib */
 #include <glib.h>
 
 /* Gaim */
 #define GAIM_PLUGINS
+#include <conversation.h>
 #include <debug.h>
 #include <plugin.h>
 #include <version.h>
@@ -38,14 +42,11 @@ chronic_received_cb(GaimAccount *account, char *sender, char *message,
 {
 	char *sound = NULL, *path = NULL;
 
-	if(strlen(message) > 6 ){
-		if(!strncmp(message, "!sound ", 7)) {
-			sound = (message + 8);
+	if(strlen(message) > 3) {
+		if(!strncmp(message, "{S ", 3)) {
+			sound = (message + 4);
 			/* add code to find a matching sound */
 			/* gaim_sound_play_file(); */
-		}
-	} else if(strlen(message) > 3) {
-		if(!strncmp(message, "{S ", 3)) {
 		}
 	}
 

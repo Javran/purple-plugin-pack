@@ -1,6 +1,4 @@
-EXTRA_DIST = \
-	.plugin \
-	chronic.wav
+EXTRA_DIST = .plugin
 
 chronicdir=$(GAIM_LIBDIR)/gaim
 
@@ -9,6 +7,7 @@ chronic_la_LDFLAGS = -module -avoid-version
 chronic_LTLIBRARIES = chronic.la
 
 chronic_la_LIBADD = \
+	$(GLIB_LIBS) \
 	$(GAIM_LIBS)
 
 chronic_la_SOURCES = chronic.c
