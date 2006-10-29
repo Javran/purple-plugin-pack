@@ -515,7 +515,7 @@ irssi_textfmt_replace_tags_text(char *str, const char *from, const char *to)
 	return g_string_free(ret, FALSE);
 }
 
-#if 0
+#if 1
 static char *
 irssi_textfmt_replace_tags_html(char *html, const char *from, const char *to)
 {
@@ -560,7 +560,7 @@ irssi_writing_cb(GaimAccount *account, const char *who, char **message,
 
 	*message = irssi_textfmt_replace_tags_text(*message, "*", "B");
 	*message = irssi_textfmt_replace_tags_text(*message, "_", "U");
-	/* *message = irssi_textfmt_replace_tags_html(*message, "/", "I"); */
+	*message = irssi_textfmt_replace_tags_html(*message, "/", "I"); 
 
 	/* TODO: here we need to make sure we don't try to double format anything.
 	 *       I'm open to any suggestions. */
@@ -577,7 +577,7 @@ irssi_sending_im_cb(GaimAccount *account, const char *receiver, char **message)
 
 	*message = irssi_textfmt_replace_tags_text(*message, "*", "B");
 	*message = irssi_textfmt_replace_tags_text(*message, "_", "U");
-	/* *message = irssi_textfmt_replace_tags_html(*message, "/", "I"); */
+	*message = irssi_textfmt_replace_tags_html(*message, "/", "I"); 
 
 	return FALSE;
 }
@@ -592,7 +592,7 @@ irssi_sending_chat_cb(GaimAccount *account, char **message, int id)
 
 	*message = irssi_textfmt_replace_tags_text(*message, "*", "B");
 	*message = irssi_textfmt_replace_tags_text(*message, "_", "U");
-	/* *message = irssi_textfmt_replace_tags_html(*message, "/", "I"); */
+	*message = irssi_textfmt_replace_tags_html(*message, "/", "I"); 
 
 	return FALSE;
 }
