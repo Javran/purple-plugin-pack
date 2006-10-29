@@ -45,6 +45,7 @@
 /* System headers */
 #include <glib.h>
 #include <gtk/gtk.h>
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -448,31 +449,69 @@ irssi_lastlog_cb(GaimConversation *c, const gchar *cmd, gchar **args,
 
 /* these will free text, and return a newly allocated string */
 static char *
-irssi_textfmt_replace_tags_text(char *text, const char *from, const char *to)
+find_start(char *text, char needle)
 {
-	int i;
-	char **splits;
+	char *str = text;
+
+	while (str) {
+		str = strchr(str, needle);
+		if (!str)
+			return NULL;
+		if (str == text || isspace(*(str-1)) || ispunct(*(str-1)))
+			return str;
+		str++;
+	}
+	return NULL;
+}
+
+static char *
+find_end(char *text, char needle)
+{
+	char *iter = text;
+
+	while (*iter && *iter != needle)
+		iter++;
+
+	return iter;
+}
+
+static char *
+irssi_textfmt_replace_tags_text(char *str, const char *from, const char *to)
+{
 	GString *ret;
+	char *start, *end = NULL, *text;
+	gboolean found;
 
-	splits = g_strsplit(text, from, 0);
 	ret = g_string_new(NULL);
+	text = str;
+	while (*text) {
+		start = find_start(text, *from);
+		if (start == NULL) {
+			g_string_append(ret, text);
+			break;
+		} else {
+			ret = g_string_append_len(ret, text, start - text);
+		}
 
-	for (i = 0; splits[i+1] && splits[i+2]; i+=2) {
-		ret = g_string_append(ret, splits[i]);
-
-		g_string_append_printf(ret, "<%s>%s</%s>", to, splits[i+1], to);
+		found = FALSE;
+		end = find_end(start + 1, *from);
+		if (*end == *from) {
+			if (*(end + 1) == '\0' || isspace(*(end + 1)) || ispunct(*(end + 1))) {
+				found = TRUE;
+			}
+		}
+		if (found)
+			g_string_append_printf(ret, "<%s>", to);
+		ret = g_string_append_len(ret, start, end - start + 1);
+		if (found)
+			g_string_append_printf(ret, "</%s>", to);
+		if (*end)
+			text = end + 1;
+		else
+			break;
 	}
 
-	while (splits[i]) {
-		ret = g_string_append(ret, splits[i++]);
-
-		if (splits[i])
-			ret = g_string_append(ret, from);
-	}
-
-	g_strfreev(splits);
-	g_free(text);
-
+	g_free(str);
 	return g_string_free(ret, FALSE);
 }
 
