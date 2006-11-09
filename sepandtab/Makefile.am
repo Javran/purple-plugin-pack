@@ -8,11 +8,11 @@ if PLUGINS
 
 sepandtab_LTLIBRARIES = sepandtab.la
 
-sepandtab_la_LIBADD = \
-	$(GAIM_LIBS)
-
 sepandtab_la_SOURCES = \
 	sepandtab.c
+
+sepandtab_la_LIBADD = \
+	$(GAIM_LIBS)
 
 endif
 

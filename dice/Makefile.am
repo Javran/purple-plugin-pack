@@ -3,17 +3,17 @@ EXTRA_DIST = .plugin .build Makefile.mingw
 dicedir = $(GAIM_LIBDIR)/gaim
 
 dice_la_LDFLAGS = -module -avoid-version
-dice_la_LIBADD = $(GLIB_LIBS)
 
 if PLUGINS
 
 dice_LTLIBRARIES = dice.la
 
-dice_la_LIBADD = \
-	$(GAIM_LIBS)
-
 dice_la_SOURCES = \
 	dice.c
+
+dice_la_LIBADD = \
+	$(GLIB_LIBS) \
+	$(GAIM_LIBS)
 
 endif
 

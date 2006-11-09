@@ -7,14 +7,10 @@ EXTRA_DIST = \
 listhandlerdir = $(GAIM_LIBDIR)/gaim
 
 listhandler_la_LDFLAGS = -module -avoid-version
-listhandler_la_LIBADD = $(GLIB_LIBS)
 
 if PLUGINS
 
 listhandler_LTLIBRARIES = listhandler.la
-
-listhandler_la_LIBADD = \
-	$(GAIM_LIBS)
 
 listhandler_la_SOURCES = \
 	aim_blt_files.c \
@@ -22,6 +18,10 @@ listhandler_la_SOURCES = \
 	lh_util.c \
 	migrate.c \
 	listhandler.c
+
+listhandler_la_LIBADD = \
+	$(GLIB_LIBS) \
+	$(GAIM_LIBS)
 
 endif
 

@@ -8,13 +8,14 @@ if PLUGINS
 if USE_TALKFILTERS
 talkfilters_LTLIBRARIES = talkfilters.la
 
+talkfilters_la_SOURCES = \
+	talkfilters.c
+
 talkfilters_la_LIBADD = \
 	$(GAIM_LIBS) \
 	$(GTK_LIBS) \
 	$(TALKFILTERS_LIBS)
 
-talkfilters_la_SOURCES = \
-	talkfilters.c
 endif
 endif
 

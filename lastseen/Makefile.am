@@ -3,17 +3,17 @@ EXTRA_DIST = .plugin .build Makefile.mingw
 lastseendir = $(GAIM_LIBDIR)/gaim
 
 lastseen_la_LDFLAGS = -module -avoid-version
-lastseen_la_LIBADD = $(GTK_LIBS)
 
 if PLUGINS
 
 lastseen_LTLIBRARIES = lastseen.la
 
-lastseen_la_LIBADD = \
-	$(GAIM_LIBS)
-
 lastseen_la_SOURCES = \
 	lastseen.c
+
+lastseen_la_LIBADD = \
+	$(GTK_LIBS) \
+	$(GAIM_LIBS)
 
 endif
 

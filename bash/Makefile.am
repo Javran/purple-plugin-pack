@@ -6,14 +6,14 @@ EXTRA_DIST = \
 bashdir = $(GAIM_LIBDIR)/gaim
 
 bash_la_LDFLAGS = -module -avoid-version
-bash_la_LIBADD = $(GLIB_LIBS)
+
+bash_la_LIBADD = \
+	$(GLIB_LIBS) \
+	$(GAIM_LIBS)
 
 if PLUGINS
 
 bash_LTLIBRARIES = bash.la
-
-bash_la_LIBADD = \
-	$(GAIM_LIBS)
 
 bash_la_SOURCES = bash.c
 

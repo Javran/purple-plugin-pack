@@ -7,13 +7,13 @@ gaim_scheduledir = $(GAIM_LIBDIR)/gaim
 
 gaim_schedule_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
-
-gaim_schedule_LTLIBRARIES = gaim-schedule.la
-
 gaim_schedule_la_LIBADD = \
 	$(GAIM_LIBS) \
 	$(GTK_LIBS)
+
+if PLUGINS
+
+gaim_schedule_LTLIBRARIES = gaim-schedule.la
 
 gaim_schedule_la_SOURCES = \
 	schedule.c	\

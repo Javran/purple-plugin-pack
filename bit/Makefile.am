@@ -8,12 +8,12 @@ if PLUGINS
 
 bit_LTLIBRARIES = bit.la
 
+bit_la_SOURCES = \
+	bit.c
+
 bit_la_LIBADD = \
 	$(GAIM_LIBS) \
 	$(GTK_LIBS)
-
-bit_la_SOURCES = \
-	bit.c
 
 endif
 

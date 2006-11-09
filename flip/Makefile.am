@@ -3,17 +3,17 @@ EXTRA_DIST = .plugin .build Makefile.mingw
 flipdir = $(GAIM_LIBDIR)/gaim
 
 flip_la_LDFLAGS = -module -avoid-version
-flip_la_LIBADD = $(GLIB_LIBS)
 
 if PLUGINS
 
 flip_LTLIBRARIES = flip.la
 
-flip_la_LIBADD = \
-	$(GAIM_LIBS)
-
 flip_la_SOURCES = \
 	flip.c
+
+flip_la_LIBADD = \
+	$(GLIB_LIBS) \
+	$(GAIM_LIBS)
 
 endif
 

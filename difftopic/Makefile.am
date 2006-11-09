@@ -8,12 +8,12 @@ if PLUGINS
 
 difftopic_LTLIBRARIES = difftopic.la
 
+difftopic_la_SOURCES = \
+	difftopic.c
+
 difftopic_la_LIBADD = \
 	$(GAIM_LIBS) \
 	$(GTK_LIBS)
-
-difftopic_la_SOURCES = \
-	difftopic.c
 
 endif
 

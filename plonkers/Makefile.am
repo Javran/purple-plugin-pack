@@ -8,17 +8,16 @@ plonkers_la_LDFLAGS = \
 	-module \
 	-avoid-version
 
-plonkers_la_LIBADD = $(GTK_LIBS)
-
 if PLUGINS
 
 plonkers_LTLIBRARIES = plonkers.la
 
-plonkers_la_LIBADD = \
-	$(GAIM_LIBS)
-
 plonkers_la_SOURCES = \
 	plonkers.c
+
+plonkers_la_LIBADD = \
+	$(GTK_LIBS) \
+	$(GAIM_LIBS)
 
 endif
 

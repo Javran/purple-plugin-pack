@@ -3,17 +3,17 @@ EXTRA_DIST = .plugin .build Makefile.mingw
 buddynotedir = $(GAIM_LIBDIR)/gaim
 
 buddynote_la_LDFLAGS = -module -avoid-version
-buddynote_la_LIBADD = $(GLIB_LIBS)
 
 if PLUGINS
 
 buddynote_LTLIBRARIES = buddynote.la
 
-buddynote_la_LIBADD = \
-	$(GAIM_LIBS)
-
 buddynote_la_SOURCES = \
 	buddynote.c
+
+buddynote_la_LIBADD = \
+	$(GLIB_LIBS) \
+	$(GAIM_LIBS)
 
 endif
 

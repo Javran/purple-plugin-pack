@@ -8,12 +8,12 @@ if PLUGINS
 
 offlinemsg_LTLIBRARIES = offlinemsg.la
 
+offlinemsg_la_SOURCES = \
+	offlinemsg.c
+
 offlinemsg_la_LIBADD = \
 	$(GAIM_LIBS) \
 	$(GTK_LIBS)
-
-offlinemsg_la_SOURCES = \
-	offlinemsg.c
 
 endif
 

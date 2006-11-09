@@ -3,17 +3,17 @@ EXTRA_DIST = .plugin .build Makefile.mingw
 blistopsdir = $(GAIM_LIBDIR)/gaim
 
 blistops_la_LDFLAGS = -module -avoid-version
-blistops_la_LIBADD = $(GTK_LIBS)
 
 if PLUGINS
 
 blistops_LTLIBRARIES = blistops.la
 
-blistops_la_LIBADD = \
-	$(GAIM_LIBS)
-
 blistops_la_SOURCES = \
 	blistops.c
+
+blistops_la_LIBADD = \
+	$(GTK_LIBS) \
+	$(GAIM_LIBS)
 
 endif
 

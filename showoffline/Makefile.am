@@ -3,17 +3,17 @@ EXTRA_DIST = .plugin .build Makefile.mingw
 showofflinedir = $(GAIM_LIBDIR)/gaim
 
 showoffline_la_LDFLAGS = -module -avoid-version
-showoffline_la_LIBADD = $(GLIB_LIBS)
 
 if PLUGINS
 
 showoffline_LTLIBRARIES = showoffline.la
 
-showoffline_la_LIBADD = \
-	$(GAIM_LIBS)
-
 showoffline_la_SOURCES = \
 	showoffline.c
+
+showoffline_la_LIBADD = \
+	$(GLIB_LIBS) \
+	$(GAIM_LIBS)
 
 endif
 

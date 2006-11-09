@@ -3,17 +3,17 @@ EXTRA_DIST = .build .plugin Makefile.mingw
 simfixdir = $(GAIM_LIBDIR)/gaim
 
 simfix_la_LDFLAGS = -module -avoid-version
-simfix_la_LIBADD = $(GLIB_LIBS)
 
 if PLUGINS
 
 simfix_LTLIBRARIES = simfix.la
 
-simfix_la_LIBADD = \
-	$(GAIM_LIBS)
-
 simfix_la_SOURCES = \
 	simfix.c
+
+simfix_la_LIBADD = \
+	$(GLIB_LIBS) \
+	$(GAIM_LIBS)
 
 endif
 

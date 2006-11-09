@@ -8,12 +8,12 @@ if PLUGINS
 
 nicksaid_LTLIBRARIES = nicksaid.la
 
+nicksaid_la_SOURCES = \
+	nicksaid.c
+
 nicksaid_la_LIBADD = \
 	$(GAIM_LIBS) \
 	$(GTK_LIBS)
-
-nicksaid_la_SOURCES = \
-	nicksaid.c
 
 endif
 

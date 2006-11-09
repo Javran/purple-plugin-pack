@@ -8,12 +8,12 @@ if PLUGINS
 
 mystatusbox_LTLIBRARIES = mystatusbox.la
 
+mystatusbox_la_SOURCES = \
+	mystatusbox.c
+
 mystatusbox_la_LIBADD = \
 	$(GAIM_LIBS) \
 	$(GTK_LIBS)
-
-mystatusbox_la_SOURCES = \
-	mystatusbox.c
 
 endif
 

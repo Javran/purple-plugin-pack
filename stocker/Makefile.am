@@ -7,19 +7,19 @@ EXTRA_DIST = \
 stockerdir = $(GAIM_LIBDIR)/gaim
 
 stocker_la_LDFLAGS = -module -avoid-version
-stocker_la_LIBADD = $(GTK_LIBS)
 
 if PLUGINS
 
 stocker_LTLIBRARIES = stocker.la
 
-stocker_la_LIBADD = \
-	$(GAIM_LIBS)
-
 stocker_la_SOURCES = \
 	gtkticker.c \
 	stocker.c \
 	stocker_prefs.c
+
+stocker_la_LIBADD = \
+	$(GTK_LIBS) \
+	$(GAIM_LIBS)
 
 endif
 

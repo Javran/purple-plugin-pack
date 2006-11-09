@@ -6,16 +6,16 @@ EXTRA_DIST = \
 eight_balldir = $(GAIM_LIBDIR)/gaim
 
 eight_ball_la_LDFLAGS = -module -avoid-version
-eight_ball_la_LIBADD = $(GLIB_LIBS)
 
 if PLUGINS
 
 eight_ball_LTLIBRARIES = eight_ball.la
 
-eight_ball_la_LIBADD = \
-	$(GAIM_LIBS)
-
 eight_ball_la_SOURCES = eight_ball.c
+
+eight_ball_la_LIBADD = \
+	$(GLIB_LIBS) \
+	$(GAIM_LIBS)
 
 endif
 

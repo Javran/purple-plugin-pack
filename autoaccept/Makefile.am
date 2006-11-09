@@ -8,12 +8,12 @@ if PLUGINS
 
 autoaccept_LTLIBRARIES = autoaccept.la
 
+autoaccept_la_SOURCES = \
+	autoaccept.c
+
 autoaccept_la_LIBADD = \
 	$(GAIM_LIBS) \
 	$(GTK_LIBS)
-
-autoaccept_la_SOURCES = \
-	autoaccept.c
 
 endif
 

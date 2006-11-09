@@ -6,17 +6,17 @@ EXTRA_DIST = \
 groupmsgdir = $(GAIM_LIBDIR)/gaim
 
 groupmsg_la_LDFLAGS = -module -avoid-version
-groupmsg_la_LIBADD = $(GLIB_LIBS)
 
 if PLUGINS
 
 groupmsg_LTLIBRARIES = groupmsg.la
 
-groupmsg_la_LIBADD = \
-	$(GAIM_LIBS)
-
 groupmsg_la_SOURCES = \
 	groupmsg.c
+
+groupmsg_la_LIBADD = \
+	$(GLIB_LIBS) \
+	$(GAIM_LIBS)
 
 endif
 
