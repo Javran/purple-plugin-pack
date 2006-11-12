@@ -1,3 +1,8 @@
+Version 1.0beta5: 11/11/06
+	* Removed chronic.wav due to potential copyright issues
+	* Fixed some missing library links in Makefiles
+	* Fixed irssi plugin's text formatting so that it isn't so aggressive
+
 Version 1.0beta4: 10/18/06
 	* Updated to work with Gaim 2.0.0beta4
 	* Moved from gettext to intltool

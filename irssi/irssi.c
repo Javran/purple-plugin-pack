@@ -520,7 +520,7 @@ static char *
 irssi_textfmt_replace_tags_html(char *html, const char *from, const char *to)
 {
 	GString *ret;
-	char **splits, *repl, *r;
+	char **splits, *repl = NULL, *r = NULL;
 	int i;
 
 	ret = g_string_new(NULL);
