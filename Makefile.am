@@ -16,6 +16,7 @@ EXTRA_DIST = \
 	gpp_config.h \
 	gpp_config.h.mingw \
 	gaim-plugin_pack.spec \
+	win_gpp.mak \
 	po/AUTHORS \
 	po/ChangeLog \
 	po/Makefile.in.in \
