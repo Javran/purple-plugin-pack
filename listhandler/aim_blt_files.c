@@ -38,7 +38,7 @@ lh_aim_filter(GaimAccount *account)
 	if(!prpl_id)
 		return FALSE;
 
-	if(!strcmp(prpl_id, "prpl-oscar"))
+	if(!strcmp(prpl_id, "prpl-aim"))
 		return TRUE;
 
 	return FALSE;
