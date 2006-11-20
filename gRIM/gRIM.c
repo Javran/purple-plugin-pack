@@ -26,7 +26,7 @@
  * 08:19 < grim> i was going to use my nick as an example but decided against that..
 */
 
-#if HAVE_CONFIG_H
+#ifdef HAVE_CONFIG_H
 # include "../gpp_config.h"
 #endif /* HAVE_CONFIG_H */
 

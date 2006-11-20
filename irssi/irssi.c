@@ -20,7 +20,7 @@
  */
 
 /* gpp_config.h provides necessary definitions that help us find/do stuff */
-#if HAVE_CONFIG_H
+#ifdef HAVE_CONFIG_H
 # include "../gpp_config.h"
 #endif
 

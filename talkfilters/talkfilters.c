@@ -20,7 +20,7 @@
    	-- done (added a menuitem in the conversation window instead)
 */
 
-#if HAVE_CONFIG_H
+#ifdef HAVE_CONFIG_H
 # include "../gpp_config.h"
 #endif /* HAVE_CONFIG_H */
 
