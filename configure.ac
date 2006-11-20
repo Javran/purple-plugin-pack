@@ -209,6 +209,7 @@ AC_OUTPUT([
 	offlinemsg/Makefile
 	markerline/Makefile
 	mystatusbox/Makefile
+	napster/Makefile
 	nicksaid/Makefile
 	newline/Makefile
 	oldlogger/Makefile
