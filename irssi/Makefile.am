@@ -3,14 +3,14 @@ EXTRA_DIST = .plugin .build Makefile.mingw
 irssidir = $(GAIM_LIBDIR)/gaim
 
 irssi_la_LDFLAGS = -module -avoid-version
-irssi_la_LIBADD = $(GLIB_LIBS)
 
 if PLUGINS
 
 irssi_LTLIBRARIES = irssi.la
 
 irssi_la_LIBADD = \
-	$(GAIM_LIBS)
+	$(GAIM_LIBS) \
+	$(GLIB_LIBS)
 
 irssi_la_SOURCES = \
 	irssi.c
