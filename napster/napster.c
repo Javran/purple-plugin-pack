@@ -25,6 +25,8 @@
 # include "../gpp_config.h"
 #endif
 
+#define GAIM_PLUGINS
+
 #include "account.h"
 #include "accountopt.h"
 #include "blist.h"
