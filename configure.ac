@@ -187,6 +187,7 @@ AC_OUTPUT([
 	VERSION
 	autoaccept/Makefile
 	autoreply/Makefile
+	awaynotify/Makefile
 	bash/Makefile
 	bit/Makefile
 	blistops/Makefile
