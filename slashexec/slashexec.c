@@ -183,11 +183,6 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 		return FALSE;
 	}
 
-	/* Now we're ready to execute the user's command.  Let the user know. */
-	gaim_conversation_write(conv, NULL,
-			_("Executing your command.  This will pause until the command "
-			"finishes executing."), GAIM_MESSAGE_SYSTEM, time(NULL));
-
 	/* I may eventually add a pref to show this to the user; for now it's fine
 	 * going just to the debug bucket */
 	gaim_debug_info("slashexec", "Spawn command: %s\n", spawn_cmd);
@@ -250,18 +245,9 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 			cmd_stdout[strlen(cmd_stdout) - 1] = '\0';
 
 		if(send) {
-			GaimConversationType type;
-			char *conv_sys_msg;
-			
-			type = gaim_conversation_get_type(conv);
-			
 			gaim_debug_info("slashexec", "Command stdout: %s\n", cmd_stdout);
 
-			conv_sys_msg = g_strdup_printf(
-				_("The following text is the output from your command and has "
-				"been sent as a message:\n%s"), cmd_stdout);
-
-			switch(type) {
+			switch(gaim_conversation_get_type(conv)) {
 				case GAIM_CONV_TYPE_IM:
 					gaim_conv_im_send(GAIM_CONV_IM(conv), cmd_stdout);
 					break;
@@ -272,10 +258,6 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 					return FALSE;
 			}
 
-			gaim_conversation_write(conv, NULL, conv_sys_msg,
-					GAIM_MESSAGE_SYSTEM, time(NULL));
-
-			g_free(conv_sys_msg);
 		} else
 			gaim_conversation_write(conv, NULL, cmd_stdout, GAIM_MESSAGE_SYSTEM,
 					time(NULL));
