@@ -67,6 +67,9 @@ gtkblist_created_cb(GaimBuddyList *blist) {
 
 	w_blist = gtkblist->window;
 	w_menubar = gtk_item_factory_get_widget(gtkblist->ift, "<GaimMain>");
+
+	gaim_prefs_trigger_callback(PREF_LIST);
+	gaim_prefs_trigger_callback(PREF_MENU);
 }
 
 /* globals to remove our pref cb's */
