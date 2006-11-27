@@ -1,3 +1,7 @@
+Version 1.0svn:
+	* Fixed a bug in blistops that caused the saved preferences not to take
+	  effect after restarting Gaim.
+
 Version 1.0beta5: 11/11/06
 	* Removed chronic.wav due to potential copyright issues
 	* Fixed some missing library links in Makefiles
