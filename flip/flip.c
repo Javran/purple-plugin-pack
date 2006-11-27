@@ -94,7 +94,7 @@ static GaimPluginInfo info =
 	NULL,											/**  summary		*/
 	NULL,											/**  description	*/
 	"Gary Kramlich <amc_grim@users.sf.net>",		/**< author			*/
-	NULL,											/**< homepage		*/
+	GPP_WEBSITE,									/**< homepage		*/
 
 	plugin_load,									/**< load			*/
 	plugin_unload,									/**< unload			*/
