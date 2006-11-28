@@ -281,9 +281,6 @@ get_config_frame(GaimPlugin *plugin)
 		gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
 		g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(set_color), formats[i].prefix);
 
-		hbox = gtk_hbox_new(FALSE, GAIM_HIG_BOX_SPACE);
-		gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-		
 		button = gtk_check_button_new_with_label(_("Bold"));
 		gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
 		if (f & FONT_BOLD)
