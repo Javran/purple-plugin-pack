@@ -275,29 +275,33 @@ get_config_frame(GaimPlugin *plugin)
 
 		hbox = gtk_hbox_new(FALSE, GAIM_HIG_BOX_SPACE);
 		gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-		gtk_box_pack_start(GTK_BOX(hbox), gtk_label_new(_("Color")), FALSE, FALSE, 0);
 
-		button = gaim_pixbuf_button_from_stock("", GTK_STOCK_SELECT_COLOR, GAIM_BUTTON_HORIZONTAL);
+		button = gaim_pixbuf_button_from_stock(" Color", GTK_STOCK_SELECT_COLOR,
+				GAIM_BUTTON_HORIZONTAL);
 		gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
-		g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(set_color), formats[i].prefix);
+		g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(set_color),
+				formats[i].prefix);
 
 		button = gtk_check_button_new_with_label(_("Bold"));
 		gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
 		if (f & FONT_BOLD)
 			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
-		g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(toggle_bold), formats[i].prefix);
+		g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(toggle_bold),
+				formats[i].prefix);
 		
 		button = gtk_check_button_new_with_label(_("Italic"));
 		gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
 		if (f & FONT_ITALIC)
 			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
-		g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(toggle_italic), formats[i].prefix);
+		g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(toggle_italic),
+				formats[i].prefix);
 		
 		button = gtk_check_button_new_with_label(_("Underline"));
 		gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
 		if (f & FONT_UNDERLINE)
 			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
-		g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(toggle_underline), formats[i].prefix);
+		g_signal_connect(G_OBJECT(button), "clicked",
+				G_CALLBACK(toggle_underline), formats[i].prefix);
 	}
 
 	frame = gaim_gtk_make_frame(ret, _("General"));
