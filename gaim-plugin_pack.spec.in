@@ -19,7 +19,7 @@ Release:    0%{?gaimdist:.%{gaimdist}}
 License:    GPL
 Group:      Applications/Internet
 
-URL:        http://www.guifications.org/
+URL:        http://gaim.guifications.org/
 Source0:    %{name}-%{version}.tar.gz
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -60,6 +60,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/pixmaps/gaim/plugin_pack
 
 %changelog
+* Tue Dec 5 2006 John Bailey <rekkanoryo@rekkanoryo.org>
+- Update the URL to match our new website
+
 * Thu Oct 19 2006 Stu Tomlinson <stu@nosnilmot.com>
 - Removed locale from %%files, that's what %%find_lang is for
 - Fixed finding translations
