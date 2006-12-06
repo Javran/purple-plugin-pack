@@ -199,9 +199,6 @@ AC_OUTPUT([
 	eight_ball/Makefile
 	flip/Makefile
 	gaim-schedule/Makefile
-	gaim-xchat/Makefile
-	xmmsremote/Makefile
-	xmmsremote/pixmaps/Makefile
 	groupmsg/Makefile
 	gRIM/Makefile
 	irssi/Makefile
@@ -222,6 +219,9 @@ AC_OUTPUT([
 	sslinfo/Makefile
 	stocker/Makefile
 	talkfilters/Makefile
+	xchat-chats/Makefile
+	xmmsremote/Makefile
+	xmmsremote/pixmaps/Makefile
 ])
 
 dnl #######################################################################

@@ -1,19 +1,19 @@
 EXTRA_DIST = .plugin .build
 
-gaim_xchatdir = $(GAIM_LIBDIR)/gaim
+xchat_chatsdir = $(GAIM_LIBDIR)/gaim
 
-gaim_xchat_la_LDFLAGS = -module -avoid-version
+xchat_chats_la_LDFLAGS = -module -avoid-version
 
 if PLUGINS
 
-gaim_xchat_LTLIBRARIES = gaim-xchat.la
+xchat_chats_LTLIBRARIES = xchat-chats.la
 
-gaim_xchat_la_SOURCES = \
+xchat_chats_la_SOURCES = \
 	xtext.h	\
 	xtext.c	\
-	gaim-xchat.c
+	xchat-chats.c
 
-gaim_xchat_la_LIBADD = \
+xchat_chats_la_LIBADD = \
 	$(GAIM_LIBS) \
 	$(GTK_LIBS)
 

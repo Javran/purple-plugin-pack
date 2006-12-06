@@ -126,7 +126,6 @@ enum
 static guint xtext_signals[LAST_SIGNAL];
 
 #ifdef XCHAT
-char *nocasestrstr (const char *text, const char *tofind);	/* util.c */
 int xtext_get_stamp_str (time_t, char **);
 #endif
 static void gtk_xtext_render_page (GtkXText * xtext);
@@ -143,29 +142,10 @@ static int gtk_xtext_render_ents (GtkXText * xtext, textentry *, textentry *);
 static void gtk_xtext_recalc_widths (xtext_buffer *buf, int);
 static void gtk_xtext_fix_indent (xtext_buffer *buf);
 static int gtk_xtext_find_subline (GtkXText *xtext, textentry *ent, int line);
-static char *gtk_xtext_conv_color (unsigned char *text, int len, int *newlen);
-static unsigned char *
+static char *
 gtk_xtext_strip_color (unsigned char *text, int len, unsigned char *outbuf,
 							  int *newlen, int *mb_ret);
 
-/* some utility functions first */
-
-#ifndef XCHAT	/* xchat has this in util.c */
-
-static char *
-nocasestrstr (const char *s, const char *tofind)
-{
-   register const size_t len = strlen (tofind);
-
-   if (len == 0)
-     return (char *)s;
-   while (toupper(*s) != toupper(*tofind) || strncasecmp (s, tofind, len))
-     if (*s++ == '\0')
-       return (char *)NULL;
-   return (char *)s;   
-}
-
-#endif
 
 /* gives width of a 8bit string - with no mIRC codes in it */
 
@@ -533,7 +513,7 @@ backend_get_text_width (GtkXText *xtext, guchar *str, int len, int is_mb)
 	if (*str == 0)
 		return 0;
 
-	pango_layout_set_text (xtext->layout, str, len);
+	pango_layout_set_text (xtext->layout, (gchar *)str, len);
 	pango_layout_get_pixel_size (xtext->layout, &width, NULL);
 
 	return width;
@@ -551,7 +531,7 @@ backend_get_char_width (GtkXText *xtext, unsigned char *str, int *mbl_ret)
 	}
 
 	*mbl_ret = charlen (str);
-	pango_layout_set_text (xtext->layout, str, *mbl_ret);
+	pango_layout_set_text (xtext->layout, (char *)str, *mbl_ret);
 	pango_layout_get_pixel_size (xtext->layout, &width, NULL);
 
 	return width;
@@ -1911,7 +1891,7 @@ gtk_xtext_motion_notify (GtkWidget * widget, GdkEventMotion * event)
 {
 	GtkXText *xtext = GTK_XTEXT (widget);
 	int tmp, x, y, offset, len, line_x;
-	unsigned char *word;
+	char *word;
 	textentry *word_ent;
 
 	gdk_window_get_pointer (widget->window, &x, &y, 0);
@@ -2080,7 +2060,7 @@ static gboolean
 gtk_xtext_button_release (GtkWidget * widget, GdkEventButton * event)
 {
 	GtkXText *xtext = GTK_XTEXT (widget);
-	unsigned char *word;
+	char *word;
 	int old;
 
 	if (xtext->moving_separator)
@@ -2143,7 +2123,7 @@ gtk_xtext_button_press (GtkWidget * widget, GdkEventButton * event)
 {
 	GtkXText *xtext = GTK_XTEXT (widget);
 	textentry *ent;
-	unsigned char *word;
+	char *word;
 	int line_x, x, y, offset, len;
 
 	gdk_window_get_pointer (widget->window, &x, &y, 0);
@@ -2292,12 +2272,11 @@ gtk_xtext_selection_get_text (GtkXText *xtext, int *len_ret)
 
 	if (xtext->color_paste)
 	{
-		/*stripped = gtk_xtext_conv_color (txt, strlen (txt), &len);*/
 		stripped = txt;
 		len = strlen (txt);
 	} else
 	{
-		stripped = gtk_xtext_strip_color (txt, strlen (txt), NULL, &len, 0);
+		stripped = gtk_xtext_strip_color ((unsigned char *)txt, strlen (txt), NULL, &len, 0);
 		free (txt);
 	}
 
@@ -2349,7 +2328,7 @@ gtk_xtext_selection_get (GtkWidget * widget,
 		}
 		break;
 	default:
-		new_text = g_locale_from_utf8 (stripped, len, NULL, &glen, NULL);
+		new_text =(guchar *) g_locale_from_utf8 (stripped, len, NULL, &glen, NULL);
 		gtk_selection_data_set (selection_data_ptr, GDK_SELECTION_TYPE_STRING,
 										8, new_text, glen);
 		g_free (new_text);
@@ -2453,7 +2432,7 @@ gtk_xtext_get_type (void)
 
 /* strip MIRC colors and other attribs. */
 
-static unsigned char *
+static char *
 gtk_xtext_strip_color (unsigned char *text, int len, unsigned char *outbuf,
 							  int *newlen, int *mb_ret)
 {
@@ -2512,96 +2491,7 @@ gtk_xtext_strip_color (unsigned char *text, int len, unsigned char *outbuf,
 	if (mb_ret != NULL)
 		*mb_ret = mb;
 
-	return new_str;
-}
-
-/* GeEkMaN: converts mIRC control codes to literal control codes */
-
-static char *
-gtk_xtext_conv_color (unsigned char *text, int len, int *newlen)
-{
-	int i, j = 2;
-	char cchar = 0;
-	char *new_str;
-	int mbl;
-
-	for (i = 0; i < len;)
-	{
-		switch (text[i])
-		{
-		case ATTR_COLOR:
-		case ATTR_RESET:
-		case ATTR_REVERSE:
-		case ATTR_BOLD:
-		case ATTR_UNDERLINE:
-		case ATTR_ITALICS:
-			j += 3;
-			i++;
-			break;
-		default:
-			mbl = charlen (text + i);
-			j += mbl;
-			i += mbl;
-		}
-	}
-
-	new_str = malloc (j);
-	j = 0;
-
-	for (i = 0; i < len;)
-	{
-		switch (text[i])
-		{
-		case ATTR_COLOR:
-			cchar = 'C';
-			break;
-		case ATTR_RESET:
-			cchar = 'O';
-			break;
-		case ATTR_REVERSE:
-			cchar = 'R';
-			break;
-		case ATTR_BOLD:
-			cchar = 'B';
-			break;
-		case ATTR_UNDERLINE:
-			cchar = 'U';
-			break;
-		case ATTR_ITALICS:
-			cchar = 'I';
-			break;
-		case ATTR_BEEP:
-			break;
-		default:
-			mbl = charlen (text + i);
-			if (mbl == 1)
-			{
-				new_str[j] = text[i];
-				j++;
-				i++;
-			} else
-			{
-				/* invalid utf8 safe guard */
-				if (i + mbl > len)
-					mbl = len - i;
-				memcpy (new_str + j, text + i, mbl);
-				j += mbl;
-				i += mbl;
-			}
-		}
-		if (cchar != 0)
-		{
-			new_str[j++] = '%';
-			new_str[j++] = cchar;
-			cchar = 0;
-			i++;
-		}
-	}
-
-	new_str[j] = 0;
-	*newlen = j;
-
-	return new_str;
+	return (char *)new_str;
 }
 
 /* gives width of a string, excluding the mIRC codes */
@@ -2613,7 +2503,7 @@ gtk_xtext_text_width (GtkXText *xtext, unsigned char *text, int len,
 	unsigned char *new_buf;
 	int new_len, mb;
 
-	new_buf = gtk_xtext_strip_color (text, len, xtext->scratch_buffer,
+	new_buf = (unsigned char *)gtk_xtext_strip_color (text, len, xtext->scratch_buffer,
 												&new_len, &mb);
 
 	if (mb_ret)
@@ -2690,7 +2580,7 @@ gtk_xtext_render_flush (GtkXText * xtext, int x, int y, unsigned char *str,
 		dofill = FALSE;	/* already drawn the background */
 	}
 
-	backend_draw_text (xtext, dofill, gc, x, y, str, len, str_width, is_mb);
+	backend_draw_text (xtext, dofill, gc, x, y, (char *)str, len, str_width, is_mb);
 
 #ifdef USE_DB
 	if (pix)
@@ -3465,7 +3355,8 @@ get_image (GtkXText *xtext, Display *xdisplay, XShmSegmentInfo *shminfo,
 static GdkPixmap *
 shade_pixmap (GtkXText * xtext, Pixmap p, int x, int y, int w, int h)
 {
-	unsigned int dummy, width, height, depth;
+	unsigned int width, height, depth, udummy;
+	int dummy;
 	GdkPixmap *shaded_pix;
 	Window root;
 	Pixmap tmp;
@@ -3475,7 +3366,7 @@ shade_pixmap (GtkXText * xtext, Pixmap p, int x, int y, int w, int h)
 	Display *xdisplay = GDK_WINDOW_XDISPLAY (xtext->draw_buf);
 
 	XGetGeometry (xdisplay, p, &root, &dummy, &dummy, &width, &height,
-					  &dummy, &depth);
+					  &udummy, &depth);
 
 	if (width < x + w || height < y + h || x < 0 || y < 0)
 	{
@@ -4707,9 +4598,9 @@ gtk_xtext_search (GtkXText * xtext, const gchar *text, textentry *start, gboolea
 	{
 		/* If Case Ignore, fold before & free after calling strstr */
 		if (case_match)
-			hay = g_strdup (ent->str);
+			hay = g_strdup ((char *)ent->str);
 		else
-			hay = g_utf8_casefold (ent->str, strlen (ent->str));
+			hay = g_utf8_casefold ((char *)ent->str, strlen ((char *)ent->str));
 		/* Try to find the needle in this haystack */
 		str = g_strstr_len (hay, strlen (hay), nee);
 		g_free (hay);
@@ -4791,8 +4682,7 @@ gtk_xtext_render_page_timeout (GtkXText * xtext)
 static void
 gtk_xtext_append_entry (xtext_buffer *buf, textentry * ent)
 {
-	unsigned int mb;
-	int i;
+	int mb, i;
 
 	/* we don't like tabs */
 	i = 0;
@@ -4888,10 +4778,10 @@ gtk_xtext_append_indent (xtext_buffer *buf,
 	int left_width;
 
 	if (left_len == -1)
-		left_len = strlen (left_text);
+		left_len = strlen ((char *)left_text);
 
 	if (right_len == -1)
-		right_len = strlen (right_text);
+		right_len = strlen ((char *)right_text);
 
 	if (right_len >= sizeof (buf->xtext->scratch_buffer))
 		right_len = sizeof (buf->xtext->scratch_buffer) - 1;
@@ -4949,7 +4839,7 @@ gtk_xtext_append (xtext_buffer *buf, unsigned char *text, int len)
 	textentry *ent;
 
 	if (len == -1)
-		len = strlen (text);
+		len = strlen ((char *)text);
 
 	if (text[len-1] == '\n')
 		len--;
