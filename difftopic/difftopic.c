@@ -168,7 +168,7 @@ topic_changed(GaimConversation *conv, const char *who, const char *what)
 	char *old;
 
 	old = g_object_get_data(G_OBJECT(gtkconv->imhtml), "difftopic");
-	if (old) {
+	if (old && what) {
 		have_fun(GTK_IMHTML(gtkconv->imhtml), old, what);
 	}
 	g_object_set_data_full(G_OBJECT(gtkconv->imhtml), "difftopic", g_strdup(what), (GDestroyNotify)g_free);
