@@ -128,22 +128,23 @@ detach_per_account_boxes()
 	if (!gtkblist)
 		return;
 
-	GtkWidget *holds[] = {gtkblist->menutray->parent, gtkblist->treeview->parent,
-				gtkblist->error_buttons, gtkblist->statusbox, NULL};
+	GtkWidget *holds[] = {gtkblist->treeview->parent,
+				gtkblist->error_buttons, gtkblist->statusbox,
+				gtkblist->scrollbook, NULL};
 
 	for (i = 0; holds[i]; i++)
 	{
 		g_object_ref(G_OBJECT(holds[i]));
 		gtk_container_remove(GTK_CONTAINER(holds[i]->parent), holds[i]);
 	}
-	
 
 	list = gtk_container_get_children(GTK_CONTAINER(gtkblist->vbox));
 	for (iter = list; iter; iter = iter->next)
 		gtk_container_remove(GTK_CONTAINER(gtkblist->vbox), iter->data);
 
-	gtk_box_pack_start(GTK_BOX(gtkblist->vbox), gtkblist->menutray->parent, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(gtkblist->vbox), gtkblist->treeview->parent, TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(gtkblist->vbox), gtkblist->scrollbook, FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(gtkblist->vbox), gtk_hseparator_new(), FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(gtkblist->vbox), gtkblist->error_buttons, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(gtkblist->vbox), gtkblist->statusbox, FALSE, FALSE, 0);
 
@@ -181,16 +182,17 @@ attach_per_account_boxes()
 	list = gtk_container_get_children(GTK_CONTAINER(gtkblist->vbox));
 	for (iter = list; iter; iter = iter->next)
 	{
-		g_object_ref(iter->data);
+		if (!GTK_IS_SEPARATOR(iter->data))
+			g_object_ref(iter->data);
 		gtk_container_remove(GTK_CONTAINER(gtkblist->vbox), iter->data);
 	}
-
-	gtk_box_pack_start(GTK_BOX(gtkblist->vbox), gtkblist->menutray->parent, FALSE, FALSE, 0);
-	g_object_unref(G_OBJECT(gtkblist->menutray->parent));
 
 	vbox = gtk_vbox_new(FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), gtkblist->treeview->parent, TRUE, TRUE, 0);
 	g_object_unref(G_OBJECT(gtkblist->treeview->parent));
+	gtk_box_pack_start(GTK_BOX(vbox), gtk_hseparator_new(), FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), gtkblist->scrollbook, FALSE, FALSE, 0);
+	g_object_unref(G_OBJECT(gtkblist->scrollbook));
 	gtk_box_pack_start(GTK_BOX(vbox), gtkblist->error_buttons, FALSE, FALSE ,0);
 	g_object_unref(G_OBJECT(gtkblist->error_buttons));
 
@@ -213,11 +215,13 @@ attach_per_account_boxes()
 	else
 		gtk_widget_show(gtkblist->statusbox);
 	
+	gtk_widget_hide(gtkblist->scrollbook);  /* yeah */
+
 	g_object_set(gtkblist->statusbox, "iconsel", !gaim_prefs_get_bool(PREF_ICONS_HIDE), NULL);
 
 	gaim_gtk_status_selectors_show(gaim_prefs_get_int(PREF_SHOW));
 
-	gtk_paned_set_position(GTK_PANED(vpane),																				 gaim_prefs_get_int(PREF_PANE));
+	gtk_paned_set_position(GTK_PANED(vpane), gaim_prefs_get_int(PREF_PANE));
 	g_signal_connect(G_OBJECT(vpane), "notify::position",
 							G_CALLBACK(pane_position_cb), NULL);
 }
@@ -318,8 +322,16 @@ gaim_gtk_status_selectors_show(GaimStatusBoxVisibility action)
 		}
 	}
 
-	gtk_widget_size_request(gtkblist->menutray->parent, &req);
-	height -= req.height;	/* Height of the menu */
+	if (GTK_WIDGET_DRAWABLE(gtkblist->scrollbook) && GTK_WIDGET_VISIBLE(gtkblist->scrollbook)) {
+		gtk_widget_size_request(gtkblist->scrollbook, &req);
+		height -= req.height;	/* Height of the scrollbook */
+		height -= 3;  /* the separator */
+	}
+
+	if (GTK_WIDGET_VISIBLE(gtkblist->menutray->parent)) {
+		gtk_widget_size_request(gtkblist->menutray->parent, &req);
+		height -= req.height;  /* Height of the menu */
+	}
 
 	height -= 9;	/* Height of the handle of the vpane */
 
