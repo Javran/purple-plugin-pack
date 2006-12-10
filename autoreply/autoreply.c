@@ -45,6 +45,7 @@
 #include <plugin.h>
 #include <pluginpref.h>
 #include <request.h>
+#include <savedstatuses.h>
 #include <status.h>
 #include <util.h>
 #include <version.h>
@@ -89,9 +90,12 @@ get_autoreply_message(GaimBuddy *buddy, GaimAccount *account)
 	use_status = gaim_prefs_get_int(PREFS_USESTATUS);
 	if (use_status == STATUS_ALWAYS)
 	{
-		reply = gaim_status_get_attr_string(gaim_account_get_active_status(account), "message");
-		if (reply && *reply == '\0')
-			reply = NULL;
+		GaimStatus *status = gaim_account_get_active_status(account);
+		GaimStatusType *type = gaim_status_get_type(status);
+		if (gaim_status_type_get_attr(type, "message") != NULL)
+			reply = gaim_status_get_attr_string(status, "message");
+		else
+			reply = gaim_savedstatus_get_message(gaim_savedstatus_get_current());
 	}
 
 	if (!reply && buddy)
@@ -180,14 +184,13 @@ written_msg(GaimAccount *account, const char *who, const char *message,
 			/* Have we sent the autoreply enough times? */
 			if (count_sent < maxsend || maxsend == -1)
 			{
+				gaim_conversation_set_data(conv, "autoreply_count", GINT_TO_POINTER(++count_sent));
+				gaim_conversation_set_data(conv, "autoreply_lastsent", GINT_TO_POINTER(now));
 				gc = gaim_account_get_connection(account);
 				if (gc->flags & GAIM_CONNECTION_AUTO_RESP)
 					flag |= GAIM_MESSAGE_AUTO_RESP;
 				serv_send_im(gc, who, reply, flag);
 				gaim_conv_im_write(GAIM_CONV_IM(conv), NULL, reply, flag, time(NULL));
-
-				gaim_conversation_set_data(conv, "autoreply_count", GINT_TO_POINTER(++count_sent));
-				gaim_conversation_set_data(conv, "autoreply_lastsent", GINT_TO_POINTER(now));
 			}
 		}
 	}
