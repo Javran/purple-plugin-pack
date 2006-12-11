@@ -2,6 +2,13 @@ Version 1.0svn:
 	* Fixed a bug in blistops that caused the saved preferences not to take
 	  effect after restarting Gaim.
 	* Slashexec no longer prints annoying system messages to the conversation
+	* Moved autoaccept to Gaim
+	* Moved autoreply to Gaim
+	* Moved buddynote to Gaim
+	* Moved convcolors to Gaim
+	* Moved markerline to Gaim
+	* Moved newline to Gaim
+	* Moved offlinemsg to Gaim
 
 Version 1.0beta5: 11/11/06
 	* Removed chronic.wav due to potential copyright issues
