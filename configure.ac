@@ -190,7 +190,6 @@ AC_OUTPUT([
 	bash/Makefile
 	bit/Makefile
 	blistops/Makefile
-	buddynote/Makefile
 	buddytime/Makefile
 	chronic/Makefile
 	dice/Makefile
@@ -203,7 +202,6 @@ AC_OUTPUT([
 	irssi/Makefile
 	lastseen/Makefile
 	listhandler/Makefile
-	offlinemsg/Makefile
 	mystatusbox/Makefile
 	napster/Makefile
 	nicksaid/Makefile

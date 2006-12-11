@@ -24,6 +24,10 @@
 # include "../gpp_config.h"
 #endif
 
+#ifdef HAVE_REGEX_H
+# include <regex.h>
+#endif /* HAVE_REGEX_H */
+
 /* all Gaim plugins need to define this */
 #define GAIM_PLUGINS
 
@@ -515,10 +519,11 @@ irssi_textfmt_replace_tags_text(char *str, const char *from, const char *to)
 	return g_string_free(ret, FALSE);
 }
 
-#if 1
 static char *
-irssi_textfmt_replace_tags_html(char *html, const char *from, const char *to)
-{
+irssi_textfmt_replace_tags_html(char *html, const char *from, const char *to) {
+#ifndef HAVE_REGEX_H
+	return html;
+#else
 	GString *ret;
 	char **splits, *repl = NULL, *r = NULL;
 	int i;
@@ -544,34 +549,35 @@ irssi_textfmt_replace_tags_html(char *html, const char *from, const char *to)
 	g_string_free(ret, FALSE);
 
 	return r;
-}
 #endif
+}
 
 /* these three callbacks are intended to modify text so that formatting appears
  * similarly to how irssi would format the text */
 static gboolean
 irssi_writing_cb(GaimAccount *account, const char *who, char **message,
-		GaimConversation *conv, GaimMessageFlags flags)
+				 GaimConversation *conv, GaimMessageFlags flags)
 {
-	/* if there aren't any asterisks, slashes, or underscores in the message, don't
-	 * bother trying to do anything to the message, as there's nothing to format */
-	if(!strchr(*message, '*') && !strchr(*message, '/') && !strchr(*message, '_'))
-		return FALSE;
+#ifdef HAVE_REGEX_H
+	gchar *new_message = NULL;
 
-	*message = irssi_textfmt_replace_tags_text(*message, "*", "B");
-	*message = irssi_textfmt_replace_tags_text(*message, "_", "U");
-	*message = irssi_textfmt_replace_tags_html(*message, "/", "I"); 
+	new_message = irssi_textfmt_regex(*message);
 
-	/* TODO: here we need to make sure we don't try to double format anything.
-	 *       I'm open to any suggestions. */
+	if(new_message) {
+		g_free(*message);
+		*message = new_message;
+	}
+#endif /* HAVE_REGEX_H */
+
 	return FALSE;
 }
 
 static gboolean
-irssi_sending_im_cb(GaimAccount *account, const char *receiver, char **message)
-{
-	/* if there aren't any asterisks, slashes, or underscores in the message, don't
-	 * bother trying to do anything to the message, as there's nothing to format */
+irssi_sending_im_cb(GaimAccount *account, const char *receiver, char **msg) {
+	/* if there aren't any asterisks, slashes, or underscores in the message,
+	 * don't bother trying to do anything to the message, as there's nothing
+	 * to format
+	 */
 	if(!strchr(*message, '*') && !strchr(*message, '/') && !strchr(*message, '_'))
 		return FALSE;
 

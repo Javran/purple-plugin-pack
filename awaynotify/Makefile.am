@@ -1,12 +1,12 @@
 EXTRA_DIST = .plugin
 
-awaynotifydir=$(GAIM_LIBDIR)/gaim
+plugindir=$(GAIM_LIBDIR)/gaim
 
 awaynotify_la_LDFLAGS = -module -avoid-version
 
-awaynotify_LTLIBRARIES = awaynotify.la
+plugin_LTLIBRARIES = awaynotify.la
 
-awaynotify_LIBADD = \
+awaynotify_la_LIBADD = \
 	$(GLIB_LIBS) \
 	$(GAIM_LIBS)
 
