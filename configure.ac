@@ -193,7 +193,6 @@ AC_OUTPUT([
 	buddynote/Makefile
 	buddytime/Makefile
 	chronic/Makefile
-	convcolors/Makefile
 	dice/Makefile
 	difftopic/Makefile
 	eight_ball/Makefile
@@ -205,7 +204,6 @@ AC_OUTPUT([
 	lastseen/Makefile
 	listhandler/Makefile
 	offlinemsg/Makefile
-	markerline/Makefile
 	mystatusbox/Makefile
 	napster/Makefile
 	nicksaid/Makefile
