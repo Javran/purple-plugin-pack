@@ -117,7 +117,6 @@ if test x"$HAVE_TALKFILTERS" = x"yes"; then
 	AC_SUBST(TALKFILTERS_LIBS)
 fi
 
-
 XMMS_LIBS=""
 XMMS_CFLAGS=""
 HAVE_XMMS="no"
@@ -148,6 +147,8 @@ fi
 AM_CONDITIONAL(USE_XMMS, test x"$HAVE_XMMS" = x"yes")
 AC_SUBST(XMMS_LIBS)
 AC_SUBST(XMMS_CFLAGS)
+
+AC_CHECK_HEADERS(regex.h)
 
 dnl #######################################################################
 dnl # Run our plugin checking
@@ -185,13 +186,12 @@ AC_OUTPUT([
 	m4/Makefile
 	po/Makefile.in
 	VERSION
-	autoaccept/Makefile
-	autoreply/Makefile
 	awaynotify/Makefile
 	bash/Makefile
 	bit/Makefile
 	blistops/Makefile
 	buddynote/Makefile
+	buddytime/Makefile
 	chronic/Makefile
 	convcolors/Makefile
 	dice/Makefile
@@ -209,7 +209,6 @@ AC_OUTPUT([
 	mystatusbox/Makefile
 	napster/Makefile
 	nicksaid/Makefile
-	newline/Makefile
 	oldlogger/Makefile
 	plonkers/Makefile
 	sepandtab/Makefile
