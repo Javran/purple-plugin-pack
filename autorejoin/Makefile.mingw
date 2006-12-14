@@ -1,0 +1,12 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for autorejoin plugin.
+#
+
+GPP_TOP :=		..
+
+GPP = autorejoin
+
+include $(GPP_TOP)/win_gpp.mak
+

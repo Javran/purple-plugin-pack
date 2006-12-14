@@ -186,6 +186,7 @@ AC_OUTPUT([
 	m4/Makefile
 	po/Makefile.in
 	VERSION
+	autorejoin/Makefile
 	awaynotify/Makefile
 	bash/Makefile
 	bit/Makefile
