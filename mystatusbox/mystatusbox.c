@@ -123,14 +123,17 @@ detach_per_account_boxes()
 	GaimGtkBuddyList *gtkblist;
 	GList *list, *iter;
 	int i;
+	gboolean headline_showing;
 
 	gtkblist = gaim_gtk_blist_get_default_gtk_blist();
 	if (!gtkblist)
 		return;
 
-	GtkWidget *holds[] = {gtkblist->treeview->parent,
+	GtkWidget *holds[] = {gtkblist->headline_hbox->parent, gtkblist->treeview->parent,
 				gtkblist->error_buttons, gtkblist->statusbox,
 				gtkblist->scrollbook, NULL};
+
+	headline_showing = GTK_WIDGET_VISIBLE(gtkblist->headline_hbox) && GTK_WIDGET_DRAWABLE(gtkblist->headline_hbox);
 
 	for (i = 0; holds[i]; i++)
 	{
@@ -142,12 +145,16 @@ detach_per_account_boxes()
 	for (iter = list; iter; iter = iter->next)
 		gtk_container_remove(GTK_CONTAINER(gtkblist->vbox), iter->data);
 
+
+	gtk_box_pack_start(GTK_BOX(gtkblist->vbox), gtkblist->headline_hbox->parent, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(gtkblist->vbox), gtkblist->treeview->parent, TRUE, TRUE, 0);
 	gtk_box_pack_start(GTK_BOX(gtkblist->vbox), gtkblist->scrollbook, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(gtkblist->vbox), gtk_hseparator_new(), FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(gtkblist->vbox), gtkblist->error_buttons, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(gtkblist->vbox), gtkblist->statusbox, FALSE, FALSE, 0);
 
+	if (!headline_showing)
+		gtk_widget_hide(gtkblist->headline_hbox);
 
 	for (i = 0; holds[i]; i++)
 		g_object_unref(G_OBJECT(holds[i]));
@@ -161,11 +168,14 @@ attach_per_account_boxes()
 	GaimGtkBuddyList *gtkblist;
 	GList *list, *iter;
 	GtkWidget *sw2, *vpane, *vbox;
+	gboolean headline_showing;
 
 	gtkblist = gaim_gtk_blist_get_default_gtk_blist();
 
 	if (!gtkblist || gtkblist_statusboxbox)
 		return;
+
+	headline_showing = GTK_WIDGET_VISIBLE(gtkblist->headline_hbox) && GTK_WIDGET_DRAWABLE(gtkblist->headline_hbox);
 
 	gtkblist_statusboxbox = gtk_vbox_new(FALSE, 0);
 	gtkblist_statusboxes = NULL;
@@ -188,6 +198,8 @@ attach_per_account_boxes()
 	}
 
 	vbox = gtk_vbox_new(FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), gtkblist->headline_hbox->parent, FALSE, FALSE, 0);
+	g_object_unref(G_OBJECT(gtkblist->headline_hbox->parent));
 	gtk_box_pack_start(GTK_BOX(vbox), gtkblist->treeview->parent, TRUE, TRUE, 0);
 	g_object_unref(G_OBJECT(gtkblist->treeview->parent));
 	gtk_box_pack_start(GTK_BOX(vbox), gtk_hseparator_new(), FALSE, FALSE, 0);
@@ -215,7 +227,8 @@ attach_per_account_boxes()
 	else
 		gtk_widget_show(gtkblist->statusbox);
 	
-	gtk_widget_hide(gtkblist->scrollbook);  /* yeah */
+	if (!headline_showing)
+		gtk_widget_hide(gtkblist->headline_hbox);
 
 	g_object_set(gtkblist->statusbox, "iconsel", !gaim_prefs_get_bool(PREF_ICONS_HIDE), NULL);
 
