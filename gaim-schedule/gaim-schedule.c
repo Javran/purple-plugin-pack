@@ -295,7 +295,7 @@ add_send_message_fields(ScheduleWindow *win, GtkWidget *box)
 	gtk_box_pack_start(GTK_BOX(enable), check, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(enable), table, TRUE, TRUE, 0);
 
-	win->accounts = optmenu = gaim_gtk_account_option_menu_new(NULL, FALSE, NULL, NULL, NULL);
+	win->accounts = optmenu = gaim_gtk_account_option_menu_new(NULL, TRUE, NULL, NULL, NULL);
 	win->buddy = entry = gtk_entry_new();
 	gaim_gtk_setup_screenname_autocomplete(entry, optmenu, FALSE);
 	fr = gaim_gtk_create_imhtml(TRUE, &imhtml, NULL, NULL);

@@ -25,6 +25,7 @@
 
 #include <stdarg.h>
 #include <stdlib.h>
+#include <string.h>
 
 static GList *schedules;
 static int timeout;
@@ -66,250 +67,83 @@ days_in_month(int month, int year)
 		return days[month];
 }
 
+static time_t
+get_next(GaimSchedule *s)
+{
+	struct
+	{
+		int mins[61];
+		int hrs[25];
+		int dates[32];
+		int months[13];
+		int years[3];
+	} p;
+	int i;
+	int y, mo, d, h, mi;
+	struct tm *tm, test;
+	time_t tme;
+	int first = 0;
+
+	memset(&p, -1, sizeof(p));
+	time(&tme);
+	tm = localtime(&tme);
+
+#define DECIDE(prop, st, count, offset) \
+	do { \
+		if (prop == -1) {  \
+			first = 1; \
+			for (i = 0; i < count; i++)  \
+				st[i] = ((first ? 0 : offset) + i) % count;  \
+		} else  \
+			st[0] = prop; \
+	} while (0)
+
+	DECIDE(s->minute, p.mins, 60, tm->tm_min); /* Minute */
+
+	DECIDE(s->hour, p.hrs, 24, tm->tm_hour); /* Hour */
+
+	DECIDE(s->d.date, p.dates, 31, tm->tm_mday); /* Date */
+
+	DECIDE(s->month, p.months, 12, tm->tm_mon); /* Month */
+
+	if (s->year == -1) {
+		p.years[0] = tm->tm_year;
+		p.years[1] = p.years[0] + 1;
+	} else
+		p.years[0] = s->year;
+
+	test = *tm;
+
+	for (y = 0; p.years[y] != -1; y++) {
+		test.tm_year = p.years[y];
+		for (mo = 0; p.months[mo] != -1; mo++) {
+			test.tm_mon = p.months[mo];
+			for (d = 0; p.dates[d] != -1; d++) {
+				test.tm_mday = p.dates[d] + 1;     /* XXX: +1 is necessary */
+				if (test.tm_mday > days_in_month(test.tm_mon, test.tm_year))
+					continue;
+				for (h = 0; p.hrs[h] != -1; h++) {
+					test.tm_hour = p.hrs[h];
+					for (mi = 0; p.mins[mi] != -1; mi++) {
+						time_t then;
+
+						test.tm_min = p.mins[mi];
+
+						then = mktime(&test);
+						if (then > tme)
+							return then;
+					}
+				}
+			}
+		}
+	}
+	return -1;
+}
+
 static void
 calculate_timestamp_for_schedule(GaimSchedule *schedule)
 {
-	time_t now, then;
-	struct tm tm, *nt;
-	gboolean imin = FALSE, ihour = FALSE, iday = FALSE, imon = FALSE, iyear = FALSE;
-
-	now = time(NULL);
-
-	nt = localtime(&now);
-
-	tm.tm_sec = 0;
-	if ((tm.tm_min = schedule->minute) == -1)
-	{
-		tm.tm_min = nt->tm_min;
-		imin = TRUE;
-	}
-	if ((tm.tm_hour = schedule->hour) == -1)
-	{
-		tm.tm_hour = nt->tm_hour;
-		ihour = TRUE;
-	}
-
-	if ((tm.tm_mon = schedule->month) == -1)
-	{
-		tm.tm_mon = nt->tm_mon;
-		imon = TRUE;
-	}
-
-	if ((tm.tm_year = schedule->year) == -1)
-	{
-		tm.tm_year = nt->tm_year;
-		iyear = TRUE;
-	}
-
-	if (schedule->type == GAIM_SCHEDULE_TYPE_DATE)
-	{
-		if ((tm.tm_mday = schedule->d.date) == 0)
-		{
-			tm.tm_mday = nt->tm_mday;
-			iday = TRUE;
-		}
-	}
-	else
-	{
-		int wday = nt->tm_wday;
-		int swday = schedule->d.day - 1;
-
-		if (swday == 0)
-		{
-			iday = TRUE;
-			tm.tm_mday = nt->tm_mday;
-		}
-		else
-		{
-			tm.tm_mday = nt->tm_mday + (7 + wday - swday) % 7;
-		}
-	}
-
-	then = mktime(&tm);
-	schedule->timestamp = then;
-
-	if (tm.tm_year < nt->tm_year)
-	{
-		if (!iyear)
-			return;
-		tm.tm_year = nt->tm_year;
-	}
-	else if (tm.tm_year > nt->tm_year)
-	{
-		if (imon)
-			tm.tm_mon = 0;
-		if (iday)
-			tm.tm_mday = 1;
-		schedule->timestamp = mktime(&tm);
-		return;
-	}
-
-	if (tm.tm_mon < nt->tm_mon)
-	{
-		if (!imon)
-		{
-			if (iyear)
-				tm.tm_year++;
-			if (iday)
-				tm.tm_mday = 1;
-			schedule->timestamp = mktime(&tm);
-			return;
-		}
-		tm.tm_mon = nt->tm_mon;
-	}
-	else if (tm.tm_mon > nt->tm_mon)
-	{
-		if (iday)
-			tm.tm_mday = 1;
-		schedule->timestamp = mktime(&tm);
-		return;
-	}
-
-	if (tm.tm_mday < nt->tm_mday)
-	{
-		if (!iday)
-		{
-			if (imon && tm.tm_mon < 11)
-				tm.tm_mon++;
-			else if (iyear)
-			{
-				tm.tm_year++;
-				if (imon)
-					tm.tm_mon = 0;
-			}
-			schedule->timestamp = mktime(&tm);
-			return;
-		}
-
-		if (schedule->type == GAIM_SCHEDULE_TYPE_DATE)
-		{
-			tm.tm_mday = nt->tm_mday;
-		}
-		else
-		{
-			/* XXX: something about the weekday */
-		}
-	}
-
-	if (tm.tm_mday > nt->tm_mday)
-	{
-		schedule->timestamp = mktime(&tm);
-		return;
-	}
-
-	if (tm.tm_hour < nt->tm_hour)
-	{
-		if (!ihour)
-		{
-			if (iday && tm.tm_mday + 1 < days_in_month(tm.tm_mon, tm.tm_year))
-				tm.tm_mday++;
-			else if (imon && tm.tm_mon < 11)
-			{
-				tm.tm_mon++;
-				if (iday)
-					tm.tm_mday = 1;
-			}
-			else if (iyear)
-			{
-				tm.tm_year++;
-				if (imon)
-					tm.tm_mon = 0;
-				if (iday)
-					tm.tm_mday = 1;
-			}
-
-			schedule->timestamp = mktime(&tm);
-			return;
-		}
-		tm.tm_hour = nt->tm_hour;
-	}
-	else if (tm.tm_hour > nt->tm_hour)
-	{
-		schedule->timestamp = mktime(&tm);
-		return;
-	}
-
-	if (tm.tm_min < nt->tm_min)
-	{
-		if (!imin)
-		{
-			if (ihour && tm.tm_hour < 22)
-				tm.tm_hour++;
-			else if (iday && tm.tm_mday + 1 < days_in_month(tm.tm_mon, tm.tm_year))
-			{
-				tm.tm_mday++;
-				if (ihour)
-					tm.tm_hour = 0;
-			}
-			else if (imon && tm.tm_mon < 11)
-			{
-				tm.tm_mon++;
-				if (iday)
-					tm.tm_mday = 1;
-				if (ihour)
-					tm.tm_hour = 0;
-			}
-			else if (iyear)
-			{
-				tm.tm_year++;
-				if (imon)
-					tm.tm_mon = 0;
-				if (iday)
-					tm.tm_mday = 1;
-				if (ihour)
-					tm.tm_hour = 0;
-			}
-			schedule->timestamp = mktime(&tm);
-			return;
-		}
-		tm.tm_min = nt->tm_min + 1;
-	}
-	schedule->timestamp = mktime(&tm);
-
-	if (schedule->timestamp < time(NULL))
-	{
-		if (imin && tm.tm_min < 58)
-			tm.tm_min++;
-		else if (ihour && tm.tm_hour < 22)
-		{
-			tm.tm_hour++;
-			if (imin)
-				tm.tm_min = 0;
-		}
-		else if (iday && tm.tm_mday + 1 < days_in_month(tm.tm_mon, tm.tm_year))
-		{
-			tm.tm_mday++;
-			if (ihour)
-				tm.tm_hour = 0;
-			if (imin)
-				tm.tm_min = 0;
-		}
-		else if (imon && tm.tm_mon < 11)
-		{
-			tm.tm_mon++;
-			if (iday)
-				tm.tm_mday = 1;
-			if (ihour)
-				tm.tm_hour = 0;
-			if (imin)
-				tm.tm_min = 0;
-		}
-		else if (iyear)
-		{
-			tm.tm_year++;
-			if (imon)
-				tm.tm_mon = 0;
-			if (iday)
-				tm.tm_mday = 1;
-			if (ihour)
-				tm.tm_hour = 0;
-			if (imin)
-				tm.tm_min = 0;
-		}
-		schedule->timestamp = mktime(&tm);
-	}
-
-	return;
+	schedule->timestamp = get_next(schedule);
 }
 
 void
