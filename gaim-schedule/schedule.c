@@ -92,8 +92,9 @@ get_next(GaimSchedule *s)
 	do { \
 		if (prop == -1) {  \
 			first = 1; \
-			for (i = 0; i < count; i++)  \
+			for (i = 0; i < count; i++)  { \
 				st[i] = ((first ? 0 : offset) + i) % count;  \
+			} \
 		} else  \
 			st[0] = prop; \
 	} while (0)
@@ -120,7 +121,7 @@ get_next(GaimSchedule *s)
 			test.tm_mon = p.months[mo];
 			for (d = 0; p.dates[d] != -1; d++) {
 				test.tm_mday = p.dates[d] + 1;     /* XXX: +1 is necessary */
-				if (test.tm_mday > days_in_month(test.tm_mon, test.tm_year))
+				if (test.tm_mday > days_in_month(test.tm_mon, test.tm_year + 1900))
 					continue;
 				for (h = 0; p.hrs[h] != -1; h++) {
 					test.tm_hour = p.hrs[h];
@@ -152,9 +153,9 @@ gaim_schedule_reschedule(GaimSchedule *schedule)
 	calculate_timestamp_for_schedule(schedule);
 	if (schedule->timestamp < time(NULL))
 	{
-		schedule->timestamp = 0;
 		gaim_debug_warning("gaim-schedule", "schedule \"%s\" will not be executed (%s)\n", schedule->name,
 					gaim_date_format_full(localtime(&schedule->timestamp)));
+		schedule->timestamp = 0;
 	}
 	else
 	{

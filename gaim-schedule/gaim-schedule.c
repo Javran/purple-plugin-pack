@@ -69,6 +69,9 @@ struct _ScheduleWindow
 	GtkWidget *hour;
 	GtkWidget *minute;
 
+	GtkWidget *eyear;
+	GtkWidget *eday;
+
 	GtkWidget *check_send;
 	GtkWidget *check_popup;
 	GtkWidget *check_status;
@@ -137,6 +140,12 @@ gtk_left_label_new(const char *text)
 }
 
 static void
+disable_widget(GtkWidget *wid, GtkWidget *target)
+{
+	gtk_widget_set_sensitive(target, !gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(wid)));
+}
+
+static void
 add_date_time_fields(ScheduleWindow *win, GtkWidget *box)
 {
 	GtkWidget *frame;
@@ -170,101 +179,74 @@ add_date_time_fields(ScheduleWindow *win, GtkWidget *box)
 	};
 	int i;
 	int row = 0, col = 0;
+	time_t now = time(NULL);
+	struct tm *tm = localtime(&now);
 
 	frame = gaim_gtk_make_frame(box, _("Select Date and Time"));
 
-	table = gtk_table_new(3, 4, FALSE);
+	table = gtk_table_new(4, 5, FALSE);
 	gtk_table_set_row_spacings(GTK_TABLE(table), GAIM_HIG_BOX_SPACE);
 	gtk_table_set_col_spacings(GTK_TABLE(table), GAIM_HIG_BOX_SPACE);
 	gtk_container_add(GTK_CONTAINER(frame), table);
 
-	gtk_table_attach(GTK_TABLE(table), label = gtk_left_label_new(_("Month")),
-							col, col+1, row, row+1,
-							0, 0,
-							0, 0);
-	NEXT_COL;
-	/* Combo for month */
+#define ATTACH(wid) \
+	do {\
+		gtk_table_attach(GTK_TABLE(table), wid, \
+								col, col+1, row, row+1, \
+								0, 0, 0, 0); \
+		col++; \
+	} while (0)
+
+	ATTACH(label = gtk_left_label_new(_("Month")));
 	win->month = combo = gtk_combo_box_new_text();
-	for (i = 0; months[i]; i++)
-	{
+	for (i = 0; months[i]; i++) {
 		gtk_combo_box_append_text(GTK_COMBO_BOX(combo), months[i]);
 	}
-	/* XXX: Make these accessibles work */
-	/*gaim_set_accessible_label(combo, label);*/
-	gtk_table_attach_defaults(GTK_TABLE(table), combo, col, col+1, row, row+1);
+	ATTACH(combo);
 
-	NEXT_COL;
-
-	gtk_table_attach(GTK_TABLE(table), label = gtk_left_label_new(_("Year")),
-							col, col+1, row, row+1,
-							0, 0,
-							0, 0);
-	NEXT_COL;
-	/* Spin for year */
-	win->year = spin = gtk_spin_button_new_with_range(-1., 9999.0, 1.0);
-	/*gaim_set_accessible_label(spin, label);*/
-	gtk_table_attach_defaults(GTK_TABLE(table), spin, col, col+1, row, row+1);
+	ATTACH(label = gtk_left_label_new(_("Year")));
+	win->year = spin = gtk_spin_button_new_with_range(1900. + tm->tm_year, 9999.0, 1.0);
+	ATTACH(spin);
+	ATTACH(win->eyear = gtk_check_button_new_with_mnemonic(_("Every Year")));
 
 	NEXT_ROW;
 
 	win->radio_day = day = gtk_radio_button_new_with_mnemonic(NULL, _("Day"));
-	gtk_table_attach(GTK_TABLE(table), day,
-							col, col+1, row, row+1,
-							0, 0,
-							0, 0);
-	NEXT_COL;
-	/* Combo for days */
+	ATTACH(day);
 	win->day = combo = gtk_combo_box_new_text();
-	for (i = 0; days[i]; i++)
-	{
+	for (i = 0; days[i]; i++) {
 		gtk_combo_box_append_text(GTK_COMBO_BOX(combo), days[i]);
 	}
-	/*gaim_set_accessible_label(combo, day);*/
-	gtk_table_attach_defaults(GTK_TABLE(table), combo, col, col+1, row, row+1);
-
-	NEXT_COL;
+	ATTACH(combo);
 
 	win->radio_date = date = gtk_radio_button_new_with_mnemonic_from_widget(GTK_RADIO_BUTTON(day), _("Date"));
-	gtk_table_attach(GTK_TABLE(table), date,
-							col, col+1, row, row+1,
-							0, 0,
-							0, 0);
-	NEXT_COL;
-	/* Spin for date */
-	win->date = spin = gtk_spin_button_new_with_range(-0., 31.0, 1.0);
-	/*gaim_set_accessible_label(spin, date);*/
-	gtk_table_attach_defaults(GTK_TABLE(table), spin, col, col+1, row, row+1);
+	ATTACH(date);
+	win->date = spin = gtk_spin_button_new_with_range(0., 31.0, 1.0);
+	ATTACH(spin);
+	ATTACH(win->eday = gtk_check_button_new_with_mnemonic(_("Everyday")));
 
 	NEXT_ROW;
 
-	gtk_table_attach(GTK_TABLE(table), label = gtk_left_label_new(_("Time")),
-							col, col+1, row, row+1,
-							0, 0, 0, 0);
-	NEXT_COL;
+	ATTACH(label = gtk_left_label_new(_("Time")));
 
 	sbox = gtk_hbox_new(FALSE, 0);
 	/* Spin for hour */
 	win->hour = spin = gtk_spin_button_new_with_range(-1., 23.0, 1.0);
-	/*gaim_set_accessible_label(spin, label);*/
 	gtk_box_pack_start(GTK_BOX(sbox), spin, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(sbox), gtk_label_new(" : "), FALSE, FALSE, 2);
 	win->minute = spin = gtk_spin_button_new_with_range(-1., 59.0, 1.0);
 	gtk_box_pack_start(GTK_BOX(sbox), spin, FALSE, FALSE, 0);
 	
-	gtk_table_attach_defaults(GTK_TABLE(table), sbox, col, col+1, row, row+1);
-#if 0
-	gtk_table_attach_defaults(GTK_TABLE(table), spin, col, col+1, row, row+1);
+	ATTACH(sbox);
 
-	NEXT_COL;
+	g_signal_connect(G_OBJECT(win->eyear), "toggled", G_CALLBACK(disable_widget),
+					win->year);
+	g_signal_connect(G_OBJECT(win->eday), "toggled", G_CALLBACK(disable_widget),
+					win->date);
 
-	gtk_table_attach(GTK_TABLE(table), gtk_left_label_new(_("Minute")),
-							col, col+1, row, row+1,
-							0, 0, 0, 0);
-	NEXT_COL;
-	/* Spin for minute */
-	win->minute = spin = gtk_spin_button_new_with_range(-1., 59.0, 1.0);
-	gtk_table_attach_defaults(GTK_TABLE(table), spin, col, col+1, row, row+1);
-#endif
+	/* Disable this as long as it's not implemented. */
+	gtk_widget_set_sensitive(win->radio_day, FALSE);
+	gtk_widget_set_sensitive(win->day, FALSE);
 }
 
 static void
@@ -359,9 +341,13 @@ schedule_selection_changed_cb(GtkTreeSelection *sel, ScheduleWindow *win)
 
 	if (schedule->type == GAIM_SCHEDULE_TYPE_DATE)
 	{
+		if (schedule->d.date == -1)
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(win->eday), TRUE);
+		else
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(win->eday), FALSE);
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(win->radio_date), TRUE);
 
-		gtk_spin_button_set_value(GTK_SPIN_BUTTON(win->date), (double)schedule->d.date);
+		gtk_spin_button_set_value(GTK_SPIN_BUTTON(win->date), (double)schedule->d.date + 1);
 		gtk_combo_box_set_active(GTK_COMBO_BOX(win->day), -1);
 	}
 	else
@@ -373,6 +359,10 @@ schedule_selection_changed_cb(GtkTreeSelection *sel, ScheduleWindow *win)
 	}
 
 	gtk_combo_box_set_active(GTK_COMBO_BOX(win->month), schedule->month + 1);
+	if (schedule->year == -1)
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(win->eyear), TRUE);
+	else
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(win->eyear), FALSE);
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(win->year), schedule->year);
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(win->hour), schedule->hour);
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(win->minute), schedule->minute);
@@ -439,27 +429,30 @@ save_clicked_cb(GtkWidget *w, ScheduleWindow *win)
 
 	gtk_list_store_set(win->model, &iter, 0, schedule->name, -1);
 
-	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(win->radio_day)))
-	{
+	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(win->radio_day))) {
 		schedule->type = GAIM_SCHEDULE_TYPE_DAY;
 		schedule->d.day = gtk_combo_box_get_active(GTK_COMBO_BOX(win->day)) - 1;
-	}
-	else
-	{
+	} else {
 		schedule->type = GAIM_SCHEDULE_TYPE_DATE;
-		schedule->d.date = gtk_spin_button_get_value(GTK_SPIN_BUTTON(win->date));
+		if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(win->eday)))
+			schedule->d.date = -1;
+		else
+			schedule->d.date = gtk_spin_button_get_value(GTK_SPIN_BUTTON(win->date)) - 1;
 	}
 
+	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(win->eyear)))
+		schedule->year = -1;
+	else
+		schedule->year = gtk_spin_button_get_value(GTK_SPIN_BUTTON(win->year));
+
 	schedule->month = gtk_combo_box_get_active(GTK_COMBO_BOX(win->month)) - 1;
-	schedule->year = gtk_spin_button_get_value(GTK_SPIN_BUTTON(win->year));
 	schedule->hour = gtk_spin_button_get_value(GTK_SPIN_BUTTON(win->hour));
 	schedule->minute = gtk_spin_button_get_value(GTK_SPIN_BUTTON(win->minute));
 
 	gaim_schedule_remove_action(schedule, SCHEDULE_ACTION_POPUP);
 	gaim_schedule_remove_action(schedule, SCHEDULE_ACTION_CONV);
 
-	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(win->check_send)))
-	{
+	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(win->check_send))) {
 		char *message = gtk_imhtml_get_markup(GTK_IMHTML(win->imhtml));
 		gaim_schedule_add_action(schedule, SCHEDULE_ACTION_CONV,
 						message, gtk_entry_get_text(GTK_ENTRY(win->buddy)),
@@ -467,8 +460,7 @@ save_clicked_cb(GtkWidget *w, ScheduleWindow *win)
 		g_free(message);
 	}
 
-	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(win->check_popup)))
-	{
+	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(win->check_popup))) {
 		gaim_schedule_add_action(schedule, SCHEDULE_ACTION_POPUP,
 					gtk_entry_get_text(GTK_ENTRY(win->popup_message)));
 	}
@@ -567,7 +559,7 @@ schedule_window_show(gboolean new)
 	win = g_new0(ScheduleWindow, 1);
 
 	win->window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_resizable(GTK_WINDOW(win->window), FALSE);
+	gtk_window_set_resizable(GTK_WINDOW(win->window), TRUE);
 	g_signal_connect(G_OBJECT(win->window), "delete_event", schedule_window_destroy, NULL);
 
 	box = gtk_hbox_new(FALSE, GAIM_HIG_BOX_SPACE);
