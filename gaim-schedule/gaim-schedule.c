@@ -561,6 +561,7 @@ schedule_window_show(gboolean new)
 	win->window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_resizable(GTK_WINDOW(win->window), TRUE);
 	g_signal_connect(G_OBJECT(win->window), "delete_event", schedule_window_destroy, NULL);
+	gtk_container_set_border_width(GTK_CONTAINER(win->window), GAIM_HIG_BOX_SPACE);
 
 	box = gtk_hbox_new(FALSE, GAIM_HIG_BOX_SPACE);
 	gtk_container_add(GTK_CONTAINER(win->window), box);
@@ -573,6 +574,7 @@ schedule_window_show(gboolean new)
 	
 	sw = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(sw), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(sw), GTK_SHADOW_IN);
 	gtk_container_add(GTK_CONTAINER(sw), win->treeview);
 
 	box2 = gtk_vbox_new(FALSE, GAIM_HIG_BOX_SPACE);
