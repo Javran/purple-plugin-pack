@@ -172,7 +172,7 @@ attach_per_account_boxes()
 
 	gtkblist = gaim_gtk_blist_get_default_gtk_blist();
 
-	if (!gtkblist || gtkblist_statusboxbox)
+	if (!gtkblist || !gtkblist->window || gtkblist_statusboxbox)
 		return;
 
 	headline_showing = GTK_WIDGET_VISIBLE(gtkblist->headline_hbox) && GTK_WIDGET_DRAWABLE(gtkblist->headline_hbox);
