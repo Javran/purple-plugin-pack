@@ -34,6 +34,7 @@ static void save_cb();
 static void parse_schedule(xmlnode *node);
 static void parse_when(GaimSchedule *schedule, xmlnode *when);
 static void parse_action(GaimSchedule *schedule, xmlnode *action);
+static int sort_schedules(gconstpointer a, gconstpointer b);
 static void gaim_schedules_load();
 
 #define TIMEOUT	60		/* update every 60 seconds */
@@ -169,7 +170,7 @@ sort_schedules(gconstpointer a, gconstpointer b)
 {
 	const GaimSchedule *sa = a, *sb = b;
 
-	if (sa->timestamp > sb->timestamp)
+	if (sa->timestamp < sb->timestamp)
 		return -1;
 	else if (sa->timestamp == sb->timestamp)
 		return 0;
@@ -334,14 +335,13 @@ check_and_execute(gpointer null)
 	{
 		gaim_schedule_activate_actions(schedule);
 		gaim_schedule_reschedule(schedule);
-		dirty = TRUE;
 		iter = iter->next;
+		dirty = TRUE;
 		if (iter == NULL)
 			break;
 		schedule = iter->data;
 	}
-	if (dirty)
-		schedules = g_list_sort(schedules, sort_schedules);
+	schedules = g_list_sort(schedules, sort_schedules);
 	return TRUE;
 }
 
