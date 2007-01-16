@@ -1,4 +1,11 @@
-EXTRA_DIST = .plugin .build Makefile.mingw
+EXTRA_DIST=\
+	.plugin \
+	.build \
+	Makefile.mingw \
+	datechange.h \
+	lastlog.h \
+	layout.h \
+	window.h
 
 irssidir = $(GAIM_LIBDIR)/gaim
 
@@ -13,7 +20,11 @@ irssi_la_LIBADD = \
 	$(GLIB_LIBS)
 
 irssi_la_SOURCES = \
-	irssi.c
+	datechange.c \
+	irssi.c \
+	lastlog.c \
+	layout.c \
+	window.c
 
 endif
 
