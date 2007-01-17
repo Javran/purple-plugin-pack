@@ -17,7 +17,7 @@ show_dialog() {
 
 # build the list of plugins to pass to dialog
 PLUGIN_LIST=""
-AVAILABLE_PLUGINS=`find -name .plugin | cut -d/ -f2`
+AVAILABLE_PLUGINS=`find -name .plugin | cut -d/ -f2 | sort`
 for P in ${AVAILABLE_PLUGINS}
 do
 	if [ -f ${P}/.abusive ] ; then
