@@ -40,6 +40,10 @@ echo "--title \"Plugins to build\" --checklist \"\" 19 60 13 ${PLUGIN_LIST}" > $
 
 show_dialog --single-quoted --file ${PC_CONFIG} 2>${PC_RESULT}
 
+if [ $? != 0 ] ; then
+	exit 1
+fi
+
 PLUGINS=`cat ${PC_RESULT} | sed 's/\ /,/g'`
 
 rm -f ${PC_CONFIG} ${PC_RESULT}
