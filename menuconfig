@@ -4,9 +4,9 @@ DIALOG=`which dialog`
 
 # make sure we have dialog
 if [ x"${DIALOG}" = x"" ] ; then
-	echo "Failed to find the program 'dialog' which is required to run for this script!" >&2
+	echo "Failed to find the program 'dialog' which is required to run this script!" >&2
 	echo "" >&2
-	echo "Please use the standard ./configure"; >&2
+	echo "Please install dialog or use the standard ./configure"; >&2
 	echo "" >&2
 	exit 1
 fi
