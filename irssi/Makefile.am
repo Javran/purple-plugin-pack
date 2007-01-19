@@ -5,6 +5,7 @@ EXTRA_DIST=\
 	datechange.h \
 	lastlog.h \
 	layout.h \
+	textfmt.h \
 	window.h
 
 irssidir = $(GAIM_LIBDIR)/gaim
@@ -24,6 +25,7 @@ irssi_la_SOURCES = \
 	irssi.c \
 	lastlog.c \
 	layout.c \
+	textfmt.c \
 	window.c
 
 endif
