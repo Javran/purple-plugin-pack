@@ -1,4 +1,4 @@
-EXTRA_DIST = .plugin .build
+EXTRA_DIST = .plugin
 
 napsterdir = $(GAIM_LIBDIR)/gaim
 
