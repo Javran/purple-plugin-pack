@@ -8,5 +8,13 @@ GPP_TOP :=		..
 
 GPP = irssi
 
+GPP_SRC := \
+	datechange.c \
+	layout.c \
+	lastlog.c \
+	textfmt.c \
+	window.c \
+	irssi.c
+
 include $(GPP_TOP)/win_gpp.mak
 
