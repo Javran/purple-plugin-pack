@@ -21,15 +21,17 @@
 # include "../gpp_config.h"
 #endif
 
-#include "blist.h"
-#include "conversation.h"
-#include "debug.h"
-#include "signals.h"
-#include "version.h"
+#include <blist.h>
+#include <conversation.h>
+#include <debug.h>
+#include <signals.h>
+#include <version.h>
 
-#include "plugin.h"
-#include "pluginpref.h"
-#include "prefs.h"
+#include <plugin.h>
+#include <pluginpref.h>
+#include <prefs.h>
+
+#include <string.h>
 
 #define PLUGIN_ID "core-plugin_pack-awaynotify"
 #define CHECK_AWAY_MESSAGE_TIME_MS 1000
@@ -59,15 +61,6 @@ static void infocheck_delete(Infochecker* checker)
 	g_free(checker);
 }
 
-static void infocheck_add(Infochecker* checker)
-{
-	static gint infocheck_timeout(gpointer data);
-
-	infochecker_list = g_list_prepend(infochecker_list, checker);
-	checker->timeout_id = g_timeout_add(CHECK_AWAY_MESSAGE_TIME_MS,
-			infocheck_timeout, g_list_first(infochecker_list));
-}
-
 static void infocheck_remove(GList* node)
 {
 	Infochecker* checker = (Infochecker*)node->data;
@@ -94,7 +87,7 @@ static void write_status(GaimBuddy *buddy, const char *message, const char* stat
 	char buf[256];
 	char *escaped;
 
-	conv = gaim_find_conversation_with_account(buddy->name, buddy->account);
+	conv = gaim_find_conversation_with_account(GAIM_CONV_TYPE_IM, buddy->name, buddy->account);
 
 	if (conv == NULL)
 		return;
@@ -190,6 +183,13 @@ static gint infocheck_timeout(gpointer data)
 	infocheck_remove(node);
 
 	return FALSE;
+}
+
+static void infocheck_add(Infochecker* checker)
+{
+	infochecker_list = g_list_prepend(infochecker_list, checker);
+	checker->timeout_id = g_timeout_add(CHECK_AWAY_MESSAGE_TIME_MS,
+			infocheck_timeout, g_list_first(infochecker_list));
 }
 
 static void buddy_away_cb(GaimBuddy *buddy, void *data)

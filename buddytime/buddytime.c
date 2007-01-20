@@ -83,7 +83,7 @@ bt_widget_new(GaimConversation *conv) {
 
 	ret->ebox = gtk_event_box_new();
 
-	ret->label = gtk_label_new();
+	ret->label = gtk_label_new("label");
 	gtk_container_add(GTK_CONTAINER(ret->ebox), ret->label);
 }
 
