@@ -21,6 +21,10 @@
 # include "../gpp_config.h"
 #endif
 
+#include "../common/i18n.h"
+
+#define GAIM_PLUGINS
+
 #include <blist.h>
 #include <conversation.h>
 #include <debug.h>
@@ -45,6 +49,8 @@ struct _Infochecker {
 };
 
 GList* infochecker_list = NULL;
+
+static gint infocheck_timeout(gpointer data);
 
 static Infochecker* infocheck_new(GaimAccount* account, char* buddy)
 {
@@ -133,7 +139,11 @@ static char* get_away_message(GaimBuddy* buddy)
 
 	if (prpl_info && prpl_info->tooltip_text) {
 		const char *end;
-		statustext = prpl_info->tooltip_text(buddy);
+		char *statustext = NULL;
+		GaimNotifyUserInfo *info = gaim_notify_user_info_new();
+		prpl_info->tooltip_text(buddy, info, TRUE);
+		statustext = gaim_notify_user_info_get_text_with_newline(info, "\n");
+		gaim_notify_user_info_destroy(info);
 
 		if (statustext && !g_utf8_validate(statustext, -1, &end)) {
 			char *new = g_strndup(statustext, g_utf8_pointer_to_offset(statustext, end));
@@ -194,7 +204,7 @@ static void infocheck_add(Infochecker* checker)
 
 static void buddy_away_cb(GaimBuddy *buddy, void *data)
 {
-	if (gaim_find_conversation_with_account(buddy->name, buddy->account) == NULL)
+	if (gaim_find_conversation_with_account(GAIM_CONV_TYPE_IM, buddy->name, buddy->account) == NULL)
 		return; /* Ignore if there's no conv open. */
 
 	infocheck_add(infocheck_new(buddy->account, buddy->name));
