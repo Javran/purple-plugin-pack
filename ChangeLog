@@ -1,4 +1,5 @@
 Version 1.0svn:
+	* Extensive changes to the irssi plugin, especially in its text formatting.
 	* Added a menuconfig script that allows a text-mode menu selection of
 	  which plugins to build.  Inspired by the Linux kernel's 'make
 	  menuconfig'.
