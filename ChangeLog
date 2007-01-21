@@ -1,3 +1,5 @@
+Version 1.0svn:
+
 Version 1.0beta6: 1/19/07
 	* Extensive changes to the irssi plugin, especially in its text formatting.
 	* Added a menuconfig script that allows a text-mode menu selection of
