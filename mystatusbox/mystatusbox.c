@@ -124,13 +124,13 @@ detach_per_account_boxes()
 	GList *list, *iter;
 	int i;
 	gboolean headline_showing;
-	GtkWidget *holds[6];
+	GtkWidget **holds;
 
 	gtkblist = gaim_gtk_blist_get_default_gtk_blist();
 	if (!gtkblist)
 		return;
 
-	holds = {gtkblist->headline_hbox->parent, gtkblist->treeview->parent,
+	holds = (GtkWidget*[]){gtkblist->headline_hbox->parent, gtkblist->treeview->parent,
 				gtkblist->error_buttons, gtkblist->statusbox,
 				gtkblist->scrollbook, NULL};
 
