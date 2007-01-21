@@ -124,7 +124,7 @@ detach_per_account_boxes()
 	GList *list, *iter;
 	int i;
 	gboolean headline_showing;
-	GtkWidget *holds[5];
+	GtkWidget *holds[6];
 
 	gtkblist = gaim_gtk_blist_get_default_gtk_blist();
 	if (!gtkblist)
