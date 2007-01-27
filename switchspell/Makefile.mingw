@@ -1,0 +1,12 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for switchspell plugin.
+#
+
+GPP_TOP :=		..
+
+GPP = switchspell
+
+include $(GPP_TOP)/win_gpp.mak
+

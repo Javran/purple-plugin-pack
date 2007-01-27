@@ -214,6 +214,7 @@ AC_OUTPUT([
 	slashexec/Makefile
 	sslinfo/Makefile
 	stocker/Makefile
+	switchspell/Makefile
 	talkfilters/Makefile
 	xchat-chats/Makefile
 	xmmsremote/Makefile
