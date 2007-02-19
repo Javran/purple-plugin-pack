@@ -103,6 +103,8 @@ AC_SUBST(GTK_CFLAGS)
 dnl #######################################################################
 dnl # Plugin dependency checking
 dnl #######################################################################
+
+# talkfilters
 AC_CHECK_HEADER(talkfilters.h, HAVE_TALKFILTERS=yes, AC_MSG_WARN([
 *** GNU Talk Filters is required to build the talkfilters plugin;
 *** please make sure you have the GNU Talk Filters development headers installed.
@@ -117,6 +119,14 @@ if test x"$HAVE_TALKFILTERS" = x"yes"; then
 	AC_SUBST(TALKFILTERS_LIBS)
 fi
 
+# switchspell
+gtkspell=yes
+PKG_CHECK_MODULES(GTKSPELL, gtkspell-2.0 >= 2.0.2, , [gtkspell=no])
+AC_SUBST(GTKSPELL_CFLAGS)
+AC_SUBST(GTKSPELL_LIBS)
+AM_CONDITIONAL(HAVE_GTKSPELL, test x"$gtkspell" = x"yes")
+
+# xmmsremote
 XMMS_LIBS=""
 XMMS_CFLAGS=""
 HAVE_XMMS="no"

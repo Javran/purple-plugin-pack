@@ -42,6 +42,7 @@
 #include <debug.h>
 
 #include <gtkconv.h>
+#include <gtkplugin.h>
 
 /* Pack/Local headers */
 #include "../common/i18n.h"
@@ -71,7 +72,7 @@ menu_conv_use_dict_cb(GObject *m, gpointer data)
 	gtkconv = GAIM_GTK_CONVERSATION(conv);
 	spell = gtkspell_get_from_text_view(GTK_TEXT_VIEW(gtkconv->entry));
 	if (spell != NULL)
-		gtkspell_set_language(spell, lang, &error);
+		gtkspell_set_language(spell, lang, &error);  /* XXX: error can possibly leak here */
 	g_object_set_data(G_OBJECT(gtkconv->entry), PROP_LANG, lang);
 }
 

@@ -1,9 +1,10 @@
 EXTRA_DIST = .plugin Makefile.mingw .build
 
+if HAVE_GTKSPELL
 switchspelldir = $(GAIM_LIBDIR)/gaim
 
 switchspell_la_LDFLAGS = -module -avoid-version \
-	`pkg-config --libs gtkspell-2.0`
+	$(GTKSPELL_LIBS)
 
 if PLUGINS
 
@@ -16,7 +17,7 @@ switchspell_la_LIBADD = \
 	$(GAIM_LIBS) \
 	$(GTK_LIBS)
 
-endif
+endif # PLUGINS
 
 AM_CPPFLAGS = \
 	-DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
@@ -25,4 +26,6 @@ AM_CPPFLAGS = \
 	$(GTK_CFLAGS) \
 	$(DEBUG_CFLAGS) \
 	$(GAIM_CFLAGS) \
-	`pkg-config --cflags gtkspell-2.0`
+	$(GTKSPELL_CFLAGS)
+
+endif # HAVE_GTKSPELL
