@@ -48,8 +48,10 @@ lh_migrate_filter(GaimAccount *account)
 static void
 lh_migrate_build_lists(void)
 {
-	GaimBuddyList *blist = gaim_get_blist();
+	GaimBuddyList *blist = NULL;
 	GaimBlistNode *root = blist->root, *g = NULL, *c = NULL, *b = NULL;
+
+	blist = gaim_get_blist();
 
 	/* walk the blist tree and build a list of the buddies and a list of
 	 * the groups corresponding to each buddy */
