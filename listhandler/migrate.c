@@ -49,9 +49,10 @@ static void
 lh_migrate_build_lists(void)
 {
 	GaimBuddyList *blist = NULL;
-	GaimBlistNode *root = blist->root, *g = NULL, *c = NULL, *b = NULL;
+	GaimBlistNode *root = NULL, *g = NULL, *c = NULL, *b = NULL;
 
 	blist = gaim_get_blist();
+	root = blist->root;
 
 	/* walk the blist tree and build a list of the buddies and a list of
 	 * the groups corresponding to each buddy */
@@ -60,7 +61,7 @@ lh_migrate_build_lists(void)
 		/* contact level */
 		for(c = g->child; c && GAIM_BLIST_NODE_IS_CONTACT(c); c = c->next)
 			/* buddy level */
-			for(b = c->child; b && GAIM_BLIST_NODE_IS_BUDDY(b); b = b-> next) {
+			for(b = c->child; b && GAIM_BLIST_NODE_IS_BUDDY(b); b = b->next) {
 				GaimGroup *tmp_group = gaim_group_new(((GaimGroup *)g)->name);
 				GaimBuddy *tmp_buddy = (GaimBuddy *)b;
 
