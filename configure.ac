@@ -210,6 +210,7 @@ AC_OUTPUT([
 	gaim-schedule/Makefile
 	groupmsg/Makefile
 	gRIM/Makefile
+	ignorance/Makefile
 	irssi/Makefile
 	lastseen/Makefile
 	listhandler/Makefile
