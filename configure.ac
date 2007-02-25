@@ -1,4 +1,4 @@
-AC_INIT([gaim-plugin_pack], [1.0svn], [guifications-devel@lists.sourceforge.net])
+AC_INIT([purple-plugin_pack], [1.0mtn], [guifications-devel@lists.sourceforge.net])
 AC_CANONICAL_SYSTEM
 AM_CONFIG_HEADER(pre_config.h)
 
@@ -25,7 +25,7 @@ LIBTOOL="$LIBTOOL --silent"
 dnl #######################################################################
 dnl # I'm lazy and figured config.h is the best place for this ;)
 dnl #######################################################################
-AC_DEFINE_UNQUOTED(GPP_WEBSITE, "http://gaim.guifications.org/trac", [Plugin Pack Website]) 
+AC_DEFINE_UNQUOTED(GPP_WEBSITE, "http://plugins.guifications.org/trac", [Plugin Pack Website]) 
 
 dnl #######################################################################
 dnl # Our header
@@ -69,20 +69,35 @@ fi
 AC_SUBST(CFLAGS)
 
 dnl #######################################################################
-dnl # Check for gaim
+dnl # Check for purple and piding
 dnl #######################################################################
+PKG_CHECK_MODULES(PURPLE, purple)
 
-PKG_CHECK_MODULES(GAIM, gaim,
-[
-	AC_DEFINE(HAVE_GAIM, 1, [Define if we've found gaim.])
-])
+PURPLE_LIBDIR="$libdir/libpurple"
+PURPLE_DATADIR="$datadir/libpurple"
+if test x"$prefix" = x"none" ; then
+	PURPLE_LIBDIR=`pkg-config --variable=libdir purple`"/libpurple"
+	PURPLE_DATADIR=`pkg-config --variable=datadir purple`"/libpurple"
+fi
 
-AC_SUBST(GAIM_CFLAGS)
-AC_SUBST(GAIM_LIBS)
-GAIM_LIBDIR=`pkg-config --variable=libdir gaim`
-GAIM_DATADIR=`pkg-config --variable=datadir gaim`
-AC_SUBST(GAIM_LIBDIR)
-AC_SUBST(GAIM_DATADIR)
+AC_SUBST(PURPLE_CFLAGS)
+AC_SUBST(PURPLE_LIBS)
+AC_SUBST(PURPLE_LIBDIR)
+AC_SUBST(PURPLE_DATADIR)
+
+PKG_CHECK_MODULES(PIDGIN, pidgin)
+
+PIDGIN_LIBDIR="$libdir/pidgin"
+PIDGIN_DATADIR="$datadir/pidgin"
+if test x"$prefix" = x"none" ; then
+	PIDGIN_LIBDIR=`pkg-config --variable=libdir pidgin`"/pidgin"
+	PIDGIN_DATADIR=`pkg-config --variable=datadir pidgin`"/pidgin"
+fi
+
+AC_SUBST(PIDGIN_CFLAGS)
+AC_SUBST(PIDGIN_LIBS)
+AC_SUBST(PIDGIN_LIBDIR)
+AC_SUBST(PIDGIN_DATADIR)
 
 dnl #######################################################################
 dnl # check for gtk and other dependencies
@@ -201,7 +216,6 @@ AC_OUTPUT([
 	bash/Makefile
 	bit/Makefile
 	blistops/Makefile
-	broadcast/Makefile
 	buddytime/Makefile
 	chronic/Makefile
 	dice/Makefile
@@ -236,11 +250,13 @@ AC_OUTPUT([
 dnl #######################################################################
 dnl # Ouput!!
 dnl #######################################################################
-
 echo;
 echo $PACKAGE $VERSION Configuration complete
 echo;
 echo Debugging enabled................: $enable_debug
+echo;
+echo Installing purple plugins to.....: `eval eval echo $PURPLE_LIBDIR`
+echo Installing pidgin plugins to.....: `eval eval echo $PIDGIN_LIBDIR`
 echo;
 echo Building plugins:
 echo $PP_BUILDDIRS | xargs -n 4 echo "	"
