@@ -1,0 +1,11 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for broadcast plugin.
+#
+
+GPP_TOP :=		..
+
+GPP = broadcast
+
+include $(GPP_TOP)/win_gpp.mak
