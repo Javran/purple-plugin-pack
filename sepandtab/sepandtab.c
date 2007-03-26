@@ -30,19 +30,13 @@
 #include <plugin.h>
 #include <version.h>
 #include <gtkplugin.h>
-#if GAIM_VERSION_CHECK(2,0,0)
 #include <gtkconv.h>
 #include <gtkconvwin.h>
-#endif
 
 #include "../common/i18n.h"
 
 static void
-#if GAIM_VERSION_CHECK(2,0,0)
 conv_placement_sep_ims_tab_chats(GaimGtkConversation *conv) {
-#else
-conv_placement_sep_ims_tab_chats(GaimConversation *conv) {
-#endif
 	GaimConversationType type;
 	GaimGtkWindow *win = NULL;
 
@@ -64,11 +58,7 @@ conv_placement_sep_ims_tab_chats(GaimConversation *conv) {
 }
 
 static void
-#if GAIM_VERSION_CHECK(2,0,0)
 conv_placement_sep_chats_tab_ims(GaimGtkConversation *conv) {
-#else
-conv_placement_sep_chats_tab_ims(GaimConversation *conv) {
-#endif
 	GaimConversationType type;
 	GaimGtkWindow *win = NULL;
 
@@ -89,12 +79,18 @@ conv_placement_sep_chats_tab_ims(GaimConversation *conv) {
 	}
 }
 
+static void
+conv_placement_grp_type_sep_prpl(GaimGtkConversation *conv) {
+}
+
 static gboolean
 plugin_load(GaimPlugin *plugin) {
 	gaim_gtkconv_placement_add_fnc("sep-ims-tab-chats", _("Separate IM, group Chats"),
 							    &conv_placement_sep_ims_tab_chats);
 	gaim_gtkconv_placement_add_fnc("sep-chats-tab-ims", _("Separate Chats, group IMs"),
 								&conv_placement_sep_chats_tab_ims);
+	gaim_gtkconv_placement_add_fnc("grp-type-sep-prpl",	_("Group by Type, Separate by Protocol"),
+								&conv_placement_grp_type_sep_prpl);
 	gaim_prefs_trigger_callback("/gaim/gtk/conversations/placement");
 
 	return TRUE;
