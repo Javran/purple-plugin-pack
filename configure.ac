@@ -1,4 +1,4 @@
-AC_INIT([gaim-plugin_pack], [1.0svn], [guifications-devel@lists.sourceforge.net])
+AC_INIT([plugin_pack], [1.0svn], [guifications-devel@lists.sourceforge.net])
 AC_CANONICAL_SYSTEM
 AM_CONFIG_HEADER(pre_config.h)
 
@@ -6,7 +6,7 @@ AM_INIT_AUTOMAKE([foreign dist-bzip2])
 
 AC_PREREQ([2.50])
 
-AC_DEFINE_UNQUOTED(GPP_VERSION, "AC_PACKAGE_VERSION", [Plugin Pack Version])
+AC_DEFINE_UNQUOTED(PP_VERSION, "AC_PACKAGE_VERSION", [Plugin Pack Version])
 
 AC_PATH_PROG(sedpath, sed)
 AC_DISABLE_STATIC
@@ -25,18 +25,17 @@ LIBTOOL="$LIBTOOL --silent"
 dnl #######################################################################
 dnl # I'm lazy and figured config.h is the best place for this ;)
 dnl #######################################################################
-AC_DEFINE_UNQUOTED(GPP_WEBSITE, "http://gaim.guifications.org/trac", [Plugin Pack Website]) 
+AC_DEFINE_UNQUOTED(GPP_WEBSITE, "http://pidgin.guifications.org/trac", [Plugin Pack Website]) 
 
 dnl #######################################################################
 dnl # Our header
 dnl #######################################################################
-
 AH_TOP([ /* our header */
-#ifndef GPP_CONFIG_H
-#define GPP_CONFIG_H
+#ifndef PP_CONFIG_H
+#define PP_CONFIG_H
 ])
 AH_BOTTOM([
-#endif /* GPP_CONFIG_H */
+#endif /* PP_CONFIG_H */
 ])
 
 dnl #######################################################################
@@ -125,18 +124,19 @@ AC_SUBST(FINCH_DATADIR)
 dnl #######################################################################
 dnl # check for gtk and other dependencies
 dnl #######################################################################
-
 AM_PATH_GLIB_2_0(2.0.0,,AC_MSG_ERROR([
 *** GLib 2.0 is required to build AC_PACKAGE_NAME; please make sure you have the
 *** GLib development headers installed. The latest version of GLib is always
 *** available at http://www.gtk.org/.]))
 AC_SUBST(GLIB_CFLAGS)
+AC_SUBST(GLIB_LIBS)
 
 AM_PATH_GTK_2_0(2.0.0,,AC_MSG_ERROR([
 *** GTK+ 2.0 is required to build AC_PACKAGE_NAME; please make sure you have the
 *** GTK+ development headers installed. The latest version of GTK+ is always
 *** available at http://www.gtk.org/.]))
 AC_SUBST(GTK_CFLAGS)
+AC_SUBST(GTK_LIBS)
 
 dnl #######################################################################
 dnl # Plugin dependency checking
@@ -196,6 +196,7 @@ AM_CONDITIONAL(USE_XMMS, test x"$HAVE_XMMS" = x"yes")
 AC_SUBST(XMMS_LIBS)
 AC_SUBST(XMMS_CFLAGS)
 
+# irssi among others
 AC_CHECK_HEADERS(regex.h)
 
 dnl #######################################################################
