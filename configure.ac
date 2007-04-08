@@ -69,20 +69,58 @@ fi
 AC_SUBST(CFLAGS)
 
 dnl #######################################################################
-dnl # Check for gaim
+dnl # Check for purple
 dnl #######################################################################
-
-PKG_CHECK_MODULES(GAIM, gaim,
+PKG_CHECK_MODULES(PURPLE, purple,
 [
-	AC_DEFINE(HAVE_GAIM, 1, [Define if we've found gaim.])
+	AC_DEFINE(HAVE_PURPLE, 1, [Define if we've found libpurple.])
 ])
 
-AC_SUBST(GAIM_CFLAGS)
-AC_SUBST(GAIM_LIBS)
-GAIM_LIBDIR=`pkg-config --variable=libdir gaim`
-GAIM_DATADIR=`pkg-config --variable=datadir gaim`
-AC_SUBST(GAIM_LIBDIR)
-AC_SUBST(GAIM_DATADIR)
+PURPLE_LIBDIR=`pkg-config --variable=libdir purple`
+PURPLE_DATADIR=`pkg-config --variable=datadir purple`
+
+AC_SUBST(PURPLE_CFLAGS)
+AC_SUBST(PURPLE_LIBS)
+AC_SUBST(PURPLE_LIBDIR)
+AC_SUBST(PURPLE_DATADIR)
+
+dnl #######################################################################
+dnl # Check for pidgin
+dnl #######################################################################
+PKG_CHECK_MODULES(PIDGIN, pidgin,
+[
+	AC_DEFINE(HAVE_PIDGIN, 1, [Define if we've found pidgin.])
+	AM_CONDITIONAL(HAVE_PIDGIN, true)
+], [
+	AM_CONDITIONAL(HAVE_PIDGIN, false)
+])
+
+PIDGIN_LIBDIR=`pkg-config --variable=libdir pidgin`
+PIDGIN_DATADIR=`pkg-config --variable=datadir pidgin`
+
+AC_SUBST(PIDGIN_CFLAGS)
+AC_SUBST(PIDGIN_LIBS)
+AC_SUBST(PIDGIN_LIBDIR)
+AC_SUBST(PIDGIN_DATADIR)
+
+dnl #######################################################################
+dnl # Check for finch
+dnl #######################################################################
+PKG_CHECK_MODULES(FINCH, finch,
+[
+	AC_DEFINE(HAVE_FINCH, 1, [Define if we've found finch.])
+	AM_CONDITIONAL(HAVE_FINCH, true)
+], [
+	AM_CONDITIONAL(HAVE_FINCH, false)
+])
+
+FINCH_LIBDIR=`pkg-config --variable=libdir finch`
+FINCH_DATADIR=`pkg-config --variable=datadir finch`
+
+AC_SUBST(FINCH_CFLAGS)
+AC_SUBST(FINCH_LIBS)
+AC_SUBST(FINCH_LIBDIR)
+AC_SUBST(FINCH_DATADIR)
 
 dnl #######################################################################
 dnl # check for gtk and other dependencies
