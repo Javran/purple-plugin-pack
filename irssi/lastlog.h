@@ -1,5 +1,5 @@
 /*
- * irssi - Implements several irssi features for Gaim
+ * irssi - Implements several irssi features for Purple
  * Copyright (C) 2005-2007 Gary Kramlich <grim@reaperworld.com>
  * Copyright (C) 2007 John Bailey <rekkanoryo@rekkanoryo.org>
  *
@@ -19,6 +19,6 @@
  * 02111-1307, USA.
  */
 
-void irssi_lastlog_init(GaimPlugin *plugin);
-void irssi_lastlog_uninit(GaimPlugin *plugin);
+void irssi_lastlog_init(PurplePlugin *plugin);
+void irssi_lastlog_uninit(PurplePlugin *plugin);
 

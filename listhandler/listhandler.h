@@ -1,5 +1,5 @@
 /*
- * Gaim Plugin Pack
+ * Purple Plugin Pack
  * Copyright (C) 2003-2005
  * See ../AUTHORS for a list of all authors
  *
@@ -29,9 +29,9 @@
 #include <string.h>
 
 /* this has to be defined for the plugin to work properly */
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
-/* Gaim headers */
+/* Purple headers */
 #include <account.h>
 #include <blist.h>
 #include <debug.h>
@@ -46,5 +46,5 @@
 
 /* we send this to the request API so it is probably a good idea to make sure
  * the other files that need it have it */
-extern GaimPlugin *listhandler;
+extern PurplePlugin *listhandler;
 

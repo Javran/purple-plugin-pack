@@ -1,5 +1,5 @@
 /*
- * Gaim Plugin Pack
+ * Purple Plugin Pack
  * Copyright (C) 2003-2005
  * See ../AUTHORS for a list of all authors
  *
@@ -26,15 +26,15 @@
 static const gchar *target_prpl_id = NULL;
 static gchar *file_contents = NULL, *filename = NULL;
 static gsize length;
-static GaimAccount *target_account = NULL, *source_account = NULL;
-static GaimBuddyList *buddies = NULL;
-static GaimConnection *gc = NULL;
+static PurpleAccount *target_account = NULL, *source_account = NULL;
+static PurpleBuddyList *buddies = NULL;
+static PurpleConnection *gc = NULL;
 static xmlnode *root = NULL;
 
 static gboolean
-lh_import_filter(GaimAccount *account)
+lh_import_filter(PurpleAccount *account)
 {
-	const gchar *prpl_id = gaim_account_get_protocol_id(account);
+	const gchar *prpl_id = purple_account_get_protocol_id(account);
 
 	if(!prpl_id)
 		return FALSE;
@@ -56,7 +56,7 @@ static void
 lh_generic_import_blist(xmlnode *blist)
 {
 	const gchar *group_name = NULL;
-	GaimGroup *gaim_group = NULL;
+	PurpleGroup *purple_group = NULL;
 	xmlnode *buddy = NULL;
 	/* get the first group */
 	xmlnode *group = xmlnode_get_child(blist, "group");
@@ -65,18 +65,18 @@ lh_generic_import_blist(xmlnode *blist)
 		/* get the group's name */
 		group_name = xmlnode_get_attrib(group, "name");
 
-		gaim_debug_info("listhandler: import", "Current group in XML is %s\n",
+		purple_debug_info("listhandler: import", "Current group in XML is %s\n",
 				group_name);
 
-		/* create and/or get a pointer to the GaimGroup */
-		gaim_group = gaim_group_new(group_name);
+		/* create and/or get a pointer to the PurpleGroup */
+		purple_group = purple_group_new(group_name);
 
 		/* get the first buddy in this group */
 		buddy = xmlnode_get_child(group, "buddy");
 
 		while(buddy) {
-			/* add the buddy to Gaim's blist */
-			lh_util_add_buddy(group_name, gaim_group,
+			/* add the buddy to Purple's blist */
+			lh_util_add_buddy(group_name, purple_group,
 					xmlnode_get_attrib(buddy, "screenname"),
 					xmlnode_get_attrib(buddy, "alias"), target_account);
 
@@ -92,21 +92,21 @@ lh_generic_import_blist(xmlnode *blist)
 }
 
 static void
-lh_generic_import_target_request_cb(void *ignored, GaimRequestFields *fields)
+lh_generic_import_target_request_cb(void *ignored, PurpleRequestFields *fields)
 {
 	/* get the target account */
-	target_account = gaim_request_fields_get_account(fields, "generic_target_acct");
+	target_account = purple_request_fields_get_account(fields, "generic_target_acct");
 
-	gaim_debug_info("listhandler: import",
+	purple_debug_info("listhandler: import",
 			"Got the target account and its connection.\n");
 
-	gaim_debug_info("listhandler: import", "Beginning to parse XML.\n");
+	purple_debug_info("listhandler: import", "Beginning to parse XML.\n");
 
 	/* call separate functions to import the privacy and blist */
 	lh_generic_import_privacy(xmlnode_get_child(root, "privacy"));	
 	lh_generic_import_blist(xmlnode_get_child(root, "blist"));
 
-	gaim_debug_info("listhandler: import", "Finished parsing XML.  "
+	purple_debug_info("listhandler: import", "Finished parsing XML.  "
 			"Freeing allocated memory.\n");
 
 	xmlnode_free(root);
@@ -115,9 +115,9 @@ lh_generic_import_target_request_cb(void *ignored, GaimRequestFields *fields)
 static void
 lh_generic_import_target_request(void)
 {
-	GaimRequestFields *request;
-	GaimRequestFieldGroup *group;
-	GaimRequestField *field;
+	PurpleRequestFields *request;
+	PurpleRequestFieldGroup *group;
+	PurpleRequestField *field;
 	GError *error = NULL;
 
 	/* we need to make sure which gaim prpl this buddy list came from so we can
@@ -131,36 +131,36 @@ lh_generic_import_target_request(void)
 	target_prpl_id = xmlnode_get_attrib(xmlnode_get_child(xmlnode_get_child(root, "config"),
 				"prpl"), "id");
 
-	gaim_debug_info("listhandler: import", "Beginning Request API calls\n");
+	purple_debug_info("listhandler: import", "Beginning Request API calls\n");
 
-	/* It seems Gaim is super-picky about the order of these first three calls */
+	/* It seems Purple is super-picky about the order of these first three calls */
 	/* create a request */
-	request = gaim_request_fields_new();
+	request = purple_request_fields_new();
 
 	/* now create a field group */
-	group = gaim_request_field_group_new(NULL);
+	group = purple_request_field_group_new(NULL);
 	/* and add that group to the request created above */
-	gaim_request_fields_add_group(request, group);
+	purple_request_fields_add_group(request, group);
 
 	/* create a field */
-	field = gaim_request_field_account_new("generic_target_acct", _("Account"), NULL);
+	field = purple_request_field_account_new("generic_target_acct", _("Account"), NULL);
 	/* set the account field filter so we only see accounts with the same
 	 * prpl as the blist was exported from */
-	gaim_request_field_account_set_filter(field, lh_import_filter);
+	purple_request_field_account_set_filter(field, lh_import_filter);
 	/* mark the field as required */
-	gaim_request_field_set_required(field, TRUE);
+	purple_request_field_set_required(field, TRUE);
 
 	/* add the field to the group created above */
-	gaim_request_field_group_add_field(group, field);
+	purple_request_field_group_add_field(group, field);
 
 	/* and finally we can create the request */
-	gaim_request_fields(gaim_get_blist(), _("Listhandler - Importing"),
+	purple_request_fields(purple_get_blist(), _("Listhandler - Importing"),
 						_("Choose the account to import to:"), NULL, request,
 						_("_Import"),
 						G_CALLBACK(lh_generic_import_target_request_cb),
 						_("_Cancel"), NULL, NULL);
 
-	gaim_debug_info("listhandler: import", "Ending Request API calls\n");
+	purple_debug_info("listhandler: import", "Ending Request API calls\n");
 
 	g_free(filename);
 
@@ -170,7 +170,7 @@ lh_generic_import_target_request(void)
 static void
 lh_generic_import_request_cb(void *user_data, const char *file)
 {
-	gaim_debug_info("listhandler: import", "Beginning import\n");
+	purple_debug_info("listhandler: import", "Beginning import\n");
 
 	if(file) {
 		filename = g_strdup(file);
@@ -187,9 +187,9 @@ lh_generic_build_config_tree(xmlnode *parent)
 	xmlnode_set_attrib(xmlnode_new_child(parent, "config-version"),
 			"version", "1");
 	xmlnode_set_attrib(xmlnode_new_child(parent, "prpl"), "id",
-			gaim_account_get_protocol_id(source_account));
+			purple_account_get_protocol_id(source_account));
 	xmlnode_set_attrib(xmlnode_new_child(parent, "source"), "account",
-			gaim_account_get_username(source_account));
+			purple_account_get_username(source_account));
 
 	return;
 }
@@ -206,17 +206,17 @@ static void
 lh_generic_build_blist_tree(xmlnode *parent)
 {
 	/*            root of tree           group      contact    buddy */
-	GaimBlistNode *root = buddies->root, *g = NULL, *c = NULL, *b = NULL;
+	PurpleBlistNode *root = buddies->root, *g = NULL, *c = NULL, *b = NULL;
 	xmlnode *group = NULL, *buddy = NULL;
-	GaimBuddy *tmpbuddy = NULL;
+	PurpleBuddy *tmpbuddy = NULL;
 	const char *tmpalias = NULL, *tmpname = NULL;
 
 	/* iterate through the groups */
 	for(g = root; g; g = g->next) {
-		if(GAIM_BLIST_NODE_IS_GROUP(g)) {
-			const char *group_name = ((GaimGroup *)g)->name;
+		if(PURPLE_BLIST_NODE_IS_GROUP(g)) {
+			const char *group_name = ((PurpleGroup *)g)->name;
 			
-			gaim_debug_info("listhandler: export", "Node is group.  Name is: %s\n",
+			purple_debug_info("listhandler: export", "Node is group.  Name is: %s\n",
 					group_name);
 
 			/* add the group to the tree */
@@ -225,16 +225,16 @@ lh_generic_build_blist_tree(xmlnode *parent)
 
 			/* iterate through the contacts */
 			for(c = g->child; c; c= c->next) {
-				if(GAIM_BLIST_NODE_IS_CONTACT(c)) {
-					gaim_debug_info("listhandler: export",
+				if(PURPLE_BLIST_NODE_IS_CONTACT(c)) {
+					purple_debug_info("listhandler: export",
 							"Node is contact.  Will parse its children.\n");
 
 					/* iterate through the buddies */
-					for(b = c->child; b && GAIM_BLIST_NODE_IS_BUDDY(b); b = b->next) {
-						tmpbuddy = (GaimBuddy *)b;
-						if(gaim_buddy_get_account(tmpbuddy) == source_account) {
-							tmpalias = gaim_buddy_get_contact_alias(tmpbuddy);
-							tmpname = gaim_buddy_get_name(tmpbuddy);
+					for(b = c->child; b && PURPLE_BLIST_NODE_IS_BUDDY(b); b = b->next) {
+						tmpbuddy = (PurpleBuddy *)b;
+						if(purple_buddy_get_account(tmpbuddy) == source_account) {
+							tmpalias = purple_buddy_get_contact_alias(tmpbuddy);
+							tmpname = purple_buddy_get_name(tmpbuddy);
 
 							buddy = xmlnode_new_child(group, "buddy");
 							xmlnode_set_attrib(buddy, "screenname", tmpname);
@@ -278,7 +278,7 @@ lh_generic_export_request_cb(void *user_data, const char *filename)
 		xmlnode *tree = lh_generic_build_tree();
 		char *xmlstring = xmlnode_to_formatted_str(tree, &xmlstrlen);
 
-		gaim_debug_info("listhandler: export",
+		purple_debug_info("listhandler: export",
 				"XML tree built and converted to string.  String is:\n\n%s\n",
 				xmlstring);
 
@@ -289,63 +289,63 @@ lh_generic_export_request_cb(void *user_data, const char *filename)
 		g_free(xmlstring);
 		xmlnode_free(tree);
 	} else
-		gaim_debug_info("listhandler: export", "Can't save file %s\n",
+		purple_debug_info("listhandler: export", "Can't save file %s\n",
 				filename ? filename : "NULL");
 	
 	return;
 }
 
 static void
-lh_generic_export_cb(void *ignored, GaimRequestFields *fields)
+lh_generic_export_cb(void *ignored, PurpleRequestFields *fields)
 {
 	/* get the source account from the dialog we requested */
-	source_account = gaim_request_fields_get_account(fields, "generic_source_acct");
+	source_account = purple_request_fields_get_account(fields, "generic_source_acct");
 
 	/* get the connection from the account */
-	gc = gaim_account_get_connection(source_account);
+	gc = purple_account_get_connection(source_account);
 
 	/* this grabs the gaim buddy list, which will be walked thru later */
-	buddies = gaim_get_blist();
+	buddies = purple_get_blist();
 
 	if(buddies)
-		gaim_request_file(listhandler, _("Save Generic .blist File"), NULL,
+		purple_request_file(listhandler, _("Save Generic .blist File"), NULL,
 				TRUE, G_CALLBACK(lh_generic_export_request_cb), NULL, NULL);
 	else
-		gaim_debug_info("listhandler: export", "blist not returned\n");
+		purple_debug_info("listhandler: export", "blist not returned\n");
 
 	return;
 }
 
 void /* do some work and export the damn blist already */
-lh_generic_export_action_cb(GaimPluginAction *action)
+lh_generic_export_action_cb(PurplePluginAction *action)
 {
-	GaimRequestFields *request;
-	GaimRequestFieldGroup *group;
-	GaimRequestField *field;
+	PurpleRequestFields *request;
+	PurpleRequestFieldGroup *group;
+	PurpleRequestField *field;
 
-	/* It seems Gaim is super-picky about the order of these first three calls */
+	/* It seems Purple is super-picky about the order of these first three calls */
 	/* create a request */
-	request = gaim_request_fields_new();
+	request = purple_request_fields_new();
 
 	/* now create a field group */
-	group = gaim_request_field_group_new(NULL);
+	group = purple_request_field_group_new(NULL);
 	/* and add that group to the request created above */
-	gaim_request_fields_add_group(request, group);
+	purple_request_fields_add_group(request, group);
 
 	/* create a field */
-	field = gaim_request_field_account_new("generic_source_acct", _("Account"), NULL);
+	field = purple_request_field_account_new("generic_source_acct", _("Account"), NULL);
 
 	/* mark the field as required */
-	gaim_request_field_set_required(field, TRUE);
+	purple_request_field_set_required(field, TRUE);
 
 	/* let's show offline accounts too */
-	gaim_request_field_account_set_show_all(field, TRUE);
+	purple_request_field_account_set_show_all(field, TRUE);
 
 	/* add the field to the group created above */
-	gaim_request_field_group_add_field(group, field);
+	purple_request_field_group_add_field(group, field);
 
 	/* and finally we can create the request */
-	gaim_request_fields(gaim_get_blist(), _("Listhandler - Exporting"),
+	purple_request_fields(purple_get_blist(), _("Listhandler - Exporting"),
 						_("Choose the account to export from:"), NULL, request,
 						_("_Export"), G_CALLBACK(lh_generic_export_cb), _("_Cancel"),
 						NULL, NULL);
@@ -354,11 +354,11 @@ lh_generic_export_action_cb(GaimPluginAction *action)
 }
 
 void
-lh_generic_import_action_cb(GaimPluginAction *action)
+lh_generic_import_action_cb(PurplePluginAction *action)
 {
-	gaim_debug_info("listhandler: import", "Requesting the file.\n");
+	purple_debug_info("listhandler: import", "Requesting the file.\n");
 
-	gaim_request_file(listhandler, _("Choose A Generic Buddy List File To Import"),
+	purple_request_file(listhandler, _("Choose A Generic Buddy List File To Import"),
 			NULL, FALSE, G_CALLBACK(lh_generic_import_request_cb), NULL, NULL);
 	
 	return;

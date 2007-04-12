@@ -1,5 +1,5 @@
 /*
- * Gaim Plugin Pack
+ * Purple Plugin Pack
  * Copyright (C) 2003-2005
  * See AUTHORS for a list of all authors
  *

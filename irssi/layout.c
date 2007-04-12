@@ -1,5 +1,5 @@
 /*
- * irssi - Implements several irssi features for Gaim
+ * irssi - Implements several irssi features for Purple
  * Copyright (C) 2005-2007 Gary Kramlich <grim@reaperworld.com>
  * Copyright (C) 2007 John Bailey <rekkanoryo@rekkanoryo.org>
  *
@@ -45,25 +45,25 @@
 /******************************************************************************
  * Globals
  *****************************************************************************/
-static GaimCmdId irssi_layout_cmd_id = 0;
+static PurpleCmdId irssi_layout_cmd_id = 0;
 
 /******************************************************************************
  * Helpers
  *****************************************************************************/
-static GaimBlistNode *
-irssi_layout_get_node_from_conv(GaimConversation *conv) {
-	GaimBlistNode *node = NULL;
+static PurpleBlistNode *
+irssi_layout_get_node_from_conv(PurpleConversation *conv) {
+	PurpleBlistNode *node = NULL;
 
 	/* this is overkill for now, but who knows, we _may_ need it later */
 
 	switch(conv->type) {
-		case GAIM_CONV_TYPE_CHAT:
-			node = (GaimBlistNode *)gaim_blist_find_chat(conv->account,
+		case PURPLE_CONV_TYPE_CHAT:
+			node = (PurpleBlistNode *)purple_blist_find_chat(conv->account,
 														 conv->name);
 
 			break;
-		case GAIM_CONV_TYPE_IM:
-			node = (GaimBlistNode *)gaim_find_buddy(conv->account, conv->name);
+		case PURPLE_CONV_TYPE_IM:
+			node = (PurpleBlistNode *)purple_find_buddy(conv->account, conv->name);
 
 			break;
 
@@ -74,28 +74,28 @@ irssi_layout_get_node_from_conv(GaimConversation *conv) {
 	return node;
 }
 
-static GaimConversation *
-irssi_layout_get_conv_from_node(GaimBlistNode *node, gboolean create) {
-	GaimAccount *account = NULL;
-	GaimConversation *conv = NULL;
-	GaimConversationType ctype = GAIM_CONV_TYPE_UNKNOWN;
+static PurpleConversation *
+irssi_layout_get_conv_from_node(PurpleBlistNode *node, gboolean create) {
+	PurpleAccount *account = NULL;
+	PurpleConversation *conv = NULL;
+	PurpleConversationType ctype = PURPLE_CONV_TYPE_UNKNOWN;
 
 	const gchar *name = NULL;
 
 	switch(node->type) {
-		case GAIM_BLIST_CHAT_NODE: {
-			GaimChat *chat = (GaimChat *)node;
+		case PURPLE_BLIST_CHAT_NODE: {
+			PurpleChat *chat = (PurpleChat *)node;
 
-			ctype = GAIM_CONV_TYPE_CHAT;
-			name = gaim_chat_get_name(chat);
+			ctype = PURPLE_CONV_TYPE_CHAT;
+			name = purple_chat_get_name(chat);
 			account = chat->account;
 
 			break;
 		}
-		case GAIM_BLIST_BUDDY_NODE: {
-			GaimBuddy *buddy = (GaimBuddy *)node;
+		case PURPLE_BLIST_BUDDY_NODE: {
+			PurpleBuddy *buddy = (PurpleBuddy *)node;
 		
-			ctype = GAIM_CONV_TYPE_IM;
+			ctype = PURPLE_CONV_TYPE_IM;
 			name = buddy->name;
 			account = buddy->account;
 
@@ -106,16 +106,16 @@ irssi_layout_get_conv_from_node(GaimBlistNode *node, gboolean create) {
 			break;
 	}
 
-	conv = gaim_find_conversation_with_account(ctype, name, account);
+	conv = purple_find_conversation_with_account(ctype, name, account);
 
 	if(!conv && create) {
-		conv = gaim_conversation_new(ctype, account, name);
+		conv = purple_conversation_new(ctype, account, name);
 
 		/* dirty hack alert! */
-		if(ctype == GAIM_BLIST_CHAT_NODE) {
-			GaimChat *chat = (GaimChat *)node;
+		if(ctype == PURPLE_BLIST_CHAT_NODE) {
+			PurpleChat *chat = (PurpleChat *)node;
 
-			GAIM_CONV_CHAT(conv)->left = TRUE;
+			PURPLE_CONV_CHAT(conv)->left = TRUE;
 			serv_join_chat(account->gc, chat->components);
 		}
 	}
@@ -124,30 +124,30 @@ irssi_layout_get_conv_from_node(GaimBlistNode *node, gboolean create) {
 }
 
 static gint
-irssi_layout_get_setting(GaimGtkConversation *gtkconv) {
-	GaimConversation *conv = gtkconv->active_conv;
-	GaimBlistNode *node = NULL;
+irssi_layout_get_setting(PidginConversation *gtkconv) {
+	PurpleConversation *conv = gtkconv->active_conv;
+	PurpleBlistNode *node = NULL;
 	gint ret = 0;
 
 	node = irssi_layout_get_node_from_conv(conv);
 
 	if(node)
-		ret = gaim_blist_node_get_int(node, IRSSI_LAYOUT_SETTING);
+		ret = purple_blist_node_get_int(node, IRSSI_LAYOUT_SETTING);
 	
 	return ret;
 }
 
 static void
 irssi_layout_reset(void) {
-	GaimBlistNode *node = gaim_blist_get_root();
+	PurpleBlistNode *node = purple_blist_get_root();
 
-	for(; node; node = gaim_blist_node_next(node, TRUE))
-		gaim_blist_node_remove_setting(node, IRSSI_LAYOUT_SETTING);
+	for(; node; node = purple_blist_node_next(node, TRUE))
+		purple_blist_node_remove_setting(node, IRSSI_LAYOUT_SETTING);
 }
 
 static void
 irssi_layout_save(void) {
-	GaimBlistNode *node = NULL;
+	PurpleBlistNode *node = NULL;
 	GList *wins = NULL;
 	gint i, j;
 
@@ -155,20 +155,20 @@ irssi_layout_save(void) {
 	irssi_layout_reset();
 	
 	/* now save the layout... */
-	wins = gaim_gtk_conv_windows_get_list();
+	wins = pidgin_conv_windows_get_list();
 
 	for(i = 1; wins; wins = wins->next, i++) {
-		GaimGtkWindow *win = wins->data;
-		GList *convs = gaim_gtk_conv_window_get_gtkconvs(win);
+		PidginWindow *win = wins->data;
+		GList *convs = pidgin_conv_window_get_gtkconvs(win);
 
 		for(j = 1; convs; convs = convs->next, j++) {
-			GaimGtkConversation *gtkconv = convs->data;
-			GaimConversation *conv = gtkconv->active_conv;
+			PidginConversation *gtkconv = convs->data;
+			PurpleConversation *conv = gtkconv->active_conv;
 
 			node = irssi_layout_get_node_from_conv(conv);
 
 			if(node)
-				gaim_blist_node_set_int(node, IRSSI_LAYOUT_SETTING,
+				purple_blist_node_set_int(node, IRSSI_LAYOUT_SETTING,
 										SETTING_FROM_INTS(i, j));
 		}
 	}
@@ -176,21 +176,21 @@ irssi_layout_save(void) {
 
 static void
 irssi_layout_load(void) {
-	GaimConversation *conv = NULL;
-	GaimBlistNode *node;
+	PurpleConversation *conv = NULL;
+	PurpleBlistNode *node;
 
-	GaimGtkConversation *gtkconv = NULL;
-	GaimGtkWindow *window = NULL;
+	PidginConversation *gtkconv = NULL;
+	PidginWindow *window = NULL;
 
 	GList *convs = NULL, *settings = NULL, *wins = NULL;
 
 	gint current = 1;
 
-	node = gaim_blist_get_root();
+	node = purple_blist_get_root();
 
 	/* build our GList's with the conversation and the setting */
-	for(; node; node = gaim_blist_node_next(node, FALSE)) {
-		gint setting = gaim_blist_node_get_int(node, IRSSI_LAYOUT_SETTING);
+	for(; node; node = purple_blist_node_next(node, FALSE)) {
+		gint setting = purple_blist_node_get_int(node, IRSSI_LAYOUT_SETTING);
 
 		if(setting == 0)
 			continue;
@@ -239,18 +239,18 @@ irssi_layout_load(void) {
 			settings = g_list_delete_link(settings, s);
 
 			/* now find the actual window this should go into */
-			wins = gaim_gtk_conv_windows_get_list();
+			wins = pidgin_conv_windows_get_list();
 			window = g_list_nth_data(wins, win - 1);
 
 			if(!window) {
 				/* make dat der dun winda */
-				window = gaim_gtk_conv_window_new();
+				window = pidgin_conv_window_new();
 			}
 
 			/* add the conversation to the window */
 			if(gtkconv->win != window) {
-				gaim_gtk_conv_window_remove_gtkconv(gtkconv->win, gtkconv);
-				gaim_gtk_conv_window_add_gtkconv(window, gtkconv);
+				pidgin_conv_window_remove_gtkconv(gtkconv->win, gtkconv);
+				pidgin_conv_window_add_gtkconv(window, gtkconv);
 			}
 		}
 
@@ -260,18 +260,18 @@ irssi_layout_load(void) {
 	/* All the conversations are in the correct windows.  Now we make sure
 	 * they're in their right positions.
 	 */
-	for(wins = gaim_gtk_conv_windows_get_list(); wins; wins = wins->next) {
+	for(wins = pidgin_conv_windows_get_list(); wins; wins = wins->next) {
 		gint count, i, pos, position;
 		gint w; /* junk var */
 
 		window = wins->data;
-		count = gaim_gtk_conv_window_get_gtkconv_count(window);
+		count = pidgin_conv_window_get_gtkconv_count(window);
 
 		if(count <= 1)
 			continue;
 
 		for(position = 1; position < count; position++) {
-			gtkconv = gaim_gtk_conv_window_get_gtkconv_at_index(window, position);
+			gtkconv = pidgin_conv_window_get_gtkconv_at_index(window, position);
 			pos = irssi_layout_get_setting(gtkconv);
 
 			SETTING_TO_INTS(pos, pos, w);
@@ -280,11 +280,11 @@ irssi_layout_load(void) {
 
 			/* this could probably use tweaking, but it _should_ work */
 			for(i = pos; i < position; i++) {
-				GaimGtkConversation *gtkconv2 = NULL;
+				PidginConversation *gtkconv2 = NULL;
 				gint p;
 				
 				gtkconv2 =
-					gaim_gtk_conv_window_get_gtkconv_at_index(window, i);
+					pidgin_conv_window_get_gtkconv_at_index(window, i);
 
 				p = irssi_layout_get_setting(gtkconv2);
 				if(p <= 0 || p <= pos)
@@ -297,8 +297,8 @@ irssi_layout_load(void) {
 	}
 }
 
-static GaimCmdRet
-irssi_layout_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args,
+static PurpleCmdRet
+irssi_layout_cmd_cb(PurpleConversation *conv, const gchar *cmd, gchar **args,
 					gchar **error, void *data)
 {
 	const gchar *sub_cmd = args[0];
@@ -311,14 +311,14 @@ irssi_layout_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args,
 		irssi_layout_reset();
 	}
 
-	return GAIM_CMD_RET_OK;
+	return PURPLE_CMD_RET_OK;
 }
 
 /******************************************************************************
  * "API"
  *****************************************************************************/
 void
-irssi_layout_init(GaimPlugin *plugin) {
+irssi_layout_init(PurplePlugin *plugin) {
 	const gchar *help;
 
 	if(irssi_layout_cmd_id != 0)
@@ -328,22 +328,22 @@ irssi_layout_init(GaimPlugin *plugin) {
 	 * or "reset" at the beginning of the last line below, or the HTML tags.
 	 */
 	help = _("<pre>layout &lt;save|reset&gt;: Remember the layout of the "
-			 "current conversations to reopen them when Gaim is restarted.\n"
+			 "current conversations to reopen them when Purple is restarted.\n"
 			 "save - saves the current layout\n"
 			 "reset - clears the current saved layout\n"
 			 "</pre>");
 
 	irssi_layout_cmd_id =
-		gaim_cmd_register("layout", "w", GAIM_CMD_P_PLUGIN,
-						  GAIM_CMD_FLAG_IM | GAIM_CMD_FLAG_CHAT, NULL,
-						  GAIM_CMD_FUNC(irssi_layout_cmd_cb), help, NULL);
+		purple_cmd_register("layout", "w", PURPLE_CMD_P_PLUGIN,
+						  PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT, NULL,
+						  PURPLE_CMD_FUNC(irssi_layout_cmd_cb), help, NULL);
 }
 
 void
-irssi_layout_uninit(GaimPlugin *plugin) {
+irssi_layout_uninit(PurplePlugin *plugin) {
 	if(irssi_layout_cmd_id == 0)
 		return;
 	
-	gaim_cmd_unregister(irssi_layout_cmd_id);
+	purple_cmd_unregister(irssi_layout_cmd_id);
 }
 

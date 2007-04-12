@@ -1,5 +1,5 @@
 /*
- * irssi - Implements several irssi features for Gaim
+ * irssi - Implements several irssi features for Purple
  * Copyright (C) 2005-2007 Gary Kramlich <grim@reaperworld.com>
  * Copyright (C) 2007 John Bailey <rekkanoryo@rekkanoryo.org>
  *
@@ -61,7 +61,7 @@ enum {
 	if(!(account)->gc) \
 		return FALSE; \
 	\
-	if(!(account)->gc->flags & GAIM_CONNECTION_HTML) \
+	if(!(account)->gc->flags & PURPLE_CONNECTION_HTML) \
 		return FALSE; \
 	\
 	if(!(message)) \
@@ -186,22 +186,22 @@ irssi_textfmt_regex(gchar *message) {
 #ifdef HAVE_REGEX_H
 
 static gboolean
-irssi_textfmt_writing_cb(GaimAccount *account, const gchar *who,
-						 gchar **message, GaimConversation *conv,
-						 GaimMessageFlags flags)
+irssi_textfmt_writing_cb(PurpleAccount *account, const gchar *who,
+						 gchar **message, PurpleConversation *conv,
+						 PurpleMessageFlags flags)
 {
 	FORMAT(account, message);
 }
 
 static gboolean
-irssi_textfmt_sending_im_cb(GaimAccount *account, const gchar *receiver,
+irssi_textfmt_sending_im_cb(PurpleAccount *account, const gchar *receiver,
 							gchar **message)
 {
 	FORMAT(account, message);
 }
 
 static gboolean
-irssi_textfmt_sending_chat_cb(GaimAccount *account, gchar **message, gint id) {
+irssi_textfmt_sending_chat_cb(PurpleAccount *account, gchar **message, gint id) {
 	FORMAT(account, message);
 }
 
@@ -211,25 +211,25 @@ irssi_textfmt_sending_chat_cb(GaimAccount *account, gchar **message, gint id) {
  * "API"
  *****************************************************************************/
 void
-irssi_textfmt_init(GaimPlugin *plugin) {
+irssi_textfmt_init(PurplePlugin *plugin) {
 #ifdef HAVE_REGEX_H
 	void *handle;
 
-	handle = gaim_conversations_get_handle();
+	handle = purple_conversations_get_handle();
 
-	gaim_signal_connect(handle, "writing-im-msg", plugin,
-						GAIM_CALLBACK(irssi_textfmt_writing_cb), NULL);
-	gaim_signal_connect(handle, "writing-chat-msg", plugin,
-						GAIM_CALLBACK(irssi_textfmt_writing_cb), NULL);
-	gaim_signal_connect(handle, "sending-im-msg", plugin,
-						GAIM_CALLBACK(irssi_textfmt_sending_im_cb), NULL);
-	gaim_signal_connect(handle, "writing-im-msg", plugin,
-						GAIM_CALLBACK(irssi_textfmt_sending_chat_cb), NULL);
+	purple_signal_connect(handle, "writing-im-msg", plugin,
+						PURPLE_CALLBACK(irssi_textfmt_writing_cb), NULL);
+	purple_signal_connect(handle, "writing-chat-msg", plugin,
+						PURPLE_CALLBACK(irssi_textfmt_writing_cb), NULL);
+	purple_signal_connect(handle, "sending-im-msg", plugin,
+						PURPLE_CALLBACK(irssi_textfmt_sending_im_cb), NULL);
+	purple_signal_connect(handle, "writing-im-msg", plugin,
+						PURPLE_CALLBACK(irssi_textfmt_sending_chat_cb), NULL);
 #endif
 }
 
 void
-irssi_textfmt_uninit(GaimPlugin *plugin) {
+irssi_textfmt_uninit(PurplePlugin *plugin) {
 	/* Nothing to do here, gaim kills our callbacks for us. */
 }
 

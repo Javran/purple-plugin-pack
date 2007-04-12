@@ -3,7 +3,7 @@ EXTRA_DIST = \
 			.abusive \
 			Makefile.mingw
 
-groupmsgdir = $(GAIM_LIBDIR)/gaim
+groupmsgdir = $(GAIM_LIBDIR)/libpurple
 
 groupmsg_la_LDFLAGS = -module -avoid-version
 
@@ -21,7 +21,7 @@ groupmsg_la_LIBADD = \
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
+	-DLIBDIR=\"$(GAIM_LIBDIR)/libpurple/\" \
 	-DDATADIR=\"$(GAIM_DATADIR)\" \
 	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
 	$(DEBUG_CFLAGS) \

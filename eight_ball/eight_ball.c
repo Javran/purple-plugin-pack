@@ -1,5 +1,5 @@
 /*
- * Gaim Plugin Pack
+ * Purple Plugin Pack
  * Copyright (C) 2003-2005
  * See ../AUTHORS for a list of all authors
  *
@@ -35,8 +35,8 @@
 /* GLib */
 #include <glib.h>
 
-/* Gaim */
-#define GAIM_PLUGINS
+/* Purple */
+#define PURPLE_PLUGINS
 #include <cmds.h>
 #include <conversation.h>
 #include <debug.h>
@@ -64,10 +64,10 @@ static const gchar *sg_ball_strings[] = {
 	"Kneel before your god!"
 };
 
-static GaimCmdId eight_ball_cmd_id = 0, sg_ball_cmd_id = 0;
+static PurpleCmdId eight_ball_cmd_id = 0, sg_ball_cmd_id = 0;
 
-static GaimCmdRet
-eight_ball_cmd_func(GaimConversation *conv, const gchar *cmd, gchar **args,
+static PurpleCmdRet
+eight_ball_cmd_func(PurpleConversation *conv, const gchar *cmd, gchar **args,
 		gchar *error, void *data)
 {
 	GString *msgstr = NULL;
@@ -81,11 +81,11 @@ eight_ball_cmd_func(GaimConversation *conv, const gchar *cmd, gchar **args,
 
 	if(!strcmp(cmd, "sgball")) {
 		numstrings = sizeof(sg_ball_strings) / sizeof(sg_ball_strings[0]);
-		msgprefix = "The Gaim Stargate Ball says";
+		msgprefix = "The Purple Stargate Ball says";
 		msgs = sg_ball_strings;
 	} else {
 		numstrings = sizeof(eight_ball_strings) / sizeof(eight_ball_strings[0]);
-		msgprefix = "The Gaim 8 Ball says";
+		msgprefix = "The Purple 8 Ball says";
 		msgs = eight_ball_strings;
 	}
 
@@ -102,65 +102,65 @@ eight_ball_cmd_func(GaimConversation *conv, const gchar *cmd, gchar **args,
 
 	g_string_append_printf(msgstr, "%s:  %s", msgprefix, msgs[index]);
 
-	switch(gaim_conversation_get_type(conv)) {
-		case GAIM_CONV_TYPE_IM:
-			gaim_conv_im_send(GAIM_CONV_IM(conv), msgstr->str);
+	switch(purple_conversation_get_type(conv)) {
+		case PURPLE_CONV_TYPE_IM:
+			purple_conv_im_send(PURPLE_CONV_IM(conv), msgstr->str);
 			break;
-		case GAIM_CONV_TYPE_CHAT:
-			gaim_conv_chat_send(GAIM_CONV_CHAT(conv), msgstr->str);
+		case PURPLE_CONV_TYPE_CHAT:
+			purple_conv_chat_send(PURPLE_CONV_CHAT(conv), msgstr->str);
 			break;
 		default:
 			g_string_free(msgstr, TRUE);
-			return GAIM_CMD_RET_FAILED;
+			return PURPLE_CMD_RET_FAILED;
 	}
 
 	g_string_free(msgstr, TRUE);
 
-	return GAIM_CMD_RET_OK;
+	return PURPLE_CMD_RET_OK;
 }
 
 static gboolean
-plugin_load(GaimPlugin *plugin)
+plugin_load(PurplePlugin *plugin)
 {
 	const gchar *eight_ball_help, *sg_ball_help;
 
 	eight_ball_help = _("8ball:  sends a random 8ball message");
 	sg_ball_help = _("sgball:  sends a random Stargate Ball message");
 
-	eight_ball_cmd_id = gaim_cmd_register("8ball", "w", GAIM_CMD_P_PLUGIN,
-									GAIM_CMD_FLAG_IM | GAIM_CMD_FLAG_CHAT |
-									GAIM_CMD_FLAG_ALLOW_WRONG_ARGS,	NULL,
-									GAIM_CMD_FUNC(eight_ball_cmd_func),
+	eight_ball_cmd_id = purple_cmd_register("8ball", "w", PURPLE_CMD_P_PLUGIN,
+									PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT |
+									PURPLE_CMD_FLAG_ALLOW_WRONG_ARGS,	NULL,
+									PURPLE_CMD_FUNC(eight_ball_cmd_func),
 									eight_ball_help, NULL);
 
-	sg_ball_cmd_id = gaim_cmd_register("sgball", "w", GAIM_CMD_P_PLUGIN,
-									GAIM_CMD_FLAG_IM | GAIM_CMD_FLAG_CHAT |
-									GAIM_CMD_FLAG_ALLOW_WRONG_ARGS, NULL,
-									GAIM_CMD_FUNC(eight_ball_cmd_func),
+	sg_ball_cmd_id = purple_cmd_register("sgball", "w", PURPLE_CMD_P_PLUGIN,
+									PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT |
+									PURPLE_CMD_FLAG_ALLOW_WRONG_ARGS, NULL,
+									PURPLE_CMD_FUNC(eight_ball_cmd_func),
 									sg_ball_help, NULL);
 
 	return TRUE;
 }
 
 static gboolean
-plugin_unload(GaimPlugin *plugin)
+plugin_unload(PurplePlugin *plugin)
 {
-	gaim_cmd_unregister(eight_ball_cmd_id);
-	gaim_cmd_unregister(sg_ball_cmd_id);
+	purple_cmd_unregister(eight_ball_cmd_id);
+	purple_cmd_unregister(sg_ball_cmd_id);
 
 	return TRUE;
 }
 
-static GaimPluginInfo eight_ball_info =
+static PurplePluginInfo eight_ball_info =
 {
-	GAIM_PLUGIN_MAGIC, /* Do you believe in magic? */
-	GAIM_MAJOR_VERSION,
-	GAIM_MINOR_VERSION,
-	GAIM_PLUGIN_STANDARD,
+	PURPLE_PLUGIN_MAGIC, /* Do you believe in magic? */
+	PURPLE_MAJOR_VERSION,
+	PURPLE_MINOR_VERSION,
+	PURPLE_PLUGIN_STANDARD,
 	NULL,
 	0,
 	NULL,
-	GAIM_PRIORITY_DEFAULT,
+	PURPLE_PRIORITY_DEFAULT,
 
 	"core-plugin_pack-eight_ball",
 	NULL,
@@ -181,7 +181,7 @@ static GaimPluginInfo eight_ball_info =
 };
 
 static void
-init_plugin(GaimPlugin *plugin)
+init_plugin(PurplePlugin *plugin)
 {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
@@ -198,5 +198,5 @@ init_plugin(GaimPlugin *plugin)
 	return;
 }
 
-GAIM_INIT_PLUGIN(eight_ball, init_plugin, eight_ball_info)
+PURPLE_INIT_PLUGIN(eight_ball, init_plugin, eight_ball_info)
 

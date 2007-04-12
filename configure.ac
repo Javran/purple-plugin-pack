@@ -72,15 +72,15 @@ dnl #######################################################################
 dnl # Check for gaim
 dnl #######################################################################
 
-PKG_CHECK_MODULES(GAIM, gaim,
+PKG_CHECK_MODULES(GAIM, pidgin,
 [
-	AC_DEFINE(HAVE_GAIM, 1, [Define if we've found gaim.])
+	AC_DEFINE(HAVE_GAIM, 1, [Define if we've found pidgin.])
 ])
 
 AC_SUBST(GAIM_CFLAGS)
 AC_SUBST(GAIM_LIBS)
-GAIM_LIBDIR=`pkg-config --variable=libdir gaim`
-GAIM_DATADIR=`pkg-config --variable=datadir gaim`
+GAIM_LIBDIR=`pkg-config --variable=libdir pidgin`
+GAIM_DATADIR=`pkg-config --variable=datadir pidgin`
 AC_SUBST(GAIM_LIBDIR)
 AC_SUBST(GAIM_DATADIR)
 

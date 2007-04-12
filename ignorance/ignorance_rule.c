@@ -113,7 +113,7 @@ gint regex_rulecheck(ignorance_rule *rule, const GString *text) {
 	gint rv=0;
 	
 	if(regcomp(&reg,(const gchar*)rule->value,REG_EXTENDED | REG_NOSUB))
-		gaim_debug_error("ignorance", "Error parsing regex %s\n",
+		purple_debug_error("ignorance", "Error parsing regex %s\n",
 				   (const gchar*)(rule->value));
 	else if(!regexec(&reg,text->str,1,NULL,0))
 		rv=rule->score;

@@ -297,13 +297,13 @@ static gboolean verify_form() {
 	rv=ignorance_rule_valid(tmp,type);
 
 	if(!rv) {
-		gaim_debug_error("ignorance","Rule invalid: %s\n",tmp);
+		purple_debug_error("ignorance","Rule invalid: %s\n",tmp);
 	}else{
 		tmp=(gchar*)gtk_entry_get_text(GTK_ENTRY(rulename));
 		rv=ignorance_rulename_valid(tmp);
 
 		if(!rv) {
-			gaim_debug_error("ignorance","Rule name invalid: %s\n",tmp);
+			purple_debug_error("ignorance","Rule name invalid: %s\n",tmp);
 		}
 	}
 

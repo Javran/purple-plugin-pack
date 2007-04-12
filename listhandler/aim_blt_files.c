@@ -1,5 +1,5 @@
 /*
- * Gaim Plugin Pack
+ * Purple Plugin Pack
  * Copyright (C) 2003-2005
  * See ../AUTHORS for a list of all authors
  *
@@ -26,14 +26,14 @@
 static gchar *filename = NULL, *file_contents = NULL;
 static gsize length;
 static GString *bltfile_string = NULL;
-static GaimAccount *source_account = NULL, *target_account = NULL;
-static GaimBuddyList *buddies = NULL;
-static GaimConnection *gc = NULL;
+static PurpleAccount *source_account = NULL, *target_account = NULL;
+static PurpleBuddyList *buddies = NULL;
+static PurpleConnection *gc = NULL;
 
 static gboolean /* used to filter the account list to oscar accounts only */
-lh_aim_filter(GaimAccount *account)
+lh_aim_filter(PurpleAccount *account)
 {
-	const gchar *prpl_id = gaim_account_get_protocol_id(account);
+	const gchar *prpl_id = purple_account_get_protocol_id(account);
 
 	if(!prpl_id)
 		return FALSE;
@@ -91,7 +91,7 @@ lh_aim_get_file_strings(gchar *file_contents, gsize *length, guint *strings_len)
 	g_file_get_contents(filename, &file_contents, length, &error);
 
 	if(error)
-		gaim_debug_misc("listhandler: import", "Error from glib:  %s\n",
+		purple_debug_misc("listhandler: import", "Error from glib:  %s\n",
 				error->message);
 
 	/* split that bigass string into manageable ones ;) */
@@ -132,13 +132,13 @@ lh_aim_list_parse(gchar **strings, guint length, guint begin, guint end)
 {
 	gchar *current_group = NULL, *current_buddy = NULL, *current_alias = NULL;
 	gint i, current_group_begin = 0, current_group_end = 0;
-	GaimGroup *current_gaim_group = NULL;
-	GaimBuddy *tmpbuddy = NULL;
+	PurpleGroup *current_purple_group = NULL;
+	PurpleBuddy *tmpbuddy = NULL;
 	GList *buddies = NULL, *groups = NULL;
 
 	/* loop until we find the end of the buddy list */
 	while(current_group_end < end && current_group_end != end - 1) {
-		gaim_debug_info("listhandler: import", "Started the parsing loop\n");
+		purple_debug_info("listhandler: import", "Started the parsing loop\n");
 
 		/* it's safe to start one after and end one before the start and end
 		 * of the list section, so save the two iterations.  the if statement
@@ -163,16 +163,16 @@ lh_aim_list_parse(gchar **strings, guint length, guint begin, guint end)
 			}
 		}
 
-		gaim_debug_info("listhandler: import", "Current group begins %d, ends %d\n",
+		purple_debug_info("listhandler: import", "Current group begins %d, ends %d\n",
 				current_group_begin, current_group_end);
 
 		/* now strip { and whitespace from the group and keep an extra
 		 * pointer to it around for easy access */
 		current_group = lh_aim_str_normalize(strings[current_group_begin]);
 
-		/* create a GaimGroup and add to the list.  This is surprisingly easy. */
-		current_gaim_group = gaim_group_new(current_group);
-		gaim_blist_add_group(current_gaim_group, NULL);
+		/* create a PurpleGroup and add to the list.  This is surprisingly easy. */
+		current_purple_group = purple_group_new(current_group);
+		purple_blist_add_group(current_purple_group, NULL);
 	
 		/* now parse the actual group */
 		for(i = current_group_begin + 1; i < current_group_end; i++) {
@@ -187,7 +187,7 @@ lh_aim_list_parse(gchar **strings, guint length, guint begin, guint end)
 				 * I have to work around their incompetence */
 				lh_aim_sn_normalize(current_buddy);
 
-				gaim_debug_info("listhandler: import", "current buddy is %s\n",
+				purple_debug_info("listhandler: import", "current buddy is %s\n",
 						current_buddy);
 
 				/* test to see if the buddy has an alias set */
@@ -201,18 +201,18 @@ lh_aim_list_parse(gchar **strings, guint length, guint begin, guint end)
 				else /* no alias is set */
 					current_alias = NULL;
 
-				tmpbuddy = gaim_buddy_new(target_account, current_buddy,
+				tmpbuddy = purple_buddy_new(target_account, current_buddy,
 										current_alias);
-				gaim_debug_info("listhandler: import",
-						"new GaimBuddy created: %s, %s, %s\n", current_buddy,
+				purple_debug_info("listhandler: import",
+						"new PurpleBuddy created: %s, %s, %s\n", current_buddy,
 						current_alias ? current_alias : "NULL",
-						gaim_account_get_username(target_account));
+						purple_account_get_username(target_account));
 
-				if(tmpbuddy && current_gaim_group) {
+				if(tmpbuddy && current_purple_group) {
 					buddies = g_list_prepend(buddies, tmpbuddy);
-					groups = g_list_prepend(groups, current_gaim_group);
+					groups = g_list_prepend(groups, current_purple_group);
 
-					gaim_debug_info("listhandler: import", "added current "
+					purple_debug_info("listhandler: import", "added current "
 							"buddy to the GLists\n");
 				}
 			}
@@ -221,27 +221,27 @@ lh_aim_list_parse(gchar **strings, guint length, guint begin, guint end)
 
 	if(buddies && groups) {
 		lh_util_add_to_blist(buddies, groups);
-		gaim_account_add_buddies(target_account, buddies);
+		purple_account_add_buddies(target_account, buddies);
 	} else {
 		if(!buddies && !groups)
-			gaim_debug_info("listhandler: import", "BOTH GLISTS NULL!!!!!\n");
+			purple_debug_info("listhandler: import", "BOTH GLISTS NULL!!!!!\n");
 		if(!buddies)
-			gaim_debug_info("listhandler: import", "BUDDY GLIST NULL!!!\n");
+			purple_debug_info("listhandler: import", "BUDDY GLIST NULL!!!\n");
 		if(!groups)
-			gaim_debug_info("listhandler: import", "GROUP GLIST NULL!!!!\n");
+			purple_debug_info("listhandler: import", "GROUP GLIST NULL!!!!\n");
 	}
 
 	return;
 }
 
 static void
-lh_aim_import_target_request_cb(void *ignored, GaimRequestFields *fields)
+lh_aim_import_target_request_cb(void *ignored, PurpleRequestFields *fields)
 {
 	gchar **strings = NULL;
 	guint strings_len = 0, list_begin = 0, list_end = 0;
 
 	/* get the target account from the dialog we requested */
-	target_account = gaim_request_fields_get_account(fields,
+	target_account = purple_request_fields_get_account(fields,
 													"aim_target_acct");
 
 	/* read and split the file */
@@ -250,7 +250,7 @@ lh_aim_import_target_request_cb(void *ignored, GaimRequestFields *fields)
 	/* find the list in that crapload of memory that just got allocated */
 	lh_aim_list_find(strings, strings_len, &list_begin, &list_end);
 
-	gaim_debug_info("listhandler: import", "List begins at %d; ends at %d\n",
+	purple_debug_info("listhandler: import", "List begins at %d; ends at %d\n",
 			list_begin, list_end);
 
 	/* parse the freaking list already */
@@ -266,40 +266,40 @@ lh_aim_import_target_request_cb(void *ignored, GaimRequestFields *fields)
 static void /* does the request API calls needed */
 lh_aim_import_target_request(void)
 {
-	GaimRequestFields *request;
-	GaimRequestFieldGroup *group;
-	GaimRequestField *field;
+	PurpleRequestFields *request;
+	PurpleRequestFieldGroup *group;
+	PurpleRequestField *field;
 
-	gaim_debug_info("listhandler: import", "Beginning Request API calls\n");
+	purple_debug_info("listhandler: import", "Beginning Request API calls\n");
 
-	/* It seems Gaim is super-picky about the order of these first three calls */
+	/* It seems Purple is super-picky about the order of these first three calls */
 	/* create a request */
-	request = gaim_request_fields_new();
+	request = purple_request_fields_new();
 
 	/* now create a field group */
-	group = gaim_request_field_group_new(NULL);
+	group = purple_request_field_group_new(NULL);
 	/* and add that group to the request created above */
-	gaim_request_fields_add_group(request, group);
+	purple_request_fields_add_group(request, group);
 
 	/* create a field */
-	field = gaim_request_field_account_new("aim_target_acct",
+	field = purple_request_field_account_new("aim_target_acct",
 										_("Account"), NULL);
 	/* set the account field filter so we only see oscar accounts */
-	gaim_request_field_account_set_filter(field, lh_aim_filter);
+	purple_request_field_account_set_filter(field, lh_aim_filter);
 	/* mark the field as required */
-	gaim_request_field_set_required(field, TRUE);
+	purple_request_field_set_required(field, TRUE);
 
 	/* add the field to the group created above */
-	gaim_request_field_group_add_field(group, field);
+	purple_request_field_group_add_field(group, field);
 
 	/* and finally we can create the request */
-	gaim_request_fields(gaim_get_blist(), _("Buddy List Importer"),
+	purple_request_fields(purple_get_blist(), _("Buddy List Importer"),
 						_("Choose the account to import to:"), NULL,
 						request, _("_Import"),
 						G_CALLBACK(lh_aim_import_target_request_cb),
 						_("_Cancel"), NULL, NULL);
 
-	gaim_debug_info("listhandler: import", "Ending Request API calls\n");
+	purple_debug_info("listhandler: import", "Ending Request API calls\n");
 
 	return;
 }
@@ -307,7 +307,7 @@ lh_aim_import_target_request(void)
 static void
 lh_aim_import_cb(void *user_data, const char *file)
 {
-	gaim_debug_info("bltimporter", "Beginning import\n");
+	purple_debug_info("bltimporter", "Beginning import\n");
 
 	if(file) {
 		filename = g_strdup(file);
@@ -319,16 +319,16 @@ lh_aim_import_cb(void *user_data, const char *file)
 }
 
 static void
-lh_aim_string_add_buddy(GaimBlistNode *node)
+lh_aim_string_add_buddy(PurpleBlistNode *node)
 {
-	GaimBuddy *buddy = (GaimBuddy *)node;
-	const char *tmpalias = gaim_buddy_get_contact_alias(buddy),
-			   *tmpname = gaim_buddy_get_name(buddy);
+	PurpleBuddy *buddy = (PurpleBuddy *)node;
+	const char *tmpalias = purple_buddy_get_contact_alias(buddy),
+			   *tmpname = purple_buddy_get_name(buddy);
 
-	gaim_debug_info("listhandler: export", "Node is buddy.  Name is: %s\n", tmpname);
+	purple_debug_info("listhandler: export", "Node is buddy.  Name is: %s\n", tmpname);
 
 	/* only export if the buddy is on the right account */
-	if(gaim_buddy_get_account(buddy) == source_account) {
+	if(purple_buddy_get_account(buddy) == source_account) {
 		/* add the buddy's screenname to the string */
 		g_string_append_printf(bltfile_string, "   \"%s\"", tmpname);
 
@@ -347,32 +347,32 @@ lh_aim_string_add_buddy(GaimBlistNode *node)
 static void
 lh_aim_build_string(void)
 {
-	GaimBlistNode *root_node = buddies->root, *g = NULL,
+	PurpleBlistNode *root_node = buddies->root, *g = NULL,
 				  *c = NULL, *b = NULL;
 
 	bltfile_string = g_string_new("Config {\n version 1\n}\n");
 
 	g_string_append_printf(bltfile_string, "User {\n screenname %s\n}\n",
-			gaim_account_get_username(source_account));
+			purple_account_get_username(source_account));
 	g_string_append(bltfile_string, "Buddy {\n list {\n");
 
 	/* this outer loop iterates through the group level of the tree */
-	for(g = root_node; g && GAIM_BLIST_NODE_IS_GROUP(g); g = g->next)
+	for(g = root_node; g && PURPLE_BLIST_NODE_IS_GROUP(g); g = g->next)
 	{
-		gaim_debug_info("listhandler: export", "Node is group.  Name is: %s\n",
-				((GaimGroup *)g)->name);
+		purple_debug_info("listhandler: export", "Node is group.  Name is: %s\n",
+				((PurpleGroup *)g)->name);
 
 		/* add the group to the string */
 		g_string_append_printf(bltfile_string, "  \"%s\" {\n",
-				((GaimGroup *)g)->name);
+				((PurpleGroup *)g)->name);
 
 		/* iterate through the contact level in this group */
-		for(c = g->child; c && GAIM_BLIST_NODE_IS_CONTACT(c); c = c->next) {
-			gaim_debug_info("listhandler: export",
+		for(c = g->child; c && PURPLE_BLIST_NODE_IS_CONTACT(c); c = c->next) {
+			purple_debug_info("listhandler: export",
 					"Node is contact.  Will parse its children.\n");
 
 			/* iterate through the contact's buddies */
-			for(b = c->child; b && GAIM_BLIST_NODE_IS_BUDDY(b); b = b->next)
+			for(b = c->child; b && PURPLE_BLIST_NODE_IS_BUDDY(b); b = b->next)
 				lh_aim_string_add_buddy(b);
 		}
 
@@ -382,7 +382,7 @@ lh_aim_build_string(void)
 	/* finish the string we'll dump to the file */
 	g_string_append(bltfile_string, " }\n}\n");
 
-	gaim_debug_info("listhandler: export", "String built.  String is:\n\n%s\n",
+	purple_debug_info("listhandler: export", "String built.  String is:\n\n%s\n",
 			bltfile_string->str);
 
 	return;
@@ -398,7 +398,7 @@ lh_aim_export_request_cb(void *user_data, const char *filename)
 		fprintf(export, "%s", bltfile_string->str);
 		fclose(export);
 	} else
-		gaim_debug_info("listhandler: export", "Can't save file %s\n",
+		purple_debug_info("listhandler: export", "Can't save file %s\n",
 				filename ? filename : "NULL");
 
 	g_string_free(bltfile_string, TRUE);
@@ -407,73 +407,73 @@ lh_aim_export_request_cb(void *user_data, const char *filename)
 }
 
 static void
-lh_aim_export_cb(void *ignored, GaimRequestFields *fields)
+lh_aim_export_cb(void *ignored, PurpleRequestFields *fields)
 {
 	/* get the source account from the dialog we requested */
-	source_account = gaim_request_fields_get_account(fields,
+	source_account = purple_request_fields_get_account(fields,
 													"aim_source_acct");
 
 	/* get the connection from the account */
-	gc = gaim_account_get_connection(source_account);
+	gc = purple_account_get_connection(source_account);
 
 	/* this grabs the gaim buddy list, which will be walked thru later */
-	buddies = gaim_get_blist();
+	buddies = purple_get_blist();
 
 	if(buddies)
-		gaim_request_file(listhandler, _("Save AIM .blt File"), NULL, TRUE,
+		purple_request_file(listhandler, _("Save AIM .blt File"), NULL, TRUE,
 				G_CALLBACK(lh_aim_export_request_cb), NULL, NULL);
 	else
-		gaim_debug_info("listhandler: export", "blist not returned\n");
+		purple_debug_info("listhandler: export", "blist not returned\n");
 
 	return;
 }
 
 void /* do some work and export the damn blist already */
-lh_aim_export_action_cb(GaimPluginAction *action)
+lh_aim_export_action_cb(PurplePluginAction *action)
 {
-	GaimRequestFields *request;
-	GaimRequestFieldGroup *group;
-	GaimRequestField *field;
+	PurpleRequestFields *request;
+	PurpleRequestFieldGroup *group;
+	PurpleRequestField *field;
 
-	gaim_debug_info("listhandler: export", "Beginning Request API calls\n");
+	purple_debug_info("listhandler: export", "Beginning Request API calls\n");
 
-	/* It seems Gaim is super-picky about the order of these first three calls */
+	/* It seems Purple is super-picky about the order of these first three calls */
 	/* create a request */
-	request = gaim_request_fields_new();
+	request = purple_request_fields_new();
 
 	/* now create a field group */
-	group = gaim_request_field_group_new(NULL);
+	group = purple_request_field_group_new(NULL);
 	/* and add that group to the request created above */
-	gaim_request_fields_add_group(request, group);
+	purple_request_fields_add_group(request, group);
 
 	/* create a field */
-	field = gaim_request_field_account_new("aim_source_acct",
+	field = purple_request_field_account_new("aim_source_acct",
 										_("Account"), NULL);
 	/* set the account field filter so we only see oscar accounts */
-	gaim_request_field_account_set_filter(field, lh_aim_filter);
+	purple_request_field_account_set_filter(field, lh_aim_filter);
 	/* mark the field as required */
-	gaim_request_field_set_required(field, TRUE);
+	purple_request_field_set_required(field, TRUE);
 
 	/* add the field to the group created above */
-	gaim_request_field_group_add_field(group, field);
+	purple_request_field_group_add_field(group, field);
 
 	/* and finally we can create the request */
-	gaim_request_fields(gaim_get_blist(), _("Buddy List Exporter"),
+	purple_request_fields(purple_get_blist(), _("Buddy List Exporter"),
 						_("Choose the account to export from:"), NULL, request,
 						_("_Export"), G_CALLBACK(lh_aim_export_cb), _("_Cancel"),
 						NULL, NULL);
 
-	gaim_debug_info("listhandler: export", "Ending Request API calls\n");
+	purple_debug_info("listhandler: export", "Ending Request API calls\n");
 
 	return;
 }
 
 void
-lh_aim_import_action_cb(GaimPluginAction *action)
+lh_aim_import_action_cb(PurplePluginAction *action)
 {
-	gaim_debug_info("listhandler: import", "Requesting the file.\n");
+	purple_debug_info("listhandler: import", "Requesting the file.\n");
 
-	gaim_request_file(listhandler, _("Choose An AIM .blt File To Import"),
+	purple_request_file(listhandler, _("Choose An AIM .blt File To Import"),
 			NULL, FALSE, G_CALLBACK(lh_aim_import_cb), NULL, NULL);
 
 	return;

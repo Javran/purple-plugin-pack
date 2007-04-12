@@ -21,7 +21,7 @@
 # include "../gpp_config.h"
 #endif
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #define PLUGIN_ID			"core-plugin_pack-autorejoin"
 #define PLUGIN_NAME			"Autorejoin (IRC)"
@@ -34,7 +34,7 @@
 #include <glib.h>
 #include <string.h>
 
-/* Gaim headers */
+/* Purple headers */
 #include <cmds.h>
 #include <plugin.h>
 #include <prpl.h>
@@ -47,11 +47,11 @@ static gboolean
 show_them(gpointer data)
 {
 	/* So you think you can kick me? I'll show you! */
-	GaimConversation *conv = data;
-	char *command = g_strdup_printf("join %s", gaim_conversation_get_name(conv));
+	PurpleConversation *conv = data;
+	char *command = g_strdup_printf("join %s", purple_conversation_get_name(conv));
 	char *markup = g_markup_escape_text(command, -1);
 	char *error = NULL;
-	gaim_cmd_do_command(conv, command, markup, &error);  /* Do anything with the return value? */
+	purple_cmd_do_command(conv, command, markup, &error);  /* Do anything with the return value? */
 	g_free(command);
 	g_free(markup);
 	g_free(error);
@@ -59,7 +59,7 @@ show_them(gpointer data)
 }
 
 static void
-irc_receiving_text(GaimConnection *gc, const char **incoming, gpointer null)
+irc_receiving_text(PurpleConnection *gc, const char **incoming, gpointer null)
 {
 	char **splits;
 
@@ -68,17 +68,17 @@ irc_receiving_text(GaimConnection *gc, const char **incoming, gpointer null)
 
 	splits = g_strsplit(*incoming, " ", -1);
 	if (splits[1]) {
-		GaimAccount *account = gaim_connection_get_account(gc);
+		PurpleAccount *account = purple_connection_get_account(gc);
 		char *str = g_ascii_strdown(splits[1], -1);
 
 		if (strcmp(str, "kick") == 0 && splits[2] && splits[3]) {
 			char *name = splits[2];
-			GList *chats = gaim_get_chats();
+			GList *chats = purple_get_chats();
 			while (chats) {
-				GaimConversation *conv = chats->data;
+				PurpleConversation *conv = chats->data;
 				chats = chats->next;
-				if (gaim_conversation_get_account(conv) == account
-						&& strcmp(gaim_conversation_get_name(conv), name) == 0) {
+				if (purple_conversation_get_account(conv) == account
+						&& strcmp(purple_conversation_get_name(conv), name) == 0) {
 					g_timeout_add(1000, show_them, conv);
 					break;
 				}
@@ -90,31 +90,31 @@ irc_receiving_text(GaimConnection *gc, const char **incoming, gpointer null)
 }
 
 static gboolean
-plugin_load(GaimPlugin *plugin)
+plugin_load(PurplePlugin *plugin)
 {
-	GaimPlugin *prpl = gaim_find_prpl("prpl-irc");
+	PurplePlugin *prpl = purple_find_prpl("prpl-irc");
 	if (!prpl)
 		return FALSE;
-	gaim_signal_connect(prpl, "irc-receiving-text", plugin,
+	purple_signal_connect(prpl, "irc-receiving-text", plugin,
 				G_CALLBACK(irc_receiving_text), NULL);
 	return TRUE;
 }
 
 static gboolean
-plugin_unload(GaimPlugin *plugin)
+plugin_unload(PurplePlugin *plugin)
 {
 	return TRUE;
 }
 
-static GaimPluginInfo info = {
-	GAIM_PLUGIN_MAGIC,			/* Magic				*/
-	GAIM_MAJOR_VERSION,			/* Gaim Major Version	*/
-	GAIM_MINOR_VERSION,			/* Gaim Minor Version	*/
-	GAIM_PLUGIN_STANDARD,		/* plugin type			*/
+static PurplePluginInfo info = {
+	PURPLE_PLUGIN_MAGIC,			/* Magic				*/
+	PURPLE_MAJOR_VERSION,			/* Purple Major Version	*/
+	PURPLE_MINOR_VERSION,			/* Purple Minor Version	*/
+	PURPLE_PLUGIN_STANDARD,		/* plugin type			*/
 	NULL,						/* ui requirement		*/
 	0,							/* flags				*/
 	NULL,						/* dependencies			*/
-	GAIM_PRIORITY_DEFAULT,		/* priority				*/
+	PURPLE_PRIORITY_DEFAULT,		/* priority				*/
 
 	PLUGIN_ID,					/* plugin id			*/
 	NULL,						/* name					*/
@@ -135,7 +135,7 @@ static GaimPluginInfo info = {
 };
 
 static void
-init_plugin(GaimPlugin *plugin)
+init_plugin(PurplePlugin *plugin)
 {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
@@ -147,4 +147,4 @@ init_plugin(GaimPlugin *plugin)
 	info.description = _(PLUGIN_DESCRIPTION);
 }
 
-GAIM_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)
+PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)

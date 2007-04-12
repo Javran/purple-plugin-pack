@@ -1,5 +1,5 @@
 /*
- * irssi - Implements several irssi features for Gaim
+ * irssi - Implements several irssi features for Purple
  * Copyright (C) 2005-2006 Gary Kramlich <grim@reaperworld.com>
  * Copyright (C) 2006 John Bailey <rekkanoryo@rekkanoryo.org>
  *
@@ -24,17 +24,17 @@
 # include "../gpp_config.h"
 #endif
 
-/* all Gaim plugins need to define this */
-#define GAIM_PLUGINS
+/* all Purple plugins need to define this */
+#define PURPLE_PLUGINS
 
 /* define these so the plugin info struct way at the bottom is cleaner */
 #define PLUGIN_ID			"gtk-plugin_pack-irssi"
 #define PLUGIN_NAME			"Irssi Features"
 #define PLUGIN_STATIC_NAME	"irssi"
 #define PLUGIN_SUMMARY		"Implements features of the irssi IRC client for " \
-							"use in Gaim."
+							"use in Purple."
 #define PLUGIN_DESCRIPTION	"Implements some features of the IRC client irssi " \
-							"to be used in Gaim.  It lets you know in all open " \
+							"to be used in Purple.  It lets you know in all open " \
 							"conversations when the day has changed, adds the " \
 							"lastlog command, adds the window command, etc.  " \
 							"The day changed message is not logged."
@@ -46,7 +46,7 @@
 /* System headers */
 #include <glib.h>
 
-/* Gaim headers */
+/* Purple headers */
 #include <gtkplugin.h>
 #include <plugin.h>
 #include <version.h>
@@ -62,7 +62,7 @@
 #include "../common/i18n.h"
 
 static gboolean
-irssi_load(GaimPlugin *plugin) {
+irssi_load(PurplePlugin *plugin) {
 	irssi_datechange_init(plugin);
 	irssi_lastlog_init(plugin);
 	irssi_layout_init(plugin);
@@ -73,7 +73,7 @@ irssi_load(GaimPlugin *plugin) {
 }
 
 static gboolean
-irssi_unload(GaimPlugin *plugin) {
+irssi_unload(PurplePlugin *plugin) {
 	irssi_textfmt_uninit(plugin);
 	irssi_window_uninit(plugin);
 	irssi_layout_uninit(plugin);
@@ -83,15 +83,15 @@ irssi_unload(GaimPlugin *plugin) {
 	return TRUE;
 }
 
-static GaimPluginInfo irssi_info = { /* this tells Gaim about the plugin */
-	GAIM_PLUGIN_MAGIC,			/* Magic				*/
-	GAIM_MAJOR_VERSION,			/* Gaim Major Version	*/
-	GAIM_MINOR_VERSION,			/* Gaim Minor Version	*/
-	GAIM_PLUGIN_STANDARD,		/* plugin type			*/
-	GAIM_GTK_PLUGIN_TYPE,		/* ui requirement		*/
+static PurplePluginInfo irssi_info = { /* this tells Purple about the plugin */
+	PURPLE_PLUGIN_MAGIC,			/* Magic				*/
+	PURPLE_MAJOR_VERSION,			/* Purple Major Version	*/
+	PURPLE_MINOR_VERSION,			/* Purple Minor Version	*/
+	PURPLE_PLUGIN_STANDARD,		/* plugin type			*/
+	PIDGIN_PLUGIN_TYPE,		/* ui requirement		*/
 	0,							/* flags				*/
 	NULL,						/* dependencies			*/
-	GAIM_PRIORITY_DEFAULT,		/* priority				*/
+	PURPLE_PRIORITY_DEFAULT,		/* priority				*/
 
 	PLUGIN_ID,					/* plugin id			*/
 	NULL,						/* name					*/
@@ -112,7 +112,7 @@ static GaimPluginInfo irssi_info = { /* this tells Gaim about the plugin */
 };
 
 static void
-irssi_init(GaimPlugin *plugin) {
+irssi_init(PurplePlugin *plugin) {
 
 /* if the user hasn't disabled internationalization support, tell gettext
  * what package we're from and where our translations are, then set gettext
@@ -128,5 +128,5 @@ irssi_init(GaimPlugin *plugin) {
 	irssi_info.description = _(PLUGIN_DESCRIPTION);
 }
 
-GAIM_INIT_PLUGIN(PLUGIN_STATIC_NAME, irssi_init, irssi_info)
+PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, irssi_init, irssi_info)
 

@@ -21,7 +21,7 @@
 # include "../gpp_config.h"
 #endif /* HAVE_CONFIG_H */
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #include <glib.h>
 #include <time.h>
@@ -35,10 +35,10 @@
 
 #include "../common/i18n.h"
 
-static GaimCmdId dice_cmd_id = 0;
+static PurpleCmdId dice_cmd_id = 0;
 
-static GaimCmdRet
-roll(GaimConversation *conv, const gchar *cmd, gchar **args,
+static PurpleCmdRet
+roll(PurpleConversation *conv, const gchar *cmd, gchar **args,
 	 gchar *error, void *data)
 {
 	GString *str = NULL;
@@ -71,48 +71,48 @@ roll(GaimConversation *conv, const gchar *cmd, gchar **args,
 		g_string_append_printf(str, " %d", roll);
 	}
 
-	if(conv->type == GAIM_CONV_TYPE_IM)
-		gaim_conv_im_send(GAIM_CONV_IM(conv), str->str);
-	else if(conv->type == GAIM_CONV_TYPE_CHAT)
-		gaim_conv_chat_send(GAIM_CONV_CHAT(conv), str->str);
+	if(conv->type == PURPLE_CONV_TYPE_IM)
+		purple_conv_im_send(PURPLE_CONV_IM(conv), str->str);
+	else if(conv->type == PURPLE_CONV_TYPE_CHAT)
+		purple_conv_chat_send(PURPLE_CONV_CHAT(conv), str->str);
 
 	g_string_free(str, TRUE);
 
-	return GAIM_CMD_RET_OK;
+	return PURPLE_CMD_RET_OK;
 }
 
 static gboolean
-plugin_load(GaimPlugin *plugin) {
+plugin_load(PurplePlugin *plugin) {
 	const gchar *help;
 
 	help = _("dice [dice] [sides]:  rolls dice number of sides sided dice");
 
-	dice_cmd_id = gaim_cmd_register("dice", "wws", GAIM_CMD_P_PLUGIN,
-									GAIM_CMD_FLAG_IM | GAIM_CMD_FLAG_CHAT |
-									GAIM_CMD_FLAG_ALLOW_WRONG_ARGS,
-									NULL, GAIM_CMD_FUNC(roll),
+	dice_cmd_id = purple_cmd_register("dice", "wws", PURPLE_CMD_P_PLUGIN,
+									PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT |
+									PURPLE_CMD_FLAG_ALLOW_WRONG_ARGS,
+									NULL, PURPLE_CMD_FUNC(roll),
 									help, NULL);
 
 	return TRUE;
 }
 
 static gboolean
-plugin_unload(GaimPlugin *plugin) {
-	gaim_cmd_unregister(dice_cmd_id);
+plugin_unload(PurplePlugin *plugin) {
+	purple_cmd_unregister(dice_cmd_id);
 
 	return TRUE;
 }
 
-static GaimPluginInfo info =
+static PurplePluginInfo info =
 {
-	GAIM_PLUGIN_MAGIC,								/**< magic			*/
-	GAIM_MAJOR_VERSION,								/**< major version	*/
-	GAIM_MINOR_VERSION,								/**< minor version	*/
-	GAIM_PLUGIN_STANDARD,							/**< type			*/
+	PURPLE_PLUGIN_MAGIC,								/**< magic			*/
+	PURPLE_MAJOR_VERSION,								/**< major version	*/
+	PURPLE_MINOR_VERSION,								/**< minor version	*/
+	PURPLE_PLUGIN_STANDARD,							/**< type			*/
 	NULL,											/**< ui_requirement	*/
 	0,												/**< flags			*/
 	NULL,											/**< dependencies	*/
-	GAIM_PRIORITY_DEFAULT,							/**< priority		*/
+	PURPLE_PRIORITY_DEFAULT,							/**< priority		*/
 
 	"core-plugin_pack-dice",						/**< id				*/
 	NULL,											/**< name			*/
@@ -133,7 +133,7 @@ static GaimPluginInfo info =
 };
 
 static void
-init_plugin(GaimPlugin *plugin) {
+init_plugin(PurplePlugin *plugin) {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
@@ -146,4 +146,4 @@ init_plugin(GaimPlugin *plugin) {
 
 }
 
-GAIM_INIT_PLUGIN(flip, init_plugin, info)
+PURPLE_INIT_PLUGIN(flip, init_plugin, info)

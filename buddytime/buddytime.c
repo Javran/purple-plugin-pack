@@ -21,7 +21,7 @@
 # include "../gpp_config.h"
 #endif
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #define PLUGIN_ID			"amc_grim-buddytime-gtk"
 #define PLUGIN_NAME			"Buddy Time"
@@ -34,11 +34,11 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#include <gaim/version.h>
-#include <gaim/blist.h>
-#include <gaim/gtkutils.h>
-#include <gaim/gtkplugin.h>
-#include <gaim/request.h>
+#include <version.h>
+#include <blist.h>
+#include <gtkutils.h>
+#include <gtkplugin.h>
+#include <request.h>
 
 #include "../common/i18n.h"
 
@@ -51,15 +51,15 @@
  * Structures
  *****************************************************************************/
 typedef struct {
-	GaimBlistNode *node;
-	GaimRequestField *timezone;
+	PurpleBlistNode *node;
+	PurpleRequestField *timezone;
 	gpointer handle;
 } BTDialog;
 
 typedef struct {
 	GtkWidget *ebox;
 	GtkWidget *label;
-	GaimConversation *conv;
+	PurpleConversation *conv;
 	guint timeout;
 } BTWidget;
 
@@ -73,7 +73,7 @@ static GList *widgets = NULL;
  * Main Stuff
  *****************************************************************************/
 static BTWidget *
-bt_widget_new(GaimConversation *conv) {
+bt_widget_new(PurpleConversation *conv) {
 	BTWidget *ret;
 
 	g_return_val_if_fail(conv, NULL);
@@ -91,7 +91,7 @@ bt_widget_new(GaimConversation *conv) {
  * Blist Stuff
  *****************************************************************************/
 static void
-bt_dialog_ok_cb(gpointer data, GaimRequestFields *fields) {
+bt_dialog_ok_cb(gpointer data, PurpleRequestFields *fields) {
 	BTDialog *dialog = (BTDialog *)data;
 
 	dialogs = g_list_remove(dialogs, dialog);
@@ -99,7 +99,7 @@ bt_dialog_ok_cb(gpointer data, GaimRequestFields *fields) {
 }
 
 static void
-bt_dialog_cancel_cb(gpointer data, GaimRequestFields *fields) {
+bt_dialog_cancel_cb(gpointer data, PurpleRequestFields *fields) {
 	BTDialog *dialog = (BTDialog *)data;
 
 	dialogs = g_list_remove(dialogs, dialog);
@@ -107,10 +107,10 @@ bt_dialog_cancel_cb(gpointer data, GaimRequestFields *fields) {
 }
 
 static void
-bt_show_dialog(GaimBlistNode *node) {
+bt_show_dialog(PurpleBlistNode *node) {
 	BTDialog *dialog;
-	GaimRequestFields *fields;
-	GaimRequestFieldGroup *group;
+	PurpleRequestFields *fields;
+	PurpleRequestFieldGroup *group;
 	gint current = 0;
 
 	dialog = g_new0(BTDialog, 1);
@@ -120,73 +120,73 @@ bt_show_dialog(GaimBlistNode *node) {
 
 	dialog->node = node;
 
-	current = gaim_blist_node_get_int(node, BT_NODE_SETTING);
+	current = purple_blist_node_get_int(node, BT_NODE_SETTING);
 
 	/* build the request fields */
-	fields = gaim_request_fields_new();
-	group = gaim_request_field_group_new(NULL);
-	gaim_request_fields_add_group(fields, group);
+	fields = purple_request_fields_new();
+	group = purple_request_field_group_new(NULL);
+	purple_request_fields_add_group(fields, group);
 
-	dialog->timezone = gaim_request_field_choice_new("timezone",
+	dialog->timezone = purple_request_field_choice_new("timezone",
 													 _("_Timezone"), 1);
-	gaim_request_field_group_add_field(group, dialog->timezone);
+	purple_request_field_group_add_field(group, dialog->timezone);
 
-	gaim_request_field_choice_add(dialog->timezone, _("Clear setting"));
+	purple_request_field_choice_add(dialog->timezone, _("Clear setting"));
 
-	gaim_request_field_choice_add(dialog->timezone, _("GMT-12"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT-11"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT-10"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT-9"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT-8"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT-7"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT-6"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT-5"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT-4"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT-3"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT-2"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT-1"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT+1"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT+2"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT+3"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT+4"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT+5"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT+6"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT+7"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT+8"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT+9"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT+10"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT+11"));
-	gaim_request_field_choice_add(dialog->timezone, _("GMT+12"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT-12"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT-11"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT-10"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT-9"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT-8"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT-7"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT-6"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT-5"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT-4"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT-3"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT-2"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT-1"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT+1"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT+2"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT+3"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT+4"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT+5"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT+6"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT+7"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT+8"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT+9"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT+10"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT+11"));
+	purple_request_field_choice_add(dialog->timezone, _("GMT+12"));
 
-//	gaim_request_field_choice_set_default_value(dialog->timezone, current);
-//	gaim_request_field_coice_set_value(dialog->timezone, current);
+//	purple_request_field_choice_set_default_value(dialog->timezone, current);
+//	purple_request_field_coice_set_value(dialog->timezone, current);
 
 	dialog->handle =
-		gaim_request_fields(NULL, _("Select timezone"),
+		purple_request_fields(NULL, _("Select timezone"),
 							NULL, "foo", fields,
-							_("OK"), GAIM_CALLBACK(bt_dialog_ok_cb),
-							_("Cancel"), GAIM_CALLBACK(bt_dialog_cancel_cb),
+							_("OK"), PURPLE_CALLBACK(bt_dialog_ok_cb),
+							_("Cancel"), PURPLE_CALLBACK(bt_dialog_cancel_cb),
 							dialog);
 	
 	dialogs = g_list_append(dialogs, dialog);
 }
 
 static void
-bt_edit_timezone_cb(GaimBlistNode *node, gpointer data) {
+bt_edit_timezone_cb(PurpleBlistNode *node, gpointer data) {
 	bt_show_dialog(node);
 }
 
 static void
-bt_blist_drawing_menu_cb(GaimBlistNode *node, GList **menu) {
-	GaimMenuAction *action;
+bt_blist_drawing_menu_cb(PurpleBlistNode *node, GList **menu) {
+	PurpleMenuAction *action;
 
 	/* ignore chats and groups */
-	if(GAIM_BLIST_NODE_IS_CHAT(node) || GAIM_BLIST_NODE_IS_GROUP(node))
+	if(PURPLE_BLIST_NODE_IS_CHAT(node) || PURPLE_BLIST_NODE_IS_GROUP(node))
 		return;
 	
-	action = gaim_menu_action_new(_("Timezone"),
-								  GAIM_CALLBACK(bt_edit_timezone_cb),
+	action = purple_menu_action_new(_("Timezone"),
+								  PURPLE_CALLBACK(bt_edit_timezone_cb),
 								  NULL,
 								  NULL);
 	(*menu) = g_list_append(*menu, action);
@@ -201,30 +201,30 @@ bt_blist_drawing_menu_cb(GaimBlistNode *node, GList **menu) {
  * Plugin Stuff
  *****************************************************************************/
 static gboolean
-plugin_load(GaimPlugin *plugin) {
-	gaim_signal_connect(gaim_blist_get_handle(),
+plugin_load(PurplePlugin *plugin) {
+	purple_signal_connect(purple_blist_get_handle(),
 						"blist-node-extended-menu",
 						plugin,
-						GAIM_CALLBACK(bt_blist_drawing_menu_cb),
+						PURPLE_CALLBACK(bt_blist_drawing_menu_cb),
 						NULL);
 
 	return TRUE;
 }
 
 static gboolean
-plugin_unload(GaimPlugin *plugin) {
+plugin_unload(PurplePlugin *plugin) {
 	return TRUE;
 }
 
-static GaimPluginInfo info = {
-	GAIM_PLUGIN_MAGIC,			/* Magic				*/
-	GAIM_MAJOR_VERSION,			/* Gaim Major Version	*/
-	GAIM_MINOR_VERSION,			/* Gaim Minor Version	*/
-	GAIM_PLUGIN_STANDARD,		/* plugin type			*/
-	GAIM_GTK_PLUGIN_TYPE,		/* ui requirement		*/
+static PurplePluginInfo info = {
+	PURPLE_PLUGIN_MAGIC,			/* Magic				*/
+	PURPLE_MAJOR_VERSION,			/* Purple Major Version	*/
+	PURPLE_MINOR_VERSION,			/* Purple Minor Version	*/
+	PURPLE_PLUGIN_STANDARD,		/* plugin type			*/
+	PIDGIN_PLUGIN_TYPE,		/* ui requirement		*/
 	0,							/* flags				*/
 	NULL,						/* dependencies			*/
-	GAIM_PRIORITY_DEFAULT,		/* priority				*/
+	PURPLE_PRIORITY_DEFAULT,		/* priority				*/
 
 	PLUGIN_ID,					/* plugin id			*/
 	NULL,						/* name					*/
@@ -245,7 +245,7 @@ static GaimPluginInfo info = {
 };
 
 static void
-init_plugin(GaimPlugin *plugin) {
+init_plugin(PurplePlugin *plugin) {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
@@ -256,4 +256,4 @@ init_plugin(GaimPlugin *plugin) {
 	info.description = _(PLUGIN_DESCRIPTION);
 }
 
-GAIM_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)
+PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)

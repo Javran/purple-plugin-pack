@@ -4,7 +4,7 @@ EXTRA_DIST = \
 	*.h \
 	Makefile.mingw
 
-listhandlerdir = $(GAIM_LIBDIR)/gaim
+listhandlerdir = $(GAIM_LIBDIR)/libpurple
 
 listhandler_la_LDFLAGS = -module -avoid-version
 
@@ -26,7 +26,7 @@ listhandler_la_LIBADD = \
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
+	-DLIBDIR=\"$(GAIM_LIBDIR)/libpurple/\" \
 	-DDATADIR=\"$(GAIM_DATADIR)\" \
 	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
 	$(DEBUG_CFLAGS) \

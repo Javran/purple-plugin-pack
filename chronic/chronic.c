@@ -29,16 +29,16 @@
 /* GLib */
 #include <glib.h>
 
-/* Gaim */
-#define GAIM_PLUGINS
+/* Purple */
+#define PURPLE_PLUGINS
 #include <conversation.h>
 #include <debug.h>
 #include <plugin.h>
 #include <version.h>
 
 static void
-chronic_received_cb(GaimAccount *account, char *sender, char *message,
-		GaimConversation *conv, GaimMessageFlags flags)
+chronic_received_cb(PurpleAccount *account, char *sender, char *message,
+		PurpleConversation *conv, PurpleMessageFlags flags)
 {
 	char *sound = NULL, *path = NULL;
 
@@ -46,7 +46,7 @@ chronic_received_cb(GaimAccount *account, char *sender, char *message,
 		if(!strncmp(message, "{S ", 3)) {
 			sound = (message + 4);
 			/* add code to find a matching sound */
-			/* gaim_sound_play_file(); */
+			/* purple_sound_play_file(); */
 		}
 	}
 
@@ -54,31 +54,31 @@ chronic_received_cb(GaimAccount *account, char *sender, char *message,
 }
 
 static gboolean
-chronic_load(GaimPlugin *plugin)
+chronic_load(PurplePlugin *plugin)
 {
 	void *convhandle;
 	
-	convhandle = gaim_conversations_get_handle();
+	convhandle = purple_conversations_get_handle();
 
-	gaim_signal_connect(convhandle, "received-im-msg", plugin,
-			GAIM_CALLBACK(chronic_received_cb), NULL);
-	gaim_signal_connect(convhandle, "received-chat-msg", plugin,
-			GAIM_CALLBACK(chronic_received_cb), NULL);
+	purple_signal_connect(convhandle, "received-im-msg", plugin,
+			PURPLE_CALLBACK(chronic_received_cb), NULL);
+	purple_signal_connect(convhandle, "received-chat-msg", plugin,
+			PURPLE_CALLBACK(chronic_received_cb), NULL);
 
 	return TRUE;
 }
 
-static GaimPluginInfo chronic_info =
+static PurplePluginInfo chronic_info =
 {
-	GAIM_PLUGIN_MAGIC,		/* magic?  do you think i'm gullible enough to
+	PURPLE_PLUGIN_MAGIC,		/* magic?  do you think i'm gullible enough to
 							 * believe in magic? */
-	GAIM_MAJOR_VERSION,		/* bet you can't guess what this is */
-	GAIM_MINOR_VERSION,		/* this either */
-	GAIM_PLUGIN_STANDARD,	/* and what about this? */
+	PURPLE_MAJOR_VERSION,		/* bet you can't guess what this is */
+	PURPLE_MINOR_VERSION,		/* this either */
+	PURPLE_PLUGIN_STANDARD,	/* and what about this? */
 	NULL,
 	0,
 	NULL,
-	GAIM_PRIORITY_DEFAULT,
+	PURPLE_PRIORITY_DEFAULT,
 	"core-plugin_pack-chronic",
 	NULL,
 	GPP_VERSION,
@@ -97,7 +97,7 @@ static GaimPluginInfo chronic_info =
 };
 
 static void
-chronic_init(GaimPlugin *plugin)
+chronic_init(PurplePlugin *plugin)
 {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
@@ -107,10 +107,10 @@ chronic_init(GaimPlugin *plugin)
 	chronic_info.name = _("Chronic");
 	chronic_info.summary = _("Sound playing triggers");
 	chronic_info.description = _("Allows buddies to remotely trigger sound"
-			" playing in your instance of Gaim with {S &lt;sound&gt;. Inspired"
+			" playing in your instance of Purple with {S &lt;sound&gt;. Inspired"
 			" by #guifications channel resident EvilDennisR and ancient"
 			" versions of AOL.  THIS PLUGIN IS NOT YET FUNCTIONAL!"
 			"  IT IS USELESS!");
 }
 
-GAIM_INIT_PLUGIN(chronic, chronic_init, chronic_info)
+PURPLE_INIT_PLUGIN(chronic, chronic_init, chronic_info)

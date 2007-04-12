@@ -1,5 +1,5 @@
 /*
- * Gaim Plugin Pack
+ * Purple Plugin Pack
  * Copyright (C) 2003-2005
  * See ../AUTHORS for a list of all authors
  *
@@ -24,19 +24,19 @@
 #include "listhandler.h"
 
 void
-lh_util_add_buddy(const gchar *group, GaimGroup *gaim_group,
-			const gchar *buddy, const gchar *alias, GaimAccount *account)
+lh_util_add_buddy(const gchar *group, PurpleGroup *purple_group,
+			const gchar *buddy, const gchar *alias, PurpleAccount *account)
 {
-	/* create a GaimBuddy and add it to the list in the specified group.
+	/* create a PurpleBuddy and add it to the list in the specified group.
 	 * The first NULL is because we have no contact.  Let the user do that.
 	 * The second NULL is because we're prepending to the group.  Let the
 	 * user organize in whatever order he/she wants. This also is surprisingly
 	 * easy to do. */
-	GaimBuddy *gaim_buddy = gaim_buddy_new(account, buddy, alias);
-	gaim_blist_add_buddy(gaim_buddy, NULL, gaim_group, NULL);
-	gaim_account_add_buddy(account, gaim_buddy); /* this is evil */
+	PurpleBuddy *purple_buddy = purple_buddy_new(account, buddy, alias);
+	purple_blist_add_buddy(purple_buddy, NULL, purple_group, NULL);
+	purple_account_add_buddy(account, purple_buddy); /* this is evil */
 
-	gaim_debug_info("listhandler: import",
+	purple_debug_info("listhandler: import",
 			"group: %s\tbuddy: %s\talias: %s\thas been added to the list\n",
 			group, buddy, alias ? alias : "NULL");
 
@@ -50,11 +50,11 @@ lh_util_add_to_blist(GList *buddies, GList *groups)
 
 	/* walk through both GLists  */
 	while(tmpb && tmpb->data && tmpg && tmpg->data) {
-		/* add the current buddy to the correct group in the Gaim blist */
-		gaim_blist_add_buddy((GaimBuddy *)(tmpb->data), NULL,
-							(GaimGroup *)(tmpg->data), NULL);
+		/* add the current buddy to the correct group in the Purple blist */
+		purple_blist_add_buddy((PurpleBuddy *)(tmpb->data), NULL,
+							(PurpleGroup *)(tmpg->data), NULL);
 
-		gaim_debug_info("listhandler: import", "added a buddy to gaim blist\n");
+		purple_debug_info("listhandler: import", "added a buddy to gaim blist\n");
 
 		/* go to the next element in each list */
 		tmpb = g_list_next(tmpb);

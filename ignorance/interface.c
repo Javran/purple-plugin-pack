@@ -39,7 +39,7 @@ GtkWidget* create_uiinfo (GPtrArray *levels) {
 	vbox1=gtk_vbox_new(FALSE, 0);
 	gtk_widget_show(vbox1);
 
-	vbox2=gtk_vbox_new(FALSE, GAIM_HIG_BOX_SPACE);
+	vbox2=gtk_vbox_new(FALSE, PURPLE_HIG_BOX_SPACE);
 	gtk_widget_show(vbox2);
 	gtk_box_pack_start(GTK_BOX (vbox1), vbox2, TRUE, TRUE, 0);
 
@@ -75,22 +75,22 @@ GtkWidget* create_uiinfo (GPtrArray *levels) {
 	gtk_widget_show (hbox);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
 
-	button=gaim_pixbuf_button_from_stock(_("Create new rule"),
-										GTK_STOCK_ADD, GAIM_BUTTON_HORIZONTAL);
+	button=pidgin_pixbuf_button_from_stock(_("Create new rule"),
+										GTK_STOCK_ADD, PIDGIN_BUTTON_HORIZONTAL);
 	gtk_widget_show (button);
 	gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 	g_signal_connect((gpointer) button, "clicked",
 					 G_CALLBACK (on_levelAdd_clicked), levelView);
 
-	button=gaim_pixbuf_button_from_stock(_("Create new group"),
-										GTK_STOCK_ADD, GAIM_BUTTON_HORIZONTAL);
+	button=pidgin_pixbuf_button_from_stock(_("Create new group"),
+										GTK_STOCK_ADD, PIDGIN_BUTTON_HORIZONTAL);
 	gtk_widget_show (button);
 	gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 	g_signal_connect ((gpointer) button, "clicked",
 					  G_CALLBACK (on_groupAdd_clicked), levelView);
 
-	button=gaim_pixbuf_button_from_stock(_("Save changes"), GTK_STOCK_YES,
-										 GAIM_BUTTON_HORIZONTAL);
+	button=pidgin_pixbuf_button_from_stock(_("Save changes"), GTK_STOCK_YES,
+										 PIDGIN_BUTTON_HORIZONTAL);
 	gtk_widget_show (button);
 	gtk_box_pack_start(GTK_BOX (hbox), button, TRUE, TRUE, 0);
 	g_signal_connect((gpointer) button, "clicked",
@@ -100,17 +100,17 @@ GtkWidget* create_uiinfo (GPtrArray *levels) {
  * set from callback.c. Can we do with just `Remove' for the text
  * and not updating as the selection in the tree changes?
  */
-	levelDel=gaim_pixbuf_button_from_stock(_("Remove rule"), GTK_STOCK_REMOVE,
-										   GAIM_BUTTON_HORIZONTAL);
+	levelDel=pidgin_pixbuf_button_from_stock(_("Remove rule"), GTK_STOCK_REMOVE,
+										   PIDGIN_BUTTON_HORIZONTAL);
 	gtk_widget_show (levelDel);
 	gtk_box_pack_start (GTK_BOX (hbox), levelDel, TRUE, TRUE, 0);
 	g_signal_connect((gpointer) levelDel, "clicked",
 					 G_CALLBACK (on_levelDel_clicked), levelView);
 
 	table=gtk_table_new(3, 2, FALSE);
-	gtk_container_set_border_width(GTK_CONTAINER(table), GAIM_HIG_BOX_SPACE);
-	gtk_table_set_col_spacings(GTK_TABLE(table), GAIM_HIG_BOX_SPACE);
-	gtk_table_set_row_spacings(GTK_TABLE(table), GAIM_HIG_BOX_SPACE);
+	gtk_container_set_border_width(GTK_CONTAINER(table), PURPLE_HIG_BOX_SPACE);
+	gtk_table_set_col_spacings(GTK_TABLE(table), PURPLE_HIG_BOX_SPACE);
+	gtk_table_set_row_spacings(GTK_TABLE(table), PURPLE_HIG_BOX_SPACE);
 	gtk_widget_show (table);
 	gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, TRUE, 0);
 
@@ -156,8 +156,8 @@ GtkWidget* create_uiinfo (GPtrArray *levels) {
 	gtk_box_pack_start(GTK_BOX (vbox2), frame, FALSE, TRUE, 0);
 
 	table=gtk_table_new(4, 2, FALSE);
-	gtk_container_set_border_width(GTK_CONTAINER(table), GAIM_HIG_BOX_SPACE);
-	gtk_table_set_col_spacings(GTK_TABLE(table), GAIM_HIG_BOX_SPACE);
+	gtk_container_set_border_width(GTK_CONTAINER(table), PURPLE_HIG_BOX_SPACE);
+	gtk_table_set_col_spacings(GTK_TABLE(table), PURPLE_HIG_BOX_SPACE);
 	gtk_widget_show(table);
 	gtk_container_add(GTK_CONTAINER(frame), table);
 
@@ -219,8 +219,8 @@ GtkWidget* create_uiinfo (GPtrArray *levels) {
 
 	table=gtk_table_new (3, 2, FALSE);
 	gtk_widget_show(table);
-	gtk_container_set_border_width(GTK_CONTAINER(table), GAIM_HIG_BOX_SPACE);
-	gtk_table_set_col_spacings(GTK_TABLE(table), GAIM_HIG_BOX_SPACE);
+	gtk_container_set_border_width(GTK_CONTAINER(table), PURPLE_HIG_BOX_SPACE);
+	gtk_table_set_col_spacings(GTK_TABLE(table), PURPLE_HIG_BOX_SPACE);
 	gtk_container_add(GTK_CONTAINER (frame), table);
 
 	im_type_cb=gtk_check_button_new_with_mnemonic(_("IM Text"));

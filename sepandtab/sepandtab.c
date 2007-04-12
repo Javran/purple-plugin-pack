@@ -1,8 +1,8 @@
 /*
- * Extra conversation placement options for Gaim
+ * Extra conversation placement options for Purple
  * Copyright (C) 2004 Gary Kramlich <amc_grim@users.sf.net>
  *
- * Gaim is the legal property of its developers, whose names are too numerous
+ * Purple is the legal property of its developers, whose names are too numerous
  * to list here.  Please refer to the COPYRIGHT file distributed with this
  * source distribution.
  *
@@ -24,7 +24,7 @@
 # include "../gpp_config.h"
 #endif
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #include <conversation.h>
 #include <plugin.h>
@@ -36,85 +36,85 @@
 #include "../common/i18n.h"
 
 static void
-conv_placement_sep_ims_tab_chats(GaimGtkConversation *conv) {
-	GaimConversationType type;
-	GaimGtkWindow *win = NULL;
+conv_placement_sep_ims_tab_chats(PidginConversation *conv) {
+	PurpleConversationType type;
+	PidginWindow *win = NULL;
 
-	type = gaim_conversation_get_type(conv->active_conv);
-	win = gaim_gtk_conv_window_last_with_type(type);
+	type = purple_conversation_get_type(conv->active_conv);
+	win = pidgin_conv_window_last_with_type(type);
 
-	if(type == GAIM_CONV_TYPE_IM) {
-		win = gaim_gtk_conv_window_new();
+	if(type == PURPLE_CONV_TYPE_IM) {
+		win = pidgin_conv_window_new();
 
-		gaim_gtk_conv_window_add_gtkconv(win, conv);
-		gaim_gtk_conv_window_show(win);
+		pidgin_conv_window_add_gtkconv(win, conv);
+		pidgin_conv_window_show(win);
 	} else {
 		if(!win)
-			win = gaim_gtk_conv_window_new();
+			win = pidgin_conv_window_new();
 
-		gaim_gtk_conv_window_add_gtkconv(win, conv);
-		gaim_gtk_conv_window_show(win);
+		pidgin_conv_window_add_gtkconv(win, conv);
+		pidgin_conv_window_show(win);
 	}
 }
 
 static void
-conv_placement_sep_chats_tab_ims(GaimGtkConversation *conv) {
-	GaimConversationType type;
-	GaimGtkWindow *win = NULL;
+conv_placement_sep_chats_tab_ims(PidginConversation *conv) {
+	PurpleConversationType type;
+	PidginWindow *win = NULL;
 
-	type = gaim_conversation_get_type(conv->active_conv);
-	win = gaim_gtk_conv_window_last_with_type(type);
+	type = purple_conversation_get_type(conv->active_conv);
+	win = pidgin_conv_window_last_with_type(type);
 
-	if(type == GAIM_CONV_TYPE_CHAT) {
-		win = gaim_gtk_conv_window_new();
+	if(type == PURPLE_CONV_TYPE_CHAT) {
+		win = pidgin_conv_window_new();
 
-		gaim_gtk_conv_window_add_gtkconv(win, conv);
-		gaim_gtk_conv_window_show(win);
+		pidgin_conv_window_add_gtkconv(win, conv);
+		pidgin_conv_window_show(win);
 	} else {
 		if(!win)
-			win = gaim_gtk_conv_window_new();
+			win = pidgin_conv_window_new();
 
-		gaim_gtk_conv_window_add_gtkconv(win, conv);
-		gaim_gtk_conv_window_show(win);
+		pidgin_conv_window_add_gtkconv(win, conv);
+		pidgin_conv_window_show(win);
 	}
 }
 
 static void
-conv_placement_grp_type_sep_prpl(GaimGtkConversation *conv) {
+conv_placement_grp_type_sep_prpl(PidginConversation *conv) {
 }
 
 static gboolean
-plugin_load(GaimPlugin *plugin) {
-	gaim_gtkconv_placement_add_fnc("sep-ims-tab-chats", _("Separate IM, group Chats"),
+plugin_load(PurplePlugin *plugin) {
+	pidgin_conv_placement_add_fnc("sep-ims-tab-chats", _("Separate IM, group Chats"),
 							    &conv_placement_sep_ims_tab_chats);
-	gaim_gtkconv_placement_add_fnc("sep-chats-tab-ims", _("Separate Chats, group IMs"),
+	pidgin_conv_placement_add_fnc("sep-chats-tab-ims", _("Separate Chats, group IMs"),
 								&conv_placement_sep_chats_tab_ims);
-	gaim_gtkconv_placement_add_fnc("grp-type-sep-prpl",	_("Group by Type, Separate by Protocol"),
+	pidgin_conv_placement_add_fnc("grp-type-sep-prpl",	_("Group by Type, Separate by Protocol"),
 								&conv_placement_grp_type_sep_prpl);
-	gaim_prefs_trigger_callback("/gaim/gtk/conversations/placement");
+	purple_prefs_trigger_callback(PIDGIN_PREFS_ROOT "/conversations/placement");
 
 	return TRUE;
 }
 
 static gboolean
-plugin_unload(GaimPlugin *plugin) {
-	gaim_gtkconv_placement_remove_fnc("sep-ims-tab-chats");
-	gaim_gtkconv_placement_remove_fnc("sep-chats-tab-ims");
+plugin_unload(PurplePlugin *plugin) {
+	pidgin_conv_placement_remove_fnc("sep-ims-tab-chats");
+	pidgin_conv_placement_remove_fnc("sep-chats-tab-ims");
 
-	gaim_prefs_trigger_callback("/gaim/gtk/conversations/placement");
+	purple_prefs_trigger_callback(PIDGIN_PREFS_ROOT "/conversations/placement");
 
 	return TRUE;
 }
 
-static GaimPluginInfo info = {
-	GAIM_PLUGIN_MAGIC,
-	GAIM_MAJOR_VERSION,
-	GAIM_MINOR_VERSION,
-	GAIM_PLUGIN_STANDARD,
-	GAIM_GTK_PLUGIN_TYPE,
+static PurplePluginInfo info = {
+	PURPLE_PLUGIN_MAGIC,
+	PURPLE_MAJOR_VERSION,
+	PURPLE_MINOR_VERSION,
+	PURPLE_PLUGIN_STANDARD,
+	PIDGIN_PLUGIN_TYPE,
 	0,
 	NULL,
-	GAIM_PRIORITY_DEFAULT,
+	PURPLE_PRIORITY_DEFAULT,
 	"gtk-plugin_pack-separate_and_tab",
 	NULL,
 	GPP_VERSION,
@@ -132,7 +132,7 @@ static GaimPluginInfo info = {
 };
 
 static void
-init_plugin(GaimPlugin *plugin) {
+init_plugin(PurplePlugin *plugin) {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
@@ -146,4 +146,4 @@ init_plugin(GaimPlugin *plugin) {
 
 }
 
-GAIM_INIT_PLUGIN(separate-and-tab, init_plugin, info)
+PURPLE_INIT_PLUGIN(separate-and-tab, init_plugin, info)

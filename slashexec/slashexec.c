@@ -41,7 +41,7 @@
 # include <unistd.h>
 #endif
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #include <cmds.h>
 #include <conversation.h>
@@ -64,7 +64,7 @@
 # define MAX_CMD_LEN 8000
 #endif
 
-static GaimCmdId se_cmd;
+static PurpleCmdId se_cmd;
 static gchar *shell;
 
 static void /* replace a character at the end of a string with' \0' */
@@ -80,7 +80,7 @@ se_replace_ending_char(gchar *string, gchar replace)
 	 * current last character in the string is not the character that needs to
 	 * be replaced. */
 	while(replace_in_string && replace_in_string == &(string[stringlen - 1])) {
-		gaim_debug_info("slashexec", "Replacing %c at position %d\n",
+		purple_debug_info("slashexec", "Replacing %c at position %d\n",
 				replace, stringlen - 1);
 
 		/* a \0 is the logical end of the string, even if characters exist in
@@ -100,7 +100,7 @@ se_replace_ending_char(gchar *string, gchar replace)
 }
 
 static gboolean
-se_do_action(GaimConversation *conv, gchar *args, gboolean send)
+se_do_action(PurpleConversation *conv, gchar *args, gboolean send)
 {
 	GError *parse_error = NULL, *exec_error = NULL;
 	gchar *spawn_cmd = NULL, **cmd_argv = NULL, *cmd_stdout = NULL,
@@ -128,14 +128,14 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 
 	/* if we get this far with a NULL, there's a problem. */
 	if(!args) {
-		gaim_debug_info("slashexec", "args NULL!\n");
+		purple_debug_info("slashexec", "args NULL!\n");
 		
 		return FALSE;
 	}
 
 	/* make sure the string passes the UTF8 validation in glib */
 	if(!g_utf8_validate(args, -1, NULL)) {
-		gaim_debug_info("slashexec", "invalid UTF8: %s\n",
+		purple_debug_info("slashexec", "invalid UTF8: %s\n",
 				args ? args : "null");
 
 		return FALSE;
@@ -157,8 +157,8 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 		if(spawn_cmd) {
 			errmsg = g_strdup_printf(_("Unable to parse \"%s\""), spawn_cmd);
 
-			gaim_debug_info("slashexec", "%s\n", errmsg);
-			gaim_conversation_write(conv, NULL, errmsg, GAIM_MESSAGE_SYSTEM,
+			purple_debug_info("slashexec", "%s\n", errmsg);
+			purple_conversation_write(conv, NULL, errmsg, PURPLE_MESSAGE_SYSTEM,
 					time(NULL));
 
 			g_free(errmsg);
@@ -169,8 +169,8 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 			errmsg = g_strdup_printf(_("Parse error message: %s"),
 					parse_error->message ? parse_error->message : "null");
 
-			gaim_debug_info("slashexec", "%s\n", errmsg);
-			gaim_conversation_write(conv, NULL, errmsg, GAIM_MESSAGE_SYSTEM,
+			purple_debug_info("slashexec", "%s\n", errmsg);
+			purple_conversation_write(conv, NULL, errmsg, PURPLE_MESSAGE_SYSTEM,
 					time(NULL));
 
 			g_free(errmsg);
@@ -185,7 +185,7 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 
 	/* I may eventually add a pref to show this to the user; for now it's fine
 	 * going just to the debug bucket */
-	gaim_debug_info("slashexec", "Spawn command: %s\n", spawn_cmd);
+	purple_debug_info("slashexec", "Spawn command: %s\n", spawn_cmd);
 
 	/* now we actually execute the command.  everything inside the block
 	 * is error checking and information for the user. */
@@ -198,8 +198,8 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 		if(spawn_cmd) {
 			errmsg = g_strdup_printf(_("Unable to execute \"%s\""),	spawn_cmd);
 
-			gaim_debug_info("slashexec", "%s\n", errmsg);
-			gaim_conversation_write(conv, NULL, errmsg, GAIM_MESSAGE_SYSTEM,
+			purple_debug_info("slashexec", "%s\n", errmsg);
+			purple_conversation_write(conv, NULL, errmsg, PURPLE_MESSAGE_SYSTEM,
 					time(NULL));
 
 			g_free(errmsg);
@@ -210,8 +210,8 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 			errmsg = g_strdup_printf(_("Execute error message: %s"),
 					exec_error->message ? exec_error->message : "NULL");
 
-			gaim_debug_info("slashexec", "%s\n", errmsg);
-			gaim_conversation_write(conv, NULL, errmsg,	GAIM_MESSAGE_SYSTEM,
+			purple_debug_info("slashexec", "%s\n", errmsg);
+			purple_conversation_write(conv, NULL, errmsg,	PURPLE_MESSAGE_SYSTEM,
 					time(NULL));
 
 			g_free(errmsg);
@@ -233,7 +233,7 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 		g_error_free(exec_error);
 
 	if(cmd_stderr)
-		gaim_debug_info("slashexec", "command stderr: %s\n", cmd_stderr);
+		purple_debug_info("slashexec", "command stderr: %s\n", cmd_stderr);
 
 	g_strfreev(cmd_argv);
 	g_free(cmd_stderr);
@@ -245,27 +245,27 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 			cmd_stdout[strlen(cmd_stdout) - 1] = '\0';
 
 		if(send) {
-			gaim_debug_info("slashexec", "Command stdout: %s\n", cmd_stdout);
+			purple_debug_info("slashexec", "Command stdout: %s\n", cmd_stdout);
 
-			switch(gaim_conversation_get_type(conv)) {
-				case GAIM_CONV_TYPE_IM:
-					gaim_conv_im_send(GAIM_CONV_IM(conv), cmd_stdout);
+			switch(purple_conversation_get_type(conv)) {
+				case PURPLE_CONV_TYPE_IM:
+					purple_conv_im_send(PURPLE_CONV_IM(conv), cmd_stdout);
 					break;
-				case GAIM_CONV_TYPE_CHAT:
-					gaim_conv_chat_send(GAIM_CONV_CHAT(conv), cmd_stdout);
+				case PURPLE_CONV_TYPE_CHAT:
+					purple_conv_chat_send(PURPLE_CONV_CHAT(conv), cmd_stdout);
 					break;
 				default:
 					return FALSE;
 			}
 
 		} else
-			gaim_conversation_write(conv, NULL, cmd_stdout, GAIM_MESSAGE_SYSTEM,
+			purple_conversation_write(conv, NULL, cmd_stdout, PURPLE_MESSAGE_SYSTEM,
 					time(NULL));
 	} else {
-		gaim_debug_info("slashexec", "Error executing \"%s\"\n", spawn_cmd);
-		gaim_conversation_write(conv, NULL,
+		purple_debug_info("slashexec", "Error executing \"%s\"\n", spawn_cmd);
+		purple_conversation_write(conv, NULL,
 				_("There was an error executing your command."),
-				GAIM_MESSAGE_SYSTEM, time(NULL));
+				PURPLE_MESSAGE_SYSTEM, time(NULL));
 			
 		g_free(spawn_cmd);
 		g_free(cmd_stdout);
@@ -279,8 +279,8 @@ se_do_action(GaimConversation *conv, gchar *args, gboolean send)
 	return TRUE;
 }
 
-static GaimCmdRet
-se_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args, gchar **error,
+static PurpleCmdRet
+se_cmd_cb(PurpleConversation *conv, const gchar *cmd, gchar **args, gchar **error,
 			gpointer data)
 {
 	gboolean send = FALSE;
@@ -292,20 +292,20 @@ se_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args, gchar **error,
 	}
 
 	if(se_do_action(conv, string, send))
-		return GAIM_CMD_RET_OK;
+		return PURPLE_CMD_RET_OK;
 	else
-		return GAIM_CMD_RET_FAILED;
+		return PURPLE_CMD_RET_FAILED;
 }
 
 static void
-se_sending_msg_helper(GaimConversation *conv, char **message)
+se_sending_msg_helper(PurpleConversation *conv, char **message)
 {
 	char *string = *message, *strip;
 	gboolean send = TRUE;
 
 	if(conv == NULL) return;
 
-	strip = gaim_markup_strip_html(string);
+	strip = purple_markup_strip_html(string);
 
 	if(*strip != '!') {
 		g_free(strip);
@@ -331,7 +331,7 @@ se_sending_msg_helper(GaimConversation *conv, char **message)
 		conv_sys_msg = g_strdup_printf(_("The following text was sent: %s"),
 				new_msg);
 
-		gaim_conversation_write(conv, NULL, conv_sys_msg, GAIM_MESSAGE_SYSTEM,
+		purple_conversation_write(conv, NULL, conv_sys_msg, PURPLE_MESSAGE_SYSTEM,
 				time(NULL));
 
 		g_free(strip);
@@ -352,23 +352,23 @@ se_sending_msg_helper(GaimConversation *conv, char **message)
 }
 
 static void
-se_sending_chat_msg_cb(GaimAccount *account, char **message, int id)
+se_sending_chat_msg_cb(PurpleAccount *account, char **message, int id)
 {
-	GaimConversation *conv;
-	conv = gaim_find_chat(account->gc, id);
+	PurpleConversation *conv;
+	conv = purple_find_chat(account->gc, id);
 	se_sending_msg_helper(conv, message);
 }
 
 static void
-se_sending_im_msg_cb(GaimAccount *account, const char *who, char **message)
+se_sending_im_msg_cb(PurpleAccount *account, const char *who, char **message)
 {
-	GaimConversation *conv;
-	conv = gaim_find_conversation_with_account(GAIM_CONV_TYPE_IM, who, account);
+	PurpleConversation *conv;
+	conv = purple_find_conversation_with_account(PURPLE_CONV_TYPE_IM, who, account);
 	se_sending_msg_helper(conv, message);
 }
 
 static gboolean
-se_load(GaimPlugin *plugin) {
+se_load(PurplePlugin *plugin) {
 #ifndef _WIN32
 	struct passwd *pw = NULL;
 #endif /* _WIN32 */
@@ -377,15 +377,15 @@ se_load(GaimPlugin *plugin) {
 						"current conversation; otherwise it is printed to the "
 						"current text box.");
 
-	se_cmd = gaim_cmd_register("exec", "s", GAIM_CMD_P_PLUGIN,
-								GAIM_CMD_FLAG_IM | GAIM_CMD_FLAG_CHAT, NULL,
+	se_cmd = purple_cmd_register("exec", "s", PURPLE_CMD_P_PLUGIN,
+								PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT, NULL,
 								se_cmd_cb, help, NULL);
 
 	/* these signals are needed for the bangexec features we took on */
-	gaim_signal_connect(gaim_conversations_get_handle(), "sending-im-msg", plugin,
-				GAIM_CALLBACK(se_sending_im_msg_cb), NULL);
-	gaim_signal_connect(gaim_conversations_get_handle(), "sending-chat-msg", plugin,
-				GAIM_CALLBACK(se_sending_chat_msg_cb), NULL);
+	purple_signal_connect(purple_conversations_get_handle(), "sending-im-msg", plugin,
+				PURPLE_CALLBACK(se_sending_im_msg_cb), NULL);
+	purple_signal_connect(purple_conversations_get_handle(), "sending-chat-msg", plugin,
+				PURPLE_CALLBACK(se_sending_chat_msg_cb), NULL);
 
 	/* this gets the user's shell.  If this is built on Windows, force cmd.exe,
 	 * which will make this plugin not work on Windows 98/ME */
@@ -407,23 +407,23 @@ se_load(GaimPlugin *plugin) {
 }
 
 static gboolean
-se_unload(GaimPlugin *plugin) {
-	gaim_cmd_unregister(se_cmd);
+se_unload(PurplePlugin *plugin) {
+	purple_cmd_unregister(se_cmd);
 
 	g_free(shell);
 
 	return TRUE;
 }
 
-static GaimPluginInfo se_info = {
-	GAIM_PLUGIN_MAGIC,
-	GAIM_MAJOR_VERSION,
-	GAIM_MINOR_VERSION,
-	GAIM_PLUGIN_STANDARD,								/* type				*/
+static PurplePluginInfo se_info = {
+	PURPLE_PLUGIN_MAGIC,
+	PURPLE_MAJOR_VERSION,
+	PURPLE_MINOR_VERSION,
+	PURPLE_PLUGIN_STANDARD,								/* type				*/
 	NULL,												/* ui requirement	*/
 	0,													/* flags			*/
 	NULL,												/* dependencies		*/
-	GAIM_PRIORITY_DEFAULT,								/* priority			*/
+	PURPLE_PRIORITY_DEFAULT,								/* priority			*/
 	"core-plugin_pack-slashexec",						/* id				*/
 	"/exec",											/* name				*/
 	GPP_VERSION,										/* version			*/
@@ -446,7 +446,7 @@ static GaimPluginInfo se_info = {
 };
 
 static void
-init_plugin(GaimPlugin *plugin) {
+init_plugin(PurplePlugin *plugin) {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
@@ -459,4 +459,4 @@ init_plugin(GaimPlugin *plugin) {
 							" (!uptime, for instance).\n");
 }
 
-GAIM_INIT_PLUGIN(slashexec, init_plugin, se_info)
+PURPLE_INIT_PLUGIN(slashexec, init_plugin, se_info)

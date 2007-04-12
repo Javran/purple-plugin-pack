@@ -1,5 +1,5 @@
 /*
- * Gaim Plugin Pack
+ * Purple Plugin Pack
  * Copyright (C) 2003-2005
  * See ../AUTHORS for a list of all authors
  *
@@ -24,14 +24,14 @@
 #include "listhandler.h"
 
 static GList *buddies = NULL, *groups = NULL;
-static GaimAccount *source_account = NULL, *target_account = NULL;
+static PurpleAccount *source_account = NULL, *target_account = NULL;
 static const gchar *valid_target_prpl_id = NULL;
 
 static gboolean
-lh_migrate_filter(GaimAccount *account)
+lh_migrate_filter(PurpleAccount *account)
 {
 	/* get the protocol plugin id for the account passsed in */
-	const gchar *prpl_id = gaim_account_get_protocol_id(account);
+	const gchar *prpl_id = purple_account_get_protocol_id(account);
 
 	/* if prpl_id is NULL, the account isn't valid */
 	if(!prpl_id)
@@ -48,29 +48,29 @@ lh_migrate_filter(GaimAccount *account)
 static void
 lh_migrate_build_lists(void)
 {
-	GaimBuddyList *blist = NULL;
-	GaimBlistNode *root = NULL, *g = NULL, *c = NULL, *b = NULL;
+	PurpleBuddyList *blist = NULL;
+	PurpleBlistNode *root = NULL, *g = NULL, *c = NULL, *b = NULL;
 
-	blist = gaim_get_blist();
+	blist = purple_get_blist();
 	root = blist->root;
 
 	/* walk the blist tree and build a list of the buddies and a list of
 	 * the groups corresponding to each buddy */
 	/* group level */
-	for(g = root; g && GAIM_BLIST_NODE_IS_GROUP(g); g = g->next)
+	for(g = root; g && PURPLE_BLIST_NODE_IS_GROUP(g); g = g->next)
 		/* contact level */
-		for(c = g->child; c && GAIM_BLIST_NODE_IS_CONTACT(c); c = c->next)
+		for(c = g->child; c && PURPLE_BLIST_NODE_IS_CONTACT(c); c = c->next)
 			/* buddy level */
-			for(b = c->child; b && GAIM_BLIST_NODE_IS_BUDDY(b); b = b->next) {
-				GaimGroup *tmp_group = gaim_group_new(((GaimGroup *)g)->name);
-				GaimBuddy *tmp_buddy = (GaimBuddy *)b;
+			for(b = c->child; b && PURPLE_BLIST_NODE_IS_BUDDY(b); b = b->next) {
+				PurpleGroup *tmp_group = purple_group_new(((PurpleGroup *)g)->name);
+				PurpleBuddy *tmp_buddy = (PurpleBuddy *)b;
 
 				/* if this buddy is on the source account then add it
 				 * to the GLists */
-				if(gaim_buddy_get_account(tmp_buddy) == source_account) {
-					GaimBuddy *tmp_buddy_2 = gaim_buddy_new(target_account,
-								  				gaim_buddy_get_name(tmp_buddy),
-												gaim_buddy_get_alias(tmp_buddy));
+				if(purple_buddy_get_account(tmp_buddy) == source_account) {
+					PurpleBuddy *tmp_buddy_2 = purple_buddy_new(target_account,
+								  				purple_buddy_get_name(tmp_buddy),
+												purple_buddy_get_alias(tmp_buddy));
 
 					groups = g_list_prepend(groups, tmp_group);
 					buddies = g_list_prepend(buddies, tmp_buddy_2);
@@ -81,20 +81,20 @@ lh_migrate_build_lists(void)
 }
 
 static void
-lh_migrate_target_request_cb(void *ignored, GaimRequestFields *fields)
+lh_migrate_target_request_cb(void *ignored, PurpleRequestFields *fields)
 {
 	/* grab the target account from the request field */
-	target_account = gaim_request_fields_get_account(fields,
+	target_account = purple_request_fields_get_account(fields,
 													"migrate_target_acct");
 
 	/* now build GLists of the buddies and corresponding groups */
 	lh_migrate_build_lists();
 
-	/* add the buddies to the Gaim buddy list */
+	/* add the buddies to the Purple buddy list */
 	lh_util_add_to_blist(buddies, groups);
 
 	/* add the buddies to the server-side list */
-	gaim_account_add_buddies(target_account, buddies);
+	purple_account_add_buddies(target_account, buddies);
 
 	/* now free the lists that were created */
 	g_list_free(buddies);
@@ -104,41 +104,41 @@ lh_migrate_target_request_cb(void *ignored, GaimRequestFields *fields)
 }
 
 static void
-lh_migrate_source_request_cb(void *ignored, GaimRequestFields *fields)
+lh_migrate_source_request_cb(void *ignored, PurpleRequestFields *fields)
 {
-	GaimRequestFields *request;
-	GaimRequestFieldGroup *group;
-	GaimRequestField *field;
+	PurpleRequestFields *request;
+	PurpleRequestFieldGroup *group;
+	PurpleRequestField *field;
 
-	source_account = gaim_request_fields_get_account(fields,
+	source_account = purple_request_fields_get_account(fields,
 													"migrate_source_acct");
-	valid_target_prpl_id = gaim_account_get_protocol_id(source_account);
+	valid_target_prpl_id = purple_account_get_protocol_id(source_account);
 
-	/* It seems Gaim is super-picky about the order of these first three calls */
+	/* It seems Purple is super-picky about the order of these first three calls */
 	/* create a request */
-	request = gaim_request_fields_new();
+	request = purple_request_fields_new();
 
 	/* now create a field group */
-	group = gaim_request_field_group_new(NULL);
+	group = purple_request_field_group_new(NULL);
 	/* and add that group to the request created above */
-	gaim_request_fields_add_group(request, group);
+	purple_request_fields_add_group(request, group);
 
 	/* create a field */
-	field = gaim_request_field_account_new("migrate_target_acct",
+	field = purple_request_field_account_new("migrate_target_acct",
 										_("Account"), NULL);
 
 	/* mark the field as required */
-	gaim_request_field_set_required(field, TRUE);
+	purple_request_field_set_required(field, TRUE);
 
 	/* filter this list so that only accounts with the same prpl as the
 	 * source account can be chosen as a destination */
-	gaim_request_field_account_set_filter(field, lh_migrate_filter);
+	purple_request_field_account_set_filter(field, lh_migrate_filter);
 
 	/* add the field to the group created above */
-	gaim_request_field_group_add_field(group, field);
+	purple_request_field_group_add_field(group, field);
 
 	/* and finally we can create the request */
-	gaim_request_fields(gaim_get_blist(), _("Listhandler - Copying"),
+	purple_request_fields(purple_get_blist(), _("Listhandler - Copying"),
 						_("Choose the account to add buddies to:"), NULL,
 						request, _("_Add"),
 						G_CALLBACK(lh_migrate_target_request_cb), _("_Cancel"),
@@ -148,36 +148,36 @@ lh_migrate_source_request_cb(void *ignored, GaimRequestFields *fields)
 }
 
 void
-lh_migrate_action_cb(GaimPluginAction *action)
+lh_migrate_action_cb(PurplePluginAction *action)
 {
-	GaimRequestFields *request;
-	GaimRequestFieldGroup *group;
-	GaimRequestField *field;
+	PurpleRequestFields *request;
+	PurpleRequestFieldGroup *group;
+	PurpleRequestField *field;
 
-	/* It seems Gaim is super-picky about the order of these first three calls */
+	/* It seems Purple is super-picky about the order of these first three calls */
 	/* create a request */
-	request = gaim_request_fields_new();
+	request = purple_request_fields_new();
 
 	/* now create a field group */
-	group = gaim_request_field_group_new(NULL);
+	group = purple_request_field_group_new(NULL);
 	/* and add that group to the request created above */
-	gaim_request_fields_add_group(request, group);
+	purple_request_fields_add_group(request, group);
 
 	/* create a field */
-	field = gaim_request_field_account_new("migrate_source_acct",
+	field = purple_request_field_account_new("migrate_source_acct",
 										_("Account"), NULL);
 
 	/* mark the field as required */
-	gaim_request_field_set_required(field, TRUE);
+	purple_request_field_set_required(field, TRUE);
 
 	/* let's show offline accounts too */
-	gaim_request_field_account_set_show_all(field, TRUE);
+	purple_request_field_account_set_show_all(field, TRUE);
 
 	/* add the field to the group created above */
-	gaim_request_field_group_add_field(group, field);
+	purple_request_field_group_add_field(group, field);
 
 	/* and finally we can create the request */
-	gaim_request_fields(gaim_get_blist(), _("Listhandler - Copying"),
+	purple_request_fields(purple_get_blist(), _("Listhandler - Copying"),
 						_("Choose the account to copy from:"), NULL, request,
 						_("C_opy"), G_CALLBACK(lh_migrate_source_request_cb),
 						_("_Cancel"), NULL, NULL);

@@ -49,7 +49,7 @@ stocker_prefs_update_list(StockerPrefs *prefs) {
 
 	gtk_list_store_clear(prefs->symbols);
 
-	for(l = gaim_prefs_get_string_list(PREF_SYMBOLS); l; l = l->next) {
+	for(l = purple_prefs_get_string_list(PREF_SYMBOLS); l; l = l->next) {
 		symbol = (gchar *)l->data;
 
 		gtk_list_store_append(prefs->symbols, &iter);
@@ -82,7 +82,7 @@ stocker_prefs_apply_cb(GtkButton *button, gpointer data) {
 	gtk_tree_model_foreach(GTK_TREE_MODEL(prefs->symbols),
 						   stocker_prefs_apply_helper, &symbols);
 
-	gaim_prefs_set_string_list(PREF_SYMBOLS, symbols);
+	purple_prefs_set_string_list(PREF_SYMBOLS, symbols);
 
 	for(l = symbols; l; l = l->next)
 		g_free(l->data);
@@ -215,14 +215,14 @@ stocker_prefs_init(void) {
 	def_syms = g_list_append(def_syms, "UYE");
 	def_syms = g_list_append(def_syms, "TWX");
 
-	gaim_prefs_add_none(PREF_MY);
-	gaim_prefs_add_none(PREF_ROOT);
-	gaim_prefs_add_string_list(PREF_SYMBOLS, def_syms);
-	gaim_prefs_add_int(PREF_INTERVAL, 30);
+	purple_prefs_add_none(PREF_MY);
+	purple_prefs_add_none(PREF_ROOT);
+	purple_prefs_add_string_list(PREF_SYMBOLS, def_syms);
+	purple_prefs_add_int(PREF_INTERVAL, 30);
 }
 
 GtkWidget *
-stocker_prefs_get_frame(GaimPlugin *plugin) {
+stocker_prefs_get_frame(PurplePlugin *plugin) {
 	StockerPrefs *prefs = g_new0(StockerPrefs, 1);
 	GtkWidget *ret, *vbox, *hbox, *box, *frame, *sw, *label, *button;
 	GtkSizeGroup *sg;
@@ -239,7 +239,7 @@ stocker_prefs_get_frame(GaimPlugin *plugin) {
 	/**********************************
 	 * symbols frame
 	 *********************************/
-	frame = gaim_gtk_make_frame(ret, _("Symbols"));
+	frame = pidgin_make_frame(ret, _("Symbols"));
 
 	box = gtk_hbox_new(FALSE, 4);
 	gtk_box_pack_start(GTK_BOX(frame), box, FALSE, FALSE, 0);
@@ -313,9 +313,9 @@ stocker_prefs_get_frame(GaimPlugin *plugin) {
 	/**********************************
 	 * options frame
 	 *********************************/
-	frame = gaim_gtk_make_frame(ret, _("Options"));
+	frame = pidgin_make_frame(ret, _("Options"));
 
-	gaim_gtk_prefs_labeled_spin_button(frame, "Update interval:",
+	pidgin_prefs_labeled_spin_button(frame, "Update interval:",
 									   PREF_INTERVAL, 1, 1440, sg);
 
 	/* show and return it already! */

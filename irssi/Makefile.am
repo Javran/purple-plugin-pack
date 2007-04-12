@@ -8,7 +8,7 @@ EXTRA_DIST=\
 	textfmt.h \
 	window.h
 
-irssidir = $(GAIM_LIBDIR)/gaim
+irssidir = $(GAIM_LIBDIR)/pidgin
 
 irssi_la_LDFLAGS = -module -avoid-version
 
@@ -31,7 +31,7 @@ irssi_la_SOURCES = \
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
+	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
 	-DDATADIR=\"$(GAIM_DATADIR)\" \
 	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
 	$(DEBUG_CFLAGS) \

@@ -23,7 +23,7 @@
 
 #include "../common/i18n.h"
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #include <blist.h>
 #include <conversation.h>
@@ -43,7 +43,7 @@
 typedef struct _Infochecker Infochecker;
 
 struct _Infochecker {
-	GaimAccount *account;
+	PurpleAccount *account;
 	char *buddy;
 	guint timeout_id;
 };
@@ -52,7 +52,7 @@ GList* infochecker_list = NULL;
 
 static gint infocheck_timeout(gpointer data);
 
-static Infochecker* infocheck_new(GaimAccount* account, char* buddy)
+static Infochecker* infocheck_new(PurpleAccount* account, char* buddy)
 {
 	Infochecker* checker = g_new0(Infochecker, 1);
 	checker->account = account;
@@ -86,25 +86,25 @@ static gint infocheck_compare(gconstpointer pa, gconstpointer pb)
 }
 
 
-static void write_status(GaimBuddy *buddy, const char *message, const char* status)
+static void write_status(PurpleBuddy *buddy, const char *message, const char* status)
 {
-	GaimConversation *conv;
+	PurpleConversation *conv;
 	const char *who;
 	char buf[256];
 	char *escaped;
 
-	conv = gaim_find_conversation_with_account(GAIM_CONV_TYPE_IM, buddy->name, buddy->account);
+	conv = purple_find_conversation_with_account(PURPLE_CONV_TYPE_IM, buddy->name, buddy->account);
 
 	if (conv == NULL)
 		return;
 
-	who = gaim_buddy_get_alias(buddy);
+	who = purple_buddy_get_alias(buddy);
 	escaped = g_markup_escape_text(who, -1);
 
 	g_snprintf(buf, sizeof(buf), message, escaped, status);
 	g_free(escaped);
 
-	gaim_conversation_write(conv, NULL, buf, GAIM_MESSAGE_SYSTEM, time(NULL));
+	purple_conversation_write(conv, NULL, buf, PURPLE_MESSAGE_SYSTEM, time(NULL));
 }
 
 static char* parse_away_message(char* statustext)
@@ -125,25 +125,25 @@ static char* parse_away_message(char* statustext)
 	return g_strdup(away_ptr);
 }
 
-static char* get_away_message(GaimBuddy* buddy)
+static char* get_away_message(PurpleBuddy* buddy)
 {
-	GaimPlugin *prpl;
-	GaimPluginProtocolInfo *prpl_info = NULL;
+	PurplePlugin *prpl;
+	PurplePluginProtocolInfo *prpl_info = NULL;
 	char* statustext = NULL;
 
 	if (buddy == NULL)
 		return NULL;
 
-	prpl = gaim_find_prpl(gaim_account_get_protocol_id(buddy->account));
-	prpl_info = GAIM_PLUGIN_PROTOCOL_INFO(prpl);
+	prpl = purple_find_prpl(purple_account_get_protocol_id(buddy->account));
+	prpl_info = PURPLE_PLUGIN_PROTOCOL_INFO(prpl);
 
 	if (prpl_info && prpl_info->tooltip_text) {
 		const char *end;
 		char *statustext = NULL;
-		GaimNotifyUserInfo *info = gaim_notify_user_info_new();
+		PurpleNotifyUserInfo *info = purple_notify_user_info_new();
 		prpl_info->tooltip_text(buddy, info, TRUE);
-		statustext = gaim_notify_user_info_get_text_with_newline(info, "\n");
-		gaim_notify_user_info_destroy(info);
+		statustext = purple_notify_user_info_get_text_with_newline(info, "\n");
+		purple_notify_user_info_destroy(info);
 
 		if (statustext && !g_utf8_validate(statustext, -1, &end)) {
 			char *new = g_strndup(statustext, g_utf8_pointer_to_offset(statustext, end));
@@ -164,15 +164,15 @@ static gint infocheck_timeout(gpointer data)
 {
 	GList* node = (GList*)data;
 	Infochecker* checker = node ? (Infochecker*)node->data : NULL;
-	GaimBuddy* buddy;
+	PurpleBuddy* buddy;
 	char* away_message;
 
 	if (node == NULL || checker == NULL) {
-		gaim_debug_warning("awaynotify", "checker called without being active!\n");
+		purple_debug_warning("awaynotify", "checker called without being active!\n");
 		return FALSE;
 	}
 
-	buddy = gaim_find_buddy(checker->account, checker->buddy);
+	buddy = purple_find_buddy(checker->account, checker->buddy);
 	away_message = get_away_message(buddy);
 
 	if (away_message == NULL) {
@@ -202,15 +202,15 @@ static void infocheck_add(Infochecker* checker)
 			infocheck_timeout, g_list_first(infochecker_list));
 }
 
-static void buddy_away_cb(GaimBuddy *buddy, void *data)
+static void buddy_away_cb(PurpleBuddy *buddy, void *data)
 {
-	if (gaim_find_conversation_with_account(GAIM_CONV_TYPE_IM, buddy->name, buddy->account) == NULL)
+	if (purple_find_conversation_with_account(PURPLE_CONV_TYPE_IM, buddy->name, buddy->account) == NULL)
 		return; /* Ignore if there's no conv open. */
 
 	infocheck_add(infocheck_new(buddy->account, buddy->name));
 }
 
-static void buddy_unaway_cb(GaimBuddy *buddy, void *data)
+static void buddy_unaway_cb(PurpleBuddy *buddy, void *data)
 {
 	GList* node = g_list_find_custom(infochecker_list, buddy->name, infocheck_compare);
 
@@ -220,28 +220,28 @@ static void buddy_unaway_cb(GaimBuddy *buddy, void *data)
 	write_status(buddy, _("%s is no longer away."), NULL);
 }
 
-static gboolean plugin_load(GaimPlugin *plugin)
+static gboolean plugin_load(PurplePlugin *plugin)
 {
-	void *blist_handle = gaim_blist_get_handle();
+	void *blist_handle = purple_blist_get_handle();
 
-	gaim_signal_connect(blist_handle, "buddy-away",
-						plugin, GAIM_CALLBACK(buddy_away_cb), NULL);
-	gaim_signal_connect(blist_handle, "buddy-back",
-						plugin, GAIM_CALLBACK(buddy_unaway_cb), NULL);
+	purple_signal_connect(blist_handle, "buddy-away",
+						plugin, PURPLE_CALLBACK(buddy_away_cb), NULL);
+	purple_signal_connect(blist_handle, "buddy-back",
+						plugin, PURPLE_CALLBACK(buddy_unaway_cb), NULL);
 
 	return TRUE;
 }
 
-static GaimPluginInfo info =
+static PurplePluginInfo info =
 {
-	GAIM_PLUGIN_MAGIC,
-	GAIM_MAJOR_VERSION,
-	GAIM_MINOR_VERSION,
-	GAIM_PLUGIN_STANDARD,                             /**< type           */
+	PURPLE_PLUGIN_MAGIC,
+	PURPLE_MAJOR_VERSION,
+	PURPLE_MINOR_VERSION,
+	PURPLE_PLUGIN_STANDARD,                             /**< type           */
 	NULL,                                             /**< ui_requirement */
 	0,                                                /**< flags          */
 	NULL,                                             /**< dependencies   */
-	GAIM_PRIORITY_DEFAULT,                            /**< priority       */
+	PURPLE_PRIORITY_DEFAULT,                            /**< priority       */
 
 	PLUGIN_ID,      			                      /**< id             */
 	NULL,                                             /**< name           */
@@ -262,7 +262,7 @@ static GaimPluginInfo info =
 };
 
 static void
-init_plugin(GaimPlugin *plugin)
+init_plugin(PurplePlugin *plugin)
 {
 	info.name = _("Away State Notification");
 	info.summary =
@@ -270,5 +270,5 @@ init_plugin(GaimPlugin *plugin)
 	info.description = info.summary;
 }
 
-GAIM_INIT_PLUGIN(statenotify, init_plugin, info)
+PURPLE_INIT_PLUGIN(statenotify, init_plugin, info)
 
