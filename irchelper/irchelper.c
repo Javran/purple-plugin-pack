@@ -49,6 +49,12 @@
 #define PLUGIN_STATIC_NAME "irchelper"
 #define PLUGIN_ID "core-rlaager-" PLUGIN_STATIC_NAME
 
+#define PLUGIN_NAME        "IRC Helper"
+#define PLUGIN_SUMMARY     "Handles the rough edges of the IRC protocol."
+#define PLUGIN_DESCRIPTION "- Transparent authentication with a variety of services.\n" \
+                           "- Suppression of various useless messages"
+#define PLUGIN_AUTHOR      "Richard Laager <rlaager@guifications.org>"
+
 
 /*****************************************************************************
  * Constants                                                                 *
@@ -160,7 +166,7 @@ static gboolean plugin_unload(PurplePlugin *plugin);
  * Plugin Info                                                               *
  *****************************************************************************/
 
-static PurplePluginInfo plugin_info =
+static PurplePluginInfo info =
 {
 	PURPLE_PLUGIN_MAGIC,
 	PURPLE_MAJOR_VERSION,
@@ -170,26 +176,13 @@ static PurplePluginInfo plugin_info =
 	0,                               /**< flags          */
 	NULL,                            /**< dependencies   */
 	PURPLE_PRIORITY_DEFAULT,         /**< priority       */
-
 	PLUGIN_ID,                       /**< id             */
-	N_("IRC Helper"),                /**< name           */
-	VERSION,                         /**< version        */
-
-	/** summary */
-	N_("Handles the rough edges of the IRC protocol."),
-
-	/** description */
-	N_(
-		"- Transparent authentication with a variety of services.\n"
-		"- Suppression of various useless messages"
-	),
-
-	/** author */
-	"Richard Laager <rlaager@guifications.org>",
-
-	/** homepage */
-	"http://plugins.guifications.org",
-
+	NULL,                            /**< name           */
+	PP_VERSION,                      /**< version        */
+	NULL,                            /**< summary        */
+	NULL,                            /**< description    */
+	PLUGIN_AUTHOR,	                 /**< author         */
+	PP_WEBSITE,                      /**< homepage       */
 	plugin_load,                     /**< load           */
 	plugin_unload,                   /**< unload         */
 	NULL,                            /**< destroy        */
@@ -1237,7 +1230,16 @@ static gboolean plugin_unload(PurplePlugin *plugin)
 
 static void plugin_init(PurplePlugin *plugin)
 {
-	plugin_info.dependencies = g_list_append(plugin_info.dependencies, IRC_PLUGIN_ID);
+	info.dependencies = g_list_append(info.dependencies, IRC_PLUGIN_ID);
+
+#ifdef ENABLE_NLS
+	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+#endif /* ENABLE_NLS */
+
+	info.name = _(PLUGIN_NAME);
+	info.summary = _(PLUGIN_SUMMARY);
+	info.description = _(PLUGIN_DESCRIPTION);
 }
 
-PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, plugin_init, plugin_info)
+PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, plugin_init, info)
