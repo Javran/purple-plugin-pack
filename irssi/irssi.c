@@ -21,7 +21,7 @@
 
 /* gpp_config.h provides necessary definitions that help us find/do stuff */
 #ifdef HAVE_CONFIG_H
-# include "../gpp_config.h"
+# include "../pp_config.h"
 #endif
 
 /* all Purple plugins need to define this */
@@ -95,11 +95,11 @@ static PurplePluginInfo irssi_info = { /* this tells Purple about the plugin */
 
 	PLUGIN_ID,					/* plugin id			*/
 	NULL,						/* name					*/
-	GPP_VERSION,				/* version				*/
+	PP_VERSION,					/* version				*/
 	NULL,						/* summary				*/
 	NULL,						/* description			*/
 	PLUGIN_AUTHOR,				/* author				*/
-	GPP_WEBSITE,				/* website				*/
+	PP_WEBSITE,					/* website				*/
 
 	irssi_load,					/* load					*/
 	irssi_unload,				/* unload				*/

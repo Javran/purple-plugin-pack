@@ -21,7 +21,7 @@
 
 /* gpp_config.h provides necessary definitions that help us find/do stuff */
 #ifdef HAVE_CONFIG_H
-# include "../gpp_config.h"
+# include "../pp_config.h"
 #endif
 
 #include <time.h>

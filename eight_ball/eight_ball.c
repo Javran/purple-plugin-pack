@@ -21,7 +21,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#	include "../gpp_config.h"
+#	include "../pp_config.h"
 #endif
 
 #include "../common/i18n.h"
@@ -164,11 +164,11 @@ static PurplePluginInfo eight_ball_info =
 
 	"core-plugin_pack-eight_ball",
 	NULL,
-	GPP_VERSION,
+	PP_VERSION,
 	NULL,
 	NULL,
 	"John Bailey <rekkanoryo@users.sourceforge.net>",
-	GPP_WEBSITE,
+	PP_WEBSITE,
 
 	plugin_load,
 	plugin_unload,

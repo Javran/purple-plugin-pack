@@ -22,7 +22,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#	include "../gpp_config.h"
+#	include "../pp_config.h"
 #endif
 
 #include "../common/i18n.h"
@@ -140,11 +140,11 @@ static PurplePluginInfo bash_info =
 	PURPLE_PRIORITY_DEFAULT,
 	"core-plugin_pack-bash",
 	NULL,
-	GPP_VERSION,
+	PP_VERSION,
 	NULL,
 	NULL,
 	"John Bailey <rekkanoryo@users.sourceforge.net>",
-	GPP_WEBSITE,
+	PP_WEBSITE,
 	plugin_load,
 	plugin_unload,
 	NULL,

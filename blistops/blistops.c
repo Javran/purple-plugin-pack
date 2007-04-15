@@ -18,7 +18,7 @@
  * 02111-1307, USA.
  */
 #ifdef HAVE_CONFIG_H
-# include "../gpp_config.h"
+# include "../pp_config.h"
 #endif
 
 #include <gdk/gdk.h>
@@ -136,11 +136,11 @@ static PurplePluginInfo info =
 
 	"gtk-plugin_pack-blistops",
 	NULL,
-	GPP_VERSION,
+	PP_VERSION,
 	NULL,
 	NULL,
 	"Gary Kramlich <amc_grim@users.sf.net>",
-	GPP_WEBSITE,
+	PP_WEBSITE,
 
 	plugin_load,
 	plugin_unload,

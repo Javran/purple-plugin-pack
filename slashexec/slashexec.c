@@ -27,7 +27,7 @@
  * window messages are not important. - rekkanoryo */
 
 #if defined HAVE_CONFIG_H && !defined _WIN32
-# include "../gpp_config.h"
+# include "../pp_config.h"
 #endif
 
 #include "../common/i18n.h"
@@ -426,7 +426,7 @@ static PurplePluginInfo se_info = {
 	PURPLE_PRIORITY_DEFAULT,								/* priority			*/
 	"core-plugin_pack-slashexec",						/* id				*/
 	"/exec",											/* name				*/
-	GPP_VERSION,										/* version			*/
+	PP_VERSION,											/* version			*/
 	NULL,												/* summary			*/
 	NULL,												/* description		*/
 
@@ -435,7 +435,7 @@ static PurplePluginInfo se_info = {
 	"Daniel Atallah, Sadrul Habib Chowdhury <sadrul@users.sf.net>, "
 	"John Bailey <rekkanoryo@users.sf.net>",			/* authors			*/
 
-	GPP_WEBSITE,										/* homepage			*/
+	PP_WEBSITE,											/* homepage			*/
 	se_load,											/* load				*/
 	se_unload,											/* unload			*/
 	NULL,												/* destroy			*/
