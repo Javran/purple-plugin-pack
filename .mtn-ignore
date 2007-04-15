@@ -14,5 +14,5 @@ missing
 po/Makefile.in.in
 po/POTFILES
 po/stamp-it
-purple-plugin_pack-[0-9]+\.[0-9]+(mtn)?\/?
+purple-plugin_pack-[0-9]+\.[0-9]+([Bb][Ee][Tt][Aa][0-9]+)?(mtn)?\/?
 stamp-h1
