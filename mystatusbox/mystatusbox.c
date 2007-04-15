@@ -18,7 +18,7 @@
  * 02111-1307, USA.
  */
 #ifdef HAVE_CONFIG_H
-# include "../gpp_config.h"
+# include "../pp_config.h"
 #endif
 
 #define PURPLE_PLUGINS
@@ -54,7 +54,8 @@
 /* Pack/Local headers */
 #include "../common/i18n.h"
 
-#define PREF_PREFIX PIDGIN_PREFS_ROOT "/" PLUGIN_ID
+/* XXX: THIS NEEDS CHANGED WHEN PIDGIN DOES ITS PREFS MIGRATION!!!!! */
+#define PREF_PREFIX "/gaim/gtk/" PLUGIN_ID
 #define PREF_PANE	PREF_PREFIX "/pane"
 #define PREF_GLOBAL	PREF_PREFIX "/global"
 #define PREF_SHOW	PREF_PREFIX "/show"
@@ -255,7 +256,8 @@ pidgin_status_selectors_show(PurpleStatusBoxVisibility action)
 	if (!gtkblist || !gtkblist_statusboxbox)
 		return;
 
-	height = purple_prefs_get_int(PIDGIN_PREFS_ROOT "/blist/height");
+	/* XXX: CHANGE THIS WHEN PIDGIN FINISHES ITS PREFS MIGRATION!!!! */
+	height = purple_prefs_get_int("/gaim/gtk/blist/height");
 	
 	if (!purple_prefs_get_bool(PREF_GLOBAL))
 	{
@@ -530,28 +532,28 @@ static PurplePluginInfo info =
 	PURPLE_PLUGIN_MAGIC,			/* Magic				*/
 	PURPLE_MAJOR_VERSION,			/* Purple Major Version	*/
 	PURPLE_MINOR_VERSION,			/* Purple Minor Version	*/
-	PURPLE_PLUGIN_STANDARD,		/* plugin type			*/
-	PIDGIN_PLUGIN_TYPE,		/* ui requirement		*/
-	0,							/* flags				*/
-	NULL,						/* dependencies			*/
+	PURPLE_PLUGIN_STANDARD,			/* plugin type			*/
+	PIDGIN_PLUGIN_TYPE,				/* ui requirement		*/
+	0,								/* flags				*/
+	NULL,							/* dependencies			*/
 	PURPLE_PRIORITY_DEFAULT,		/* priority				*/
 
-	PLUGIN_ID,					/* plugin id			*/
-	NULL,						/* name					*/
-	GPP_VERSION,				/* version				*/
-	NULL,						/* summary				*/
-	NULL,						/* description			*/
-	PLUGIN_AUTHOR,				/* author				*/
-	GPP_WEBSITE,				/* website				*/
+	PLUGIN_ID,						/* plugin id			*/
+	NULL,							/* name					*/
+	PP_VERSION,						/* version				*/
+	NULL,							/* summary				*/
+	NULL,							/* description			*/
+	PLUGIN_AUTHOR,					/* author				*/
+	PP_WEBSITE,						/* website				*/
 
-	plugin_load,				/* load					*/
-	plugin_unload,				/* unload				*/
-	NULL,						/* destroy				*/
+	plugin_load,					/* load					*/
+	plugin_unload,					/* unload				*/
+	NULL,							/* destroy				*/
 
-	NULL,						/* ui_info				*/
-	NULL,						/* extra_info			*/
-	&prefs_info,				/* prefs_info			*/
-	actions						/* actions				*/
+	NULL,							/* ui_info				*/
+	NULL,							/* extra_info			*/
+	&prefs_info,					/* prefs_info			*/
+	actions							/* actions				*/
 };
 
 static void
