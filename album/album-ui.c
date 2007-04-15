@@ -696,7 +696,7 @@ static void update_icon_view(icon_viewer_key *key)
 		gtk_container_set_border_width(GTK_CONTAINER(hbox), VBOX_BORDER);
 
 		/* Image */
-		filename = g_build_filename(DATADIR, "pixmaps", "gaim", "dialogs", "purple_info.png", NULL);
+		filename = g_build_filename(PIXMAPSDIR, "dialogs", "purple_info.png", NULL);
 
 		pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
 		g_free(filename);
@@ -772,7 +772,7 @@ static GtkWidget *get_viewer_icon()
 	GtkWidget *image;
 
 	if (filename == NULL)
-		filename = g_build_filename(DATADIR, "pixmaps", "gaim", "icons", "online.png", NULL);
+		filename = g_build_filename(PIXMAPSDIR, "icons", "online.png", NULL);
 
 	pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
 	g_free(filename);
