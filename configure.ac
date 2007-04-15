@@ -81,6 +81,14 @@ AM_CONDITIONAL(HAVE_PURPLE, true)
 PURPLE_LIBDIR=`pkg-config --variable=libdir purple`
 PURPLE_DATADIR=`pkg-config --variable=datadir purple`
 
+if test x"$PURPLE_LIBDIR" != x"" ; then
+	PURPLE_LIBDIR="$PURPLE_LIBDIR/purple"
+fi
+
+if test x"$PURPLE_DATADIR" != x"" ; then
+	PURPLE_DATADIR="$PURPLE_DATADIR/purple"
+fi
+
 AC_SUBST(PURPLE_CFLAGS)
 AC_SUBST(PURPLE_LIBS)
 AC_SUBST(PURPLE_LIBDIR)
@@ -102,6 +110,14 @@ PKG_CHECK_MODULES(PIDGIN, pidgin,
 PIDGIN_LIBDIR=`pkg-config --variable=libdir pidgin`
 PIDGIN_DATADIR=`pkg-config --variable=datadir pidgin`
 
+if test x"$PIDGIN_LIBDIR" != x"" ; then
+	PIDGIN_LIBDIR="$PIDGIN_LIBDIR/pidgin"
+fi
+
+if test x"$PIDGIN_DATADIR" != x"" ; then
+	PIDGIN_DATADIR="$PIDGIN_DATADIR/pidgin"
+fi
+
 AC_SUBST(PIDGIN_CFLAGS)
 AC_SUBST(PIDGIN_LIBS)
 AC_SUBST(PIDGIN_LIBDIR)
@@ -122,6 +138,14 @@ PKG_CHECK_MODULES(FINCH, finch,
 
 FINCH_LIBDIR=`pkg-config --variable=libdir finch`
 FINCH_DATADIR=`pkg-config --variable=datadir finch`
+
+if test x"$FINCH_LIBDIR" != x"" ; then
+	FINCH_LIBDIR="$FINCH_LIBDIR/finch"
+fi
+
+if test x"$FINCH_DATADIR" != x"" ; then
+	FINCH_DATADIR="$FINCH_DATADIR/finch"
+fi
 
 AC_SUBST(FINCH_CFLAGS)
 AC_SUBST(FINCH_LIBS)
@@ -286,6 +310,7 @@ echo;
 echo Build purple plugins.............: $HAVE_PURPLE
 if test x"$HAVE_PURPLE" = x"yes" ; then
 	echo Installing purple plugins to.....: `eval eval echo $PURPLE_LIBDIR`
+	echo Installing purple plugin data to.: `eval eval echo $PURPLE_DATADIR`
 	if test x"$PP_PURPLE_BUILD" = x"" ; then
 		echo Purple plugins to be built.......: none
 	else
@@ -298,6 +323,7 @@ echo;
 echo Build pidgin plugins.............: $HAVE_PIDGIN
 if test x"$HAVE_PIDGIN" = x"yes" ; then
 	echo Installing pidgin plugins to.....: `eval eval echo $PIDGIN_LIBDIR`
+	echo Installing pidgin plugin data to.: `eval eval echo $PIDGIN_DATADIR`
 	if test x"$PP_PIDGIN_BUILD" = x"" ; then
 		echo Pidgin plugins to be built.......: none
 	else
@@ -310,6 +336,7 @@ echo;
 echo Build finch plugins..............: $HAVE_FINCH
 if test x"$HAVE_FINCH" = x"yes" ; then
 	echo Installing finch plugins to......: `eval eval echo $FINCH_LIBDIR`
+	echo Installing finch plugin data to..: `eval eval echo $FINCH_DATADIR`
 	if test x"$PP_FINCH_BUILD" = x"" ; then
 		echo Finch plugins to be built........: none
 	else
