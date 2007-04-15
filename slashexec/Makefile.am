@@ -7,7 +7,7 @@ slashexecdir = $(GAIM_LIBDIR)/libpurple
 
 slashexec_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PURPLE
 
 slashexec_LTLIBRARIES = slashexec.la
 

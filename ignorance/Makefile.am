@@ -16,7 +16,7 @@ ignorancedir = $(GAIM_LIBDIR)/pidgin
 
 ignorance_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PIDGIN
 
 ignorance_LTLIBRARIES = \
 	ignorance.la

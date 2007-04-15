@@ -4,7 +4,7 @@ sepandtabdir = $(GAIM_LIBDIR)/pidgin
 
 sepandtab_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PIDGIN
 
 sepandtab_LTLIBRARIES = sepandtab.la
 

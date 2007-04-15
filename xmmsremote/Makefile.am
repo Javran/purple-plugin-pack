@@ -6,7 +6,7 @@ xmmsremotedir = $(GAIM_LIBDIR)/pidgin
 
 xmmsremote_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PIDGIN
 if USE_XMMS
 xmmsremote_LTLIBRARIES = xmmsremote.la
 

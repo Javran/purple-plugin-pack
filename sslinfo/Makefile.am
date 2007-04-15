@@ -4,7 +4,7 @@ sslinfodir = $(GAIM_LIBDIR)/libpurple
 
 sslinfo_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PURPLE
 
 sslinfo_LTLIBRARIES = sslinfo.la
 

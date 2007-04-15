@@ -4,6 +4,8 @@ chronicdir=$(GAIM_LIBDIR)/libpurple
 
 chronic_la_LDFLAGS = -module -avoid-version
 
+if HAVE_PURPLE
+
 chronic_LTLIBRARIES = chronic.la
 
 chronic_la_LIBADD = \
@@ -11,6 +13,8 @@ chronic_la_LIBADD = \
 	$(GAIM_LIBS)
 
 chronic_la_SOURCES = chronic.c
+
+endif
 
 AM_CPPFLAGS = \
 	-DLIBDIR=\"$(GAIM_LIBDIR)/libpurple/\" \

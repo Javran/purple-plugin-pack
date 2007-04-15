@@ -11,7 +11,7 @@ bash_la_LIBADD = \
 	$(GLIB_LIBS) \
 	$(GAIM_LIBS)
 
-if PLUGINS
+if HAVE_PURPLE
 
 bash_LTLIBRARIES = bash.la
 

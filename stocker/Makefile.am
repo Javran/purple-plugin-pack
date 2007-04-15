@@ -8,7 +8,7 @@ stockerdir = $(GAIM_LIBDIR)/pidgin
 
 stocker_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PIDGIN
 
 stocker_LTLIBRARIES = stocker.la
 

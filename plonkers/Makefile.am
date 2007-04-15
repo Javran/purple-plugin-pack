@@ -8,7 +8,7 @@ plonkers_la_LDFLAGS = \
 	-module \
 	-avoid-version
 
-if PLUGINS
+if HAVE_PIDGIN
 
 plonkers_LTLIBRARIES = plonkers.la
 

@@ -8,7 +8,7 @@ listhandlerdir = $(GAIM_LIBDIR)/libpurple
 
 listhandler_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PURPLE
 
 listhandler_LTLIBRARIES = listhandler.la
 

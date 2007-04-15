@@ -6,7 +6,7 @@ switchspelldir = $(GAIM_LIBDIR)/pidgin
 switchspell_la_LDFLAGS = -module -avoid-version \
 	$(GTKSPELL_LIBS)
 
-if PLUGINS
+if HAVE_PIDGIN
 
 switchspell_LTLIBRARIES = switchspell.la
 
@@ -17,7 +17,7 @@ switchspell_la_LIBADD = \
 	$(GAIM_LIBS) \
 	$(GTK_LIBS)
 
-endif # PLUGINS
+endif # PIDGIN
 
 AM_CPPFLAGS = \
 	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \

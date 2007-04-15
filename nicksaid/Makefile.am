@@ -4,7 +4,7 @@ nicksaiddir = $(GAIM_LIBDIR)/pidgin
 
 nicksaid_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PIDGIN
 
 nicksaid_LTLIBRARIES = nicksaid.la
 

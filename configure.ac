@@ -1,4 +1,4 @@
-AC_INIT([gaim-plugin_pack], [1.0mtn], [guifications-devel@lists.sourceforge.net])
+AC_INIT([purple-plugin_pack], [1.0mtn], [guifications-devel@lists.sourceforge.net])
 AC_CANONICAL_SYSTEM
 AM_CONFIG_HEADER(pre_config.h)
 
@@ -6,7 +6,7 @@ AM_INIT_AUTOMAKE([foreign dist-bzip2])
 
 AC_PREREQ([2.50])
 
-AC_DEFINE_UNQUOTED(GPP_VERSION, "AC_PACKAGE_VERSION", [Plugin Pack Version])
+AC_DEFINE_UNQUOTED(PP_VERSION, "AC_PACKAGE_VERSION", [Plugin Pack Version])
 
 AC_PATH_PROG(sedpath, sed)
 AC_DISABLE_STATIC
@@ -25,18 +25,17 @@ LIBTOOL="$LIBTOOL --silent"
 dnl #######################################################################
 dnl # I'm lazy and figured config.h is the best place for this ;)
 dnl #######################################################################
-AC_DEFINE_UNQUOTED(GPP_WEBSITE, "http://gaim.guifications.org/trac", [Plugin Pack Website]) 
+AC_DEFINE_UNQUOTED(PP_WEBSITE, "http://purple.guifications.org/trac", [Plugin Pack Website]) 
 
 dnl #######################################################################
 dnl # Our header
 dnl #######################################################################
-
 AH_TOP([ /* our header */
-#ifndef GPP_CONFIG_H
-#define GPP_CONFIG_H
+#ifndef PP_CONFIG_H
+#define PP_CONFIG_H
 ])
 AH_BOTTOM([
-#endif /* GPP_CONFIG_H */
+#endif /* PP_CONFIG_H */
 ])
 
 dnl #######################################################################
@@ -69,36 +68,82 @@ fi
 AC_SUBST(CFLAGS)
 
 dnl #######################################################################
-dnl # Check for gaim
+dnl # Check for purple
 dnl #######################################################################
-
-PKG_CHECK_MODULES(GAIM, pidgin,
+PKG_CHECK_MODULES(PURPLE, purple,
 [
-	AC_DEFINE(HAVE_GAIM, 1, [Define if we've found pidgin.])
+	AC_DEFINE(HAVE_PURPLE, 1, [Define if we've found libpurple.])
 ])
 
-AC_SUBST(GAIM_CFLAGS)
-AC_SUBST(GAIM_LIBS)
-GAIM_LIBDIR=`pkg-config --variable=libdir pidgin`
-GAIM_DATADIR=`pkg-config --variable=datadir pidgin`
-AC_SUBST(GAIM_LIBDIR)
-AC_SUBST(GAIM_DATADIR)
+HAVE_PURPLE="yes"
+AM_CONDITIONAL(HAVE_PURPLE, true)
+
+PURPLE_LIBDIR=`pkg-config --variable=libdir purple`
+PURPLE_DATADIR=`pkg-config --variable=datadir purple`
+
+AC_SUBST(PURPLE_CFLAGS)
+AC_SUBST(PURPLE_LIBS)
+AC_SUBST(PURPLE_LIBDIR)
+AC_SUBST(PURPLE_DATADIR)
+
+dnl #######################################################################
+dnl # Check for pidgin
+dnl #######################################################################
+PKG_CHECK_MODULES(PIDGIN, pidgin,
+[
+	AC_DEFINE(HAVE_PIDGIN, 1, [Define if we've found pidgin.])
+	HAVE_PIDGIN="yes"
+	AM_CONDITIONAL(HAVE_PIDGIN, true)
+], [
+	HAVE_PIDGIN="no"
+	AM_CONDITIONAL(HAVE_PIDGIN, false)
+])
+
+PIDGIN_LIBDIR=`pkg-config --variable=libdir pidgin`
+PIDGIN_DATADIR=`pkg-config --variable=datadir pidgin`
+
+AC_SUBST(PIDGIN_CFLAGS)
+AC_SUBST(PIDGIN_LIBS)
+AC_SUBST(PIDGIN_LIBDIR)
+AC_SUBST(PIDGIN_DATADIR)
+
+dnl #######################################################################
+dnl # Check for finch
+dnl #######################################################################
+PKG_CHECK_MODULES(FINCH, finch,
+[
+	AC_DEFINE(HAVE_FINCH, 1, [Define if we've found finch.])
+	HAVE_FINCH="yes"
+	AM_CONDITIONAL(HAVE_FINCH, true)
+], [
+	HAVE_FINCH="no"
+	AM_CONDITIONAL(HAVE_FINCH, false)
+])
+
+FINCH_LIBDIR=`pkg-config --variable=libdir finch`
+FINCH_DATADIR=`pkg-config --variable=datadir finch`
+
+AC_SUBST(FINCH_CFLAGS)
+AC_SUBST(FINCH_LIBS)
+AC_SUBST(FINCH_LIBDIR)
+AC_SUBST(FINCH_DATADIR)
 
 dnl #######################################################################
 dnl # check for gtk and other dependencies
 dnl #######################################################################
-
 AM_PATH_GLIB_2_0(2.0.0,,AC_MSG_ERROR([
 *** GLib 2.0 is required to build AC_PACKAGE_NAME; please make sure you have the
 *** GLib development headers installed. The latest version of GLib is always
 *** available at http://www.gtk.org/.]))
 AC_SUBST(GLIB_CFLAGS)
+AC_SUBST(GLIB_LIBS)
 
 AM_PATH_GTK_2_0(2.0.0,,AC_MSG_ERROR([
 *** GTK+ 2.0 is required to build AC_PACKAGE_NAME; please make sure you have the
 *** GTK+ development headers installed. The latest version of GTK+ is always
 *** available at http://www.gtk.org/.]))
 AC_SUBST(GTK_CFLAGS)
+AC_SUBST(GTK_LIBS)
 
 dnl #######################################################################
 dnl # Plugin dependency checking
@@ -164,12 +209,6 @@ dnl #######################################################################
 dnl # Run our plugin checking
 dnl #######################################################################
 AM_BUILD_PLUGIN_LIST()
-
-dnl #######################################################################
-dnl # Check if plugins are enabled
-dnl #######################################################################
-want_plugins=yes
-AM_CONDITIONAL(PLUGINS, test "$want_plugins" = "yes")
 
 dnl #######################################################################
 dnl # Version stuff
@@ -238,14 +277,47 @@ AC_OUTPUT([
 dnl #######################################################################
 dnl # Ouput!!
 dnl #######################################################################
-
 echo;
 echo $PACKAGE $VERSION Configuration complete
 echo;
 echo Debugging enabled................: $enable_debug
 echo;
-echo Building plugins:
-echo $PP_BUILDDIRS | xargs -n 4 echo "	"
+
+echo Build purple plugins.............: $HAVE_PURPLE
+if test x"$HAVE_PURPLE" = x"yes" ; then
+	echo Installing purple plugins to.....: `eval eval echo $PURPLE_LIBDIR`
+	if test x"$PP_PURPLE_BUILD" = x"" ; then
+		echo Purple plugins to be built.......: none
+	else
+		echo Purple plugins to be built.......:
+		echo $PP_PURPLE_BUILD | xargs -n 4 echo "	"
+	fi
+fi
 echo;
+
+echo Build pidgin plugins.............: $HAVE_PIDGIN
+if test x"$HAVE_PIDGIN" = x"yes" ; then
+	echo Installing pidgin plugins to.....: `eval eval echo $PIDGIN_LIBDIR`
+	if test x"$PP_PIDGIN_BUILD" = x"" ; then
+		echo Pidgin plugins to be built.......: none
+	else
+		echo Pidgin plugins to be built.......:
+		echo $PP_PIDGIN_BUILD | xargs -n 4 echo "	"
+	fi
+fi
+echo;
+
+echo Build finch plugins..............: $HAVE_FINCH
+if test x"$HAVE_FINCH" = x"yes" ; then
+	echo Installing finch plugins to......: `eval eval echo $FINCH_LIBDIR`
+	if test x"$PP_FINCH_BUILD" = x"" ; then
+		echo Finch plugins to be built........: none
+	else
+		echo Finch plugins to be built........:
+		echo $PP_FINCH_BUILD | xargs -n 4 echo "	"
+	fi
+fi
+echo;
+
 echo Type make to compile
 echo;

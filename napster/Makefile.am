@@ -4,7 +4,7 @@ napsterdir = $(GAIM_LIBDIR)/libpurple
 
 napster_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PURPLE
 
 napster_LTLIBRARIES = napster.la
 
