@@ -1,6 +1,6 @@
-EXTRA_DIST = .plugin Makefile.mingw .build
+EXTRA_DIST = .pidgin-nlugin Makefile.mingw .build
 
-bitdir = $(GAIM_LIBDIR)/pidgin
+bitdir = $(PIDGIN_LIBDIR)
 
 bit_la_LDFLAGS = -module -avoid-version
 
@@ -12,15 +12,14 @@ bit_la_SOURCES = \
 	bit.c
 
 bit_la_LIBADD = \
-	$(GAIM_LIBS) \
+	$(PIDGIN_LIBS) \
 	$(GTK_LIBS)
 
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PIDGIN_LIBDIR)\" \
+	-DDATADIR=\"$(PIDGIN_DATADIR)\" \
 	$(GTK_CFLAGS) \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS)
+	$(PIDGIN_CFLAGS)

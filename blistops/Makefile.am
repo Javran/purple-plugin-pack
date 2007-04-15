@@ -1,6 +1,6 @@
-EXTRA_DIST = .plugin .build Makefile.mingw
+EXTRA_DIST = .pidgin-plugin .build Makefile.mingw
 
-blistopsdir = $(GAIM_LIBDIR)/pidgin
+blistopsdir = $(PIDGIN_LIBDIR)
 
 blistops_la_LDFLAGS = -module -avoid-version
 
@@ -13,15 +13,14 @@ blistops_la_SOURCES = \
 
 blistops_la_LIBADD = \
 	$(GTK_LIBS) \
-	$(GAIM_LIBS)
+	$(PIDGIN_LIBS)
 
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PIDGIN_LIBDIR)\" \
+	-DDATADIR=\"$(PIDGIN_DATADIR)\" \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS) \
+	$(PIDGIN_CFLAGS) \
 	$(GTK_CFLAGS)
 

@@ -1,11 +1,11 @@
 EXTRA_DIST = \
 	.build \
-	.plugin \
+	.pidgin-plugin \
 	Makefile.mingw \
 	album.h \
 	album-ui.h
 
-albumdir = $(GAIM_LIBDIR)/pidgin
+albumdir = $(PIDGIN_LIBDIR)
 
 album_la_LDFLAGS = -module -avoid-version
 
@@ -18,15 +18,14 @@ album_la_SOURCES = \
 	album-ui.c
 
 album_la_LIBADD = \
-	$(GAIM_LIBS) \
+	$(PIDGIN_LIBS) \
 	$(GTK_LIBS)
 
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PIDGIN_LIBDIR)\" \
+	-DDATADIR=\"$(PIDGIN_DATADIR)\" \
 	$(GTK_CFLAGS) \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS)
+	$(PIDGIN_CFLAGS)
