@@ -273,6 +273,7 @@ AC_OUTPUT([
 	plugin_pack.spec
 	album/Makefile
 	autorejoin/Makefile
+	autoreply/Makefile
 	awaynotify/Makefile
 	bash/Makefile
 	bit/Makefile
