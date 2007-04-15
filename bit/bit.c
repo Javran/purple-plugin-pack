@@ -20,7 +20,7 @@
 # include "../gpp_config.h"
 #endif /* HAVE_CONFIG_H */
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #include <buddyicon.h>
 #include <debug.h>
@@ -31,8 +31,8 @@
 
 #include "../common/i18n.h"
 
-GaimPlugin *bit = NULL; /* the request api prefers this for a plugin */
-static GaimBuddyList *buddies = NULL;
+PurplePlugin *bit = NULL; /* the request api prefers this for a plugin */
+static PurpleBuddyList *buddies = NULL;
 
 /* TODO: Add a function to clear unused icons */
 /* TODO: Ensure all this stuff I have at the moment is safe for others to use */
@@ -40,84 +40,84 @@ static GaimBuddyList *buddies = NULL;
 static void
 blist_iterate_action(gboolean remove)
 {
-	GaimBlistNode *node = NULL;
-	GaimConversation *conv = NULL;
+	PurpleBlistNode *node = NULL;
+	PurpleConversation *conv = NULL;
 	gint n;
 
 	/* this grabs the gaim buddy list, which will be walked through */
-	buddies = gaim_get_blist();
+	buddies = purple_get_blist();
 
 	/* Use the utility function to loop over the nodes of the tree */
-	for (node = buddies->root; node && GAIM_BLIST_NODE_IS_BUDDY(node); 
-		 node = gaim_blist_node_next(node, TRUE)) {
-		GaimBuddy *buddy = (GaimBuddy *)node;
-		const char *tmpname = gaim_buddy_get_name(buddy);
-		GaimBuddyIcon *icon = gaim_buddy_get_icon(buddy);
+	for (node = buddies->root; node && PURPLE_BLIST_NODE_IS_BUDDY(node); 
+		 node = purple_blist_node_next(node, TRUE)) {
+		PurpleBuddy *buddy = (PurpleBuddy *)node;
+		const char *tmpname = purple_buddy_get_name(buddy);
+		PurpleBuddyIcon *icon = purple_buddy_get_icon(buddy);
 		if (icon != NULL) {
-			gaim_debug_info("bit", "Processing %s (%d)\n", tmpname,
+			purple_debug_info("bit", "Processing %s (%d)\n", tmpname,
 							 icon->ref_count);
 			if (!icon->ref_count > 0 && remove == TRUE) {
 				for ( n = icon->ref_count; n !=0; n-- ) {
-					gaim_debug_info("bit", "ref_count: %d\n", n);
-					gaim_buddy_icon_unref(icon);
+					purple_debug_info("bit", "ref_count: %d\n", n);
+					purple_buddy_icon_unref(icon);
 				}
 			}
 			/* XXX: This *may* cause a segfault. - Sadrul */
 			if (remove == TRUE) {
-				gaim_debug_info("bit", "Uncaching icon for %s\n", tmpname);
-				gaim_buddy_icon_uncache(buddy);
+				purple_debug_info("bit", "Uncaching icon for %s\n", tmpname);
+				purple_buddy_icon_uncache(buddy);
 				/* XXX: This *definately* causes a segfault. From reading the 
 				 * source, I may not need to unref but just straight destroy it
 				 * haven't played/investigated enough to decide if I want to
 				 * keep/move/delete this - Bleeter
 
-				gaim_debug_info("bit", "Destroying icon for %s\n", tmpname);
-				gaim_buddy_icon_destroy(icon);*/
+				purple_debug_info("bit", "Destroying icon for %s\n", tmpname);
+				purple_buddy_icon_destroy(icon);*/
 			}
 		} else {
 			if (remove == TRUE)
-				gaim_debug_info("bit", "No icon to flush for %s\n", tmpname);
+				purple_debug_info("bit", "No icon to flush for %s\n", tmpname);
 		}
 
-		if (gaim_account_is_connected(gaim_buddy_get_account(buddy))) {
-			gaim_debug_info("bit", "Updating icon for %s\n",
+		if (purple_account_is_connected(purple_buddy_get_account(buddy))) {
+			purple_debug_info("bit", "Updating icon for %s\n",
 							 tmpname);
-			gaim_blist_update_buddy_icon(buddy);
-			conv = gaim_find_conversation_with_account(GAIM_CONV_TYPE_IM,
-									  tmpname,gaim_buddy_get_account(buddy));
+			purple_blist_update_buddy_icon(buddy);
+			conv = purple_find_conversation_with_account(PURPLE_CONV_TYPE_IM,
+									  tmpname,purple_buddy_get_account(buddy));
 			if (conv != NULL)
-				gaim_conversation_update(conv, GAIM_CONV_UPDATE_ICON);
+				purple_conversation_update(conv, PURPLE_CONV_UPDATE_ICON);
 		}
 	}
 }
 
 static void
-flush_buddy_icon_action(GaimPluginAction *action)
+flush_buddy_icon_action(PurplePluginAction *action)
 {
 	blist_iterate_action(TRUE);
 }
 
 static void
-refresh_buddy_icon_action(GaimPluginAction *action)
+refresh_buddy_icon_action(PurplePluginAction *action)
 {
 	blist_iterate_action(FALSE);
 }
 
 #if 0
 static void
-destroy_unused_icons_action(GaimPluginAction *action)
+destroy_unused_icons_action(PurplePluginAction *action)
 {
 	GDir *dir;
 	GList *l;
 	const char *path, *filename;
 	const char *type;
 
-	path = gaim_buddy_icons_get_cache_dir();
+	path = purple_buddy_icons_get_cache_dir();
 	if (path == NULL) {
 		gchar *str;
 		str = g_strdup_printf(_("Unable to locate the buddy icon cache directory %s"), path);
-		gaim_debug_error("bit", str);
-		gaim_notify_error(bit, _("Destroy Unused Icons"), _("Unable to locate"),
+		purple_debug_error("bit", str);
+		purple_notify_error(bit, _("Destroy Unused Icons"), _("Unable to locate"),
 						  str);
 		return;
 	}
@@ -125,25 +125,25 @@ destroy_unused_icons_action(GaimPluginAction *action)
 	if (!(dir = g_dir_open(path, 0, NULL))) {
 		gchar *str;
 		str = g_strdup_printf(_("Unable to read the buddy icon cache directory %s"), path);
-		gaim_debug_error("bit", str);
-		gaim_notify_error(bit, _("Destroy Unused Icons"), _("Unable to read"),
+		purple_debug_error("bit", str);
+		purple_notify_error(bit, _("Destroy Unused Icons"), _("Unable to read"),
 						  str);
 		return;
 	}
 
 	while ((filename = g_dir_read_name(dir))) {
 
-		GaimBlistNode *cur_node = NULL;
-		GaimConversation *conv = NULL;
+		PurpleBlistNode *cur_node = NULL;
+		PurpleConversation *conv = NULL;
 		gint n;
 
-		buddies = gaim_get_blist();
+		buddies = purple_get_blist();
 		for (cur_node = buddies->root; cur_node; 
-			 cur_node = gaim_blist_node_next(cur_node, TRUE)) {
-			if(GAIM_BLIST_NODE_IS_BUDDY(cur_node)) {
-				GaimBuddy *buddy = (GaimBuddy *)cur_node;
-				const char *tmpname = gaim_buddy_get_name(buddy);
-				GaimBuddyIcon *icon = gaim_buddy_get_icon(buddy);
+			 cur_node = purple_blist_node_next(cur_node, TRUE)) {
+			if(PURPLE_BLIST_NODE_IS_BUDDY(cur_node)) {
+				PurpleBuddy *buddy = (PurpleBuddy *)cur_node;
+				const char *tmpname = purple_buddy_get_name(buddy);
+				PurpleBuddyIcon *icon = purple_buddy_get_icon(buddy);
 				if (icon != NULL) {
 					/* store each found icon FILENAME into *l */
 					/* checksums are done in prpl, so don't bother trying */
@@ -151,18 +151,18 @@ destroy_unused_icons_action(GaimPluginAction *action)
 			}
 		}
 		/* remove files not in SOMWHERE*/
-		gaim_debug_info("bit", "Filename %s\n", filename);
-		type = gaim_buddy_icon_get_type(filename);
-		gaim_debug_info("bit", "Type %s\n", type);
+		purple_debug_info("bit", "Filename %s\n", filename);
+		type = purple_buddy_icon_get_type(filename);
+		purple_debug_info("bit", "Type %s\n", type);
 	}
 }
 #endif
 
 static GList *
-bit_actions(GaimPlugin *plugin, gpointer context)
+bit_actions(PurplePlugin *plugin, gpointer context)
 {
 	GList *list = NULL;
-	GaimPluginAction *act = NULL;
+	PurplePluginAction *act = NULL;
 
 #if 0
 /* buddy icon structs currently suck, I think
@@ -171,33 +171,33 @@ bit_actions(GaimPlugin *plugin, gpointer context)
    ... a huge hash type table *may help*, but I'd consider it highly inefficient
    then again, some of the stuff in here ain't exactly a TGV either */
 
-	act = gaim_plugin_action_new(_("Destroy Unused Icons"),
+	act = purple_plugin_action_new(_("Destroy Unused Icons"),
 			destroy_unused_icons_action);
 	list = g_list_append(list, act);
 #endif
-	act = gaim_plugin_action_new(_("Flush Buddy Icons"),
+	act = purple_plugin_action_new(_("Flush Buddy Icons"),
 			flush_buddy_icon_action);
 	list = g_list_append(list, act);
 
-	act = gaim_plugin_action_new(_("Refresh Buddy Icons"),
+	act = purple_plugin_action_new(_("Refresh Buddy Icons"),
 			refresh_buddy_icon_action);
 	list = g_list_append(list, act);
 
-	gaim_debug_info("bit", "Action list created\n");
+	purple_debug_info("bit", "Action list created\n");
 
 	return list;
 }
 
-static GaimPluginInfo info =
+static PurplePluginInfo info =
 {
-	GAIM_PLUGIN_MAGIC,								/**< magic			*/
-	GAIM_MAJOR_VERSION,								/**< major version	*/
-	GAIM_MINOR_VERSION,								/**< minor version	*/
-	GAIM_PLUGIN_STANDARD,							/**< type			*/
+	PURPLE_PLUGIN_MAGIC,								/**< magic			*/
+	PURPLE_MAJOR_VERSION,								/**< major version	*/
+	PURPLE_MINOR_VERSION,								/**< minor version	*/
+	PURPLE_PLUGIN_STANDARD,							/**< type			*/
 	NULL,											/**< ui_requirement	*/
 	0,												/**< flags			*/
 	NULL,											/**< dependencies	*/
-	GAIM_PRIORITY_DEFAULT,							/**< priority		*/
+	PURPLE_PRIORITY_DEFAULT,							/**< priority		*/
 
 	"core-plugin_pack-bit",							/**< id				*/
 	NULL,											/**< name			*/
@@ -219,7 +219,7 @@ static GaimPluginInfo info =
 };
 
 static void
-init_plugin(GaimPlugin *plugin)
+init_plugin(PurplePlugin *plugin)
 {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
@@ -227,13 +227,13 @@ init_plugin(GaimPlugin *plugin)
 #endif
 	info.name = _("Buddy Icon Tools");
 	info.summary = _("Tools to manipulate buddy icons. *DANGEROUS*");
-	info.description = _("Whilst working on Gaim 2.0.0, I found a need to "
+	info.description = _("Whilst working on Purple 2.0.0, I found a need to "
 			"destroy all my buddies' buddy icons.  There's nothing to do "
-			"these functions in Gaim, so here they are. Completely, "
+			"these functions in Purple, so here they are. Completely, "
 			"thoroughly untested.");
 
 	bit = plugin; /* handle needed for request API file selector */
 }
 
-GAIM_INIT_PLUGIN(bit, init_plugin, info)
+PURPLE_INIT_PLUGIN(bit, init_plugin, info)
 

@@ -1,5 +1,5 @@
 /*
- * irssi - Implements several irssi features for Gaim
+ * irssi - Implements several irssi features for Purple
  * Copyright (C) 2005-2007 Gary Kramlich <grim@reaperworld.com>
  * Copyright (C) 2007 John Bailey <rekkanoryo@rekkanoryo.org>
  *
@@ -38,14 +38,14 @@
 /******************************************************************************
  * Globals
  *****************************************************************************/
-static GaimCmdId irssi_lastlog_cmd = 0;
+static PurpleCmdId irssi_lastlog_cmd = 0;
 
 /******************************************************************************
  * Helpers
  *****************************************************************************/
 static void
-irssi_lastlog(GaimConversation *c, const gchar *needle) {
-	GaimGtkConversation *gtkconv = c->ui_data;
+irssi_lastlog(PurpleConversation *c, const gchar *needle) {
+	PidginConversation *gtkconv = c->ui_data;
 	int i;
 	GString *result;
 	char **lines;
@@ -61,7 +61,7 @@ irssi_lastlog(GaimConversation *c, const gchar *needle) {
 	 */
 
 	for (i = 0; lines[i]; i++) {
-		char *strip = gaim_markup_strip_html(lines[i]);
+		char *strip = purple_markup_strip_html(lines[i]);
 		if (strstr(strip, needle)) {
 			result = g_string_append(result, lines[i]);
 			result = g_string_append(result, "<br>");
@@ -73,27 +73,27 @@ irssi_lastlog(GaimConversation *c, const gchar *needle) {
 	/* XXX: This should probably be moved into outputting directly in the
 	 * conversation window.
 	 */
-	gaim_notify_formatted(gtkconv, _("Lastlog"), _("Lastlog output"), NULL,
+	purple_notify_formatted(gtkconv, _("Lastlog"), _("Lastlog output"), NULL,
 						  result->str, NULL, NULL);
 
 	g_string_free(result, TRUE);
 	g_strfreev(lines);
 }
 
-static GaimCmdRet
-irssi_lastlog_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args,
+static PurpleCmdRet
+irssi_lastlog_cmd_cb(PurpleConversation *conv, const gchar *cmd, gchar **args,
 					 gchar **error, void *data)
 {
 	irssi_lastlog(conv, args[0]);
 
-	return GAIM_CMD_RET_OK;
+	return PURPLE_CMD_RET_OK;
 }
 
 /******************************************************************************
  * "API"
  *****************************************************************************/
 void
-irssi_lastlog_init(GaimPlugin *plugin) {
+irssi_lastlog_init(PurplePlugin *plugin) {
 	const gchar *help;
 
 	if(irssi_lastlog_cmd != 0)
@@ -113,14 +113,14 @@ irssi_lastlog_init(GaimPlugin *plugin) {
 	 * the help string, and set no user data to pass to the callback
 	 */
 	irssi_lastlog_cmd =
-		gaim_cmd_register("lastlog", "s", GAIM_CMD_P_PLUGIN,
-						  GAIM_CMD_FLAG_IM | GAIM_CMD_FLAG_CHAT, NULL,
-						  GAIM_CMD_FUNC(irssi_lastlog_cmd_cb), help, NULL);
+		purple_cmd_register("lastlog", "s", PURPLE_CMD_P_PLUGIN,
+						  PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT, NULL,
+						  PURPLE_CMD_FUNC(irssi_lastlog_cmd_cb), help, NULL);
 }
 
 void
-irssi_lastlog_uninit(GaimPlugin *plugin) {
-	gaim_cmd_unregister(irssi_lastlog_cmd);
+irssi_lastlog_uninit(PurplePlugin *plugin) {
+	purple_cmd_unregister(irssi_lastlog_cmd);
 
 	irssi_lastlog_cmd = 0;
 }

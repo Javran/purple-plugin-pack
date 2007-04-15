@@ -1,5 +1,5 @@
 /*
- * Gaim Plugin Pack
+ * Purple Plugin Pack
  * Copyright (C) 2003-2005
  * See ../AUTHORS for a list of all authors
  *
@@ -26,49 +26,49 @@
 #include "gen_xml_files.h"
 #include "migrate.h"
 
-GaimPlugin *listhandler = NULL; /* the request api prefers this for a plugin */
+PurplePlugin *listhandler = NULL; /* the request api prefers this for a plugin */
 
 static GList * /* gaim's picky and wants a GList of actions for its menu */
-listhandler_actions(GaimPlugin *plugin, gpointer context)
+listhandler_actions(PurplePlugin *plugin, gpointer context)
 {
 	GList *list = NULL;
-	GaimPluginAction *action = NULL;
+	PurplePluginAction *action = NULL;
 
-	action = gaim_plugin_action_new(_("Import AIM Buddy List File"),
+	action = purple_plugin_action_new(_("Import AIM Buddy List File"),
 									lh_aim_import_action_cb);
 	list = g_list_append(list, action);
 
-	action = gaim_plugin_action_new(_("Import Generic Buddy List File"),
+	action = purple_plugin_action_new(_("Import Generic Buddy List File"),
 									lh_generic_import_action_cb);
 	list = g_list_append(list, action);
 
-	action = gaim_plugin_action_new(_("Export AIM Buddy List File"),
+	action = purple_plugin_action_new(_("Export AIM Buddy List File"),
 									lh_aim_export_action_cb);
 	list = g_list_append(list, action);
 
-	action = gaim_plugin_action_new(_("Export Generic Buddy List File"),
+	action = purple_plugin_action_new(_("Export Generic Buddy List File"),
 									lh_generic_export_action_cb);
 	list = g_list_append(list, action);
 
-	action = gaim_plugin_action_new(_("Copy Buddies From One Account to Another"),
+	action = purple_plugin_action_new(_("Copy Buddies From One Account to Another"),
 									lh_migrate_action_cb);
 	list = g_list_append(list, action);
 
-	gaim_debug_info("listhandler", "Action list created\n");
+	purple_debug_info("listhandler", "Action list created\n");
 
 	return list;
 }
 
-static GaimPluginInfo listhandler_info =
+static PurplePluginInfo listhandler_info =
 {
-	GAIM_PLUGIN_MAGIC, /* abracadabra */
-	GAIM_MAJOR_VERSION,
-	GAIM_MINOR_VERSION,
-	GAIM_PLUGIN_STANDARD,
+	PURPLE_PLUGIN_MAGIC, /* abracadabra */
+	PURPLE_MAJOR_VERSION,
+	PURPLE_MINOR_VERSION,
+	PURPLE_PLUGIN_STANDARD,
 	NULL,
 	0,
 	NULL,
-	GAIM_PRIORITY_DEFAULT,
+	PURPLE_PRIORITY_DEFAULT,
 	"core-plugin_pack-listhandler",
 	NULL,
 	GPP_VERSION,
@@ -86,7 +86,7 @@ static GaimPluginInfo listhandler_info =
 };
 
 static void /* gaim will call this to initialize the plugin */
-init_plugin(GaimPlugin *plugin)
+init_plugin(PurplePlugin *plugin)
 {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
@@ -109,4 +109,4 @@ init_plugin(GaimPlugin *plugin)
 	return;
 }
 
-GAIM_INIT_PLUGIN(listhandler, init_plugin, listhandler_info)
+PURPLE_INIT_PLUGIN(listhandler, init_plugin, listhandler_info)

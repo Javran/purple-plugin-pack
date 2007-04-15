@@ -3,7 +3,7 @@ EXTRA_DIST = \
 	.build \
 	Makefile.mingw
 
-slashexecdir = $(GAIM_LIBDIR)/gaim
+slashexecdir = $(GAIM_LIBDIR)/libpurple
 
 slashexec_la_LDFLAGS = -module -avoid-version
 
@@ -20,7 +20,7 @@ slashexec_la_LIBADD = \
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
+	-DLIBDIR=\"$(GAIM_LIBDIR)/libpurple/\" \
 	-DDATADIR=\"$(GAIM_DATADIR)\" \
 	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
 	$(DEBUG_CFLAGS) \

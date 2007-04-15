@@ -20,7 +20,7 @@
 # include "../gpp_config.h"
 #endif /* HAVE_CONFIG_H */
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #include <glib.h>
 #include <string.h>
@@ -31,15 +31,15 @@
 
 #include "../common/i18n.h"
 
-static GaimPlugin *my_plugin = NULL;
+static PurplePlugin *my_plugin = NULL;
 
-static GaimPlugin *
+static PurplePlugin *
 sslinfo_find_ssl_plugin() {
-	GaimPlugin *plugin, *ssl_plugin = NULL;
+	PurplePlugin *plugin, *ssl_plugin = NULL;
 	GList *l;
 
-	for(l = gaim_plugins_get_all(); l; l = l->next) {
-		plugin = (GaimPlugin *)l->data;
+	for(l = purple_plugins_get_all(); l; l = l->next) {
+		plugin = (PurplePlugin *)l->data;
 
 		if(plugin == my_plugin)
 			continue;
@@ -47,7 +47,7 @@ sslinfo_find_ssl_plugin() {
 		if(plugin->info && plugin->info->id &&
 		   !strncmp(plugin->info->id, "ssl-", 4))
 		{
-			if(gaim_plugin_is_loaded(plugin) || gaim_plugin_load(plugin)) {
+			if(purple_plugin_is_loaded(plugin) || purple_plugin_load(plugin)) {
 				ssl_plugin = plugin;
 				break;
 			}
@@ -58,8 +58,8 @@ sslinfo_find_ssl_plugin() {
 }
 
 static void
-sslinfo_show(GaimPluginAction *action) {
-	GaimPlugin *ssl_plugin = NULL;
+sslinfo_show(PurplePluginAction *action) {
+	PurplePlugin *ssl_plugin = NULL;
 	GString *text = NULL;
 	gchar *escaped = NULL;
 
@@ -89,32 +89,32 @@ sslinfo_show(GaimPluginAction *action) {
 		}
 	}
 
-	gaim_notify_formatted(action->plugin, _("SSL Info"), _("SSL Info"), NULL,
+	purple_notify_formatted(action->plugin, _("SSL Info"), _("SSL Info"), NULL,
 						  text->str, NULL, NULL);
 
 	g_string_free(text, TRUE);
 }
 
 static GList *
-sslinfo_actions(GaimPlugin *plugin, gpointer context) {
+sslinfo_actions(PurplePlugin *plugin, gpointer context) {
 	GList *l = NULL;
-	GaimPluginAction *act = NULL;
+	PurplePluginAction *act = NULL;
 
-	act = gaim_plugin_action_new(_("Get SSL info"), sslinfo_show);
+	act = purple_plugin_action_new(_("Get SSL info"), sslinfo_show);
 	l = g_list_append(l, act);
 
 	return l;
 }
 
-static GaimPluginInfo info = {
-	GAIM_PLUGIN_MAGIC,
-	GAIM_MAJOR_VERSION,
-	GAIM_MINOR_VERSION,
-	GAIM_PLUGIN_STANDARD,
+static PurplePluginInfo info = {
+	PURPLE_PLUGIN_MAGIC,
+	PURPLE_MAJOR_VERSION,
+	PURPLE_MINOR_VERSION,
+	PURPLE_PLUGIN_STANDARD,
 	NULL,
 	0,
 	NULL,
-	GAIM_PRIORITY_DEFAULT,
+	PURPLE_PRIORITY_DEFAULT,
 
 	"core-plugin_pack-sslinfo",
 	NULL,
@@ -135,7 +135,7 @@ static GaimPluginInfo info = {
 };
 
 static void
-init_plugin(GaimPlugin *plugin) {
+init_plugin(PurplePlugin *plugin) {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
@@ -148,4 +148,4 @@ init_plugin(GaimPlugin *plugin) {
 	my_plugin = plugin;
 }
 
-GAIM_INIT_PLUGIN(sslinfo, init_plugin, info)
+PURPLE_INIT_PLUGIN(sslinfo, init_plugin, info)

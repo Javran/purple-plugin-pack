@@ -1,4 +1,4 @@
-AC_INIT([plugin_pack], [1.0svn], [guifications-devel@lists.sourceforge.net])
+AC_INIT([purple-plugin_pack], [1.0mtn], [guifications-devel@lists.sourceforge.net])
 AC_CANONICAL_SYSTEM
 AM_CONFIG_HEADER(pre_config.h)
 
@@ -25,7 +25,7 @@ LIBTOOL="$LIBTOOL --silent"
 dnl #######################################################################
 dnl # I'm lazy and figured config.h is the best place for this ;)
 dnl #######################################################################
-AC_DEFINE_UNQUOTED(GPP_WEBSITE, "http://pidgin.guifications.org/trac", [Plugin Pack Website]) 
+AC_DEFINE_UNQUOTED(PP_WEBSITE, "http://purple.guifications.org/trac", [Plugin Pack Website]) 
 
 dnl #######################################################################
 dnl # Our header
@@ -196,7 +196,6 @@ AM_CONDITIONAL(USE_XMMS, test x"$HAVE_XMMS" = x"yes")
 AC_SUBST(XMMS_LIBS)
 AC_SUBST(XMMS_CFLAGS)
 
-# irssi among others
 AC_CHECK_HEADERS(regex.h)
 
 dnl #######################################################################
@@ -275,11 +274,13 @@ AC_OUTPUT([
 dnl #######################################################################
 dnl # Ouput!!
 dnl #######################################################################
-
 echo;
 echo $PACKAGE $VERSION Configuration complete
 echo;
 echo Debugging enabled................: $enable_debug
+echo;
+echo Installing purple plugins to.....: `eval eval echo $PURPLE_LIBDIR`
+echo Installing pidgin plugins to.....: `eval eval echo $PIDGIN_LIBDIR`
 echo;
 echo Building plugins:
 echo $PP_BUILDDIRS | xargs -n 4 echo "	"

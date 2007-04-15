@@ -21,7 +21,7 @@
 # include "../gpp_config.h"
 #endif
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #define PLUGIN_ID           "gtk-plugin_pack-switchspell"
 #define PLUGIN_NAME         "Switch Spell"
@@ -34,7 +34,7 @@
 /* System headers */
 #include <glib.h>
 
-/* Gaim headers */
+/* Purple headers */
 #include <plugin.h>
 #include <version.h>
 
@@ -55,21 +55,21 @@
 
 /* TODO: Add option to save the selected language for the dude and restore it */
 
-static void regenerate_switchspell_menu(GaimGtkConversation *gtkconv);
+static void regenerate_switchspell_menu(PidginConversation *gtkconv);
 
 static void
 menu_conv_use_dict_cb(GObject *m, gpointer data)
 {
-	GaimGtkWindow *win = g_object_get_data(m, "user_data");
+	PidginWindow *win = g_object_get_data(m, "user_data");
 	gchar *lang = g_object_get_data(m, "lang");
-	GaimConversation *conv;
-	GaimGtkConversation *gtkconv;
+	PurpleConversation *conv;
+	PidginConversation *gtkconv;
 	GtkSpell *spell;
 	GError *error = NULL;
 
-	conv = gaim_gtk_conv_window_get_active_conversation(win);
+	conv = pidgin_conv_window_get_active_conversation(win);
 
-	gtkconv = GAIM_GTK_CONVERSATION(conv);
+	gtkconv = PIDGIN_CONVERSATION(conv);
 	spell = gtkspell_get_from_text_view(GTK_TEXT_VIEW(gtkconv->entry));
 	if (spell != NULL)
 		gtkspell_set_language(spell, lang, &error);  /* XXX: error can possibly leak here */
@@ -77,9 +77,9 @@ menu_conv_use_dict_cb(GObject *m, gpointer data)
 }
 
 static void
-regenerate_switchspell_menu(GaimGtkConversation *gtkconv)
+regenerate_switchspell_menu(PidginConversation *gtkconv)
 {
-	GaimGtkWindow *win;
+	PidginWindow *win;
 	GtkWidget *menu;
 	GtkWidget *mitem;
 	GSList *group = NULL;
@@ -91,7 +91,7 @@ regenerate_switchspell_menu(GaimGtkConversation *gtkconv)
 	if (gtkconv == NULL)
 		return;
 
-	win = gaim_gtkconv_get_window(gtkconv);
+	win = pidgin_conv_get_window(gtkconv);
 	if (win == NULL)
 		return;
 
@@ -129,9 +129,9 @@ regenerate_switchspell_menu(GaimGtkConversation *gtkconv)
 }
 
 static void
-update_switchspell_selection(GaimGtkConversation *gtkconv)
+update_switchspell_selection(PidginConversation *gtkconv)
 {
-	GaimGtkWindow *win;
+	PidginWindow *win;
 	GtkWidget *menu;
 	GList *item;
 	const char *curlang;
@@ -139,7 +139,7 @@ update_switchspell_selection(GaimGtkConversation *gtkconv)
 	if (gtkconv == NULL)
 		return;
 
-	win = gaim_gtkconv_get_window(gtkconv);
+	win = pidgin_conv_get_window(gtkconv);
 	if (win == NULL)
 		return;
 
@@ -164,17 +164,17 @@ update_switchspell_selection(GaimGtkConversation *gtkconv)
 }
 
 static void
-conversation_switched_cb(GaimConversation *conv)
+conversation_switched_cb(PurpleConversation *conv)
 {
-	GaimGtkConversation *gtkconv = GAIM_GTK_CONVERSATION(conv);
+	PidginConversation *gtkconv = PIDGIN_CONVERSATION(conv);
 	regenerate_switchspell_menu(gtkconv);
 	update_switchspell_selection(gtkconv);
 }
 		
 static gboolean
-make_sure_gtkconv(GaimConversation *conv)
+make_sure_gtkconv(PurpleConversation *conv)
 {
-	GaimGtkConversation *gtkconv = GAIM_GTK_CONVERSATION(conv);
+	PidginConversation *gtkconv = PIDGIN_CONVERSATION(conv);
 	if (gtkconv == NULL)
 		return TRUE;
 	g_object_set_data(G_OBJECT(gtkconv->entry), PROP_LANG, getenv("LANG"));
@@ -183,7 +183,7 @@ make_sure_gtkconv(GaimConversation *conv)
 }
 
 static void
-conversation_created_cb(GaimConversation *conv)
+conversation_created_cb(PurpleConversation *conv)
 {
 	/* Read all about it (and more!) in xmmsremote */
 	g_timeout_add(500, (GSourceFunc)make_sure_gtkconv, conv);
@@ -191,31 +191,31 @@ conversation_created_cb(GaimConversation *conv)
 
 static void attach_switchspell_menu(gpointer data, gpointer dontcare)
 {
-	GaimGtkWindow *win = data;
-	GaimGtkConversation *gtkconv;
+	PidginWindow *win = data;
+	PidginConversation *gtkconv;
 
-	gtkconv = gaim_gtk_conv_window_get_active_gtkconv(win);
+	gtkconv = pidgin_conv_window_get_active_gtkconv(win);
 	regenerate_switchspell_menu(gtkconv);
 	update_switchspell_selection(gtkconv);
 }
 
-static gboolean plugin_load(GaimPlugin *plugin)
+static gboolean plugin_load(PurplePlugin *plugin)
 {
-	void *conv_handle = gaim_conversations_get_handle();
+	void *conv_handle = purple_conversations_get_handle();
 
-	gaim_signal_connect(conv_handle, "conversation-created", plugin,
-						GAIM_CALLBACK(conversation_created_cb), NULL);
-	gaim_signal_connect(gaim_gtk_conversations_get_handle(), "conversation-switched",
-						plugin, GAIM_CALLBACK(conversation_switched_cb), NULL);
+	purple_signal_connect(conv_handle, "conversation-created", plugin,
+						PURPLE_CALLBACK(conversation_created_cb), NULL);
+	purple_signal_connect(pidgin_conversations_get_handle(), "conversation-switched",
+						plugin, PURPLE_CALLBACK(conversation_switched_cb), NULL);
 
-	g_list_foreach(gaim_gtk_conv_windows_get_list(), attach_switchspell_menu, NULL);
+	g_list_foreach(pidgin_conv_windows_get_list(), attach_switchspell_menu, NULL);
 
 	return TRUE;
 }
 
 static void remove_switchspell_menu(gpointer data, gpointer dontcare)
 {
-	GaimGtkWindow *win = data;
+	PidginWindow *win = data;
 	GtkWidget *menu;
 
 	menu = g_object_get_data(G_OBJECT(win->window), PROP_LANG);
@@ -225,24 +225,24 @@ static void remove_switchspell_menu(gpointer data, gpointer dontcare)
 	}
 }
 
-static gboolean plugin_unload(GaimPlugin *plugin)
+static gboolean plugin_unload(PurplePlugin *plugin)
 {
-	gaim_prefs_disconnect_by_handle(plugin);
+	purple_prefs_disconnect_by_handle(plugin);
 
-	g_list_foreach(gaim_gtk_conv_windows_get_list(), remove_switchspell_menu, NULL);
+	g_list_foreach(pidgin_conv_windows_get_list(), remove_switchspell_menu, NULL);
 
 	return TRUE;
 }
 
-static GaimPluginInfo info = {
-	GAIM_PLUGIN_MAGIC,        /* Magic               */
-	GAIM_MAJOR_VERSION,       /* Gaim Major Version  */
-	GAIM_MINOR_VERSION,       /* Gaim Minor Version  */
-	GAIM_PLUGIN_STANDARD,     /* plugin type         */
-	GAIM_GTK_PLUGIN_TYPE,     /* ui requirement      */
+static PurplePluginInfo info = {
+	PURPLE_PLUGIN_MAGIC,        /* Magic               */
+	PURPLE_MAJOR_VERSION,       /* Purple Major Version  */
+	PURPLE_MINOR_VERSION,       /* Purple Minor Version  */
+	PURPLE_PLUGIN_STANDARD,     /* plugin type         */
+	PIDGIN_PLUGIN_TYPE,     /* ui requirement      */
 	0,                        /* flags               */
 	NULL,                     /* dependencies        */
-	GAIM_PRIORITY_DEFAULT,    /* priority            */
+	PURPLE_PRIORITY_DEFAULT,    /* priority            */
 
 	PLUGIN_ID,                /* plugin id           */
 	NULL,                     /* name                */
@@ -262,7 +262,7 @@ static GaimPluginInfo info = {
 	NULL                      /* actions             */
 };
 
-static void init_plugin(GaimPlugin *plugin)
+static void init_plugin(PurplePlugin *plugin)
 {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
@@ -274,4 +274,4 @@ static void init_plugin(GaimPlugin *plugin)
 	info.description = _(PLUGIN_DESCRIPTION);
 }
 
-GAIM_INIT_PLUGIN(talkfilters, init_plugin, info)
+PURPLE_INIT_PLUGIN(talkfilters, init_plugin, info)

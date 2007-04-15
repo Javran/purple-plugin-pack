@@ -1,5 +1,5 @@
 /*
- * Gaim-Schedule - Schedule reminders at specified times.
+ * Purple-Schedule - Schedule reminders at specified times.
  * Copyright (C) 2006
  *
  * This program is free software; you can redistribute it and/or
@@ -21,11 +21,11 @@
 # include "../gpp_config.h"
 #endif
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #define PLUGIN_ID			"gtk-gaim-schedule"
-#define PLUGIN_NAME			"Gaim Schedule"
-#define PLUGIN_STATIC_NAME	"Gaim Schedule"
+#define PLUGIN_NAME			"Purple Schedule"
+#define PLUGIN_STATIC_NAME	"Purple Schedule"
 #define PLUGIN_SUMMARY		"Schedule reminders at specified times."
 #define PLUGIN_DESCRIPTION	"Schedule reminders at specified times."
 #define PLUGIN_AUTHOR		"Sadrul H Chowdhury <sadrul@users.sourceforge.net>"
@@ -35,7 +35,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-/* Gaim headers */
+/* Purple headers */
 #include <gtkplugin.h>
 #include <version.h>
 
@@ -103,13 +103,13 @@ add_columns(ScheduleWindow *win)
 static void
 populate_list(ScheduleWindow *win)
 {
-	GList *list = gaim_schedules_get_all();
+	GList *list = purple_schedules_get_all();
 
 	gtk_list_store_clear(win->model);
 	while (list)
 	{
 		GtkTreeIter iter;
-		GaimSchedule *schedule = list->data;
+		PurpleSchedule *schedule = list->data;
 
 		gtk_list_store_append(win->model, &iter);
 		gtk_list_store_set(win->model, &iter, 0, schedule->name, 1, schedule, -1);
@@ -182,11 +182,11 @@ add_date_time_fields(ScheduleWindow *win, GtkWidget *box)
 	time_t now = time(NULL);
 	struct tm *tm = localtime(&now);
 
-	frame = gaim_gtk_make_frame(box, _("Select Date and Time"));
+	frame = pidgin_make_frame(box, _("Select Date and Time"));
 
 	table = gtk_table_new(4, 5, FALSE);
-	gtk_table_set_row_spacings(GTK_TABLE(table), GAIM_HIG_BOX_SPACE);
-	gtk_table_set_col_spacings(GTK_TABLE(table), GAIM_HIG_BOX_SPACE);
+	gtk_table_set_row_spacings(GTK_TABLE(table), PIDGIN_HIG_BOX_SPACE);
+	gtk_table_set_col_spacings(GTK_TABLE(table), PIDGIN_HIG_BOX_SPACE);
 	gtk_container_add(GTK_CONTAINER(frame), table);
 
 #define ATTACH(wid) \
@@ -261,14 +261,14 @@ add_send_message_fields(ScheduleWindow *win, GtkWidget *box)
 	GtkWidget *frame, *table, *enable, *check;
 	GtkWidget *optmenu, *entry, *imhtml, *fr;
 
-	frame = gaim_gtk_make_frame(box, _("Send Message"));
+	frame = pidgin_make_frame(box, _("Send Message"));
 
-	enable = gtk_vbox_new(FALSE, GAIM_HIG_BOX_SPACE);
+	enable = gtk_vbox_new(FALSE, PIDGIN_HIG_BOX_SPACE);
 	gtk_container_add(GTK_CONTAINER(frame), enable);
 
 	table = gtk_table_new(4, 2, FALSE);
-	gtk_table_set_row_spacings(GTK_TABLE(table), GAIM_HIG_BOX_SPACE);
-	gtk_table_set_col_spacings(GTK_TABLE(table), GAIM_HIG_BOX_SPACE);
+	gtk_table_set_row_spacings(GTK_TABLE(table), PIDGIN_HIG_BOX_SPACE);
+	gtk_table_set_col_spacings(GTK_TABLE(table), PIDGIN_HIG_BOX_SPACE);
 	gtk_widget_set_sensitive(table, FALSE);
 
 	win->check_send = check = gtk_check_button_new_with_mnemonic(_("_Send message to a friend"));
@@ -277,10 +277,10 @@ add_send_message_fields(ScheduleWindow *win, GtkWidget *box)
 	gtk_box_pack_start(GTK_BOX(enable), check, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(enable), table, TRUE, TRUE, 0);
 
-	win->accounts = optmenu = gaim_gtk_account_option_menu_new(NULL, TRUE, NULL, NULL, NULL);
+	win->accounts = optmenu = pidgin_account_option_menu_new(NULL, TRUE, NULL, NULL, NULL);
 	win->buddy = entry = gtk_entry_new();
-	gaim_gtk_setup_screenname_autocomplete(entry, optmenu, FALSE);
-	fr = gaim_gtk_create_imhtml(TRUE, &imhtml, NULL, NULL);
+	pidgin_setup_screenname_autocomplete(entry, optmenu, FALSE);
+	fr = pidgin_create_imhtml(TRUE, &imhtml, NULL, NULL);
 	win->imhtml = imhtml;
 	/* XXX: set the formatting to default send-message format */
 
@@ -304,9 +304,9 @@ add_popup_fields(ScheduleWindow *win, GtkWidget *box)
 	GtkWidget *frame, *enable, *check;
 	GtkWidget *entry;
 
-	frame = gaim_gtk_make_frame(box, _("Popup Dialog"));
+	frame = pidgin_make_frame(box, _("Popup Dialog"));
 
-	enable = gtk_hbox_new(FALSE, GAIM_HIG_BOX_SPACE);
+	enable = gtk_hbox_new(FALSE, PIDGIN_HIG_BOX_SPACE);
 	gtk_container_add(GTK_CONTAINER(frame), enable);
 
 	win->check_popup = check = gtk_check_button_new_with_mnemonic(_("_Popup a reminder dialog with message"));
@@ -324,7 +324,7 @@ schedule_selection_changed_cb(GtkTreeSelection *sel, ScheduleWindow *win)
 {
 	GtkTreeModel *model;
 	GtkTreeIter iter;
-	GaimSchedule *schedule;
+	PurpleSchedule *schedule;
 	GList *list;
 
 	if (!gtk_tree_selection_get_selected(sel, &model, &iter))
@@ -339,7 +339,7 @@ schedule_selection_changed_cb(GtkTreeSelection *sel, ScheduleWindow *win)
 
 	gtk_entry_set_text(GTK_ENTRY(win->name), schedule->name);
 
-	if (schedule->type == GAIM_SCHEDULE_TYPE_DATE)
+	if (schedule->type == PURPLE_SCHEDULE_TYPE_DATE)
 	{
 		if (schedule->d.date == -1)
 			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(win->eday), TRUE);
@@ -383,14 +383,14 @@ schedule_selection_changed_cb(GtkTreeSelection *sel, ScheduleWindow *win)
 				break;
 			case SCHEDULE_ACTION_CONV:
 				gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(win->check_send), TRUE);
-				gaim_gtk_account_option_menu_set_selected(win->accounts, action->d.send.account);
+				pidgin_account_option_menu_set_selected(win->accounts, action->d.send.account);
 				gtk_entry_set_text(GTK_ENTRY(win->buddy), action->d.send.who);
 				gtk_imhtml_clear(GTK_IMHTML(win->imhtml));
 				/* XXX: gtk_imhtml_set_protocol_name*/
 				gtk_imhtml_append_text(GTK_IMHTML(win->imhtml), action->d.send.message, 0);
 				break;
 			default:
-				gaim_debug_warning("gaim-schedule", "action type not implemented yet.\n");
+				purple_debug_warning("gaim-schedule", "action type not implemented yet.\n");
 				break;
 		}
 	}
@@ -401,7 +401,7 @@ add_name_field(ScheduleWindow *win, GtkWidget *box)
 {
 	GtkWidget *label, *pack, *entry;
 
-	pack = gtk_hbox_new(FALSE, GAIM_HIG_BOX_SPACE);
+	pack = gtk_hbox_new(FALSE, PIDGIN_HIG_BOX_SPACE);
 
 	label = gtk_label_new(_("Name"));
 	gtk_box_pack_start(GTK_BOX(pack), label, FALSE, FALSE, 0);
@@ -417,7 +417,7 @@ save_clicked_cb(GtkWidget *w, ScheduleWindow *win)
 {
 	GtkTreeSelection *sel;
 	GtkTreeIter iter;
-	GaimSchedule *schedule;
+	PurpleSchedule *schedule;
 
 	sel = gtk_tree_view_get_selection(GTK_TREE_VIEW(win->treeview));
 	gtk_tree_selection_get_selected(sel, NULL, &iter);
@@ -430,10 +430,10 @@ save_clicked_cb(GtkWidget *w, ScheduleWindow *win)
 	gtk_list_store_set(win->model, &iter, 0, schedule->name, -1);
 
 	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(win->radio_day))) {
-		schedule->type = GAIM_SCHEDULE_TYPE_DAY;
+		schedule->type = PURPLE_SCHEDULE_TYPE_DAY;
 		schedule->d.day = gtk_combo_box_get_active(GTK_COMBO_BOX(win->day)) - 1;
 	} else {
-		schedule->type = GAIM_SCHEDULE_TYPE_DATE;
+		schedule->type = PURPLE_SCHEDULE_TYPE_DATE;
 		if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(win->eday)))
 			schedule->d.date = -1;
 		else
@@ -449,27 +449,27 @@ save_clicked_cb(GtkWidget *w, ScheduleWindow *win)
 	schedule->hour = gtk_spin_button_get_value(GTK_SPIN_BUTTON(win->hour));
 	schedule->minute = gtk_spin_button_get_value(GTK_SPIN_BUTTON(win->minute));
 
-	gaim_schedule_remove_action(schedule, SCHEDULE_ACTION_POPUP);
-	gaim_schedule_remove_action(schedule, SCHEDULE_ACTION_CONV);
+	purple_schedule_remove_action(schedule, SCHEDULE_ACTION_POPUP);
+	purple_schedule_remove_action(schedule, SCHEDULE_ACTION_CONV);
 
 	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(win->check_send))) {
 		char *message = gtk_imhtml_get_markup(GTK_IMHTML(win->imhtml));
-		gaim_schedule_add_action(schedule, SCHEDULE_ACTION_CONV,
+		purple_schedule_add_action(schedule, SCHEDULE_ACTION_CONV,
 						message, gtk_entry_get_text(GTK_ENTRY(win->buddy)),
-						gaim_gtk_account_option_menu_get_selected(win->accounts));
+						pidgin_account_option_menu_get_selected(win->accounts));
 		g_free(message);
 	}
 
 	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(win->check_popup))) {
-		gaim_schedule_add_action(schedule, SCHEDULE_ACTION_POPUP,
+		purple_schedule_add_action(schedule, SCHEDULE_ACTION_POPUP,
 					gtk_entry_get_text(GTK_ENTRY(win->popup_message)));
 	}
 
-	gaim_schedule_reschedule(schedule);
-	if (!g_list_find(gaim_schedules_get_all(), schedule))
-		gaim_schedules_add(schedule);
+	purple_schedule_reschedule(schedule);
+	if (!g_list_find(purple_schedules_get_all(), schedule))
+		purple_schedules_add(schedule);
 	
-	gaim_schedules_sync();
+	purple_schedules_sync();
 }
 
 static gboolean
@@ -498,13 +498,13 @@ find_schedule_by_name(const char *name, ScheduleWindow *win)
 static void
 add_schedule_cb(GtkWidget *b, ScheduleWindow *win)
 {
-	GaimSchedule *schedule;
+	PurpleSchedule *schedule;
 	char *name;
 	int count = 1;
 	GtkTreeIter iter;
 	GtkTreePath *path;
 
-	schedule = gaim_schedule_new();
+	schedule = purple_schedule_new();
 	name = g_strdup("Schedule");
 	while (find_schedule_by_name(name, win))
 	{
@@ -529,7 +529,7 @@ delete_schedule_cb(GtkWidget *b, ScheduleWindow *win)
 	GtkTreeSelection *sel;
 	GtkTreeIter iter;
 	GtkTreeModel *model;
-	GaimSchedule *schedule;
+	PurpleSchedule *schedule;
 
 	/* XXX: ask for confirmation? */
 
@@ -540,7 +540,7 @@ delete_schedule_cb(GtkWidget *b, ScheduleWindow *win)
 
 	gtk_tree_model_get(model, &iter, 1, &schedule, -1);
 	gtk_list_store_remove(win->model, &iter);
-	gaim_schedule_destroy(schedule);
+	purple_schedule_destroy(schedule);
 }
 
 static void
@@ -561,9 +561,9 @@ schedule_window_show(gboolean new)
 	win->window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_resizable(GTK_WINDOW(win->window), TRUE);
 	g_signal_connect(G_OBJECT(win->window), "delete_event", schedule_window_destroy, NULL);
-	gtk_container_set_border_width(GTK_CONTAINER(win->window), GAIM_HIG_BOX_SPACE);
+	gtk_container_set_border_width(GTK_CONTAINER(win->window), PIDGIN_HIG_BOX_SPACE);
 
-	box = gtk_hbox_new(FALSE, GAIM_HIG_BOX_SPACE);
+	box = gtk_hbox_new(FALSE, PIDGIN_HIG_BOX_SPACE);
 	gtk_container_add(GTK_CONTAINER(win->window), box);
 
 	win->model = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_POINTER);
@@ -577,24 +577,24 @@ schedule_window_show(gboolean new)
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(sw), GTK_SHADOW_IN);
 	gtk_container_add(GTK_CONTAINER(sw), win->treeview);
 
-	box2 = gtk_vbox_new(FALSE, GAIM_HIG_BOX_SPACE);
+	box2 = gtk_vbox_new(FALSE, PIDGIN_HIG_BOX_SPACE);
 	gtk_box_pack_start(GTK_BOX(box2), sw, TRUE, TRUE, 0);
 
 	bbox = gtk_hbutton_box_new();
-	button = gaim_pixbuf_button_from_stock(_("_Add"), GTK_STOCK_ADD, GAIM_BUTTON_HORIZONTAL);
+	button = pidgin_pixbuf_button_from_stock(_("_Add"), GTK_STOCK_ADD, PIDGIN_BUTTON_HORIZONTAL);
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(add_schedule_cb), win);
 	gtk_box_pack_start(GTK_BOX(bbox), button, FALSE, TRUE, 0);
 
-	button = gaim_pixbuf_button_from_stock(_("_Delete"), GTK_STOCK_CANCEL, GAIM_BUTTON_HORIZONTAL);
+	button = pidgin_pixbuf_button_from_stock(_("_Delete"), GTK_STOCK_CANCEL, PIDGIN_BUTTON_HORIZONTAL);
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(delete_schedule_cb), win);
 	gtk_box_pack_start(GTK_BOX(bbox), button, FALSE, TRUE, 0);
 	
 	gtk_box_pack_start(GTK_BOX(box2), bbox, FALSE, FALSE, 0);
 
-	gtk_box_pack_start(GTK_BOX(box), box2, FALSE, FALSE, GAIM_HIG_BOX_SPACE);
+	gtk_box_pack_start(GTK_BOX(box), box2, FALSE, FALSE, PIDGIN_HIG_BOX_SPACE);
 
-	win->right_container = box2 = gtk_vbox_new(FALSE, GAIM_HIG_BOX_SPACE);
-	gtk_box_pack_start(GTK_BOX(box), box2, TRUE, TRUE, GAIM_HIG_BOX_SPACE);
+	win->right_container = box2 = gtk_vbox_new(FALSE, PIDGIN_HIG_BOX_SPACE);
+	gtk_box_pack_start(GTK_BOX(box), box2, TRUE, TRUE, PIDGIN_HIG_BOX_SPACE);
 
 	add_name_field(win, box2);
 	add_date_time_fields(win, box2);
@@ -632,57 +632,57 @@ schedule_window_show(gboolean new)
 }
 
 static void
-gaim_schedule_window_new(GaimPluginAction *action)
+purple_schedule_window_new(PurplePluginAction *action)
 {
 	schedule_window_show(TRUE);
 }
 
 static void
-gaim_schedule_list(GaimPluginAction *action)
+purple_schedule_list(PurplePluginAction *action)
 {
 	schedule_window_show(FALSE);
 }
 
 static GList *
-actions(GaimPlugin *plugin, gpointer context)
+actions(PurplePlugin *plugin, gpointer context)
 {
 	GList *list = NULL;
-	GaimPluginAction *act;
+	PurplePluginAction *act;
 
-	/* XXX: submit the patch to Gaim for making the mnemonics work */
-	act = gaim_plugin_action_new(_("New Schedule"), gaim_schedule_window_new);
+	/* XXX: submit the patch to Purple for making the mnemonics work */
+	act = purple_plugin_action_new(_("New Schedule"), purple_schedule_window_new);
 	list = g_list_append(list, act);
 
-	act = gaim_plugin_action_new(_("List of Schedules"), gaim_schedule_list);
+	act = purple_plugin_action_new(_("List of Schedules"), purple_schedule_list);
 	list = g_list_append(list, act);
 
 	return list;
 }
 
 static gboolean
-plugin_load(GaimPlugin *plugin)
+plugin_load(PurplePlugin *plugin)
 {
-	gaim_schedule_init();
+	purple_schedule_init();
 	return TRUE;
 }
 
 static gboolean
-plugin_unload(GaimPlugin *plugin)
+plugin_unload(PurplePlugin *plugin)
 {
 	schedule_window_destroy();
-	gaim_schedule_uninit();
+	purple_schedule_uninit();
 	return TRUE;
 }
 
-static GaimPluginInfo info = {
-	GAIM_PLUGIN_MAGIC,			/* Magic				*/
-	GAIM_MAJOR_VERSION,			/* Gaim Major Version	*/
-	GAIM_MINOR_VERSION,			/* Gaim Minor Version	*/
-	GAIM_PLUGIN_STANDARD,		/* plugin type			*/
-	GAIM_GTK_PLUGIN_TYPE,		/* ui requirement		*/
+static PurplePluginInfo info = {
+	PURPLE_PLUGIN_MAGIC,			/* Magic				*/
+	PURPLE_MAJOR_VERSION,			/* Purple Major Version	*/
+	PURPLE_MINOR_VERSION,			/* Purple Minor Version	*/
+	PURPLE_PLUGIN_STANDARD,		/* plugin type			*/
+	PIDGIN_PLUGIN_TYPE,		/* ui requirement		*/
 	0,							/* flags				*/
 	NULL,						/* dependencies			*/
-	GAIM_PRIORITY_DEFAULT,		/* priority				*/
+	PURPLE_PRIORITY_DEFAULT,		/* priority				*/
 
 	PLUGIN_ID,					/* plugin id			*/
 	NULL,						/* name					*/
@@ -703,7 +703,7 @@ static GaimPluginInfo info = {
 };
 
 static void
-init_plugin(GaimPlugin *plugin)
+init_plugin(PurplePlugin *plugin)
 {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
@@ -715,4 +715,4 @@ init_plugin(GaimPlugin *plugin)
 	info.description = _(PLUGIN_DESCRIPTION);
 }
 
-GAIM_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)
+PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)

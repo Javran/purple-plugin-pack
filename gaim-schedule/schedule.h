@@ -1,5 +1,5 @@
 /*
- * Gaim-Schedule - Schedule reminders/pounces at specified times.
+ * Purple-Schedule - Schedule reminders/pounces at specified times.
  * Copyright (C) 2006
  *
  * This program is free software; you can redistribute it and/or
@@ -30,7 +30,7 @@
 #include <account.h>
 #include <debug.h>
 
-typedef struct _GaimSchedule GaimSchedule;
+typedef struct _PurpleSchedule PurpleSchedule;
 typedef struct _ScheduleAction ScheduleAction;
 
 typedef enum
@@ -43,23 +43,23 @@ typedef enum
 
 typedef enum
 {
-	GAIM_SCHEDULE_TYPE_DATE,				/* Schedule for a date */
-	GAIM_SCHEDULE_TYPE_DAY					/* Schedule for a day (eg. Sunday) */
+	PURPLE_SCHEDULE_TYPE_DATE,				/* Schedule for a date */
+	PURPLE_SCHEDULE_TYPE_DAY					/* Schedule for a day (eg. Sunday) */
 } ScheduleType;
 
 typedef enum
 {
-	GAIM_SCHEDULE_DAY_ALL,
-	GAIM_SCHEDULE_DAY_SUN,
-	GAIM_SCHEDULE_DAY_MON,
-	GAIM_SCHEDULE_DAY_TUE,
-	GAIM_SCHEDULE_DAY_WED,
-	GAIM_SCHEDULE_DAY_THR,
-	GAIM_SCHEDULE_DAY_FRI,
-	GAIM_SCHEDULE_DAY_SAT
+	PURPLE_SCHEDULE_DAY_ALL,
+	PURPLE_SCHEDULE_DAY_SUN,
+	PURPLE_SCHEDULE_DAY_MON,
+	PURPLE_SCHEDULE_DAY_TUE,
+	PURPLE_SCHEDULE_DAY_WED,
+	PURPLE_SCHEDULE_DAY_THR,
+	PURPLE_SCHEDULE_DAY_FRI,
+	PURPLE_SCHEDULE_DAY_SAT
 } ScheduleDay;
 
-struct _GaimSchedule
+struct _PurpleSchedule
 {
 	ScheduleType type;
 	char *name;
@@ -91,33 +91,33 @@ struct _ScheduleAction
 		{
 			char *message;		/* send message */
 			char *who;
-			GaimAccount *account;
+			PurpleAccount *account;
 		} send;
 		char *status_title;		/* title of the status to change to */
 	} d;
 };
 
-GaimSchedule *gaim_schedule_new();
+PurpleSchedule *purple_schedule_new();
 
-void gaim_schedule_destroy(GaimSchedule *schedule);
+void purple_schedule_destroy(PurpleSchedule *schedule);
 
-void gaim_schedule_add_action(GaimSchedule *schedule, ScheduleActionType type, ...);
+void purple_schedule_add_action(PurpleSchedule *schedule, ScheduleActionType type, ...);
 
-void gaim_schedule_remove_action(GaimSchedule *schedule, ScheduleActionType type);
+void purple_schedule_remove_action(PurpleSchedule *schedule, ScheduleActionType type);
 
-void gaim_schedule_action_destroy(ScheduleAction *action);
+void purple_schedule_action_destroy(ScheduleAction *action);
 
-GList *gaim_schedules_get_all();
+GList *purple_schedules_get_all();
 
-void gaim_schedules_add(GaimSchedule *schedule);
+void purple_schedules_add(PurpleSchedule *schedule);
 
-void gaim_schedule_reschedule(GaimSchedule *schedule);
+void purple_schedule_reschedule(PurpleSchedule *schedule);
 
-void gaim_schedule_init();
+void purple_schedule_init();
 
-void gaim_schedule_uninit();
+void purple_schedule_uninit();
 
-void gaim_schedules_sync();
+void purple_schedules_sync();
 
 G_END_DECLS
 

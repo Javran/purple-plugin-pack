@@ -103,7 +103,7 @@ gboolean ignorance_level_has_denizen_regex(ignorance_level *level,
 	udata[0]=denizens;
 
 	if(regcomp(&reg,regex,REG_EXTENDED | REG_NOSUB)) {
-		gaim_debug_error("ignorance", "Error parsing regex %s\n",
+		purple_debug_error("ignorance", "Error parsing regex %s\n",
 				   regex);
 		regfree(&reg);
 		return FALSE;
@@ -146,14 +146,14 @@ gboolean ignorance_level_remove_denizen(ignorance_level *level,
 	rv=g_hash_table_lookup_extended(level->denizens_hash, username->str, &kptr,
 									&vptr);
 
-	gaim_debug_info("ignorance","Remove: found id %x\n",vptr);
+	purple_debug_info("ignorance","Remove: found id %x\n",vptr);
 	if(rv){
-		gaim_debug_info("ignorance","Removing from hash\n");
+		purple_debug_info("ignorance","Removing from hash\n");
 		g_hash_table_remove(level->denizens_hash,username->str);
 
-		gaim_debug_info("ignorance","Freeing denizen\n");
+		purple_debug_info("ignorance","Freeing denizen\n");
 		ignorance_denizen_free((ignorance_denizen*)vptr);
-		gaim_debug_info("ignorance","Done freeing denizen\n");
+		purple_debug_info("ignorance","Done freeing denizen\n");
 	}
 
 	return rv;
@@ -166,13 +166,13 @@ gint ignorance_level_rulecheck(ignorance_level *level,
 	ignorance_rule *cur;
 	ignorance_denizen *id;
 
-	gaim_debug_info("ignorance","Preparing to lookup %s\n", username->str);
+	purple_debug_info("ignorance","Preparing to lookup %s\n", username->str);
 	id = g_hash_table_lookup(level->denizens_hash, username->str);
-	gaim_debug_info("ignorance","Got denizen %x\n",id);
+	purple_debug_info("ignorance","Got denizen %x\n",id);
 	if(id){
-		gaim_debug_info("ignorance","Making sure text isn't name\n");
+		purple_debug_info("ignorance","Making sure text isn't name\n");
 		if(strcasecmp(ignorance_denizen_get_name(id),text->str)){
-			gaim_debug_info("ignorance","Setting new message to %s\n", text->str);
+			purple_debug_info("ignorance","Setting new message to %s\n", text->str);
 			ignorance_denizen_set_message(id, text->str);
 		}
 	}

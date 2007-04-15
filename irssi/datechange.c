@@ -1,5 +1,5 @@
 /*
- * irssi - Implements several irssi features for Gaim
+ * irssi - Implements several irssi features for Purple
  * Copyright (C) 2005-2007 Gary Kramlich <grim@reaperworld.com>
  * Copyright (C) 2007 John Bailey <rekkanoryo@rekkanoryo.org>
  *
@@ -81,20 +81,20 @@ irssi_datechange_timeout_cb(gpointer data) {
 	strftime(buff, sizeof(buff), "%d %b %Y", localtime(&t));
 	message = g_strdup_printf(_("Day changed to %s"), buff);
 
-	for(l = gaim_get_conversations(); l; l = l->next) {
-		GaimConversation *conv = (GaimConversation *)l->data;
+	for(l = purple_get_conversations(); l; l = l->next) {
+		PurpleConversation *conv = (PurpleConversation *)l->data;
 
-		gaim_conversation_write(conv, NULL, message,
-				GAIM_MESSAGE_NO_LOG | GAIM_MESSAGE_SYSTEM | GAIM_MESSAGE_ACTIVE_ONLY,
+		purple_conversation_write(conv, NULL, message,
+				PURPLE_MESSAGE_NO_LOG | PURPLE_MESSAGE_SYSTEM | PURPLE_MESSAGE_ACTIVE_ONLY,
 				t);
 		if ((irssi_datechange_get_day(&t) == 1) &&
 				(irssi_datechange_get_month(&t) == 0))
 		{
 			const gchar *new_year = _("Happy New Year");
-			if(conv->type == GAIM_CONV_TYPE_IM)
-				gaim_conv_im_send(GAIM_CONV_IM(conv), new_year);
-			else if(conv->type == GAIM_CONV_TYPE_CHAT)
-				gaim_conv_chat_send(GAIM_CONV_CHAT(conv), new_year);
+			if(conv->type == PURPLE_CONV_TYPE_IM)
+				purple_conv_im_send(PURPLE_CONV_IM(conv), new_year);
+			else if(conv->type == PURPLE_CONV_TYPE_CHAT)
+				purple_conv_chat_send(PURPLE_CONV_CHAT(conv), new_year);
 		}
 	}
 
@@ -109,11 +109,11 @@ irssi_datechange_timeout_cb(gpointer data) {
  * "API"
  *****************************************************************************/
 void
-irssi_datechange_init(GaimPlugin *plugin) {
+irssi_datechange_init(PurplePlugin *plugin) {
 	time_t t;
 
 	if(irssi_datechange_timeout_id != 0)
-		gaim_timeout_remove(irssi_datechange_timeout_id);
+		purple_timeout_remove(irssi_datechange_timeout_id);
 	
 	t = time(NULL);
 	lastday = irssi_datechange_get_day(&t);
@@ -129,8 +129,8 @@ irssi_datechange_init(GaimPlugin *plugin) {
 }
 
 void
-irssi_datechange_uninit(GaimPlugin *plugin) {
+irssi_datechange_uninit(PurplePlugin *plugin) {
 	if(irssi_datechange_timeout_id != 0)
-		gaim_timeout_remove(irssi_datechange_timeout_id);
+		purple_timeout_remove(irssi_datechange_timeout_id);
 }
 

@@ -20,7 +20,7 @@
 # include "../gpp_config.h"
 #endif /* HAVE_CONFIG_H */
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #include <plugin.h>
 #include <debug.h>
@@ -42,7 +42,7 @@ GSList *connecting;
 static gboolean
 remove_connecting_account(void *p)
 {
-	GaimAccount *account = (GaimAccount *)p;
+	PurpleAccount *account = (PurpleAccount *)p;
 
 	if (account == NULL)
 		return FALSE;
@@ -53,7 +53,7 @@ remove_connecting_account(void *p)
 		return FALSE;
 	}
 
-	if (account->gc->state == GAIM_CONNECTING)
+	if (account->gc->state == PURPLE_CONNECTING)
 		return TRUE;
 
 	connecting = g_slist_remove(connecting, account);
@@ -62,7 +62,7 @@ remove_connecting_account(void *p)
 }
 
 static void
-account_connecting_cb(GaimAccount *account, void *data)
+account_connecting_cb(PurpleAccount *account, void *data)
 {
 	if (g_slist_find(connecting, account) == NULL)
 	{
@@ -72,26 +72,26 @@ account_connecting_cb(GaimAccount *account, void *data)
 }
 
 static void
-received_im_msg_cb(GaimAccount *account, char *sender, char *message,
-				   GaimConversation *conv, int flags, void *data)
+received_im_msg_cb(PurpleAccount *account, char *sender, char *message,
+				   PurpleConversation *conv, int flags, void *data)
 {
-	GaimBuddy *buddy;
+	PurpleBuddy *buddy;
 	gchar *said = NULL;
 	GSList *buds;
 
-	gaim_markup_html_to_xhtml(message, NULL, &said);
-	for (buds = gaim_find_buddies(account, sender); buds; buds = buds->next)
+	purple_markup_html_to_xhtml(message, NULL, &said);
+	for (buds = purple_find_buddies(account, sender); buds; buds = buds->next)
 	{
 		buddy = buds->data;
 
-		gaim_blist_node_set_int((GaimBlistNode*)buddy, "lastseen", time(NULL));
-		gaim_blist_node_set_string((GaimBlistNode*)buddy, "lastsaid", g_strchomp(said));
+		purple_blist_node_set_int((PurpleBlistNode*)buddy, "lastseen", time(NULL));
+		purple_blist_node_set_string((PurpleBlistNode*)buddy, "lastsaid", g_strchomp(said));
 	}
 	g_free(said);
 }
 
 static void
-buddy_signedon_cb(GaimBuddy *buddy, void *data)
+buddy_signedon_cb(PurpleBuddy *buddy, void *data)
 {
 	/* TODO: if the buddy is actually the account that is signing on, we
 	 * should actually update signon time. Don't forget to normalize
@@ -99,75 +99,75 @@ buddy_signedon_cb(GaimBuddy *buddy, void *data)
 	 * is always online when we log in? hmmm */
 	if (g_slist_find(connecting, buddy->account) != NULL)
 		return;
-	gaim_blist_node_set_int((GaimBlistNode*)buddy, "signedon", time(NULL));
+	purple_blist_node_set_int((PurpleBlistNode*)buddy, "signedon", time(NULL));
 }
 
 static void
-buddy_signedoff_cb(GaimBuddy *buddy, void *data)
+buddy_signedoff_cb(PurpleBuddy *buddy, void *data)
 {
-	gaim_blist_node_set_int((GaimBlistNode*)buddy, "signedoff", time(NULL) );
+	purple_blist_node_set_int((PurpleBlistNode*)buddy, "signedoff", time(NULL) );
 }
 
-#if GAIM_VERSION_CHECK(2,0,0)
+#if PURPLE_VERSION_CHECK(2,0,0)
 static void
-drawing_tooltip_cb(GaimBlistNode *node, GString *str, gboolean full, void *data)
+drawing_tooltip_cb(PurpleBlistNode *node, GString *str, gboolean full, void *data)
 #else
 static void
-drawing_tooltip_cb(GaimBlistNode *node, char **text, void *data)
+drawing_tooltip_cb(PurpleBlistNode *node, char **text, void *data)
 #endif
 {
-	GaimBuddy *buddy = NULL;
-	GaimBlistNode *n;
+	PurpleBuddy *buddy = NULL;
+	PurpleBlistNode *n;
 	time_t last = 0, max = 0, off = 0, on = 0;
 	const gchar *tmp = NULL;
 	gchar *seen = NULL, *said = NULL, *offs = NULL, *ons = NULL;
-#if !GAIM_VERSION_CHECK(2,0,0)
+#if !PURPLE_VERSION_CHECK(2,0,0)
 	gchar *tmp2 = NULL;
 #endif
 
-	if(GAIM_BLIST_NODE_IS_BUDDY(node))
+	if(PURPLE_BLIST_NODE_IS_BUDDY(node))
 	{
-#if GAIM_VERSION_CHECK(2,0,0)
+#if PURPLE_VERSION_CHECK(2,0,0)
 		if (!full)
 			return;
 #endif
-		node = (GaimBlistNode *)gaim_buddy_get_contact((GaimBuddy *)node);
+		node = (PurpleBlistNode *)purple_buddy_get_contact((PurpleBuddy *)node);
 	}
 
-	if(!GAIM_BLIST_NODE_IS_CONTACT(node))
+	if(!PURPLE_BLIST_NODE_IS_CONTACT(node))
 		return;
 
 	for (n = node->child; n; n = n->next)
 	{
-		if (!GAIM_BLIST_NODE_IS_BUDDY(n))
+		if (!PURPLE_BLIST_NODE_IS_BUDDY(n))
 			continue;
-		last = gaim_blist_node_get_int(n, "lastseen");
+		last = purple_blist_node_get_int(n, "lastseen");
 		if (last > max) {
 			max = last;
-			buddy = (GaimBuddy *)n;
+			buddy = (PurpleBuddy *)n;
 		}
 		last = 0;
 	}
 
 	if(!buddy)
-		buddy = gaim_contact_get_priority_buddy((GaimContact *)node);
+		buddy = purple_contact_get_priority_buddy((PurpleContact *)node);
 
-	last = gaim_blist_node_get_int((GaimBlistNode *)buddy, "lastseen");
+	last = purple_blist_node_get_int((PurpleBlistNode *)buddy, "lastseen");
 	if (last)
-		seen = gaim_str_seconds_to_string(time(NULL) - last);
-	on = gaim_blist_node_get_int((GaimBlistNode *)buddy, "signedon");
+		seen = purple_str_seconds_to_string(time(NULL) - last);
+	on = purple_blist_node_get_int((PurpleBlistNode *)buddy, "signedon");
 	if (on)
-		ons = gaim_str_seconds_to_string(time(NULL) - on);
-	if(!GAIM_BUDDY_IS_ONLINE(buddy)) {
-		off = gaim_blist_node_get_int((GaimBlistNode *)buddy, "signedoff");
+		ons = purple_str_seconds_to_string(time(NULL) - on);
+	if(!PURPLE_BUDDY_IS_ONLINE(buddy)) {
+		off = purple_blist_node_get_int((PurpleBlistNode *)buddy, "signedoff");
 		if (off)
-			offs = gaim_str_seconds_to_string(time(NULL) - off);
+			offs = purple_str_seconds_to_string(time(NULL) - off);
 	}
-	tmp = gaim_blist_node_get_string((GaimBlistNode *)buddy, "lastsaid");
+	tmp = purple_blist_node_get_string((PurpleBlistNode *)buddy, "lastsaid");
 	if(tmp)
 		said = g_strchomp(g_markup_escape_text(tmp, -1));
 
-#if GAIM_VERSION_CHECK(2,0,0)
+#if PURPLE_VERSION_CHECK(2,0,0)
 	g_string_append_printf(str,
 					  "%s %s" /* Last seen */
 					  "%s %s" /* Last said */
@@ -199,46 +199,46 @@ drawing_tooltip_cb(GaimBlistNode *node, char **text, void *data)
 }
 
 static gboolean
-plugin_load(GaimPlugin *plugin)
+plugin_load(PurplePlugin *plugin)
 {
-	void *blist = gaim_blist_get_handle();
-	void *conversation = gaim_conversations_get_handle();
-	void *gtkblist = gaim_gtk_blist_get_handle();
+	void *blist = purple_blist_get_handle();
+	void *conversation = purple_conversations_get_handle();
+	void *gtkblist = pidgin_blist_get_handle();
 
 	connecting = NULL;
 
-	gaim_signal_connect(gaim_accounts_get_handle(), "account-connecting",
-						plugin, GAIM_CALLBACK(account_connecting_cb), NULL);
-	gaim_signal_connect(conversation, "received-im-msg",
-						plugin, GAIM_CALLBACK(received_im_msg_cb), NULL);
-	gaim_signal_connect(blist, "buddy-signed-on", plugin,
-						GAIM_CALLBACK(buddy_signedon_cb), NULL);
-	gaim_signal_connect(blist, "buddy-signed-off", plugin,
-						GAIM_CALLBACK(buddy_signedoff_cb), NULL);
-	gaim_signal_connect(gtkblist, "drawing-tooltip",
-						plugin, GAIM_CALLBACK(drawing_tooltip_cb), NULL);
+	purple_signal_connect(purple_accounts_get_handle(), "account-connecting",
+						plugin, PURPLE_CALLBACK(account_connecting_cb), NULL);
+	purple_signal_connect(conversation, "received-im-msg",
+						plugin, PURPLE_CALLBACK(received_im_msg_cb), NULL);
+	purple_signal_connect(blist, "buddy-signed-on", plugin,
+						PURPLE_CALLBACK(buddy_signedon_cb), NULL);
+	purple_signal_connect(blist, "buddy-signed-off", plugin,
+						PURPLE_CALLBACK(buddy_signedoff_cb), NULL);
+	purple_signal_connect(gtkblist, "drawing-tooltip",
+						plugin, PURPLE_CALLBACK(drawing_tooltip_cb), NULL);
 
 	return TRUE;
 }
 
 static gboolean
-plugin_unload(GaimPlugin *plugin)
+plugin_unload(PurplePlugin *plugin)
 {
 	g_slist_free(connecting);
 
 	return TRUE;
 }
 
-static GaimPluginInfo info =
+static PurplePluginInfo info =
 {
-	GAIM_PLUGIN_MAGIC,								/**< magic			*/
-	GAIM_MAJOR_VERSION,								/**< major version	*/
-	GAIM_MINOR_VERSION,								/**< minor version	*/
-	GAIM_PLUGIN_STANDARD,							/**< type			*/
-	GAIM_GTK_PLUGIN_TYPE,							/**< ui_requirement	*/
+	PURPLE_PLUGIN_MAGIC,								/**< magic			*/
+	PURPLE_MAJOR_VERSION,								/**< major version	*/
+	PURPLE_MINOR_VERSION,								/**< minor version	*/
+	PURPLE_PLUGIN_STANDARD,							/**< type			*/
+	PIDGIN_PLUGIN_TYPE,							/**< ui_requirement	*/
 	0,												/**< flags			*/
 	NULL,											/**< dependencies	*/
-	GAIM_PRIORITY_DEFAULT,							/**< priority		*/
+	PURPLE_PRIORITY_DEFAULT,							/**< priority		*/
 
 	"gtk-plugin_pack-lastseen",						/**< id				*/
 	NULL,											/**< name			*/
@@ -259,7 +259,7 @@ static GaimPluginInfo info =
 };
 
 static void
-init_plugin(GaimPlugin *plugin) {
+init_plugin(PurplePlugin *plugin) {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
@@ -272,4 +272,4 @@ init_plugin(GaimPlugin *plugin) {
 						 "logged out, for buddies on your buddy list.");
 }
 
-GAIM_INIT_PLUGIN(lastseen, init_plugin, info)
+PURPLE_INIT_PLUGIN(lastseen, init_plugin, info)

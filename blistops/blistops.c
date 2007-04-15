@@ -24,7 +24,7 @@
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #include <gtkplugin.h>
 #include <gtkblist.h>
@@ -51,7 +51,7 @@ abracadabra(GtkWidget *w, gboolean v) {
 }
 
 static void
-pref_cb(const char *name, GaimPrefType type,
+pref_cb(const char *name, PurplePrefType type,
 		gconstpointer val, gpointer data) {
 	gboolean value = GPOINTER_TO_INT(val);
 
@@ -62,34 +62,34 @@ pref_cb(const char *name, GaimPrefType type,
 }
 
 static void
-gtkblist_created_cb(GaimBuddyList *blist) {
-	GaimGtkBuddyList *gtkblist = GAIM_GTK_BLIST(blist);
+gtkblist_created_cb(PurpleBuddyList *blist) {
+	PidginBuddyList *gtkblist = PIDGIN_BLIST(blist);
 
 	w_blist = gtkblist->window;
-	w_menubar = gtk_item_factory_get_widget(gtkblist->ift, "<GaimMain>");
+	w_menubar = gtk_item_factory_get_widget(gtkblist->ift, "<PurpleMain>");
 
-	gaim_prefs_trigger_callback(PREF_LIST);
-	gaim_prefs_trigger_callback(PREF_MENU);
+	purple_prefs_trigger_callback(PREF_LIST);
+	purple_prefs_trigger_callback(PREF_MENU);
 }
 
 /* globals to remove our pref cb's */
 guint blist_id = 0, menu_id = 0;
 
 static gboolean
-plugin_load(GaimPlugin *plugin) {
-	gaim_signal_connect(gaim_gtk_blist_get_handle(), "gtkblist-created", plugin,
-						GAIM_CALLBACK(gtkblist_created_cb), NULL);
+plugin_load(PurplePlugin *plugin) {
+	purple_signal_connect(pidgin_blist_get_handle(), "gtkblist-created", plugin,
+						PURPLE_CALLBACK(gtkblist_created_cb), NULL);
 
-	blist_id = gaim_prefs_connect_callback(plugin, PREF_LIST, pref_cb, NULL);
-	menu_id = gaim_prefs_connect_callback(plugin, PREF_MENU, pref_cb, NULL);
+	blist_id = purple_prefs_connect_callback(plugin, PREF_LIST, pref_cb, NULL);
+	menu_id = purple_prefs_connect_callback(plugin, PREF_MENU, pref_cb, NULL);
 
 	return TRUE;
 }
 
 static gboolean
-plugin_unload(GaimPlugin *plugin) {
-	gaim_prefs_disconnect_callback(blist_id);
-	gaim_prefs_disconnect_callback(menu_id);
+plugin_unload(PurplePlugin *plugin) {
+	purple_prefs_disconnect_callback(blist_id);
+	purple_prefs_disconnect_callback(menu_id);
 
 	if(w_blist) {
 		gtk_widget_show(w_blist);
@@ -101,38 +101,38 @@ plugin_unload(GaimPlugin *plugin) {
 	return TRUE;
 }
 
-static GaimPluginPrefFrame *
-get_plugin_pref_frame(GaimPlugin *plugin) {
-	GaimPluginPrefFrame *frame;
-	GaimPluginPref *ppref;
+static PurplePluginPrefFrame *
+get_plugin_pref_frame(PurplePlugin *plugin) {
+	PurplePluginPrefFrame *frame;
+	PurplePluginPref *ppref;
 
-	frame = gaim_plugin_pref_frame_new();
+	frame = purple_plugin_pref_frame_new();
 
-	ppref = gaim_plugin_pref_new_with_name_and_label(PREF_LIST,									
+	ppref = purple_plugin_pref_new_with_name_and_label(PREF_LIST,									
 									_("Hide the buddy list when it is created"));
-	gaim_plugin_pref_frame_add(frame, ppref);
+	purple_plugin_pref_frame_add(frame, ppref);
 
-	ppref = gaim_plugin_pref_new_with_name_and_label(PREF_MENU,
+	ppref = purple_plugin_pref_new_with_name_and_label(PREF_MENU,
 									_("Hide the menu in the buddy list window"));
-	gaim_plugin_pref_frame_add(frame, ppref);
+	purple_plugin_pref_frame_add(frame, ppref);
 
 	return frame;
 }
 
-static GaimPluginUiInfo prefs_info = {
+static PurplePluginUiInfo prefs_info = {
 	get_plugin_pref_frame
 };
 
-static GaimPluginInfo info =
+static PurplePluginInfo info =
 {
-	GAIM_PLUGIN_MAGIC,
-	GAIM_MAJOR_VERSION,
-	GAIM_MINOR_VERSION,
-	GAIM_PLUGIN_STANDARD,
-	GAIM_GTK_PLUGIN_TYPE,
+	PURPLE_PLUGIN_MAGIC,
+	PURPLE_MAJOR_VERSION,
+	PURPLE_MINOR_VERSION,
+	PURPLE_PLUGIN_STANDARD,
+	PIDGIN_PLUGIN_TYPE,
 	0,
 	NULL,
-	GAIM_PRIORITY_DEFAULT,
+	PURPLE_PRIORITY_DEFAULT,
 
 	"gtk-plugin_pack-blistops",
 	NULL,
@@ -153,7 +153,7 @@ static GaimPluginInfo info =
 };
 
 static void
-init_plugin(GaimPlugin *plugin) {
+init_plugin(PurplePlugin *plugin) {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
@@ -163,10 +163,10 @@ init_plugin(GaimPlugin *plugin) {
 	info.summary = _("Gives extended options to the buddy list");
 	info.description = _("Gives extended options to the buddy list");
 
-	gaim_prefs_add_none(PREF_MY);
-	gaim_prefs_add_none(PREF_ROOT);
-	gaim_prefs_add_bool(PREF_LIST, TRUE);
-	gaim_prefs_add_bool(PREF_MENU, TRUE);
+	purple_prefs_add_none(PREF_MY);
+	purple_prefs_add_none(PREF_ROOT);
+	purple_prefs_add_bool(PREF_LIST, TRUE);
+	purple_prefs_add_bool(PREF_MENU, TRUE);
 }
 
-GAIM_INIT_PLUGIN(blistops, init_plugin, info)
+PURPLE_INIT_PLUGIN(blistops, init_plugin, info)

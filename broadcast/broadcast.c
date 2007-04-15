@@ -21,7 +21,7 @@
 # include "../gpp_config.h"
 #endif /* HAVE_CONFIG_H */
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #include <blist.h>
 #include <debug.h>
@@ -46,19 +46,19 @@ broadcast_request_send_cb(GList *list, const char *message)
 {
 	char *stripped;
 	GList *l;
-	GaimBuddy *b;
-	GaimConversation *conv = NULL;
+	PurpleBuddy *b;
+	PurpleConversation *conv = NULL;
 
-	gaim_markup_html_to_xhtml(message, NULL, &stripped);
+	purple_markup_html_to_xhtml(message, NULL, &stripped);
 
 	for (l = list; l; l = l->next) {
 		b = l->data;
-		conv = gaim_conversation_new(GAIM_CONV_TYPE_IM, b->account, b->name);
+		conv = purple_conversation_new(PURPLE_CONV_TYPE_IM, b->account, b->name);
 		if(conv) {
-			if (b->account->gc->flags & GAIM_CONNECTION_HTML)
-				gaim_conv_im_send(GAIM_CONV_IM(conv), message);
+			if (b->account->gc->flags & PURPLE_CONNECTION_HTML)
+				purple_conv_im_send(PURPLE_CONV_IM(conv), message);
 			else
-				gaim_conv_im_send(GAIM_CONV_IM(conv), stripped);
+				purple_conv_im_send(PURPLE_CONV_IM(conv), stripped);
 		}
 	}
 
@@ -67,31 +67,31 @@ broadcast_request_send_cb(GList *list, const char *message)
 }
 
 static void
-broadcast_action_cb(GaimPluginAction *action)
+broadcast_action_cb(PurplePluginAction *action)
 {
 	GList *buddies = NULL, *ltmp = NULL;
 	GString stmp = NULL;
 	const gchar *bname = NULL, *balias = NULL;
-	GaimBlistNode *root = NULL, *g = NULL, *c = NULL;
-	GaimBuddy *b = NULL;
-	GaimBuddyList *blist = NULL;
+	PurpleBlistNode *root = NULL, *g = NULL, *c = NULL;
+	PurpleBuddy *b = NULL;
+	PurpleBuddyList *blist = NULL;
 
-	blist = gaim_get_blist();
+	blist = purple_get_blist();
 	root = blist->root;
 
-	for(g = root; g && GAIM_BLIST_NODE_IS_GROUP(g); g = g->next) {
+	for(g = root; g && PURPLE_BLIST_NODE_IS_GROUP(g); g = g->next) {
 		for (c = g->child; c; c = c->next) {
-			if(!GAIM_BLIST_NODE_IS_CHAT(c)) {
+			if(!PURPLE_BLIST_NODE_IS_CHAT(c)) {
 				buddies = g_list_append(buddies,
-							gaim_contact_get_priority_buddy((GaimContact *)c));
+							purple_contact_get_priority_buddy((PurpleContact *)c));
 
-				gaim_debug_info(BROADCAST_CATEGORY, "added a buddy to queue\n");
+				purple_debug_info(BROADCAST_CATEGORY, "added a buddy to queue\n");
 			}
 		}
 	}
 
 	if(buddies == NULL) {
-		gaim_debug_error(BROADCAST_CATEGORY, "no buddies in queue!\n");
+		purple_debug_error(BROADCAST_CATEGORY, "no buddies in queue!\n");
 
 		return;
 	}
@@ -100,26 +100,26 @@ broadcast_action_cb(GaimPluginAction *action)
 		stmp = g_string_new(_("Your message will be sent to and possibly annoy"
 							" EVERYONE on your buddy list!"));
 
-		gaim_debug_info(BROADCAST_CATEGORY,
+		purple_debug_info(BROADCAST_CATEGORY,
 				"too many buddies on list; showing generic message!\n");
 	} else {
 		stmp = g_string_new("Your message will be sent to these buddies:\n");
 
 		for(ltmp = buddies; ltmp; ltmp = ltmp->next) {
-			b = (GaimBuddy *)(ltmp->data);
-			bname = gaim_buddy_get_alias(b);
-			balias = gaim_buddy_get_alias(b);
+			b = (PurpleBuddy *)(ltmp->data);
+			bname = purple_buddy_get_alias(b);
+			balias = purple_buddy_get_alias(b);
 
 			stmp = g_string_append_printf(stmp, "    %s (%s)\n", balias, bname);
 
-			gaim_debug_info(BROADCAST_CATEGORY, "added %s (%s) to dialog string\n",
+			purple_debug_info(BROADCAST_CATEGORY, "added %s (%s) to dialog string\n",
 					balias, bname);
 		}
 	}
 
-	gaim_debug_info(BROADCAST_CATEGORY, "requesting message input\n");
+	purple_debug_info(BROADCAST_CATEGORY, "requesting message input\n");
 
-	gaim_request_input(action, _("Broadcast Spim"),
+	purple_request_input(action, _("Broadcast Spim"),
 			_("Enter the message to send"), stmp->str, "", TRUE, FALSE, "html",
 			_("Send"), G_CALLBACK(broadcast_request_send_cb), _("Cancel"),
 			G_CALLBACK(broadcast_request_cancel_cb), buddies);
@@ -130,32 +130,32 @@ broadcast_action_cb(GaimPluginAction *action)
 }
 
 static GList *
-broadcast_actions(GaimPlugin *plugin, gpointer context)
+broadcast_actions(PurplePlugin *plugin, gpointer context)
 {
-	gaim_debug_info(BROADCAST_CATEGORY, "creating the action list\n");
+	purple_debug_info(BROADCAST_CATEGORY, "creating the action list\n");
 
-	return g_list_append(NULL, gaim_plugin_action_new(_("Broadcast a Message"),
+	return g_list_append(NULL, purple_plugin_action_new(_("Broadcast a Message"),
 				broadcast_action_cb));
 }
 
 static gboolean
-broadcast_load(GaimPlugin *plugin)
+broadcast_load(PurplePlugin *plugin)
 {
-	gaim_debug_misc(BROADCAST_CATEGORY, "broadcast_load called\n");
+	purple_debug_misc(BROADCAST_CATEGORY, "broadcast_load called\n");
 
 	return TRUE;
 }
 
-static GaimPluginInfo broadcast_info =
+static PurplePluginInfo broadcast_info =
 {
-	GAIM_PLUGIN_MAGIC,
-	GAIM_MAJOR_VERSION,
-	GAIM_MINOR_VERSION,
-	GAIM_PLUGIN_STANDARD,
+	PURPLE_PLUGIN_MAGIC,
+	PURPLE_MAJOR_VERSION,
+	PURPLE_MINOR_VERSION,
+	PURPLE_PLUGIN_STANDARD,
 	NULL,
 	0,
 	NULL,
-	GAIM_PRIORITY_DEFAULT,
+	PURPLE_PRIORITY_DEFAULT,
 	"core-plugin_pack-broadcast",
 	NULL,
 	GPP_VERSION,
@@ -174,7 +174,7 @@ static GaimPluginInfo broadcast_info =
 
 
 static void
-broadcast_init(GaimPlugin *plugin) {
+broadcast_init(PurplePlugin *plugin) {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
@@ -183,8 +183,8 @@ broadcast_init(GaimPlugin *plugin) {
 	broadcast_info.name = _("Broadcaster");
 	broadcast_info.summary = _("Send an IM to everyone on your buddy list.");
 	broadcast_info.description = _("Adds the ability to send an IM to every "
-			"Gaim Contact on your Buddy List");
+			"Purple Contact on your Buddy List");
 }
 
-GAIM_INIT_PLUGIN(broadcast, broadcast_init, broadcast_info)
+PURPLE_INIT_PLUGIN(broadcast, broadcast_init, broadcast_info)
 

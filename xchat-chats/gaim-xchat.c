@@ -1,5 +1,5 @@
 /*
- * Gaim-XChat - Use XChat-like chats
+ * Purple-XChat - Use XChat-like chats
  * Copyright (C) 2005
  *
  * This program is free software; you can redistribute it and/or
@@ -21,13 +21,13 @@
 # include "../gpp_config.h"
 #endif
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #define PLUGIN_ID			"gtk-plugin_pack-gaim-xchat"
-#define PLUGIN_NAME			"Gaim-XChat"
-#define PLUGIN_STATIC_NAME	"Gaim-XChat"
-#define PLUGIN_SUMMARY		"XChat-like chats with Gaim"
-#define PLUGIN_DESCRIPTION	"You can chat in Gaim using XChat's indented view."
+#define PLUGIN_NAME			"Purple-XChat"
+#define PLUGIN_STATIC_NAME	"Purple-XChat"
+#define PLUGIN_SUMMARY		"XChat-like chats with Purple"
+#define PLUGIN_DESCRIPTION	"You can chat in Purple using XChat's indented view."
 #define PLUGIN_AUTHOR		"Sadrul Habib Chowdhury <sadrul@users.sourceforge.net>"
 
 #define	PREFS_PREFIX		"/plugins/gtk/" PLUGIN_ID
@@ -40,7 +40,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-/* Gaim headers */
+/* Purple headers */
 
 #include <conversation.h>
 #include <gtkconv.h>
@@ -55,20 +55,20 @@
 
 #include "xtext.h"
 
-static GaimConversationUiOps *uiops = NULL;
+static PurpleConversationUiOps *uiops = NULL;
 
-static void (*default_write_conv)(GaimConversation *conv, const char *name, const char *alias,
-						   const char *message, GaimMessageFlags flags, time_t mtime);
-static void (*default_create_conversation)(GaimConversation *conv);
+static void (*default_write_conv)(PurpleConversation *conv, const char *name, const char *alias,
+						   const char *message, PurpleMessageFlags flags, time_t mtime);
+static void (*default_create_conversation)(PurpleConversation *conv);
 
-static void (*default_destroy_conversation)(GaimConversation *conv);
+static void (*default_destroy_conversation)(PurpleConversation *conv);
 
-static GtkWidget* hack_and_get_widget(GaimGtkConversation *gtkconv);
+static GtkWidget* hack_and_get_widget(PidginConversation *gtkconv);
 void palette_alloc (GtkWidget * widget);
 
-typedef struct _GaimXChat GaimXChat;
+typedef struct _PurpleXChat PurpleXChat;
 
-struct _GaimXChat
+struct _PurpleXChat
 {
 	GtkWidget *imhtml;
 	GtkWidget *xtext;
@@ -83,7 +83,7 @@ typedef enum
 	GX_SYSTEM,
 	GX_HIGHLIGHT,
 	GX_ERROR
-}GaimXChatMessage;
+}PurpleXChatMessage;
 
 static GdkColor colors[][2] = {
     /* colors for xtext */
@@ -159,26 +159,26 @@ mg_word_check (GtkWidget * xtext, char *word, int len)
 }
 #endif
 
-GtkWidget *get_xtext(GaimConversation *conv)
+GtkWidget *get_xtext(PurpleConversation *conv)
 {
-	GaimXChat *gx;
+	PurpleXChat *gx;
 
 	if ((gx = g_hash_table_lookup(xchats, conv)) == NULL)
 	{
-		GaimGtkConversation *gtkconv;
+		PidginConversation *gtkconv;
 		GtkWidget *xtext;
 		GtkWidget *imhtml = NULL;
 		GtkStyle *style;
 
-		gtkconv = GAIM_GTK_CONVERSATION(conv);
+		gtkconv = PIDGIN_CONVERSATION(conv);
 		if (!gtkconv)
 			return NULL;
 		imhtml = gtkconv->imhtml;
 		style = gtk_widget_get_style(imhtml);
 
-		palette_alloc(gaim_gtkconv_get_window(gtkconv)->window);
+		palette_alloc(pidgin_conv_get_window(gtkconv)->window);
 
-		gx = g_new0(GaimXChat, 1);
+		gx = g_new0(PurpleXChat, 1);
 
 		xtext = gtk_xtext_new(colors, TRUE);
 
@@ -219,19 +219,19 @@ palette_alloc (GtkWidget * widget)
     }
 }
 
-static void gaim_xchat_write_conv(GaimConversation *conv, const char *name, const char *alias,
-						   const char *message, GaimMessageFlags flags, time_t mtime)
+static void purple_xchat_write_conv(PurpleConversation *conv, const char *name, const char *alias,
+						   const char *message, PurpleMessageFlags flags, time_t mtime)
 {
-	GaimConversationType type;
+	PurpleConversationType type;
 	GtkWidget *xtext;
 	char *msg;
-	GaimXChatMessage col = 0;
+	PurpleXChatMessage col = 0;
 
 	/* Do the usual stuff first. */
 	default_write_conv(conv, name, alias, message, flags, mtime);
 	
-	type = gaim_conversation_get_type(conv);
-	if (type != GAIM_CONV_TYPE_CHAT)
+	type = purple_conversation_get_type(conv);
+	if (type != PURPLE_CONV_TYPE_CHAT)
 	{
 		/* If it's IM, we have nothing to do. */
 		return;
@@ -240,9 +240,9 @@ static void gaim_xchat_write_conv(GaimConversation *conv, const char *name, cons
 	/* So it's a chat. Let's play. */
 
 	xtext = get_xtext(conv);
-	if (name == NULL || !strcmp(name, gaim_conversation_get_name(conv)))
+	if (name == NULL || !strcmp(name, purple_conversation_get_name(conv)))
 		name = "*";
-	msg = gaim_markup_strip_html(message);
+	msg = purple_markup_strip_html(message);
 	if (msg && msg[0] == '/' && msg[1] == 'm' && msg[2] == 'e' && msg[3] == ' ')
 	{
 		char *tmp = msg;
@@ -251,18 +251,18 @@ static void gaim_xchat_write_conv(GaimConversation *conv, const char *name, cons
 		name = "*";
 	}
 
-	if (flags & GAIM_MESSAGE_SEND)
+	if (flags & PURPLE_MESSAGE_SEND)
 		col = GX_SEND;
-	else if (flags & GAIM_MESSAGE_RECV)
+	else if (flags & PURPLE_MESSAGE_RECV)
 	{
-		if (flags & GAIM_MESSAGE_NICK)
+		if (flags & PURPLE_MESSAGE_NICK)
 			col = GX_HIGHLIGHT;
 		else
 			col = GX_RECV;
 	}
-	else if (flags & GAIM_MESSAGE_ERROR)
+	else if (flags & PURPLE_MESSAGE_ERROR)
 		col = GX_ERROR;
-	else if ((flags & GAIM_MESSAGE_SYSTEM) || (flags & GAIM_MESSAGE_NO_LOG))
+	else if ((flags & PURPLE_MESSAGE_SYSTEM) || (flags & PURPLE_MESSAGE_NO_LOG))
 		col = GX_SYSTEM;
 
 	gtk_xtext_append_indent(GTK_XTEXT(xtext)->buffer, (guchar*)name, strlen(name), colors[col][0].pixel,
@@ -271,7 +271,7 @@ static void gaim_xchat_write_conv(GaimConversation *conv, const char *name, cons
 }
 
 static GtkWidget*
-hack_and_get_widget(GaimGtkConversation *gtkconv)
+hack_and_get_widget(PidginConversation *gtkconv)
 {
 	GtkWidget *tab_cont, *pane, *vbox, *hpaned, *frame;
 	GList *list;
@@ -303,15 +303,15 @@ hack_and_get_widget(GaimGtkConversation *gtkconv)
 }
 
 static void
-gaim_conversation_use_xtext(GaimConversation *conv)
+purple_conversation_use_xtext(PurpleConversation *conv)
 {
-	GaimGtkConversation *gtkconv;
+	PidginConversation *gtkconv;
 	GtkWidget *parent, *box, *wid, *frame, *xtext;
 
-	if (gaim_conversation_get_type(conv) != GAIM_CONV_TYPE_CHAT)
+	if (purple_conversation_get_type(conv) != PURPLE_CONV_TYPE_CHAT)
 		return;
 
-	gtkconv = GAIM_GTK_CONVERSATION(conv);
+	gtkconv = PIDGIN_CONVERSATION(conv);
 	if (!gtkconv)
 		return;
 
@@ -336,16 +336,16 @@ gaim_conversation_use_xtext(GaimConversation *conv)
 }
 
 static void
-gaim_xchat_create_conv(GaimConversation *conv)
+purple_xchat_create_conv(PurpleConversation *conv)
 {
 	default_create_conversation(conv);
-	gaim_conversation_use_xtext(conv);
+	purple_conversation_use_xtext(conv);
 }
 
 static void
-gaim_xchat_destroy_conv(GaimConversation *conv)
+purple_xchat_destroy_conv(PurpleConversation *conv)
 {
-	GaimXChat *gx;
+	PurpleXChat *gx;
 
 	default_destroy_conversation(conv);
 
@@ -358,38 +358,38 @@ gaim_xchat_destroy_conv(GaimConversation *conv)
 }
 
 static gboolean
-plugin_load(GaimPlugin *plugin)
+plugin_load(PurplePlugin *plugin)
 {
 	GList *list;
 
-	uiops = gaim_gtk_conversations_get_conv_ui_ops();
+	uiops = pidgin_conversations_get_conv_ui_ops();
 
 	if (uiops == NULL)
 		return FALSE;
 
 	/* Use the oh-so-useful uiops. Signals? bleh. */
 	default_write_conv = uiops->write_conv;
-	uiops->write_conv = gaim_xchat_write_conv;
+	uiops->write_conv = purple_xchat_write_conv;
 
 	default_create_conversation = uiops->create_conversation;
-	uiops->create_conversation = gaim_xchat_create_conv;
+	uiops->create_conversation = purple_xchat_create_conv;
 
 	default_destroy_conversation = uiops->destroy_conversation;
-	uiops->destroy_conversation = gaim_xchat_destroy_conv;
+	uiops->destroy_conversation = purple_xchat_destroy_conv;
 
 	xchats = g_hash_table_new(g_direct_hash, g_direct_equal);
 
-	list = gaim_get_chats();
+	list = purple_get_chats();
 	while (list)
 	{
-		gaim_conversation_use_xtext(list->data);
+		purple_conversation_use_xtext(list->data);
 		list = list->next;
 	}
 	
 	return TRUE;
 }
 
-static void remove_xtext(GaimConversation *conv, GaimXChat *gx, gpointer null)
+static void remove_xtext(PurpleConversation *conv, PurpleXChat *gx, gpointer null)
 {
 	GtkWidget *frame, *parent;
 
@@ -407,7 +407,7 @@ static void remove_xtext(GaimConversation *conv, GaimXChat *gx, gpointer null)
 }
 
 static gboolean
-plugin_unload(GaimPlugin *plugin)
+plugin_unload(PurplePlugin *plugin)
 {
 	/* Restore the default ui-ops */
 	uiops->write_conv = default_write_conv;
@@ -421,16 +421,16 @@ plugin_unload(GaimPlugin *plugin)
 	return TRUE;
 }
 
-static GaimPluginInfo info =
+static PurplePluginInfo info =
 {
-	GAIM_PLUGIN_MAGIC,			/* Magic				*/
-	GAIM_MAJOR_VERSION,			/* Gaim Major Version	*/
-	GAIM_MINOR_VERSION,			/* Gaim Minor Version	*/
-	GAIM_PLUGIN_STANDARD,		/* plugin type			*/
-	GAIM_GTK_PLUGIN_TYPE,		/* ui requirement		*/
+	PURPLE_PLUGIN_MAGIC,			/* Magic				*/
+	PURPLE_MAJOR_VERSION,			/* Purple Major Version	*/
+	PURPLE_MINOR_VERSION,			/* Purple Minor Version	*/
+	PURPLE_PLUGIN_STANDARD,		/* plugin type			*/
+	PIDGIN_PLUGIN_TYPE,		/* ui requirement		*/
 	0,							/* flags				*/
 	NULL,						/* dependencies			*/
-	GAIM_PRIORITY_DEFAULT,		/* priority				*/
+	PURPLE_PRIORITY_DEFAULT,		/* priority				*/
 
 	PLUGIN_ID,					/* plugin id			*/
 	NULL,						/* name					*/
@@ -451,7 +451,7 @@ static GaimPluginInfo info =
 };
 
 static void
-init_plugin(GaimPlugin *plugin) {
+init_plugin(PurplePlugin *plugin) {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
@@ -461,8 +461,8 @@ init_plugin(GaimPlugin *plugin) {
 	info.summary = _(PLUGIN_SUMMARY);
 	info.description = _(PLUGIN_DESCRIPTION);
 
-	gaim_prefs_add_none(PREFS_PREFIX);
-	gaim_prefs_add_string(PREFS_DATE_FORMAT, "[%H:%M]");
+	purple_prefs_add_none(PREFS_PREFIX);
+	purple_prefs_add_string(PREFS_DATE_FORMAT, "[%H:%M]");
 }
 
-GAIM_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)
+PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)

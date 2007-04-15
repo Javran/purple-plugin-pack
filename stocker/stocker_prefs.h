@@ -32,7 +32,7 @@
 G_BEGIN_DECLS
 
 void stocker_prefs_init(void);
-GtkWidget *stocker_prefs_get_frame(GaimPlugin *plugin);
+GtkWidget *stocker_prefs_get_frame(PurplePlugin *plugin);
 
 G_END_DECLS
 

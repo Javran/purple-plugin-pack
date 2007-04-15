@@ -1,6 +1,6 @@
 EXTRA_DIST = .plugin .build Makefile.mingw
 
-blistopsdir = $(GAIM_LIBDIR)/gaim
+blistopsdir = $(GAIM_LIBDIR)/pidgin
 
 blistops_la_LDFLAGS = -module -avoid-version
 
@@ -18,7 +18,7 @@ blistops_la_LIBADD = \
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
+	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
 	-DDATADIR=\"$(GAIM_DATADIR)\" \
 	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
 	$(DEBUG_CFLAGS) \

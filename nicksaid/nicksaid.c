@@ -21,7 +21,7 @@
 # include "../gpp_config.h"
 #endif
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #define PLUGIN_ID			"gtk-plugin_pack-nicksaid"
 #define PLUGIN_NAME			"Nicksaid"
@@ -44,7 +44,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-/* Gaim headers */
+/* Purple headers */
 #include <gtkplugin.h>
 #include <version.h>
 
@@ -54,7 +54,7 @@
 #include <gtkconv.h>
 #include <gtkimhtml.h>
 #include <gtkmenutray.h>
-#include <gaimstock.h>
+#include <pidginstock.h>
 #include <gtkutils.h>
 
 /* Pack/Local headers */
@@ -66,12 +66,12 @@ static GList *hlwords = NULL;		/* Words to highlight on */
 
 #if 0
 static void
-go_next(GtkWidget *w, GaimGtkConversation *gtkconv)
+go_next(GtkWidget *w, PidginConversation *gtkconv)
 {
 }
 
 static void
-go_previous(GtkWidget *w, GaimGtkConversation *gtkconv)
+go_previous(GtkWidget *w, PidginConversation *gtkconv)
 {
 }
 #endif
@@ -188,7 +188,7 @@ draw_line(GtkWidget *widget, GdkEventExpose *event, struct _callbackdata *data)
 }
 
 static void
-go_selected(GtkWidget *w, GaimGtkConversation *gtkconv)
+go_selected(GtkWidget *w, PidginConversation *gtkconv)
 {
 	GtkTextIter iter;
 	int offset;
@@ -208,7 +208,7 @@ go_selected(GtkWidget *w, GaimGtkConversation *gtkconv)
 }
 
 static void
-clear_list(GtkWidget *w, GaimGtkConversation *gtkconv)
+clear_list(GtkWidget *w, PidginConversation *gtkconv)
 {
 	GList *list = g_object_get_data(G_OBJECT(gtkconv->imhtml), "nicksaid:list");
 
@@ -225,7 +225,7 @@ clear_list(GtkWidget *w, GaimGtkConversation *gtkconv)
 }
 
 static void
-show_all(GtkWidget *w, GaimGtkConversation *gtkconv)
+show_all(GtkWidget *w, PidginConversation *gtkconv)
 {
 	GList *list = g_object_get_data(G_OBJECT(gtkconv->imhtml), "nicksaid:list");
 	GString *str = g_string_new(NULL);
@@ -237,26 +237,26 @@ show_all(GtkWidget *w, GaimGtkConversation *gtkconv)
 		list = list->next;
 	}
 
-	gaim_notify_formatted(gtkconv, _("Nicksaid"), _("List of highlighted messages:"),
+	purple_notify_formatted(gtkconv, _("Nicksaid"), _("List of highlighted messages:"),
 			NULL, str->str, NULL, NULL);
 	g_string_free(str, TRUE);
 }
 
 static gboolean
-generate_popup(GtkWidget *w, GdkEventButton *event, GaimGtkWindow *win)
+generate_popup(GtkWidget *w, GdkEventButton *event, PidginWindow *win)
 {
 	GtkWidget *menu, *item;
-	GaimConversation *conv;
-	GaimGtkConversation *gtkconv;
+	PurpleConversation *conv;
+	PidginConversation *gtkconv;
 	GList *list;
 
-	conv = gaim_gtk_conv_window_get_active_conversation(win);
-	if (gaim_conversation_get_type(conv) != GAIM_CONV_TYPE_CHAT)
+	conv = pidgin_conv_window_get_active_conversation(win);
+	if (purple_conversation_get_type(conv) != PURPLE_CONV_TYPE_CHAT)
 		return FALSE;
 
 	menu = gtk_menu_new();
 
-	gtkconv = GAIM_GTK_CONVERSATION(conv);
+	gtkconv = PIDGIN_CONVERSATION(conv);
 
 	list = g_object_get_data(G_OBJECT(gtkconv->imhtml), "nicksaid:list");
 	if (!list)
@@ -279,7 +279,7 @@ generate_popup(GtkWidget *w, GdkEventButton *event, GaimGtkWindow *win)
 		gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
 		g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(go_previous), gtkconv);
 
-		gaim_separator(menu);
+		pidgin_separator(menu);
 #endif
 
 		while (list)
@@ -297,7 +297,7 @@ generate_popup(GtkWidget *w, GdkEventButton *event, GaimGtkWindow *win)
 			list = list->next;
 		}
 
-		gaim_separator(menu);
+		pidgin_separator(menu);
 
 		item = gtk_menu_item_new_with_label(_("Clear History"));
 		gtk_widget_show(item);
@@ -307,7 +307,7 @@ generate_popup(GtkWidget *w, GdkEventButton *event, GaimGtkWindow *win)
 		item = gtk_menu_item_new_with_label(_("Show All"));
 		gtk_widget_show(item);
 		gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
-		if (gaim_prefs_get_bool(PREF_SHOWALL))
+		if (purple_prefs_get_bool(PREF_SHOWALL))
 			g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(show_all), gtkconv);
 		else
 			gtk_widget_set_sensitive(item, FALSE);
@@ -321,33 +321,33 @@ generate_popup(GtkWidget *w, GdkEventButton *event, GaimGtkWindow *win)
 }
 
 static gboolean
-displaying_msg_cb(GaimAccount *account, const char *name, char **buffer,
-				GaimConversation *conv, GaimMessageFlags flags, gpointer null)
+displaying_msg_cb(PurpleAccount *account, const char *name, char **buffer,
+				PurpleConversation *conv, PurpleMessageFlags flags, gpointer null)
 {
-	GaimGtkConversation *gtkconv;
+	PidginConversation *gtkconv;
 	GtkWidget *imhtml;
 	GtkTextIter iter;
 	GList *list;
 	int pos;
 	char *tmp, *who, *prefix = NULL;
 	NickSaid *said;
-	gboolean timestamp = gaim_prefs_get_bool(PREF_TIMESTAMP);
-	gboolean datestamp = gaim_prefs_get_bool(PREF_DATESTAMP);
-	gboolean showwho = gaim_prefs_get_bool(PREF_SHOWWHO);
+	gboolean timestamp = purple_prefs_get_bool(PREF_TIMESTAMP);
+	gboolean datestamp = purple_prefs_get_bool(PREF_DATESTAMP);
+	gboolean showwho = purple_prefs_get_bool(PREF_SHOWWHO);
 
-	if (!(flags & GAIM_MESSAGE_NICK) || !GAIM_IS_GTK_CONVERSATION(conv) ||
-			gaim_conversation_get_type(conv) != GAIM_CONV_TYPE_CHAT)
+	if (!(flags & PURPLE_MESSAGE_NICK) || !PIDGIN_IS_PIDGIN_CONVERSATION(conv) ||
+			purple_conversation_get_type(conv) != PURPLE_CONV_TYPE_CHAT)
 		return FALSE;
 
-	gtkconv = GAIM_GTK_CONVERSATION(conv);
+	gtkconv = PIDGIN_CONVERSATION(conv);
 	imhtml = gtkconv->imhtml;
 
 	gtk_text_buffer_get_end_iter(GTK_IMHTML(imhtml)->text_buffer, &iter);
 	pos = gtk_text_iter_get_offset(&iter);
 	list = g_object_get_data(G_OBJECT(imhtml), "nicksaid:list");
 
-	tmp = gaim_markup_strip_html(*buffer);
-	who = g_strndup(tmp, gaim_prefs_get_int(PREF_CHARS));
+	tmp = purple_markup_strip_html(*buffer);
+	who = g_strndup(tmp, purple_prefs_get_int(PREF_CHARS));
 	g_free(tmp);
 
 	if (!g_utf8_validate(who, -1, (const char **)&tmp))
@@ -377,7 +377,7 @@ displaying_msg_cb(GaimAccount *account, const char *name, char **buffer,
 		said->who = who;
 	}
 
-	if (gaim_prefs_get_bool(PREF_SHOWALL))
+	if (purple_prefs_get_bool(PREF_SHOWALL))
 	{
 		said->what = g_strdup_printf("%s<b>%s: </b>%s",
 				prefix ? prefix : "", name, *buffer);
@@ -392,15 +392,15 @@ displaying_msg_cb(GaimAccount *account, const char *name, char **buffer,
 }
 
 static GtkWidget *
-get_tray_icon_for_window(GaimGtkWindow *win)
+get_tray_icon_for_window(PidginWindow *win)
 {
 	GtkWidget *w = g_object_get_data(G_OBJECT(win->window), "nicksaid:trayicon");
 	if (w == NULL)
 	{
 		w = gtk_event_box_new();
 		gtk_container_add(GTK_CONTAINER(w), 
-					gtk_image_new_from_stock(GAIM_STOCK_IM, GTK_ICON_SIZE_MENU));
-		gaim_gtk_menu_tray_append(GAIM_GTK_MENU_TRAY(win->menu.tray), w, "Nicksaid");
+					gtk_image_new_from_stock(PIDGIN_STOCK_TOOLBAR_MESSAGE_NEW, GTK_ICON_SIZE_MENU));
+		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), w, "Nicksaid");
 		gtk_widget_show_all(w);
 		g_object_set_data(G_OBJECT(win->window), "nicksaid:trayicon", w);
 
@@ -410,16 +410,16 @@ get_tray_icon_for_window(GaimGtkWindow *win)
 }
 
 static void
-update_menu_tray(GaimConversation *conv, gpointer null)
+update_menu_tray(PurpleConversation *conv, gpointer null)
 {
-	GaimGtkConversation *gtkconv;
-	GaimGtkWindow *win;
+	PidginConversation *gtkconv;
+	PidginWindow *win;
 	GtkWidget *icon;
 
-	if (!GAIM_IS_GTK_CONVERSATION(conv))
+	if (!PIDGIN_IS_PIDGIN_CONVERSATION(conv))
 		return;
 
-	gtkconv = GAIM_GTK_CONVERSATION(conv);
+	gtkconv = PIDGIN_CONVERSATION(conv);
 	win = gtkconv->win;
 
 	if (!win)
@@ -427,34 +427,34 @@ update_menu_tray(GaimConversation *conv, gpointer null)
 
 	icon = get_tray_icon_for_window(win);
 
-	if (gaim_conversation_get_type(conv) != GAIM_CONV_TYPE_CHAT)
+	if (purple_conversation_get_type(conv) != PURPLE_CONV_TYPE_CHAT)
 		gtk_widget_hide(icon);
 	else
 		gtk_widget_show(icon);
 }
 
 static void
-deleting_conversation_cb(GaimConversation *conv, gpointer null)
+deleting_conversation_cb(PurpleConversation *conv, gpointer null)
 {
-	if (gaim_conversation_get_type(conv) != GAIM_CONV_TYPE_CHAT ||
-			!GAIM_IS_GTK_CONVERSATION(conv))
+	if (purple_conversation_get_type(conv) != PURPLE_CONV_TYPE_CHAT ||
+			!PIDGIN_IS_PIDGIN_CONVERSATION(conv))
 		return;
 
-	clear_list(NULL, GAIM_GTK_CONVERSATION(conv));
+	clear_list(NULL, PIDGIN_CONVERSATION(conv));
 }
 
 static gboolean
-rcvd_msg_cb(GaimAccount *account, const char **who, const char **message,
-				GaimConversation *conv, GaimMessageFlags *flags)
+rcvd_msg_cb(PurpleAccount *account, const char **who, const char **message,
+				PurpleConversation *conv, PurpleMessageFlags *flags)
 {
 	char *msg, *delims;
 	GList *iter;
 
-	if (*flags & GAIM_MESSAGE_NICK)
+	if (*flags & PURPLE_MESSAGE_NICK)
 		return FALSE;
 
 	delims = g_strdup(DELIMS);
-	g_strdelimit(delims, gaim_prefs_get_string(PREF_HLWORDS), ' ');
+	g_strdelimit(delims, purple_prefs_get_string(PREF_HLWORDS), ' ');
 	
 	msg = g_strdup(*message);
 	g_strdelimit(msg, delims, ' ');
@@ -468,7 +468,7 @@ rcvd_msg_cb(GaimAccount *account, const char **who, const char **message,
 			char *e = s + strlen(iter->data);
 			if (*e == ' ' || *e == '\0')
 			{
-				*flags |= GAIM_MESSAGE_NICK;
+				*flags |= PURPLE_MESSAGE_NICK;
 				break;
 			}
 		}
@@ -496,7 +496,7 @@ construct_list()
 
 	destroy_list();
 
-	string = g_strdup(gaim_prefs_get_string(PREF_HLWORDS));
+	string = g_strdup(purple_prefs_get_string(PREF_HLWORDS));
 	s = string;
 	e = NULL;
 
@@ -519,109 +519,109 @@ construct_list()
 }
 
 static void
-unload_cleanup_gtkconv(GaimGtkConversation *gtkconv, gpointer null)
+unload_cleanup_gtkconv(PidginConversation *gtkconv, gpointer null)
 {
 	clear_list(NULL, gtkconv);
 }
 
 static void
-unload_cleanup_win(GaimGtkWindow *win, gpointer null)
+unload_cleanup_win(PidginWindow *win, gpointer null)
 {
 	GtkWidget *w = get_tray_icon_for_window(win);
 	g_object_set_data(G_OBJECT(win->window), "nicksaid:trayicon", NULL);
 	gtk_widget_destroy(w);
 
-	g_list_foreach(gaim_gtk_conv_window_get_gtkconvs(win), (GFunc)unload_cleanup_gtkconv, NULL);
+	g_list_foreach(pidgin_conv_window_get_gtkconvs(win), (GFunc)unload_cleanup_gtkconv, NULL);
 }
 
 static gboolean
-plugin_load(GaimPlugin *plugin)
+plugin_load(PurplePlugin *plugin)
 {
 	construct_list();
 
-	gaim_signal_connect(gaim_conversations_get_handle(), "receiving-chat-msg",
-						plugin,	GAIM_CALLBACK(rcvd_msg_cb), NULL);
-	gaim_signal_connect(gaim_gtk_conversations_get_handle(), "displaying-chat-msg",
-						plugin, GAIM_CALLBACK(displaying_msg_cb), NULL);
-	gaim_signal_connect(gaim_gtk_conversations_get_handle(), "conversation-switched",
-						plugin, GAIM_CALLBACK(update_menu_tray), NULL);
-	gaim_signal_connect(gaim_conversations_get_handle(), "deleting-conversation",
-						plugin, GAIM_CALLBACK(deleting_conversation_cb), NULL);
+	purple_signal_connect(purple_conversations_get_handle(), "receiving-chat-msg",
+						plugin,	PURPLE_CALLBACK(rcvd_msg_cb), NULL);
+	purple_signal_connect(pidgin_conversations_get_handle(), "displaying-chat-msg",
+						plugin, PURPLE_CALLBACK(displaying_msg_cb), NULL);
+	purple_signal_connect(pidgin_conversations_get_handle(), "conversation-switched",
+						plugin, PURPLE_CALLBACK(update_menu_tray), NULL);
+	purple_signal_connect(purple_conversations_get_handle(), "deleting-conversation",
+						plugin, PURPLE_CALLBACK(deleting_conversation_cb), NULL);
 
-	gaim_prefs_connect_callback(plugin, PREF_HLWORDS,
-					(GaimPrefCallback)construct_list, NULL);
+	purple_prefs_connect_callback(plugin, PREF_HLWORDS,
+					(PurplePrefCallback)construct_list, NULL);
 
 	return TRUE;
 }
 
 static gboolean
-plugin_unload(GaimPlugin *plugin)
+plugin_unload(PurplePlugin *plugin)
 {
 	destroy_list();
 
-	g_list_foreach(gaim_gtk_conv_windows_get_list(), (GFunc)unload_cleanup_win, NULL);
+	g_list_foreach(pidgin_conv_windows_get_list(), (GFunc)unload_cleanup_win, NULL);
 
-	gaim_prefs_disconnect_by_handle(plugin);
+	purple_prefs_disconnect_by_handle(plugin);
 
 	return TRUE;
 }
 
-static GaimPluginPrefFrame *
-get_plugin_pref_frame(GaimPlugin *plugin)
+static PurplePluginPrefFrame *
+get_plugin_pref_frame(PurplePlugin *plugin)
 {
-	GaimPluginPrefFrame *frame;
-	GaimPluginPref *pref;
+	PurplePluginPrefFrame *frame;
+	PurplePluginPref *pref;
 
-	frame = gaim_plugin_pref_frame_new();
+	frame = purple_plugin_pref_frame_new();
 
-	pref = gaim_plugin_pref_new_with_label(_("Highlight"));
-	gaim_plugin_pref_frame_add(frame, pref);
+	pref = purple_plugin_pref_new_with_label(_("Highlight"));
+	purple_plugin_pref_frame_add(frame, pref);
 
-	pref = gaim_plugin_pref_new_with_name_and_label(PREF_HLWORDS,
+	pref = purple_plugin_pref_new_with_name_and_label(PREF_HLWORDS,
 					_("_Words to highlight on\n(separate the words with a blank space)"));
-	gaim_plugin_pref_frame_add(frame, pref);
+	purple_plugin_pref_frame_add(frame, pref);
 
-	pref = gaim_plugin_pref_new_with_label(_("Number of displayed characters"));
-	gaim_plugin_pref_frame_add(frame, pref);
+	pref = purple_plugin_pref_new_with_label(_("Number of displayed characters"));
+	purple_plugin_pref_frame_add(frame, pref);
 
-	pref = gaim_plugin_pref_new_with_name_and_label(PREF_CHARS,
+	pref = purple_plugin_pref_new_with_name_and_label(PREF_CHARS,
 					_("_Set the number of characters displayed\nin the nicksaid menu"));
-	gaim_plugin_pref_set_bounds(pref, 10, 40);
-	gaim_plugin_pref_frame_add(frame, pref);
+	purple_plugin_pref_set_bounds(pref, 10, 40);
+	purple_plugin_pref_frame_add(frame, pref);
 
-	pref = gaim_plugin_pref_new_with_name_and_label(PREF_SHOWWHO,
+	pref = purple_plugin_pref_new_with_name_and_label(PREF_SHOWWHO,
 					_("Display who said your name in the nicksaid menu"));
-	gaim_plugin_pref_frame_add(frame, pref);
+	purple_plugin_pref_frame_add(frame, pref);
 
-	pref = gaim_plugin_pref_new_with_name_and_label(PREF_TIMESTAMP,
+	pref = purple_plugin_pref_new_with_name_and_label(PREF_TIMESTAMP,
 					_("Display _timestamps in the nicksaid menu"));
-	gaim_plugin_pref_frame_add(frame, pref);
+	purple_plugin_pref_frame_add(frame, pref);
 
-	pref = gaim_plugin_pref_new_with_name_and_label(PREF_DATESTAMP,
+	pref = purple_plugin_pref_new_with_name_and_label(PREF_DATESTAMP,
 					_("_Display _datestamps in the nicksaid menu"));
-	gaim_plugin_pref_frame_add(frame, pref);
+	purple_plugin_pref_frame_add(frame, pref);
 
-	pref = gaim_plugin_pref_new_with_name_and_label(PREF_SHOWALL,
+	pref = purple_plugin_pref_new_with_name_and_label(PREF_SHOWALL,
 					_("Allow displaying in a separate dialog"));
-	gaim_plugin_pref_frame_add(frame, pref);
+	purple_plugin_pref_frame_add(frame, pref);
 
 	return frame;
 }
 
-static GaimPluginUiInfo prefs_info = {
+static PurplePluginUiInfo prefs_info = {
 	get_plugin_pref_frame
 };
 
-static GaimPluginInfo info =
+static PurplePluginInfo info =
 {
-	GAIM_PLUGIN_MAGIC,			/* Magic				*/
-	GAIM_MAJOR_VERSION,			/* Gaim Major Version	*/
-	GAIM_MINOR_VERSION,			/* Gaim Minor Version	*/
-	GAIM_PLUGIN_STANDARD,		/* plugin type			*/
-	GAIM_GTK_PLUGIN_TYPE,		/* ui requirement		*/
+	PURPLE_PLUGIN_MAGIC,			/* Magic				*/
+	PURPLE_MAJOR_VERSION,			/* Purple Major Version	*/
+	PURPLE_MINOR_VERSION,			/* Purple Minor Version	*/
+	PURPLE_PLUGIN_STANDARD,		/* plugin type			*/
+	PIDGIN_PLUGIN_TYPE,		/* ui requirement		*/
 	0,							/* flags				*/
 	NULL,						/* dependencies			*/
-	GAIM_PRIORITY_DEFAULT,		/* priority				*/
+	PURPLE_PRIORITY_DEFAULT,		/* priority				*/
 
 	PLUGIN_ID,					/* plugin id			*/
 	NULL,						/* name					*/
@@ -642,7 +642,7 @@ static GaimPluginInfo info =
 };
 
 static void
-init_plugin(GaimPlugin *plugin)
+init_plugin(PurplePlugin *plugin)
 {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
@@ -653,13 +653,13 @@ init_plugin(GaimPlugin *plugin)
 	info.summary = _(PLUGIN_SUMMARY);
 	info.description = _(PLUGIN_DESCRIPTION);
 
-	gaim_prefs_add_none(PREF_PREFIX);
-	gaim_prefs_add_string(PREF_HLWORDS, "");
-	gaim_prefs_add_int(PREF_CHARS, 15);
-	gaim_prefs_add_bool(PREF_TIMESTAMP, TRUE);
-	gaim_prefs_add_bool(PREF_DATESTAMP, FALSE);
-	gaim_prefs_add_bool(PREF_SHOWWHO, TRUE);
-	gaim_prefs_add_bool(PREF_SHOWALL, FALSE);
+	purple_prefs_add_none(PREF_PREFIX);
+	purple_prefs_add_string(PREF_HLWORDS, "");
+	purple_prefs_add_int(PREF_CHARS, 15);
+	purple_prefs_add_bool(PREF_TIMESTAMP, TRUE);
+	purple_prefs_add_bool(PREF_DATESTAMP, FALSE);
+	purple_prefs_add_bool(PREF_SHOWWHO, TRUE);
+	purple_prefs_add_bool(PREF_SHOWALL, FALSE);
 }
 
-GAIM_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)
+PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)

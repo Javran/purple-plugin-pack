@@ -25,16 +25,16 @@
 #define SHORTDESC "Ignorance filter"
 
 #ifndef IGNORANCE_CONFDIR
-# define IGNORANCE_CONFDIR gaim_user_dir()
+# define IGNORANCE_CONFDIR purple_user_dir()
 #endif
 
 #define EXEC_TIMEOUT 10
 
 #define GREATER(x,y) ((x)?((x)>(y)):(y))
 
-#if ((GAIM_MAJOR_VERSION) < 2)
-#define GAIM_CONV_TYPE_CHAT GAIM_CONV_CHAT
-#define GAIM_CONV_TYPE_IM GAIM_CONV_IM
+#if ((PURPLE_MAJOR_VERSION) < 2)
+#define PURPLE_CONV_TYPE_CHAT PURPLE_CONV_CHAT
+#define PURPLE_CONV_TYPE_IM PURPLE_CONV_IM
 #endif
 
 #if GLIB_CHECK_VERSION(2,6,0)

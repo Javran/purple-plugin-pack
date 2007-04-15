@@ -1,6 +1,6 @@
 EXTRA_DIST = .plugin .build
 
-xchat_chatsdir = $(GAIM_LIBDIR)/gaim
+xchat_chatsdir = $(GAIM_LIBDIR)/pidgin
 
 xchat_chats_la_LDFLAGS = -module -avoid-version
 
@@ -20,7 +20,7 @@ xchat_chats_la_LIBADD = \
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
+	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
 	-DDATADIR=\"$(GAIM_DATADIR)\" \
 	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
 	$(GTK_CFLAGS) \

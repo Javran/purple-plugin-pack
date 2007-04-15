@@ -20,7 +20,7 @@
 # include "../gpp_config.h"
 #endif /* HAVE_CONFIG_H */
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 #define OLDLOGGER_PLUGIN_ID "core-plugin_pack-oldlogger"
 
 #include <errno.h>
@@ -55,13 +55,13 @@
 #endif
 
 
-#if GAIM_VERSION_CHECK(2,0,0)
-static GaimLogLogger *oldtxt_logger;
-static GaimLogLogger *oldhtml_logger;
+#if PURPLE_VERSION_CHECK(2,0,0)
+static PurpleLogLogger *oldtxt_logger;
+static PurpleLogLogger *oldhtml_logger;
 #define return_written return written
 #else
-static GaimLogLogger oldtxt_logger;
-static GaimLogLogger oldhtml_logger;
+static PurpleLogLogger oldtxt_logger;
+static PurpleLogLogger oldhtml_logger;
 #define return_written return
 #endif
 
@@ -86,17 +86,17 @@ oldlogger_date_full(void)
 	return buf;
 }
 
-static void old_logger_create(GaimLog *log)
+static void old_logger_create(PurpleLog *log)
 {
-	if(log->type == GAIM_LOG_SYSTEM){
-		const char *ud = gaim_user_dir();
+	if(log->type == PURPLE_LOG_SYSTEM){
+		const char *ud = purple_user_dir();
 		char *dir;
 		char *filename;
 		struct basic_logger_data *data;
 		struct stat st;
 
 		dir = g_build_filename(ud, "logs", NULL);
-		gaim_build_dir (dir, S_IRUSR | S_IWUSR | S_IXUSR);
+		purple_build_dir (dir, S_IRUSR | S_IWUSR | S_IXUSR);
 		filename = g_build_filename(dir, "system", NULL);
 		g_free(dir);
 
@@ -109,7 +109,7 @@ static void old_logger_create(GaimLog *log)
 
 		data->file = g_fopen(filename, "a");
 		if (!data->file) {
-			gaim_debug(GAIM_DEBUG_ERROR, "log",
+			purple_debug(PURPLE_DEBUG_ERROR, "log",
 					"Could not create log file %s\n", filename);
 			g_free(filename);
 			g_free(data);
@@ -120,7 +120,7 @@ static void old_logger_create(GaimLog *log)
 	}
 }
 
-static void old_logger_update_index(GaimLog *log)
+static void old_logger_update_index(PurpleLog *log)
 {
 	struct basic_logger_data *data = log->logger_data;
 	struct stat st;
@@ -145,7 +145,7 @@ static void old_logger_update_index(GaimLog *log)
 	/* The index file exists and is at least as new as the log, so open it. */
 	if (!data->new && !g_file_get_contents(index_path, &index_data, NULL, &error))
 	{
-		gaim_debug_error("log", "Failed to read contents of index \"%s\": %s\n",
+		purple_debug_error("log", "Failed to read contents of index \"%s\": %s\n",
 						 index_path, error->message);
 		g_error_free(error);
 		g_free(index_path);
@@ -156,7 +156,7 @@ static void old_logger_update_index(GaimLog *log)
 
 	index_tmp = g_strdup_printf("%s.XXXXXX", index_path);
 	if ((index_fd = g_mkstemp(index_tmp)) == -1) {
-		gaim_debug_error("log", "Failed to open index temp file: %s\n",
+		purple_debug_error("log", "Failed to open index temp file: %s\n",
 		                 strerror(errno));
 		g_error_free(error);
 		g_free(index_path);
@@ -166,7 +166,7 @@ static void old_logger_update_index(GaimLog *log)
 	} else {
 		if ((index = fdopen(index_fd, "wb")) == NULL)
 		{
-			gaim_debug_error("log", "Failed to fdopen() index temp file: %s\n",
+			purple_debug_error("log", "Failed to fdopen() index temp file: %s\n",
 			                 strerror(errno));
 			close(index_fd);
 			if (index_tmp != NULL)
@@ -186,14 +186,14 @@ static void old_logger_update_index(GaimLog *log)
 
 	if (g_rename(index_tmp, index_path))
 	{
-		gaim_debug_warning("log", "Failed to rename index temp file \"%s\" to \"%s\": %s\n",
+		purple_debug_warning("log", "Failed to rename index temp file \"%s\" to \"%s\": %s\n",
 						   index_tmp, index_path, strerror(errno));
 		g_unlink(index_tmp);
 		g_free(index_tmp);
 	}
 }
 
-static void old_logger_finalize(GaimLog *log)
+static void old_logger_finalize(PurpleLog *log)
 {
 	struct basic_logger_data *data = log->logger_data;
 	if (data) {
@@ -214,18 +214,18 @@ static void old_logger_finalize(GaimLog *log)
  ** Ye Olde PLAIN TEXT LOGGER **
  *******************************/
 
-#if GAIM_VERSION_CHECK(2,0,0)
+#if PURPLE_VERSION_CHECK(2,0,0)
 static gsize
 #else
 static void
 #endif
-oldtxt_logger_write(GaimLog *log, GaimMessageFlags type,
+oldtxt_logger_write(PurpleLog *log, PurpleMessageFlags type,
 			     const char *from, time_t time, const char *message)
 {
 	char date[64];
 	char *stripped = NULL;
 	struct basic_logger_data *data = log->logger_data;
-	const char *prpl = (gaim_find_prpl(gaim_account_get_protocol_id(log->account)))->info->name;
+	const char *prpl = (purple_find_prpl(purple_account_get_protocol_id(log->account)))->info->name;
 	gsize written = 0;
 	if (!data) {
 		/* This log is new.  We could use the logger's 'new' function, but
@@ -237,15 +237,15 @@ oldtxt_logger_write(GaimLog *log, GaimMessageFlags type,
 		 * Stu: well, this isn't really necessary with crappy old logging, but I'm
 		 * too lazy to do it any other way.
 		 */
-		const char *ud = gaim_user_dir();
+		const char *ud = purple_user_dir();
 		char *filename;
-		char *guy = g_strdup(gaim_normalize(log->account, log->name));
+		char *guy = g_strdup(purple_normalize(log->account, log->name));
 		char *chat;
 		char *dir;
 		char *logfile;
 		struct stat st;
 
-		if (log->type == GAIM_LOG_CHAT) {
+		if (log->type == PURPLE_LOG_CHAT) {
 			chat = g_strdup_printf("%s.chat", guy);
 			g_free(guy);
 			guy = chat;
@@ -254,7 +254,7 @@ oldtxt_logger_write(GaimLog *log, GaimMessageFlags type,
 		g_free(guy);
 
 		dir = g_build_filename(ud, "logs", NULL);
-		gaim_build_dir (dir, S_IRUSR | S_IWUSR | S_IXUSR);
+		purple_build_dir (dir, S_IRUSR | S_IWUSR | S_IXUSR);
 
 		filename = g_build_filename(dir, logfile, NULL);
 		g_free(dir);
@@ -269,7 +269,7 @@ oldtxt_logger_write(GaimLog *log, GaimMessageFlags type,
 
 		data->file = g_fopen(filename, "a");
 		if (!data->file) {
-			gaim_debug(GAIM_DEBUG_ERROR, "log", "Could not create log file %s\n", filename);
+			purple_debug(PURPLE_DEBUG_ERROR, "log", "Could not create log file %s\n", filename);
 			g_free(filename);
 			g_free(data);
 			return_written;
@@ -277,7 +277,7 @@ oldtxt_logger_write(GaimLog *log, GaimMessageFlags type,
 		data->filename = filename;
 
 		if (data->new)
-			written += fprintf(data->file, _("IM Sessions with %s\n"), gaim_normalize(log->account, log->name));
+			written += fprintf(data->file, _("IM Sessions with %s\n"), purple_normalize(log->account, log->name));
 
 		written += fprintf(data->file, "---- New Conversation @ %s ----\n",
 			oldlogger_date_full());
@@ -288,36 +288,36 @@ oldtxt_logger_write(GaimLog *log, GaimMessageFlags type,
 	if(!data->file)
 		return_written;
 
-	gaim_markup_html_to_xhtml(message, NULL, &stripped);
+	purple_markup_html_to_xhtml(message, NULL, &stripped);
 
-	if(log->type == GAIM_LOG_SYSTEM){
+	if(log->type == PURPLE_LOG_SYSTEM){
 		if (!strncmp(stripped, "+++ ", 4)) {
 			written += fprintf(data->file, "---- %s @ %s ----\n", stripped, oldlogger_date_full());
 		} else {
-			written += fprintf(data->file, "---- %s (%s) reported that %s @ %s ----\n", gaim_account_get_username(log->account), prpl, stripped, oldlogger_date_full());
+			written += fprintf(data->file, "---- %s (%s) reported that %s @ %s ----\n", purple_account_get_username(log->account), prpl, stripped, oldlogger_date_full());
 		}
 	} else {
 		strftime(date, sizeof(date), "%H:%M:%S", localtime(&time));
-		if (type & GAIM_MESSAGE_SEND ||
-			type & GAIM_MESSAGE_RECV) {
-			if (type & GAIM_MESSAGE_AUTO_RESP) {
+		if (type & PURPLE_MESSAGE_SEND ||
+			type & PURPLE_MESSAGE_RECV) {
+			if (type & PURPLE_MESSAGE_AUTO_RESP) {
 				written += fprintf(data->file, _("(%s) %s <AUTO-REPLY>: %s\n"), date,
 						from, stripped);
 			} else {
-				if(gaim_message_meify(stripped, -1))
+				if(purple_message_meify(stripped, -1))
 					written += fprintf(data->file, "(%s) ***%s %s\n", date, from,
 							stripped);
 				else
 					written += fprintf(data->file, "(%s) %s: %s\n", date, from,
 							stripped);
 			}
-		} else if (type & GAIM_MESSAGE_SYSTEM)
+		} else if (type & PURPLE_MESSAGE_SYSTEM)
 			written += fprintf(data->file, "(%s) %s\n", date, stripped);
-		else if (type & GAIM_MESSAGE_NO_LOG) {
+		else if (type & PURPLE_MESSAGE_NO_LOG) {
 			/* This shouldn't happen */
 			g_free(stripped);
 			return_written;
-		} else if (type & GAIM_MESSAGE_WHISPER)
+		} else if (type & PURPLE_MESSAGE_WHISPER)
 			written += fprintf(data->file, "(%s) *%s* %s\n", date, from, stripped);
 		else
 			written += fprintf(data->file, "(%s) %s%s %s\n", date, from ? from : "",
@@ -330,8 +330,8 @@ oldtxt_logger_write(GaimLog *log, GaimMessageFlags type,
 	return_written;
 }
 
-#if !GAIM_VERSION_CHECK(2,0,0)
-static GaimLogLogger oldtxt_logger = {
+#if !PURPLE_VERSION_CHECK(2,0,0)
+static PurpleLogLogger oldtxt_logger = {
 	N_("Old plain text"), "oldtxt",
 	old_logger_create,
 	oldtxt_logger_write,
@@ -348,30 +348,30 @@ static GaimLogLogger oldtxt_logger = {
 /****************************
  ** Ye Olde HTML LOGGER *****
  ****************************/
-#if GAIM_VERSION_CHECK(2,0,0)
+#if PURPLE_VERSION_CHECK(2,0,0)
 static gsize
 #else
 static void
 #endif
-oldhtml_logger_write(GaimLog *log, GaimMessageFlags type,
+oldhtml_logger_write(PurpleLog *log, PurpleMessageFlags type,
 					const char *from, time_t time, const char *message)
 {
 	char date[64];
 	char *msg_fixed = NULL;
 	struct basic_logger_data *data = log->logger_data;
-	const char *prpl = (gaim_find_prpl(gaim_account_get_protocol_id(log->account)))->info->name;
+	const char *prpl = (purple_find_prpl(purple_account_get_protocol_id(log->account)))->info->name;
 	gsize written = 0;
 	if(!data) {
 		/* This log is new */
-		const char *ud = gaim_user_dir();
+		const char *ud = purple_user_dir();
 		char *filename;
-		char *guy = g_strdup(gaim_normalize(log->account, log->name));
+		char *guy = g_strdup(purple_normalize(log->account, log->name));
 		char *chat;
 		char *dir;
 		char *logfile;
 		struct stat st;
 
-		if (log->type == GAIM_LOG_CHAT) {
+		if (log->type == PURPLE_LOG_CHAT) {
 			chat = g_strdup_printf("%s.chat", guy);
 			g_free(guy);
 			guy = chat;
@@ -380,7 +380,7 @@ oldhtml_logger_write(GaimLog *log, GaimMessageFlags type,
 		g_free(guy);
 
 		dir = g_build_filename(ud, "logs", NULL);
-		gaim_build_dir (dir, S_IRUSR | S_IWUSR | S_IXUSR);
+		purple_build_dir (dir, S_IRUSR | S_IWUSR | S_IXUSR);
 
 		filename = g_build_filename(dir, logfile, NULL);
 		g_free(dir);
@@ -395,7 +395,7 @@ oldhtml_logger_write(GaimLog *log, GaimMessageFlags type,
 
 		data->file = g_fopen(filename, "a");
 		if (!data->file) {
-			gaim_debug(GAIM_DEBUG_ERROR, "log",
+			purple_debug(PURPLE_DEBUG_ERROR, "log",
 					"Could not create log file %s\n", filename);
 			g_free(filename);
 			g_free(data);
@@ -405,7 +405,7 @@ oldhtml_logger_write(GaimLog *log, GaimMessageFlags type,
 
 		if (data->new) {
 			written += fprintf(data->file, "<HTML><HEAD><TITLE>");
-			written += fprintf(data->file, _("IM Sessions with %s"), gaim_normalize(log->account, log->name));
+			written += fprintf(data->file, _("IM Sessions with %s"), purple_normalize(log->account, log->name));
 			written += fprintf(data->file, "</TITLE></HEAD><BODY BGCOLOR=\"#ffffff\">\n");
 		}
 		written += fprintf(data->file, "<HR><BR><H3 Align=Center> ");
@@ -418,35 +418,35 @@ oldhtml_logger_write(GaimLog *log, GaimMessageFlags type,
 	if(!data->file)
 		return_written;
 
-	gaim_markup_html_to_xhtml(message, &msg_fixed, NULL);
+	purple_markup_html_to_xhtml(message, &msg_fixed, NULL);
 
-	if(log->type == GAIM_LOG_SYSTEM){
+	if(log->type == PURPLE_LOG_SYSTEM){
 		if (!strncmp(msg_fixed, "+++ ", 4)) {
 			written += fprintf(data->file, "---- %s @ %s ----<BR>\n", msg_fixed, oldlogger_date_full());
 		} else {
-			written += fprintf(data->file, "---- %s (%s) reported that %s @ %s ----<BR>\n", gaim_account_get_username(log->account), prpl, msg_fixed, oldlogger_date_full());
+			written += fprintf(data->file, "---- %s (%s) reported that %s @ %s ----<BR>\n", purple_account_get_username(log->account), prpl, msg_fixed, oldlogger_date_full());
 		}
 	} else {
 		strftime(date, sizeof(date), "%H:%M:%S", localtime(&time));
-		if (type & GAIM_MESSAGE_SYSTEM)
+		if (type & PURPLE_MESSAGE_SYSTEM)
 			written += fprintf(data->file, "<FONT COLOR=\"#000000\" sml=\"%s\">(%s) <B>%s</B></FONT><BR>\n", prpl, date, msg_fixed);
-		else if (type & GAIM_MESSAGE_WHISPER)
+		else if (type & PURPLE_MESSAGE_WHISPER)
 			written += fprintf(data->file, "<FONT COLOR=\"#6C2585\" sml=\"%s\">(%s) <B>%s:</B></FONT> %s<BR>\n",
 					prpl, date, from, msg_fixed);
-		else if (type & GAIM_MESSAGE_AUTO_RESP) {
-			if (type & GAIM_MESSAGE_SEND)
+		else if (type & PURPLE_MESSAGE_AUTO_RESP) {
+			if (type & PURPLE_MESSAGE_SEND)
 				written += fprintf(data->file, _("<FONT COLOR=\"#16569E\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> %s<BR>\n"), prpl, date, from, msg_fixed);
-			else if (type & GAIM_MESSAGE_RECV)
+			else if (type & PURPLE_MESSAGE_RECV)
 				written += fprintf(data->file, _("<FONT COLOR=\"#A82F2F\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> %s<BR>\n"), prpl, date, from, msg_fixed);
-		} else if (type & GAIM_MESSAGE_RECV) {
-			if(gaim_message_meify(msg_fixed, -1))
+		} else if (type & PURPLE_MESSAGE_RECV) {
+			if(purple_message_meify(msg_fixed, -1))
 				written += fprintf(data->file, "<FONT COLOR=\"#6C2585\" sml=\"%s\">(%s) <B>***%s</B></FONT> <font sml=\"%s\">%s</FONT><BR>\n",
 						prpl, date, from, prpl, msg_fixed);
 			else
 				written += fprintf(data->file, "<FONT COLOR=\"#A82F2F\" sml=\"%s\">(%s) <B>%s:</B></FONT> <font sml=\"%s\">%s</FONT><BR>\n",
 						prpl, date, from, prpl, msg_fixed);
-		} else if (type & GAIM_MESSAGE_SEND) {
-			if(gaim_message_meify(msg_fixed, -1))
+		} else if (type & PURPLE_MESSAGE_SEND) {
+			if(purple_message_meify(msg_fixed, -1))
 				written += fprintf(data->file, "<FONT COLOR=\"#6C2585\" sml=\"%s\">(%s) <B>***%s</B></FONT> <font sml=\"%s\">%s</FONT><BR>\n",
 						prpl, date, from, prpl, msg_fixed);
 			else
@@ -461,8 +461,8 @@ oldhtml_logger_write(GaimLog *log, GaimMessageFlags type,
 	return_written;
 }
 
-#if !GAIM_VERSION_CHECK(2,0,0)
-static GaimLogLogger oldhtml_logger = {
+#if !PURPLE_VERSION_CHECK(2,0,0)
+static PurpleLogLogger oldhtml_logger = {
 	N_("Old HTML"), "oldhtml",
 	old_logger_create,
 	oldhtml_logger_write,
@@ -476,51 +476,51 @@ static GaimLogLogger oldhtml_logger = {
 #endif
 
 static gboolean
-plugin_load(GaimPlugin *plugin)
+plugin_load(PurplePlugin *plugin)
 {
-#if GAIM_VERSION_CHECK(2,0,0)
-	oldtxt_logger = gaim_log_logger_new("oldtxt", N_("Old plain text"), 3,
+#if PURPLE_VERSION_CHECK(2,0,0)
+	oldtxt_logger = purple_log_logger_new("oldtxt", N_("Old plain text"), 3,
 										old_logger_create,
 										oldtxt_logger_write,
 										old_logger_finalize);
-	gaim_log_logger_add(oldtxt_logger);
-	oldhtml_logger = gaim_log_logger_new("oldhtml", N_("Old HTML"), 3,
+	purple_log_logger_add(oldtxt_logger);
+	oldhtml_logger = purple_log_logger_new("oldhtml", N_("Old HTML"), 3,
 										 old_logger_create,
 										 oldhtml_logger_write,
 										 old_logger_finalize);
-	gaim_log_logger_add(oldhtml_logger);
+	purple_log_logger_add(oldhtml_logger);
 #else
-	gaim_log_logger_add(&oldtxt_logger);
-	gaim_log_logger_add(&oldhtml_logger);
+	purple_log_logger_add(&oldtxt_logger);
+	purple_log_logger_add(&oldhtml_logger);
 #endif
-	gaim_prefs_trigger_callback("/core/logging/format");
+	purple_prefs_trigger_callback("/core/logging/format");
 	return TRUE;
 }
 
 static gboolean
-plugin_unload(GaimPlugin *plugin)
+plugin_unload(PurplePlugin *plugin)
 {
-#if GAIM_VERSION_CHECK(2,0,0)
-	gaim_log_logger_remove(oldtxt_logger);
-	gaim_log_logger_remove(oldhtml_logger);
+#if PURPLE_VERSION_CHECK(2,0,0)
+	purple_log_logger_remove(oldtxt_logger);
+	purple_log_logger_remove(oldhtml_logger);
 #else
-	gaim_log_logger_remove(&oldtxt_logger);
-	gaim_log_logger_remove(&oldhtml_logger);
+	purple_log_logger_remove(&oldtxt_logger);
+	purple_log_logger_remove(&oldhtml_logger);
 #endif
-	gaim_prefs_trigger_callback("/core/logging/format");
+	purple_prefs_trigger_callback("/core/logging/format");
 	return TRUE;
 }
 
-static GaimPluginInfo info =
+static PurplePluginInfo info =
 {
-	GAIM_PLUGIN_MAGIC,								/**< magic			*/
-	GAIM_MAJOR_VERSION,								/**< major version	*/
-	GAIM_MINOR_VERSION,								/**< minor version	*/
-	GAIM_PLUGIN_STANDARD,							/**< type			*/
+	PURPLE_PLUGIN_MAGIC,								/**< magic			*/
+	PURPLE_MAJOR_VERSION,								/**< major version	*/
+	PURPLE_MINOR_VERSION,								/**< minor version	*/
+	PURPLE_PLUGIN_STANDARD,							/**< type			*/
 	NULL,											/**< ui_requirement	*/
 	0,												/**< flags			*/
 	NULL,											/**< dependencies	*/
-	GAIM_PRIORITY_DEFAULT,							/**< priority		*/
+	PURPLE_PRIORITY_DEFAULT,							/**< priority		*/
 
 	OLDLOGGER_PLUGIN_ID,							/**< id				*/
 	NULL,											/**< name			*/
@@ -541,7 +541,7 @@ static GaimPluginInfo info =
 };
 
 static void
-init_plugin(GaimPlugin *plugin) {
+init_plugin(PurplePlugin *plugin) {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
@@ -552,4 +552,4 @@ init_plugin(GaimPlugin *plugin) {
 	info.description = _("Re-implements the legacy, deficient, logging");
 }
 
-GAIM_INIT_PLUGIN(oldlogger, init_plugin, info)
+PURPLE_INIT_PLUGIN(oldlogger, init_plugin, info)

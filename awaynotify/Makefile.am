@@ -1,6 +1,6 @@
 EXTRA_DIST = .plugin
 
-plugindir=$(GAIM_LIBDIR)/gaim
+plugindir=$(GAIM_LIBDIR)/libpurple
 
 awaynotify_la_LDFLAGS = -module -avoid-version
 
@@ -13,7 +13,7 @@ awaynotify_la_LIBADD = \
 awaynotify_la_SOURCES = awaynotify.c
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
+	-DLIBDIR=\"$(GAIM_LIBDIR)/libpurple/\" \
 	-DDATADIR=\"$(GAIM_DATADIR)\" \
 	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
 	$(GLIB_CFLAGS) \

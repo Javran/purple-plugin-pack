@@ -1,5 +1,5 @@
 /*
- * Ignorance - Make up for deficiencies in Gaim's privacy
+ * Ignorance - Make up for deficiencies in Purple's privacy
  *
  * Copyright (c) 200?-2006 Levi Bard
  * Copyright (c) 2005-2006 Peter Lawler
@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 /* ignorance headers */
 #include "ignorance_level.h"
@@ -30,7 +30,7 @@
 #include "ignorance_violation.h"
 #include "ignorance_rule.h"
 
-/* GTK Gaim headers */
+/* GTK Purple headers */
 #include <gtkplugin.h>
 #include <gtkutils.h>
 
@@ -100,34 +100,34 @@ static ignorance_level* ignorance_get_user_level(const GString *username){
 	return ignorance_get_default_level();
 }
 
-static void gaim_buddy_add(gpointer key, gpointer value, gpointer user_data) {
-	GaimBuddy *buddy = (GaimBuddy*)value;
+static void purple_buddy_add(gpointer key, gpointer value, gpointer user_data) {
+	PurpleBuddy *buddy = (PurpleBuddy*)value;
 	ignorance_level	*level = (ignorance_level*)user_data;
-	GaimAccount *account = NULL;
+	PurpleAccount *account = NULL;
 	gchar *name = NULL;
 	GString	*tmp;
 	
 	if(buddy && level) {
 		name = (gchar*)buddy->name;
 		account = buddy->account;
-		tmp = g_string_new(gaim_account_get_protocol_id(account));
-		g_string_append(tmp, gaim_normalize_nocase(account, name));
+		tmp = g_string_new(purple_account_get_protocol_id(account));
+		g_string_append(tmp, purple_normalize_nocase(account, name));
 		
 		if(ignorance_get_user_level(tmp) == ignorance_get_default_level()) {
 			ignorance_level_add_denizen(level, tmp);
 
 			if(strstr(level->name->str, "WL")) {
-				gaim_privacy_deny_remove(account, name, FALSE);
-				gaim_privacy_permit_add(account, name, FALSE);
+				purple_privacy_deny_remove(account, name, FALSE);
+				purple_privacy_permit_add(account, name, FALSE);
 			} else if(strstr(level->name->str,"BL")) {
-				gaim_privacy_permit_remove(account, name, FALSE);
-				gaim_privacy_deny_add(account, name, FALSE);
+				purple_privacy_permit_remove(account, name, FALSE);
+				purple_privacy_deny_add(account, name, FALSE);
 			}
 		}
 
 		g_string_free(tmp, TRUE);
 	} else {
-		gaim_debug_error("ignorance", "Bad arguments to gaim_buddy_add\n");
+		purple_debug_error("ignorance", "Bad arguments to purple_buddy_add\n");
 	}
 }
 
@@ -165,7 +165,7 @@ static gboolean import_curphoo_list() {
 	buf = g_build_filename(g_get_home_dir(), ".curphoo", "ignore", NULL);
 
 	if(!(curphoofile = fopen(buf, "r"))) {
-		gaim_debug_error("ignorance", "Unable to open %s\n", buf);
+		purple_debug_error("ignorance", "Unable to open %s\n", buf);
 		g_free(buf);
 
 		return FALSE;
@@ -178,7 +178,7 @@ static gboolean import_curphoo_list() {
 	curphoolevel = ignorance_get_level_name(tmp);
 
 	if(!curphoolevel) {
-		gaim_debug_info("ignorance", "Creating new Curphoo blacklist\n");
+		purple_debug_info("ignorance", "Creating new Curphoo blacklist\n");
 #ifdef HAVE_REGEX_H
 		curphoorule = ignorance_rule_newp(g_string_new("Everything"),
 				IGNORANCE_RULE_REGEX,(gchar*)".*", IGNORANCE_FLAG_FILTER,
@@ -199,11 +199,11 @@ static gboolean import_curphoo_list() {
 
 	g_free(buf);
 
-	gaim_debug_info("ignorance", "Preparing to read in curphoo blacklist users\n");
+	purple_debug_info("ignorance", "Preparing to read in curphoo blacklist users\n");
 
 	for(; buf_get_line(ibuf, &buf, &pnt, size); ){
 		g_string_assign(tmp, "prpl-yahoo");
-		g_string_append(tmp, gaim_normalize_nocase(NULL,buf));
+		g_string_append(tmp, purple_normalize_nocase(NULL,buf));
 
 		if(ignorance_get_user_level(tmp) == ignorance_get_default_level())
 			ignorance_level_add_denizen(curphoolevel, tmp);
@@ -221,7 +221,7 @@ static gboolean import_curphoo_list() {
 	curphoolevel = ignorance_get_level_name(tmp);
 
 	if(!curphoolevel) {
-		gaim_debug_info("ignorance", "Creating new Curphoo whitelist\n");
+		purple_debug_info("ignorance", "Creating new Curphoo whitelist\n");
 
 		curphoolevel = ignorance_level_new();
 		curphoolevel->name = g_string_new(tmp->str);
@@ -230,11 +230,11 @@ static gboolean import_curphoo_list() {
 
 	g_free(buf);
 
-	gaim_debug_info("ignorance", "Preparing to read in curphoo whitelist users\n");
+	purple_debug_info("ignorance", "Preparing to read in curphoo whitelist users\n");
 
 	for(; buf_get_line(ibuf, &buf, &pnt, size); ) {
 		g_string_assign(tmp, "prpl-yahoo");
-		g_string_append(tmp, gaim_normalize_nocase(NULL, buf));
+		g_string_append(tmp, purple_normalize_nocase(NULL, buf));
 
 		if(ignorance_get_user_level(tmp) == ignorance_get_default_level())
 			ignorance_level_add_denizen(curphoolevel, tmp);
@@ -242,26 +242,26 @@ static gboolean import_curphoo_list() {
 
 	g_free(ibuf);
 
-	gaim_debug_info("ignorance", "Done importing Curphoo users\n");
+	purple_debug_info("ignorance", "Done importing Curphoo users\n");
 
 	return TRUE;
 }
 
-static gboolean import_gaim_list() {
-	GaimBuddyList *bl;
+static gboolean import_purple_list() {
+	PurpleBuddyList *bl;
 	GString *wlname;
 	ignorance_level *wl;
 	gboolean rv = FALSE;
 
-	bl = gaim_get_blist();
+	bl = purple_get_blist();
 	wlname = g_string_new("WL");
 	wl = ignorance_get_level_name(wlname);
 
 	if(bl && wl) {
-		g_hash_table_foreach(bl->buddies, gaim_buddy_add, wl);
+		g_hash_table_foreach(bl->buddies, purple_buddy_add, wl);
 		rv = TRUE;
 	} else
-		gaim_debug_error("ignorance", "Unable to get Gaim buddy list!\n");
+		purple_debug_error("ignorance", "Unable to get Purple buddy list!\n");
 
 	g_string_free(wlname, TRUE);
 
@@ -282,7 +282,7 @@ static gboolean import_zinc_list()
 	buf = g_build_filename(g_get_home_dir(), ".zinc", "ignore", NULL);
 
 	if(!(zincfile = fopen(buf, "r"))) {
-		gaim_debug_error("ignorance", "Unable to open %s\n",buf);
+		purple_debug_error("ignorance", "Unable to open %s\n",buf);
 
 		g_free(buf);
 
@@ -297,7 +297,7 @@ static gboolean import_zinc_list()
 	zinclevel = ignorance_get_level_name(tmp);
 
 	if(!zinclevel){
-		gaim_debug_info("ignorance", "Creating new Zinc blacklist\n");
+		purple_debug_info("ignorance", "Creating new Zinc blacklist\n");
 #ifdef HAVE_REGEX_H
 		zincrule = ignorance_rule_newp(g_string_new("Everything"),
 				IGNORANCE_RULE_REGEX, (gchar*)".*", IGNORANCE_FLAG_FILTER,
@@ -318,11 +318,11 @@ static gboolean import_zinc_list()
 
 	g_free(buf);
 
-	gaim_debug_info("ignorance", "Preparing to read in zinc blacklist users\n");
+	purple_debug_info("ignorance", "Preparing to read in zinc blacklist users\n");
 
 	for(; buf_get_line(ibuf, &buf, &pnt, size); ) {
 		g_string_assign(tmp, "prpl-yahoo");
-		g_string_append(tmp, gaim_normalize_nocase(NULL, buf));
+		g_string_append(tmp, purple_normalize_nocase(NULL, buf));
 		if(ignorance_get_user_level(tmp) == ignorance_get_default_level())
 			ignorance_level_add_denizen(zinclevel, tmp);
 	}
@@ -339,7 +339,7 @@ static gboolean import_zinc_list()
 	zinclevel = ignorance_get_level_name(tmp);
 
 	if(!zinclevel) {
-		gaim_debug_info("ignorance", "Creating new Zinc whitelist\n");
+		purple_debug_info("ignorance", "Creating new Zinc whitelist\n");
 		zinclevel = ignorance_level_new();
 		zinclevel->name = g_string_new(tmp->str);
 		ignorance_add_level(zinclevel);
@@ -347,43 +347,43 @@ static gboolean import_zinc_list()
 
 	g_free(buf);
 
-	gaim_debug_info("ignorance", "Preparing to read in zinc whitelist users\n");
+	purple_debug_info("ignorance", "Preparing to read in zinc whitelist users\n");
 
 	for(; buf_get_line(ibuf, &buf, &pnt, size); ) {
 		/* maybe this will be this way eventually, when i kill unnecessary
 		 * GStrings - rekkanoryo */
-		/* tmp = g_strdup_printf("prpl-yahoo %s", gaim_normalize_nocase(NULL, buf)); */
+		/* tmp = g_strdup_printf("prpl-yahoo %s", purple_normalize_nocase(NULL, buf)); */
 		g_string_assign(tmp, "prpl-yahoo");
-		g_string_append(tmp, gaim_normalize_nocase(NULL, buf));
+		g_string_append(tmp, purple_normalize_nocase(NULL, buf));
 		if(ignorance_get_user_level(tmp) == ignorance_get_default_level())
 			ignorance_level_add_denizen(zinclevel, tmp);
 	}
 
 	g_free(ibuf);
 
-	gaim_debug_info("ignorance", "Done importing Zinc users\n");
+	purple_debug_info("ignorance", "Done importing Zinc users\n");
 
 	return TRUE;
 }
 
-static gboolean ignorance_rm_user(GaimConversation *conv, const gchar *username) {
+static gboolean ignorance_rm_user(PurpleConversation *conv, const gchar *username) {
 	gchar *msgbuf = NULL, *cursor = NULL;
 	gboolean retval = FALSE;
 	GString *usergs;
 	ignorance_level *level = NULL;
 	int len=0;
 
-	usergs = g_string_new(gaim_normalize_nocase(NULL, username));
+	usergs = g_string_new(purple_normalize_nocase(NULL, username));
 
 	level=ignorance_get_user_level(usergs);
 
 	if(level) {
 		retval = ignorance_level_remove_denizen(level, usergs);
 
-		gaim_debug_info("ignorance", "Done removing denizen from level\n");
+		purple_debug_info("ignorance", "Done removing denizen from level\n");
 
 		if(conv) {
-			gaim_debug_info("ignorance",
+			purple_debug_info("ignorance",
 					"Creating status message for username %x and level %x\n",
 					username, level);
 
@@ -396,9 +396,9 @@ static gboolean ignorance_rm_user(GaimConversation *conv, const gchar *username)
 				msgbuf = g_strdup_printf(_("Unable to remove %s from %s\n"),
 						username, level->name->str);
 
-			gaim_debug_info("ignorance", "Writing status message\n");
+			purple_debug_info("ignorance", "Writing status message\n");
 
-			gaim_conversation_write(conv, NULL, msgbuf, GAIM_MESSAGE_NO_LOG,
+			purple_conversation_write(conv, NULL, msgbuf, PURPLE_MESSAGE_NO_LOG,
 					time(NULL));
 
 			g_free(msgbuf);
@@ -406,36 +406,36 @@ static gboolean ignorance_rm_user(GaimConversation *conv, const gchar *username)
 	}
 
 	if(conv) { 
-		gaim_debug_info("ignorance",
+		purple_debug_info("ignorance",
 				"Preparing to push through to gaim privacy\n");
 
-		len = strlen(gaim_account_get_protocol_id(
-					gaim_conversation_get_account(conv)));
+		len = strlen(purple_account_get_protocol_id(
+					purple_conversation_get_account(conv)));
 
 		cursor = (gchar*)username + len;
 
 		if(cursor && (strlen(username) > len)) {
-			gaim_debug_info("ignorance", "Removing from permit list\n");
+			purple_debug_info("ignorance", "Removing from permit list\n");
 
-			gaim_privacy_permit_remove(gaim_conversation_get_account(conv),
+			purple_privacy_permit_remove(purple_conversation_get_account(conv),
 					cursor, FALSE);
 
-			gaim_debug_info("ignorance", "Removing from deny list\n");
+			purple_debug_info("ignorance", "Removing from deny list\n");
 
-			gaim_privacy_deny_remove(gaim_conversation_get_account(conv), cursor,
+			purple_privacy_deny_remove(purple_conversation_get_account(conv), cursor,
 					FALSE);
 
-			if(gaim_conversation_get_type(conv) == GAIM_CONV_TYPE_CHAT) {
-				gaim_debug_info("ignorance", "Removing from chat ignore list\n");
+			if(purple_conversation_get_type(conv) == PURPLE_CONV_TYPE_CHAT) {
+				purple_debug_info("ignorance", "Removing from chat ignore list\n");
 
-				gaim_conv_chat_unignore(GAIM_CONV_CHAT(conv), cursor);
+				purple_conv_chat_unignore(PURPLE_CONV_CHAT(conv), cursor);
 			}
 		}
 	}
 
 	g_string_free(usergs, TRUE);
 
-	gaim_debug_info("ignorance", "Exiting\n");
+	purple_debug_info("ignorance", "Exiting\n");
 
 	return retval;
 }
@@ -453,34 +453,34 @@ ignorance_place_user_name(const GString *level_name, const GString *username) {
 			return TRUE;
 		}
 	} else
-		gaim_debug_error("ignorance", "Invalid level %s\n", level_name->str);
+		purple_debug_error("ignorance", "Invalid level %s\n", level_name->str);
 
 	return FALSE;
 }
 
-static gboolean ignorance_bl_user(GaimConversation *conv, const gchar *username,
+static gboolean ignorance_bl_user(PurpleConversation *conv, const gchar *username,
 								  const gchar *actual_levelname)
 {
 	gboolean retval = FALSE;
 	gchar *msgbuf = NULL;
 	GString *wlname, *usergs;
-	GaimAccount *account = NULL;
+	PurpleAccount *account = NULL;
 
 	wlname = g_string_new(actual_levelname);
 
 	g_return_val_if_fail(conv != NULL, retval);
 
-	account = gaim_conversation_get_account(conv);
-	usergs = g_string_new(gaim_account_get_protocol_id(account));
-	g_string_append(usergs, gaim_normalize_nocase(NULL, username));
+	account = purple_conversation_get_account(conv);
+	usergs = g_string_new(purple_account_get_protocol_id(account));
+	g_string_append(usergs, purple_normalize_nocase(NULL, username));
 
 	if(ignorance_place_user_name(wlname, usergs)){
 		retval = TRUE;
-		gaim_privacy_permit_remove(account, username, FALSE);
-		gaim_privacy_deny_add(account, username, FALSE);
+		purple_privacy_permit_remove(account, username, FALSE);
+		purple_privacy_deny_add(account, username, FALSE);
 
-		if(gaim_conversation_get_type(conv) == GAIM_CONV_TYPE_CHAT)
-			gaim_conv_chat_ignore(GAIM_CONV_CHAT(conv), username);
+		if(purple_conversation_get_type(conv) == PURPLE_CONV_TYPE_CHAT)
+			purple_conv_chat_ignore(PURPLE_CONV_CHAT(conv), username);
 
 		msgbuf = g_strdup_printf(_("Assigned user %s to %s"), username,
 				actual_levelname);
@@ -489,7 +489,7 @@ static gboolean ignorance_bl_user(GaimConversation *conv, const gchar *username,
 				_("Unable to assign user %s to %s - may already be there"),
 				username, actual_levelname);
 
-	gaim_conversation_write(conv, NULL, msgbuf, GAIM_MESSAGE_NO_LOG, time(NULL));
+	purple_conversation_write(conv, NULL, msgbuf, PURPLE_MESSAGE_NO_LOG, time(NULL));
 
 	g_free(msgbuf);
 	g_string_free(usergs, TRUE);
@@ -564,7 +564,7 @@ yahoo_strip_tattoo(gchar *origmessage) {
 			if(cursor) {
 				rvindex = cursor + 1 - message;
 
-				gaim_debug_info("yahoo", "%s\nconverted to \n%s\n%s\n\n",
+				purple_debug_info("yahoo", "%s\nconverted to \n%s\n%s\n\n",
 					origmessage, cursor + 1, origmessage + rvindex);
 
 				g_free(message);
@@ -651,7 +651,7 @@ handle_exec_command (const gchar *command, GString *result,unsigned long maxlen)
 		g_string_append(result,message);
 	}
 
-	gaim_debug_info("Ignorance", "Execute command called for: "
+	purple_debug_info("Ignorance", "Execute command called for: "
 					"%s\n%s%s%s", command, retval ? "" : "Error: ",
 					retval ? "" : message, retval ? "" : "\n");
 	g_free(message);
@@ -660,47 +660,47 @@ handle_exec_command (const gchar *command, GString *result,unsigned long maxlen)
 }
 
 static gboolean
-apply_rule(GaimConversation *conv, GaimAccount *account,
+apply_rule(PurpleConversation *conv, PurpleAccount *account,
 		const GString *username, const GString *text, gint flags)
 {
 	gint text_score = 0;
 	gboolean rv = TRUE, newconv = FALSE;
 	GList *violations = NULL, *cursor = NULL;
 	GString *tmp;
-	GString *prpluser = g_string_new(gaim_account_get_protocol_id(account));
+	GString *prpluser = g_string_new(purple_account_get_protocol_id(account));
 	ignorance_level *user_level;
 	ignorance_violation *viol;
-	GaimConversationType conv_type;
+	PurpleConversationType conv_type;
 
-	g_string_append(prpluser, gaim_normalize_nocase(account, username->str));
+	g_string_append(prpluser, purple_normalize_nocase(account, username->str));
 	user_level=ignorance_get_user_level(prpluser);
 
-	gaim_debug_info("ignorance", "Preparing to check %s\n", text->str);
+	purple_debug_info("ignorance", "Preparing to check %s\n", text->str);
 
 	text_score=ignorance_level_rulecheck(user_level, prpluser, text, flags,
 			&violations);
 
-	gaim_debug_info("ignorance", "Got score %d\n", text_score);
+	purple_debug_info("ignorance", "Got score %d\n", text_score);
 
 	if(!(text_score & (IGNORANCE_FLAG_FILTER | IGNORANCE_FLAG_IGNORE))) {
 		rv = FALSE;
 		if(text_score) {
 			for(cursor = violations; cursor; cursor = cursor->next) {
 				viol = (ignorance_violation*)(cursor->data);
-				gaim_debug_info("ignorance", "Got violation type %d: %s\n",
+				purple_debug_info("ignorance", "Got violation type %d: %s\n",
 						viol->type,viol->value);
 
 				switch(viol->type) {
 					case IGNORANCE_FLAG_SOUND:
-						gaim_debug_info("ignorance",
+						purple_debug_info("ignorance",
 								"Attempting to play sound %s\n", viol->value);
 
-						gaim_sound_play_file(viol->value, account);
+						purple_sound_play_file(viol->value, account);
 
 						break;
 
 					case IGNORANCE_FLAG_EXECUTE:
-						gaim_debug_info("ignorance",
+						purple_debug_info("ignorance",
 								"Attempting to execute command %s\n",
 								viol->value);
 
@@ -709,9 +709,9 @@ apply_rule(GaimConversation *conv, GaimAccount *account,
 						handle_exec_command(viol->value, tmp, 512);
 
 						if(conv)
-							gaim_conversation_write(conv,
-									gaim_account_get_username(account),
-									tmp->str, GAIM_MESSAGE_NO_LOG, time(NULL));
+							purple_conversation_write(conv,
+									purple_account_get_username(account),
+									tmp->str, PURPLE_MESSAGE_NO_LOG, time(NULL));
 
 						g_string_free(tmp, TRUE);
 
@@ -720,21 +720,21 @@ apply_rule(GaimConversation *conv, GaimAccount *account,
 					case IGNORANCE_FLAG_MESSAGE:
 						if(!conv) {
 							newconv = TRUE;
-							conv = gaim_conversation_new(GAIM_CONV_TYPE_IM,
+							conv = purple_conversation_new(PURPLE_CONV_TYPE_IM,
 									account, username->str);
 						}
 
-						conv_type = gaim_conversation_get_type(conv);
+						conv_type = purple_conversation_get_type(conv);
 
-						if(conv_type == GAIM_CONV_TYPE_IM) {
-							gaim_conv_im_send(GAIM_CONV_IM(conv), viol->value);
-						} else if(conv_type == GAIM_CONV_TYPE_CHAT) {
-							gaim_conv_chat_send(GAIM_CONV_CHAT(conv),
+						if(conv_type == PURPLE_CONV_TYPE_IM) {
+							purple_conv_im_send(PURPLE_CONV_IM(conv), viol->value);
+						} else if(conv_type == PURPLE_CONV_TYPE_CHAT) {
+							purple_conv_chat_send(PURPLE_CONV_CHAT(conv),
 									viol->value);
 						} /* braces for readability only */
 
 						if(newconv)
-							gaim_conversation_destroy(conv);
+							purple_conversation_destroy(conv);
 
 						break;
 
@@ -748,20 +748,20 @@ apply_rule(GaimConversation *conv, GaimAccount *account,
 
 	g_string_free(prpluser, TRUE);
 
-	gaim_debug_info("ignorance", "Preparing to free violation items\n");
+	purple_debug_info("ignorance", "Preparing to free violation items\n");
 	g_list_foreach(violations, ignorance_violation_free_g, NULL);
 
-	gaim_debug_info("ignorance",
+	purple_debug_info("ignorance",
 			"Done freeing violation items, now freeing list itself\n");
 	g_list_free(violations);
 
-	gaim_debug_info("ignorance",
+	purple_debug_info("ignorance",
 			"Done checking, returning from applying rules\n");
 
 	return rv;
 }
 
-static gboolean substitute (GaimConversation *conv,GaimAccount *account,
+static gboolean substitute (PurpleConversation *conv,PurpleAccount *account,
 							const gchar *sender, gchar **message, gint msgflags) {
 	GString *username=NULL, *text=NULL;
 	gboolean rv=FALSE;
@@ -773,9 +773,9 @@ static gboolean substitute (GaimConversation *conv,GaimAccount *account,
 		return FALSE;
 
 
-	username=g_string_new(gaim_normalize_nocase(account,sender));
+	username=g_string_new(purple_normalize_nocase(account,sender));
 
-	gaim_debug_info("ignorance","Got message \"%s\" from user \"%s\"\n",*message,sender);
+	purple_debug_info("ignorance","Got message \"%s\" from user \"%s\"\n",*message,sender);
 
 	cursor=yahoo_strip_tattoo(*message);
 	if(cursor!=*message){
@@ -789,50 +789,50 @@ static gboolean substitute (GaimConversation *conv,GaimAccount *account,
 	rv=apply_rule(conv,account,username,text,msgflags);
 
 	if(rv)
-		gaim_debug_info("ignorance", "%s: %s violated!\n",username->str,text->str);
+		purple_debug_info("ignorance", "%s: %s violated!\n",username->str,text->str);
 
 	g_string_free(username,TRUE);
 	g_string_free(text,TRUE);
 
-	gaim_debug_info("ignorance","Returning from substitution\n");
+	purple_debug_info("ignorance","Returning from substitution\n");
 
 	return rv;
 }
 
-static gboolean chat_cb(GaimAccount *account, gchar **sender, gchar **buffer,
-						GaimConversation *chat, void *data){
+static gboolean chat_cb(PurpleAccount *account, gchar **sender, gchar **buffer,
+						PurpleConversation *chat, void *data){
 	return substitute(chat, account, *sender, buffer,
 					  IGNORANCE_APPLY_CHAT | IGNORANCE_APPLY_USER);
 }
 
-static gboolean im_cb(GaimAccount *account, gchar **sender, gchar **buffer,
+static gboolean im_cb(PurpleAccount *account, gchar **sender, gchar **buffer,
 					  gint *flags, void *data){
-	GaimConversation *gc;
+	PurpleConversation *gc;
 
-	gc=gaim_find_conversation_with_account(GAIM_CONV_TYPE_IM,*sender,account);
+	gc=purple_find_conversation_with_account(PURPLE_CONV_TYPE_IM,*sender,account);
 
 	return substitute(gc, account, *sender,buffer,
 					  IGNORANCE_APPLY_IM | IGNORANCE_APPLY_USER);
 }
 
-static gboolean chat_joinleave_cb (GaimConversation *conv, const gchar *name,
+static gboolean chat_joinleave_cb (PurpleConversation *conv, const gchar *name,
 								   void *data){
 	gchar *message=g_strdup(name);
-	gboolean rv=substitute(conv, gaim_conversation_get_account(conv), name,
+	gboolean rv=substitute(conv, purple_conversation_get_account(conv), name,
 						   &message,IGNORANCE_APPLY_ENTERLEAVE | IGNORANCE_APPLY_USER);
 	g_free(message);
 
 	return rv;
 }
 
-static gint chat_invited_cb(GaimAccount *account,const gchar *inviter, const gchar *chat, const gchar *invite_message, const GHashTable *components, void *data){
+static gint chat_invited_cb(PurpleAccount *account,const gchar *inviter, const gchar *chat, const gchar *invite_message, const GHashTable *components, void *data){
 	gchar *message=g_strdup(invite_message);
 	gboolean rv;
 	gint invite_ask=0;
-	GaimConversation *gc;
+	PurpleConversation *gc;
 	g_free(message);
 
-	gc=gaim_find_conversation_with_account(GAIM_CONV_TYPE_IM,inviter,account);
+	gc=purple_find_conversation_with_account(PURPLE_CONV_TYPE_IM,inviter,account);
 
 	rv=substitute(gc,account,inviter,&message,IGNORANCE_APPLY_INVITE | IGNORANCE_APPLY_USER | IGNORANCE_APPLY_CHAT);
 
@@ -842,33 +842,33 @@ static gint chat_invited_cb(GaimAccount *account,const gchar *inviter, const gch
 	return invite_ask;
 }
 
-static void buddy_added_cb(GaimBuddy *buddy, gpointer data){
+static void buddy_added_cb(PurpleBuddy *buddy, gpointer data){
 	GString	*wlname=g_string_new("WL");
 	ignorance_level	*wl=ignorance_get_level_name(wlname);
-	GaimAccount *account=buddy->account;
+	PurpleAccount *account=buddy->account;
 	gchar *name=(gchar*)buddy->name;
 
-	gaim_debug_info("ignorance","Caught buddy-added for %s%s\n",
-		gaim_account_get_protocol_id(account), name);
-	gaim_buddy_add(NULL,buddy,wl);
+	purple_debug_info("ignorance","Caught buddy-added for %s%s\n",
+		purple_account_get_protocol_id(account), name);
+	purple_buddy_add(NULL,buddy,wl);
 
 	g_string_free(wlname,TRUE);
 }
 
-static void buddy_removed_cb(GaimBuddy *buddy, gpointer data){
+static void buddy_removed_cb(PurpleBuddy *buddy, gpointer data){
 	GString *tmp=NULL;
-	GaimConversation *conv=NULL;
-	GaimAccount *account=buddy->account;
+	PurpleConversation *conv=NULL;
+	PurpleAccount *account=buddy->account;
 	gchar *name=(gchar*)buddy->name;
 
-	tmp=g_string_new(gaim_account_get_protocol_id(account));
+	tmp=g_string_new(purple_account_get_protocol_id(account));
 
-	conv=gaim_find_conversation_with_account(GAIM_CONV_TYPE_IM,tmp->str,account);
+	conv=purple_find_conversation_with_account(PURPLE_CONV_TYPE_IM,tmp->str,account);
 
-	gaim_debug_info("ignorance","Caught buddy-removed for %s%s\n",
-		gaim_account_get_protocol_id(account), name);
+	purple_debug_info("ignorance","Caught buddy-removed for %s%s\n",
+		purple_account_get_protocol_id(account), name);
 
-	g_string_append(tmp,gaim_normalize_nocase(account,name));
+	g_string_append(tmp,purple_normalize_nocase(account,name));
 
 	ignorance_rm_user(conv,tmp->str);
 
@@ -916,7 +916,7 @@ gboolean save_conf()
 	gchar *name, tempfilename[BUF_LONG];
 	gint fd, i;
 
-	name = g_build_filename(gaim_user_dir(), "ignorance", NULL);
+	name = g_build_filename(purple_user_dir(), "ignorance", NULL);
 	strcpy(tempfilename, name);
 	strcat(tempfilename,".XXXXXX");
 	fd = g_mkstemp(tempfilename);
@@ -939,7 +939,7 @@ gboolean save_conf()
 	}
 
 	if(fclose(f)) {
-		gaim_debug_error("ignorance",
+		purple_debug_error("ignorance",
 				   "Error writing to %s: %m\n", tempfilename);
 		unlink(tempfilename);
 		g_free(name);
@@ -987,27 +987,27 @@ gboolean ignorance_remove_level(const GString *levelname){
 }
 
 static void
-ignorance_signals_connect(GaimPlugin *plugin)
+ignorance_signals_connect(PurplePlugin *plugin)
 {
 	void *conv_handle, *blist_handle;
 
-	conv_handle = gaim_conversations_get_handle();
-	blist_handle = gaim_blist_get_handle();
+	conv_handle = purple_conversations_get_handle();
+	blist_handle = purple_blist_get_handle();
 
-	gaim_signal_connect(conv_handle, "receiving-im-msg", plugin,
-			GAIM_CALLBACK (im_cb), NULL);
-	gaim_signal_connect(conv_handle, "receiving-chat-msg", plugin,
-			GAIM_CALLBACK (chat_cb), NULL);
-	gaim_signal_connect(conv_handle,"chat-buddy-joining", plugin,
-			GAIM_CALLBACK(chat_joinleave_cb),NULL);
-	gaim_signal_connect(conv_handle,"chat-buddy-leaving", plugin,
-			GAIM_CALLBACK(chat_joinleave_cb),NULL);
-	gaim_signal_connect(conv_handle,"chat-invited", plugin,
-			GAIM_CALLBACK(chat_invited_cb),NULL);
-	gaim_signal_connect(blist_handle,"buddy-added", plugin,
-			GAIM_CALLBACK(buddy_added_cb),NULL);
-	gaim_signal_connect(blist_handle,"buddy-removed", plugin,
-			GAIM_CALLBACK(buddy_removed_cb),NULL);
+	purple_signal_connect(conv_handle, "receiving-im-msg", plugin,
+			PURPLE_CALLBACK (im_cb), NULL);
+	purple_signal_connect(conv_handle, "receiving-chat-msg", plugin,
+			PURPLE_CALLBACK (chat_cb), NULL);
+	purple_signal_connect(conv_handle,"chat-buddy-joining", plugin,
+			PURPLE_CALLBACK(chat_joinleave_cb),NULL);
+	purple_signal_connect(conv_handle,"chat-buddy-leaving", plugin,
+			PURPLE_CALLBACK(chat_joinleave_cb),NULL);
+	purple_signal_connect(conv_handle,"chat-invited", plugin,
+			PURPLE_CALLBACK(chat_invited_cb),NULL);
+	purple_signal_connect(blist_handle,"buddy-added", plugin,
+			PURPLE_CALLBACK(buddy_added_cb),NULL);
+	purple_signal_connect(blist_handle,"buddy-removed", plugin,
+			PURPLE_CALLBACK(buddy_removed_cb),NULL);
 
 	return;
 }
@@ -1021,9 +1021,9 @@ static gboolean load_conf() {
 	static ignorance_rule *tmprule = NULL;
 	GString *tmpgs = NULL;
 
-	buf = g_build_filename(gaim_user_dir(), "ignorance", NULL);
+	buf = g_build_filename(purple_user_dir(), "ignorance", NULL);
 
-	gaim_debug_info("ignorance", "Attempting to load conf file %s\n",buf);
+	purple_debug_info("ignorance", "Attempting to load conf file %s\n",buf);
 
 	levels = g_ptr_array_new();
 
@@ -1033,10 +1033,10 @@ static gboolean load_conf() {
 		buf=g_build_filename(IGNORANCE_CONFDIR,"ignorance.conf",NULL);
 
 		if(!(conffile = fopen(buf,"r"))) {
-			gaim_debug_info("ignorance",
+			purple_debug_info("ignorance",
 					"Unable to open local or global conf files; falling back to defaults\n");
 			generate_default_levels();
-			import_gaim_list();
+			import_purple_list();
 			import_zinc_list();
 			import_curphoo_list();
 
@@ -1051,7 +1051,7 @@ static gboolean load_conf() {
 
 	if(!ibuf) {
 		generate_default_levels();
-		import_gaim_list();
+		import_purple_list();
 		import_zinc_list();
 		import_curphoo_list();
 		return FALSE;
@@ -1078,7 +1078,7 @@ static gboolean load_conf() {
 				tmplvl=ignorance_level_read(buf);
 
 			if(tmplvl) {
-	 			gaim_debug_info("ignorance", "Adding level %s\n",
+	 			purple_debug_info("ignorance", "Adding level %s\n",
 						tmplvl->name->str);
 
 				ignorance_add_level(tmplvl);
@@ -1094,7 +1094,7 @@ static gboolean load_conf() {
 					g_string_append(tmpgs, "\n");
 				}
 
-		 		gaim_debug_info("ignorance", "Attempting to read rule %s\n",
+		 		purple_debug_info("ignorance", "Attempting to read rule %s\n",
 						tmpgs->str);
 
 				tmprule = ignorance_rule_read(tmpgs->str);
@@ -1103,15 +1103,15 @@ static gboolean load_conf() {
 			} else
 				 tmprule = ignorance_rule_read(buf);
 			if(tmprule) {
-	 			gaim_debug_info("ignorance", "Adding rule %s: %s\n",
+	 			purple_debug_info("ignorance", "Adding rule %s: %s\n",
 						tmprule->name->str, (gchar*)(tmprule->value));
 
 		 		ignorance_level_add_rule(tmplvl, tmprule);
 			}
 		 } else if(tmplvl) {
-			tmpgs = g_string_new(gaim_normalize_nocase(NULL, buf));
+			tmpgs = g_string_new(purple_normalize_nocase(NULL, buf));
 
-	 		gaim_debug_info("ignorance", "Adding denizen %s\n", buf);
+	 		purple_debug_info("ignorance", "Adding denizen %s\n", buf);
 
 			if(ignorance_get_user_level(tmpgs) == ignorance_get_default_level())
 				ignorance_level_add_denizen(tmplvl, tmpgs);
@@ -1122,7 +1122,7 @@ static gboolean load_conf() {
 
 	g_free(ibuf);
 
-	import_gaim_list();
+	import_purple_list();
 	import_zinc_list();
 	import_curphoo_list();
 
@@ -1130,8 +1130,8 @@ static gboolean load_conf() {
 }
 
 static gboolean
-ignorance_load (GaimPlugin *plugin) {
-	gaim_debug_info("ignorance", "Loading ignorance plugin");
+ignorance_load (PurplePlugin *plugin) {
+	purple_debug_info("ignorance", "Loading ignorance plugin");
 
 	load_conf();
 
@@ -1141,28 +1141,28 @@ ignorance_load (GaimPlugin *plugin) {
 }
 
 static gboolean
-plugin_unload(GaimPlugin *plugin) {
-	gaim_debug_info("ignorance", "Unloading ignorance plugin\n");
+plugin_unload(PurplePlugin *plugin) {
+	purple_debug_info("ignorance", "Unloading ignorance plugin\n");
 	save_conf();
 
 	return TRUE;
 }
 
-static GtkWidget *get_config_frame(GaimPlugin *plugin) {
+static GtkWidget *get_config_frame(PurplePlugin *plugin) {
 	return create_uiinfo(levels);
 }
 
-static GaimGtkPluginUiInfo ui_info = { get_config_frame };
+static PidginPluginUiInfo ui_info = { get_config_frame };
 
-static GaimPluginInfo ig_info = {
-	GAIM_PLUGIN_MAGIC,
-	GAIM_MAJOR_VERSION,
-	GAIM_MINOR_VERSION,
-	GAIM_PLUGIN_STANDARD,
-	GAIM_GTK_PLUGIN_TYPE,
+static PurplePluginInfo ig_info = {
+	PURPLE_PLUGIN_MAGIC,
+	PURPLE_MAJOR_VERSION,
+	PURPLE_MINOR_VERSION,
+	PURPLE_PLUGIN_STANDARD,
+	PIDGIN_PLUGIN_TYPE,
 	0,
 	NULL,
-	GAIM_PRIORITY_DEFAULT,
+	PURPLE_PRIORITY_DEFAULT,
 	IGNORANCE_PLUGIN_ID,
 	NULL,
 	GPP_VERSION,
@@ -1181,7 +1181,7 @@ static GaimPluginInfo ig_info = {
 };
 
 static void 
-ignorance_init (GaimPlugin * plugin)
+ignorance_init (PurplePlugin * plugin)
 {
 #ifdef ENABLE_NLS
 	bindtextdomain(GPP_PACKAGE, LOCALEDIR);
@@ -1195,4 +1195,4 @@ ignorance_init (GaimPlugin * plugin)
 		_("Allows you to manage lists of users with various levels of allowable activity.");
 }
 
-GAIM_INIT_PLUGIN (ignorance, ignorance_init, ig_info)
+PURPLE_INIT_PLUGIN (ignorance, ignorance_init, ig_info)

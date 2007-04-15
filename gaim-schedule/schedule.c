@@ -1,5 +1,5 @@
 /*
- * Gaim-Schedule - Schedule reminders/pounces at specified times.
+ * Purple-Schedule - Schedule reminders/pounces at specified times.
  * Copyright (C) 2006
  *
  * This program is free software; you can redistribute it and/or
@@ -32,10 +32,10 @@ static int timeout;
 
 static void save_cb();
 static void parse_schedule(xmlnode *node);
-static void parse_when(GaimSchedule *schedule, xmlnode *when);
-static void parse_action(GaimSchedule *schedule, xmlnode *action);
+static void parse_when(PurpleSchedule *schedule, xmlnode *when);
+static void parse_action(PurpleSchedule *schedule, xmlnode *action);
 static int sort_schedules(gconstpointer a, gconstpointer b);
-static void gaim_schedules_load();
+static void purple_schedules_load();
 
 #define TIMEOUT	60		/* update every 60 seconds */
 
@@ -69,7 +69,7 @@ days_in_month(int month, int year)
 }
 
 static time_t
-get_next(GaimSchedule *s)
+get_next(PurpleSchedule *s)
 {
 	struct
 	{
@@ -143,32 +143,32 @@ get_next(GaimSchedule *s)
 }
 
 static void
-calculate_timestamp_for_schedule(GaimSchedule *schedule)
+calculate_timestamp_for_schedule(PurpleSchedule *schedule)
 {
 	schedule->timestamp = get_next(schedule);
 }
 
 void
-gaim_schedule_reschedule(GaimSchedule *schedule)
+purple_schedule_reschedule(PurpleSchedule *schedule)
 {
 	calculate_timestamp_for_schedule(schedule);
 	if (schedule->timestamp < time(NULL))
 	{
-		gaim_debug_warning("gaim-schedule", "schedule \"%s\" will not be executed (%s)\n", schedule->name,
-					gaim_date_format_full(localtime(&schedule->timestamp)));
+		purple_debug_warning("gaim-schedule", "schedule \"%s\" will not be executed (%s)\n", schedule->name,
+					purple_date_format_full(localtime(&schedule->timestamp)));
 		schedule->timestamp = 0;
 	}
 	else
 	{
-		gaim_debug_info("gaim-schedule", "schedule \"%s\" will be executed at: %s\n", schedule->name,
-					gaim_date_format_full(localtime(&schedule->timestamp)));
+		purple_debug_info("gaim-schedule", "schedule \"%s\" will be executed at: %s\n", schedule->name,
+					purple_date_format_full(localtime(&schedule->timestamp)));
 	}
 }
 
 static int
 sort_schedules(gconstpointer a, gconstpointer b)
 {
-	const GaimSchedule *sa = a, *sb = b;
+	const PurpleSchedule *sa = a, *sb = b;
 
 	if (sa->timestamp < sb->timestamp)
 		return -1;
@@ -185,20 +185,20 @@ recalculate_next_slots()
 
 	for (iter = schedules; iter; iter = iter->next)
 	{
-		gaim_schedule_reschedule(iter->data);
+		purple_schedule_reschedule(iter->data);
 	}
 
 	schedules = g_list_sort(schedules, sort_schedules);
 }
 
-GaimSchedule *gaim_schedule_new()
+PurpleSchedule *purple_schedule_new()
 {
-	GaimSchedule *sch = g_new0(GaimSchedule, 1);
+	PurpleSchedule *sch = g_new0(PurpleSchedule, 1);
 
 	return sch;
 }
 
-void gaim_schedule_add_action(GaimSchedule *schedule, ScheduleActionType type, ...)
+void purple_schedule_add_action(PurpleSchedule *schedule, ScheduleActionType type, ...)
 {
 	ScheduleAction *action;
 	va_list vargs;
@@ -215,7 +215,7 @@ void gaim_schedule_add_action(GaimSchedule *schedule, ScheduleActionType type, .
 		case SCHEDULE_ACTION_CONV:
 			action->d.send.message = g_strdup(va_arg(vargs, char*));
 			action->d.send.who = g_strdup(va_arg(vargs, char *));
-			action->d.send.account = va_arg(vargs, GaimAccount*);
+			action->d.send.account = va_arg(vargs, PurpleAccount*);
 			break;
 		case SCHEDULE_ACTION_STATUS:
 			action->d.status_title = g_strdup(va_arg(vargs, char *));
@@ -229,7 +229,7 @@ void gaim_schedule_add_action(GaimSchedule *schedule, ScheduleActionType type, .
 	save_cb();
 }
 
-void gaim_schedule_remove_action(GaimSchedule *schedule, ScheduleActionType type)
+void purple_schedule_remove_action(PurpleSchedule *schedule, ScheduleActionType type)
 {
 	GList *iter;
 
@@ -238,44 +238,44 @@ void gaim_schedule_remove_action(GaimSchedule *schedule, ScheduleActionType type
 		ScheduleAction *action = iter->data;
 		if (action->type == type)
 		{
-			gaim_schedule_action_destroy(action);
+			purple_schedule_action_destroy(action);
 			schedule->actions = g_list_delete_link(schedule->actions, iter);
 			break;
 		}
 	}
 }
 
-void gaim_schedule_action_activate(ScheduleAction *action)
+void purple_schedule_action_activate(ScheduleAction *action)
 {
-	GaimConversation *conv;
+	PurpleConversation *conv;
 
 	switch (action->type)
 	{
 		case SCHEDULE_ACTION_POPUP:
-			gaim_notify_message(action, GAIM_NOTIFY_MSG_INFO, _("Schedule"), action->d.popup_message,
+			purple_notify_message(action, PURPLE_NOTIFY_MSG_INFO, _("Schedule"), action->d.popup_message,
 							NULL, NULL, NULL);
 			break;
 		case SCHEDULE_ACTION_CONV:
-			conv = gaim_conversation_new(GAIM_CONV_TYPE_IM, action->d.send.account, action->d.send.who);
-			gaim_conv_im_send_with_flags(GAIM_CONV_IM(conv), action->d.send.message, 0);
+			conv = purple_conversation_new(PURPLE_CONV_TYPE_IM, action->d.send.account, action->d.send.who);
+			purple_conv_im_send_with_flags(PURPLE_CONV_IM(conv), action->d.send.message, 0);
 			break;
 		default:
-			gaim_debug_warning("gaim-schedule", "unimplemented action\n");
+			purple_debug_warning("gaim-schedule", "unimplemented action\n");
 			break;
 	}
 }
 
-void gaim_schedule_activate_actions(GaimSchedule *sch)
+void purple_schedule_activate_actions(PurpleSchedule *sch)
 {
 	GList *iter;
 
 	for (iter = sch->actions; iter; iter = iter->next)
 	{
-		gaim_schedule_action_activate(iter->data);
+		purple_schedule_action_activate(iter->data);
 	}
 }
 
-void gaim_schedule_action_destroy(ScheduleAction *action)
+void purple_schedule_action_destroy(ScheduleAction *action)
 {
 	switch (action->type)
 	{
@@ -290,19 +290,19 @@ void gaim_schedule_action_destroy(ScheduleAction *action)
 			g_free(action->d.status_title);
 			break;
 		default:
-			gaim_debug_warning("gaim-schedule", "unknown action type\n");
+			purple_debug_warning("gaim-schedule", "unknown action type\n");
 			break;
 	}
 	g_free(action);
-	gaim_notify_close_with_handle(action);
+	purple_notify_close_with_handle(action);
 }
 
-void gaim_schedule_destroy(GaimSchedule *schedule)
+void purple_schedule_destroy(PurpleSchedule *schedule)
 {
 	while (schedule->actions)
 	{
 		ScheduleAction *action = schedule->actions->data;
-		gaim_schedule_action_destroy(action);
+		purple_schedule_action_destroy(action);
 		schedule->actions = g_list_delete_link(schedule->actions, schedule->actions);
 	}
 	g_free(schedule);
@@ -310,13 +310,13 @@ void gaim_schedule_destroy(GaimSchedule *schedule)
 	schedules = g_list_remove(schedules, schedule);
 }
 
-GList *gaim_schedules_get_all()
+GList *purple_schedules_get_all()
 {
 	return schedules;
 }
 
 
-void gaim_schedules_add(GaimSchedule *schedule)
+void purple_schedules_add(PurpleSchedule *schedule)
 {
 	schedules = g_list_append(schedules, schedule);
 }
@@ -324,7 +324,7 @@ void gaim_schedules_add(GaimSchedule *schedule)
 static gboolean
 check_and_execute(gpointer null)
 {
-	GaimSchedule *schedule;
+	PurpleSchedule *schedule;
 	GList *iter = schedules;
 	gboolean dirty = FALSE;
 
@@ -333,8 +333,8 @@ check_and_execute(gpointer null)
 	schedule = iter->data;
 	while (schedule->timestamp && schedule->timestamp < time(NULL))
 	{
-		gaim_schedule_activate_actions(schedule);
-		gaim_schedule_reschedule(schedule);
+		purple_schedule_activate_actions(schedule);
+		purple_schedule_reschedule(schedule);
 		iter = iter->next;
 		dirty = TRUE;
 		if (iter == NULL)
@@ -345,24 +345,24 @@ check_and_execute(gpointer null)
 	return TRUE;
 }
 
-void gaim_schedule_init()
+void purple_schedule_init()
 {
-	gaim_schedules_load();
+	purple_schedules_load();
 	recalculate_next_slots();
 	timeout = g_timeout_add(10000, (GSourceFunc)check_and_execute, NULL);
 }
 
-void gaim_schedule_uninit()
+void purple_schedule_uninit()
 {
 	g_source_remove(timeout);
 	save_cb();
 	while (schedules)
 	{
-		gaim_schedule_destroy(schedules->data);
+		purple_schedule_destroy(schedules->data);
 	}
 }
 
-void gaim_schedules_sync()
+void purple_schedules_sync()
 {
 	save_cb();
 }
@@ -371,11 +371,11 @@ void gaim_schedules_sync()
  * Read from XML
  */
 static void
-gaim_schedules_load()
+purple_schedules_load()
 {
 	xmlnode *gaim, *schedule;
 
-	gaim = gaim_util_read_xml_from_file("schedules.xml", _("list of schedules"));
+	gaim = purple_util_read_xml_from_file("schedules.xml", _("list of schedules"));
 	if (gaim == NULL)
 		return;
 
@@ -396,7 +396,7 @@ gaim_schedules_load()
 static void
 parse_schedule(xmlnode *node)
 {
-	GaimSchedule *schedule;
+	PurpleSchedule *schedule;
 	xmlnode *child;
 	const char *name;
 
@@ -408,7 +408,7 @@ parse_schedule(xmlnode *node)
 		return;
 	}
 
-	schedule = gaim_schedule_new();
+	schedule = purple_schedule_new();
 	schedule->name = g_strdup(name);
 
 	schedules = g_list_append(schedules, schedule);
@@ -422,12 +422,12 @@ parse_schedule(xmlnode *node)
 }
 
 static void
-parse_when(GaimSchedule *schedule, xmlnode *when)
+parse_when(PurpleSchedule *schedule, xmlnode *when)
 {
 	int type = atoi(xmlnode_get_attrib(when, "type"));
 
 	schedule->type = type;
-	if (type == GAIM_SCHEDULE_TYPE_DATE)
+	if (type == PURPLE_SCHEDULE_TYPE_DATE)
 		schedule->d.date = atoi(xmlnode_get_attrib(when, "date"));
 	else
 		schedule->d.day = atoi(xmlnode_get_attrib(when, "day"));
@@ -439,7 +439,7 @@ parse_when(GaimSchedule *schedule, xmlnode *when)
 }
 
 static void
-parse_action(GaimSchedule *schedule, xmlnode *action)
+parse_action(PurpleSchedule *schedule, xmlnode *action)
 {
 	int type = atoi(xmlnode_get_attrib(action, "type"));
 	xmlnode *data = xmlnode_get_child(action, "data"), *account, *message;
@@ -449,22 +449,22 @@ parse_action(GaimSchedule *schedule, xmlnode *action)
 	{
 		case SCHEDULE_ACTION_POPUP:
 			tmp = xmlnode_get_data(data);
-			gaim_schedule_add_action(schedule, type, tmp);
+			purple_schedule_add_action(schedule, type, tmp);
 			g_free(tmp);
 			break;
 		case SCHEDULE_ACTION_CONV:
 			account = xmlnode_get_child(data, "account");
 			message = xmlnode_get_child(data, "message");
 			tmp = xmlnode_get_data(message);
-			gaim_schedule_add_action(schedule, type, tmp,
+			purple_schedule_add_action(schedule, type, tmp,
 						xmlnode_get_attrib(account, "who"),
-						gaim_accounts_find(xmlnode_get_attrib(account, "name"),
+						purple_accounts_find(xmlnode_get_attrib(account, "name"),
 									xmlnode_get_attrib(account, "prpl")));
 			g_free(tmp);
 			break;
 		case SCHEDULE_ACTION_STATUS:
 			tmp = xmlnode_get_data(action);
-			gaim_schedule_add_action(schedule, type, tmp);
+			purple_schedule_add_action(schedule, type, tmp);
 			g_free(tmp);
 			break;
 		default:
@@ -502,15 +502,15 @@ action_to_xmlnode(ScheduleAction *action)
 			break;
 		case SCHEDULE_ACTION_CONV:
 			gchild = xmlnode_new_child(child, "account");
-			xmlnode_set_attrib(gchild, "prpl", gaim_account_get_protocol_id(action->d.send.account));
-			xmlnode_set_attrib(gchild, "name", gaim_account_get_username(action->d.send.account));
+			xmlnode_set_attrib(gchild, "prpl", purple_account_get_protocol_id(action->d.send.account));
+			xmlnode_set_attrib(gchild, "name", purple_account_get_username(action->d.send.account));
 			xmlnode_set_attrib(gchild, "who", action->d.send.who);
 
 			gchild = xmlnode_new_child(child, "message");
 			xmlnode_insert_data(gchild, action->d.send.message, -1);
 			break;
 		default:
-			gaim_debug_warning("gaim-schedule", "unknown action type\n");
+			purple_debug_warning("gaim-schedule", "unknown action type\n");
 			break;
 	}
 
@@ -518,7 +518,7 @@ action_to_xmlnode(ScheduleAction *action)
 }
 
 static xmlnode*
-when_to_xmlnode(GaimSchedule *schedule)
+when_to_xmlnode(PurpleSchedule *schedule)
 {
 	xmlnode *node;
 
@@ -528,10 +528,10 @@ when_to_xmlnode(GaimSchedule *schedule)
 
 	switch (schedule->type)
 	{
-		case GAIM_SCHEDULE_TYPE_DATE:
+		case PURPLE_SCHEDULE_TYPE_DATE:
 			xmlnode_set_attrib_int(node, "date", schedule->d.date);
 			break;
-		case GAIM_SCHEDULE_TYPE_DAY:
+		case PURPLE_SCHEDULE_TYPE_DAY:
 			xmlnode_set_attrib_int(node, "day", schedule->d.day);
 			break;
 	}
@@ -548,7 +548,7 @@ when_to_xmlnode(GaimSchedule *schedule)
 }
 
 static xmlnode*
-schedule_to_xmlnode(GaimSchedule *schedule)
+schedule_to_xmlnode(PurpleSchedule *schedule)
 {
 	xmlnode *node, *child;
 	GList *iter;
@@ -580,7 +580,7 @@ schedules_to_xmlnode()
 
 	for (iter = schedules; iter; iter = iter->next)
 	{
-		GaimSchedule *schedule = iter->data;
+		PurpleSchedule *schedule = iter->data;
 
 		xmlnode_insert_child(child, schedule_to_xmlnode(schedule));
 	}
@@ -596,7 +596,7 @@ save_cb()
 
 	node = schedules_to_xmlnode();
 	data = xmlnode_to_formatted_str(node, NULL);
-	gaim_util_write_data_to_file("schedules.xml", data, -1);
+	purple_util_write_data_to_file("schedules.xml", data, -1);
 	g_free(data);
 	xmlnode_free(node);
 }
