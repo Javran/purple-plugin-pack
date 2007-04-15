@@ -938,7 +938,7 @@ gxr_get_config_frame(PurplePlugin *plugin) {
  ******************************************************************************/
 static gchar *
 gxr_file_name(const gchar *file_name) {
-	return g_build_filename(DATADIR, "pixmaps", "gaim", "plugin_pack",
+	return g_build_filename(PIXMAPSDIR, "plugin_pack",
 			"xmmsremote", file_name, NULL);
 }
 
