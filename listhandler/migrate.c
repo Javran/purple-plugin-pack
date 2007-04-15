@@ -22,6 +22,7 @@
  */
 
 #include "listhandler.h"
+#include "migrate.h"
 
 static GList *buddies = NULL, *groups = NULL;
 static PurpleAccount *source_account = NULL, *target_account = NULL;

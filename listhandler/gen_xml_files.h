@@ -20,6 +20,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#ifndef _LISTHANDLER_GEN_XML_H
+#define _LISTHANDLER_GEN_XML_H
 
 void lh_generic_import_action_cb(PurplePluginAction *action);
 void lh_generic_export_action_cb(PurplePluginAction *action);
+
+#endif /*_LISTHANDLER_GEN_XML_H*/

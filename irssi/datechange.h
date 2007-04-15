@@ -19,6 +19,11 @@
  * 02111-1307, USA.
  */
 
+#ifndef _IRSSI_DATECHANGE_H
+#define _IRSSI_DATECHANGE_H
+
 void irssi_datechange_init(PurplePlugin *plugin);
 void irssi_datechange_uninit(PurplePlugin *plugin);
+
+#endif /*_IRSSI_DATECHANGE_H*/
 

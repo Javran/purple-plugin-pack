@@ -32,6 +32,7 @@
 #include <cmds.h>
 
 #include "../common/i18n.h"
+#include "textfmt.h"
 
 /******************************************************************************
  * Globals

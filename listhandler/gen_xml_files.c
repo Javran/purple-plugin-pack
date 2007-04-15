@@ -22,6 +22,7 @@
  */
 
 #include "listhandler.h"
+#include "gen_xml_files.h"
 
 static const gchar *target_prpl_id = NULL;
 static gchar *file_contents = NULL, *filename = NULL;

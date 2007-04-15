@@ -22,6 +22,10 @@
  */
 
 /* callbacks for the GList of plugin actions */
+#ifndef _LISTHANDLER_AIM_BLT_H
+#define _LISTHANDLER_AIM_BLT_H
+
 void lh_aim_export_action_cb(PurplePluginAction *action);
 void lh_aim_import_action_cb(PurplePluginAction *action);
 
+#endif /*_LISTHANDLER_AIM_BLT_H*/

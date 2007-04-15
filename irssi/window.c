@@ -33,6 +33,7 @@
 #include <gtkconv.h>
 
 #include "../common/i18n.h"
+#include "window.h"
 
 /******************************************************************************
  * Globals
