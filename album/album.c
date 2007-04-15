@@ -61,6 +61,12 @@
 
 GHashTable *buddy_windows;
 
+#define PLUGIN_NAME        "Album"
+#define PLUGIN_SUMMARY     "Archives buddy icons."
+#define PLUGIN_DESCRIPTION "Enable this plugin to automatically archive all buddy icons."
+#define PLUGIN_AUTHOR      "Richard Laager <rlaager@guifications.org>" \
+                           "\n\t\t\tSadrul Habib Chowdhury <imadil@gmail.com>"
+
 /*****************************************************************************
  * Prototypes                                                                *
  *****************************************************************************/
@@ -72,7 +78,7 @@ static gboolean plugin_load(PurplePlugin *plugin);
  * Plugin Info                                                               *
  *****************************************************************************/
 
-static PurplePluginInfo plugin_info =
+static PurplePluginInfo info =
 {
 	PURPLE_PLUGIN_MAGIC,
 	PURPLE_MAJOR_VERSION,
@@ -83,28 +89,16 @@ static PurplePluginInfo plugin_info =
 	0,                                 /**< flags          */
 	NULL,                              /**< dependencies   */
 	PURPLE_PRIORITY_DEFAULT,           /**< priority       */
-
 	PLUGIN_ID,                         /**< id             */
-	N_("Album"),                       /**< name           */
-	VERSION,                           /**< version        */
-
-	/** summary */
-	N_("Archives buddy icons."),
-
-	/** description */
-	N_("Enable this plugin to automatically archive all buddy icons."),
-
-	/** author */
-	"Richard Laager <rlaager@guifications.org>"
-	"\n\t\t\tSadrul Habib Chowdhury <imadil@gmail.com>",
-
-	/** homepage */
-	"http://plugins.guifications.org",
-
+	NULL,                              /**< name           */
+	PP_VERSION,                        /**< version        */
+	PLUGIN_SUMMARY,                    /**< summary        */
+	NULL,                              /**< description    */
+	PLUGIN_AUTHOR,                     /**< author         */
+	PP_WEBSITE,                        /**< homepage       */
 	plugin_load,                       /**< load           */
 	NULL,                              /**< unload         */
 	NULL,                              /**< destroy        */
-
 	NULL,                              /**< ui_info        */
 	NULL,                              /**< extra_info     */
 	NULL,                              /**< prefs_info     */
@@ -399,6 +393,15 @@ static gboolean plugin_load(PurplePlugin *plugin)
 
 static void plugin_init(PurplePlugin *plugin)
 {
+#ifdef ENABLE_NLS
+	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+#endif /* ENABLE_NLS */
+
+	info.name = _(PLUGIN_NAME);
+	info.summary = _(PLUGIN_SUMMARY);
+	info.description = _(PLUGIN_DESCRIPTION);
+
 	/* Setup preferences. */
 	purple_prefs_add_none(PREF_PREFIX);
 	purple_prefs_add_int(PREF_WINDOW_HEIGHT, 258);
@@ -406,4 +409,4 @@ static void plugin_init(PurplePlugin *plugin)
 	purple_prefs_add_int(PREF_ICON_SIZE, 1);
 }
 
-PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, plugin_init, plugin_info)
+PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, plugin_init, info)
