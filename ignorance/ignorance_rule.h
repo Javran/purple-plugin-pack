@@ -18,7 +18,7 @@
 #define IGNORANCE_RULE_H
 
 #ifdef HAVE_CONFIG_H
-# include "../gpp_config.h"
+# include "../pp_config.h"
 #endif
 
 #include <stdlib.h>

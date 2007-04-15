@@ -1,16 +1,17 @@
+-include $(PP_TOP)/local.mak
 
-GAIM_TOP :=		$(GPP_TOP)/../../..
-GTK_TOP :=		$(GAIM_TOP)/../win32-dev/gtk_2_0
-GAIM_INSTALL_DIR :=	$(GAIM_TOP)/win32-install-dir
-DLL_INSTALL_DIR :=	$(GAIM_INSTALL_DIR)/plugins
-DLL_ZIP_DIR :=		$(GPP_TOP)/win32-dist
+PIDGIN_TREE_TOP ?=	$(PP_TOP)/../../..
+GTK_TOP :=		$(PIDGIN_TREE_TOP)/../win32-dev/gtk_2_0
+DLL_ZIP_DIR :=		$(PP_TOP)/win32-dist
 
-GPP_VERSION := $(shell cat ${GPP_TOP}/VERSION)
-GPP_CONFIG_H := $(GPP_TOP)/gpp_config.h
+PP_VERSION := $(shell cat ${PP_TOP}/VERSION)
+PP_CONFIG_H := $(PP_TOP)/pp_config.h
 
-include $(GAIM_TOP)/libgaim/win32/global.mak
+include $(PIDGIN_TREE_TOP)/libpurple/win32/global.mak
 
-DEFINES += -DGPP_VERSION=\"$(GPP_VERSION)\"
+DLL_INSTALL_DIR ?=	$(PIDGIN_INSTALL_DIR)/plugins
+
+DEFINES += -DPP_VERSION=\"$(PP_VERSION)\"
 
 ##
 ## INCLUDE PATHS
@@ -25,26 +26,26 @@ INCLUDE_PATHS +=	-I. \
 			-I$(GTK_TOP)/include/freetype2 \
 			-I$(GTK_TOP)/lib/glib-2.0/include \
 			-I$(GTK_TOP)/lib/gtk-2.0/include \
-			-I$(GAIM_TOP)/libgaim \
-			-I$(GAIM_TOP)/libgaim/win32 \
-			-I$(GAIM_TOP)/gtk \
-			-I$(GAIM_TOP)/gtk/win32 \
-			-I$(GAIM_TOP)
+			-I$(PURPLE_TOP) \
+			-I$(PURPLE_TOP)/win32 \
+			-I$(PIDGIN_TOP) \
+			-I$(PIDGIN_TOP)/win32 \
+			-I$(PIDGIN_TREE_TOP)
 
 
 LIB_PATHS =		\
 			-L$(GTK_TOP)/lib \
-			-L$(GAIM_TOP)/libgaim \
-			-L$(GAIM_TOP)/gtk
+			-L$(PURPLE_TOP) \
+			-L$(PIDGIN_TOP)
 
 ##
 ##  SOURCES, OBJECTS
 ##
 
-GPP_SRC ?= $(GPP).c
+PP_SRC ?= $(PP).c
 
 
-GPP_OBJ = $(GPP_SRC:%.c=%.o)
+PP_OBJ = $(PP_SRC:%.c=%.o)
 
 ##
 ## LIBRARIES
@@ -53,13 +54,15 @@ GPP_OBJ = $(GPP_SRC:%.c=%.o)
 PLUGIN_LIBS = \
 	-lgtk-win32-2.0 \
 	-lgdk-win32-2.0 \
+	-lgdk_pixbuf-2.0 \
 	-lglib-2.0 \
+	-lpango-1.0 \
 	-lgmodule-2.0 \
 	-lgobject-2.0 \
 	-lws2_32 \
 	-lintl \
-	-llibgaim \
-	-lgtkgaim
+	-lpurple \
+	-lpidgin
 
 ##
 ## RULES
@@ -76,28 +79,28 @@ PLUGIN_LIBS = \
 
 .PHONY: all clean install install_zip
 
-all: $(GPP).dll
+all: $(PP).dll
 
-$(GPP_CONFIG_H): $(GPP_TOP)/gpp_config.h.mingw
-	cp $(GPP_TOP)/gpp_config.h.mingw $(GPP_CONFIG_H)
+$(PP_CONFIG_H): $(PP_TOP)/pp_config.h.mingw
+	cp $(PP_TOP)/pp_config.h.mingw $(PP_CONFIG_H)
 
 $(DLL_ZIP_DIR):
 	mkdir $(DLL_ZIP_DIR)
 
 install: all
-	cp $(GPP).dll $(DLL_INSTALL_DIR)
+	cp $(PP).dll $(DLL_INSTALL_DIR)
 
 install_zip: $(DLL_ZIP_DIR) all
-	cp $(GPP).dll $(DLL_ZIP_DIR)
+	cp $(PP).dll $(DLL_ZIP_DIR)
 
-$(GPP_OBJ): $(GPP_CONFIG_H)
+$(PP_OBJ): $(PP_CONFIG_H)
 
 ##
 ## BUILD DLL
 ##
 
-$(GPP).dll: $(GPP_OBJ) $(GAIM_TOP)/libgaim/libgaim.dll.a $(GAIM_TOP)/gtk/gtkgaim.dll.a
-	$(CC) -shared $(GPP_OBJ) $(LIB_PATHS) $(PLUGIN_LIBS) $(DLL_LD_FLAGS) -o $(GPP).dll
+$(PP).dll: $(PP_OBJ) $(PURPLE_DLL).a $(PIDGIN_DLL).a
+	$(CC) -shared $(PP_OBJ) $(LIB_PATHS) $(PLUGIN_LIBS) $(DLL_LD_FLAGS) -o $(PP).dll
 
 
 ##
@@ -106,6 +109,6 @@ $(GPP).dll: $(GPP_OBJ) $(GAIM_TOP)/libgaim/libgaim.dll.a $(GAIM_TOP)/gtk/gtkgaim
 
 clean:
 	rm -rf *.o
-	rm -rf $(GPP).dll
+	rm -rf $(PP).dll
 
 

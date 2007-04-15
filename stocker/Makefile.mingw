@@ -8,25 +8,25 @@
 # PATHS
 #
 
-GPP_TOP :=		../
+PP_TOP :=		../
 GTK_TOP :=		../../../../win32-dev/gtk_2_0
 GAIM_TOP :=		../../..
 GAIM_INSTALL_DIR :=	$(GAIM_TOP)/win32-install-dir
 DLL_INSTALL_DIR :=	$(GAIM_INSTALL_DIR)/plugins
 
-GPP_VERSION := $(shell cat ${GPP_TOP}/VERSION)
+PP_VERSION := $(shell cat ${PP_TOP}/VERSION)
 
 ##
 ## VARIABLE DEFINITIONS
 ##
 
-GPP = stocker
+PP = stocker
 
 # Compiler Options
 
 CFLAGS = 
 
-DEFINES = -DGPP_VERSION=\"$(GPP_VERSION)\"
+DEFINES = -DPP_VERSION=\"$(PP_VERSION)\"
 
 LDFLAGS = 
 
@@ -65,13 +65,13 @@ LIB_PATHS =		\
 ##  SOURCES, OBJECTS
 ##
 
-GPP_SRC = \
+PP_SRC = \
 		gtkticker.c \
 		stocker.c \
 		stocker_prefs.c
 
 
-GPP_OBJ = $(GPP_SRC:%.c=%.o)
+PP_OBJ = $(PP_SRC:%.c=%.o)
 
 ##
 ## LIBRARIES
@@ -104,10 +104,10 @@ PLUGIN_LIBS = \
 
 .PHONY: all clean install
 
-all: $(GPP).dll
+all: $(PP).dll
 
 install: all
-	cp $(GPP).dll $(DLL_INSTALL_DIR)
+	cp $(PP).dll $(DLL_INSTALL_DIR)
 
 ##
 ## BUILD Dependencies
@@ -120,8 +120,8 @@ $(GAIM_TOP)/src/gaim.lib:
 ## BUILD DLL
 ##
 
-$(GPP).dll: $(GPP_OBJ) $(GAIM_TOP)/src/gaim.lib
-	$(CC) -shared $(GPP_OBJ) $(LIB_PATHS) $(PLUGIN_LIBS) $(DLL_LD_FLAGS) -o $(GPP).dll
+$(PP).dll: $(PP_OBJ) $(GAIM_TOP)/src/gaim.lib
+	$(CC) -shared $(PP_OBJ) $(LIB_PATHS) $(PLUGIN_LIBS) $(DLL_LD_FLAGS) -o $(PP).dll
 
 
 ##
@@ -130,4 +130,4 @@ $(GPP).dll: $(GPP_OBJ) $(GAIM_TOP)/src/gaim.lib
 
 clean:
 	rm -rf *.o
-	rm -rf $(GPP).dll
+	rm -rf $(PP).dll

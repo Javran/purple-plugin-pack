@@ -27,7 +27,7 @@
 */
 
 #ifdef HAVE_CONFIG_H
-# include "../gpp_config.h"
+# include "../pp_config.h"
 #endif /* HAVE_CONFIG_H */
 
 #define PURPLE_PLUGINS
@@ -316,13 +316,13 @@ static PurplePluginInfo info =
 
 	"gtk-plugin_pack-gRIM",							/**< id				*/
 	NULL,											/**< name			*/
-	GPP_VERSION,									/**< version		*/
+	PP_VERSION,									/**< version		*/
 	NULL,											/**  summary		*/
 	NULL,											/**  description	*/
 	"Peter Lawler <bleeter from users.sf.net> and"
 	" Sadrul Habib Chowdhury <sadrul from users.sf.net>",
 													/**< authors		*/
-	GPP_WEBSITE,									/**< homepage		*/
+	PP_WEBSITE,									/**< homepage		*/
 
 	plugin_load,									/**< load			*/
 	plugin_unload,									/**< unload			*/

@@ -4,9 +4,9 @@
 # Description: Makefile for gRIM plugin.
 #
 
-GPP_TOP :=		..
+PP_TOP :=		..
 
-GPP = gRIM
+PP = gRIM
 
-include $(GPP_TOP)/win_gpp.mak
+include $(PP_TOP)/win_pp.mak
 

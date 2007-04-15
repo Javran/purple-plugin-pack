@@ -22,7 +22,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#	include "../gpp_config.h"
+#	include "../pp_config.h"
 #endif
 
 #include <glib.h>

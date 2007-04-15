@@ -18,7 +18,7 @@
  * 02111-1307, USA.
  */
 #ifdef HAVE_CONFIG_H
-# include "../gpp_config.h"
+# include "../pp_config.h"
 #endif
 
 #define PURPLE_PLUGINS
@@ -609,7 +609,7 @@ get_plugin_pref_frame(PurplePlugin *plugin)
 }
 
 static PurplePluginUiInfo prefs_info = {
-	get_plugin_pref_frame
+	get_plugin_pref_frame, 0, NULL
 };
 
 static PurplePluginInfo info =
@@ -625,11 +625,11 @@ static PurplePluginInfo info =
 
 	PLUGIN_ID,					/* plugin id			*/
 	NULL,						/* name					*/
-	GPP_VERSION,				/* version				*/
+	PP_VERSION,				/* version				*/
 	NULL,						/* summary				*/
 	NULL,						/* description			*/
 	PLUGIN_AUTHOR,				/* author				*/
-	GPP_WEBSITE,				/* website				*/
+	PP_WEBSITE,				/* website				*/
 
 	plugin_load,				/* load					*/
 	plugin_unload,				/* unload				*/

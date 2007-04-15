@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #ifdef HAVE_CONFIG_H
-# include "../gpp_config.h"
+# include "../pp_config.h"
 #endif /* HAVE_CONFIG_H */
 
 #define PURPLE_PLUGINS
@@ -164,11 +164,11 @@ static PurplePluginInfo info =
 
 	"core-plugin_pack-groupmsg",					/**< id				*/
 	NULL,											/**< name			*/
-	GPP_VERSION,									/**< version		*/
+	PP_VERSION,									/**< version		*/
 	NULL,											/**  summary		*/
 	NULL,											/**  description	*/
 	"Stu Tomlinson <stu@nosnilmot.com>",			/**< author			*/
-	GPP_WEBSITE,									/**< homepage		*/
+	PP_WEBSITE,									/**< homepage		*/
 
 	plugin_load,									/**< load			*/
 	NULL,											/**< unload			*/

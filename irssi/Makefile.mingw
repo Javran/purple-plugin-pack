@@ -4,11 +4,11 @@
 # Description: Makefile for irssi plugin.
 #
 
-GPP_TOP :=		..
+PP_TOP :=		..
 
-GPP = irssi
+PP = irssi
 
-GPP_SRC := \
+PP_SRC := \
 	datechange.c \
 	layout.c \
 	lastlog.c \
@@ -16,5 +16,5 @@ GPP_SRC := \
 	window.c \
 	irssi.c
 
-include $(GPP_TOP)/win_gpp.mak
+include $(PP_TOP)/win_pp.mak
 

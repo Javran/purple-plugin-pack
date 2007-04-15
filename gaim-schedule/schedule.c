@@ -574,7 +574,7 @@ schedules_to_xmlnode()
 	xmlnode *node, *child;
 
 	node = xmlnode_new("gaim-schedule");
-	xmlnode_set_attrib(node, "version", GPP_VERSION);
+	xmlnode_set_attrib(node, "version", PP_VERSION);
 
 	child = xmlnode_new_child(node, "schedules");
 

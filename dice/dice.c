@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #ifdef HAVE_CONFIG_H
-# include "../gpp_config.h"
+# include "../pp_config.h"
 #endif /* HAVE_CONFIG_H */
 
 #define PURPLE_PLUGINS
@@ -116,11 +116,11 @@ static PurplePluginInfo info =
 
 	"core-plugin_pack-dice",						/**< id				*/
 	NULL,											/**< name			*/
-	GPP_VERSION,									/**< version		*/
+	PP_VERSION,									/**< version		*/
 	NULL,											/**  summary		*/
 	NULL,											/**  description	*/
 	"Gary Kramlich <amc_grim@users.sf.net>",		/**< author			*/
-	GPP_WEBSITE,									/**< homepage		*/
+	PP_WEBSITE,									/**< homepage		*/
 
 	plugin_load,									/**< load			*/
 	plugin_unload,									/**< unload			*/

@@ -18,7 +18,7 @@
  * 02111-1307, USA.
  */
 #ifdef HAVE_CONFIG_H
-# include "../gpp_config.h"
+# include "../pp_config.h"
 #endif
 
 #include "stocker_prefs.h"

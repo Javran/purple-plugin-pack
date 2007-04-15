@@ -1105,7 +1105,7 @@ album_select_dialog_cb(gpointer data, PurpleRequestFields *fields)
 }
 
 /* Based on Pidgin's gtkdialogs.c, pidgindialogs_log(). */
-void album_select_dialog(PurplePluginAction *action)
+static void album_select_dialog(PurplePluginAction *action)
 {
 	PurpleRequestFields *fields;
 	PurpleRequestFieldGroup *group;

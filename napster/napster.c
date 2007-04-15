@@ -22,7 +22,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "../gpp_config.h"
+# include "../pp_config.h"
 #endif
 
 #define PURPLE_PLUGINS
@@ -721,7 +721,7 @@ static PurplePluginInfo info = {
 	                                                  /**  description    */
 	N_("NAPSTER Protocol Plugin"),
 	NULL,                                             /**< author         */
-	GPP_WEBSITE,                                     /**< homepage       */
+	PP_WEBSITE,                                     /**< homepage       */
 
 	NULL,                                             /**< load           */
 	NULL,                                             /**< unload         */

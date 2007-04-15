@@ -17,16 +17,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef GPP_INTL_H
-#define GPP_INTL_H
+#ifndef PP_INTL_H
+#define PP_INTL_H
 
 #ifdef HAVE_CONFIG_H
 # include "../pp_config.h"
 #endif
 
+#ifndef _WIN32
 #ifndef LOCALEDIR
 # define LOCALEDIR "/BROKEN"
 #endif /* LOCALEDIR */
+#endif
 
 #include <glib.h>
 #if GLIB_CHECK_VERSION(2,4,0)

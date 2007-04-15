@@ -21,7 +21,7 @@
 */
 
 #ifdef HAVE_CONFIG_H
-# include "../gpp_config.h"
+# include "../pp_config.h"
 #endif /* HAVE_CONFIG_H */
 
 #define PURPLE_PLUGINS
@@ -379,12 +379,12 @@ static PurplePluginInfo talkfilters_info = {
 	PURPLE_PRIORITY_DEFAULT,								/* priority			*/
 	"gtk-plugin_pack-talkfilters",						/* id				*/
 	NULL,												/* name				*/
-	GPP_VERSION,
+	PP_VERSION,
 	NULL,												/* summary			*/
 	NULL,												/* description		*/
 	"Mark Lindner <markl@gnu.org>, "
 	"Peter Lawler <bleeter@users.sf.net>",
-	GPP_WEBSITE,
+	PP_WEBSITE,
 	plugin_load,
 	plugin_unload,
 	NULL,

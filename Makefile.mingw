@@ -1,7 +1,7 @@
 #
 # Makefile.mingw
 #
-# Description: Makefile for win32 (mingw) gaim plugin pack
+# Description: Makefile for win32 (mingw) purple plugin pack
 #
 
 VERSION := $(shell cat ./VERSION)
@@ -26,7 +26,7 @@ clean:
 	    $(MAKE) -C $$subdir -f Makefile.mingw clean; \
 	  fi; fi; fi; \
 	done; \
-	rm -rf gpp_config.h win32-dist gaim-plugin_pack*.zip
+	rm -rf pp_config.h win32-dist purple-plugin_pack*.zip
 
 install_zip:
 	list='$(shell ls -D)'; for subdir in $$list; do \
@@ -35,5 +35,5 @@ install_zip:
 	  fi; fi; fi; \
 	done; \
 	cd win32-dist; \
-	zip ../gaim-plugin_pack-$(VERSION).zip *.dll; \
+	zip ../purple-plugin_pack-$(VERSION).zip *.dll; \
 	cd ..
