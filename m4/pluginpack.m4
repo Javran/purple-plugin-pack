@@ -29,41 +29,43 @@ AC_DEFUN([AM_BUILD_PLUGIN_LIST],
 	dnl #######################################################################
 	dnl # Build a list of all the available plugins
 	dnl #######################################################################
-	for d in *; do
+	for d in $srcdir/*; do
 		if ! test -d $d; then
 			continue
 		fi
 
+		base=`basename $d`
+
 		if test -f $d/.purple-plugin ; then
 			if test -f $d/.abusive ; then
-				PP_PURPLE_ABUSIVE="$PP_PURPLE_ABUSIVE $d"
+				PP_PURPLE_ABUSIVE="$PP_PURPLE_ABUSIVE $base"
 			fi
 
 			if test -f $d/.build ; then
-				PP_PURPLE_BUILD="$PP_PURPLE_BUILD $d"
+				PP_PURPLE_BUILD="$PP_PURPLE_BUILD $base"
 			fi
 
-			PP_PURPLE="$PP_PURPLE $d"
+			PP_PURPLE="$PP_PURPLE $base"
 		elif test -f $d/.pidgin-plugin ; then
 			if test -f $d/.abusive ; then
-				PP_PIDGIN_ABUSIVE="$PP_PIDGIN_ABUSIVE $d"
+				PP_PIDGIN_ABUSIVE="$PP_PIDGIN_ABUSIVE $base"
 			fi
 
 			if test -f $d/.build ; then
-				PP_PIDGIN_BUILD="$PP_PIDGIN_BUILD $d"
+				PP_PIDGIN_BUILD="$PP_PIDGIN_BUILD $base"
 			fi
 
-			PP_PIDGIN="$PP_PIDGIN $d"
+			PP_PIDGIN="$PP_PIDGIN $base"
 		elif test -f $d/.finch-plugin ; then
 			if test -f $d/.abusive ; then
-				PP_FINCH_ABUSIVE="$PP_FINCH_ABUSIVE $d"
+				PP_FINCH_ABUSIVE="$PP_FINCH_ABUSIVE $base"
 			fi
 
 			if test -f $d/.build ; then
-				PP_FINCH_BUILD="$PP_FINCH_BUILD $d"
+				PP_FINCH_BUILD="$PP_FINCH_BUILD $base"
 			fi
 
-			PP_FINCH="$PP_FINCH $d"
+			PP_FINCH="$PP_FINCH $base"
 		fi
 	done;
 
