@@ -1,0 +1,12 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for album plugin.
+#
+
+GPP_TOP :=		..
+
+GPP = album
+
+include $(GPP_TOP)/win_gpp.mak
+

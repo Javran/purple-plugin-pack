@@ -1,3 +1,4 @@
+album/album.c
 autoreply/autoreply.c
 awaynotify/awaynotify.c
 bash/bash.c
