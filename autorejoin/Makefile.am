@@ -1,4 +1,4 @@
-EXTRA_DIST = .plugin Makefile.mingw
+EXTRA_DIST = .purple-plugin Makefile.mingw
 
 autorejoindir = $(PURPLE_LIBDIR)/purple
 

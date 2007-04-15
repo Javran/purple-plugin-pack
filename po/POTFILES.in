@@ -1,5 +1,5 @@
 album/album.c
-autoreply/autoreply.c
+autorejoin/autorejoin.c
 awaynotify/awaynotify.c
 bash/bash.c
 bit/bit.c

@@ -1,4 +1,4 @@
-EXTRA_DIST = .pidgin-plugin .build Makefile.mingw
+EXTRA_DIST = .pidgin-plugin Makefile.mingw
 
 sepandtabdir = $(PIDGIN_LIBDIR)
 

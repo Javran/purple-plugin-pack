@@ -1,4 +1,4 @@
-EXTRA_DIST = .plugin .build Makefile.mingw
+EXTRA_DIST = .purple-plugin .build Makefile.mingw
 
 irchelperdir = $(PURPLE_LIBDIR)
 

@@ -1,4 +1,4 @@
-EXTRA_DIST = .plugin Makefile.mingw .build
+EXTRA_DIST = .pidgin-plugin Makefile.mingw
 
 if HAVE_GTKSPELL
 switchspelldir = $(PIDGIN_LIBDIR)

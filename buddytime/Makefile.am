@@ -1,6 +1,6 @@
-EXTRA_DIST = .plugin
+EXTRA_DIST = .pidgin-plugin
 
-buddytimedir = $(GAIM_LIBDIR)/pidgin
+buddytimedir = $(PIDGIN_LIBDIR)
 
 buddytime_la_LDFLAGS = -module -avoid-version
 
@@ -12,17 +12,16 @@ buddytime_la_SOURCES = \
 	buddytime.c
 
 buddytime_la_LIBADD = \
-	$(GAIM_LIBS) \
+	$(PIDGIN_LIBS) \
 	$(GLIB_LIBS) \
 	$(GTK_LIBS)
 
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PIDGIN_LIBDIR)\" \
+	-DDATADIR=\"$(PIDGIN_DATADIR)\" \
 	$(GTK_CFLAGS) \
 	$(GLIB_CFLAGS) \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS)
+	$(PIDGIN_CFLAGS)

@@ -1,5 +1,5 @@
 EXTRA_DIST = \
-	.plugin \
+	.purple-plugin \
 	.build \
 	Makefile.mingw
 
