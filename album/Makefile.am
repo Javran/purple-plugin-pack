@@ -9,7 +9,7 @@ albumdir = $(GAIM_LIBDIR)/pidgin
 
 album_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PIDGIN
 
 album_LTLIBRARIES = album.la
 

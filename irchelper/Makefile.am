@@ -4,7 +4,7 @@ irchelperdir = $(GAIM_LIBDIR)/libpurple
 
 irchelper_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PURPLE
 
 irchelper_LTLIBRARIES = irchelper.la
 
