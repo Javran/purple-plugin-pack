@@ -1,6 +1,6 @@
 .*/?Makefile(\.in)?$
 .*/?.+\.loT
-.*/?.+_config.h(\.in)?$
+(pre|pp)_config.h(\.in)?$
 .+\.spec
 .*\.dll
 aclocal.m4
@@ -16,6 +16,7 @@ missing
 po/Makefile.in.in
 po/POTFILES
 po/stamp-it
+po/.+\.pot
 purple-plugin_pack-[0-9]+\.[0-9]+([Bb][Ee][Tt][Aa][0-9]+)?(mtn)?\/?
 stamp-h1
 win32-dist

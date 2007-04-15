@@ -1,6 +1,6 @@
-EXTRA_DIST = .plugin
+EXTRA_DIST = .purple-plugin
 
-chronicdir=$(GAIM_LIBDIR)/libpurple
+chronicdir=$(PURPLE_LIBDIR)
 
 chronic_la_LDFLAGS = -module -avoid-version
 
@@ -10,17 +10,16 @@ chronic_LTLIBRARIES = chronic.la
 
 chronic_la_LIBADD = \
 	$(GLIB_LIBS) \
-	$(GAIM_LIBS)
+	$(PURPLE_LIBS)
 
 chronic_la_SOURCES = chronic.c
 
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/libpurple/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PURPLE_LIBDIR)\" \
+	-DDATADIR=\"$(PURPLE_DATADIR)\" \
 	$(GLIB_CFLAGS) \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS)
+	$(PURPLE_CFLAGS)
 

@@ -1,5 +1,5 @@
 album/album.c
-autoreply/autoreply.c
+autorejoin/autorejoin.c
 awaynotify/awaynotify.c
 bash/bash.c
 bit/bit.c
@@ -11,8 +11,6 @@ dice/dice.c
 eight_ball/eight_ball.c
 flip/flip.c
 gRIM/gRIM.c
-gaim-schedule/gaim-schedule.c
-gaim-schedule/schedule.c
 groupmsg/groupmsg.c
 ignorance/ignorance.c
 ignorance/interface.c
@@ -32,6 +30,8 @@ mystatusbox/mystatusbox.c
 napster/napster.c
 nicksaid/nicksaid.c
 oldlogger/oldlogger.c
+schedule/gaim-schedule.c
+schedule/schedule.c
 sepandtab/sepandtab.c
 showoffline/showoffline.c
 simfix/simfix.c

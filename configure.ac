@@ -272,7 +272,6 @@ AC_OUTPUT([
 	difftopic/Makefile
 	eight_ball/Makefile
 	flip/Makefile
-	gaim-schedule/Makefile
 	groupmsg/Makefile
 	gRIM/Makefile
 	ignorance/Makefile
@@ -285,6 +284,7 @@ AC_OUTPUT([
 	nicksaid/Makefile
 	oldlogger/Makefile
 	plonkers/Makefile
+	schedule/Makefile
 	sepandtab/Makefile
 	showoffline/Makefile
 	simfix/Makefile

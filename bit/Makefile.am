@@ -1,4 +1,4 @@
-EXTRA_DIST = .pidgin-nlugin Makefile.mingw .build
+EXTRA_DIST = .pidgin-plugin Makefile.mingw .build
 
 bitdir = $(PIDGIN_LIBDIR)
 
