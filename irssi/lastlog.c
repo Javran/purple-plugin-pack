@@ -34,6 +34,7 @@
 #include <gtkimhtml.h>
 
 #include "../common/i18n.h"
+#include "lastlog.h"
 
 /******************************************************************************
  * Globals

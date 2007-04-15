@@ -19,6 +19,10 @@
  * 02111-1307, USA.
  */
 
+#ifndef _IRSSI_WINDOW_H
+#define _IRSSI_WINDOW_H
+
 void irssi_window_init(PurplePlugin *plugin);
 void irssi_window_uninit(PurplePlugin *plugin);
 
+#endif /*_IRSSI_WINDOW_H*/

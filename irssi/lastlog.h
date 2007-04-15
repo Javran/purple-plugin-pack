@@ -19,6 +19,10 @@
  * 02111-1307, USA.
  */
 
+#ifndef _IRSSI_LASTLOG_H
+#define _IRSSI_LASTLOG_H
+
 void irssi_lastlog_init(PurplePlugin *plugin);
 void irssi_lastlog_uninit(PurplePlugin *plugin);
 
+#endif /*_IRSSI_LASTLOG_H*/

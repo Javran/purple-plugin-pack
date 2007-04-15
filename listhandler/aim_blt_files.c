@@ -22,6 +22,7 @@
  */
 
 #include "listhandler.h"
+#include "aim_blt_files.h"
 
 static gchar *filename = NULL, *file_contents = NULL;
 static gsize length;

@@ -629,7 +629,7 @@ static gboolean writing_chat_msg_cb(PurpleAccount *account, const char *who,
 		if (g_str_has_prefix(tmp, name) &&
 		    g_str_has_prefix(tmp + strlen(name), MESSAGE_MODE_NOTICE_SUFFIX NICK_CHANSERV))
 		{
-			if (time(NULL) < (time_t)GPOINTER_TO_INT(purple_conversation_get_data(conv, PLUGIN_ID "_start_time") + 10))
+			if (time(NULL) < (time_t)GPOINTER_TO_INT(purple_conversation_get_data(conv, PLUGIN_ID "_start_time")) + 10)
 				return TRUE;
 		}
 	}

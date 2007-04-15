@@ -32,6 +32,7 @@
 #include <gtkconv.h>
 
 #include "../common/i18n.h"
+#include "layout.h"
 
 #define IRSSI_LAYOUT_SETTING	"irssi::layout"
 
