@@ -1,6 +1,6 @@
 .*/?Makefile(\.in)?$
 .*/?.+\.loT
-.*/?.+_config.h(\.in)?$
+(pre|pp)_config.h(\.in)?$
 .+\.spec
 aclocal.m4
 config.(guess|log|status|sub)
