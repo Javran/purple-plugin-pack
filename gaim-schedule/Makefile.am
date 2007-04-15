@@ -1,14 +1,11 @@
-EXTRA_DIST = \
-	.build \
-	.plugin \
-	schedule.h
+EXTRA_DIST = .build .pidgin-plugin schedule.h
 
-gaim_scheduledir = $(GAIM_LIBDIR)/pidgin
+gaim_scheduledir = $(PIDGIN_LIBDIR)
 
 gaim_schedule_la_LDFLAGS = -module -avoid-version
 
 gaim_schedule_la_LIBADD = \
-	$(GAIM_LIBS) \
+	$(PIDGIN_LIBS) \
 	$(GTK_LIBS)
 
 if HAVE_PIDGIN
@@ -22,9 +19,8 @@ gaim_schedule_la_SOURCES = \
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PIDGIN_LIBDIR)\" \
+	-DDATADIR=\"$(PIDGIN_DATADIR)\" \
 	$(GTK_CFLAGS) \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS)
+	$(PIDGIN_CFLAGS)

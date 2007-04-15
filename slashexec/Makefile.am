@@ -1,9 +1,6 @@
-EXTRA_DIST = \
-	.plugin \
-	.build \
-	Makefile.mingw
+EXTRA_DIST = .purple-plugin .build Makefile.mingw
 
-slashexecdir = $(GAIM_LIBDIR)/libpurple
+slashexecdir = $(PURPLE_LIBDIR)
 
 slashexec_la_LDFLAGS = -module -avoid-version
 
@@ -15,15 +12,14 @@ slashexec_la_SOURCES = slashexec.c
 
 slashexec_la_LIBADD = \
 	$(GLIB_LIBS) \
-	$(GAIM_LIBS)
+	$(PURPLE_LIBS)
 
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/libpurple/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PURPLE_LIBDIR)\" \
+	-DDATADIR=\"$(PURPLE_DATADIR)\" \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS) \
+	$(PURPLE_CFLAGS) \
 	$(GLIB_CFLAGS)
 

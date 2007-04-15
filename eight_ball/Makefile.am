@@ -1,9 +1,6 @@
-EXTRA_DIST = \
-	.build \
-	.plugin \
-	Makefile.mingw
+EXTRA_DIST = .build .purple-plugin Makefile.mingw
 
-eight_balldir = $(GAIM_LIBDIR)/libpurple
+eight_balldir = $(PURPLE_LIBDIR)
 
 eight_ball_la_LDFLAGS = -module -avoid-version
 
@@ -15,15 +12,14 @@ eight_ball_la_SOURCES = eight_ball.c
 
 eight_ball_la_LIBADD = \
 	$(GLIB_LIBS) \
-	$(GAIM_LIBS)
+	$(PURPLE_LIBS)
 
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/libpurple/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PURPLE_LIBDIR)\" \
+	-DDATADIR=\"$(PURPLE_DATADIR)\" \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS) \
+	$(PURPLE_CFLAGS) \
 	$(GLIB_CFLAGS)
 

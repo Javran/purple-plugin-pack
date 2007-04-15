@@ -1,10 +1,6 @@
-EXTRA_DIST = \
-	.build \
-	.plugin \
-	*.h \
-	Makefile.mingw
+EXTRA_DIST = .build .purple-plugin *.h Makefile.mingw
 
-listhandlerdir = $(GAIM_LIBDIR)/libpurple
+listhandlerdir = $(PURPLE_LIBDIR)
 
 listhandler_la_LDFLAGS = -module -avoid-version
 
@@ -21,14 +17,13 @@ listhandler_la_SOURCES = \
 
 listhandler_la_LIBADD = \
 	$(GLIB_LIBS) \
-	$(GAIM_LIBS)
+	$(PURPLE_LIBS)
 
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/libpurple/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PURPLE_LIBDIR)\" \
+	-DDATADIR=\"$(PURPLE_DATADIR)\" \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS)
+	$(PURPLE_CFLAGS)
 

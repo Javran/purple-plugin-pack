@@ -1,8 +1,6 @@
-EXTRA_DIST = \
-	.plugin \
-	.build
+EXTRA_DIST = .pidgin-plugin .build
 
-plonkersdir = $(GAIM_LIBDIR)/pidgin
+plonkersdir = $(PIDGIN_LIBDIR)
 
 plonkers_la_LDFLAGS = \
 	-module \
@@ -17,14 +15,14 @@ plonkers_la_SOURCES = \
 
 plonkers_la_LIBADD = \
 	$(GTK_LIBS) \
-	$(GAIM_LIBS)
+	$(PIDGIN_LIBS)
 
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
+	-DLIBDIR=\"$(PIDGIN_LIBDIR)\" \
+	-DDATADIR=\"$(PIDGIN_DATADIR)\" \
 	$(DEBUG_CFLAGS) \
 	$(GTK_CFLAGS) \
 	$(GLIB_CFLAGS) \
-	$(GAIM_CFLAGS)
+	$(PIDGIN_CFLAGS)

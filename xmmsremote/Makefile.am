@@ -1,8 +1,8 @@
-EXTRA_DIST = .build .plugin
+EXTRA_DIST = .build .pidgin-plugin
 
 SUBDIRS = pixmaps
 
-xmmsremotedir = $(GAIM_LIBDIR)/pidgin
+xmmsremotedir = $(PIDGIN_LIBDIR)
 
 xmmsremote_la_LDFLAGS = -module -avoid-version
 
@@ -14,7 +14,7 @@ xmmsremote_la_SOURCES = \
 	xmmsremote.c
 
 xmmsremote_la_LIBADD = \
-	$(GAIM_LIBS) \
+	$(PIDGIN_LIBS) \
 	$(GTK_LIBS) \
 	$(XMMS_LIBS)
 
@@ -22,11 +22,10 @@ endif
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PIDGIN_LIBDIR)\" \
+	-DDATADIR=\"$(PIDGIN_DATADIR)\" \
 	$(GTK_CFLAGS) \
 	$(GLIB_CFLAGS) \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS) \
+	$(PIDGIN_CFLAGS) \
 	$(XMMS_CFLAGS)

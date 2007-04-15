@@ -1,6 +1,6 @@
-EXTRA_DIST = .build .plugin Makefile.mingw
+EXTRA_DIST = .build .purple-plugin Makefile.mingw
 
-simfixdir = $(GAIM_LIBDIR)/libpurple
+simfixdir = $(PURPLE_LIBDIR)
 
 simfix_la_LDFLAGS = -module -avoid-version
 
@@ -13,14 +13,13 @@ simfix_la_SOURCES = \
 
 simfix_la_LIBADD = \
 	$(GLIB_LIBS) \
-	$(GAIM_LIBS)
+	$(PURPLE_LIBS)
 
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/libpurple/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PURPLE_LIBDIR)\" \
+	-DDATADIR=\"$(PURPLE_DATADIR)\" \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS)
+	$(PURPLE_CFLAGS)
 
