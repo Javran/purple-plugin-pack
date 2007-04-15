@@ -21,7 +21,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
+# include "../gpp_config.h"
 #endif
 
 #define PURPLE_PLUGINS
@@ -91,7 +91,7 @@ plugin_load(PurplePlugin *plugin) {
 								&conv_placement_sep_chats_tab_ims);
 	pidgin_conv_placement_add_fnc("grp-type-sep-prpl",	_("Group by Type, Separate by Protocol"),
 								&conv_placement_grp_type_sep_prpl);
-	purple_prefs_trigger_callback("/purple/gtk/conversations/placement");
+	purple_prefs_trigger_callback(PIDGIN_PREFS_ROOT "/conversations/placement");
 
 	return TRUE;
 }
@@ -101,7 +101,7 @@ plugin_unload(PurplePlugin *plugin) {
 	pidgin_conv_placement_remove_fnc("sep-ims-tab-chats");
 	pidgin_conv_placement_remove_fnc("sep-chats-tab-ims");
 
-	purple_prefs_trigger_callback("/purple/gtk/conversations/placement");
+	purple_prefs_trigger_callback(PIDGIN_PREFS_ROOT "/conversations/placement");
 
 	return TRUE;
 }
@@ -117,11 +117,11 @@ static PurplePluginInfo info = {
 	PURPLE_PRIORITY_DEFAULT,
 	"gtk-plugin_pack-separate_and_tab",
 	NULL,
-	PP_VERSION,
+	GPP_VERSION,
 	NULL,
 	NULL,
 	"Gary Kramlich <amc_grim@users.sf.net>",
-	PP_WEBSITE,
+	GPP_WEBSITE,
 	plugin_load,
 	plugin_unload,
 	NULL,
