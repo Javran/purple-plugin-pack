@@ -110,4 +110,25 @@ AC_DEFUN([AM_BUILD_PLUGIN_LIST],
 	AC_SUBST(PP_FINCH)
 	AC_SUBST(PP_FINCH_ABUSIVE)
 	AC_SUBST(PP_FINCH_BUILD)
+
+	dnl #######################################################################
+	dnl # build some statistics info
+	dnl #######################################################################
+	PP_PURPLE_TOTAL_COUNT=`echo $PP_PURPLE | xargs -n 1 echo | wc -l`
+	PP_PURPLE_BUILD_COUNT=`echo $PP_PURPLE_BUILD | xargs -n 1 echo | wc -l`
+
+	AC_SUBST(PP_PURPLE_TOTAL_COUNT)
+	AC_SUBST(PP_PURPLE_BUILD_COUNT)
+
+	PP_PIDGIN_TOTAL_COUNT=`echo $PP_PIDGIN | xargs -n 1 echo | wc -l`
+	PP_PIDGIN_BUILD_COUNT=`echo $PP_PIDGIN_BUILD | xargs -n 1 echo | wc -l`
+
+	AC_SUBST(PP_PIDGIN_TOTAL_COUNT)
+	AC_SUBST(PP_PIDGIN_BUILD_COUNT)
+
+	PP_FINCH_TOTAL_COUNT=`echo $PP_FINCH | xargs -n 1 echo | wc -l`
+	PP_FINCH_BUILD_COUNT=`echo $PP_FINCH_BUILD | xargs -n 1 echo | wc -l`
+
+	AC_SUBST(PP_FINCH_TOTAL_COUNT)
+	AC_SUBST(PP_FINCH_BUILD_COUNT)
 ])
