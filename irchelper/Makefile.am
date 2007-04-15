@@ -1,6 +1,6 @@
 EXTRA_DIST = .plugin .build Makefile.mingw
 
-irchelperdir = $(GAIM_LIBDIR)/libpurple
+irchelperdir = $(PURPLE_LIBDIR)
 
 irchelper_la_LDFLAGS = -module -avoid-version
 
@@ -13,14 +13,13 @@ irchelper_la_SOURCES = \
 
 irchelper_la_LIBADD = \
 	$(GLIB_LIBS) \
-	$(GAIM_LIBS)
+	$(PURPLE_LIBS)
 
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/libpurple/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PURPLE_LIBDIR)\" \
+	-DDATADIR=\"$(PURPLE_DATADIR)\" \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS)
+	$(PURPLE_CFLAGS)
 

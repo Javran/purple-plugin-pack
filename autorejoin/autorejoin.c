@@ -118,11 +118,11 @@ static PurplePluginInfo info = {
 
 	PLUGIN_ID,					/* plugin id			*/
 	NULL,						/* name					*/
-	GPP_VERSION,				/* version				*/
+	PP_VERSION,					/* version				*/
 	NULL,						/* summary				*/
 	NULL,						/* description			*/
 	PLUGIN_AUTHOR,				/* author				*/
-	GPP_WEBSITE,				/* website				*/
+	PP_WEBSITE,					/* website				*/
 
 	plugin_load,				/* load					*/
 	plugin_unload,				/* unload				*/

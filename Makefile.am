@@ -23,9 +23,9 @@ EXTRA_DIST = \
 	po/Makefile.in.in \
 	po/Makefile.mingw
 
-DIST_SUBDIRS = common doc m4 po $(PP_DIST)
+DIST_SUBDIRS = common doc m4 po $(PP_PURPLE) $(PP_PIDGIN) $(PP_FINCH)
 
-SUBDIRS = common doc m4 po $(PP_BUILD)
+SUBDIRS = common doc m4 po $(PP_PURPLE_BUILD) $(PP_PURPLE_PIDGIN) $(PP_PURPLE_FINCH)
 
 BUILT_SOURCES = pp_config.h
 
@@ -41,7 +41,3 @@ CLEANFILES=
 
 ACLOCAL_AMFLAGS = -I m4
 
-plugin_info:
-	@echo Building: $(PP_BUILD)
-	@echo;
-	@echo Disting: $(PP_DIST)

@@ -21,8 +21,12 @@
 #define GPP_INTL_H
 
 #ifdef HAVE_CONFIG_H
-# include "../gpp_config.h"
+# include "../pp_config.h"
 #endif
+
+#ifndef LOCALEDIR
+# define LOCALEDIR "/BROKEN"
+#endif /* LOCALEDIR */
 
 #include <glib.h>
 #if GLIB_CHECK_VERSION(2,4,0)
