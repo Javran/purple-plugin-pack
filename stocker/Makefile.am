@@ -1,10 +1,10 @@
 EXTRA_DIST = \
-	.plugin \
+	.pidgin-plugin \
 	gtkticker.h \
 	stocker_prefs.h \
 	Makefile.mingw
 
-stockerdir = $(GAIM_LIBDIR)/pidgin
+stockerdir = $(PIDGIN_LIBDIR)
 
 stocker_la_LDFLAGS = -module -avoid-version
 
@@ -19,15 +19,14 @@ stocker_la_SOURCES = \
 
 stocker_la_LIBADD = \
 	$(GTK_LIBS) \
-	$(GAIM_LIBS)
+	$(PIDGIN_LIBS)
 
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PIDGIN_LIBDIR)\" \
+	-DDATADIR=\"$(PIDGIN_DATADIR)\" \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS) \
+	$(PIDGIN_CFLAGS) \
 	$(GTK_CFLAGS)
 

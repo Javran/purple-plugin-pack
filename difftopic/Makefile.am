@@ -1,6 +1,6 @@
-EXTRA_DIST = .plugin Makefile.mingw .build
+EXTRA_DIST = .pidgin-plugin Makefile.mingw .build
 
-difftopicdir = $(GAIM_LIBDIR)/pidgin
+difftopicdir = $(PIDGIN_LIBDIR)
 
 difftopic_la_LDFLAGS = -module -avoid-version
 
@@ -12,15 +12,14 @@ difftopic_la_SOURCES = \
 	difftopic.c
 
 difftopic_la_LIBADD = \
-	$(GAIM_LIBS) \
+	$(PIDGIN_LIBS) \
 	$(GTK_LIBS)
 
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PIDGIN_LIBDIR)/pidgin/\" \
+	-DDATADIR=\"$(PIDGIN_DATADIR)\" \
 	$(GTK_CFLAGS) \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS)
+	$(PIDGIN_CFLAGS)

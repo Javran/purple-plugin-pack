@@ -1,5 +1,5 @@
 EXTRA_DIST=\
-	.plugin \
+	.pidgin-plugin \
 	.build \
 	Makefile.mingw \
 	datechange.h \
@@ -8,7 +8,7 @@ EXTRA_DIST=\
 	textfmt.h \
 	window.h
 
-irssidir = $(GAIM_LIBDIR)/pidgin
+irssidir = $(PIDGIN_LIBDIR)
 
 irssi_la_LDFLAGS = -module -avoid-version
 
@@ -17,7 +17,7 @@ if HAVE_PIDGIN
 irssi_LTLIBRARIES = irssi.la
 
 irssi_la_LIBADD = \
-	$(GAIM_LIBS) \
+	$(PIDGIN_LIBS) \
 	$(GLIB_LIBS)
 
 irssi_la_SOURCES = \
@@ -31,11 +31,10 @@ irssi_la_SOURCES = \
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PIDGIN_LIBDIR)\" \
+	-DDATADIR=\"$(PIDGIN_DATADIR)\" \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS) \
+	$(PIDGIN_CFLAGS) \
 	$(GTK_CFLAGS) \
 	$(GLIB_CFLAGS)
 

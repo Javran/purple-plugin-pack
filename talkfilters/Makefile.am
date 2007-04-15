@@ -1,6 +1,6 @@
-EXTRA_DIST = .build .plugin
+EXTRA_DIST = .build .pidgin-plugin
 
-talkfiltersdir = $(GAIM_LIBDIR)/pidgin
+talkfiltersdir = $(PIDGIN_LIBDIR)
 
 talkfilters_la_LDFLAGS = -module -avoid-version
 
@@ -12,7 +12,7 @@ talkfilters_la_SOURCES = \
 	talkfilters.c
 
 talkfilters_la_LIBADD = \
-	$(GAIM_LIBS) \
+	$(PIDGIN_LIBS) \
 	$(GTK_LIBS) \
 	$(TALKFILTERS_LIBS)
 
@@ -20,9 +20,8 @@ endif
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PIDGIN_LIBDIR)\" \
+	-DDATADIR=\"$(PIDGIN_DATADIR)\" \
 	$(GTK_CFLAGS) \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS)
+	$(PIDGIN_CFLAGS)
