@@ -89,7 +89,7 @@ static void /* gaim will call this to initialize the plugin */
 init_plugin(PurplePlugin *plugin)
 {
 #ifdef ENABLE_NLS
-	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
+	bindtextdomain(GETTEXT_PACKAGE, PP_LOCALEDIR);
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 

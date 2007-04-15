@@ -80,6 +80,7 @@ AM_CONDITIONAL(HAVE_PURPLE, true)
 
 PURPLE_LIBDIR=`pkg-config --variable=libdir purple`
 PURPLE_DATADIR=`pkg-config --variable=datadir purple`
+PURPLE_PIXMAPSDIR=""
 
 # this is a hack but should work fine.
 # we use the libpurple datadir for PP_LOCALEDIR since we are not breaking up
@@ -92,13 +93,14 @@ if test x"$PURPLE_LIBDIR" != x"" ; then
 fi
 
 if test x"$PURPLE_DATADIR" != x"" ; then
-	PURPLE_DATADIR="$PURPLE_DATADIR/purple"
+	PURPLE_PIXMAPSDIR="$PURPLE_DATADIR/pixmaps/libpurple"
 fi
 
 AC_SUBST(PURPLE_CFLAGS)
 AC_SUBST(PURPLE_LIBS)
 AC_SUBST(PURPLE_LIBDIR)
 AC_SUBST(PURPLE_DATADIR)
+AC_SUBST(PURPLE_PIXMAPSDIR)
 
 dnl #######################################################################
 dnl # Check for pidgin
@@ -115,19 +117,21 @@ PKG_CHECK_MODULES(PIDGIN, pidgin,
 
 PIDGIN_LIBDIR=`pkg-config --variable=libdir pidgin`
 PIDGIN_DATADIR=`pkg-config --variable=datadir pidgin`
+PIDGIN_PIXMAPSDIR=""
 
 if test x"$PIDGIN_LIBDIR" != x"" ; then
 	PIDGIN_LIBDIR="$PIDGIN_LIBDIR/pidgin"
 fi
 
 if test x"$PIDGIN_DATADIR" != x"" ; then
-	PIDGIN_DATADIR="$PIDGIN_DATADIR/pidgin"
+	PIDGIN_PIXMAPSDIR="$PIDGIN_DATADIR/pixmaps/pidgin"
 fi
 
 AC_SUBST(PIDGIN_CFLAGS)
 AC_SUBST(PIDGIN_LIBS)
 AC_SUBST(PIDGIN_LIBDIR)
 AC_SUBST(PIDGIN_DATADIR)
+AC_SUBST(PIDGIN_PIXMAPSDIR)
 
 dnl #######################################################################
 dnl # Check for finch
@@ -144,19 +148,21 @@ PKG_CHECK_MODULES(FINCH, finch,
 
 FINCH_LIBDIR=`pkg-config --variable=libdir finch`
 FINCH_DATADIR=`pkg-config --variable=datadir finch`
+FINCH_PIXMAPSDIR=""
 
 if test x"$FINCH_LIBDIR" != x"" ; then
 	FINCH_LIBDIR="$FINCH_LIBDIR/finch"
 fi
 
 if test x"$FINCH_DATADIR" != x"" ; then
-	FINCH_DATADIR="$FINCH_DATADIR/finch"
+	FINCH_PIXMAPSDIR="$FINCH_DATADIR/pixmaps/finch"
 fi
 
 AC_SUBST(FINCH_CFLAGS)
 AC_SUBST(FINCH_LIBS)
 AC_SUBST(FINCH_LIBDIR)
 AC_SUBST(FINCH_DATADIR)
+AC_SUBST(FINCH_PIXMAPSDIR)
 
 dnl #######################################################################
 dnl # check for gtk and other dependencies

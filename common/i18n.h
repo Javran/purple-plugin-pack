@@ -24,15 +24,6 @@
 # include "../pp_config.h"
 #endif
 
-/* dirty hack */
-#ifndef _WIN32
-#ifdef PP_LOCALEDIR
-# ifndef LOCALEDIR
-#  define LOCALEDIR PP_LOCALEDIR
-# endif /* LOCALEDIR */
-#endif /* PP_LOCALEDIR */
-#endif
-
 #include <glib.h>
 #if GLIB_CHECK_VERSION(2,4,0)
 #include <glib/gi18n-lib.h>

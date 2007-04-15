@@ -15,7 +15,7 @@ napster_la_LIBADD = \
 	$(GLIB_LIBS) \
 	$(PURPLE_LIBS)
 
-napsterpixdir=$(PURPLE_DATADIR)/pixmaps/libpurple/status/default
+napsterpixdir=$(PURPLE_PIXAMPSDIR)/status/default
 
 napsterpix_DATA=napster.png
 

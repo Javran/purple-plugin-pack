@@ -105,14 +105,10 @@ static PurplePluginInfo info =
 	PURPLE_PRIORITY_DEFAULT,							/**< priority		*/
 
 	"core-plugin_pack-simfix",						/**< id				*/
-	N_("SIM-fix"),									/**< name			*/
-	PP_VERSION,									/**< version		*/
-													/**  summary		*/
-	N_("Fix messages from broken SIM clients."),
-													/**  description	*/
-	N_("Fixes messages received from broken SIM clients by "
-	   "stripping HTML from them. The buddy must be on your "
-	   "list and set as a SIM user."),
+	NULL,											/**< name			*/
+	PP_VERSION,										/**< version		*/
+	NULL,											/**  summary		*/
+	NULL,											/**  description	*/
 	"Stu Tomlinson <stu@nosnilmot.com>",			/**< author			*/
 	PP_WEBSITE,									/**< homepage		*/
 
@@ -127,8 +123,17 @@ static PurplePluginInfo info =
 };
 
 static void
-init_plugin(PurplePlugin *plugin)
-{
+init_plugin(PurplePlugin *plugin) {
+#ifdef ENABLE_NLS
+	bindtextdomain(GETTEXT_PACKAGE, PP_LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+#endif
+
+	info.name = _("SIM-fix");
+	info.summary = _("Fix messages from broken SIM clients.");
+	info.description = _("Fixes messages received from broken SIM clients by "
+						 "stripping HTML from them. The buddy must be on your "
+						 "list and set as a SIM user.");
 }
 
 PURPLE_INIT_PLUGIN(simfix, init_plugin, info)

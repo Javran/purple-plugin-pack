@@ -1184,7 +1184,7 @@ static void
 ignorance_init (PurplePlugin * plugin)
 {
 #ifdef ENABLE_NLS
-	bindtextdomain(PP_PACKAGE, LOCALEDIR);
+	bindtextdomain(PP_PACKAGE, PP_LOCALEDIR);
 	bind_textdomain_codeset(PP_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 

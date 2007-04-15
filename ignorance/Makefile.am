@@ -47,6 +47,7 @@ endif
 AM_CPPFLAGS = \
 	-DDATADIR=\"$(PIDGIN_DATADIR)\" \
 	-DVERSION=\"$(VERSION)\" \
+	-DPIXMAPSDIR=\"$(PIDGIN_PIXMAPSDIR)\" \
 	-DIGNORANCE_CONFDIR=\"$(ignorance_confdir)\" \
 	$(DEBUG_CFLAGS) \
 	$(GTK_CFLAGS) \

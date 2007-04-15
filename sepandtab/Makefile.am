@@ -1,4 +1,4 @@
-EXTRA_DIST = .pidgin-plugin Makefile.mingw
+EXTRA_DIST = .build .pidgin-plugin Makefile.mingw
 
 sepandtabdir = $(PIDGIN_LIBDIR)
 
@@ -19,6 +19,7 @@ endif
 AM_CPPFLAGS = \
 	-DLIBDIR=\"$(PIDGIN_LIBDIR)\" \
 	-DDATADIR=\"$(PIDGIN_DATADIR)\" \
+	-DPIXMAPSDIR=\"$(PIDGIN_PIXMAPSDIR)\" \
 	$(DEBUG_CFLAGS) \
 	$(PIDGIN_CFLAGS) \
 	$(GTK_CFLAGS)

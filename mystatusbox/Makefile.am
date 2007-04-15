@@ -1,4 +1,4 @@
-EXTRA_DIST = .pidgin-plugin Makefile.mingw
+EXTRA_DIST = .build .pidgin-plugin Makefile.mingw
 
 mystatusboxdir = $(PIDGIN_LIBDIR)
 
@@ -20,6 +20,7 @@ endif
 AM_CPPFLAGS = \
 	-DLIBDIR=\"$(PIDGIN_LIBDIR)\" \
 	-DDATADIR=\"$(PIDGIN_DATADIR)\" \
+	-DPIXMAPSDIR=\"$(PIDGIN_PIXMAPSDIR)\" \
 	$(GTK_CFLAGS) \
 	$(DEBUG_CFLAGS) \
 	$(PIDGIN_CFLAGS)
