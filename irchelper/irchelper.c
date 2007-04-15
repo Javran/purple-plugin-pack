@@ -165,11 +165,11 @@ static PurplePluginInfo plugin_info =
 	PURPLE_PLUGIN_MAGIC,
 	PURPLE_MAJOR_VERSION,
 	0,
-	PURPLE_PLUGIN_STANDARD,            /**< type           */
+	PURPLE_PLUGIN_STANDARD,          /**< type           */
 	NULL,                            /**< ui_requirement */
 	0,                               /**< flags          */
 	NULL,                            /**< dependencies   */
-	PURPLE_PRIORITY_DEFAULT,           /**< priority       */
+	PURPLE_PRIORITY_DEFAULT,         /**< priority       */
 
 	PLUGIN_ID,                       /**< id             */
 	N_("IRC Helper"),                /**< name           */
