@@ -253,12 +253,12 @@ dnl # Finish up
 dnl #######################################################################
 AC_OUTPUT([
 	Makefile
-	gaim-plugin_pack.spec
 	common/Makefile
 	doc/Makefile
 	m4/Makefile
 	po/Makefile.in
 	VERSION
+	plugin_pack.spec
 	album/Makefile
 	autorejoin/Makefile
 	awaynotify/Makefile
