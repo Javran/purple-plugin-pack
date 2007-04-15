@@ -1,5 +1,5 @@
 /*
- * irssi - Implements several irssi features for Gaim
+ * irssi - Implements several irssi features for Purple
  * Copyright (C) 2005-2007 Gary Kramlich <grim@reaperworld.com>
  * Copyright (C) 2007 John Bailey <rekkanoryo@rekkanoryo.org>
  *
@@ -37,32 +37,32 @@
 /******************************************************************************
  * Globals
  *****************************************************************************/
-static GaimCmdId irssi_window_cmd_id = 0;
-static GaimCmdId irssi_win_cmd_id = 0;
+static PurpleCmdId irssi_window_cmd_id = 0;
+static PurpleCmdId irssi_win_cmd_id = 0;
 
 /******************************************************************************
  * Helpers
  *****************************************************************************/
 static gboolean
-irssi_window_close_cb(GaimConversation *c) {
+irssi_window_close_cb(PurpleConversation *c) {
 	/* this gets called from a conversation since the conversation must exist
 	 * until all of the commands are processed, and the output is output.
 	 */
 
-	gaim_conversation_destroy(c);
+	purple_conversation_destroy(c);
 
 	return FALSE;
 }
 
-static GaimCmdRet
-irssi_window_cmd(GaimConversation *conv, const gchar *sub_cmd,
+static PurpleCmdRet
+irssi_window_cmd(PurpleConversation *conv, const gchar *sub_cmd,
 				 gchar **error)
 {
-	GaimGtkConversation *gtkconv;
-	GaimGtkWindow *win;
+	PidginConversation *gtkconv;
+	PidginWindow *win;
 	gint cur;
 
-	gtkconv = GAIM_GTK_CONVERSATION(conv);
+	gtkconv = PIDGIN_CONVERSATION(conv);
 	win = gtkconv->win;
 	cur = gtk_notebook_get_current_page(GTK_NOTEBOOK(win->notebook));
 
@@ -74,23 +74,23 @@ irssi_window_cmd(GaimConversation *conv, const gchar *sub_cmd,
 		if(tab < 0) {
 			*error = g_strdup(_("Invalid window specified."));
 
-			return GAIM_CMD_RET_FAILED;
+			return PURPLE_CMD_RET_FAILED;
 		}
 
-		if(tab < gaim_gtk_conv_window_get_gtkconv_count(win))
+		if(tab < pidgin_conv_window_get_gtkconv_count(win))
 			gtk_notebook_set_current_page(GTK_NOTEBOOK(win->notebook), tab);
 
-		return GAIM_CMD_RET_OK;
+		return PURPLE_CMD_RET_OK;
 	}
 
 	if(!g_ascii_strcasecmp(sub_cmd, "close")) {
 		g_timeout_add(50, (GSourceFunc)irssi_window_close_cb, conv);
 
-		return GAIM_CMD_RET_OK;
+		return PURPLE_CMD_RET_OK;
 	} else if(!g_ascii_strcasecmp(sub_cmd, "next") ||
 			  !g_ascii_strcasecmp(sub_cmd, "right"))
 	{
-		if(!gaim_gtk_conv_window_get_gtkconv_at_index(win, cur + 1)) {
+		if(!pidgin_conv_window_get_gtkconv_at_index(win, cur + 1)) {
 			/* wrap around... */
 			gtk_notebook_set_current_page(GTK_NOTEBOOK(win->notebook), 0);
 		} else {
@@ -99,12 +99,12 @@ irssi_window_cmd(GaimConversation *conv, const gchar *sub_cmd,
 										  cur + 1);
 		}
 
-		return GAIM_CMD_RET_OK;
+		return PURPLE_CMD_RET_OK;
 	} else if(!g_ascii_strcasecmp(sub_cmd, "previous") ||
 			  !g_ascii_strcasecmp(sub_cmd, "prev") ||
 			  !g_ascii_strcasecmp(sub_cmd, "left"))
 	{
-		if(!gaim_gtk_conv_window_get_gtkconv_at_index(win, cur - 1)) {
+		if(!pidgin_conv_window_get_gtkconv_at_index(win, cur - 1)) {
 			/* wrap around... */
 			gtk_notebook_set_current_page(GTK_NOTEBOOK(win->notebook), -1);
 		} else {
@@ -112,19 +112,19 @@ irssi_window_cmd(GaimConversation *conv, const gchar *sub_cmd,
 										  cur - 1);
 		}
 
-		return GAIM_CMD_RET_OK;
+		return PURPLE_CMD_RET_OK;
 	} else {
 		*error = g_strdup(_("Invalid argument!"));
 
-		return GAIM_CMD_RET_FAILED;
+		return PURPLE_CMD_RET_FAILED;
 	}
 
 	*error = g_strdup(_("Unknown Error!"));
-	return GAIM_CMD_RET_FAILED;
+	return PURPLE_CMD_RET_FAILED;
 }
 
-static GaimCmdRet
-irssi_window_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args,
+static PurpleCmdRet
+irssi_window_cmd_cb(PurpleConversation *conv, const gchar *cmd, gchar **args,
 					gchar **error, void *data)
 {
 	return irssi_window_cmd(conv, args[0], error);
@@ -134,7 +134,7 @@ irssi_window_cmd_cb(GaimConversation *conv, const gchar *cmd, gchar **args,
  * "API"
  *****************************************************************************/
 void
-irssi_window_init(GaimPlugin *plugin) {
+irssi_window_init(PurplePlugin *plugin) {
 	const gchar *help;
 
 	if(irssi_window_cmd_id != 0 || irssi_win_cmd_id != 0)
@@ -158,26 +158,26 @@ irssi_window_init(GaimPlugin *plugin) {
 			 "</pre>");
 
 	irssi_window_cmd_id =
-		gaim_cmd_register("window", "w", GAIM_CMD_P_PLUGIN,
-						  GAIM_CMD_FLAG_IM | GAIM_CMD_FLAG_CHAT, NULL, 
-						  GAIM_CMD_FUNC(irssi_window_cmd_cb), help, NULL);
+		purple_cmd_register("window", "w", PURPLE_CMD_P_PLUGIN,
+						  PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT, NULL, 
+						  PURPLE_CMD_FUNC(irssi_window_cmd_cb), help, NULL);
 
 	/* same thing as above, except for the /win command */
 	help = _("<pre>win: THis command is synonymous with /window.  Try /help "
 			 "window for further details.</pre>");
 
 	irssi_win_cmd_id =
-		gaim_cmd_register("win", "w", GAIM_CMD_P_PLUGIN, 
-						  GAIM_CMD_FLAG_IM | GAIM_CMD_FLAG_CHAT, NULL,
-						  GAIM_CMD_FUNC(irssi_window_cmd_cb), help, NULL);
+		purple_cmd_register("win", "w", PURPLE_CMD_P_PLUGIN, 
+						  PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT, NULL,
+						  PURPLE_CMD_FUNC(irssi_window_cmd_cb), help, NULL);
 }
 
 void
-irssi_window_uninit(GaimPlugin *plugin) {
+irssi_window_uninit(PurplePlugin *plugin) {
 	if(irssi_window_cmd_id == 0 || irssi_win_cmd_id == 0)
 		return;
 
-	gaim_cmd_unregister(irssi_window_cmd_id);
-	gaim_cmd_unregister(irssi_win_cmd_id);
+	purple_cmd_unregister(irssi_window_cmd_id);
+	purple_cmd_unregister(irssi_win_cmd_id);
 }
 

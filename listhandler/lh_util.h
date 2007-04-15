@@ -1,5 +1,5 @@
 /*
- * Gaim Plugin Pack
+ * Purple Plugin Pack
  * Copyright (C) 2003-2005
  * See ../AUTHORS for a list of all authors
  *
@@ -21,9 +21,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-void lh_util_add_buddy(const gchar *group, GaimGroup *gaim_group,
+void lh_util_add_buddy(const gchar *group, PurpleGroup *purple_group,
 					const gchar *buddy, const gchar *alias,
-					GaimAccount *account);
+					PurpleAccount *account);
 
 void lh_util_add_to_blist(GList *buddies, GList *groups);
 

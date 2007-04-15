@@ -30,7 +30,7 @@
 # include "../gpp_config.h"
 #endif /* HAVE_CONFIG_H */
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #include <gtkconv.h>
 #include <gtkimhtml.h>
@@ -105,17 +105,17 @@ struct lyrics_and_info {
 struct timeout_data
 {
 	struct lyrics_and_info *info;
-	GaimConversation *conv;
+	PurpleConversation *conv;
 };
 
-static GaimCmdId rim_cmd_id = 0;
+static PurpleCmdId rim_cmd_id = 0;
 
 static gboolean
 timeout_func_cb(struct timeout_data *data)
 {
 	char *msg;
 	const char *color;
-	GaimGtkConversation *gtkconv = GAIM_GTK_CONVERSATION(data->conv);
+	PidginConversation *gtkconv = PIDGIN_CONVERSATION(data->conv);
 	GtkIMHtml *imhtml = GTK_IMHTML(gtkconv->entry);
 	GList *list;
 
@@ -171,10 +171,10 @@ timeout_func_cb(struct timeout_data *data)
 	else
 		msg = g_strdup(*(char*)list->data ? (char*)list->data : "&nbsp;");
 
-	if (gaim_conversation_get_type(data->conv) == GAIM_CONV_TYPE_IM)
-		gaim_conv_im_send(GAIM_CONV_IM(data->conv), msg);
-	else if (gaim_conversation_get_type(data->conv) == GAIM_CONV_TYPE_CHAT)
-		gaim_conv_chat_send(GAIM_CONV_CHAT(data->conv), msg);
+	if (purple_conversation_get_type(data->conv) == PURPLE_CONV_TYPE_IM)
+		purple_conv_im_send(PURPLE_CONV_IM(data->conv), msg);
+	else if (purple_conversation_get_type(data->conv) == PURPLE_CONV_TYPE_CHAT)
+		purple_conv_chat_send(PURPLE_CONV_CHAT(data->conv), msg);
 	g_free(msg);
 
 	g_free(list->data);
@@ -212,13 +212,13 @@ rim_get_file_lines(const char *filename)
 	return list;
 }
 
-static GaimCmdRet
-rim(GaimConversation *conv, const gchar *cmd, gchar **args,
+static PurpleCmdRet
+rim(PurpleConversation *conv, const gchar *cmd, gchar **args,
 	 gchar *error, void *null)
 {
 	struct timeout_data *data = g_new0(struct timeout_data, 1);
 	struct lyrics_and_info *info = g_new0(struct lyrics_and_info, 1);
-	GaimGtkConversation *gtkconv = GAIM_GTK_CONVERSATION(conv);
+	PidginConversation *gtkconv = PIDGIN_CONVERSATION(conv);
 	gint source;
 
 	/* XXX: Need to manually parse the arguments :-/ */
@@ -253,7 +253,7 @@ rim(GaimConversation *conv, const gchar *cmd, gchar **args,
 	{
 		g_free(info);
 		g_free(data);
-		return GAIM_CMD_STATUS_FAILED;
+		return PURPLE_CMD_STATUS_FAILED;
 	}
 
 	info->gap = info->time / g_list_length(info->lyric);
@@ -269,11 +269,11 @@ rim(GaimConversation *conv, const gchar *cmd, gchar **args,
 	g_object_set_data_full(G_OBJECT(gtkconv->imhtml), "gRim:timer",
 			GINT_TO_POINTER(source), (GDestroyNotify)g_source_remove);
 
-	return GAIM_CMD_RET_OK;
+	return PURPLE_CMD_RET_OK;
 }
 
 static gboolean
-plugin_load(GaimPlugin *plugin) {
+plugin_load(PurplePlugin *plugin) {
 	const gchar *help;
 
 	/* should be completely mad and see if user has only one buddy (not a chat)
@@ -281,38 +281,38 @@ plugin_load(GaimPlugin *plugin) {
 	help = _("gRIM: rim your pals\n"
 			"/rim &lt;filename&gt; &lt;duration-in-secs&gt;");
 
-	rim_cmd_id = gaim_cmd_register("rim", "ws", GAIM_CMD_P_PLUGIN,
-									GAIM_CMD_FLAG_IM | GAIM_CMD_FLAG_CHAT,
-									NULL, GAIM_CMD_FUNC(rim),
+	rim_cmd_id = purple_cmd_register("rim", "ws", PURPLE_CMD_P_PLUGIN,
+									PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT,
+									NULL, PURPLE_CMD_FUNC(rim),
 									help, NULL);
 
 	/* THIS LINE IS NOT TRANSLATABLE. Patches to make it NLS capable will be
 	 * rejected without response */
 	help = "gRIM: Take off every 'Zig'!!";
-	rim_cmd_id = gaim_cmd_register("base", "", GAIM_CMD_P_PLUGIN,
-									GAIM_CMD_FLAG_IM | GAIM_CMD_FLAG_CHAT,
-									NULL, GAIM_CMD_FUNC(rim),
+	rim_cmd_id = purple_cmd_register("base", "", PURPLE_CMD_P_PLUGIN,
+									PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT,
+									NULL, PURPLE_CMD_FUNC(rim),
 									help, NULL);
 	return TRUE;
 }
 
 static gboolean
-plugin_unload(GaimPlugin *plugin) {
-	gaim_cmd_unregister(rim_cmd_id);
+plugin_unload(PurplePlugin *plugin) {
+	purple_cmd_unregister(rim_cmd_id);
 
 	return TRUE;
 }
 
-static GaimPluginInfo info =
+static PurplePluginInfo info =
 {
-	GAIM_PLUGIN_MAGIC,								/**< magic			*/
-	GAIM_MAJOR_VERSION,								/**< major version	*/
-	GAIM_MINOR_VERSION,								/**< minor version	*/
-	GAIM_PLUGIN_STANDARD,							/**< type			*/
-	GAIM_GTK_PLUGIN_TYPE,							/**< ui_requirement	*/
+	PURPLE_PLUGIN_MAGIC,								/**< magic			*/
+	PURPLE_MAJOR_VERSION,								/**< major version	*/
+	PURPLE_MINOR_VERSION,								/**< minor version	*/
+	PURPLE_PLUGIN_STANDARD,							/**< type			*/
+	PIDGIN_PLUGIN_TYPE,							/**< ui_requirement	*/
 	0,												/**< flags			*/
 	NULL,											/**< dependencies	*/
-	GAIM_PRIORITY_DEFAULT,							/**< priority		*/
+	PURPLE_PRIORITY_DEFAULT,							/**< priority		*/
 
 	"gtk-plugin_pack-gRIM",							/**< id				*/
 	NULL,											/**< name			*/
@@ -335,7 +335,7 @@ static GaimPluginInfo info =
 };
 
 static void
-init_plugin(GaimPlugin *plugin) {
+init_plugin(PurplePlugin *plugin) {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
@@ -376,4 +376,4 @@ here which I got from wikipedia.
     Captain: For great justice. 
 */
 
-GAIM_INIT_PLUGIN(flip, init_plugin, info)
+PURPLE_INIT_PLUGIN(flip, init_plugin, info)

@@ -12,7 +12,7 @@ EXTRA_DIST = \
 	regex.h \
 	support.h
 
-ignorancedir = $(GAIM_LIBDIR)/gaim
+ignorancedir = $(GAIM_LIBDIR)/pidgin
 
 ignorance_la_LDFLAGS = -module -avoid-version
 
@@ -22,7 +22,7 @@ ignorance_LTLIBRARIES = \
 	ignorance.la
 
 ignorance_confdir = \
-	$(sysconfdir)/gaim
+	$(sysconfdir)/pidgin
 
 ignorance_conf_DATA = \
 	ignorance.conf

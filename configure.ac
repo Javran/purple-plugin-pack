@@ -69,7 +69,7 @@ fi
 AC_SUBST(CFLAGS)
 
 dnl #######################################################################
-dnl # Check for purple and piding
+dnl # Check for purple and pidgin
 dnl #######################################################################
 PKG_CHECK_MODULES(PURPLE, purple)
 
@@ -216,6 +216,7 @@ AC_OUTPUT([
 	bash/Makefile
 	bit/Makefile
 	blistops/Makefile
+	broadcast/Makefile
 	buddytime/Makefile
 	chronic/Makefile
 	dice/Makefile

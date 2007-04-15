@@ -1,6 +1,6 @@
 EXTRA_DIST = .plugin .build Makefile.mingw
 
-lastseendir = $(GAIM_LIBDIR)/gaim
+lastseendir = $(GAIM_LIBDIR)/pidgin
 
 lastseen_la_LDFLAGS = -module -avoid-version
 
@@ -18,7 +18,7 @@ lastseen_la_LIBADD = \
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
+	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
 	-DDATADIR=\"$(GAIM_DATADIR)\" \
 	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
 	$(DEBUG_CFLAGS) \

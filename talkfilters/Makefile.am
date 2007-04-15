@@ -1,6 +1,6 @@
 EXTRA_DIST = .build .plugin
 
-talkfiltersdir = $(GAIM_LIBDIR)/gaim
+talkfiltersdir = $(GAIM_LIBDIR)/pidgin
 
 talkfilters_la_LDFLAGS = -module -avoid-version
 
@@ -20,7 +20,7 @@ endif
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
+	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
 	-DDATADIR=\"$(GAIM_DATADIR)\" \
 	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
 	$(GTK_CFLAGS) \

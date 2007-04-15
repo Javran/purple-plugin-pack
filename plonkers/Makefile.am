@@ -2,7 +2,7 @@ EXTRA_DIST = \
 	.plugin \
 	.build
 
-plonkersdir = $(GAIM_LIBDIR)/gaim
+plonkersdir = $(GAIM_LIBDIR)/pidgin
 
 plonkers_la_LDFLAGS = \
 	-module \
@@ -22,7 +22,7 @@ plonkers_la_LIBADD = \
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
+	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
 	-DDATADIR=\"$(GAIM_DATADIR)\" \
 	$(DEBUG_CFLAGS) \
 	$(GTK_CFLAGS) \

@@ -2,7 +2,7 @@ EXTRA_DIST = .build .plugin
 
 SUBDIRS = pixmaps
 
-xmmsremotedir = $(GAIM_LIBDIR)/gaim
+xmmsremotedir = $(GAIM_LIBDIR)/pidgin
 
 xmmsremote_la_LDFLAGS = -module -avoid-version
 
@@ -22,7 +22,7 @@ endif
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
+	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
 	-DDATADIR=\"$(GAIM_DATADIR)\" \
 	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
 	$(GTK_CFLAGS) \

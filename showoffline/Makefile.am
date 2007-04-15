@@ -1,6 +1,6 @@
 EXTRA_DIST = .plugin .build Makefile.mingw
 
-showofflinedir = $(GAIM_LIBDIR)/gaim
+showofflinedir = $(GAIM_LIBDIR)/libpurple
 
 showoffline_la_LDFLAGS = -module -avoid-version
 
@@ -18,7 +18,7 @@ showoffline_la_LIBADD = \
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
+	-DLIBDIR=\"$(GAIM_LIBDIR)/libpurple/\" \
 	-DDATADIR=\"$(GAIM_DATADIR)\" \
 	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
 	$(DEBUG_CFLAGS) \

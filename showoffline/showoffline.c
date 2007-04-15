@@ -20,7 +20,7 @@
 # include "../gpp_config.h"
 #endif /* HAVE_CONFIG_H */
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #include <debug.h>
 #include <notify.h>
@@ -32,55 +32,55 @@
 #include "../common/i18n.h"
 
 static void
-showoffline_cb(GaimBlistNode *node, gpointer data)
+showoffline_cb(PurpleBlistNode *node, gpointer data)
 {
-	GaimBuddyList *blist = gaim_get_blist();
-	GaimBlistUiOps *ops = gaim_blist_get_ui_ops();
-	gaim_blist_node_set_bool(node, "show_offline",
-							 !gaim_blist_node_get_bool(node, "show_offline"));
+	PurpleBuddyList *blist = purple_get_blist();
+	PurpleBlistUiOps *ops = purple_blist_get_ui_ops();
+	purple_blist_node_set_bool(node, "show_offline",
+							 !purple_blist_node_get_bool(node, "show_offline"));
 	ops->update(blist, node);
 }
 
 static void
-showoffline_extended_menu_cb(GaimBlistNode *node, GList **m)
+showoffline_extended_menu_cb(PurpleBlistNode *node, GList **m)
 {
-	GaimMenuAction *bna = NULL;
+	PurpleMenuAction *bna = NULL;
 
-	if (!GAIM_BLIST_NODE_IS_BUDDY(node))
+	if (!PURPLE_BLIST_NODE_IS_BUDDY(node))
 		return;
 
 	*m = g_list_append(*m, bna);
 
-	if (gaim_blist_node_get_bool(node, "show_offline"))
-		bna = gaim_menu_action_new(_("Hide when offline"), GAIM_CALLBACK(showoffline_cb),
+	if (purple_blist_node_get_bool(node, "show_offline"))
+		bna = purple_menu_action_new(_("Hide when offline"), PURPLE_CALLBACK(showoffline_cb),
 										NULL, NULL);
 	else
-		bna = gaim_menu_action_new(_("Show when offline"), GAIM_CALLBACK(showoffline_cb),
+		bna = purple_menu_action_new(_("Show when offline"), PURPLE_CALLBACK(showoffline_cb),
 										NULL, NULL);
 
 	*m = g_list_append(*m, bna);
 }
 
 static gboolean
-plugin_load(GaimPlugin *plugin)
+plugin_load(PurplePlugin *plugin)
 {
 
-	gaim_signal_connect(gaim_blist_get_handle(), "blist-node-extended-menu",
-						plugin, GAIM_CALLBACK(showoffline_extended_menu_cb), NULL);
+	purple_signal_connect(purple_blist_get_handle(), "blist-node-extended-menu",
+						plugin, PURPLE_CALLBACK(showoffline_extended_menu_cb), NULL);
 
 	return TRUE;
 }
 
-static GaimPluginInfo info =
+static PurplePluginInfo info =
 {
-	GAIM_PLUGIN_MAGIC,
-	GAIM_MAJOR_VERSION,								/**< major version	*/
-	GAIM_MINOR_VERSION,
-	GAIM_PLUGIN_STANDARD,							/**< type			*/
+	PURPLE_PLUGIN_MAGIC,
+	PURPLE_MAJOR_VERSION,								/**< major version	*/
+	PURPLE_MINOR_VERSION,
+	PURPLE_PLUGIN_STANDARD,							/**< type			*/
 	NULL,											/**< ui_requirement	*/
 	0,												/**< flags			*/
 	NULL,											/**< dependencies	*/
-	GAIM_PRIORITY_DEFAULT,							/**< priority		*/
+	PURPLE_PRIORITY_DEFAULT,							/**< priority		*/
 
 	"core-plugin_pack-showoffline",					/**< id				*/
 	NULL,											/**< name			*/
@@ -102,7 +102,7 @@ static GaimPluginInfo info =
 
 
 static void
-init_plugin(GaimPlugin *plugin) {
+init_plugin(PurplePlugin *plugin) {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
@@ -114,4 +114,4 @@ init_plugin(GaimPlugin *plugin) {
 						 "list when they are offline, even with \"Show Offline Buddies\" turned off.");
 }
 
-GAIM_INIT_PLUGIN(showoffline, init_plugin, info)
+PURPLE_INIT_PLUGIN(showoffline, init_plugin, info)

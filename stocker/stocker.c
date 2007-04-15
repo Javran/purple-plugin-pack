@@ -24,7 +24,7 @@
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #include <gtkplugin.h>
 #include <gtkprefs.h>
@@ -63,17 +63,17 @@ static GList *quotes = NULL;
  *****************************************************************************/
 static gboolean
 stocker_create() {
-	GaimBuddyList *blist;
-	GaimGtkBuddyList *gtkblist;
+	PurpleBuddyList *blist;
+	PidginBuddyList *gtkblist;
 
 	if(GTK_IS_WIDGET(ticker))
 		gtk_widget_destroy(ticker);
 
-	blist = gaim_get_blist();
+	blist = purple_get_blist();
 	if(!blist)
 		return FALSE;
 
-	gtkblist = GAIM_GTK_BLIST(blist);
+	gtkblist = PIDGIN_BLIST(blist);
 
 	ticker = gtk_ticker_new();
 	gtk_box_pack_start(GTK_BOX(gtkblist->vbox), ticker, FALSE, FALSE, 0);
@@ -86,7 +86,7 @@ stocker_create() {
 }
 
 static void
-stocker_blist_created(GaimBuddyList *blist, gpointer data) {
+stocker_blist_created(PurpleBuddyList *blist, gpointer data) {
 	stocker_create();
 }
 
@@ -94,18 +94,18 @@ stocker_blist_created(GaimBuddyList *blist, gpointer data) {
  * plugin crap
  *****************************************************************************/
 static gboolean
-stocker_load(GaimPlugin *plugin) {
+stocker_load(PurplePlugin *plugin) {
 	if(!stocker_create()) {
-		gaim_signal_connect(gaim_gtk_blist_get_handle(), "gtkblist-created",
+		purple_signal_connect(pidgin_blist_get_handle(), "gtkblist-created",
 							plugin,
-							GAIM_CALLBACK(stocker_blist_created), NULL);
+							PURPLE_CALLBACK(stocker_blist_created), NULL);
 	}
 
 	return TRUE;
 }
 
 static gboolean
-stocker_unload(GaimPlugin *plugin) {
+stocker_unload(PurplePlugin *plugin) {
 	if(GTK_IS_WIDGET(ticker))
 		gtk_widget_destroy(ticker);
 	ticker = NULL;
@@ -113,18 +113,18 @@ stocker_unload(GaimPlugin *plugin) {
 	return TRUE;
 }
 
-static GaimGtkPluginUiInfo stocker_ui_info = { stocker_prefs_get_frame };
+static PidginPluginUiInfo stocker_ui_info = { stocker_prefs_get_frame };
 
-static GaimPluginInfo stocker_info =
+static PurplePluginInfo stocker_info =
 {
-	GAIM_PLUGIN_MAGIC,
-	GAIM_MAJOR_VERSION,
-	GAIM_MINOR_VERSION,
-	GAIM_PLUGIN_STANDARD,
-	GAIM_GTK_PLUGIN_TYPE,
+	PURPLE_PLUGIN_MAGIC,
+	PURPLE_MAJOR_VERSION,
+	PURPLE_MINOR_VERSION,
+	PURPLE_PLUGIN_STANDARD,
+	PIDGIN_PLUGIN_TYPE,
 	0,
 	NULL,
-	GAIM_PRIORITY_DEFAULT,
+	PURPLE_PRIORITY_DEFAULT,
 
 	"gtk-plugin_pack-stocker",
 	NULL,
@@ -145,7 +145,7 @@ static GaimPluginInfo stocker_info =
 };
 
 static void
-stocker_init(GaimPlugin *plugin) {
+stocker_init(PurplePlugin *plugin) {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
@@ -160,4 +160,4 @@ stocker_init(GaimPlugin *plugin) {
 	stocker_prefs_init();
 }
 
-GAIM_INIT_PLUGIN(stocker, stocker_init, stocker_info)
+PURPLE_INIT_PLUGIN(stocker, stocker_init, stocker_info)

@@ -1,5 +1,5 @@
 /*
- * Gaim Plugin Pack
+ * Purple Plugin Pack
  * Copyright (C) 2003-2005
  * See ../AUTHORS for a list of all authors
  *
@@ -36,8 +36,8 @@
 /* GLib */
 #include <glib.h>
 
-/* Gaim */
-#define GAIM_PLUGINS
+/* Purple */
+#define PURPLE_PLUGINS
 #include <cmds.h>
 #include <conversation.h>
 #include <debug.h>
@@ -47,10 +47,10 @@
 #define BASH_QUOTES 636661
 #define QDB_QUOTES 58841
 
-static GaimCmdId bash, qdb;
+static PurpleCmdId bash, qdb;
 
-static GaimCmdRet
-cmd_func(GaimConversation *conv, const gchar *cmd, gchar **args,
+static PurpleCmdRet
+cmd_func(PurpleConversation *conv, const gchar *cmd, gchar **args,
 		gchar *error, void *data)
 {
 	GString *msgstr = NULL;
@@ -78,29 +78,29 @@ cmd_func(GaimConversation *conv, const gchar *cmd, gchar **args,
 	
 	g_string_append_printf(msgstr, "%i", quoteid);
 
-	switch(gaim_conversation_get_type(conv)) {
-		case GAIM_CONV_TYPE_IM:
-			gaim_conv_im_send(GAIM_CONV_IM(conv), msgstr->str);
+	switch(purple_conversation_get_type(conv)) {
+		case PURPLE_CONV_TYPE_IM:
+			purple_conv_im_send(PURPLE_CONV_IM(conv), msgstr->str);
 			break;
-		case GAIM_CONV_TYPE_CHAT:
-			gaim_conv_chat_send(GAIM_CONV_CHAT(conv), msgstr->str);
+		case PURPLE_CONV_TYPE_CHAT:
+			purple_conv_chat_send(PURPLE_CONV_CHAT(conv), msgstr->str);
 			break;
 		default:
 			g_string_free(msgstr, TRUE);
-			return GAIM_CMD_RET_FAILED;
+			return PURPLE_CMD_RET_FAILED;
 	}
 
 	g_string_free(msgstr, TRUE);
 
-	return GAIM_CMD_RET_OK;
+	return PURPLE_CMD_RET_OK;
 }
 
 static gboolean
-plugin_load(GaimPlugin *plugin)
+plugin_load(PurplePlugin *plugin)
 {
 	const gchar *bash_help, *qdb_help;
-	GaimCmdFlag flags = GAIM_CMD_FLAG_IM | GAIM_CMD_FLAG_CHAT |
-						GAIM_CMD_FLAG_ALLOW_WRONG_ARGS;
+	PurpleCmdFlag flags = PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT |
+						PURPLE_CMD_FLAG_ALLOW_WRONG_ARGS;
 
 	bash_help = _("bash [n]: sends a link to a bash.org quote.  Specify a"
 				" number for n and it will send a link to the quote with the"
@@ -110,34 +110,34 @@ plugin_load(GaimPlugin *plugin)
 				"for n and it will send a link to the quite with the specified "
 				"number.");
 
-	bash = gaim_cmd_register("bash", "w", GAIM_CMD_P_PLUGIN, flags, NULL,
-							GAIM_CMD_FUNC(cmd_func), bash_help, NULL);
+	bash = purple_cmd_register("bash", "w", PURPLE_CMD_P_PLUGIN, flags, NULL,
+							PURPLE_CMD_FUNC(cmd_func), bash_help, NULL);
 
-	qdb = gaim_cmd_register("qdb", "w", GAIM_CMD_P_PLUGIN, flags, NULL,
-							GAIM_CMD_FUNC(cmd_func), qdb_help, NULL);
+	qdb = purple_cmd_register("qdb", "w", PURPLE_CMD_P_PLUGIN, flags, NULL,
+							PURPLE_CMD_FUNC(cmd_func), qdb_help, NULL);
 
 	return TRUE;
 }
 
 static gboolean
-plugin_unload(GaimPlugin *plugin)
+plugin_unload(PurplePlugin *plugin)
 {
-	gaim_cmd_unregister(bash);
-	gaim_cmd_unregister(qdb);
+	purple_cmd_unregister(bash);
+	purple_cmd_unregister(qdb);
 
 	return TRUE;
 }
 
-static GaimPluginInfo bash_info =
+static PurplePluginInfo bash_info =
 {
-	GAIM_PLUGIN_MAGIC, /* magic, my ass */
-	GAIM_MAJOR_VERSION,
-	GAIM_MINOR_VERSION,
-	GAIM_PLUGIN_STANDARD,
+	PURPLE_PLUGIN_MAGIC, /* magic, my ass */
+	PURPLE_MAJOR_VERSION,
+	PURPLE_MINOR_VERSION,
+	PURPLE_PLUGIN_STANDARD,
 	NULL,
 	0,
 	NULL,
-	GAIM_PRIORITY_DEFAULT,
+	PURPLE_PRIORITY_DEFAULT,
 	"core-plugin_pack-bash",
 	NULL,
 	GPP_VERSION,
@@ -155,7 +155,7 @@ static GaimPluginInfo bash_info =
 };
 
 static void
-init_plugin(GaimPlugin *plugin)
+init_plugin(PurplePlugin *plugin)
 {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
@@ -172,4 +172,4 @@ init_plugin(GaimPlugin *plugin)
 	return;
 }
 
-GAIM_INIT_PLUGIN(bash, init_plugin, bash_info)
+PURPLE_INIT_PLUGIN(bash, init_plugin, bash_info)

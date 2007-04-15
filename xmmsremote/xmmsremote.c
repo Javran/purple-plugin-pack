@@ -28,7 +28,7 @@
 # include "../gpp_config.h"
 #endif
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #include <cmds.h>
 #include <conversation.h>
@@ -46,7 +46,7 @@
  * Constants
  ******************************************************************************/
 #define GXR_SESSION \
-	(gaim_prefs_get_int("/plugins/gtk/plugin_pack/xmms-remote/session"))
+	(purple_prefs_get_int("/plugins/gtk/plugin_pack/xmms-remote/session"))
 
 #define GXR_STOCK_NEXT "gxr-next"
 #define GXR_STOCK_PAUSE "gxr-pause"
@@ -69,7 +69,7 @@ enum {
 static GList *buttons = NULL, *checkboxes = NULL;
 static GtkIconFactory *icon_factory;
 static GtkWidget *blist_button = NULL;
-static GaimCmdId gxr_cmd;
+static PurpleCmdId gxr_cmd;
 
 /*******************************************************************************
  * Callbacks
@@ -173,7 +173,7 @@ gxr_format_info() {
 	song = xmms_remote_get_playlist_title(session, pos);
 
 	str = g_string_new("");
-	format = gaim_prefs_get_string("/plugins/gtk/plugin_pack/xmms-remote/format");
+	format = purple_prefs_get_string("/plugins/gtk/plugin_pack/xmms-remote/format");
 
 	while(format) {
 		if(format[0] != '%') {
@@ -247,16 +247,16 @@ gxr_format_info() {
 }
 
 static void
-gxr_display_title(GaimGtkWindow *win) {
-	GaimConversationType type;
+gxr_display_title(PidginWindow *win) {
+	PurpleConversationType type;
 	gchar *text = NULL;
-	GaimConversation *conv;
+	PurpleConversation *conv;
 
 	g_return_if_fail(win);
 
-	conv = gaim_gtk_conv_window_get_active_conversation(win);
+	conv = pidgin_conv_window_get_active_conversation(win);
 
-	type = gaim_conversation_get_type(conv);
+	type = purple_conversation_get_type(conv);
 
 	text = gxr_format_info();
 
@@ -264,14 +264,14 @@ gxr_display_title(GaimGtkWindow *win) {
 		return;
 
 	switch(type) {
-		case GAIM_CONV_TYPE_IM:
-			gaim_conv_im_send(GAIM_CONV_IM(conv), text);
+		case PURPLE_CONV_TYPE_IM:
+			purple_conv_im_send(PURPLE_CONV_IM(conv), text);
 			break;
-		case GAIM_CONV_TYPE_CHAT:
-			gaim_conv_chat_send(GAIM_CONV_CHAT(conv), text);
+		case PURPLE_CONV_TYPE_CHAT:
+			purple_conv_chat_send(PURPLE_CONV_CHAT(conv), text);
 			break;
-		case GAIM_CONV_TYPE_UNKNOWN:
-		case GAIM_CONV_TYPE_MISC:
+		case PURPLE_CONV_TYPE_UNKNOWN:
+		case PURPLE_CONV_TYPE_MISC:
 		default:
 			break;
 	}
@@ -282,9 +282,9 @@ gxr_display_title(GaimGtkWindow *win) {
 
 static void
 gxr_menu_display_title_cb(GtkMenuItem *item, gpointer data) {
-	GaimGtkWindow *win;
+	PidginWindow *win;
 
-	win = (GaimGtkWindow *)data;
+	win = (PidginWindow *)data;
 
 	gxr_display_title(win);
 }
@@ -308,7 +308,7 @@ gxr_make_item(GtkWidget *menu, const gchar *text, GtkSignalFunc sf,
 
 static GtkWidget *
 gxr_make_button(const char *stock, GCallback cb, gpointer data,
-				GaimGtkWindow *win)
+				PidginWindow *win)
 {
 	GtkWidget *ebox, *image;
 
@@ -344,7 +344,7 @@ gxr_make_playlist(GtkWidget *menu_item) {
 		g_free(song);
 
 		if(i == current)
-			gaim_new_check_item(menu, title, G_CALLBACK(gxr_menu_playlist_cb),
+			pidgin_new_check_item(menu, title, G_CALLBACK(gxr_menu_playlist_cb),
 								GINT_TO_POINTER(i), TRUE);
 		else
 			item = gxr_make_item(menu, title, G_CALLBACK(gxr_menu_playlist_cb),
@@ -362,14 +362,14 @@ gxr_make_playlist(GtkWidget *menu_item) {
 }
 
 static GtkWidget *
-gxr_make_menu(GaimGtkWindow *win) {
+gxr_make_menu(PidginWindow *win) {
 	GtkWidget *menu, *item;
 	gint session = GXR_SESSION;
 
 	menu = gtk_menu_new();
 
 	if(!xmms_remote_is_running(session)) {
-		item = gaim_new_item_from_stock(menu, "Please start XMMS",
+		item = pidgin_new_item_from_stock(menu, "Please start XMMS",
 										GXR_STOCK_XMMS, NULL, NULL, 0, 0, NULL);
 		gtk_widget_set_sensitive(item, FALSE);
 
@@ -377,14 +377,14 @@ gxr_make_menu(GaimGtkWindow *win) {
 	}
 
 	/* play */
-	item = gaim_new_item_from_stock(menu, "Play", GXR_STOCK_PLAY,
+	item = pidgin_new_item_from_stock(menu, "Play", GXR_STOCK_PLAY,
 									G_CALLBACK(gxr_menu_play_cb), NULL, 0,
 									0, NULL);
 	if(xmms_remote_is_playing(session) && !xmms_remote_is_paused(session))
 		gtk_widget_set_sensitive(item, FALSE);
 
 	/* pause */
-	item = gaim_new_item_from_stock(menu, "Pause", GXR_STOCK_PAUSE,
+	item = pidgin_new_item_from_stock(menu, "Pause", GXR_STOCK_PAUSE,
 									G_CALLBACK(gxr_menu_pause_cb), NULL, 0,
 									0, NULL);
 	if(!xmms_remote_is_playing(session) && !xmms_remote_is_paused(session))
@@ -393,36 +393,36 @@ gxr_make_menu(GaimGtkWindow *win) {
 		gtk_widget_set_sensitive(item, FALSE);
 
 	/* stop */
-	item = gaim_new_item_from_stock(menu, "Stop", GXR_STOCK_STOP,
+	item = pidgin_new_item_from_stock(menu, "Stop", GXR_STOCK_STOP,
 									G_CALLBACK(gxr_menu_stop_cb), NULL, 0,
 									0, NULL);
 	if(!xmms_remote_is_playing(session) && !xmms_remote_is_paused(session))
 		gtk_widget_set_sensitive(item, FALSE);
 
 	/* next */
-	gaim_new_item_from_stock(menu, "Next", GXR_STOCK_NEXT,
+	pidgin_new_item_from_stock(menu, "Next", GXR_STOCK_NEXT,
 							 G_CALLBACK(gxr_menu_next_cb), NULL, 0, 0,
 							 NULL);
 
 	/* previous */
-	gaim_new_item_from_stock(menu, "Previous", GXR_STOCK_PREVIOUS,
+	pidgin_new_item_from_stock(menu, "Previous", GXR_STOCK_PREVIOUS,
 							 G_CALLBACK(gxr_menu_prev_cb), NULL, 0, 0,
 							 NULL);
 
 	/* separator */
-	gaim_separator(menu);
+	pidgin_separator(menu);
 
 	/* repeat */
-	gaim_new_check_item(menu, "Repeat", G_CALLBACK(gxr_menu_repeat_cb),
+	pidgin_new_check_item(menu, "Repeat", G_CALLBACK(gxr_menu_repeat_cb),
 						NULL, xmms_remote_is_repeat(session));
 
 	/* shuffle */
-	gaim_new_check_item(menu, "Shuffle", G_CALLBACK(gxr_menu_shuffle_cb),
+	pidgin_new_check_item(menu, "Shuffle", G_CALLBACK(gxr_menu_shuffle_cb),
 						NULL, xmms_remote_is_shuffle(session));
 
-	if(gaim_prefs_get_bool("/plugins/gtk/plugin_pack/xmms-remote/show_playlist")) {
+	if(purple_prefs_get_bool("/plugins/gtk/plugin_pack/xmms-remote/show_playlist")) {
 		/* separator */
-		gaim_separator(menu);
+		pidgin_separator(menu);
 
 		/* playlist */
 		item = gxr_make_item(menu, "Playlist", NULL, NULL);
@@ -432,7 +432,7 @@ gxr_make_menu(GaimGtkWindow *win) {
 	if(win) {
 		/* Only if we are in a conversation window */
 		/* separator */
-		gaim_separator(menu);
+		pidgin_separator(menu);
 
 		/* title */
 		item = gxr_make_item(menu, "Display title",
@@ -445,32 +445,32 @@ gxr_make_menu(GaimGtkWindow *win) {
 
 static void
 gxr_button_clicked_cb(GtkButton *button, gpointer data) {
-	GaimGtkWindow *win;
+	PidginWindow *win;
 	GtkWidget *menu;
 
 	win = g_object_get_data(G_OBJECT(button), "win");
 	menu = gxr_make_menu(win);
 
 	if(win)
-		gtk_widget_grab_focus(gaim_gtk_conv_window_get_active_gtkconv(win)->entry);
+		gtk_widget_grab_focus(pidgin_conv_window_get_active_gtkconv(win)->entry);
 
 	gtk_menu_popup(GTK_MENU(menu), NULL, NULL, NULL, NULL, 0,
 				   gtk_get_current_event_time());
 }
 
 static void
-gxr_add_button(GaimGtkWindow *win) {
-	GaimGtkConversation *gtkconv = gaim_gtk_conv_window_get_active_gtkconv(win);
-	GaimConversation *conv = gtkconv->active_conv;
-	GaimConversationType type = gaim_conversation_get_type(conv);
+gxr_add_button(PidginWindow *win) {
+	PidginConversation *gtkconv = pidgin_conv_window_get_active_gtkconv(win);
+	PurpleConversation *conv = gtkconv->active_conv;
+	PurpleConversationType type = purple_conversation_get_type(conv);
 	GtkWidget *tray;
 	GtkWidget *button = NULL;
 	GList *l;
 
-	if(type != GAIM_CONV_TYPE_IM && type != GAIM_CONV_TYPE_CHAT)
+	if(type != PURPLE_CONV_TYPE_IM && type != PURPLE_CONV_TYPE_CHAT)
 		return;
 
-	if(!gaim_prefs_get_bool("/plugins/gtk/plugin_pack/xmms-remote/conv"))
+	if(!purple_prefs_get_bool("/plugins/gtk/plugin_pack/xmms-remote/conv"))
 		return;
 
 	for(l = buttons; l; l = l->next) {
@@ -481,10 +481,10 @@ gxr_add_button(GaimGtkWindow *win) {
 
 	tray = win->menu.tray;
 
-	if(!gaim_prefs_get_bool("/plugins/gtk/plugin_pack/xmms-remote/extended")) {
+	if(!purple_prefs_get_bool("/plugins/gtk/plugin_pack/xmms-remote/extended")) {
 		/* Show the minimal control */
 		button = gxr_make_button(GXR_STOCK_XMMS, G_CALLBACK(gxr_button_clicked_cb), win, win);
-		gaim_gtk_menu_tray_append(GAIM_GTK_MENU_TRAY(win->menu.tray), button,
+		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), button,
 								"XMMS Remote Control Options");
 		buttons = g_list_append(buttons, (gpointer)button);
 	} else {
@@ -495,30 +495,30 @@ gxr_add_button(GaimGtkWindow *win) {
 		 */
 		button = gxr_make_button(GXR_STOCK_NEXT,
 								 G_CALLBACK(gxr_button_next_cb), NULL, win);
-		gaim_gtk_menu_tray_append(GAIM_GTK_MENU_TRAY(win->menu.tray), button, "Next");
+		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), button, "Next");
 		buttons = g_list_append(buttons, (gpointer)button);
 		
 		button = gxr_make_button(GXR_STOCK_STOP,
 								 G_CALLBACK(gxr_button_stop_cb), NULL, win);
-		gaim_gtk_menu_tray_append(GAIM_GTK_MENU_TRAY(win->menu.tray), button, "Stop");
+		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), button, "Stop");
 		buttons = g_list_append(buttons, (gpointer)button);
 
 		button = gxr_make_button(GXR_STOCK_PAUSE,
 								 G_CALLBACK(gxr_button_pause_cb), NULL, win);
-		gaim_gtk_menu_tray_append(GAIM_GTK_MENU_TRAY(win->menu.tray), button, "Pause");
+		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), button, "Pause");
 		buttons = g_list_append(buttons, (gpointer)button);
 
 		button = gxr_make_button(GXR_STOCK_PLAY,
 								 G_CALLBACK(gxr_button_play_cb), NULL, win);
-		gaim_gtk_menu_tray_append(GAIM_GTK_MENU_TRAY(win->menu.tray), button, "Play");
+		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), button, "Play");
 		buttons = g_list_append(buttons, (gpointer)button);
 
 		button = gxr_make_button(GXR_STOCK_PREVIOUS,
 								 G_CALLBACK(gxr_button_prev_cb), NULL, win);
-		gaim_gtk_menu_tray_append(GAIM_GTK_MENU_TRAY(win->menu.tray), button, "Previous");
+		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), button, "Previous");
 		buttons = g_list_append(buttons, (gpointer)button);
 
-		if(gaim_prefs_get_bool("/plugins/gtk/plugin_pack/xmms-remote/volume")) {
+		if(purple_prefs_get_bool("/plugins/gtk/plugin_pack/xmms-remote/volume")) {
 			/* The volume controller */
 			GtkWidget *slider;
 
@@ -527,7 +527,7 @@ gxr_add_button(GaimGtkWindow *win) {
 			gtk_scale_set_draw_value(GTK_SCALE(slider), FALSE);
 			gtk_range_set_value(GTK_RANGE(slider),
 								xmms_remote_get_main_volume(GXR_SESSION));
-			gaim_gtk_menu_tray_append(GAIM_GTK_MENU_TRAY(win->menu.tray),
+			pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray),
 									slider, "XMMS Volume Control");
 
 			g_object_set_data(G_OBJECT(slider), "win", win);
@@ -545,13 +545,13 @@ static void
 gxr_show_buttons(void) {
 	GList *wins;
 
-	for(wins = gaim_gtk_conv_windows_get_list(); wins; wins = wins->next)
+	for(wins = pidgin_conv_windows_get_list(); wins; wins = wins->next)
 		gxr_add_button(wins->data);
 }
 
 static void
 gxr_hide_buttons(void) {
-	GaimGtkWindow *win;
+	PidginWindow *win;
 	GtkWidget *button;
 	GList *l, *l_next;
 
@@ -609,7 +609,7 @@ static void refresh_buttons() {
 }
 
 static void
-gxr_button_show_cb(const char *name, GaimPrefType type, gconstpointer val,
+gxr_button_show_cb(const char *name, PurplePrefType type, gconstpointer val,
 				   gpointer data)
 {
 	refresh_buttons();
@@ -622,28 +622,28 @@ static void
 gxr_popup_cb(GtkWidget *w, GtkMenu *menu, gpointer data) {
 	GtkWidget *item, *submenu;
 
-	gaim_separator(GTK_WIDGET(menu));
+	pidgin_separator(GTK_WIDGET(menu));
 
-	item = gaim_new_item_from_stock(GTK_WIDGET(menu), "XMMS Remote Control",
+	item = pidgin_new_item_from_stock(GTK_WIDGET(menu), "XMMS Remote Control",
 									GXR_STOCK_XMMS, NULL, NULL, 0, 0, NULL);
 
-	submenu = gxr_make_menu((GaimGtkWindow *)data);
+	submenu = gxr_make_menu((PidginWindow *)data);
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(item), submenu);
 
 	gtk_widget_show(item);
 }
 
 void
-gxr_disconnect_popup_cb(GaimConversation *conv) {
-	GaimGtkWindow *win;
-	GaimGtkConversation *gtkconv;
+gxr_disconnect_popup_cb(PurpleConversation *conv) {
+	PidginWindow *win;
+	PidginConversation *gtkconv;
 	GtkWidget *entry;
 	gulong handle;
 
-	if((gtkconv = GAIM_GTK_CONVERSATION(conv)) == NULL)
+	if((gtkconv = PIDGIN_CONVERSATION(conv)) == NULL)
 		return;
 
-	win = gaim_gtkconv_get_window(gtkconv);
+	win = pidgin_conv_get_window(gtkconv);
 	entry = gtkconv->entry;
 
 	handle = (gulong)g_object_get_data(G_OBJECT(entry), "gxr-popup-handle");
@@ -655,12 +655,12 @@ gxr_disconnect_popup_cb(GaimConversation *conv) {
 }
 
 static void
-gxr_hook_popup_for_gtkconv(GaimGtkConversation *gtkconv) {
+gxr_hook_popup_for_gtkconv(PidginConversation *gtkconv) {
 	gulong handle;
 	GtkWidget *entry;
-	GaimGtkWindow *win;
+	PidginWindow *win;
 
-	win = gaim_gtkconv_get_window(gtkconv);
+	win = pidgin_conv_get_window(gtkconv);
 	entry = gtkconv->entry;
 
 	if ((gulong)g_object_get_data(G_OBJECT(entry), "gxr-popup-handle"))
@@ -675,26 +675,26 @@ gxr_hook_popup_for_gtkconv(GaimGtkConversation *gtkconv) {
 static void
 gxr_hook_popups(void) {
 	GList *convs;
-	GaimConversation *conv;
+	PurpleConversation *conv;
 
-	for(convs = gaim_get_conversations(); convs; convs = convs->next) {
-		GaimGtkConversation *gtkconv;
+	for(convs = purple_get_conversations(); convs; convs = convs->next) {
+		PidginConversation *gtkconv;
 
-		conv = (GaimConversation *)convs->data;
-		gtkconv = GAIM_GTK_CONVERSATION(conv);
+		conv = (PurpleConversation *)convs->data;
+		gtkconv = PIDGIN_CONVERSATION(conv);
 		gxr_hook_popup_for_gtkconv(gtkconv);
 	}
 }
 
 static gboolean
-attach_to_window_tray(GaimConversation *conv) {
-	GaimGtkConversation *gtkconv;
-	GaimGtkWindow *win;
+attach_to_window_tray(PurpleConversation *conv) {
+	PidginConversation *gtkconv;
+	PidginWindow *win;
 
-	if((gtkconv = GAIM_GTK_CONVERSATION(conv)) == NULL)
+	if((gtkconv = PIDGIN_CONVERSATION(conv)) == NULL)
 		return TRUE;
 
-	win = gaim_gtkconv_get_window(gtkconv);
+	win = pidgin_conv_get_window(gtkconv);
 	if(!win)
 		return TRUE;
 
@@ -711,7 +711,7 @@ attach_to_window_tray(GaimConversation *conv) {
 }
 
 static void
-gxr_conv_created_cb(GaimConversation *conv, gpointer data) {
+gxr_conv_created_cb(PurpleConversation *conv, gpointer data) {
 	/* This terrible workaround is necessary because when you have
 	 * message-queueing enabled, the conversation does NOT get attached
 	 * to the viewable window immediately when it gets created. Rather,
@@ -721,14 +721,14 @@ gxr_conv_created_cb(GaimConversation *conv, gpointer data) {
 }
 
 static void
-gxr_conv_destroyed_cb(GaimConversation *conv, gpointer data) {
-	GaimGtkWindow *win;
+gxr_conv_destroyed_cb(PurpleConversation *conv, gpointer data) {
+	PidginWindow *win;
 	GtkWidget *button;
 	GList *l, *l_next;
 
-	win = gaim_gtkconv_get_window(GAIM_GTK_CONVERSATION(conv));
+	win = pidgin_conv_get_window(PIDGIN_CONVERSATION(conv));
 
-	if(gaim_gtk_conv_window_get_gtkconv_count(win) != 1)
+	if(pidgin_conv_window_get_gtkconv_count(win) != 1)
 		return;
 
 	for(l = buttons; l != NULL; l = l_next) {
@@ -743,24 +743,24 @@ gxr_conv_destroyed_cb(GaimConversation *conv, gpointer data) {
 	}
 }
 
-static GaimCmdRet
-gxr_cmd_cb(GaimConversation *c, const gchar *cmd, gchar **args, gchar **error,
+static PurpleCmdRet
+gxr_cmd_cb(PurpleConversation *c, const gchar *cmd, gchar **args, gchar **error,
 		void *data)
 {
 	gchar *lower;
 	gint session = GXR_SESSION;
-	GaimGtkWindow *win;
+	PidginWindow *win;
 
-	win = gaim_gtkconv_get_window(GAIM_GTK_CONVERSATION(c));
+	win = pidgin_conv_get_window(PIDGIN_CONVERSATION(c));
 
 	if(!xmms_remote_is_running(session)) {
 		*error = g_strdup("XMMS is not running");
-		return GAIM_CMD_RET_FAILED;
+		return PURPLE_CMD_RET_FAILED;
 	}
 
 	if(!*args && !args[0]) {
 		*error = g_strdup("eek!");
-		return GAIM_CMD_RET_FAILED;
+		return PURPLE_CMD_RET_FAILED;
 	}
 
 	lower = g_ascii_strdown(args[0], strlen(args[0]));
@@ -787,12 +787,12 @@ gxr_cmd_cb(GaimConversation *c, const gchar *cmd, gchar **args, gchar **error,
 		xmms_remote_main_win_toggle(session, FALSE);
 	else {
 		*error = g_strdup("unknown argument");
-		return GAIM_CMD_RET_FAILED;
+		return PURPLE_CMD_RET_FAILED;
 	}
 
 	g_free(lower);
 
-	return GAIM_CMD_RET_OK;
+	return PURPLE_CMD_RET_OK;
 }
 
 /*******************************************************************************
@@ -813,16 +813,16 @@ gxr_make_label(const gchar *text, GtkSizeGroup *sg) {
 }
 
 static GtkWidget *
-gxr_get_config_frame(GaimPlugin *plugin) {
+gxr_get_config_frame(PurplePlugin *plugin) {
 	GtkWidget *vbox, *hbox, *frame, *label, *checkbox;
 	GtkSizeGroup *sg;
 
 	vbox = gtk_vbox_new(FALSE, 6);
 	gtk_container_set_border_width(GTK_CONTAINER(vbox), 12);
 
-	frame = gaim_gtk_make_frame(vbox, "Info");
+	frame = pidgin_make_frame(vbox, "Info");
 
-	gaim_gtk_prefs_labeled_entry(frame, "Info Format:",
+	pidgin_prefs_labeled_entry(frame, "Info Format:",
 								 "/plugins/gtk/plugin_pack/xmms-remote/format",
 								 NULL);
 
@@ -888,41 +888,41 @@ gxr_get_config_frame(GaimPlugin *plugin) {
 	label = gxr_make_label("%B: Bitrate in kBps", NULL);
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 
-	frame = gaim_gtk_make_frame(vbox, "Appearance");
+	frame = pidgin_make_frame(vbox, "Appearance");
 
-	checkbox = gaim_gtk_prefs_checkbox("Show playlist in the control menu",
+	checkbox = pidgin_prefs_checkbox("Show playlist in the control menu",
 							"/plugins/gtk/plugin_pack/xmms-remote/show_playlist",
 							frame);
 	g_object_set_data(G_OBJECT(checkbox), "gxr-id", GINT_TO_POINTER(GXR_PREF_PLAYLIST));
 	checkboxes = g_list_prepend(checkboxes, checkbox);
 
-	checkbox = gaim_gtk_prefs_checkbox("Show controls in buddy list",
+	checkbox = pidgin_prefs_checkbox("Show controls in buddy list",
 							"/plugins/gtk/plugin_pack/xmms-remote/blist",
 							frame);
 	g_object_set_data(G_OBJECT(checkbox), "gxr-id", GINT_TO_POINTER(GXR_PREF_BLIST));
 	checkboxes = g_list_prepend(checkboxes, checkbox);
 	
-	checkbox = gaim_gtk_prefs_checkbox("Show controls in conversation windows",
+	checkbox = pidgin_prefs_checkbox("Show controls in conversation windows",
 							"/plugins/gtk/plugin_pack/xmms-remote/conv",
 							frame);
 	g_object_set_data(G_OBJECT(checkbox), "gxr-id", GINT_TO_POINTER(GXR_PREF_CONV_WINDOW));
 	checkboxes = g_list_prepend(checkboxes, checkbox);
 
-	checkbox = gaim_gtk_prefs_checkbox("Show extended controls (Conversation windows only)",
+	checkbox = pidgin_prefs_checkbox("Show extended controls (Conversation windows only)",
 							"/plugins/gtk/plugin_pack/xmms-remote/extended",
 							frame);
 	g_object_set_data(G_OBJECT(checkbox), "gxr-id", GINT_TO_POINTER(GXR_PREF_EXTENDED_CTRL));
 	checkboxes = g_list_prepend(checkboxes, checkbox);
 
-	checkbox = gaim_gtk_prefs_checkbox("Show volume control (Conversation windows only)",
+	checkbox = pidgin_prefs_checkbox("Show volume control (Conversation windows only)",
 							"/plugins/gtk/plugin_pack/xmms-remote/volume",
 							frame);
 	g_object_set_data(G_OBJECT(checkbox), "gxr-id", GINT_TO_POINTER(GXR_PREF_VOLUME_CTRL));
 	checkboxes = g_list_prepend(checkboxes, checkbox);
 
-	frame = gaim_gtk_make_frame(vbox, "Advanced");
+	frame = pidgin_make_frame(vbox, "Advanced");
 
-	gaim_gtk_prefs_labeled_spin_button(frame, "XMMS instance to control",
+	pidgin_prefs_labeled_spin_button(frame, "XMMS instance to control",
 								   "/plugins/gtk/plugin_pack/xmms-remote/session",
 								   0, 65535, NULL);
 
@@ -984,17 +984,17 @@ gxr_init_stock() {
 }
 
 static void
-gxr_hook_blist(const char *name, GaimPrefType type, gconstpointer val,
+gxr_hook_blist(const char *name, PurplePrefType type, gconstpointer val,
 				gpointer data)
 {
 	gboolean value = GPOINTER_TO_INT(val);
 
 	if(value && !blist_button) {
-		GaimGtkBuddyList *gtkblist = gaim_gtk_blist_get_default_gtk_blist();
+		PidginBuddyList *gtkblist = pidgin_blist_get_default_gtk_blist();
 
 		blist_button = gxr_make_button(GXR_STOCK_XMMS,
 								G_CALLBACK(gxr_button_clicked_cb), NULL, NULL);
-		gaim_gtk_menu_tray_append(GAIM_GTK_MENU_TRAY(gtkblist->menutray),
+		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(gtkblist->menutray),
 								blist_button, "XMMS Remote Control Options");
 	} else {
 		if(blist_button) {
@@ -1006,7 +1006,7 @@ gxr_hook_blist(const char *name, GaimPrefType type, gconstpointer val,
 
 static void
 gxr_gtkblist_created_cb(void) {
-	gaim_prefs_trigger_callback("/plugins/gtk/plugin_pack/xmms-remote/blist");
+	purple_prefs_trigger_callback("/plugins/gtk/plugin_pack/xmms-remote/blist");
 }
 
 /*******************************************************************************
@@ -1014,8 +1014,8 @@ gxr_gtkblist_created_cb(void) {
  ******************************************************************************/
 
 static gboolean
-gxr_load(GaimPlugin *plugin) {
-	void *conv_handle = gaim_conversations_get_handle();
+gxr_load(PurplePlugin *plugin) {
+	void *conv_handle = purple_conversations_get_handle();
 	const gchar *help = "<pre>xmms &lt;[play][pause][stop][next][prev][repeat][shuffle][show][hide][info]&gt;\n"
 						"Play     Starts playback\n"
 						"Pause    Pauses playback\n"
@@ -1032,47 +1032,47 @@ gxr_load(GaimPlugin *plugin) {
 	gxr_init_stock();
 
 	/* connect to the signals we need.. */
-	gaim_signal_connect(conv_handle, "conversation-created", plugin,
-						GAIM_CALLBACK(gxr_conv_created_cb), NULL);
+	purple_signal_connect(conv_handle, "conversation-created", plugin,
+						PURPLE_CALLBACK(gxr_conv_created_cb), NULL);
 
-	gaim_signal_connect(conv_handle, "deleting-conversation", plugin,
-						GAIM_CALLBACK(gxr_conv_destroyed_cb), NULL);
+	purple_signal_connect(conv_handle, "deleting-conversation", plugin,
+						PURPLE_CALLBACK(gxr_conv_destroyed_cb), NULL);
 
-	gaim_prefs_connect_callback(plugin, "/plugins/gtk/plugin_pack/xmms-remote/conv",
+	purple_prefs_connect_callback(plugin, "/plugins/gtk/plugin_pack/xmms-remote/conv",
 								gxr_button_show_cb, NULL);
 
-	gaim_prefs_connect_callback(plugin, "/plugins/gtk/plugin_pack/xmms-remote/blist",
+	purple_prefs_connect_callback(plugin, "/plugins/gtk/plugin_pack/xmms-remote/blist",
 								gxr_hook_blist, NULL);
 
-	gaim_prefs_connect_callback(plugin, "/plugins/gtk/plugin_pack/xmms-remote/extended",
+	purple_prefs_connect_callback(plugin, "/plugins/gtk/plugin_pack/xmms-remote/extended",
 								gxr_button_show_cb, NULL);
 
-	gaim_prefs_connect_callback(plugin, "/plugins/gtk/plugin_pack/xmms-remote/volume",
+	purple_prefs_connect_callback(plugin, "/plugins/gtk/plugin_pack/xmms-remote/volume",
 								gxr_button_show_cb, NULL);
 
 	gxr_show_buttons();
 
 	/* register our command */
-	gxr_cmd = gaim_cmd_register("xmms", "w", GAIM_CMD_P_PLUGIN,
-								GAIM_CMD_FLAG_IM | GAIM_CMD_FLAG_CHAT, NULL,
+	gxr_cmd = purple_cmd_register("xmms", "w", PURPLE_CMD_P_PLUGIN,
+								PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT, NULL,
 								gxr_cmd_cb, help, NULL);
 
 	/* hijack the popup menus in the imhtmls */
 	gxr_hook_popups();
 
-	if(gaim_prefs_get_bool("/plugins/gtk/plugin_pack/xmms-remote/blist") &&
-			!gaim_gtk_blist_get_default_gtk_blist())
+	if(purple_prefs_get_bool("/plugins/gtk/plugin_pack/xmms-remote/blist") &&
+			!pidgin_blist_get_default_gtk_blist())
 	{
-		gaim_signal_connect(gaim_gtk_blist_get_handle(), "gtkblist-created", 
-					plugin, GAIM_CALLBACK(gxr_gtkblist_created_cb), NULL);
+		purple_signal_connect(pidgin_blist_get_handle(), "gtkblist-created", 
+					plugin, PURPLE_CALLBACK(gxr_gtkblist_created_cb), NULL);
 	} else
-		gaim_prefs_trigger_callback("/plugins/gtk/plugin_pack/xmms-remote/blist");
+		purple_prefs_trigger_callback("/plugins/gtk/plugin_pack/xmms-remote/blist");
 
 	return TRUE;
 }
 
 static gboolean
-gxr_unload(GaimPlugin *plugin) {
+gxr_unload(PurplePlugin *plugin) {
 	/* remove our buttons */
 	gxr_hide_buttons();
 
@@ -1085,49 +1085,49 @@ gxr_unload(GaimPlugin *plugin) {
 	}
 
 	/* remove our popup menu item */
-	gaim_conversation_foreach(gxr_disconnect_popup_cb);
+	purple_conversation_foreach(gxr_disconnect_popup_cb);
 	/* remove our icons */
 	gtk_icon_factory_remove_default(icon_factory);
 
 	/* remove our command */
-	gaim_cmd_unregister(gxr_cmd);
+	purple_cmd_unregister(gxr_cmd);
 
 	return TRUE;
 }
 
 static void
-init_plugin(GaimPlugin *plugin) {
-	gaim_prefs_add_none("/plugins/gtk/plugin_pack");
-	gaim_prefs_add_none("/plugins/gtk/plugin_pack/xmms-remote");
-	gaim_prefs_add_string("/plugins/gtk/plugin_pack/xmms-remote/format",
+init_plugin(PurplePlugin *plugin) {
+	purple_prefs_add_none("/plugins/gtk/plugin_pack");
+	purple_prefs_add_none("/plugins/gtk/plugin_pack/xmms-remote");
+	purple_prefs_add_string("/plugins/gtk/plugin_pack/xmms-remote/format",
 						  "/me is listening to %T");
-	gaim_prefs_add_int("/plugins/gtk/plugin_pack/xmms-remote/session", 0);
-	gaim_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/show_playlist", TRUE);
-	gaim_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/conv", TRUE);
-	gaim_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/blist", TRUE);
-	gaim_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/extended", TRUE);
-	gaim_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/volume", TRUE);
+	purple_prefs_add_int("/plugins/gtk/plugin_pack/xmms-remote/session", 0);
+	purple_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/show_playlist", TRUE);
+	purple_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/conv", TRUE);
+	purple_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/blist", TRUE);
+	purple_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/extended", TRUE);
+	purple_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/volume", TRUE);
 }
 
-static GaimGtkPluginUiInfo ui_info = { gxr_get_config_frame };
+static PidginPluginUiInfo ui_info = { gxr_get_config_frame };
 
-static GaimPluginInfo gxr_info = {
-	GAIM_PLUGIN_MAGIC,									/* Don't			*/
-	GAIM_MAJOR_VERSION,									/* fear the		*/
-	GAIM_MINOR_VERSION,									/* reaper		*/
-	GAIM_PLUGIN_STANDARD,								/* type			*/
-	GAIM_GTK_PLUGIN_TYPE,								/* ui requirement	*/
+static PurplePluginInfo gxr_info = {
+	PURPLE_PLUGIN_MAGIC,									/* Don't			*/
+	PURPLE_MAJOR_VERSION,									/* fear the		*/
+	PURPLE_MINOR_VERSION,									/* reaper		*/
+	PURPLE_PLUGIN_STANDARD,								/* type			*/
+	PIDGIN_PLUGIN_TYPE,								/* ui requirement	*/
 	0,													/* flags			*/
 	NULL,												/* dependencies	*/
-	GAIM_PRIORITY_DEFAULT,								/* priority		*/
+	PURPLE_PRIORITY_DEFAULT,								/* priority		*/
 
 	"gtk-plugin_pack-xmmsremote",						/* id			*/
 	"XMMS Remote Control",								/* name			*/
 	GPP_VERSION,										/* version		*/
-	"Control XMMS from Gaim conversations",				/* summary		*/
+	"Control XMMS from Purple conversations",				/* summary		*/
 	"A small plugin that adds a menu or buttons to the "
-	"Gaim conversation windows' menubars, so that you "
-	"can control XMMS from within Gaim.",				/* description	*/
+	"Purple conversation windows' menubars, so that you "
+	"can control XMMS from within Purple.",				/* description	*/
 
 	"Gary Kramlich <plugin_pack@users.sf.net>",			/* author		*/
 	GPP_WEBSITE,										/* homepage		*/
@@ -1141,4 +1141,4 @@ static GaimPluginInfo gxr_info = {
 	NULL												/* actions info	*/
 };
 
-GAIM_INIT_PLUGIN(xmmsremote, init_plugin, gxr_info)
+PURPLE_INIT_PLUGIN(xmmsremote, init_plugin, gxr_info)

@@ -1,6 +1,6 @@
 EXTRA_DIST = .build .plugin Makefile.mingw
 
-nicksaiddir = $(GAIM_LIBDIR)/gaim
+nicksaiddir = $(GAIM_LIBDIR)/pidgin
 
 nicksaid_la_LDFLAGS = -module -avoid-version
 
@@ -18,7 +18,7 @@ nicksaid_la_LIBADD = \
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
+	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
 	-DDATADIR=\"$(GAIM_DATADIR)\" \
 	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
 	$(GTK_CFLAGS) \

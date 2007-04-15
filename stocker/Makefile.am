@@ -4,7 +4,7 @@ EXTRA_DIST = \
 	stocker_prefs.h \
 	Makefile.mingw
 
-stockerdir = $(GAIM_LIBDIR)/gaim
+stockerdir = $(GAIM_LIBDIR)/pidgin
 
 stocker_la_LDFLAGS = -module -avoid-version
 
@@ -24,7 +24,7 @@ stocker_la_LIBADD = \
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
+	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
 	-DDATADIR=\"$(GAIM_DATADIR)\" \
 	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
 	$(DEBUG_CFLAGS) \

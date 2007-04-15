@@ -1,7 +1,7 @@
 EXTRA_DIST = .plugin Makefile.mingw .build
 
 if HAVE_GTKSPELL
-switchspelldir = $(GAIM_LIBDIR)/gaim
+switchspelldir = $(GAIM_LIBDIR)/pidgin
 
 switchspell_la_LDFLAGS = -module -avoid-version \
 	$(GTKSPELL_LIBS)
@@ -20,7 +20,7 @@ switchspell_la_LIBADD = \
 endif # PLUGINS
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
+	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
 	-DDATADIR=\"$(GAIM_DATADIR)\" \
 	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
 	$(GTK_CFLAGS) \

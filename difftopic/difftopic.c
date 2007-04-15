@@ -21,7 +21,7 @@
 # include "../gpp_config.h"
 #endif
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #define PLUGIN_ID			"gtk-plugin_pack-difftopic"
 #define PLUGIN_NAME			"DiffTopic"
@@ -35,7 +35,7 @@
 #include <ctype.h>
 #include <string.h>
 
-/* Gaim headers */
+/* Purple headers */
 #include <plugin.h>
 #include <version.h>
 #include <gtkplugin.h>
@@ -162,9 +162,9 @@ have_fun(GtkIMHtml *imhtml, const char *old, const char *new)
 }
 
 static void
-topic_changed(GaimConversation *conv, const char *who, const char *what)
+topic_changed(PurpleConversation *conv, const char *who, const char *what)
 {
-	GaimGtkConversation *gtkconv = conv->ui_data;
+	PidginConversation *gtkconv = conv->ui_data;
 	char *old;
 
 	old = g_object_get_data(G_OBJECT(gtkconv->imhtml), "difftopic");
@@ -175,30 +175,30 @@ topic_changed(GaimConversation *conv, const char *who, const char *what)
 }
 
 static gboolean
-plugin_load(GaimPlugin *plugin)
+plugin_load(PurplePlugin *plugin)
 {
-	gaim_signal_connect(gaim_conversations_get_handle(), "chat-topic-changed",
-				plugin, GAIM_CALLBACK(topic_changed), NULL);
+	purple_signal_connect(purple_conversations_get_handle(), "chat-topic-changed",
+				plugin, PURPLE_CALLBACK(topic_changed), NULL);
 	/* Set the topic to the opened chat windows */
 	return TRUE;
 }
 
 static gboolean
-plugin_unload(GaimPlugin *plugin)
+plugin_unload(PurplePlugin *plugin)
 {
 	return TRUE;
 }
 
-static GaimPluginInfo info =
+static PurplePluginInfo info =
 {
-	GAIM_PLUGIN_MAGIC,    /* Magic              */
-	GAIM_MAJOR_VERSION,   /* Gaim Major Version */
-	GAIM_MINOR_VERSION,   /* Gaim Minor Version */
-	GAIM_PLUGIN_STANDARD, /* plugin type        */
-	GAIM_GTK_PLUGIN_TYPE, /* ui requirement     */
+	PURPLE_PLUGIN_MAGIC,    /* Magic              */
+	PURPLE_MAJOR_VERSION,   /* Purple Major Version */
+	PURPLE_MINOR_VERSION,   /* Purple Minor Version */
+	PURPLE_PLUGIN_STANDARD, /* plugin type        */
+	PIDGIN_PLUGIN_TYPE, /* ui requirement     */
 	0,                    /* flags              */
 	NULL,                 /* dependencies       */
-	GAIM_PRIORITY_DEFAULT,/* priority           */
+	PURPLE_PRIORITY_DEFAULT,/* priority           */
 
 	PLUGIN_ID,            /* plugin id          */
 	NULL,                 /* name               */
@@ -219,7 +219,7 @@ static GaimPluginInfo info =
 };
 
 static void
-init_plugin(GaimPlugin *plugin)
+init_plugin(PurplePlugin *plugin)
 {
 #ifdef ENABLE_NLS
 	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
@@ -231,4 +231,4 @@ init_plugin(GaimPlugin *plugin)
 	info.description = _(PLUGIN_DESCRIPTION);
 }
 
-GAIM_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)
+PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)

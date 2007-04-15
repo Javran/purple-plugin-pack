@@ -47,11 +47,11 @@ gint ignorance_denizen_get_repeats(ignorance_denizen *id) {
 
 gint ignorance_denizen_set_message(ignorance_denizen *id, const gchar *message) {
 	if(!strcasecmp(id->last_message,message)){
-		gaim_debug_info("ignorance","Got repeat %d for message %s\n",
+		purple_debug_info("ignorance","Got repeat %d for message %s\n",
 						id->repeats+1,message);
 		id->repeats++;
 	} else {
-		gaim_debug_info("ignorance","New message %s replacing old message %s",
+		purple_debug_info("ignorance","New message %s replacing old message %s",
 						message,id->last_message);
 		g_free(id->last_message);
 		id->last_message=g_strdup(message);

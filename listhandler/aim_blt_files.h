@@ -1,5 +1,5 @@
 /*
- * Gaim Plugin Pack
+ * Purple Plugin Pack
  * Copyright (C) 2003-2005
  * See ../AUTHORS for a list of all authors
  *
@@ -22,6 +22,6 @@
  */
 
 /* callbacks for the GList of plugin actions */
-void lh_aim_export_action_cb(GaimPluginAction *action);
-void lh_aim_import_action_cb(GaimPluginAction *action);
+void lh_aim_export_action_cb(PurplePluginAction *action);
+void lh_aim_import_action_cb(PurplePluginAction *action);
 

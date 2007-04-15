@@ -3,7 +3,7 @@ EXTRA_DIST = \
 	.build \
 	Makefile.mingw
 
-bashdir = $(GAIM_LIBDIR)/gaim
+bashdir = $(GAIM_LIBDIR)/libpurple
 
 bash_la_LDFLAGS = -module -avoid-version
 
@@ -20,7 +20,7 @@ bash_la_SOURCES = bash.c
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/gaim/\" \
+	-DLIBDIR=\"$(GAIM_LIBDIR)/libpurple/\" \
 	-DDATADIR=\"$(GAIM_DATADIR)\" \
 	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
 	$(DEBUG_CFLAGS) \
