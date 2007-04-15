@@ -10,7 +10,9 @@ install-sh
 intltool-.*
 libtool
 ltmain.sh
+missing
 po/Makefile.in.in
 po/POTFILES
 po/stamp-it
+purple-plugin_pack-[0-9]+\.[0-9]+(mtn)?\/?
 stamp-h1
