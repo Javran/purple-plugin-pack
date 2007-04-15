@@ -41,3 +41,22 @@ CLEANFILES=
 
 ACLOCAL_AMFLAGS = -I m4
 
+info:
+	@echo ---------------------------------------
+	@echo Plugin Pack Info
+	@echo ---------------------------------------
+	@echo Purple Plugins:
+	@echo 	Available.: $(PP_PURPLE)
+	@echo 	Abusive...: $(PP_PURPLE_ABUSIVE)
+	@echo 	Building..: $(PP_PURPLE_BUILD)
+	@echo ---------------------------------------
+	@echo Pidgin Plugins:
+	@echo 	Available.: $(PP_PIDGIN)
+	@echo 	Abusive...: $(PP_PIDGIN_ABUSIVE)
+	@echo 	Building..: $(PP_PIDGIN_BUILD)
+	@echo ---------------------------------------
+	@echo Finch Plugins:
+	@echo 	Available.: $(PP_FINCH)
+	@echo 	Abusive...: $(PP_FINCH_ABUSIVE)
+	@echo 	Building..: $(PP_FINCH_BUILD)
+	@echo ---------------------------------------
