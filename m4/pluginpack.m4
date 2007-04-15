@@ -14,23 +14,17 @@ dnl ###########################################################################
 
 AC_DEFUN([AM_BUILD_PLUGIN_LIST],
 [dnl
-
-	echo "HAVE_PURPLE: $HAVE_PURPLE"
-	echo "HAVE_PIDGIN: $HAVE_PIDGIN"
-	echo "HAVE_FINCH: $HAVE_FINCH"
-
-	PP_DIST=""
-	PP_AVAILABLE=""
-	PP_ABUSIVE=""
-
 	PP_PURPLE=""
 	PP_PURPLE_ABUSIVE=""
+	PP_PURPLE_BUILD=""
 
 	PP_PIDGIN=""
 	PP_PIDGIN_ABUSIVE=""
+	PP_PIDGIN_BUILD=""
 
 	PP_FINCH=""
-	PP_FINICH_ABUSIVE=""
+	PP_FINCH_ABUSIVE=""
+	PP_FINCH_BUILD=""
 
 	dnl #######################################################################
 	dnl # Build a list of all the available plugins
@@ -46,50 +40,32 @@ AC_DEFUN([AM_BUILD_PLUGIN_LIST],
 			fi
 
 			if test -f $d/.build ; then
-				PP_PURPLE="$PP_PURPLE $d"
+				PP_PURPLE_BUILD="$PP_PURPLE_BUILD $d"
 			fi
 
-			PP_DIST="$PP_DIST $d"
+			PP_PURPLE="$PP_PURPLE $d"
 		elif test -f $d/.pidgin-plugin ; then
 			if test -f $d/.abusive ; then
 				PP_PIDGIN_ABUSIVE="$PP_PIDGIN_ABUSIVE $d"
 			fi
 
 			if test -f $d/.build ; then
-				PP_PIDGIN="$PP_PIDGIN $d"
+				PP_PIDGIN_BUILD="$PP_PIDGIN_BUILD $d"
 			fi
 
-			PP_DIST="$PP_DIST $d"
+			PP_PIDGIN="$PP_PIDGIN $d"
 		elif test -f $d/.finch-plugin ; then
 			if test -f $d/.abusive ; then
 				PP_FINCH_ABUSIVE="$PP_FINCH_ABUSIVE $d"
 			fi
 
 			if test -f $d/.build ; then
-				PP_FINCH="$PP_FINCH $d"
+				PP_FINCH_BUILD="$PP_FINCH_BUILD $d"
 			fi
 
-			PP_DIST="$PP_DIST $d"
+			PP_FINCH="$PP_FINCH $d"
 		fi
 	done;
-
-	dnl #######################################################################
-	dnl # Determine the available plugins
-	dnl #######################################################################
-	if test x"$HAVE_PURPLE" = x"yes" ; then
-		PP_AVAILABLE="$PP_AVAILABLE $PP_PURPLE"
-		PP_ABUSIVE="$PP_ABUSIVE $PP_PURPLE_ABUSIVE"
-	fi
-
-	if test x"$HAVE_PIDGIN" = x"yes" ; then
-		PP_AVAILABLE="$PP_AVAILABLE $PP_PIDGIN"
-		PP_ABUSIVE="$PP_ABUSIVE $PP_PIDGIN_ABUSIVE"
-	fi
-
-	if test x"$HAVE_FINCH" = x"yes" ; then
-		PP_AVAILABLE="$PP_AVAILABLE $PP_FINCH"
-		PP_ABUSIVE="$PP_ABUSIVE $PP_FINCH_ABUSIVE"
-	fi
 
 	dnl #######################################################################
 	dnl # Add our argument
@@ -123,13 +99,15 @@ AC_DEFUN([AM_BUILD_PLUGIN_LIST],
 	dnl #######################################################################
 	dnl # substitue our sub dirs
 	dnl #######################################################################
-	AC_SUBST(PP_BUILD)
-	AC_SUBST(PP_DIST)
+	AC_SUBST(PP_PURPLE)
+	AC_SUBST(PP_PURPLE_ABUSIVE)
+	AC_SUBST(PP_PURPLE_BUILD)
 
-	echo "PP_PURPLE.........: $PP_PURPLE"
-	echo "PP_PURPLE_ABUSIVE.: $PP_PURPLE_ABUSIVE"
-	echo "PP_PIDGIN.........: $PP_PIDGIN"
-	echo "PP_PIDGIN_ABUSIVE.: $PP_PIDGIN_ABUSIVE"
-	echo "PP_FINCH..........: $PP_FINCH"
-	echo "PP_FINCH_ABUSIVE..: $PP_FINCH_ABUSIVE"
+	AC_SUBST(PP_PIDGIN)
+	AC_SUBST(PP_PIDGIN_ABUSIVE)
+	AC_SUBST(PP_PIDGIN_BUILD)
+
+	AC_SUBST(PP_FINCH)
+	AC_SUBST(PP_FINCH_ABUSIVE)
+	AC_SUBST(PP_FINCH_BUILD)
 ])

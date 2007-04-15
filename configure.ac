@@ -280,11 +280,42 @@ echo $PACKAGE $VERSION Configuration complete
 echo;
 echo Debugging enabled................: $enable_debug
 echo;
-echo Installing purple plugins to.....: `eval eval echo $PURPLE_LIBDIR`
-echo Installing pidgin plugins to.....: `eval eval echo $PIDGIN_LIBDIR`
+
+echo Build purple plugins.............: $HAVE_PURPLE
+if test x"$HAVE_PURPLE" = x"yes" ; then
+	echo Installing purple plugins to.....: `eval eval echo $PURPLE_LIBDIR`
+	if test x"$PP_PURPLE_BUILD" = x"" ; then
+		echo Purple plugins to be built.......: none
+	else
+		echo Purple plugins to be built.......:
+		echo $PP_PURPLE_BUILD | xargs -n 4 echo "	"
+	fi
+fi
 echo;
-echo Building plugins:
-echo $PP_BUILD | xargs -n 4 echo "	"
+
+echo Build pidgin plugins.............: $HAVE_PIDGIN
+if test x"$HAVE_PIDGIN" = x"yes" ; then
+	echo Installing pidgin plugins to.....: `eval eval echo $PIDGIN_LIBDIR`
+	if test x"$PP_PIDGIN_BUILD" = x"" ; then
+		echo Pidgin plugins to be built.......: none
+	else
+		echo Pidgin plugins to be built.......:
+		echo $PP_PIDGIN_BUILD | xargs -n 4 echo "	"
+	fi
+fi
 echo;
+
+echo Build finch plugins..............: $HAVE_FINCH
+if test x"$HAVE_FINCH" = x"yes" ; then
+	echo Installing finch plugins to......: `eval eval echo $FINCH_LIBDIR`
+	if test x"$PP_FINCH_BUILD" = x"" ; then
+		echo Finch plugins to be built........: none
+	else
+		echo Finch plugins to be built........:
+		echo $PP_FINCH_BUILD | xargs -n 4 echo "	"
+	fi
+fi
+echo;
+
 echo Type make to compile
 echo;
