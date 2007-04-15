@@ -1,6 +1,6 @@
-EXTRA_DIST = .plugin .build Makefile.mingw
+EXTRA_DIST = .purple-plugin .build Makefile.mingw
 
-sslinfodir = $(GAIM_LIBDIR)/libpurple
+sslinfodir = $(PURPLE_LIBDIR)
 
 sslinfo_la_LDFLAGS = -module -avoid-version
 
@@ -13,15 +13,14 @@ sslinfo_la_SOURCES = \
 
 sslinfo_la_LIBADD = \
 	$(GLIB_LIBS) \
-	$(GAIM_LIBS)
+	$(PURPLE_LIBS)
 
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/libpurple/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PURPLE_LIBDIR)\" \
+	-DDATADIR=\"$(PURPLE_DATADIR)\" \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS) \
+	$(PURPLE_CFLAGS) \
 	$(GLIB_CFLAGS)
 

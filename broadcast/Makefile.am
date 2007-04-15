@@ -3,7 +3,7 @@ EXTRA_DIST = \
 			.abusive \
 			Makefile.mingw
 
-broadcastdir = $(GAIM_LIBDIR)/libpurple
+broadcastdir = $(PURPLE_LIBDIR)
 
 broadcast_la_LDFLAGS = -module -avoid-version
 
@@ -16,14 +16,13 @@ broadcast_la_SOURCES = \
 
 broadcast_la_LIBADD = \
 	$(GLIB_LIBS) \
-	$(GAIM_LIBS)
+	$(PURPLE_LIBS)
 
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/libpurple/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PURPLE_LIBDIR)\" \
+	-DDATADIR=\"$(PURPLE_DATADIR)\" \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS)
+	$(PURPLE_CFLAGS)
 

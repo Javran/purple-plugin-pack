@@ -1,6 +1,6 @@
-EXTRA_DIST = .plugin
+EXTRA_DIST = .purple-plugin
 
-napsterdir = $(GAIM_LIBDIR)/libpurple
+napsterdir = $(PURPLE_LIBDIR)
 
 napster_la_LDFLAGS = -module -avoid-version
 
@@ -13,18 +13,17 @@ napster_la_SOURCES = \
 
 napster_la_LIBADD = \
 	$(GLIB_LIBS) \
-	$(GAIM_LIBS)
+	$(PURPLE_LIBS)
 
-napsterpixdir=$(GAIM_DATADIR)/pixmaps/libpurple/status/default
+napsterpixdir=$(PURPLE_DATADIR)/pixmaps/libpurple/status/default
 
 napsterpix_DATA=napster.png
 
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/libpurple/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PURPLE_LIBDIR)\" \
+	-DDATADIR=\"$(PURPLE_DATADIR)\" \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS)
+	$(PURPLE_CFLAGS)
 

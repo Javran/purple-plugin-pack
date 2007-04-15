@@ -18,7 +18,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "../gpp_config.h"
+# include "../pp_config.h"
 #endif /* HAVE_CONFIG_H */
 
 #define PURPLE_PLUGINS
@@ -158,11 +158,11 @@ static PurplePluginInfo broadcast_info =
 	PURPLE_PRIORITY_DEFAULT,
 	"core-plugin_pack-broadcast",
 	NULL,
-	GPP_VERSION,
+	PP_VERSION,
 	NULL,
 	NULL,
 	"John Bailey <rekkanoryo@rekkanoryo.org>",
-	GPP_WEBSITE,
+	PP_WEBSITE,
 	broadcast_load,
 	NULL,
 	NULL,
