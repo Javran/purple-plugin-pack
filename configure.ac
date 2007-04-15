@@ -81,6 +81,12 @@ AM_CONDITIONAL(HAVE_PURPLE, true)
 PURPLE_LIBDIR=`pkg-config --variable=libdir purple`
 PURPLE_DATADIR=`pkg-config --variable=datadir purple`
 
+# this is a hack but should work fine.
+# we use the libpurple datadir for PP_LOCALEDIR since we are not breaking up
+# the pot's yet, and need to make sure they goto the same place
+PP_LOCALEDIR="PURPLE_DATADIR/locale"
+AC_DEFINE_UNQUOTED(PP_LOCALEDIR, ["$PP_LOCALEDIR"], [The localedir to use])
+
 if test x"$PURPLE_LIBDIR" != x"" ; then
 	PURPLE_LIBDIR="$PURPLE_LIBDIR/purple"
 fi

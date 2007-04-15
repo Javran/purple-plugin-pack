@@ -17,16 +17,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef GPP_INTL_H
-#define GPP_INTL_H
+#ifndef PP_I18N_H
+#define PP_I18N_H
 
 #ifdef HAVE_CONFIG_H
 # include "../pp_config.h"
 #endif
 
-#ifndef LOCALEDIR
-# define LOCALEDIR "/BROKEN"
-#endif /* LOCALEDIR */
+/* dirty hack */
+#ifdef PP_LOCALEDIR
+# ifndef LOCALEDIR
+#  define LOCALEDIR PP_LOCALEDIR
+# endif /* LOCALEDIR */
+#endif /* PP_LOCALEDIR */
 
 #include <glib.h>
 #if GLIB_CHECK_VERSION(2,4,0)
@@ -47,4 +50,4 @@
 # include <win32dep.h>
 #endif
 
-#endif
+#endif /* PP_I18N_H */
