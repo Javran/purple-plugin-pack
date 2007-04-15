@@ -1,5 +1,5 @@
 EXTRA_DIST = \
-	.plugin \
+	.pidgin-plugin \
 	callbacks.h \
 	ignorance.conf \
 	ignorance.h \
@@ -12,7 +12,7 @@ EXTRA_DIST = \
 	regex.h \
 	support.h
 
-ignorancedir = $(GAIM_LIBDIR)/pidgin
+ignorancedir = $(PIDGIN_LIBDIR)/pidgin
 
 ignorance_la_LDFLAGS = -module -avoid-version
 
@@ -38,20 +38,19 @@ ignorance_la_SOURCES = \
 	support.c
 
 ignorance_la_LIBADD = \
-	$(GAIM_LIBS) \
+	$(PIDGIN_LIBS) \
 	$(GTK_LIBS) \
 	$(GLIB_LIBS)
 
 endif
 
 AM_CPPFLAGS = \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
+	-DDATADIR=\"$(PIDGIN_DATADIR)\" \
 	-DVERSION=\"$(VERSION)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
 	-DIGNORANCE_CONFDIR=\"$(ignorance_confdir)\" \
 	$(DEBUG_CFLAGS) \
 	$(GTK_CFLAGS) \
-	$(GAIM_CFLAGS) \
+	$(PIDGIN_CFLAGS) \
 	$(PLUGIN_CFLAGS)
 
 ignorance.conf:
