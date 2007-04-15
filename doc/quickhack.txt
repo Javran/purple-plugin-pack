@@ -11,6 +11,8 @@ add <directory>/Makefile to the AC_OUTPUT line.
 If you want the plugin to build by default, create a file named .build in the
 directory for the plugin.
 
+For the i18n support, plugins need to be added to po/POTFILES.in.
+
 All plugins should have both a .plugin file and be added AC_OUTPUT in
 configure.ac.  This way when working on new plugins, the plugin will not build
 by default but can still be compiled by 'cd'ing into its directory and typing
