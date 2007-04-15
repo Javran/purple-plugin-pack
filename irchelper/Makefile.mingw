@@ -1,0 +1,12 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for irchelper plugin.
+#
+
+GPP_TOP :=		..
+
+GPP = irchelper
+
+include $(GPP_TOP)/win_gpp.mak
+

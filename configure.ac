@@ -212,6 +212,7 @@ AC_OUTPUT([
 	groupmsg/Makefile
 	gRIM/Makefile
 	ignorance/Makefile
+	irchelper/Makefile
 	irssi/Makefile
 	lastseen/Makefile
 	listhandler/Makefile

@@ -13,6 +13,7 @@ gRIM/gRIM.c
 gaim-schedule/gaim-schedule.c
 gaim-schedule/schedule.c
 groupmsg/groupmsg.c
+irchelper/irchelper.c
 irssi/irssi.c
 lastseen/lastseen.c
 listhandler/aim_blt_files.c

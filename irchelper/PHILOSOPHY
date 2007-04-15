@@ -1,0 +1,31 @@
+Mission Statement:
+
+	The IRC Helper plugin exists to enhance IRC support in Pidgin in ways
+	which are inappropriate for general inclusion in Pidgin.
+
+Enhancing IRC support in Pidgin involves two specific areas:
+
+	First, wrapping IRC services and other protocol oddities so that from
+	the user's perspective, IRC reacts the same as the other protocols in
+	Pidgin.  The most obvious example is with NickServ.  For most
+	protocols, you set a password and Gaim authenticates you and you're
+	done.  With IRC, you have to manually authenticate to NickServ (or
+	setup a Buddy Pounce).  By handling the NickServ authentication, this
+	plugin enhances the users's experience by providing consistency with
+	other protocols (as well as the obvious automation by saving the
+	NickServ password).
+
+	Second,this plugin should offer novel new features.  See the IDEAS file
+	for examples.
+
+Most of the existing code in this plugin is specific to popular IRC servers.
+If this code was in Pidgin, users would expect it to work everywhere, which it
+won't.  The inconsitent behavior would result in a lot of complaints to the
+Pidgin team.
+
+Also, if the servers ever changed their responses (even by a single character),
+things would break.  Pidgin needs to be more stable than that.  IRC is a
+(mostly) documented protocol.  While it has its quirks, IRC is fairly
+standardized and unchanging.  On the other hand, IRC services and the like are
+not standardized and can change without notice.  Pidgin can focus on the
+standard protocol and this plugin will focus on the non-standard services, etc.
