@@ -28,12 +28,17 @@
 
 #include <conversation.h>
 #include <plugin.h>
+#include <pidgin.h>
 #include <version.h>
 #include <gtkplugin.h>
 #include <gtkconv.h>
 #include <gtkconvwin.h>
 
 #include "../common/i18n.h"
+
+/* XXX: THIS MUST BE CHANGED WHEN PIDGIN DOES ITS PREFS MIGRATION!!!!! */
+#define SEPANDTAB_PREF "/gaim/gtk/conversations/placement"
+
 
 static void
 conv_placement_sep_ims_tab_chats(PidginConversation *conv) {
@@ -91,7 +96,7 @@ plugin_load(PurplePlugin *plugin) {
 								&conv_placement_sep_chats_tab_ims);
 	pidgin_conv_placement_add_fnc("grp-type-sep-prpl",	_("Group by Type, Separate by Protocol"),
 								&conv_placement_grp_type_sep_prpl);
-	purple_prefs_trigger_callback(PIDGIN_PREFS_ROOT "/conversations/placement");
+	purple_prefs_trigger_callback(SEPANDTAB_PREF);
 
 	return TRUE;
 }
@@ -99,9 +104,10 @@ plugin_load(PurplePlugin *plugin) {
 static gboolean
 plugin_unload(PurplePlugin *plugin) {
 	pidgin_conv_placement_remove_fnc("sep-ims-tab-chats");
+
 	pidgin_conv_placement_remove_fnc("sep-chats-tab-ims");
 
-	purple_prefs_trigger_callback(PIDGIN_PREFS_ROOT "/conversations/placement");
+	purple_prefs_trigger_callback(SEPANDTAB_PREF);
 
 	return TRUE;
 }
