@@ -4,7 +4,7 @@ flipdir = $(GAIM_LIBDIR)/libpurple
 
 flip_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PURPLE
 
 flip_LTLIBRARIES = flip.la
 

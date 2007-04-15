@@ -4,7 +4,7 @@ xchat_chatsdir = $(GAIM_LIBDIR)/pidgin
 
 xchat_chats_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PIDGIN
 
 xchat_chats_LTLIBRARIES = xchat-chats.la
 

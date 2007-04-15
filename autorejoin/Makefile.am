@@ -1,10 +1,10 @@
 EXTRA_DIST = .plugin Makefile.mingw
 
-autorejoindir = $(GAIM_LIBDIR)/pidgin
+autorejoindir = $(PURPLE_LIBDIR)/purple
 
 autorejoin_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PURPLE
 
 autorejoin_LTLIBRARIES = autorejoin.la
 
@@ -17,9 +17,9 @@ autorejoin_la_SOURCES = \
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(GAIM_LIBDIR)/pidgin/\" \
-	-DDATADIR=\"$(GAIM_DATADIR)\" \
-	-DLOCALEDIR=\"$(GAIM_DATADIR)/locale\" \
+	-DLIBDIR=\"$(PURPLE_LIBDIR)/purple/\" \
+	-DDATADIR=\"$(PURPLE_DATADIR)\" \
+	-DLOCALEDIR=\"$(PURPLE_DATADIR)/locale\" \
 	$(GTK_CFLAGS) \
 	$(DEBUG_CFLAGS) \
-	$(GAIM_CFLAGS)
+	$(PURPLE_CFLAGS)

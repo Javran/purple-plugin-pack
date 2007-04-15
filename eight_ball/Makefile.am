@@ -7,7 +7,7 @@ eight_balldir = $(GAIM_LIBDIR)/libpurple
 
 eight_ball_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PURPLE
 
 eight_ball_LTLIBRARIES = eight_ball.la
 

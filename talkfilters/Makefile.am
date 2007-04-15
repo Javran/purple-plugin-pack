@@ -4,7 +4,7 @@ talkfiltersdir = $(GAIM_LIBDIR)/pidgin
 
 talkfilters_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PIDGIN
 if USE_TALKFILTERS
 talkfilters_LTLIBRARIES = talkfilters.la
 

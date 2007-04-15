@@ -4,7 +4,7 @@ lastseendir = $(GAIM_LIBDIR)/pidgin
 
 lastseen_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PIDGIN
 
 lastseen_LTLIBRARIES = lastseen.la
 

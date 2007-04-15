@@ -7,7 +7,7 @@ groupmsgdir = $(GAIM_LIBDIR)/libpurple
 
 groupmsg_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PIDGIN
 
 groupmsg_LTLIBRARIES = groupmsg.la
 

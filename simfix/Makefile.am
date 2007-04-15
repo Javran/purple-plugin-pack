@@ -4,7 +4,7 @@ simfixdir = $(GAIM_LIBDIR)/libpurple
 
 simfix_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PURPLE
 
 simfix_LTLIBRARIES = simfix.la
 

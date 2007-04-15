@@ -4,7 +4,7 @@ showofflinedir = $(GAIM_LIBDIR)/libpurple
 
 showoffline_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PURPLE
 
 showoffline_LTLIBRARIES = showoffline.la
 

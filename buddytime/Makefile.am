@@ -4,7 +4,8 @@ buddytimedir = $(GAIM_LIBDIR)/pidgin
 
 buddytime_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PIDGIN
+
 buddytime_LTLIBRARIES = buddytime.la
 
 buddytime_la_SOURCES = \

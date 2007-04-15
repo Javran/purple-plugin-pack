@@ -4,7 +4,7 @@ oldloggerdir = $(GAIM_LIBDIR)/libpurple
 
 oldlogger_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PURPLE
 
 oldlogger_LTLIBRARIES = oldlogger.la
 

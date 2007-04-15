@@ -4,7 +4,7 @@ gRIMdir = $(GAIM_LIBDIR)/pidgin
 
 gRIM_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PIDGIN
 
 gRIM_LTLIBRARIES = gRIM.la
 

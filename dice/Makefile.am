@@ -4,7 +4,7 @@ dicedir = $(GAIM_LIBDIR)/libpurple
 
 dice_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PURPLE
 
 dice_LTLIBRARIES = dice.la
 

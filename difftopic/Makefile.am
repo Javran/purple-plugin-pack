@@ -4,7 +4,7 @@ difftopicdir = $(GAIM_LIBDIR)/pidgin
 
 difftopic_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PIDGIN
 
 difftopic_LTLIBRARIES = difftopic.la
 

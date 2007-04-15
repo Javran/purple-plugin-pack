@@ -7,7 +7,7 @@ broadcastdir = $(GAIM_LIBDIR)/libpurple
 
 broadcast_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PURPLE
 
 broadcast_LTLIBRARIES = broadcast.la
 

@@ -12,7 +12,7 @@ irssidir = $(GAIM_LIBDIR)/pidgin
 
 irssi_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PIDGIN
 
 irssi_LTLIBRARIES = irssi.la
 

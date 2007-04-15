@@ -11,7 +11,7 @@ gaim_schedule_la_LIBADD = \
 	$(GAIM_LIBS) \
 	$(GTK_LIBS)
 
-if PLUGINS
+if HAVE_PIDGIN
 
 gaim_schedule_LTLIBRARIES = gaim-schedule.la
 

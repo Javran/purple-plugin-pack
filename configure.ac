@@ -75,6 +75,9 @@ PKG_CHECK_MODULES(PURPLE, purple,
 	AC_DEFINE(HAVE_PURPLE, 1, [Define if we've found libpurple.])
 ])
 
+HAVE_PURPLE="yes"
+AM_CONDITIONAL(HAVE_PURPLE, true)
+
 PURPLE_LIBDIR=`pkg-config --variable=libdir purple`
 PURPLE_DATADIR=`pkg-config --variable=datadir purple`
 
@@ -89,8 +92,10 @@ dnl #######################################################################
 PKG_CHECK_MODULES(PIDGIN, pidgin,
 [
 	AC_DEFINE(HAVE_PIDGIN, 1, [Define if we've found pidgin.])
+	HAVE_PIDGIN="yes"
 	AM_CONDITIONAL(HAVE_PIDGIN, true)
 ], [
+	HAVE_PIDGIN="no"
 	AM_CONDITIONAL(HAVE_PIDGIN, false)
 ])
 
@@ -108,8 +113,10 @@ dnl #######################################################################
 PKG_CHECK_MODULES(FINCH, finch,
 [
 	AC_DEFINE(HAVE_FINCH, 1, [Define if we've found finch.])
+	HAVE_FINCH="yes"
 	AM_CONDITIONAL(HAVE_FINCH, true)
 ], [
+	HAVE_FINCH="no"
 	AM_CONDITIONAL(HAVE_FINCH, false)
 ])
 
@@ -204,12 +211,6 @@ dnl #######################################################################
 AM_BUILD_PLUGIN_LIST()
 
 dnl #######################################################################
-dnl # Check if plugins are enabled
-dnl #######################################################################
-want_plugins=yes
-AM_CONDITIONAL(PLUGINS, test "$want_plugins" = "yes")
-
-dnl #######################################################################
 dnl # Version stuff
 dnl #######################################################################
 AC_CONFIG_COMMANDS_PRE([
@@ -283,7 +284,7 @@ echo Installing purple plugins to.....: `eval eval echo $PURPLE_LIBDIR`
 echo Installing pidgin plugins to.....: `eval eval echo $PIDGIN_LIBDIR`
 echo;
 echo Building plugins:
-echo $PP_BUILDDIRS | xargs -n 4 echo "	"
+echo $PP_BUILD | xargs -n 4 echo "	"
 echo;
 echo Type make to compile
 echo;

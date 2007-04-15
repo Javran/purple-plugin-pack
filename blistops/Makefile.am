@@ -4,7 +4,7 @@ blistopsdir = $(GAIM_LIBDIR)/pidgin
 
 blistops_la_LDFLAGS = -module -avoid-version
 
-if PLUGINS
+if HAVE_PIDGIN
 
 blistops_LTLIBRARIES = blistops.la
 
