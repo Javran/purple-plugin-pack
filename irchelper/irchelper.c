@@ -1,5 +1,5 @@
 /*
- * IRC Helper Plugin for Purple
+ * IRC Helper Plugin for libpurple
  *
  * Copyright (C) 2005-2007, Richard Laager <rlaager@users.sf.net>
  * Copyright (C) 2004-2005, Mathias Hasselmann <mathias@taschenorakel.de>
