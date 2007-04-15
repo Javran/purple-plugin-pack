@@ -25,7 +25,7 @@
 #include <string.h>
 
 #ifdef HAVE_CONFIG_H
-# include "../gpp_config.h"
+# include "../pp_config.h"
 #endif
 
 #define PURPLE_PLUGINS
@@ -1115,30 +1115,30 @@ static PurplePluginInfo gxr_info = {
 	PURPLE_PLUGIN_MAGIC,									/* Don't			*/
 	PURPLE_MAJOR_VERSION,									/* fear the		*/
 	PURPLE_MINOR_VERSION,									/* reaper		*/
-	PURPLE_PLUGIN_STANDARD,								/* type			*/
-	PIDGIN_PLUGIN_TYPE,								/* ui requirement	*/
-	0,													/* flags			*/
-	NULL,												/* dependencies	*/
+	PURPLE_PLUGIN_STANDARD,									/* type			*/
+	PIDGIN_PLUGIN_TYPE,										/* ui requirement	*/
+	0,														/* flags			*/
+	NULL,													/* dependencies	*/
 	PURPLE_PRIORITY_DEFAULT,								/* priority		*/
 
-	"gtk-plugin_pack-xmmsremote",						/* id			*/
-	"XMMS Remote Control",								/* name			*/
-	GPP_VERSION,										/* version		*/
+	"gtk-plugin_pack-xmmsremote",							/* id			*/
+	"XMMS Remote Control",									/* name			*/
+	PP_VERSION,												/* version		*/
 	"Control XMMS from Purple conversations",				/* summary		*/
 	"A small plugin that adds a menu or buttons to the "
 	"Purple conversation windows' menubars, so that you "
-	"can control XMMS from within Purple.",				/* description	*/
+	"can control XMMS from within Purple.",					/* description	*/
 
-	"Gary Kramlich <plugin_pack@users.sf.net>",			/* author		*/
-	GPP_WEBSITE,										/* homepage		*/
+	"Gary Kramlich <plugin_pack@users.sf.net>",				/* author		*/
+	PP_WEBSITE,												/* homepage		*/
 
-	gxr_load,											/* load			*/
-	gxr_unload,											/* unload		*/
-	NULL,												/* destroy		*/
+	gxr_load,												/* load			*/
+	gxr_unload,												/* unload		*/
+	NULL,													/* destroy		*/
 
-	&ui_info,											/* ui info		*/
-	NULL,												/* extra info		*/
-	NULL												/* actions info	*/
+	&ui_info,												/* ui info		*/
+	NULL,													/* extra info		*/
+	NULL													/* actions info	*/
 };
 
 PURPLE_INIT_PLUGIN(xmmsremote, init_plugin, gxr_info)
