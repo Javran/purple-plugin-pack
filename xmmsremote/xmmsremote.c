@@ -1123,14 +1123,14 @@ static PurplePluginInfo gxr_info = {
 
 	"gtk-plugin_pack-xmmsremote",							/* id			*/
 	"XMMS Remote Control",									/* name			*/
-	PP_VERSION,												/* version		*/
+	PP_VERSION,										/* version		*/
 	"Control XMMS from Purple conversations",				/* summary		*/
 	"A small plugin that adds a menu or buttons to the "
 	"Purple conversation windows' menubars, so that you "
 	"can control XMMS from within Purple.",					/* description	*/
 
 	"Gary Kramlich <plugin_pack@users.sf.net>",				/* author		*/
-	PP_WEBSITE,												/* homepage		*/
+	PP_WEBSITE,										/* homepage		*/
 
 	gxr_load,												/* load			*/
 	gxr_unload,												/* unload		*/

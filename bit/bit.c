@@ -201,12 +201,12 @@ static PurplePluginInfo info =
 
 	"core-plugin_pack-bit",							/**< id				*/
 	NULL,											/**< name			*/
-	PP_VERSION,										/**< version		*/
+	PP_VERSION,									/**< version		*/
 	NULL,											/**  summary		*/
 	NULL,											/**  description	*/
 	"Peter Lawler <bleeter from users.sf.net>",
 													/**< authors		*/
-	PP_WEBSITE,										/**< homepage		*/
+	PP_WEBSITE,									/**< homepage		*/
 
 	NULL,											/**< load			*/
 	NULL,											/**< unload			*/

@@ -242,11 +242,11 @@ static PurplePluginInfo info =
 
 	"gtk-plugin_pack-lastseen",						/**< id				*/
 	NULL,											/**< name			*/
-	PP_VERSION,										/**< version		*/
+	PP_VERSION,									/**< version		*/
 	NULL,											/**  summary		*/
 	NULL,											/**  description	*/
 	"Stu Tomlinson <stu@nosnilmot.com>",			/**< author			*/
-	PP_WEBSITE,										/**< homepage		*/
+	PP_WEBSITE,									/**< homepage		*/
 
 	plugin_load,									/**< load			*/
 	plugin_unload,									/**< unload			*/

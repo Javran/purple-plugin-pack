@@ -106,7 +106,7 @@ static PurplePluginInfo info =
 
 	"core-plugin_pack-simfix",						/**< id				*/
 	N_("SIM-fix"),									/**< name			*/
-	PP_VERSION,										/**< version		*/
+	PP_VERSION,									/**< version		*/
 													/**  summary		*/
 	N_("Fix messages from broken SIM clients."),
 													/**  description	*/
@@ -114,7 +114,7 @@ static PurplePluginInfo info =
 	   "stripping HTML from them. The buddy must be on your "
 	   "list and set as a SIM user."),
 	"Stu Tomlinson <stu@nosnilmot.com>",			/**< author			*/
-	PP_WEBSITE,										/**< homepage		*/
+	PP_WEBSITE,									/**< homepage		*/
 
 	plugin_load,									/**< load			*/
 	NULL,											/**< unload			*/

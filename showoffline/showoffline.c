@@ -88,7 +88,7 @@ static PurplePluginInfo info =
 	NULL,											/**  summary		*/
 	NULL,											/**  description	*/
 	"Stu Tomlinson <stu@nosnilmot.com>",			/**< author			*/
-	PP_WEBSITE,										/**< homepage		*/
+	PP_WEBSITE,									/**< homepage		*/
 
 	plugin_load,									/**< load			*/
 	NULL,											/**< unload			*/

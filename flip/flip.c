@@ -90,11 +90,11 @@ static PurplePluginInfo info =
 
 	"core-plugin_pack-flip",						/**< id				*/
 	NULL,											/**< name			*/
-	PP_VERSION,										/**< version		*/
+	PP_VERSION,									/**< version		*/
 	NULL,											/**  summary		*/
 	NULL,											/**  description	*/
 	"Gary Kramlich <amc_grim@users.sf.net>",		/**< author			*/
-	PP_WEBSITE,										/**< homepage		*/
+	PP_WEBSITE,									/**< homepage		*/
 
 	plugin_load,									/**< load			*/
 	plugin_unload,									/**< unload			*/

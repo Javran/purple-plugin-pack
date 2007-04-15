@@ -18,7 +18,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "../gpp_config.h"
+# include "../pp_config.h"
 #endif /* HAVE_CONFIG_H */
 
 #include "../common/i18n.h"
@@ -81,11 +81,11 @@ static PurplePluginInfo chronic_info =
 	PURPLE_PRIORITY_DEFAULT,
 	"core-plugin_pack-chronic",
 	NULL,
-	GPP_VERSION,
+	PP_VERSION,
 	NULL,
 	NULL,
 	"John Bailey <rekkanoryo@rekkanoryo.org>",
-	GPP_WEBSITE,
+	PP_WEBSITE,
 	chronic_load,
 	/* comment below is temporary until i decide if i need the function */
 	NULL, /*chronic_unload,*/

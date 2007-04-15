@@ -426,7 +426,7 @@ static PurplePluginInfo se_info = {
 	PURPLE_PRIORITY_DEFAULT,								/* priority			*/
 	"core-plugin_pack-slashexec",						/* id				*/
 	"/exec",											/* name				*/
-	PP_VERSION,											/* version			*/
+	PP_VERSION,										/* version			*/
 	NULL,												/* summary			*/
 	NULL,												/* description		*/
 
@@ -435,7 +435,7 @@ static PurplePluginInfo se_info = {
 	"Daniel Atallah, Sadrul Habib Chowdhury <sadrul@users.sf.net>, "
 	"John Bailey <rekkanoryo@users.sf.net>",			/* authors			*/
 
-	PP_WEBSITE,											/* homepage			*/
+	PP_WEBSITE,										/* homepage			*/
 	se_load,											/* load				*/
 	se_unload,											/* unload			*/
 	NULL,												/* destroy			*/

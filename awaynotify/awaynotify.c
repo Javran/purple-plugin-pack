@@ -18,7 +18,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "../gpp_config.h"
+# include "../pp_config.h"
 #endif
 
 #include "../common/i18n.h"
@@ -245,11 +245,11 @@ static PurplePluginInfo info =
 
 	PLUGIN_ID,      			                      /**< id             */
 	NULL,                                             /**< name           */
-	GPP_VERSION,                                      /**< version        */
+	PP_VERSION,                                      /**< version        */
 	NULL,                                             /**  summary        */
 	NULL,                                             /**  description    */
 	"Matt Perry <guy@somewhere.fscked.org>",          /**< author         */
-	GPP_WEBSITE,                                      /**< homepage       */
+	PP_WEBSITE,                                      /**< homepage       */
 
 	plugin_load,                                      /**< load           */
 	NULL,                                             /**< unload         */

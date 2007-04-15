@@ -609,7 +609,7 @@ get_plugin_pref_frame(PurplePlugin *plugin)
 }
 
 static PurplePluginUiInfo prefs_info = {
-	get_plugin_pref_frame
+	get_plugin_pref_frame, 0, NULL
 };
 
 static PurplePluginInfo info =
@@ -625,11 +625,11 @@ static PurplePluginInfo info =
 
 	PLUGIN_ID,					/* plugin id			*/
 	NULL,						/* name					*/
-	PP_VERSION,					/* version				*/
+	PP_VERSION,				/* version				*/
 	NULL,						/* summary				*/
 	NULL,						/* description			*/
 	PLUGIN_AUTHOR,				/* author				*/
-	PP_WEBSITE,					/* website				*/
+	PP_WEBSITE,				/* website				*/
 
 	plugin_load,				/* load					*/
 	plugin_unload,				/* unload				*/

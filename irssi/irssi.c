@@ -19,7 +19,7 @@
  * 02111-1307, USA.
  */
 
-/* gpp_config.h provides necessary definitions that help us find/do stuff */
+/* pp_config.h provides necessary definitions that help us find/do stuff */
 #ifdef HAVE_CONFIG_H
 # include "../pp_config.h"
 #endif
@@ -95,11 +95,11 @@ static PurplePluginInfo irssi_info = { /* this tells Purple about the plugin */
 
 	PLUGIN_ID,					/* plugin id			*/
 	NULL,						/* name					*/
-	PP_VERSION,					/* version				*/
+	PP_VERSION,				/* version				*/
 	NULL,						/* summary				*/
 	NULL,						/* description			*/
 	PLUGIN_AUTHOR,				/* author				*/
-	PP_WEBSITE,					/* website				*/
+	PP_WEBSITE,				/* website				*/
 
 	irssi_load,					/* load					*/
 	irssi_unload,				/* unload				*/

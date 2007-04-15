@@ -4,9 +4,9 @@
 # Description: Makefile for my status box plugin.
 #
 
-GPP_TOP :=		..
+PP_TOP :=		..
 
-GPP = mystatusbox
+PP = mystatusbox
 
-include $(GPP_TOP)/win_gpp.mak
+include $(PP_TOP)/win_pp.mak
 

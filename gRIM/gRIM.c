@@ -316,13 +316,13 @@ static PurplePluginInfo info =
 
 	"gtk-plugin_pack-gRIM",							/**< id				*/
 	NULL,											/**< name			*/
-	PP_VERSION,										/**< version		*/
+	PP_VERSION,									/**< version		*/
 	NULL,											/**  summary		*/
 	NULL,											/**  description	*/
 	"Peter Lawler <bleeter from users.sf.net> and"
 	" Sadrul Habib Chowdhury <sadrul from users.sf.net>",
 													/**< authors		*/
-	PP_WEBSITE,										/**< homepage		*/
+	PP_WEBSITE,									/**< homepage		*/
 
 	plugin_load,									/**< load			*/
 	plugin_unload,									/**< unload			*/

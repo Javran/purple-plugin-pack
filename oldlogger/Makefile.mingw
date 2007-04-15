@@ -4,9 +4,9 @@
 # Description: Makefile for oldlogger plugin.
 #
 
-GPP_TOP :=		..
+PP_TOP :=		..
 
-GPP = oldlogger
+PP = oldlogger
 
-include $(GPP_TOP)/win_gpp.mak
+include $(PP_TOP)/win_pp.mak
 

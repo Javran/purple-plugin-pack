@@ -17,19 +17,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef PP_I18N_H
-#define PP_I18N_H
+#ifndef PP_INTL_H
+#define PP_INTL_H
 
 #ifdef HAVE_CONFIG_H
 # include "../pp_config.h"
 #endif
 
 /* dirty hack */
+#ifndef _WIN32
 #ifdef PP_LOCALEDIR
 # ifndef LOCALEDIR
 #  define LOCALEDIR PP_LOCALEDIR
 # endif /* LOCALEDIR */
 #endif /* PP_LOCALEDIR */
+#endif
 
 #include <glib.h>
 #if GLIB_CHECK_VERSION(2,4,0)

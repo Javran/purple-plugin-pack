@@ -1165,7 +1165,7 @@ static PurplePluginInfo ig_info = {
 	PURPLE_PRIORITY_DEFAULT,
 	IGNORANCE_PLUGIN_ID,
 	NULL,
-	GPP_VERSION,
+	PP_VERSION,
 	NULL,
 	NULL,
 	"Peter Lawler <bleeter from users.sf.net>, "
@@ -1184,8 +1184,8 @@ static void
 ignorance_init (PurplePlugin * plugin)
 {
 #ifdef ENABLE_NLS
-	bindtextdomain(GPP_PACKAGE, LOCALEDIR);
-	bind_textdomain_codeset(GPP_PACKAGE, "UTF-8");
+	bindtextdomain(PP_PACKAGE, LOCALEDIR);
+	bind_textdomain_codeset(PP_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
 	ig_info.name = _("Ignorance");

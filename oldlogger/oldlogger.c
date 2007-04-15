@@ -73,7 +73,7 @@ struct basic_logger_data {
 	time_t old_last_modified;
 };
 
-const gchar *
+static const gchar *
 oldlogger_date_full(void)
 {
 	gchar *buf;
@@ -524,11 +524,11 @@ static PurplePluginInfo info =
 
 	OLDLOGGER_PLUGIN_ID,							/**< id				*/
 	NULL,											/**< name			*/
-	PP_VERSION,										/**< version		*/
+	PP_VERSION,									/**< version		*/
 	NULL,											/**< summary		*/
 	NULL,											/**< description	*/
 	"Stu Tomlinson <stu@nosnilmot.com>",			/**< author			*/
-	PP_WEBSITE,										/**< homepage		*/
+	PP_WEBSITE,									/**< homepage		*/
 
 	plugin_load,									/**< load			*/
 	plugin_unload,									/**< unload			*/

@@ -327,7 +327,7 @@ static PurplePluginInfo plonkers_info = {
 
 	"core-plugin_pack-Plonkers",					/* id			*/
 	"Plonkers",										/* name			*/
-	PP_VERSION,										/* version		*/
+	PP_VERSION,									/* version		*/
 	"Tell plonkers what you really think",			/* summary		*/
 	"A small plugin that lets you announce"
 	" to a chat room your current ignores, as"
@@ -335,7 +335,7 @@ static PurplePluginInfo plonkers_info = {
 	" privacy tools for dealing with idiots.\n"
 	"Name inspired by en_IE/GB word for 'idiots'.",/* description	*/
 	"Peter Lawler <bleeter from users.sf.net>",		/* author		*/
-	PP_WEBSITE,										/* homepage		*/
+	PP_WEBSITE,									/* homepage		*/
 	plonkers_load,									/* load			*/
 	plonkers_unload,								/* unload		*/
 	NULL,											/* destroy		*/
