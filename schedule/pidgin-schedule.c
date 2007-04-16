@@ -390,7 +390,7 @@ schedule_selection_changed_cb(GtkTreeSelection *sel, ScheduleWindow *win)
 				gtk_imhtml_append_text(GTK_IMHTML(win->imhtml), action->d.send.message, 0);
 				break;
 			default:
-				purple_debug_warning("gaim-schedule", "action type not implemented yet.\n");
+				purple_debug_warning("pidgin-schedule", "action type not implemented yet.\n");
 				break;
 		}
 	}
