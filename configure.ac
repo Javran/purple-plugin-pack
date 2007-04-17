@@ -287,6 +287,7 @@ AC_OUTPUT([
 	flip/Makefile
 	groupmsg/Makefile
 	gRIM/Makefile
+	hideconv/Makefile
 	ignorance/Makefile
 	irchelper/Makefile
 	irssi/Makefile

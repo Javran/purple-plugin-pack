@@ -1,0 +1,12 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for hideconv plugin.
+#
+
+GPP_TOP :=		..
+
+GPP = hideconv
+
+include $(GPP_TOP)/win_gpp.mak
+
