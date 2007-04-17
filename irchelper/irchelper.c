@@ -552,7 +552,7 @@ static void signed_on_cb(PurpleConnection *connection)
 				stuff->account = account;
 
 				/* Disconnect the ghosted connection. */
-				command = g_strdup_printf("quota %s GHOST %s %s", NICK_NICKSERV, userparts[0], nickpassword);
+				command = g_strdup_printf("quote %s GHOST %s %s", NICK_NICKSERV, userparts[0], nickpassword);
 				conv = get_conversation(account);
 
 				purple_debug_misc(PLUGIN_STATIC_NAME, "Sending command: %s\n", command);
