@@ -1,4 +1,5 @@
 EXTRA_DIST = \
+	.incomplete \
 	.pidgin-plugin \
 	gtkticker.h \
 	stocker_prefs.h \
