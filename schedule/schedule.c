@@ -154,13 +154,13 @@ purple_schedule_reschedule(PurpleSchedule *schedule)
 	calculate_timestamp_for_schedule(schedule);
 	if (schedule->timestamp < time(NULL))
 	{
-		purple_debug_warning("gaim-schedule", "schedule \"%s\" will not be executed (%s)\n", schedule->name,
+		purple_debug_warning("purple-schedule", "schedule \"%s\" will not be executed (%s)\n", schedule->name,
 					purple_date_format_full(localtime(&schedule->timestamp)));
 		schedule->timestamp = 0;
 	}
 	else
 	{
-		purple_debug_info("gaim-schedule", "schedule \"%s\" will be executed at: %s\n", schedule->name,
+		purple_debug_info("purple-schedule", "schedule \"%s\" will be executed at: %s\n", schedule->name,
 					purple_date_format_full(localtime(&schedule->timestamp)));
 	}
 }
@@ -260,7 +260,7 @@ void purple_schedule_action_activate(ScheduleAction *action)
 			purple_conv_im_send_with_flags(PURPLE_CONV_IM(conv), action->d.send.message, 0);
 			break;
 		default:
-			purple_debug_warning("gaim-schedule", "unimplemented action\n");
+			purple_debug_warning("purple-schedule", "unimplemented action\n");
 			break;
 	}
 }
@@ -290,7 +290,7 @@ void purple_schedule_action_destroy(ScheduleAction *action)
 			g_free(action->d.status_title);
 			break;
 		default:
-			purple_debug_warning("gaim-schedule", "unknown action type\n");
+			purple_debug_warning("purple-schedule", "unknown action type\n");
 			break;
 	}
 	g_free(action);
@@ -373,13 +373,13 @@ void purple_schedules_sync()
 static void
 purple_schedules_load()
 {
-	xmlnode *gaim, *schedule;
+	xmlnode *purple, *schedule;
 
-	gaim = purple_util_read_xml_from_file("schedules.xml", _("list of schedules"));
-	if (gaim == NULL)
+	purple = purple_util_read_xml_from_file("schedules.xml", _("list of schedules"));
+	if (purple == NULL)
 		return;
 
-	schedule = xmlnode_get_child(gaim, "schedules");
+	schedule = xmlnode_get_child(purple, "schedules");
 	if (schedule)
 	{
 		xmlnode *sch;
@@ -390,7 +390,7 @@ purple_schedules_load()
 		}
 	}
 
-	xmlnode_free(gaim);
+	xmlnode_free(purple);
 }
 
 static void
@@ -510,7 +510,7 @@ action_to_xmlnode(ScheduleAction *action)
 			xmlnode_insert_data(gchild, action->d.send.message, -1);
 			break;
 		default:
-			purple_debug_warning("gaim-schedule", "unknown action type\n");
+			purple_debug_warning("purple-schedule", "unknown action type\n");
 			break;
 	}
 
@@ -573,7 +573,7 @@ schedules_to_xmlnode()
 	GList *iter;
 	xmlnode *node, *child;
 
-	node = xmlnode_new("gaim-schedule");
+	node = xmlnode_new("purple-schedule");
 	xmlnode_set_attrib(node, "version", PP_VERSION);
 
 	child = xmlnode_new_child(node, "schedules");

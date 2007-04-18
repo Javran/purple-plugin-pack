@@ -1,20 +1,20 @@
 EXTRA_DIST = .build .pidgin-plugin schedule.h
 
-gaim_scheduledir = $(PIDGIN_LIBDIR)
+pidgin_scheduledir = $(PIDGIN_LIBDIR)
 
-gaim_schedule_la_LDFLAGS = -module -avoid-version
+pidgin_schedule_la_LDFLAGS = -module -avoid-version
 
-gaim_schedule_la_LIBADD = \
+pidgin_schedule_la_LIBADD = \
 	$(PIDGIN_LIBS) \
 	$(GTK_LIBS)
 
 if HAVE_PIDGIN
 
-gaim_schedule_LTLIBRARIES = gaim-schedule.la
+pidgin_schedule_LTLIBRARIES = pidgin-schedule.la
 
-gaim_schedule_la_SOURCES = \
+pidgin_schedule_la_SOURCES = \
 	schedule.c	\
-	gaim-schedule.c
+	pidgin-schedule.c
 
 endif
 

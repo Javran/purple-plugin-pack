@@ -1,5 +1,5 @@
 /*
-  xmms-remote - Control xmms from gaim conversations
+  xmms-remote - Control xmms from Pidgin conversations
   Copyright (C) 2004 Gary Kramlich
 
   This program is free software; you can redistribute it and/or

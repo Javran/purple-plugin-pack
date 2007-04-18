@@ -37,8 +37,6 @@ pp_config.h: pre_config.h
 	rm -f po/.tmp-Makefile
 	$(sedpath) 's/\#define PACKAGE/\#define PP_PACKAGE/g' pre_config.h > $@
 
-CLEANFILES=
-
 ACLOCAL_AMFLAGS = -I m4
 
 info:
