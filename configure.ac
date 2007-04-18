@@ -94,6 +94,7 @@ fi
 
 if test x"$PURPLE_DATADIR" != x"" ; then
 	PURPLE_PIXMAPSDIR="$PURPLE_DATADIR/pixmaps/libpurple"
+	AC_DEFINE_UNQUOTED(PURPLE_PIXMAPSDIR, "$PURPLE_PIXMAPSDIR", [Libpurple pixmaps directory])
 fi
 
 AC_SUBST(PURPLE_CFLAGS)
@@ -101,6 +102,7 @@ AC_SUBST(PURPLE_LIBS)
 AC_SUBST(PURPLE_LIBDIR)
 AC_SUBST(PURPLE_DATADIR)
 AC_SUBST(PURPLE_PIXMAPSDIR)
+
 
 dnl #######################################################################
 dnl # Check for pidgin
@@ -125,6 +127,7 @@ fi
 
 if test x"$PIDGIN_DATADIR" != x"" ; then
 	PIDGIN_PIXMAPSDIR="$PIDGIN_DATADIR/pixmaps/pidgin"
+	AC_DEFINE_UNQUOTED(PIDGIN_PIXMAPSDIR, "$PIDGIN_PIXMAPSDIR", [Pidgin pixmaps directory])
 fi
 
 AC_SUBST(PIDGIN_CFLAGS)
@@ -156,6 +159,7 @@ fi
 
 if test x"$FINCH_DATADIR" != x"" ; then
 	FINCH_PIXMAPSDIR="$FINCH_DATADIR/pixmaps/finch"
+	AC_DEFINE_UNQUOTED(FINCH_PIXMAPSDIR, "$FINCH_PIXMAPSDIR", [Finch pixmaps directory])
 fi
 
 AC_SUBST(FINCH_CFLAGS)
