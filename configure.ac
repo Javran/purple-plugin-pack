@@ -89,7 +89,7 @@ PP_LOCALEDIR="PURPLE_DATADIR/locale"
 AC_DEFINE_UNQUOTED(PP_LOCALEDIR, ["$PP_LOCALEDIR"], [The localedir to use])
 
 if test x"$PURPLE_LIBDIR" != x"" ; then
-	PURPLE_LIBDIR="$PURPLE_LIBDIR/libpurple"
+	PURPLE_LIBDIR="$PURPLE_LIBDIR/purple"
 fi
 
 if test x"$PURPLE_DATADIR" != x"" ; then
