@@ -1,6 +1,7 @@
 EXTRA_DIST = \
-			.purple-plugin \
 			.abusive \
+			.incomplete \
+			.purple-plugin \
 			Makefile.mingw
 
 broadcastdir = $(PURPLE_LIBDIR)

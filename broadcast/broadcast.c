@@ -70,7 +70,7 @@ static void
 broadcast_action_cb(PurplePluginAction *action)
 {
 	GList *buddies = NULL, *ltmp = NULL;
-	GString stmp = NULL;
+	GString *stmp = NULL;
 	const gchar *bname = NULL, *balias = NULL;
 	PurpleBlistNode *root = NULL, *g = NULL, *c = NULL;
 	PurpleBuddy *b = NULL;
@@ -110,7 +110,7 @@ broadcast_action_cb(PurplePluginAction *action)
 			bname = purple_buddy_get_alias(b);
 			balias = purple_buddy_get_alias(b);
 
-			stmp = g_string_append_printf(stmp, "    %s (%s)\n", balias, bname);
+			g_string_append_printf(stmp, "    %s (%s)\n", balias, bname);
 
 			purple_debug_info(BROADCAST_CATEGORY, "added %s (%s) to dialog string\n",
 					balias, bname);

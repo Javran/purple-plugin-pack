@@ -1,4 +1,4 @@
-EXTRA_DIST = .pidgin-plugin
+EXTRA_DIST = .incomplete .pidgin-plugin
 
 buddytimedir = $(PIDGIN_LIBDIR)
 
