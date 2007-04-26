@@ -111,6 +111,7 @@ bt_show_dialog(PurpleBlistNode *node) {
 	BTDialog *dialog;
 	PurpleRequestFields *fields;
 	PurpleRequestFieldGroup *group;
+	PurpleAccount *account = NULL;
 	gint current = 0;
 
 	dialog = g_new0(BTDialog, 1);
@@ -121,6 +122,8 @@ bt_show_dialog(PurpleBlistNode *node) {
 	dialog->node = node;
 
 	current = purple_blist_node_get_int(node, BT_NODE_SETTING);
+
+	/* TODO: set account from node */
 
 	/* build the request fields */
 	fields = purple_request_fields_new();
@@ -162,12 +165,13 @@ bt_show_dialog(PurpleBlistNode *node) {
 //	purple_request_field_choice_set_default_value(dialog->timezone, current);
 //	purple_request_field_coice_set_value(dialog->timezone, current);
 
+	/* TODO: set who from blist node */
 	dialog->handle =
 		purple_request_fields(NULL, _("Select timezone"),
 							NULL, "foo", fields,
 							_("OK"), PURPLE_CALLBACK(bt_dialog_ok_cb),
 							_("Cancel"), PURPLE_CALLBACK(bt_dialog_cancel_cb),
-							dialog);
+							account, NULL /* who */, NULL, dialog);
 	
 	dialogs = g_list_append(dialogs, dialog);
 }

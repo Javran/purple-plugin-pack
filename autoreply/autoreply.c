@@ -230,7 +230,8 @@ set_auto_reply(PurpleBlistNode *node, gpointer plugin)
 					get_autoreply_message(buddy, account), TRUE, FALSE,
 					(gc->flags & PURPLE_CONNECTION_HTML) ? "html" : NULL,
 					_("_Save"), G_CALLBACK(set_auto_reply_cb),
-					_("_Cancel"), NULL, node);
+					_("_Cancel"), NULL, 
+					account, purple_buddy_get_name(buddy), NULL, node);
 	g_free(message);
 }
 

@@ -298,7 +298,7 @@ lh_aim_import_target_request(void)
 						_("Choose the account to import to:"), NULL,
 						request, _("_Import"),
 						G_CALLBACK(lh_aim_import_target_request_cb),
-						_("_Cancel"), NULL, NULL);
+						_("_Cancel"), NULL, NULL, NULL, NULL, NULL);
 
 	purple_debug_info("listhandler: import", "Ending Request API calls\n");
 
@@ -422,7 +422,8 @@ lh_aim_export_cb(void *ignored, PurpleRequestFields *fields)
 
 	if(buddies)
 		purple_request_file(listhandler, _("Save AIM .blt File"), NULL, TRUE,
-				G_CALLBACK(lh_aim_export_request_cb), NULL, NULL);
+				G_CALLBACK(lh_aim_export_request_cb), NULL,
+				source_account, NULL, NULL, NULL);
 	else
 		purple_debug_info("listhandler: export", "blist not returned\n");
 
@@ -462,7 +463,7 @@ lh_aim_export_action_cb(PurplePluginAction *action)
 	purple_request_fields(purple_get_blist(), _("Buddy List Exporter"),
 						_("Choose the account to export from:"), NULL, request,
 						_("_Export"), G_CALLBACK(lh_aim_export_cb), _("_Cancel"),
-						NULL, NULL);
+						NULL, NULL, NULL, NULL, NULL);
 
 	purple_debug_info("listhandler: export", "Ending Request API calls\n");
 
@@ -475,7 +476,8 @@ lh_aim_import_action_cb(PurplePluginAction *action)
 	purple_debug_info("listhandler: import", "Requesting the file.\n");
 
 	purple_request_file(listhandler, _("Choose An AIM .blt File To Import"),
-			NULL, FALSE, G_CALLBACK(lh_aim_import_cb), NULL, NULL);
+			NULL, FALSE, G_CALLBACK(lh_aim_import_cb),
+			NULL, NULL, NULL, NULL, NULL);
 
 	return;
 }

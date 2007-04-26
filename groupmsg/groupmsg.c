@@ -124,7 +124,7 @@ groupmsg_sendto_group(PurpleBlistNode *node, gpointer data)
 					   "", TRUE, FALSE, "html",
 					   _("Send"), G_CALLBACK(do_it_cb),
 					   _("Cancel"), G_CALLBACK(dont_do_it_cb),
-					   list);
+					   NULL, NULL, NULL, list);
 	g_free(tmp);
 }
 
