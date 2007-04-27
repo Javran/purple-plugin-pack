@@ -493,7 +493,7 @@ plugin_load(PurplePlugin *plugin)
 	purple_log_logger_add(&oldtxt_logger);
 	purple_log_logger_add(&oldhtml_logger);
 #endif
-	purple_prefs_trigger_callback("/core/logging/format");
+	purple_prefs_trigger_callback("/purple/logging/format");
 	return TRUE;
 }
 
@@ -507,7 +507,7 @@ plugin_unload(PurplePlugin *plugin)
 	purple_log_logger_remove(&oldtxt_logger);
 	purple_log_logger_remove(&oldhtml_logger);
 #endif
-	purple_prefs_trigger_callback("/core/logging/format");
+	purple_prefs_trigger_callback("/purple/logging/format");
 	return TRUE;
 }
 
