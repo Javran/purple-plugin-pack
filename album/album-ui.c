@@ -1135,6 +1135,7 @@ static void album_select_dialog(PurplePluginAction *action)
 	                    fields,
 	                    _("OK"), G_CALLBACK(album_select_dialog_cb),
 	                    _("Cancel"), NULL,
+	                    NULL, NULL, NULL,
 	                    NULL);
 }
 

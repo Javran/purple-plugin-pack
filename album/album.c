@@ -145,81 +145,53 @@ char *album_buddy_icon_get_dir(PurpleAccount *account, const char *name)
  * Callbacks                                                                 *
  *****************************************************************************/
 
-static void buddy_icon_cached_cb(PurpleBuddyIcon *icon, PurpleBuddy *buddy,
-                                 const char *filename, const char *old_icon, gpointer data)
+static void store_buddy_icon(PurpleBuddyIcon *icon, PurpleBuddy *buddy)
 {
-	char *dir;
-
-	const void *icon_data;
-	size_t len;
-
-	PurpleCipherContext *context;
-	gchar digest[41];
-	gboolean got_digest;
-
-	char *checksum;
-	const char *ext;
-	char *new_filename;
+	const char *icon_path;
+	char *filename;
 	char *path;
+	char *dir;
 
 #ifndef _WIN32
 	int status;
 #endif
-	FILE *file = NULL;
-
 
 	/* BUILD THE DIRECTORY PATH & CREATE DIRECTORY */
 	dir = album_buddy_icon_get_dir(purple_buddy_get_account(buddy), purple_buddy_get_name(buddy));
 	purple_build_dir (dir, S_IRUSR | S_IWUSR | S_IXUSR);
 
-
-	/* GET THE DATA */
-	icon_data = purple_buddy_icon_get_data(icon, &len);
-
-
-	/* HASH THE DATA */
-	context = purple_cipher_context_new_by_name("sha1", NULL);
-	if (context == NULL) {
-		purple_debug_info(PLUGIN_STATIC_NAME, "could not find sha1 cipher\n");
-		return;
-	}
-
-	purple_cipher_context_append(context, icon_data, len);
-
-	got_digest = purple_cipher_context_digest_to_str(context,
-			sizeof(digest), digest, NULL);
-
-	if (got_digest)
-		checksum = g_strdup(digest);
-	else
-		checksum = g_strdup_printf("%x", g_random_int());
-
-	purple_cipher_context_destroy(context);
-
-	/* BUILD THE FILENAME */
-	ext = purple_buddy_icon_get_type(icon);
-	if (ext == NULL)
-		ext = "icon";
-	new_filename = g_strdup_printf("%s.%s", checksum, ext);
-	g_free(checksum);
-	path = g_build_filename(dir, new_filename, NULL);
+	icon_path = purple_buddy_icon_get_full_path(icon);
+	filename = g_path_get_basename(icon_path);
+	path = g_build_filename(dir, filename, NULL);
 	g_free(dir);
-	g_free(new_filename);
-
+	g_free(filename);
 
 #ifndef _WIN32
 	/* TRY MAKING A HARD LINK */
-	status = link(filename, path);
+	status = link(icon_path, path);
 	if (status != 0)
 	{
 		if (status != EEXIST)
 		{
 #endif
+			gconstpointer icon_data;
+			size_t len;
+			FILE *file;
+
+			icon_data = purple_buddy_icon_get_data(icon, &len);
+
 			/* WRITE THE DATA */
 			if ((file = g_fopen(path, "wb")) != NULL)
 			{
-				fwrite(icon_data, 1, len, file);
-				fclose(file);
+				if (!fwrite(icon_data, len, 1, file))
+				{
+					purple_debug_error(PLUGIN_STATIC_NAME, "Failed to write to %s: %s\n",
+					                   path, strerror(errno));
+					fclose(file);
+					g_unlink(path);
+				}
+				else
+					fclose(file);
 			}
 #ifndef _WIN32
 		}
@@ -229,31 +201,21 @@ static void buddy_icon_cached_cb(PurpleBuddyIcon *icon, PurpleBuddy *buddy,
 		}
 	}
 #endif
+	g_free(path);
 }
 
 static void cache_for_buddy(gpointer key, PurpleBuddy *buddy, gpointer data)
 {
 	PurpleBuddyIcon *icon;
-	const char *filename;
-	char *full_path;
 
 	icon = purple_buddy_get_icon(buddy);
 	if (icon == NULL)
 		return;
 
-	filename = purple_blist_node_get_string((PurpleBlistNode*)buddy, "buddy_icon");
-	if (filename == NULL)
-		return;
+	purple_debug_misc(PLUGIN_STATIC_NAME, "Caching icon for buddy: %s\n",
+	                  purple_buddy_get_name(buddy));
 
-	purple_debug_misc(PLUGIN_STATIC_NAME, "Caching existing icon for buddy: %s\n",
-	                             purple_buddy_get_name(buddy));
-
-	full_path = purple_buddy_icons_get_full_path(filename);
-
-	/* Pretend this was just cached by Purple. */
-	buddy_icon_cached_cb(icon, buddy, full_path, NULL, NULL);
-
-	g_free(full_path);
+	store_buddy_icon(icon, buddy);
 }
 
 static
