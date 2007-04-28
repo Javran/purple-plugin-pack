@@ -1,6 +1,6 @@
 EXTRA_DIST = .purple-plugin Makefile.mingw
 
-autorejoindir = $(PURPLE_LIBDIR)/purple
+autorejoindir = $(PURPLE_LIBDIR)
 
 autorejoin_la_LDFLAGS = -module -avoid-version
 
@@ -17,7 +17,7 @@ autorejoin_la_SOURCES = \
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(PURPLE_LIBDIR)/purple/\" \
+	-DLIBDIR=\"$(PURPLE_LIBDIR)\" \
 	-DDATADIR=\"$(PURPLE_DATADIR)\" \
 	-DLOCALEDIR=\"$(PURPLE_DATADIR)/locale\" \
 	$(GTK_CFLAGS) \
