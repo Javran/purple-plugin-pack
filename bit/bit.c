@@ -54,18 +54,22 @@ blist_iterate_action(gboolean remove)
 		const char *tmpname = purple_buddy_get_name(buddy);
 		PurpleBuddyIcon *icon = purple_buddy_get_icon(buddy);
 		if (icon != NULL) {
-			purple_debug_info("bit", "Processing %s (%d)\n", tmpname,
-							 icon->ref_count);
+#if 0
+			purple_debug_info("bit", "Processing %s (%p)\n", tmpname, icon);
 			if (!icon->ref_count > 0 && remove == TRUE) {
 				for ( n = icon->ref_count; n !=0; n-- ) {
 					purple_debug_info("bit", "ref_count: %d\n", n);
 					purple_buddy_icon_unref(icon);
 				}
 			}
+#endif
 			/* XXX: This *may* cause a segfault. - Sadrul */
 			if (remove == TRUE) {
 				purple_debug_info("bit", "Uncaching icon for %s\n", tmpname);
+#if 0
+				/* XXX: The new buddy icon API doesn't have purple_buddy_icon_uncache() */
 				purple_buddy_icon_uncache(buddy);
+#endif
 				/* XXX: This *definately* causes a segfault. From reading the 
 				 * source, I may not need to unref but just straight destroy it
 				 * haven't played/investigated enough to decide if I want to
