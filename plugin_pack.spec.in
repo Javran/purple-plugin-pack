@@ -1,36 +1,36 @@
 #
-# gaim_major_ver and gaim_minor_ver should be defined to match the minimum
-# Gaim API version _required_ to build Plugin Pack
-# Due to the way Gaim checks plugin versions, we need to also ensure that
-# the correct minimum version of Gaim is Require:'d based on what version of
-# the Gaim headers we actually build with.
+# pidgin_major_ver and pidgin_minor_ver should be defined to match the minimum
+# Pidgin API version _required_ to build Plugin Pack
+# Due to the way Pidgin checks plugin versions, we need to also ensure that
+# the correct minimum version of Pidgin is Require:'d based on what version of
+# the Pidgin headers we actually build with.
 #
 
-%define gaim_major_ver 2
-%define gaim_minor_ver 0
-%define gaim_next_major_ver %(echo $((%{gaim_major_ver}+1)))
-%define gaim_build_minor_ver %(pkg-config --modversion gaim | awk -F. '{ print $2 }')
+%define pidgin_major_ver 2
+%define pidgin_minor_ver 0
+%define pidgin_next_major_ver %(echo $((%{pidgin_major_ver}+1)))
+%define pidgin_build_minor_ver %(pkg-config --modversion pidgin | awk -F. '{ print $2 }')
 
-Summary:    Plugin Pack for Gaim
+Summary:    Plugin Pack for Pidgin
 Name:       @PACKAGE@
 Version:    @VERSION@
 
-Release:    0%{?gaimdist:.%{gaimdist}}
+Release:    0%{?pidgindist:.%{pidgindist}}
 License:    GPL
 Group:      Applications/Internet
 
-URL:        http://gaim.guifications.org/
-Source0:    %{name}-%{version}.tar.gz
+URL:        http://plugins.guifications.org/
+Source0:    %{name}-%{version}.tar.bz2
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires: pkgconfig, libtool, gettext, xmms-devel
-BuildRequires: gaim-devel >= 1:%{gaim_major_ver}.%{gaim_minor_ver}, gaim-devel < 1:%{gaim_next_major_ver}
+BuildRequires: pidgin-devel >= %{pidgin_major_ver}.%{pidgin_minor_ver}, pidgin-devel < %{pidgin_next_major_ver}
 %if "%{_vendor}" == "MandrakeSoft" || "%{_vendor}" == "Mandrakesoft"
 BuildRequires: libgtk+2.0_0-devel
 %else
 BuildRequires: gtk2-devel
 %endif
-Requires: gaim >= 1:%{gaim_major_ver}.%{gaim_build_minor_ver}, gaim < 1:%{gaim_next_major_ver}
+Requires:      pidgin >= %{pidgin_major_ver}.%{pidgin_build_minor_ver}, pidgin < %{pidgin_next_major_ver}
 
 %description
 All the other plugins
@@ -46,8 +46,8 @@ make %{?_smp_mflags}
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
 
-strip $RPM_BUILD_ROOT%{_libdir}/gaim/*.so || :
-rm -f $RPM_BUILD_ROOT%{_libdir}/gaim/*.la $RPM_BUILD_ROOT%{_libdir}/gaim/*.a
+rm -f $RPM_BUILD_ROOT%{_libdir}/purple-2/*.la $RPM_BUILD_ROOT%{_libdir}/purple-2/*.a
+rm -f $RPM_BUILD_ROOT%{_libdir}/pidgin/*.la $RPM_BUILD_ROOT%{_libdir}/pidgin/*.a
 %find_lang plugin_pack
 
 %clean
@@ -56,10 +56,16 @@ rm -rf $RPM_BUILD_ROOT
 %files -f plugin_pack.lang
 %defattr(-,root,root,-)
 %doc AUTHORS ChangeLog COPYING README
-%{_libdir}/gaim/*.so
-%{_datadir}/pixmaps/gaim/plugin_pack
+%{_libdir}/pidgin/*.so
+%{_libdir}/purple-2/*.so
+%{_datadir}/pixmaps/pidgin/plugin_pack
 
 %changelog
+* Mon Apr 30 2007 Stu Tomlinson <stu@nosnilmot.com>
+- Update for the rename of Gaim to Pidgin
+- New URL for our new website
+- Use tar.bz2 for source
+
 * Tue Dec 5 2006 John Bailey <rekkanoryo@rekkanoryo.org>
 - Update the URL to match our new website
 
