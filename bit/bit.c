@@ -197,29 +197,33 @@ static PurplePluginInfo info =
 	PURPLE_PLUGIN_MAGIC,								/**< magic			*/
 	PURPLE_MAJOR_VERSION,								/**< major version	*/
 	PURPLE_MINOR_VERSION,								/**< minor version	*/
-	PURPLE_PLUGIN_STANDARD,							/**< type			*/
-	NULL,											/**< ui_requirement	*/
-	0,												/**< flags			*/
-	NULL,											/**< dependencies	*/
+	PURPLE_PLUGIN_STANDARD,								/**< type			*/
+	NULL,												/**< ui_requirement	*/
+	0,													/**< flags			*/
+	NULL,												/**< dependencies	*/
 	PURPLE_PRIORITY_DEFAULT,							/**< priority		*/
 
-	"core-plugin_pack-bit",							/**< id				*/
-	NULL,											/**< name			*/
-	PP_VERSION,									/**< version		*/
-	NULL,											/**  summary		*/
-	NULL,											/**  description	*/
+	"core-plugin_pack-bit",								/**< id				*/
+	NULL,												/**< name			*/
+	PP_VERSION,											/**< version		*/
+	NULL,												/**  summary		*/
+	NULL,												/**  description	*/
 	"Peter Lawler <bleeter from users.sf.net>",
-													/**< authors		*/
-	PP_WEBSITE,									/**< homepage		*/
+														/**< authors		*/
+	PP_WEBSITE,											/**< homepage		*/
 
-	NULL,											/**< load			*/
-	NULL,											/**< unload			*/
-	NULL,											/**< destroy		*/
+	NULL,												/**< load			*/
+	NULL,												/**< unload			*/
+	NULL,												/**< destroy		*/
 
-	NULL,											/**< ui_info		*/
-	NULL,											/**< extra_info		*/
-	NULL,											/**< prefs_info		*/
-	bit_actions										/**< actions		*/
+	NULL,												/**< ui_info		*/
+	NULL,												/**< extra_info		*/
+	NULL,												/**< prefs_info		*/
+	bit_actions,										/**< actions		*/
+	NULL,												/**< reserved 1		*/
+	NULL,												/**< reserved 2		*/
+	NULL,												/**< reserved 3		*/
+	NULL												/**< reserved 4		*/
 };
 
 static void

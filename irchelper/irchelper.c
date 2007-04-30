@@ -190,7 +190,11 @@ static PurplePluginInfo info =
 	NULL,                            /**< ui_info        */
 	NULL,                            /**< extra_info     */
 	NULL,                            /**< prefs_info     */
-	NULL
+	NULL,                            /**< actions        */
+	NULL,                            /**< reserved 1     */
+	NULL,                            /**< reserved 2     */
+	NULL,                            /**< reserved 3     */
+	NULL                             /**< reserved 4     */
 };
 
 /* XXX: This is a dirty hack. It's better than what I was doing before, though. */

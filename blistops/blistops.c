@@ -120,7 +120,13 @@ get_plugin_pref_frame(PurplePlugin *plugin) {
 }
 
 static PurplePluginUiInfo prefs_info = {
-	get_plugin_pref_frame, 0, NULL
+	get_plugin_pref_frame,
+	0,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
 
 static PurplePluginInfo info =
@@ -149,6 +155,10 @@ static PurplePluginInfo info =
 	NULL,
 	NULL,
 	&prefs_info,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
 	NULL
 };
 

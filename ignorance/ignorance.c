@@ -1152,7 +1152,14 @@ static GtkWidget *get_config_frame(PurplePlugin *plugin) {
 	return create_uiinfo(levels);
 }
 
-static PidginPluginUiInfo ui_info = { get_config_frame };
+static PidginPluginUiInfo ui_info = {
+	get_config_frame,
+	0,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
 
 static PurplePluginInfo ig_info = {
 	PURPLE_PLUGIN_MAGIC,
@@ -1175,6 +1182,10 @@ static PurplePluginInfo ig_info = {
 	plugin_unload,
 	NULL,
 	&ui_info,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
 	NULL,
 	NULL,
 	NULL

@@ -177,6 +177,10 @@ static PurplePluginInfo eight_ball_info =
 	NULL,
 	NULL,
 	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
 	NULL
 };
 

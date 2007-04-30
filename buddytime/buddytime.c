@@ -224,28 +224,32 @@ static PurplePluginInfo info = {
 	PURPLE_PLUGIN_MAGIC,			/* Magic				*/
 	PURPLE_MAJOR_VERSION,			/* Purple Major Version	*/
 	PURPLE_MINOR_VERSION,			/* Purple Minor Version	*/
-	PURPLE_PLUGIN_STANDARD,		/* plugin type			*/
-	PIDGIN_PLUGIN_TYPE,		/* ui requirement		*/
-	0,							/* flags				*/
-	NULL,						/* dependencies			*/
+	PURPLE_PLUGIN_STANDARD,			/* plugin type			*/
+	PIDGIN_PLUGIN_TYPE,				/* ui requirement		*/
+	0,								/* flags				*/
+	NULL,							/* dependencies			*/
 	PURPLE_PRIORITY_DEFAULT,		/* priority				*/
 
-	PLUGIN_ID,					/* plugin id			*/
-	NULL,						/* name					*/
-	PP_VERSION,				/* version				*/
-	NULL,						/* summary				*/
-	NULL,						/* description			*/
-	PLUGIN_AUTHOR,				/* author				*/
-	PP_WEBSITE,				/* website				*/
+	PLUGIN_ID,						/* plugin id			*/
+	NULL,							/* name					*/
+	PP_VERSION,						/* version				*/
+	NULL,							/* summary				*/
+	NULL,							/* description			*/
+	PLUGIN_AUTHOR,					/* author				*/
+	PP_WEBSITE,						/* website				*/
 
-	plugin_load,				/* load					*/
-	plugin_unload,				/* unload				*/
-	NULL,						/* destroy				*/
+	plugin_load,					/* load					*/
+	plugin_unload,					/* unload				*/
+	NULL,							/* destroy				*/
 
-	NULL,						/* ui_info				*/
-	NULL,						/* extra_info			*/
-	NULL,						/* prefs_info			*/
-	NULL						/* actions				*/
+	NULL,							/* ui_info				*/
+	NULL,							/* extra_info			*/
+	NULL,							/* prefs_info			*/
+	NULL,							/* actions				*/
+	NULL,							/* reserved 1			*/
+	NULL,							/* reserved 2			*/
+	NULL,							/* reserved 3			*/
+	NULL							/* reserved 4			*/
 };
 
 static void

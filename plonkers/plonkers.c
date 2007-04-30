@@ -313,36 +313,48 @@ init_plugin(PurplePlugin *plugin) {
 
 }
 
-static PidginPluginUiInfo ui_info = { plonkers_get_config_frame };
+static PidginPluginUiInfo ui_info = {
+	plonkers_get_config_frame,
+	0,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
 
 static PurplePluginInfo plonkers_info = {
 	PURPLE_PLUGIN_MAGIC,								/* Fear			*/
 	PURPLE_MAJOR_VERSION,								/* the			*/
 	PURPLE_MINOR_VERSION,								/* reaper		*/
-	PURPLE_PLUGIN_STANDARD,							/* type			*/
-	PIDGIN_PLUGIN_TYPE,							/* ui requirement	*/
-	0,												/* flags			*/
-	NULL,											/* dependencies	*/
+	PURPLE_PLUGIN_STANDARD,								/* type			*/
+	PIDGIN_PLUGIN_TYPE,									/* ui requirement	*/
+	0,													/* flags			*/
+	NULL,												/* dependencies	*/
 	PURPLE_PRIORITY_DEFAULT,							/* priority		*/
 
-	"core-plugin_pack-Plonkers",					/* id			*/
-	"Plonkers",										/* name			*/
-	PP_VERSION,									/* version		*/
-	"Tell plonkers what you really think",			/* summary		*/
+	"core-plugin_pack-Plonkers",						/* id			*/
+	"Plonkers",											/* name			*/
+	PP_VERSION,											/* version		*/
+	"Tell plonkers what you really think",				/* summary		*/
 	"A small plugin that lets you announce"
 	" to a chat room your current ignores, as"
 	" well as providing other pointless ingore and"
 	" privacy tools for dealing with idiots.\n"
-	"Name inspired by en_IE/GB word for 'idiots'.",/* description	*/
-	"Peter Lawler <bleeter from users.sf.net>",		/* author		*/
-	PP_WEBSITE,									/* homepage		*/
-	plonkers_load,									/* load			*/
-	plonkers_unload,								/* unload		*/
-	NULL,											/* destroy		*/
+	"Name inspired by en_IE/GB word for 'idiots'.",		/* description	*/
+	"Peter Lawler <bleeter from users.sf.net>",			/* author		*/
+	PP_WEBSITE,											/* homepage		*/
+	plonkers_load,										/* load			*/
+	plonkers_unload,									/* unload		*/
+	NULL,												/* destroy		*/
 
-	&ui_info,										/* ui info		*/
-	NULL,											/* extra info		*/
-	NULL											/* actions info	*/
+	&ui_info,											/* ui info		*/
+	NULL,												/* extra info		*/
+	NULL,												/* prefs info		*/
+	NULL,												/* actions info	*/
+	NULL,												/* reserved 1	*/
+	NULL,												/* reserved 2	*/
+	NULL,												/* reserved 3	*/
+	NULL												/* reserved 4	*/
 };
 
 PURPLE_INIT_PLUGIN(plonkers, init_plugin, plonkers_info)

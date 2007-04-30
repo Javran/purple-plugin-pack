@@ -701,6 +701,10 @@ static PurplePluginProtocolInfo prpl_info = {
 	NULL,					/* new_xfer */
 	NULL,					/* offline_message */
 	NULL,					/* whiteboard_prpl_ops */
+	NULL,					/* reserved 1 */
+	NULL,					/* reserved 2 */
+	NULL,					/* reserved 3 */
+	NULL					/* reserved 4 */
 };
 
 static PurplePluginInfo info = {
@@ -729,6 +733,10 @@ static PurplePluginInfo info = {
 
 	NULL,                                             /**< ui_info        */
 	&prpl_info,                                       /**< extra_info     */
+	NULL,
+	NULL,
+	NULL,
+	NULL,
 	NULL,
 	NULL
 };

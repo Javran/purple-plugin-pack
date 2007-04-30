@@ -365,7 +365,13 @@ get_plugin_pref_frame(PurplePlugin *plugin)
 }
 
 static PurplePluginUiInfo prefs_info = {
-	get_plugin_pref_frame
+	get_plugin_pref_frame,
+	0,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
 
 static PurplePluginInfo talkfilters_info = {
@@ -392,6 +398,10 @@ static PurplePluginInfo talkfilters_info = {
 	NULL,
 	NULL,
 	&prefs_info,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
 	NULL
 };
 

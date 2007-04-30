@@ -108,28 +108,32 @@ static PurplePluginInfo info =
 	PURPLE_PLUGIN_MAGIC,								/**< magic			*/
 	PURPLE_MAJOR_VERSION,								/**< major version	*/
 	PURPLE_MINOR_VERSION,								/**< minor version	*/
-	PURPLE_PLUGIN_STANDARD,							/**< type			*/
-	NULL,											/**< ui_requirement	*/
-	0,												/**< flags			*/
-	NULL,											/**< dependencies	*/
+	PURPLE_PLUGIN_STANDARD,								/**< type			*/
+	NULL,												/**< ui_requirement	*/
+	0,													/**< flags			*/
+	NULL,												/**< dependencies	*/
 	PURPLE_PRIORITY_DEFAULT,							/**< priority		*/
 
-	"core-plugin_pack-dice",						/**< id				*/
-	NULL,											/**< name			*/
-	PP_VERSION,									/**< version		*/
-	NULL,											/**  summary		*/
-	NULL,											/**  description	*/
-	"Gary Kramlich <amc_grim@users.sf.net>",		/**< author			*/
-	PP_WEBSITE,									/**< homepage		*/
+	"core-plugin_pack-dice",							/**< id				*/
+	NULL,												/**< name			*/
+	PP_VERSION,											/**< version		*/
+	NULL,												/**  summary		*/
+	NULL,												/**  description	*/
+	"Gary Kramlich <amc_grim@users.sf.net>",			/**< author			*/
+	PP_WEBSITE,											/**< homepage		*/
 
-	plugin_load,									/**< load			*/
-	plugin_unload,									/**< unload			*/
-	NULL,											/**< destroy		*/
+	plugin_load,										/**< load			*/
+	plugin_unload,										/**< unload			*/
+	NULL,												/**< destroy		*/
 
-	NULL,											/**< ui_info		*/
-	NULL,											/**< extra_info		*/
-	NULL,											/**< prefs_info		*/
-	NULL											/**< actions		*/
+	NULL,												/**< ui_info		*/
+	NULL,												/**< extra_info		*/
+	NULL,												/**< prefs_info		*/
+	NULL,												/**< actions		*/
+	NULL,												/**< reserved 1		*/
+	NULL,												/**< reserved 2		*/
+	NULL,												/**< reserved 3		*/
+	NULL												/**< reserved 4		*/
 };
 
 static void

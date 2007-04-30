@@ -74,13 +74,13 @@ plugin_load(PurplePlugin *plugin)
 static PurplePluginInfo info =
 {
 	PURPLE_PLUGIN_MAGIC,
-	PURPLE_MAJOR_VERSION,								/**< major version	*/
+	PURPLE_MAJOR_VERSION,							/**< major version	*/
 	PURPLE_MINOR_VERSION,
 	PURPLE_PLUGIN_STANDARD,							/**< type			*/
 	NULL,											/**< ui_requirement	*/
 	0,												/**< flags			*/
 	NULL,											/**< dependencies	*/
-	PURPLE_PRIORITY_DEFAULT,							/**< priority		*/
+	PURPLE_PRIORITY_DEFAULT,						/**< priority		*/
 
 	"core-plugin_pack-showoffline",					/**< id				*/
 	NULL,											/**< name			*/
@@ -88,7 +88,7 @@ static PurplePluginInfo info =
 	NULL,											/**  summary		*/
 	NULL,											/**  description	*/
 	"Stu Tomlinson <stu@nosnilmot.com>",			/**< author			*/
-	PP_WEBSITE,									/**< homepage		*/
+	PP_WEBSITE,										/**< homepage		*/
 
 	plugin_load,									/**< load			*/
 	NULL,											/**< unload			*/
@@ -97,7 +97,11 @@ static PurplePluginInfo info =
 	NULL,											/**< ui_info		*/
 	NULL,											/**< extra_info		*/
 	NULL,											/**< prefs_info		*/
-	NULL											/**< actions		*/
+	NULL,											/**< actions		*/
+	NULL,											/**< reserved 1		*/
+	NULL,											/**< reserved 2		*/
+	NULL,											/**< reserved 3		*/
+	NULL											/**< reserved 4		*/
 };
 
 

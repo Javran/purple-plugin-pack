@@ -102,7 +102,11 @@ static PurplePluginInfo info =
 	NULL,                              /**< ui_info        */
 	NULL,                              /**< extra_info     */
 	NULL,                              /**< prefs_info     */
-	album_get_plugin_actions
+	album_get_plugin_actions,          /**< plugin actions */
+	NULL,                              /**< reserved 1     */
+	NULL,                              /**< reserved 2     */
+	NULL,                              /**< reserved 3     */
+	NULL                               /**< reserved 4     */
 };
 
 

@@ -36,8 +36,7 @@
 
 #include "../common/i18n.h"
 
-/* XXX: THIS MUST BE CHANGED WHEN PIDGIN DOES ITS PREFS MIGRATION!!!!! */
-#define SEPANDTAB_PREF "/gaim/gtk/conversations/placement"
+#define SEPANDTAB_PREF "/pidgin/conversations/placement"
 
 
 static void
@@ -130,6 +129,10 @@ static PurplePluginInfo info = {
 	PP_WEBSITE,
 	plugin_load,
 	plugin_unload,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
 	NULL,
 	NULL,
 	NULL,

@@ -169,7 +169,11 @@ static PurplePluginInfo broadcast_info =
 	NULL,
 	NULL,
 	NULL,
-	broadcast_actions
+	broadcast_actions,
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
 
 

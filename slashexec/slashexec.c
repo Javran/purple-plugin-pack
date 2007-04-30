@@ -442,6 +442,10 @@ static PurplePluginInfo se_info = {
 	NULL,												/* ui info			*/
 	NULL,												/* extra info		*/
 	NULL,												/* actions info		*/
+	NULL,
+	NULL,
+	NULL,
+	NULL,
 	NULL
 };
 
