@@ -11,7 +11,7 @@
 %define pidgin_next_major_ver %(echo $((%{pidgin_major_ver}+1)))
 %define pidgin_build_minor_ver %(pkg-config --modversion pidgin | awk -F. '{ print $2 }')
 
-Summary:    Plugin Pack for Pidgin
+Summary:    Plugin Pack for libpurple and derived IM clients
 Name:       @PACKAGE@
 Version:    @VERSION@
 
@@ -30,10 +30,18 @@ BuildRequires: libgtk+2.0_0-devel
 %else
 BuildRequires: gtk2-devel
 %endif
-Requires:      pidgin >= %{pidgin_major_ver}.%{pidgin_build_minor_ver}, pidgin < %{pidgin_next_major_ver}
+Requires:      libpurple >= %{pidgin_major_ver}.%{pidgin_build_minor_ver}, libpurple < %{pidgin_next_major_ver}
+
+%package -n pidgin-plugin_pack
+Summary:    Plugin Pack for Pidgin
+Group:      Applications/Internet
+Requires:   pidgin >= %{pidgin_major_ver}.%{pidgin_build_minor_ver}, pidgin < %{pidgin_next_major_ver}
 
 %description
-All the other plugins
+All the other plugins for all libpurple derived clients
+
+%description -n pidgin-plugin_pack
+All the other plugins for Pidgin
 
 %prep
 %setup -q
@@ -56,15 +64,21 @@ rm -rf $RPM_BUILD_ROOT
 %files -f plugin_pack.lang
 %defattr(-,root,root,-)
 %doc AUTHORS ChangeLog COPYING README
-%{_libdir}/pidgin/*.so
 %{_libdir}/purple-2/*.so
+
+%files -n pidgin-plugin_pack -f plugin_pack.lang
+%defattr(-,root,root,-)
+%doc AUTHORS ChangeLog COPYING README
+%{_libdir}/pidgin/*.so
 %{_datadir}/pixmaps/pidgin/plugin_pack
+
 
 %changelog
 * Mon Apr 30 2007 Stu Tomlinson <stu@nosnilmot.com>
 - Update for the rename of Gaim to Pidgin
 - New URL for our new website
 - Use tar.bz2 for source
+- Split into pidgin- and purple- RPMs
 
 * Tue Dec 5 2006 John Bailey <rekkanoryo@rekkanoryo.org>
 - Update the URL to match our new website
