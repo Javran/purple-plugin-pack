@@ -1,9 +1,14 @@
-Version 1.0beta7: 3/30/07
+Version 1.0beta7: 6/30/07
 	* Added the Ignorance plugin to the main development line
 	* Added broadcast plugin
 	* Imported the IRC Helper plugin
 	* Imported the "Gaim Album" plugin, as "Album"
-	* Some plugins graduated to pidgin proper (XXX: list which ones!)
+	* Updated all namespaces for purple, pidgin, and finch API
+	* Completed Broadcaster plugin (abusive)
+	* Changed .plugin files to .purple-plugin, .pidgin-plugin, and
+	  .finch-plugin
+	* Added .incomplete to specify plugins that shouldn't ever build
+	  automagically.
 
 Version 1.0beta6: 1/19/07
 	* Extensive changes to the irssi plugin, especially in its text formatting.
