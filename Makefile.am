@@ -13,7 +13,6 @@ EXTRA_DIST = \
 	README \
 	VERSION \
 	VERSION.in \
-	pp_config.h \
 	pp_config.h.mingw \
 	plugin_pack.spec \
 	menuconfig \
