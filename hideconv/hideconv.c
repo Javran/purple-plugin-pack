@@ -163,6 +163,9 @@ conv_created_to(PurpleConversation *conv)
 
 	if (!gtkconv)
 		return TRUE;
+	if (!GTK_WIDGET_VISIBLE(gtkconv->win->window))
+		return TRUE;
+
 	attach_menu_to_window(gtkconv->win);
 	return FALSE;
 }
@@ -185,6 +188,7 @@ twisted_present(PurpleConversation *conv)
 			create_hidden_convwin();
 	}
 	orig_conv_present(conv);
+	conv_created(conv, NULL);
 }
 
 static void
