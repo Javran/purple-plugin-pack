@@ -53,7 +53,7 @@
 /* Plugin Pack Headers */
 #include "../common/i18n.h"
 
-#define	PREFS_PREFIX		"/core/" PLUGIN_ID
+#define	PREFS_PREFIX		"/plugins/core/" PLUGIN_ID
 #define	PREFS_IDLE			PREFS_PREFIX "/idle"
 #define	PREFS_AWAY			PREFS_PREFIX "/away"
 #define	PREFS_GLOBAL		PREFS_PREFIX "/global"
