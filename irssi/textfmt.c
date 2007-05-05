@@ -231,6 +231,6 @@ irssi_textfmt_init(PurplePlugin *plugin) {
 
 void
 irssi_textfmt_uninit(PurplePlugin *plugin) {
-	/* Nothing to do here, gaim kills our callbacks for us. */
+	/* Nothing to do here, purple kills our callbacks for us. */
 }
 

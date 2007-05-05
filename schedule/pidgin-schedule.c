@@ -23,7 +23,7 @@
 
 #define PURPLE_PLUGINS
 
-#define PLUGIN_ID			"gtk-gaim-schedule"
+#define PLUGIN_ID			"gtk-schedule"
 #define PLUGIN_NAME			"Purple Schedule"
 #define PLUGIN_STATIC_NAME	"Purple Schedule"
 #define PLUGIN_SUMMARY		"Schedule reminders at specified times."

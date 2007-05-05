@@ -28,7 +28,7 @@
 
 PurplePlugin *listhandler = NULL; /* the request api prefers this for a plugin */
 
-static GList * /* gaim's picky and wants a GList of actions for its menu */
+static GList * /* pidgin's picky and wants a GList of actions for its menu */
 listhandler_actions(PurplePlugin *plugin, gpointer context)
 {
 	GList *list = NULL;
@@ -89,7 +89,7 @@ static PurplePluginInfo listhandler_info =
 	NULL
 };
 
-static void /* gaim will call this to initialize the plugin */
+static void /* purple will call this to initialize the plugin */
 init_plugin(PurplePlugin *plugin)
 {
 #ifdef ENABLE_NLS

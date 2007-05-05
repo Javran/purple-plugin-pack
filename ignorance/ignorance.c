@@ -36,11 +36,11 @@
 
 #include "interface.h"
 
-/* libgaim headers */
+/* libpurple headers */
 #include <blist.h>
 #include <cmds.h>
 #include <conversation.h>
-#include <gaim.h>
+#include <purple.h>
 #include <plugin.h>
 #include <privacy.h>
 #include <signals.h>
@@ -407,7 +407,7 @@ static gboolean ignorance_rm_user(PurpleConversation *conv, const gchar *usernam
 
 	if(conv) { 
 		purple_debug_info("ignorance",
-				"Preparing to push through to gaim privacy\n");
+				"Preparing to push through to purple privacy\n");
 
 		len = strlen(purple_account_get_protocol_id(
 					purple_conversation_get_account(conv)));

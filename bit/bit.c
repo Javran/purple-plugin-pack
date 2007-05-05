@@ -44,7 +44,7 @@ blist_iterate_action(gboolean remove)
 	PurpleConversation *conv = NULL;
 	gint n;
 
-	/* this grabs the gaim buddy list, which will be walked through */
+	/* this grabs the purple buddy list, which will be walked through */
 	buddies = purple_get_blist();
 
 	/* Use the utility function to loop over the nodes of the tree */

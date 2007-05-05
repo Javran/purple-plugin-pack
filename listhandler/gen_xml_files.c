@@ -121,8 +121,8 @@ lh_generic_import_target_request(void)
 	PurpleRequestField *field;
 	GError *error = NULL;
 
-	/* we need to make sure which gaim prpl this buddy list came from so we can
-	 * filter the accounts list before showing it */
+	/* we need to make sure which purple prpl this buddy list came from so we
+	 * can filter the accounts list before showing it */
 
 	/* read the file */
 	g_file_get_contents(filename, &file_contents, &length, &error);
@@ -305,7 +305,7 @@ lh_generic_export_cb(void *ignored, PurpleRequestFields *fields)
 	/* get the connection from the account */
 	gc = purple_account_get_connection(source_account);
 
-	/* this grabs the gaim buddy list, which will be walked thru later */
+	/* this grabs the purple buddy list, which will be walked thru later */
 	buddies = purple_get_blist();
 
 	if(buddies)
