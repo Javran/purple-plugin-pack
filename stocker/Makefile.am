@@ -2,8 +2,7 @@ EXTRA_DIST = \
 	.incomplete \
 	.pidgin-plugin \
 	gtkticker.h \
-	stocker_prefs.h \
-	Makefile.mingw
+	stocker_prefs.h
 
 stockerdir = $(PIDGIN_LIBDIR)
 
