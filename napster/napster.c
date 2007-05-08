@@ -1,5 +1,5 @@
 /*
- * gaim - Napster Protocol Plugin
+ * napster - Napster Protocol Plugin
  *
  * Copyright (C) 2000-2001, Rob Flynn <rob@marko.net>
  *
@@ -445,7 +445,7 @@ nap_callback(gpointer data, gint source, PurpleInputCondition condition) {
 		break;
 
 	case 604: /* MSG_SERVER_WHOIS_RESPONSE */
-		/* XXX - Format is:   "Elite" 37 " " "Active" 0 0 0 0 "gaim 0.63cvs" 0 0 192.168.1.41 32798 0 unknown flounder */
+		/* XXX - Format is:   "Elite" 37 " " "Active" 0 0 0 0 "purple 0.63cvs" 0 0 192.168.1.41 32798 0 unknown flounder */
 		res = g_strsplit(buf, " ", 2);
 		/* res[0] == username */
 		purple_notify_userinfo(gc, res[0], res[1], NULL, NULL);
@@ -543,7 +543,7 @@ nap_login_connect(gpointer data, gint source, const gchar *error_message) {
 	g_free(buf);
 
 	/* Write our signon data */
-	nap_write_packet(gc, 2, "%s %s 0 \"gaim %s\" 0",
+	nap_write_packet(gc, 2, "%s %s 0 \"purple %s\" 0",
 			purple_account_get_username(gc->account),
 			purple_connection_get_password(gc), VERSION);
 

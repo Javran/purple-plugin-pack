@@ -417,7 +417,7 @@ lh_aim_export_cb(void *ignored, PurpleRequestFields *fields)
 	/* get the connection from the account */
 	gc = purple_account_get_connection(source_account);
 
-	/* this grabs the gaim buddy list, which will be walked thru later */
+	/* this grabs the purple buddy list, which will be walked thru later */
 	buddies = purple_get_blist();
 
 	if(buddies)

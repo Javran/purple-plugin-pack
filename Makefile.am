@@ -60,3 +60,6 @@ info:
 	@echo "	Incomplete.: $(PP_FINCH_INCOMPLETE)"
 	@echo "	Building...: $(PP_FINCH_BUILD)"
 	@echo "---------------------------------------"
+
+dist-hook:
+	$(MAKE) -C po update-po

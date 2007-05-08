@@ -1,5 +1,5 @@
 /*
- * slashexec - A CLI for gaim
+ * slashexec - A CLI for pidgin
  * Copyright (C) 2004-2006 Gary Kramlich
  * Copyright (C) 2005-2006 Peter Lawler
  * Copyright (C) 2005-2006 Daniel Atallah

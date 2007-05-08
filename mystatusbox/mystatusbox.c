@@ -55,7 +55,7 @@
 #include "../common/i18n.h"
 
 /* XXX: THIS NEEDS CHANGED WHEN PIDGIN DOES ITS PREFS MIGRATION!!!!! */
-#define PREF_PREFIX "/gaim/gtk/" PLUGIN_ID
+#define PREF_PREFIX "/pidgin/gtk/" PLUGIN_ID
 #define PREF_PANE	PREF_PREFIX "/pane"
 #define PREF_GLOBAL	PREF_PREFIX "/global"
 #define PREF_SHOW	PREF_PREFIX "/show"
@@ -257,7 +257,7 @@ pidgin_status_selectors_show(PurpleStatusBoxVisibility action)
 		return;
 
 	/* XXX: CHANGE THIS WHEN PIDGIN FINISHES ITS PREFS MIGRATION!!!! */
-	height = purple_prefs_get_int("/gaim/gtk/blist/height");
+	height = purple_prefs_get_int("/pidgin/gtk/blist/height");
 	
 	if (!purple_prefs_get_bool(PREF_GLOBAL))
 	{

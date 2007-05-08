@@ -85,7 +85,7 @@ struct _NickSaid
 	char *what;
 };
 
-/* <lift src="gaim/src/util.c"> */
+/* <lift src="pidgin/src/util.c"> ??? */
 static const gchar *
 ns_time(void)
 {
@@ -292,7 +292,7 @@ generate_popup(GtkWidget *w, GdkEventButton *event, PidginWindow *win)
 							GINT_TO_POINTER(said->offset));
 			g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(go_selected), gtkconv);
 		/* TODO:
-		 * If the line to scrollback to is greater /gaim/gtk/conversations/scrollback_lines,
+		 * If the line to scrollback to is greater /pidgin/gtk/conversations/scrollback_lines,
 		 * desensitise the widget so it at least displays.. or something like that. you get the drift. */
 			list = list->next;
 		}
