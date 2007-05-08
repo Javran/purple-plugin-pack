@@ -17,7 +17,7 @@ INCLUDE_PATHS += \
 	-I$(ASPELL_TOP)/include
 
 LIB_PATHS += \
-	-L$(GTKSPELL_TOP) \
+	-L$(GTKSPELL_TOP)/gtkspell \
 	-L$(ASPELL_TOP)/lib
 
 PLUGIN_LIBS += \
