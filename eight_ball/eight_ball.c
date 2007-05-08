@@ -61,7 +61,8 @@ static const gchar *sg_ball_strings[] = {
 	"That's what you get for dickin' around", /* from "Fallout" */
 	"Jaffa! Cree!",
 	"Tec ma te",
-	"Kneel before your god!"
+	"Kneel before your god!",
+	"I believe a medical attack could be successful."
 };
 
 static PurpleCmdId eight_ball_cmd_id = 0, sg_ball_cmd_id = 0;
