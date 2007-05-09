@@ -175,8 +175,8 @@ init_plugin(PurplePlugin *plugin) {
 
 	purple_prefs_add_none(PREF_MY);
 	purple_prefs_add_none(PREF_ROOT);
-	purple_prefs_add_bool(PREF_LIST, TRUE);
-	purple_prefs_add_bool(PREF_MENU, TRUE);
+	purple_prefs_add_bool(PREF_LIST, FALSE);
+	purple_prefs_add_bool(PREF_MENU, FALSE);
 }
 
 PURPLE_INIT_PLUGIN(blistops, init_plugin, info)
