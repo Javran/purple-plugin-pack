@@ -10,6 +10,10 @@ PP_TOP :=		..
 
 PP = switchspell
 
+INCLUDE_PATHS = -I$(GTKSPELL_TOP) -I$(ASPELL_TOP)/include
+
+LIB_PATHS = -L$(ASPELL_TOP)/lib
+
 include $(PP_TOP)/win_pp.mak
 
 INCLUDE_PATHS += \
