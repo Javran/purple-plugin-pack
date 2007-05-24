@@ -294,7 +294,7 @@ lh_aim_import_target_request(void)
 	purple_request_field_group_add_field(group, field);
 
 	/* and finally we can create the request */
-	purple_request_fields(purple_get_blist(), _("Buddy List Importer"),
+	purple_request_fields(purple_get_blist(), _("List Handler: Importing"),
 						_("Choose the account to import to:"), NULL,
 						request, _("_Import"),
 						G_CALLBACK(lh_aim_import_target_request_cb),
@@ -308,7 +308,7 @@ lh_aim_import_target_request(void)
 static void
 lh_aim_import_cb(void *user_data, const char *file)
 {
-	purple_debug_info("bltimporter", "Beginning import\n");
+	purple_debug_info("listhandler: import", "Beginning import\n");
 
 	if(file) {
 		filename = g_strdup(file);
@@ -459,7 +459,7 @@ lh_aim_export_action_cb(PurplePluginAction *action)
 	purple_request_field_group_add_field(group, field);
 
 	/* and finally we can create the request */
-	purple_request_fields(purple_get_blist(), _("Buddy List Exporter"),
+	purple_request_fields(purple_get_blist(), _("List Handler: Exporting"),
 						_("Choose the account to export from:"), NULL, request,
 						_("_Export"), G_CALLBACK(lh_aim_export_cb), _("_Cancel"),
 						NULL, NULL);

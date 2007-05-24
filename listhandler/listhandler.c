@@ -28,17 +28,21 @@
 
 PurplePlugin *listhandler = NULL; /* the request api prefers this for a plugin */
 
-static GList * /* gaim's picky and wants a GList of actions for its menu */
+static GList * /* libpurple's picky and wants a GList of actions for the UI menu */
 listhandler_actions(PurplePlugin *plugin, gpointer context)
 {
 	GList *list = NULL;
 	PurplePluginAction *action = NULL;
 
-	action = purple_plugin_action_new(_("Import AIM Buddy List File"),
+	action = purple_plugin_action_new(_("Import AIM Buddy List File (.blt)"),
 									lh_aim_import_action_cb);
 	list = g_list_append(list, action);
 
-	action = purple_plugin_action_new(_("Import Generic Buddy List File"),
+	action = purple_plugin_action_new(_("Import NotesBuddy Buddy List File (.dat)"),
+									lh_nb_import_action_cb);
+	list = g_list_append(list, action);
+
+	action = purple_plugin_action_new(_("Import Generic Buddy List File (.xml)"),
 									lh_generic_import_action_cb);
 	list = g_list_append(list, action);
 
