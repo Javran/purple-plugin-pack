@@ -141,6 +141,10 @@ static PurplePluginInfo stocker_info =
 	&stocker_ui_info,
 	NULL,
 	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
 	NULL
 };
 

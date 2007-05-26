@@ -9,8 +9,6 @@ PP_CONFIG_H := $(PP_TOP)/pp_config.h
 
 include $(PIDGIN_TREE_TOP)/libpurple/win32/global.mak
 
-DLL_INSTALL_DIR ?=	$(PIDGIN_INSTALL_DIR)/plugins
-
 DEFINES += -DPP_VERSION=\"$(PP_VERSION)\"
 
 ##
@@ -76,7 +74,6 @@ PLUGIN_LIBS = \
 ## TARGET DEFINITIONS
 ##
 
-
 .PHONY: all clean install install_zip
 
 all: $(PP).dll
@@ -85,15 +82,15 @@ $(PP_CONFIG_H): $(PP_TOP)/pp_config.h.mingw
 	cp $(PP_TOP)/pp_config.h.mingw $(PP_CONFIG_H)
 
 $(DLL_ZIP_DIR):
-	mkdir $(DLL_ZIP_DIR)
+	mkdir -p $(DLL_ZIP_DIR)
 
-install: all
-	cp $(PP).dll $(DLL_INSTALL_DIR)
+install: all $(PIDGIN_INSTALL_PLUGINS_DIR)
+	cp $(PP).dll $(PIDGIN_INSTALL_PLUGINS_DIR)
 
 install_zip: $(DLL_ZIP_DIR) all
 	cp $(PP).dll $(DLL_ZIP_DIR)
 
-$(PP_OBJ): $(PP_CONFIG_H)
+$(PP_OBJ): $(PP_CONFIG_H) $(PURPLE_VERSION_H)
 
 ##
 ## BUILD DLL
@@ -111,4 +108,4 @@ clean:
 	rm -rf *.o
 	rm -rf $(PP).dll
 
-
+include $(PIDGIN_COMMON_TARGETS)

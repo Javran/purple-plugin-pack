@@ -308,30 +308,34 @@ static PurplePluginInfo info =
 	PURPLE_PLUGIN_MAGIC,								/**< magic			*/
 	PURPLE_MAJOR_VERSION,								/**< major version	*/
 	PURPLE_MINOR_VERSION,								/**< minor version	*/
-	PURPLE_PLUGIN_STANDARD,							/**< type			*/
-	PIDGIN_PLUGIN_TYPE,							/**< ui_requirement	*/
-	0,												/**< flags			*/
-	NULL,											/**< dependencies	*/
+	PURPLE_PLUGIN_STANDARD,								/**< type			*/
+	PIDGIN_PLUGIN_TYPE,									/**< ui_requirement	*/
+	0,													/**< flags			*/
+	NULL,												/**< dependencies	*/
 	PURPLE_PRIORITY_DEFAULT,							/**< priority		*/
 
-	"gtk-plugin_pack-gRIM",							/**< id				*/
-	NULL,											/**< name			*/
-	PP_VERSION,									/**< version		*/
-	NULL,											/**  summary		*/
-	NULL,											/**  description	*/
+	"gtk-plugin_pack-gRIM",								/**< id				*/
+	NULL,												/**< name			*/
+	PP_VERSION,											/**< version		*/
+	NULL,												/**  summary		*/
+	NULL,												/**  description	*/
 	"Peter Lawler <bleeter from users.sf.net> and"
 	" Sadrul Habib Chowdhury <sadrul from users.sf.net>",
-													/**< authors		*/
-	PP_WEBSITE,									/**< homepage		*/
+														/**< authors		*/
+	PP_WEBSITE,											/**< homepage		*/
 
-	plugin_load,									/**< load			*/
-	plugin_unload,									/**< unload			*/
-	NULL,											/**< destroy		*/
+	plugin_load,										/**< load			*/
+	plugin_unload,										/**< unload			*/
+	NULL,												/**< destroy		*/
 
-	NULL,											/**< ui_info		*/
-	NULL,											/**< extra_info		*/
-	NULL,											/**< prefs_info		*/
-	NULL											/**< actions		*/
+	NULL,												/**< ui_info		*/
+	NULL,												/**< extra_info		*/
+	NULL,												/**< prefs_info		*/
+	NULL,												/**< actions		*/
+	NULL,												/**< reserved 1		*/
+	NULL,												/**< reserved 2		*/
+	NULL,												/**< reserved 3		*/
+	NULL												/**< reserved 4		*/
 };
 
 static void

@@ -1,4 +1,4 @@
-EXTRA_DIST = .plugin Makefile.mingw .build
+EXTRA_DIST = .pidgin-plugin Makefile.mingw .build
 
 hideconvdir = $(PIDGIN_LIBDIR)
 

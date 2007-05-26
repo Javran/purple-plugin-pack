@@ -1,6 +1,5 @@
 EXTRA_DIST = \
 			.abusive \
-			.incomplete \
 			.purple-plugin \
 			Makefile.mingw
 

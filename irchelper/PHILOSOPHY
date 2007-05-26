@@ -8,7 +8,7 @@ Enhancing IRC support in Pidgin involves two specific areas:
 	First, wrapping IRC services and other protocol oddities so that from
 	the user's perspective, IRC reacts the same as the other protocols in
 	Pidgin.  The most obvious example is with NickServ.  For most
-	protocols, you set a password and Gaim authenticates you and you're
+	protocols, you set a password and Pidgin authenticates you and you're
 	done.  With IRC, you have to manually authenticate to NickServ (or
 	setup a Buddy Pounce).  By handling the NickServ authentication, this
 	plugin enhances the users's experience by providing consistency with

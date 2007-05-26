@@ -1,5 +1,5 @@
 dnl ###########################################################################
-dnl # m4 Build Helper for the gaim plugin pack
+dnl # m4 Build Helper for the purple plugin pack
 dnl # Copyright (C) 2005-2007 Gary Kramlich <grim@reaperworld.com>
 dnl #
 dnl # awk foo and other sanity graciously provided by Caleb Gilmour

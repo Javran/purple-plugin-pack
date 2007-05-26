@@ -80,9 +80,9 @@ plonkers_format_info(PurpleConversation *conv) {
 	}
 	plonkers_str = g_string_new("");
 	if (plonkers_size == 1) {
-		format = g_strdup(purple_prefs_get_string("/plugins/core/plugin_pack/gaim-plonkers/plonkers/format_singular"));
+		format = g_strdup(purple_prefs_get_string("/plugins/core/plugin_pack/plonkers/plonkers/format_singular"));
 	} else {
-		format = g_strdup(purple_prefs_get_string("/plugins/core/plugin_pack/gaim-plonkers/plonkers/format_plural"));
+		format = g_strdup(purple_prefs_get_string("/plugins/core/plugin_pack/plonkers/plonkers/format_plural"));
 	}
 
 	while(format) {
@@ -139,7 +139,8 @@ plonkers_display(PurpleConversation *conv) {
  ******************************************************************************/
 static PurpleCmdRet
 plonkers_cmd_cb(PurpleConversation *c, const gchar *cmd, gchar **args, gchar **error, void *data) {
- /* I plan a switch that dumps the current 'block' list, once gaim privacy can export */
+ /* I plan a switch that dumps the current 'block' list, once purple privacy
+  * can export */
 #if 0
 	gchar *lower;
 
@@ -231,18 +232,18 @@ plonkers_get_config_frame(PurplePlugin *plugin) {
 	frame = pidgin_make_frame(vbox, "Ignored Plonkers");
 
 	pidgin_prefs_labeled_entry(frame, "Plonkers singular format:",
-								 "/plugins/core/plugin_pack/gaim-plonkers/plonkers/format_singular",
+								 "/plugins/core/plugin_pack/plonkers/plonkers/format_singular",
 								 NULL);
 	pidgin_prefs_labeled_entry(frame, "Plonkers plural format:",
-								 "/plugins/core/plugin_pack/gaim-plonkers/plonkers/format_plural",
+								 "/plugins/core/plugin_pack/plonkers/plonkers/format_plural",
 								 NULL);
 
 	frame = pidgin_make_frame(vbox, "Plonking");
 	pidgin_prefs_labeled_entry(frame, "Plonked singular plural:",
-								 "/plugins/core/plugin_pack/gaim-plonkers/plonked/format_singular",
+								 "/plugins/core/plugin_pack/plonkers/plonked/format_singular",
 								 NULL);
 	pidgin_prefs_labeled_entry(frame, "Plonked plural format:",
-								 "/plugins/core/plugin_pack/gaim-plonkers/plonked/format_plural",
+								 "/plugins/core/plugin_pack/plonkers/plonked/format_plural",
 								 NULL);
 	sg = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -299,50 +300,62 @@ plonkers_unload(PurplePlugin *plugin) {
 static void
 init_plugin(PurplePlugin *plugin) {
 	purple_prefs_add_none("/plugins/core/plugin_pack");
-	purple_prefs_add_none("/plugins/core/plugin_pack/gaim-plonkers");
-	purple_prefs_add_none("/plugins/core/plugin_pack/gaim-plonkers/plonkers");
-	purple_prefs_add_string("/plugins/core/plugin_pack/gaim-plonkers/plonkers/format_singular",
+	purple_prefs_add_none("/plugins/core/plugin_pack/plonkers");
+	purple_prefs_add_none("/plugins/core/plugin_pack/plonkers/plonkers");
+	purple_prefs_add_string("/plugins/core/plugin_pack/plonkers/plonkers/format_singular",
 						  "/me has identified %N plonker: %P.");
-	purple_prefs_add_string("/plugins/core/plugin_pack/gaim-plonkers/plonkers/format_plural",
+	purple_prefs_add_string("/plugins/core/plugin_pack/plonkers/plonkers/format_plural",
 						  "/me has identified %N plonkers: %P.");
-	purple_prefs_add_none("/plugins/core/plugin_pack/gaim-plonkers/plonked");
-	purple_prefs_add_string("/plugins/core/plugin_pack/gaim-plonkers/plonked/format_singular",
+	purple_prefs_add_none("/plugins/core/plugin_pack/plonkers/plonked");
+	purple_prefs_add_string("/plugins/core/plugin_pack/plonkers/plonked/format_singular",
 						  "/me plonks: %P.");
-	purple_prefs_add_string("/plugins/core/plugin_pack/gaim-plonkers/plonked/format_plural",
+	purple_prefs_add_string("/plugins/core/plugin_pack/plonkers/plonked/format_plural",
 						  "/me plonks: %P.");
 
 }
 
-static PidginPluginUiInfo ui_info = { plonkers_get_config_frame };
+static PidginPluginUiInfo ui_info = {
+	plonkers_get_config_frame,
+	0,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
 
 static PurplePluginInfo plonkers_info = {
 	PURPLE_PLUGIN_MAGIC,								/* Fear			*/
 	PURPLE_MAJOR_VERSION,								/* the			*/
 	PURPLE_MINOR_VERSION,								/* reaper		*/
-	PURPLE_PLUGIN_STANDARD,							/* type			*/
-	PIDGIN_PLUGIN_TYPE,							/* ui requirement	*/
-	0,												/* flags			*/
-	NULL,											/* dependencies	*/
+	PURPLE_PLUGIN_STANDARD,								/* type			*/
+	PIDGIN_PLUGIN_TYPE,									/* ui requirement	*/
+	0,													/* flags			*/
+	NULL,												/* dependencies	*/
 	PURPLE_PRIORITY_DEFAULT,							/* priority		*/
 
-	"core-plugin_pack-Plonkers",					/* id			*/
-	"Plonkers",										/* name			*/
-	PP_VERSION,									/* version		*/
-	"Tell plonkers what you really think",			/* summary		*/
+	"core-plugin_pack-Plonkers",						/* id			*/
+	"Plonkers",											/* name			*/
+	PP_VERSION,											/* version		*/
+	"Tell plonkers what you really think",				/* summary		*/
 	"A small plugin that lets you announce"
 	" to a chat room your current ignores, as"
 	" well as providing other pointless ingore and"
 	" privacy tools for dealing with idiots.\n"
-	"Name inspired by en_IE/GB word for 'idiots'.",/* description	*/
-	"Peter Lawler <bleeter from users.sf.net>",		/* author		*/
-	PP_WEBSITE,									/* homepage		*/
-	plonkers_load,									/* load			*/
-	plonkers_unload,								/* unload		*/
-	NULL,											/* destroy		*/
+	"Name inspired by en_IE/GB word for 'idiots'.",		/* description	*/
+	"Peter Lawler <bleeter from users.sf.net>",			/* author		*/
+	PP_WEBSITE,											/* homepage		*/
+	plonkers_load,										/* load			*/
+	plonkers_unload,									/* unload		*/
+	NULL,												/* destroy		*/
 
-	&ui_info,										/* ui info		*/
-	NULL,											/* extra info		*/
-	NULL											/* actions info	*/
+	&ui_info,											/* ui info		*/
+	NULL,												/* extra info		*/
+	NULL,												/* prefs info		*/
+	NULL,												/* actions info	*/
+	NULL,												/* reserved 1	*/
+	NULL,												/* reserved 2	*/
+	NULL,												/* reserved 3	*/
+	NULL												/* reserved 4	*/
 };
 
 PURPLE_INIT_PLUGIN(plonkers, init_plugin, plonkers_info)

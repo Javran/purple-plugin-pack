@@ -151,6 +151,10 @@ static PurplePluginInfo bash_info =
 	NULL,
 	NULL,
 	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
 	NULL
 };
 

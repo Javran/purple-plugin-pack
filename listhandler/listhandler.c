@@ -86,10 +86,14 @@ static PurplePluginInfo listhandler_info =
 	NULL,
 	NULL,
 	NULL,
-	listhandler_actions
+	listhandler_actions,
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
 
-static void /* gaim will call this to initialize the plugin */
+static void /* purple will call this to initialize the plugin */
 init_plugin(PurplePlugin *plugin)
 {
 #ifdef ENABLE_NLS

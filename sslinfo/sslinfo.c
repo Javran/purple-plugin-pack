@@ -131,7 +131,11 @@ static PurplePluginInfo info = {
 	NULL,
 	NULL,
 	NULL,
-	sslinfo_actions
+	sslinfo_actions,
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
 
 static void

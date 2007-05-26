@@ -120,7 +120,13 @@ get_plugin_pref_frame(PurplePlugin *plugin) {
 }
 
 static PurplePluginUiInfo prefs_info = {
-	get_plugin_pref_frame, 0, NULL
+	get_plugin_pref_frame,
+	0,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
 
 static PurplePluginInfo info =
@@ -149,6 +155,10 @@ static PurplePluginInfo info =
 	NULL,
 	NULL,
 	&prefs_info,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
 	NULL
 };
 
@@ -165,8 +175,8 @@ init_plugin(PurplePlugin *plugin) {
 
 	purple_prefs_add_none(PREF_MY);
 	purple_prefs_add_none(PREF_ROOT);
-	purple_prefs_add_bool(PREF_LIST, TRUE);
-	purple_prefs_add_bool(PREF_MENU, TRUE);
+	purple_prefs_add_bool(PREF_LIST, FALSE);
+	purple_prefs_add_bool(PREF_MENU, FALSE);
 }
 
 PURPLE_INIT_PLUGIN(blistops, init_plugin, info)

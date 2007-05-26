@@ -13,7 +13,6 @@ EXTRA_DIST = \
 	README \
 	VERSION \
 	VERSION.in \
-	pp_config.h \
 	pp_config.h.mingw \
 	plugin_pack.spec \
 	menuconfig \
@@ -61,3 +60,6 @@ info:
 	@echo "	Incomplete.: $(PP_FINCH_INCOMPLETE)"
 	@echo "	Building...: $(PP_FINCH_BUILD)"
 	@echo "---------------------------------------"
+
+dist-hook:
+	$(MAKE) -C po update-po

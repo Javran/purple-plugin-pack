@@ -1109,7 +1109,14 @@ init_plugin(PurplePlugin *plugin) {
 	purple_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/volume", TRUE);
 }
 
-static PidginPluginUiInfo ui_info = { gxr_get_config_frame };
+static PidginPluginUiInfo ui_info = {
+	gxr_get_config_frame,
+	0,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
 
 static PurplePluginInfo gxr_info = {
 	PURPLE_PLUGIN_MAGIC,									/* Don't			*/
@@ -1123,14 +1130,14 @@ static PurplePluginInfo gxr_info = {
 
 	"gtk-plugin_pack-xmmsremote",							/* id			*/
 	"XMMS Remote Control",									/* name			*/
-	PP_VERSION,										/* version		*/
+	PP_VERSION,												/* version		*/
 	"Control XMMS from Purple conversations",				/* summary		*/
 	"A small plugin that adds a menu or buttons to the "
 	"Purple conversation windows' menubars, so that you "
 	"can control XMMS from within Purple.",					/* description	*/
 
 	"Gary Kramlich <plugin_pack@users.sf.net>",				/* author		*/
-	PP_WEBSITE,										/* homepage		*/
+	PP_WEBSITE,												/* homepage		*/
 
 	gxr_load,												/* load			*/
 	gxr_unload,												/* unload		*/
@@ -1138,7 +1145,12 @@ static PurplePluginInfo gxr_info = {
 
 	&ui_info,												/* ui info		*/
 	NULL,													/* extra info		*/
-	NULL													/* actions info	*/
+	NULL,													/* prefs info		*/
+	NULL,													/* actions info	*/
+	NULL,													/* reserved 1	*/
+	NULL,													/* reserved 2	*/
+	NULL,													/* reserved 3	*/
+	NULL													/* reserved 4	*/
 };
 
 PURPLE_INIT_PLUGIN(xmmsremote, init_plugin, gxr_info)

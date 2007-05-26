@@ -93,6 +93,10 @@ static PurplePluginInfo chronic_info =
 	NULL,
 	NULL,
 	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
 	NULL
 };
 

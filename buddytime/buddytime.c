@@ -111,6 +111,7 @@ bt_show_dialog(PurpleBlistNode *node) {
 	BTDialog *dialog;
 	PurpleRequestFields *fields;
 	PurpleRequestFieldGroup *group;
+	PurpleAccount *account = NULL;
 	gint current = 0;
 
 	dialog = g_new0(BTDialog, 1);
@@ -121,6 +122,8 @@ bt_show_dialog(PurpleBlistNode *node) {
 	dialog->node = node;
 
 	current = purple_blist_node_get_int(node, BT_NODE_SETTING);
+
+	/* TODO: set account from node */
 
 	/* build the request fields */
 	fields = purple_request_fields_new();
@@ -162,12 +165,13 @@ bt_show_dialog(PurpleBlistNode *node) {
 //	purple_request_field_choice_set_default_value(dialog->timezone, current);
 //	purple_request_field_coice_set_value(dialog->timezone, current);
 
+	/* TODO: set who from blist node */
 	dialog->handle =
 		purple_request_fields(NULL, _("Select timezone"),
 							NULL, "foo", fields,
 							_("OK"), PURPLE_CALLBACK(bt_dialog_ok_cb),
 							_("Cancel"), PURPLE_CALLBACK(bt_dialog_cancel_cb),
-							dialog);
+							account, NULL /* who */, NULL, dialog);
 	
 	dialogs = g_list_append(dialogs, dialog);
 }
@@ -220,28 +224,32 @@ static PurplePluginInfo info = {
 	PURPLE_PLUGIN_MAGIC,			/* Magic				*/
 	PURPLE_MAJOR_VERSION,			/* Purple Major Version	*/
 	PURPLE_MINOR_VERSION,			/* Purple Minor Version	*/
-	PURPLE_PLUGIN_STANDARD,		/* plugin type			*/
-	PIDGIN_PLUGIN_TYPE,		/* ui requirement		*/
-	0,							/* flags				*/
-	NULL,						/* dependencies			*/
+	PURPLE_PLUGIN_STANDARD,			/* plugin type			*/
+	PIDGIN_PLUGIN_TYPE,				/* ui requirement		*/
+	0,								/* flags				*/
+	NULL,							/* dependencies			*/
 	PURPLE_PRIORITY_DEFAULT,		/* priority				*/
 
-	PLUGIN_ID,					/* plugin id			*/
-	NULL,						/* name					*/
-	PP_VERSION,				/* version				*/
-	NULL,						/* summary				*/
-	NULL,						/* description			*/
-	PLUGIN_AUTHOR,				/* author				*/
-	PP_WEBSITE,				/* website				*/
+	PLUGIN_ID,						/* plugin id			*/
+	NULL,							/* name					*/
+	PP_VERSION,						/* version				*/
+	NULL,							/* summary				*/
+	NULL,							/* description			*/
+	PLUGIN_AUTHOR,					/* author				*/
+	PP_WEBSITE,						/* website				*/
 
-	plugin_load,				/* load					*/
-	plugin_unload,				/* unload				*/
-	NULL,						/* destroy				*/
+	plugin_load,					/* load					*/
+	plugin_unload,					/* unload				*/
+	NULL,							/* destroy				*/
 
-	NULL,						/* ui_info				*/
-	NULL,						/* extra_info			*/
-	NULL,						/* prefs_info			*/
-	NULL						/* actions				*/
+	NULL,							/* ui_info				*/
+	NULL,							/* extra_info			*/
+	NULL,							/* prefs_info			*/
+	NULL,							/* actions				*/
+	NULL,							/* reserved 1			*/
+	NULL,							/* reserved 2			*/
+	NULL,							/* reserved 3			*/
+	NULL							/* reserved 4			*/
 };
 
 static void

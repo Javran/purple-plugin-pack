@@ -1,4 +1,4 @@
-AC_INIT([purple-plugin_pack], [1.0mtn], [guifications-devel@lists.sourceforge.net])
+AC_INIT([purple-plugin_pack], [1.0], [guifications-devel@lists.sourceforge.net])
 AC_CANONICAL_SYSTEM
 AM_CONFIG_HEADER(pre_config.h)
 
@@ -89,7 +89,7 @@ PP_LOCALEDIR="PURPLE_DATADIR/locale"
 AC_DEFINE_UNQUOTED(PP_LOCALEDIR, ["$PP_LOCALEDIR"], [The localedir to use])
 
 if test x"$PURPLE_LIBDIR" != x"" ; then
-	PURPLE_LIBDIR="$PURPLE_LIBDIR/libpurple"
+	PURPLE_LIBDIR="$PURPLE_LIBDIR/purple-2"
 fi
 
 if test x"$PURPLE_DATADIR" != x"" ; then
@@ -171,17 +171,21 @@ AC_SUBST(FINCH_PIXMAPSDIR)
 dnl #######################################################################
 dnl # check for gtk and other dependencies
 dnl #######################################################################
-AM_PATH_GLIB_2_0(2.0.0,,AC_MSG_ERROR([
-*** GLib 2.0 is required to build AC_PACKAGE_NAME; please make sure you have the
-*** GLib development headers installed. The latest version of GLib is always
-*** available at http://www.gtk.org/.]))
+HAVE_GLIB="no"
+PKG_CHECK_MODULES(GLIB, [glib-2.0], HAVE_GLIB="yes", HAVE_GLIB="no")
+
+if test x"$HAVE_GLIB" = x"no" ; then
+	echo "glib development headers were not found.  glib development headers"
+	echo "are required to build $PACKAGE."
+	exit 1
+fi
 AC_SUBST(GLIB_CFLAGS)
 AC_SUBST(GLIB_LIBS)
 
-AM_PATH_GTK_2_0(2.0.0,,AC_MSG_ERROR([
-*** GTK+ 2.0 is required to build AC_PACKAGE_NAME; please make sure you have the
-*** GTK+ development headers installed. The latest version of GTK+ is always
-*** available at http://www.gtk.org/.]))
+HAVE_GTK="no"
+GTK_CFLAGS=""
+GTK_LIBS=""
+PKG_CHECK_MODULES(GTK, [gtk+-2.0], HAVE_GTK="yes", HAVE_GTK="no")
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
 

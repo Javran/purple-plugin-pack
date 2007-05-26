@@ -255,7 +255,11 @@ static PurplePluginInfo info =
 	NULL,											/**< ui_info		*/
 	NULL,											/**< extra_info		*/
 	NULL,											/**< prefs_info		*/
-	NULL											/**< actions		*/
+	NULL,											/**< actions		*/
+	NULL,											/**< reserved 1		*/
+	NULL,											/**< reserved 2		*/
+	NULL,											/**< reserved 3		*/
+	NULL											/**< reserved 4		*/
 };
 
 static void

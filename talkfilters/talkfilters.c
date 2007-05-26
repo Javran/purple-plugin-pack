@@ -3,7 +3,7 @@
  * http://www.hyperrealm.com/talkfilters/talkfilters.html
  *
  * Mark Lindner <markl@gnu.org> 1/6/04
- * Updates for the gaim plugin pack (C) 2005 by
+ * Updates for the purple plugin pack (C) 2005 by
  *    Peter Lawler <bleeter from users.sf.net>
  */
 
@@ -11,7 +11,7 @@
 -- save filter preference
 	-- done (sadrul)
 -- slash commands (allowing it to be a one liner)
--- convert all gtk preference calls to gaim internal calls
+-- convert all gtk preference calls to pidgin internal calls
 	-- done (sadrul)
 -- allow saving different filters for different buddies (or accounts)
 -- add an entry in the popup for the imhtml-entry in the conversation window
@@ -365,7 +365,13 @@ get_plugin_pref_frame(PurplePlugin *plugin)
 }
 
 static PurplePluginUiInfo prefs_info = {
-	get_plugin_pref_frame
+	get_plugin_pref_frame,
+	0,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
 
 static PurplePluginInfo talkfilters_info = {
@@ -392,6 +398,10 @@ static PurplePluginInfo talkfilters_info = {
 	NULL,
 	NULL,
 	&prefs_info,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
 	NULL
 };
 

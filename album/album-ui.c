@@ -696,7 +696,11 @@ static void update_icon_view(icon_viewer_key *key)
 		gtk_container_set_border_width(GTK_CONTAINER(hbox), VBOX_BORDER);
 
 		/* Image */
+#ifndef _WIN32
 		filename = g_build_filename(PIXMAPSDIR, "dialogs", "purple_info.png", NULL);
+#else
+		filename = g_build_filename(wpurple_install_dir(), "pixmaps", "pidgin", "dialogs", "purple_info.png", NULL);
+#endif
 
 		pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
 		g_free(filename);
@@ -772,7 +776,11 @@ static GtkWidget *get_viewer_icon()
 	GtkWidget *image;
 
 	if (filename == NULL)
+#ifndef _WIN32
 		filename = g_build_filename(PIXMAPSDIR, "icons", "online.png", NULL);
+#else
+		filename = g_build_filename(wpurple_install_dir(), "pixmaps", "pidgin", "icons", "online.png", NULL);
+#endif
 
 	pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
 	g_free(filename);
@@ -1135,6 +1143,7 @@ static void album_select_dialog(PurplePluginAction *action)
 	                    fields,
 	                    _("OK"), G_CALLBACK(album_select_dialog_cb),
 	                    _("Cancel"), NULL,
+	                    NULL, NULL, NULL,
 	                    NULL);
 }
 

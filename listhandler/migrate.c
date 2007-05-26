@@ -143,7 +143,7 @@ lh_migrate_source_request_cb(void *ignored, PurpleRequestFields *fields)
 						_("Choose the account to add buddies to:"), NULL,
 						request, _("_Add"),
 						G_CALLBACK(lh_migrate_target_request_cb), _("_Cancel"),
-						NULL, NULL);
+						NULL, NULL, NULL, NULL, NULL);
 
 	return;
 }
@@ -181,6 +181,6 @@ lh_migrate_action_cb(PurplePluginAction *action)
 	purple_request_fields(purple_get_blist(), _("Listhandler - Copying"),
 						_("Choose the account to copy from:"), NULL, request,
 						_("C_opy"), G_CALLBACK(lh_migrate_source_request_cb),
-						_("_Cancel"), NULL, NULL);
+						_("_Cancel"), NULL, NULL, NULL, NULL, NULL);
 	return;
 }

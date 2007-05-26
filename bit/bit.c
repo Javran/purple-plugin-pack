@@ -44,7 +44,7 @@ blist_iterate_action(gboolean remove)
 	PurpleConversation *conv = NULL;
 	gint n;
 
-	/* this grabs the gaim buddy list, which will be walked through */
+	/* this grabs the purple buddy list, which will be walked through */
 	buddies = purple_get_blist();
 
 	/* Use the utility function to loop over the nodes of the tree */
@@ -54,18 +54,22 @@ blist_iterate_action(gboolean remove)
 		const char *tmpname = purple_buddy_get_name(buddy);
 		PurpleBuddyIcon *icon = purple_buddy_get_icon(buddy);
 		if (icon != NULL) {
-			purple_debug_info("bit", "Processing %s (%d)\n", tmpname,
-							 icon->ref_count);
+#if 0
+			purple_debug_info("bit", "Processing %s (%p)\n", tmpname, icon);
 			if (!icon->ref_count > 0 && remove == TRUE) {
 				for ( n = icon->ref_count; n !=0; n-- ) {
 					purple_debug_info("bit", "ref_count: %d\n", n);
 					purple_buddy_icon_unref(icon);
 				}
 			}
+#endif
 			/* XXX: This *may* cause a segfault. - Sadrul */
 			if (remove == TRUE) {
 				purple_debug_info("bit", "Uncaching icon for %s\n", tmpname);
+#if 0
+				/* XXX: The new buddy icon API doesn't have purple_buddy_icon_uncache() */
 				purple_buddy_icon_uncache(buddy);
+#endif
 				/* XXX: This *definately* causes a segfault. From reading the 
 				 * source, I may not need to unref but just straight destroy it
 				 * haven't played/investigated enough to decide if I want to
@@ -193,29 +197,33 @@ static PurplePluginInfo info =
 	PURPLE_PLUGIN_MAGIC,								/**< magic			*/
 	PURPLE_MAJOR_VERSION,								/**< major version	*/
 	PURPLE_MINOR_VERSION,								/**< minor version	*/
-	PURPLE_PLUGIN_STANDARD,							/**< type			*/
-	NULL,											/**< ui_requirement	*/
-	0,												/**< flags			*/
-	NULL,											/**< dependencies	*/
+	PURPLE_PLUGIN_STANDARD,								/**< type			*/
+	NULL,												/**< ui_requirement	*/
+	0,													/**< flags			*/
+	NULL,												/**< dependencies	*/
 	PURPLE_PRIORITY_DEFAULT,							/**< priority		*/
 
-	"core-plugin_pack-bit",							/**< id				*/
-	NULL,											/**< name			*/
-	PP_VERSION,									/**< version		*/
-	NULL,											/**  summary		*/
-	NULL,											/**  description	*/
+	"core-plugin_pack-bit",								/**< id				*/
+	NULL,												/**< name			*/
+	PP_VERSION,											/**< version		*/
+	NULL,												/**  summary		*/
+	NULL,												/**  description	*/
 	"Peter Lawler <bleeter from users.sf.net>",
-													/**< authors		*/
-	PP_WEBSITE,									/**< homepage		*/
+														/**< authors		*/
+	PP_WEBSITE,											/**< homepage		*/
 
-	NULL,											/**< load			*/
-	NULL,											/**< unload			*/
-	NULL,											/**< destroy		*/
+	NULL,												/**< load			*/
+	NULL,												/**< unload			*/
+	NULL,												/**< destroy		*/
 
-	NULL,											/**< ui_info		*/
-	NULL,											/**< extra_info		*/
-	NULL,											/**< prefs_info		*/
-	bit_actions										/**< actions		*/
+	NULL,												/**< ui_info		*/
+	NULL,												/**< extra_info		*/
+	NULL,												/**< prefs_info		*/
+	bit_actions,										/**< actions		*/
+	NULL,												/**< reserved 1		*/
+	NULL,												/**< reserved 2		*/
+	NULL,												/**< reserved 3		*/
+	NULL												/**< reserved 4		*/
 };
 
 static void

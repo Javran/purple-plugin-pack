@@ -493,7 +493,7 @@ plugin_load(PurplePlugin *plugin)
 	purple_log_logger_add(&oldtxt_logger);
 	purple_log_logger_add(&oldhtml_logger);
 #endif
-	purple_prefs_trigger_callback("/core/logging/format");
+	purple_prefs_trigger_callback("/purple/logging/format");
 	return TRUE;
 }
 
@@ -507,7 +507,7 @@ plugin_unload(PurplePlugin *plugin)
 	purple_log_logger_remove(&oldtxt_logger);
 	purple_log_logger_remove(&oldhtml_logger);
 #endif
-	purple_prefs_trigger_callback("/core/logging/format");
+	purple_prefs_trigger_callback("/purple/logging/format");
 	return TRUE;
 }
 
@@ -516,28 +516,32 @@ static PurplePluginInfo info =
 	PURPLE_PLUGIN_MAGIC,								/**< magic			*/
 	PURPLE_MAJOR_VERSION,								/**< major version	*/
 	PURPLE_MINOR_VERSION,								/**< minor version	*/
-	PURPLE_PLUGIN_STANDARD,							/**< type			*/
-	NULL,											/**< ui_requirement	*/
-	0,												/**< flags			*/
-	NULL,											/**< dependencies	*/
+	PURPLE_PLUGIN_STANDARD,								/**< type			*/
+	NULL,												/**< ui_requirement	*/
+	0,													/**< flags			*/
+	NULL,												/**< dependencies	*/
 	PURPLE_PRIORITY_DEFAULT,							/**< priority		*/
 
-	OLDLOGGER_PLUGIN_ID,							/**< id				*/
-	NULL,											/**< name			*/
-	PP_VERSION,									/**< version		*/
-	NULL,											/**< summary		*/
-	NULL,											/**< description	*/
-	"Stu Tomlinson <stu@nosnilmot.com>",			/**< author			*/
-	PP_WEBSITE,									/**< homepage		*/
+	OLDLOGGER_PLUGIN_ID,								/**< id				*/
+	NULL,												/**< name			*/
+	PP_VERSION,											/**< version		*/
+	NULL,												/**< summary		*/
+	NULL,												/**< description	*/
+	"Stu Tomlinson <stu@nosnilmot.com>",				/**< author			*/
+	PP_WEBSITE,											/**< homepage		*/
 
-	plugin_load,									/**< load			*/
-	plugin_unload,									/**< unload			*/
-	NULL,											/**< destroy		*/
+	plugin_load,										/**< load			*/
+	plugin_unload,										/**< unload			*/
+	NULL,												/**< destroy		*/
 
-	NULL,											/**< ui_info		*/
-	NULL,											/**< extra_info		*/
-	NULL,											/**< prefs_info		*/
-	NULL											/**< actions		*/
+	NULL,												/**< ui_info		*/
+	NULL,												/**< extra_info		*/
+	NULL,												/**< prefs_info		*/
+	NULL,												/**< actions		*/
+	NULL,												/**< reserved 1		*/
+	NULL,												/**< reserved 2		*/
+	NULL,												/**< reserved 3		*/
+	NULL												/**< reserved 4		*/
 };
 
 static void

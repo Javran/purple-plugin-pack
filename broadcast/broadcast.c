@@ -122,7 +122,7 @@ broadcast_action_cb(PurplePluginAction *action)
 	purple_request_input(action, _("Broadcast Spim"),
 			_("Enter the message to send"), stmp->str, "", TRUE, FALSE, "html",
 			_("Send"), G_CALLBACK(broadcast_request_send_cb), _("Cancel"),
-			G_CALLBACK(broadcast_request_cancel_cb), buddies);
+			G_CALLBACK(broadcast_request_cancel_cb), NULL, NULL, NULL, buddies);
 
 	g_string_free(stmp, TRUE);
 
@@ -169,7 +169,11 @@ static PurplePluginInfo broadcast_info =
 	NULL,
 	NULL,
 	NULL,
-	broadcast_actions
+	broadcast_actions,
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
 
 

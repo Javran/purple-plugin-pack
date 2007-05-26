@@ -224,13 +224,13 @@ irssi_textfmt_init(PurplePlugin *plugin) {
 						PURPLE_CALLBACK(irssi_textfmt_writing_cb), NULL);
 	purple_signal_connect(handle, "sending-im-msg", plugin,
 						PURPLE_CALLBACK(irssi_textfmt_sending_im_cb), NULL);
-	purple_signal_connect(handle, "writing-im-msg", plugin,
+	purple_signal_connect(handle, "sending-chat-msg", plugin,
 						PURPLE_CALLBACK(irssi_textfmt_sending_chat_cb), NULL);
 #endif
 }
 
 void
 irssi_textfmt_uninit(PurplePlugin *plugin) {
-	/* Nothing to do here, gaim kills our callbacks for us. */
+	/* Nothing to do here, purple kills our callbacks for us. */
 }
 

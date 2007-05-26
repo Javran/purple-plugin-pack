@@ -54,7 +54,8 @@ lh_util_add_to_blist(GList *buddies, GList *groups)
 		purple_blist_add_buddy((PurpleBuddy *)(tmpb->data), NULL,
 							(PurpleGroup *)(tmpg->data), NULL);
 
-		purple_debug_info("listhandler: import", "added a buddy to gaim blist\n");
+		purple_debug_info("listhandler: import", "added a buddy to pidgin "
+						  "blist\n");
 
 		/* go to the next element in each list */
 		tmpb = g_list_next(tmpb);
