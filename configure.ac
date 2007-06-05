@@ -297,6 +297,7 @@ AC_OUTPUT([
 	gRIM/Makefile
 	hideconv/Makefile
 	ignorance/Makefile
+	ignore/Makefile
 	irchelper/Makefile
 	irssi/Makefile
 	lastseen/Makefile
