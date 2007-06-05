@@ -129,7 +129,7 @@ lh_aim_list_find(gchar **strings, guint strings_len, guint *begin, guint *end)
 }
 
 static void /* parse this damn buddy list already */
-lh_aim_list_parse(gchar **strings, guint length, guint begin, guint end)
+lh_aim_list_parse_and_add(gchar **strings, guint length, guint begin, guint end)
 {
 	gchar *current_group = NULL, *current_buddy = NULL, *current_alias = NULL;
 	gint i, current_group_begin = 0, current_group_end = 0;
@@ -255,7 +255,7 @@ lh_aim_import_target_request_cb(void *ignored, PurpleRequestFields *fields)
 			list_begin, list_end);
 
 	/* parse the freaking list already */
-	lh_aim_list_parse(strings, strings_len, list_begin, list_end);
+	lh_aim_list_parse_and_add(strings, strings_len, list_begin, list_end);
 
 	/* clean up all that crap that got allocated */
 	g_strfreev(strings);

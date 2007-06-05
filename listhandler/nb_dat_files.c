@@ -25,7 +25,7 @@
 #include "nb_dat_files.h"
 
 static const gchar *target_prpl_id = NULL;
-static gchar *file_contents = NULL, *filename = NULL;
+static gchar *filename = NULL;
 static PurpleAccount *target_account = NULL;
 static PurpleConnection *gc = NULL;
 
@@ -44,14 +44,37 @@ lh_nb_filter(PurpleAccount *account)
 }
 
 static void
+lh_nb_list_parse_and_add(void)
+{
+	GError *error = NULL;
+	gchar *file_contents = NULL;
+
+	/* grab the entire contents of the file and log to the debug log on both
+	 * success and failure */
+	if(g_file_get_contents(filename, &filecontents, length, &error))
+		purple_debug_misc("listhandler: import", "Got contents of file %s",
+				filename ? filename : "(filename is NULL?!)");
+	else
+		purple_debug_error("listhandler: import", "Failed to get contents of file %s",
+				filename ? filename : "(filename is NULL?!)");
+
+	/* TODO: Finish this! */
+	
+	if(error)
+		g_error_free(error);
+
+	return;
+}
+
+static void
 lh_nb_target_request_cb(void *ignored, PurpleRequestFeilds *fields)
 {
-	gchar **strings = NULL;
-	guint strings_len = 0;
-	
+	/* we need to know which account to import to */
 	target_account = purple_request_fields_get_account(fields, "nb_target_acct");
 
-	strings = lh_nb_get_file_strings(file_contents, &length, &strings_len);
+	lh_nb_list_parse_and_add(); /* go read the list */
+
+	return;
 }
 
 static void
