@@ -299,6 +299,7 @@ AC_OUTPUT([
 	highlight/Makefile
 	ignorance/Makefile
 	ignore/Makefile
+	irc-more/Makefile
 	irchelper/Makefile
 	irssi/Makefile
 	lastseen/Makefile
