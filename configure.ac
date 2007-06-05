@@ -296,6 +296,7 @@ AC_OUTPUT([
 	groupmsg/Makefile
 	gRIM/Makefile
 	hideconv/Makefile
+	highlight/Makefile
 	ignorance/Makefile
 	ignore/Makefile
 	irchelper/Makefile
