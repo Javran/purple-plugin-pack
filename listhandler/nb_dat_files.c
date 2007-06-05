@@ -44,13 +44,24 @@ lh_nb_filter(PurpleAccount *account)
 }
 
 static void
-lh_nb_import_import_target_request(void)
+lh_nb_target_request_cb(void *ignored, PurpleRequestFeilds *fields)
+{
+	gchar **strings = NULL;
+	guint strings_len = 0;
+	
+	target_account = purple_request_fields_get_account(fields, "nb_target_acct");
+
+	strings = lh_nb_get_file_strings(file_contents, &length, &strings_len);
+}
+
+static void
+lh_nb_import_target_request(void)
 {
 	PurpleRequestFields *request;
 	PurpleRequestFieldsGroup *group;
 	PurpleRequestField *field;
 
-	purple_debug_info("listhandler:import", "Beginning Request API calls\n");
+	purple_debug_info("listhandler: import", "Beginning Request API calls\n");
 
 	/* It seems Purple is super-picky about the order of these first three calls */
 	/* create the request */
@@ -105,3 +116,4 @@ lh_nb_import_action_cb(PurplePluginAction *action)
 
 	return;
 }
+
