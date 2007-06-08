@@ -1,7 +1,7 @@
 /*
  * Adds a command to roll an arbitrary number of dice with an arbitrary 
  * number of sides
- * Copyright (C) 2005 Gary Kramlich <amc_grim@users.sf.net>
+ * Copyright (C) 2005 Gary Kramlich <grim@reaperworld.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -119,7 +119,7 @@ static PurplePluginInfo info =
 	PP_VERSION,											/**< version		*/
 	NULL,												/**  summary		*/
 	NULL,												/**  description	*/
-	"Gary Kramlich <amc_grim@users.sf.net>",			/**< author			*/
+	"Gary Kramlich <grim@reaperworld.com>",				/**< author			*/
 	PP_WEBSITE,											/**< homepage		*/
 
 	plugin_load,										/**< load			*/

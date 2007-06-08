@@ -143,7 +143,7 @@ static PurplePluginInfo bash_info =
 	PP_VERSION,
 	NULL,
 	NULL,
-	"John Bailey <rekkanoryo@users.sourceforge.net>",
+	"John Bailey <rekkanoryo@rekkanoryo.org>",
 	PP_WEBSITE,
 	plugin_load,
 	plugin_unload,

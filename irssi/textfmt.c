@@ -191,6 +191,9 @@ irssi_textfmt_writing_cb(PurpleAccount *account, const gchar *who,
 						 gchar **message, PurpleConversation *conv,
 						 PurpleMessageFlags flags)
 {
+	if(flags & PURPLE_MESSAGE_SYSTEM)
+		return FALSE;
+
 	FORMAT(account, message);
 }
 

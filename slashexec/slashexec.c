@@ -423,19 +423,19 @@ static PurplePluginInfo se_info = {
 	NULL,												/* ui requirement	*/
 	0,													/* flags			*/
 	NULL,												/* dependencies		*/
-	PURPLE_PRIORITY_DEFAULT,								/* priority			*/
+	PURPLE_PRIORITY_DEFAULT,							/* priority			*/
 	"core-plugin_pack-slashexec",						/* id				*/
 	"/exec",											/* name				*/
-	PP_VERSION,										/* version			*/
+	PP_VERSION,											/* version			*/
 	NULL,												/* summary			*/
 	NULL,												/* description		*/
 
-	"Gary Kramlich <amc_grim@users.sf.net>, "
+	"Gary Kramlich <grim@reaperworld.com>, "
 	"Peter Lawler <bleeter from users.sf.net>, "
 	"Daniel Atallah, Sadrul Habib Chowdhury <sadrul@users.sf.net>, "
-	"John Bailey <rekkanoryo@users.sf.net>",			/* authors			*/
+	"John Bailey <rekkanoryo@rekkanoryo.org>",			/* authors			*/
 
-	PP_WEBSITE,										/* homepage			*/
+	PP_WEBSITE,											/* homepage			*/
 	se_load,											/* load				*/
 	se_unload,											/* unload			*/
 	NULL,												/* destroy			*/
