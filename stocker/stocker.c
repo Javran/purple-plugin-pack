@@ -131,7 +131,7 @@ static PurplePluginInfo stocker_info =
 	PP_VERSION,
 	NULL,
 	NULL,
-	"Gary Kramlich <amc_grim@users.sf.net>",
+	"Gary Kramlich <grim@reaperworld.com>",
 	PP_WEBSITE,
 
 	stocker_load,

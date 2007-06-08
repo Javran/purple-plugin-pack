@@ -1,6 +1,6 @@
 /*
  * sslinfo - Gets info about your currently loaded ssl plugin
- * Copyright (C) 2004 Gary Kramlich <amc_grim@users.sf.net>
+ * Copyright (C) 2004 Gary Kramlich <grim@reaperworld.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -121,7 +121,7 @@ static PurplePluginInfo info = {
 	PP_VERSION,
 	NULL,
 	NULL,
-	"Gary Kramlich <amc_grim@users.sf.net>",
+	"Gary Kramlich <grim@reaperworld.com>",
 	PP_WEBSITE,
 
 	NULL,

@@ -1,6 +1,6 @@
 /*
  * Extra conversation placement options for Purple
- * Copyright (C) 2004 Gary Kramlich <amc_grim@users.sf.net>
+ * Copyright (C) 2004 Gary Kramlich <grim@reaperworld.com>
  *
  * Purple is the legal property of its developers, whose names are too numerous
  * to list here.  Please refer to the COPYRIGHT file distributed with this
@@ -125,7 +125,7 @@ static PurplePluginInfo info = {
 	PP_VERSION,
 	NULL,
 	NULL,
-	"Gary Kramlich <amc_grim@users.sf.net>",
+	"Gary Kramlich <grim@reaperworld.com>",
 	PP_WEBSITE,
 	plugin_load,
 	plugin_unload,

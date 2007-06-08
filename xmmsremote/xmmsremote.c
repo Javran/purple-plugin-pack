@@ -1136,7 +1136,7 @@ static PurplePluginInfo gxr_info = {
 	"Purple conversation windows' menubars, so that you "
 	"can control XMMS from within Purple.",					/* description	*/
 
-	"Gary Kramlich <plugin_pack@users.sf.net>",				/* author		*/
+	"Gary Kramlich <grim@reaperworld.com>",					/* author		*/
 	PP_WEBSITE,												/* homepage		*/
 
 	gxr_load,												/* load			*/

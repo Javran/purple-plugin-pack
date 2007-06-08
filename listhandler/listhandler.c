@@ -78,7 +78,7 @@ static PurplePluginInfo listhandler_info =
 	PP_VERSION,
 	NULL,
 	NULL,
-	"John Bailey <rekkanoryo@users.sourceforge.net>",
+	"John Bailey <rekkanoryo@rekkanoryo.org>",
 	PP_WEBSITE,
 	NULL,
 	NULL,
