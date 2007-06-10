@@ -13,7 +13,6 @@ listhandler_la_SOURCES = \
 	gen_xml_files.c \
 	lh_util.c \
 	migrate.c \
-	nb_dat_files.c \
 	listhandler.c
 
 listhandler_la_LIBADD = \
