@@ -1176,7 +1176,7 @@ void album_blist_node_menu_cb(PurpleBlistNode *node, GList **menu)
 				callback = NULL;
 			}
 		}
-		else
+		else if (PURPLE_BLIST_NODE_IS_CONTACT(node))
 		{
 			/* We don't want to show this option in buddy submenus. */
 			if ((PurpleBlistNode *)((PurpleContact *)node->parent)->priority != node)
