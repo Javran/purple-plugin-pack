@@ -38,10 +38,6 @@ listhandler_actions(PurplePlugin *plugin, gpointer context)
 									lh_aim_import_action_cb);
 	list = g_list_append(list, action);
 
-	action = purple_plugin_action_new(_("Import NotesBuddy Buddy List File (.dat)"),
-									lh_nb_import_action_cb);
-	list = g_list_append(list, action);
-
 	action = purple_plugin_action_new(_("Import Generic Buddy List File (.xml)"),
 									lh_generic_import_action_cb);
 	list = g_list_append(list, action);
@@ -78,7 +74,7 @@ static PurplePluginInfo listhandler_info =
 	PP_VERSION,
 	NULL,
 	NULL,
-	"John Bailey <rekkanoryo@users.sourceforge.net>",
+	"John Bailey <rekkanoryo@rekkanoryo.org>",
 	PP_WEBSITE,
 	NULL,
 	NULL,
