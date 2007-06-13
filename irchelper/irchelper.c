@@ -357,8 +357,7 @@ static void jeux_identify(PurpleConnection *connection, IRCHelperStateFlags stat
 		if (purple_cmd_do_command(conv, authentication, authentication, &error) != PURPLE_CMD_STATUS_OK)
 		{
 			/* TODO: PRINT ERROR MESSAGE */
-			if (NULL != error)
-				g_free(error);
+			g_free(error);
 		}
 		g_free(conv);
 
@@ -394,8 +393,7 @@ static void jeux_identify(PurpleConnection *connection, IRCHelperStateFlags stat
 		if (purple_cmd_do_command(conv, command, command, &error) != PURPLE_CMD_STATUS_OK)
 		{
 			/* TODO: PRINT ERROR MESSAGE */
-			if (NULL != error)
-				g_free(error);
+			g_free(error);
 		}
 
 		g_free(command);
@@ -419,8 +417,7 @@ static void nickserv_do_identify(char *authentication, gpointer proto_data, Purp
 	if (purple_cmd_do_command(conv, authentication, authentication, &error) != PURPLE_CMD_STATUS_OK)
 	{
 		/* TODO: PRINT ERROR MESSAGE */
-		if (NULL != error)
-			g_free(error);
+		g_free(error);
 	}
 	g_free(authentication);
 	g_free(conv);
@@ -486,8 +483,7 @@ static gboolean ghosted_nickname_killed_cb(struct proto_stuff *stuff)
 	if (purple_cmd_do_command(conv, command, command, &error) != PURPLE_CMD_STATUS_OK)
 	{
 		/* TODO: PRINT ERROR MESSAGE */
-		if (NULL != error)
-			g_free(error);
+		g_free(error);
 	}
 
 	g_free(command);
@@ -593,8 +589,7 @@ static void signed_on_cb(PurpleConnection *connection)
 				if (purple_cmd_do_command(conv, command, command, &error) != PURPLE_CMD_STATUS_OK)
 				{
 					/* TODO: PRINT ERROR MESSAGE */
-					if (NULL != error)
-						g_free(error);
+					g_free(error);
 				}
 				g_free(command);
 				g_free(conv);
