@@ -42,12 +42,20 @@ listhandler_actions(PurplePlugin *plugin, gpointer context)
 									lh_generic_import_action_cb);
 	list = g_list_append(list, action);
 
+	action = purple_plugin_action_new(_("Import Generic Alias List File"),
+									lh_generic_import_alist_action_cb);
+	list = g_list_append(list, action);
+
 	action = purple_plugin_action_new(_("Export AIM Buddy List File"),
 									lh_aim_export_action_cb);
 	list = g_list_append(list, action);
 
 	action = purple_plugin_action_new(_("Export Generic Buddy List File"),
 									lh_generic_export_action_cb);
+	list = g_list_append(list, action);
+
+	action = purple_plugin_action_new(_("Export Generic Alias List File"),
+									lh_generic_export_alist_action_cb);
 	list = g_list_append(list, action);
 
 	action = purple_plugin_action_new(_("Copy Buddies From One Account to Another"),

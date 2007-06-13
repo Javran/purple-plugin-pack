@@ -26,4 +26,9 @@
 void lh_generic_import_action_cb(PurplePluginAction *action);
 void lh_generic_export_action_cb(PurplePluginAction *action);
 
+void lh_generic_import_alist_action_cb(PurplePluginAction *action);
+void lh_generic_export_alist_action_cb(PurplePluginAction *action);
+
+
+
 #endif /*_LISTHANDLER_GEN_XML_H*/
