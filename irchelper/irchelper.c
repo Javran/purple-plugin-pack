@@ -67,6 +67,8 @@
 
 #define DOMAIN_SUFFIX_FREENODE ".freenode.net"
 #define DOMAIN_SUFFIX_GAMESURGE ".gamesurge.net"
+#define DOMAIN_SUFFIX_THUNDERCITY ".thundercity.org"
+#define DOMAIN_SUFFIX_DALNET ".dal.net"
 #define DOMAIN_SUFFIX_JEUX ".jeux.fr"
 #define DOMAIN_SUFFIX_QUAKENET ".quakenet.org"
 #define DOMAIN_SUFFIX_UNDERNET ".undernet.org"
@@ -119,6 +121,7 @@
 #define NICK_JEUX_WELCOME "[Welcome]"
 #define NICK_MEMOSERV "MemoServ"
 #define NICK_NICKSERV "NickServ"
+#define NICK_DALNET_AUTHSERV_SERVICE NICK_NICKSERV "@services.dal.net"
 #define NICK_QUAKENET_L "L"
 #define NICK_QUAKENET_Q "Q"
 #define NICK_QUAKENET_Q_SERVICE NICK_QUAKENET_Q "@CServe.quakenet.org"
@@ -144,6 +147,8 @@ typedef enum {
 	IRC_NETWORK_TYPE_QUAKENET  = 0x0080,
 	IRC_NETWORK_TYPE_JEUX      = 0x0100,
 	IRC_NETWORK_TYPE_UNDERNET  = 0x0200,
+	IRC_NETWORK_TYPE_THUNDERCITY = 0x0400,
+	IRC_NETWORK_TYPE_DALNET    = 0x0800,
 } IRCHelperStateFlags;
 
 struct proto_stuff
@@ -227,6 +232,10 @@ static IRCHelperStateFlags get_connection_type(PurpleConnection *connection)
 
 	if (g_str_has_suffix(username, DOMAIN_SUFFIX_GAMESURGE))
 		type = IRC_NETWORK_TYPE_GAMESURGE;
+	else if (g_str_has_suffix(username, DOMAIN_SUFFIX_THUNDERCITY))
+		type = IRC_NETWORK_TYPE_THUNDERCITY;
+	else if (g_str_has_suffix(username, DOMAIN_SUFFIX_DALNET))
+		type = IRC_NETWORK_TYPE_DALNET;
 	else if (g_str_has_suffix(username, DOMAIN_SUFFIX_QUAKENET))
 		type = IRC_NETWORK_TYPE_QUAKENET;
 	else if (g_str_has_suffix(username, DOMAIN_SUFFIX_JEUX))
@@ -292,6 +301,8 @@ static void authserv_identify(const char *command, PurpleConnection *connection,
 
 		if (state & IRC_NETWORK_TYPE_GAMESURGE)
 			authserv = NICK_GAMESURGE_AUTHSERV_SERVICE;
+		else if (state & IRC_NETWORK_TYPE_DALNET)
+			authserv = NICK_DALNET_AUTHSERV_SERVICE;
 		else if (state & IRC_NETWORK_TYPE_QUAKENET)
 			authserv = NICK_QUAKENET_Q_SERVICE;
 		else if (state & IRC_NETWORK_TYPE_UNDERNET)
@@ -398,9 +409,8 @@ static void jeux_identify(PurpleConnection *connection, IRCHelperStateFlags stat
  * NickServ Helper Functions                                                 *
  *****************************************************************************/
 
-static void nickserv_identify(gpointer proto_data, PurpleConnection *gc, const char *nickpassword)
+static void nickserv_do_identify(char *authentication, gpointer proto_data, PurpleConnection *gc, const char *nickpassword)
 {
-	gchar *authentication = g_strdup_printf("quote %s IDENTIFY %s", NICK_NICKSERV, nickpassword);
 	PurpleConversation *conv = get_conversation(purple_connection_get_account(gc));
 	gchar *error;
 
@@ -421,6 +431,18 @@ static void nickserv_identify(gpointer proto_data, PurpleConnection *gc, const c
 	 */
 	purple_timeout_add(TIMEOUT_IDENTIFY, (GSourceFunc)auth_timeout,
 	                 (gpointer)proto_data);
+}
+
+static void nickserv_identify(gpointer proto_data, PurpleConnection *gc, const char *nickpassword)
+{
+	char *authentication = g_strdup_printf("quote %s IDENTIFY %s", NICK_NICKSERV, nickpassword);
+	nickserv_do_identify(authentication, proto_data, gc, nickpassword);
+}
+
+static void nickserv_msg_identify(const char *command, gpointer proto_data, PurpleConnection *gc, const char *nickpassword)
+{
+	char *authentication = g_strdup_printf("quote PRIVMSG %s : %s %s", NICK_NICKSERV, command, nickpassword);
+	nickserv_do_identify(authentication, proto_data, gc, nickpassword);
 }
 
 static gboolean ghosted_nickname_killed_cb(struct proto_stuff *stuff)
@@ -511,6 +533,13 @@ static void signed_on_cb(PurpleConnection *connection)
 
 		authserv_identify("AUTH", connection, state);
 	}
+	if (state & IRC_NETWORK_TYPE_DALNET)
+	{
+		purple_debug_info(PLUGIN_STATIC_NAME, "Connected with DalNet: %s\n",
+						purple_connection_get_display_name(connection));
+
+		authserv_identify("IDENTIFY", connection, state);
+	}
 	else if (state & IRC_NETWORK_TYPE_JEUX)
 	{
 		purple_debug_info(PLUGIN_STATIC_NAME, "Connected with Jeux.fr: %s\n",
@@ -588,7 +617,11 @@ static void signed_on_cb(PurpleConnection *connection)
 
 			g_strfreev(userparts);
 
-			nickserv_identify(connection->proto_data, connection, nickpassword);
+
+			if (state & IRC_NETWORK_TYPE_THUNDERCITY)
+				nickserv_msg_identify("AUTH", connection->proto_data, connection, nickpassword);
+			else
+				nickserv_identify(connection->proto_data, connection, nickpassword);
 		}
 	}
 
