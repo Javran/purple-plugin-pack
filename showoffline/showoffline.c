@@ -36,8 +36,27 @@ showoffline_cb(PurpleBlistNode *node, gpointer data)
 {
 	PurpleBuddyList *blist = purple_get_blist();
 	PurpleBlistUiOps *ops = purple_blist_get_ui_ops();
-	purple_blist_node_set_bool(node, "show_offline",
-							 !purple_blist_node_get_bool(node, "show_offline"));
+
+	if (PURPLE_BLIST_NODE_IS_BUDDY(node))
+	{
+		purple_blist_node_set_bool(node, "show_offline",
+								 !purple_blist_node_get_bool(node, "show_offline"));
+	}
+	else if (PURPLE_BLIST_NODE_IS_CONTACT(node))
+	{
+		PurpleBlistNode *bnode;
+		gboolean setting = !purple_blist_node_get_bool(node, "show_offline");
+
+		purple_blist_node_set_bool(node, "show_offline", setting);
+		for (bnode = node->child; bnode != NULL; bnode = bnode->next) {
+			purple_blist_node_set_bool(bnode, "show_offline", setting);
+		}
+	}
+	else
+	{
+		g_return_if_reached();
+	}
+
 	ops->update(blist, node);
 }
 
@@ -46,7 +65,10 @@ showoffline_extended_menu_cb(PurpleBlistNode *node, GList **m)
 {
 	PurpleMenuAction *bna = NULL;
 
-	if (!PURPLE_BLIST_NODE_IS_BUDDY(node))
+	if (purple_blist_node_get_flags(node) & PURPLE_BLIST_NODE_FLAG_NO_SAVE)
+		return;
+
+	if (!PURPLE_BLIST_NODE_IS_CONTACT(node) && !PURPLE_BLIST_NODE_IS_BUDDY(node))
 		return;
 
 	*m = g_list_append(*m, bna);
