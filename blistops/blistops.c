@@ -61,36 +61,46 @@ pref_cb(const char *name, PurplePrefType type,
 		abracadabra(w_menubar, value);
 }
 
+static gboolean
+motion_notify_cb(GtkTreeView *view, GdkEventMotion *event, GtkRequisition *req) {
+	if (event->y < req->height) {
+		gtk_widget_show(w_menubar);
+	} else {
+		gtk_widget_hide(w_menubar);
+	}
+
+	return FALSE;
+}
+
 static void
 gtkblist_created_cb(PurpleBuddyList *blist) {
 	PidginBuddyList *gtkblist = PIDGIN_BLIST(blist);
+	static GtkRequisition req;
 
 	w_blist = gtkblist->window;
 	w_menubar = gtk_item_factory_get_widget(gtkblist->ift, "<PurpleMain>");
+	gtk_widget_size_request(w_menubar, &req);
+	g_signal_connect(gtkblist->treeview, "motion-notify-event", G_CALLBACK(motion_notify_cb), &req);
 
 	purple_prefs_trigger_callback(PREF_LIST);
 	purple_prefs_trigger_callback(PREF_MENU);
 }
-
-/* globals to remove our pref cb's */
-guint blist_id = 0, menu_id = 0;
 
 static gboolean
 plugin_load(PurplePlugin *plugin) {
 	purple_signal_connect(pidgin_blist_get_handle(), "gtkblist-created", plugin,
 						PURPLE_CALLBACK(gtkblist_created_cb), NULL);
 
-	blist_id = purple_prefs_connect_callback(plugin, PREF_LIST, pref_cb, NULL);
-	menu_id = purple_prefs_connect_callback(plugin, PREF_MENU, pref_cb, NULL);
+	if (pidgin_blist_get_default_gtk_blist())
+		gtkblist_created_cb(purple_get_blist());
+	purple_prefs_connect_callback(plugin, PREF_LIST, pref_cb, NULL);
+	purple_prefs_connect_callback(plugin, PREF_MENU, pref_cb, NULL);
 
 	return TRUE;
 }
 
 static gboolean
 plugin_unload(PurplePlugin *plugin) {
-	purple_prefs_disconnect_callback(blist_id);
-	purple_prefs_disconnect_callback(menu_id);
-
 	if(w_blist) {
 		gtk_widget_show(w_blist);
 
