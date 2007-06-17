@@ -80,7 +80,8 @@ lh_generic_import_blist(xmlnode *blist)
 			/* add the buddy to Purple's blist */
 			lh_util_add_buddy(group_name, purple_group,
 					xmlnode_get_attrib(buddy, "screenname"),
-					xmlnode_get_attrib(buddy, "alias"), target_account);
+					xmlnode_get_attrib(buddy, "alias"), target_account,
+					xmlnode_get_attrib(buddy, "notes"));
 
 			/* get the next buddy in the current group */
 			buddy = xmlnode_get_next_twin(buddy);
@@ -237,7 +238,7 @@ lh_generic_build_blist_tree(xmlnode *parent)
 	PurpleBlistNode *root = buddies->root, *g = NULL, *c = NULL, *b = NULL;
 	xmlnode *group = NULL, *buddy = NULL;
 	PurpleBuddy *tmpbuddy = NULL;
-	const char *tmpalias = NULL, *tmpname = NULL;
+	const char *tmpalias = NULL, *tmpname = NULL, *tmpsetting = NULL;
 
 	/* iterate through the groups */
 	for(g = root; g; g = g->next) {
@@ -263,9 +264,11 @@ lh_generic_build_blist_tree(xmlnode *parent)
 						if(purple_buddy_get_account(tmpbuddy) == source_account) {
 							tmpalias = purple_buddy_get_contact_alias(tmpbuddy);
 							tmpname = purple_buddy_get_name(tmpbuddy);
+							tmpsetting = purple_blist_node_get_string(b, "notes");
 
 							buddy = xmlnode_new_child(group, "buddy");
 							xmlnode_set_attrib(buddy, "screenname", tmpname);
+							xmlnode_set_attrib(buddy, "notes", tmpsetting);
 
 							if(strcmp(tmpalias, tmpname))
 								xmlnode_set_attrib(buddy, "alias", tmpalias);

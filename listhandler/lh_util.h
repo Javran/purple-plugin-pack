@@ -23,7 +23,7 @@
 
 void lh_util_add_buddy(const gchar *group, PurpleGroup *purple_group,
 					const gchar *buddy, const gchar *alias,
-					PurpleAccount *account);
+					PurpleAccount *account, const gchar *buddynotes);
 
 void lh_util_add_to_blist(GList *buddies, GList *groups);
 

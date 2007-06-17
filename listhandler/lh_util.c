@@ -25,7 +25,8 @@
 
 void
 lh_util_add_buddy(const gchar *group, PurpleGroup *purple_group,
-			const gchar *buddy, const gchar *alias, PurpleAccount *account)
+			const gchar *buddy, const gchar *alias, PurpleAccount *account,
+			const gchar *buddynotes)
 {
 	/* create a PurpleBuddy and add it to the list in the specified group.
 	 * The first NULL is because we have no contact.  Let the user do that.
@@ -34,7 +35,10 @@ lh_util_add_buddy(const gchar *group, PurpleGroup *purple_group,
 	 * easy to do. */
 	PurpleBuddy *purple_buddy = purple_buddy_new(account, buddy, alias);
 	purple_blist_add_buddy(purple_buddy, NULL, purple_group, NULL);
-	purple_account_add_buddy(account, purple_buddy); /* this is evil */
+	purple_account_add_buddy(account, purple_buddy);
+
+	if(buddynotes)
+		purple_blist_node_set_string((PurpleBlistNode *)buddy, "notes", buddynotes);
 
 	purple_debug_info("listhandler: import",
 			"group: %s\tbuddy: %s\talias: %s\thas been added to the list\n",
