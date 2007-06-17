@@ -1,6 +1,16 @@
-Version 1.0mtn:
+Version 1.1mtn:
+	* Listhandler now supports alias-only list exports and imports (rseeber)
+	* Added ignore plugin
+	* Added irc-more plugin
+	* Added highlight plugin
 
-Version 1.0beta7: 6/30/07
+Version 1.0: 5/4/07
+	* Updated for Pidgin 2.0.0
+	* Fixed build-by-default and win32 building for several plugins
+	* Added hideconv plugin
+	* Took autoreply back from Pidgin
+
+Version 1.0beta7: 4/30/07
 	* Added the Ignorance plugin to the main development line
 	* Added broadcast plugin
 	* Imported the IRC Helper plugin
