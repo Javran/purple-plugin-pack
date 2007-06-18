@@ -60,6 +60,7 @@
 #define	PREFS_MINTIME		PREFS_PREFIX "/mintime"
 #define	PREFS_MAXSEND		PREFS_PREFIX "/maxsend"
 #define	PREFS_USESTATUS		PREFS_PREFIX "/usestatus"
+#define	PREFS_PREFIX_MSG    PREFS_PREFIX "/prefix"
 
 typedef struct _PurpleAutoReply PurpleAutoReply;
 
@@ -171,6 +172,8 @@ written_msg(PurpleAccount *account, const char *who, const char *message,
 		PurpleMessageFlags flag = PURPLE_MESSAGE_SEND;
 		time_t last_sent, now;
 		int count_sent, maxsend;
+		char *send = NULL;
+		const char *prefix;
 
 		last_sent = GPOINTER_TO_INT(purple_conversation_get_data(conv, "autoreply_lastsent"));
 		now = time(NULL);
@@ -187,10 +190,15 @@ written_msg(PurpleAccount *account, const char *who, const char *message,
 				purple_conversation_set_data(conv, "autoreply_count", GINT_TO_POINTER(++count_sent));
 				purple_conversation_set_data(conv, "autoreply_lastsent", GINT_TO_POINTER(now));
 				gc = purple_account_get_connection(account);
-				if (gc->flags & PURPLE_CONNECTION_AUTO_RESP)
+				prefix = purple_prefs_get_string(PREFS_PREFIX_MSG);
+				if (gc->flags & PURPLE_CONNECTION_AUTO_RESP) {
 					flag |= PURPLE_MESSAGE_AUTO_RESP;
-				serv_send_im(gc, who, reply, flag);
-				purple_conv_im_write(PURPLE_CONV_IM(conv), NULL, reply, flag, time(NULL));
+					prefix = NULL;  /* The prpl knows about auto-response. So ignore the prefix string. */
+				}
+				send = g_strdup_printf("%s%s", prefix ? prefix : "", reply);
+				serv_send_im(gc, who, send, flag);
+				purple_conv_im_write(PURPLE_CONV_IM(conv), NULL, send, flag, time(NULL));
+				g_free(send);
 			}
 		}
 	}
@@ -357,6 +365,10 @@ get_plugin_pref_frame(PurplePlugin *plugin)
 				PURPLE_STRING_FORMAT_TYPE_MULTILINE | PURPLE_STRING_FORMAT_TYPE_HTML);
 	purple_plugin_pref_frame_add(frame, pref);
 
+	pref = purple_plugin_pref_new_with_name_and_label(PREFS_PREFIX_MSG,
+					_("Prefix autoreplies\n(only when necessary)"));
+	purple_plugin_pref_frame_add(frame, pref);
+
 	pref = purple_plugin_pref_new_with_label(_("Status message"));
 	purple_plugin_pref_frame_add(frame, pref);
 
@@ -444,6 +456,7 @@ init_plugin(PurplePlugin *plugin)
 	purple_prefs_add_int(PREFS_MINTIME, 10);
 	purple_prefs_add_int(PREFS_MAXSEND, 10);
 	purple_prefs_add_int(PREFS_USESTATUS, STATUS_NEVER);
+	purple_prefs_add_string(PREFS_PREFIX_MSG, _("This is an autoreply: "));
 }
 
 PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)
