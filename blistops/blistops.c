@@ -90,6 +90,25 @@ pref_cb(const char *name, PurplePrefType type,
 }
 
 static void
+reset_row_heights(const char *name, PurplePrefType type,
+		gconstpointer val, gpointer data)
+{
+	PidginBuddyList *gtkblist = pidgin_blist_get_default_gtk_blist();
+	GtkTreeViewColumn *col = gtk_tree_view_get_column(GTK_TREE_VIEW(gtkblist->treeview), 1);
+	GList *iter = gtk_tree_view_column_get_cell_renderers(col);
+
+	for (; iter; iter = g_list_delete_link(iter, iter)) {
+		GtkCellRenderer *rend = iter->data;
+		if (GTK_IS_CELL_RENDERER_PIXBUF(rend)) {
+			g_object_set(rend, "height", val ? 32 : 16, NULL);
+			break;
+		}
+	}
+	if (iter)
+		g_list_free(iter);
+}
+
+static void
 redraw_blist(const char *name, PurplePrefType type,
 		gconstpointer val, gpointer data)
 {
@@ -144,7 +163,6 @@ row_changed_cb(GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, Pidgin
 		 * We need to find a way to make sure that doesn't happen.
 		 */
 		gtk_tree_store_set(GTK_TREE_STORE(model), iter, BUDDY_ICON_VISIBLE_COLUMN, FALSE, -1);
-		/*g_object_set(gtkblist->text_rend, "height", 32, NULL);*/
 	}
 
 end:
@@ -166,6 +184,8 @@ gtkblist_created_cb(PurpleBuddyList *blist)
 
 	purple_prefs_trigger_callback(PREF_LIST);
 	purple_prefs_trigger_callback(PREF_MENU);
+
+	purple_prefs_trigger_callback(PIDGIN_PREFS_ROOT "/blist/show_buddy_icons");
 }
 
 static gboolean
@@ -181,6 +201,9 @@ plugin_load(PurplePlugin *plugin)
 
 	purple_prefs_connect_callback(plugin, PREF_STRETCH, redraw_blist, purple_get_blist());
 	purple_prefs_connect_callback(plugin, PREF_EMAIL, redraw_blist, purple_get_blist());
+	
+	purple_prefs_connect_callback(plugin, PIDGIN_PREFS_ROOT "/blist/show_buddy_icons",
+				reset_row_heights, NULL);
 
 	return TRUE;
 }
