@@ -366,7 +366,7 @@ get_plugin_pref_frame(PurplePlugin *plugin)
 	purple_plugin_pref_frame_add(frame, pref);
 
 	pref = purple_plugin_pref_new_with_name_and_label(PREFS_PREFIX_MSG,
-					_("Prefix autoreplies\n(only when necessary)"));
+					_("Autoreply Prefix\n(only when necessary)"));
 	purple_plugin_pref_frame_add(frame, pref);
 
 	pref = purple_plugin_pref_new_with_label(_("Status message"));
