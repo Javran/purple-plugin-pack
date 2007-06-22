@@ -92,6 +92,7 @@ have_fun(GtkIMHtml *imhtml, const char *old, const char *new)
 	GList *lold, *lnew;
 	int i, j, m, n;
 	GString *from, *to;
+	char *text;
 
 	lold = split_string(old);
 	lnew = split_string(new);
@@ -148,10 +149,9 @@ have_fun(GtkIMHtml *imhtml, const char *old, const char *new)
 		i--;
 	}
 
-	gtk_imhtml_append_text(GTK_IMHTML(imhtml), "<BR>Topic changed from: <BR>", 0);
-	gtk_imhtml_append_text(GTK_IMHTML(imhtml), from->str, 0);
-	gtk_imhtml_append_text(GTK_IMHTML(imhtml), "<BR>To:<BR>", 0);
-	gtk_imhtml_append_text(GTK_IMHTML(imhtml), to->str, 0);
+	text = g_strdup_printf(_("<BR>Topic changed from: <BR>%s<BR>To:<BR>%s"), from->str, to->str);
+	gtk_imhtml_append_text(GTK_IMHTML(imhtml), text, 0);
+	g_free(text);
 
 	g_string_free(from, TRUE);
 	g_string_free(to, TRUE);
