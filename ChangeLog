@@ -1,8 +1,15 @@
 Version 1.1mtn:
+	* Blistops now offers the ability to stretch the display of screen names
+	  or aliases into the buddy icon column when no icon exists
+	* Blistops now shows the menu bar when hovering near the top of the buddy
+	  list window.  Resolves a number of Pidgin bug reports
 	* Listhandler now supports alias-only list exports and imports (rseeber)
+	* Listhandler now exports buddy notes created with the buddynote plugin
+	  but importing does not yet work
 	* Added ignore plugin
 	* Added irc-more plugin
 	* Added highlight plugin
+	* Fixed build-by-default status for switchspell
 
 Version 1.0: 5/4/07
 	* Updated for Pidgin 2.0.0
