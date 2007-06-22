@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugin_pack 1.0beta3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-05 17:06-0500\n"
+"POT-Creation-Date: 2007-06-21 19:55-0400\n"
 "PO-Revision-Date: 2006-08-05 20:42+0200\n"
 "Last-Translator: Máximo Castañeda <antiswen@yahoo.es>\n"
 "Language-Team: es_ES <antiswen@yahoo.es>\n"
@@ -119,97 +119,108 @@ msgid ""
 msgstr ""
 
 #. XXX: There should be a way to reset to the default/account-default autoreply
-#: ../autoreply/autoreply.c:225
+#: ../autoreply/autoreply.c:233
 #, c-format
 msgid "Set autoreply message for %s"
 msgstr ""
 
-#: ../autoreply/autoreply.c:227
+#: ../autoreply/autoreply.c:235
 msgid "Set Autoreply Message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:228
+#: ../autoreply/autoreply.c:236
 msgid ""
 "The following message will be sent to the buddy when the buddy sends you a "
 "message and autoreply is enabled."
 msgstr ""
 
-#: ../autoreply/autoreply.c:232
+#: ../autoreply/autoreply.c:240
 #, fuzzy
 msgid "_Save"
 msgstr "Guardar"
 
-#: ../autoreply/autoreply.c:233 ../listhandler/aim_blt_files.c:301
-#: ../listhandler/aim_blt_files.c:465 ../listhandler/gen_xml_files.c:162
-#: ../listhandler/gen_xml_files.c:352 ../listhandler/migrate.c:145
+#: ../autoreply/autoreply.c:241 ../listhandler/aim_blt_files.c:301
+#: ../listhandler/aim_blt_files.c:465 ../listhandler/gen_xml_files.c:190
+#: ../listhandler/gen_xml_files.c:430 ../listhandler/gen_xml_files.c:546
+#: ../listhandler/gen_xml_files.c:623 ../listhandler/migrate.c:145
 #: ../listhandler/migrate.c:184
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: ../autoreply/autoreply.c:246
+#: ../autoreply/autoreply.c:254
 msgid "Set _Autoreply Message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:255
+#: ../autoreply/autoreply.c:263
 msgid "Autoreply message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:342
+#: ../autoreply/autoreply.c:350
 msgid "Send autoreply messages when"
 msgstr ""
 
-#: ../autoreply/autoreply.c:346
+#: ../autoreply/autoreply.c:354
 msgid "When my account is _away"
 msgstr ""
 
-#: ../autoreply/autoreply.c:350
+#: ../autoreply/autoreply.c:358
 msgid "When my account is _idle"
 msgstr ""
 
-#: ../autoreply/autoreply.c:354
+#: ../autoreply/autoreply.c:362
 msgid "_Default reply"
 msgstr ""
 
-#: ../autoreply/autoreply.c:360
+#: ../autoreply/autoreply.c:369
+msgid ""
+"Autoreply Prefix\n"
+"(only when necessary)"
+msgstr ""
+
+#: ../autoreply/autoreply.c:372
 msgid "Status message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:364
+#: ../autoreply/autoreply.c:376
 msgid "Autoreply with status message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:366
+#: ../autoreply/autoreply.c:378
 msgid "Never"
 msgstr ""
 
-#: ../autoreply/autoreply.c:368
+#: ../autoreply/autoreply.c:380
 msgid "Always when there is a status message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:370
+#: ../autoreply/autoreply.c:382
 msgid "Only when there's no autoreply message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:375
+#: ../autoreply/autoreply.c:387
 msgid "Delay between autoreplies"
 msgstr ""
 
-#: ../autoreply/autoreply.c:379
+#: ../autoreply/autoreply.c:391
 msgid "_Minimum delay (mins)"
 msgstr ""
 
-#: ../autoreply/autoreply.c:383
+#: ../autoreply/autoreply.c:395
 msgid "Times to send autoreplies"
 msgstr ""
 
-#: ../autoreply/autoreply.c:387
+#: ../autoreply/autoreply.c:399
 msgid "Ma_ximum count"
 msgstr ""
 
-#: ../autoreply/autoreply.c:442
+#: ../autoreply/autoreply.c:454
 msgid ""
 "I am currently not available. Please leave your message, and I will get back "
 "to you as soon as possible."
+msgstr ""
+
+#: ../autoreply/autoreply.c:459
+msgid "This is an autoreply: "
 msgstr ""
 
 #: ../awaynotify/awaynotify.c:190
@@ -307,19 +318,27 @@ msgid ""
 "are. Completely, thoroughly untested."
 msgstr ""
 
-#: ../blistops/blistops.c:112
+#: ../blistops/blistops.c:233
 msgid "Hide the buddy list when it is created"
 msgstr "Ocultar la lista de contactos cuando se crea"
 
-#: ../blistops/blistops.c:116
+#: ../blistops/blistops.c:237
 msgid "Hide the menu in the buddy list window"
 msgstr "Ocultar el menú de la ventana de la lista de contactos"
 
-#: ../blistops/blistops.c:172
+#: ../blistops/blistops.c:241
+msgid "Stretch the buddyname if the buddy has no buddyicon."
+msgstr ""
+
+#: ../blistops/blistops.c:245
+msgid "Show email addresses for all the buddies."
+msgstr ""
+
+#: ../blistops/blistops.c:302
 msgid "Buddy List Options"
 msgstr "Opciones de Lista de Contactos"
 
-#: ../blistops/blistops.c:173 ../blistops/blistops.c:174
+#: ../blistops/blistops.c:303 ../blistops/blistops.c:304
 msgid "Gives extended options to the buddy list"
 msgstr "Añade opciones para la lista de contactos"
 
@@ -518,23 +537,28 @@ msgstr ""
 "Añade un comando (/dice) para lanzar un número arbitrario de dados con un "
 "número arbitrario de caras"
 
-#: ../eight_ball/eight_ball.c:127
-msgid "8ball:  sends a random 8ball message"
+#: ../difftopic/difftopic.c:152
+#, c-format
+msgid "<BR>Topic changed from: <BR>%s<BR>To:<BR>%s"
 msgstr ""
 
 #: ../eight_ball/eight_ball.c:128
+msgid "8ball:  sends a random 8ball message"
+msgstr ""
+
+#: ../eight_ball/eight_ball.c:129
 msgid "sgball:  sends a random Stargate Ball message"
 msgstr ""
 
-#: ../eight_ball/eight_ball.c:195
+#: ../eight_ball/eight_ball.c:196
 msgid "Magic 8 Ball"
 msgstr ""
 
-#: ../eight_ball/eight_ball.c:196
+#: ../eight_ball/eight_ball.c:197
 msgid "Provides Magic 8-ball like functionality"
 msgstr ""
 
-#: ../eight_ball/eight_ball.c:197
+#: ../eight_ball/eight_ball.c:198
 msgid ""
 "Provides Magic 8-ball like functionality with the /8ball command, as well as "
 "similar functionality for common Stargate words or phrases with the /sg-ball "
@@ -641,6 +665,35 @@ msgstr ""
 msgid "Hide All Conversations"
 msgstr ""
 
+#: ../highlight/highlight.c:81
+msgid "Highlight History"
+msgstr ""
+
+#: ../highlight/highlight.c:253
+msgid ""
+"/highlight history: shows the list of highlighted sentences from the "
+"history.\n"
+"/highlight clear:   clears the history.\n"
+"/highlight +&lt;word&gt;:  adds &lt;word&gt; to the highlight word list for "
+"this conversation only.\n"
+"/highlight -&lt;word&gt;:  removes &lt;word&gt; from the highlight word list "
+"for this conversation only.\n"
+msgstr ""
+
+#: ../highlight/highlight.c:281
+msgid ""
+"Words to highlight on\n"
+"(separate words by space)"
+msgstr ""
+
+#: ../highlight/highlight.c:309 ../nicksaid/nicksaid.c:577
+msgid "Highlight"
+msgstr ""
+
+#: ../highlight/highlight.c:311 ../highlight/highlight.c:312
+msgid "Support for highlighting words."
+msgstr ""
+
 #: ../ignorance/ignorance.c:391
 #, c-format
 msgid "Successfully removed %s from %s"
@@ -718,7 +771,7 @@ msgstr ""
 msgid "Filter"
 msgstr "Filtros de Dialectos"
 
-#: ../ignorance/interface.c:172
+#: ../ignorance/interface.c:172 ../ignore/ignore.c:275
 msgid "Ignore"
 msgstr ""
 
@@ -767,62 +820,119 @@ msgstr ""
 msgid "Couldn't find pixmap file: %s"
 msgstr ""
 
-#: ../irchelper/irchelper.c:920
+#: ../ignore/ignore.c:133
+msgid "Ignore Rules"
+msgstr ""
+
+#: ../ignore/ignore.c:133
+msgid "The following are the current ignore rules"
+msgstr ""
+
+#: ../ignore/ignore.c:134
+msgid "(Dear God! You are not ignoring any one!)"
+msgstr ""
+
+#: ../ignore/ignore.c:236
+msgid ""
+"ignore [-c] [+&lt;ignore&gt; -&lt;unignore&gt;]<br>Examples:<br>   'ignore "
+"+StupidBot -NotABot' \t - (in a chat) Starts ignoring StupidBot, and removes "
+"NotABot from ignore list.<br>   'ignore -c +AnotherBot' \t - (in a chat) "
+"Starts ignoring AnotherBot, but only in chats.<br>   'ignore +' \t - (in an "
+"IM) Starts ignoring this person.<br>   'ignore -' \t - (in an IM) Starts "
+"unignoring this person.<br>   'ignore' \t - Lists the current ignore rules."
+msgstr ""
+
+#: ../ignore/ignore.c:277
+msgid ""
+"Flexible plugin to selectively ignore people. Please do not use if you have "
+"amnesia."
+msgstr ""
+
+#: ../ignore/ignore.c:278
+msgid ""
+"Flexible plugin to selectively ignore people. See '/help ignore' for more "
+"help.\n"
+"Please do not use if you have amnesia."
+msgstr ""
+
+#: ../irc-more/irc-more.c:86
+msgid "Default Quit Message"
+msgstr ""
+
+#: ../irc-more/irc-more.c:89
+msgid "Default Part Message"
+msgstr ""
+
+#: ../irc-more/irc-more.c:92
+msgid "CTCP Version reply"
+msgstr ""
+
+#: ../irc-more/irc-more.c:116
+msgid "IRC More"
+msgstr ""
+
+#: ../irc-more/irc-more.c:118 ../irc-more/irc-more.c:119
+msgid ""
+"Adds a couple of options for IRC: Customized default quit message, and CTCP "
+"version reply."
+msgstr ""
+
+#: ../irchelper/irchelper.c:948
 msgid "You have been added to the access list."
 msgstr ""
 
-#: ../irchelper/irchelper.c:922
+#: ../irchelper/irchelper.c:950
 #, c-format
 msgid "You have been added to the access list with an access level of %s."
 msgstr ""
 
-#: ../irchelper/irchelper.c:956
+#: ../irchelper/irchelper.c:984
 msgid "You have been removed from the access list."
 msgstr ""
 
-#: ../irchelper/irchelper.c:1065
+#: ../irchelper/irchelper.c:1093
 msgid "NickServ Authentication Error"
 msgstr ""
 
-#: ../irchelper/irchelper.c:1066
+#: ../irchelper/irchelper.c:1094
 msgid "Error authenticating with NickServ"
 msgstr ""
 
-#: ../irchelper/irchelper.c:1067 ../irchelper/irchelper.c:1093
-#: ../irchelper/irchelper.c:1119
+#: ../irchelper/irchelper.c:1095 ../irchelper/irchelper.c:1121
+#: ../irchelper/irchelper.c:1147
 msgid "Check your password."
 msgstr ""
 
-#: ../irchelper/irchelper.c:1091
+#: ../irchelper/irchelper.c:1119
 msgid "GameSurge Authentication Error"
 msgstr ""
 
-#: ../irchelper/irchelper.c:1092
+#: ../irchelper/irchelper.c:1120
 msgid "Error authenticating with AuthServ"
 msgstr ""
 
-#: ../irchelper/irchelper.c:1117
+#: ../irchelper/irchelper.c:1145
 msgid "QuakeNet Authentication Error"
 msgstr ""
 
-#: ../irchelper/irchelper.c:1118
+#: ../irchelper/irchelper.c:1146
 msgid "Error authenticating with Q"
 msgstr ""
 
 #. Register protocol preferences.
-#: ../irchelper/irchelper.c:1157
+#: ../irchelper/irchelper.c:1185
 msgid "Auth name"
 msgstr ""
 
-#: ../irchelper/irchelper.c:1160
+#: ../irchelper/irchelper.c:1188
 msgid "Nick password"
 msgstr ""
 
-#: ../irchelper/irchelper.c:1164
+#: ../irchelper/irchelper.c:1192
 msgid "Disconnect ghosts (Duplicate nicknames)"
 msgstr ""
 
-#: ../irchelper/irchelper.c:1168
+#: ../irchelper/irchelper.c:1196
 msgid "Operator password"
 msgstr ""
 
@@ -960,7 +1070,8 @@ msgstr ""
 
 #. create a field
 #: ../listhandler/aim_blt_files.c:287 ../listhandler/aim_blt_files.c:453
-#: ../listhandler/gen_xml_files.c:147 ../listhandler/gen_xml_files.c:338
+#: ../listhandler/gen_xml_files.c:175 ../listhandler/gen_xml_files.c:416
+#: ../listhandler/gen_xml_files.c:532 ../listhandler/gen_xml_files.c:608
 #: ../listhandler/migrate.c:129 ../listhandler/migrate.c:169
 #: ../schedule/pidgin-schedule.c:292
 msgid "Account"
@@ -968,14 +1079,17 @@ msgstr "Cuenta"
 
 #. and finally we can create the request
 #: ../listhandler/aim_blt_files.c:297
-msgid "Buddy List Importer"
-msgstr "Importador de Listas de Contactos"
+#, fuzzy
+msgid "List Handler: Importing"
+msgstr "Listhandler - Importando"
 
-#: ../listhandler/aim_blt_files.c:298 ../listhandler/gen_xml_files.c:159
+#: ../listhandler/aim_blt_files.c:298 ../listhandler/gen_xml_files.c:187
+#: ../listhandler/gen_xml_files.c:620
 msgid "Choose the account to import to:"
 msgstr "Elija la cuenta a la que importar:"
 
-#: ../listhandler/aim_blt_files.c:299 ../listhandler/gen_xml_files.c:160
+#: ../listhandler/aim_blt_files.c:299 ../listhandler/gen_xml_files.c:188
+#: ../listhandler/gen_xml_files.c:621
 msgid "_Import"
 msgstr "_Importar"
 
@@ -985,14 +1099,17 @@ msgstr "Guardar Archivo AIM .blt"
 
 #. and finally we can create the request
 #: ../listhandler/aim_blt_files.c:463
-msgid "Buddy List Exporter"
-msgstr "Exportador de Listas de Contactos"
+#, fuzzy
+msgid "List Handler: Exporting"
+msgstr "Listhandler - Exportando"
 
-#: ../listhandler/aim_blt_files.c:464 ../listhandler/gen_xml_files.c:351
+#: ../listhandler/aim_blt_files.c:464 ../listhandler/gen_xml_files.c:429
+#: ../listhandler/gen_xml_files.c:545
 msgid "Choose the account to export from:"
 msgstr "Elija la cuenta de la que exportar:"
 
-#: ../listhandler/aim_blt_files.c:465 ../listhandler/gen_xml_files.c:352
+#: ../listhandler/aim_blt_files.c:465 ../listhandler/gen_xml_files.c:430
+#: ../listhandler/gen_xml_files.c:546
 msgid "_Export"
 msgstr "_Exportar"
 
@@ -1001,55 +1118,72 @@ msgid "Choose An AIM .blt File To Import"
 msgstr "Elija el Archivo AIM .blt que Importar"
 
 #. and finally we can create the request
-#: ../listhandler/gen_xml_files.c:158
+#: ../listhandler/gen_xml_files.c:186 ../listhandler/gen_xml_files.c:619
 msgid "Listhandler - Importing"
 msgstr "Listhandler - Importando"
 
-#: ../listhandler/gen_xml_files.c:312
+#: ../listhandler/gen_xml_files.c:390
 msgid "Save Generic .blist File"
 msgstr "Guardar Archivo Genérico .blist"
 
 #. and finally we can create the request
-#: ../listhandler/gen_xml_files.c:350
+#: ../listhandler/gen_xml_files.c:428 ../listhandler/gen_xml_files.c:544
 #, fuzzy
 msgid "Listhandler - Exporting"
 msgstr "Listhandler - Exportando"
 
-#: ../listhandler/gen_xml_files.c:363
+#: ../listhandler/gen_xml_files.c:441 ../listhandler/gen_xml_files.c:650
 msgid "Choose A Generic Buddy List File To Import"
 msgstr "Elija el Archivo Genérico de Contactos a Importar"
 
+#: ../listhandler/gen_xml_files.c:505
+#, fuzzy
+msgid "Save Generic .alist File"
+msgstr "Guardar Archivo Genérico .blist"
+
 #: ../listhandler/listhandler.c:37
-msgid "Import AIM Buddy List File"
+#, fuzzy
+msgid "Import AIM Buddy List File (.blt)"
 msgstr "Importar Archivo AIM de Contactos"
 
 #: ../listhandler/listhandler.c:41
-msgid "Import Generic Buddy List File"
+#, fuzzy
+msgid "Import Generic Buddy List File (.xml)"
 msgstr "Importar Archivo Genérico de Contactos"
 
 #: ../listhandler/listhandler.c:45
+#, fuzzy
+msgid "Import Generic Alias List File"
+msgstr "Importar Archivo Genérico de Contactos"
+
+#: ../listhandler/listhandler.c:49
 msgid "Export AIM Buddy List File"
 msgstr "Exportar Archivo AIM de Contactos"
 
-#: ../listhandler/listhandler.c:49
+#: ../listhandler/listhandler.c:53
 msgid "Export Generic Buddy List File"
 msgstr "Exportar Archivo Genérico de Contactos"
 
-#: ../listhandler/listhandler.c:53
+#: ../listhandler/listhandler.c:57
+#, fuzzy
+msgid "Export Generic Alias List File"
+msgstr "Exportar Archivo Genérico de Contactos"
+
+#: ../listhandler/listhandler.c:61
 msgid "Copy Buddies From One Account to Another"
 msgstr "Copiar Contactos de una Cuenta a otra"
 
-#: ../listhandler/listhandler.c:100
+#: ../listhandler/listhandler.c:108
 msgid "List Handler"
 msgstr "List Handler"
 
-#: ../listhandler/listhandler.c:102
+#: ../listhandler/listhandler.c:110
 msgid "Provides numerous user-requested list-handling capabilities."
 msgstr ""
 "Provee varias acciones de manejo de listas de contactos pedidas por los "
 "usuarios."
 
-#: ../listhandler/listhandler.c:105
+#: ../listhandler/listhandler.c:113
 msgid ""
 "Provides numerous user-requested list-handling capabilities, such as "
 "importing and exporting of AIM .blt files and generic protocol-agnostic XML ."
@@ -1216,10 +1350,6 @@ msgstr ""
 
 #: ../nicksaid/nicksaid.c:307
 msgid "Show All"
-msgstr ""
-
-#: ../nicksaid/nicksaid.c:577
-msgid "Highlight"
 msgstr ""
 
 #: ../nicksaid/nicksaid.c:581
@@ -1498,23 +1628,23 @@ msgstr ""
 "Una separa los IMs y agrupa los chats en pestañas\n"
 "La otra separa los chats y agrupa los IMs"
 
-#: ../showoffline/showoffline.c:55
+#: ../showoffline/showoffline.c:77
 msgid "Hide when offline"
 msgstr ""
 
-#: ../showoffline/showoffline.c:58
+#: ../showoffline/showoffline.c:80
 msgid "Show when offline"
 msgstr ""
 
-#: ../showoffline/showoffline.c:115
+#: ../showoffline/showoffline.c:137
 msgid "Show Offline"
 msgstr ""
 
-#: ../showoffline/showoffline.c:116
+#: ../showoffline/showoffline.c:138
 msgid "Show specific buddies while offline."
 msgstr ""
 
-#: ../showoffline/showoffline.c:117
+#: ../showoffline/showoffline.c:139
 msgid ""
 "Adds the option to show specific buddies in your buddy list when they are "
 "offline, even with \"Show Offline Buddies\" turned off."
@@ -1689,6 +1819,12 @@ msgstr ""
 "integrado. Los filtros incluyen austro, b1ff, brooklyn, chef, cockney, "
 "drawl, dubya, fudd, funetak, jethro, jive, kraut, pansy, pirate, postmodern, "
 "redneck, valspeak, and warez."
+
+#~ msgid "Buddy List Importer"
+#~ msgstr "Importador de Listas de Contactos"
+
+#~ msgid "Buddy List Exporter"
+#~ msgstr "Exportador de Listas de Contactos"
 
 #~ msgid "Notes"
 #~ msgstr "Notas"

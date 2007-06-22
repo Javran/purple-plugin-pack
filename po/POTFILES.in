@@ -33,7 +33,6 @@ listhandler/aim_blt_files.c
 listhandler/gen_xml_files.c
 listhandler/listhandler.c
 listhandler/migrate.c
-listhandler/nb_dat_files.c
 mystatusbox/mystatusbox.c
 napster/napster.c
 nicksaid/nicksaid.c
