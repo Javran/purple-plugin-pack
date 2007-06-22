@@ -1,5 +1,5 @@
 #! /bin/sh
-PACKAGE="pidgin-plugin_pack"
+PACKAGE="purple-plugin_pack"
 
 (intltoolize --version) < /dev/null > /dev/null 2>&1 || {
 	echo;
