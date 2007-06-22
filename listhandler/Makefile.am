@@ -3,7 +3,7 @@ EXTRA_DIST=\
 	.purple-plugin \
 	Makefile.mingw \
 	aim_blt_files.h \
-	n_xml_files.h \
+	gen_xml_files.h \
 	lh_util.h \
 	listhandler.h \
 	migrate.h
