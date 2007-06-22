@@ -26,6 +26,12 @@ DIST_SUBDIRS = common doc m4 po $(PP_PURPLE) $(PP_PIDGIN) $(PP_FINCH)
 
 SUBDIRS = common doc m4 po $(PP_PURPLE_BUILD) $(PP_PIDGIN_BUILD) $(PP_FINCH_BUILD)
 
+DISTCLEANFILES=\
+	pp_config.h \
+	intltool-extract \
+	intltool-update \
+	intltool-merge
+
 BUILT_SOURCES = pp_config.h
 
 $(OBJECTS): $(BUILT_SOURCES)
