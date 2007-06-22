@@ -10,6 +10,7 @@ Version 1.1mtn:
 	* Added irc-more plugin
 	* Added highlight plugin
 	* Fixed build-by-default status for switchspell
+	* Fix crash in album when using Pidgin 2.0.2 or newer
 
 Version 1.0: 5/4/07
 	* Updated for Pidgin 2.0.0
