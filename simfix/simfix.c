@@ -71,6 +71,9 @@ simfix_extended_menu_cb(PurpleBlistNode *node, GList **m)
 {
 	PurpleMenuAction *bna = NULL;
 
+	if (purple_blist_node_get_flags(node) & PURPLE_BLIST_NODE_FLAG_NO_SAVE)
+		return;
+
 	if(!PURPLE_BLIST_NODE_IS_BUDDY(node))
 		return;
 	if (!purple_blist_node_get_bool(node, "sim-user"))
