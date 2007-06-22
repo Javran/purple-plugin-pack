@@ -1,4 +1,12 @@
-EXTRA_DIST = .build .purple-plugin *.h Makefile.mingw
+EXTRA_DIST=\
+	.build \
+	.purple-plugin \
+	Makefile.mingw \
+	aim_blt_files.h \
+	n_xml_files.h \
+	lh_util.h \
+	listhandler.h \
+	migrate.h
 
 listhandlerdir = $(PURPLE_LIBDIR)
 
