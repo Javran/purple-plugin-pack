@@ -314,7 +314,7 @@ lh_generic_build_alist_tree(xmlnode *parent)
 						tmpbuddy = (PurpleBuddy *)b;
 						if(purple_buddy_get_account(tmpbuddy) == source_account) {
 							tmpalias = purple_buddy_get_alias_only(tmpbuddy);
-							if ( tmpalias != NULL ){
+							if (tmpalias != NULL) {
 								tmpname = purple_buddy_get_name(tmpbuddy);
 								buddy = xmlnode_new_child(parent, "buddy");
 								xmlnode_set_attrib(buddy, "screenname", tmpname);
@@ -450,13 +450,12 @@ lh_generic_import_action_cb(PurplePluginAction *action)
 static xmlnode *
 lh_generic_alist_build_tree(void)
 {
-	xmlnode *root_node = xmlnode_new("exported_buddy_list");
+	xmlnode *root_node = xmlnode_new("exported_alias_list");
 
 	/* since building this tree is really building three smaller trees that
 	 * share a common parent, we'll build each tree separately to make this
 	 * easier to read and understand what goes in each tree (hopefully). */
 	lh_generic_build_config_tree(xmlnode_new_child(root_node, "config"));
-	lh_generic_build_privacy_tree(xmlnode_new_child(root_node, "privacy"));
 	lh_generic_build_alist_tree(xmlnode_new_child(root_node, "alist"));
 
 	return root_node;
