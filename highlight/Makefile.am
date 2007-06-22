@@ -1,4 +1,4 @@
-EXTRA_DIST = .pidgin-plugin Makefile.mingw .incomplete .build
+EXTRA_DIST = .purple-plugin Makefile.mingw .build
 
 highlightdir = $(PIDGIN_LIBDIR)
 
