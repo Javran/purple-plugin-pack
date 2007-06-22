@@ -1,10 +1,10 @@
 EXTRA_DIST = .build .purple-plugin Makefile.mingw
 
-ignoredir = $(PIDGIN_LIBDIR)
+ignoredir = $(PURPLE_LIBDIR)
 
 ignore_la_LDFLAGS = -module -avoid-version
 
-if HAVE_PIDGIN
+if HAVE_PURPLE
 
 ignore_LTLIBRARIES = ignore.la
 
@@ -12,15 +12,15 @@ ignore_la_SOURCES = \
 	ignore.c
 
 ignore_la_LIBADD = \
-	$(PIDGIN_LIBS) \
-	$(GTK_LIBS)
+	$(PURPLE_LIBS) \
+	$(GLIB_LIBS)
 
 endif
 
 AM_CPPFLAGS = \
-	-DLIBDIR=\"$(PIDGIN_LIBDIR)\" \
-	-DDATADIR=\"$(PIDGIN_DATADIR)\" \
-	-DPIXMAPSDIR=\"$(PIDGIN_PIXMAPSDIR)\" \
-	$(GTK_CFLAGS) \
+	-DLIBDIR=\"$(PURPLE_LIBDIR)\" \
+	-DDATADIR=\"$(PURPLE_DATADIR)\" \
+	-DPIXMAPSDIR=\"$(PURPLE_PIXMAPSDIR)\" \
+	$(GLIB_CFLAGS) \
 	$(DEBUG_CFLAGS) \
-	$(PIDGIN_CFLAGS)
+	$(PURPLE_CFLAGS)
