@@ -307,7 +307,6 @@ AC_OUTPUT([
 	broadcast/Makefile
 	buddytime/Makefile
 	chronic/Makefile
-	convbadger/Makefile
 	dice/Makefile
 	difftopic/Makefile
 	eight_ball/Makefile
