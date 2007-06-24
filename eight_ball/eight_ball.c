@@ -65,7 +65,17 @@ static const gchar *sg_ball_strings[] = {
 	"I believe a medical attack could be successful."
 };
 
-static PurpleCmdId eight_ball_cmd_id = 0, sg_ball_cmd_id = 0;
+static const gchar *fullcrap_strings[] = {
+	"you are only fullcrap",
+	"this is only fooling blabber",
+	"thats nots really nice",
+	"Oh I at all do not understand a pancake about what you here talk.",
+	"it shall be visible will be?"
+};
+
+static PurpleCmdId eight_ball_cmd_id = 0,
+                   sg_ball_cmd_id = 0,
+                   fullcrap_cmd_id = 0;
 
 static PurpleCmdRet
 eight_ball_cmd_func(PurpleConversation *conv, const gchar *cmd, gchar **args,
@@ -84,6 +94,10 @@ eight_ball_cmd_func(PurpleConversation *conv, const gchar *cmd, gchar **args,
 		numstrings = sizeof(sg_ball_strings) / sizeof(sg_ball_strings[0]);
 		msgprefix = "The Purple Stargate Ball says";
 		msgs = sg_ball_strings;
+	} else if(!strcmp(cmd, "fullcrap")) {
+		numstrings = sizeof(fullcrap_strings) / sizeof(fullcrap_strings[0]);
+		msgprefix = "The Purple Fullcrap Ball says";
+		msgs = fullcrap_strings;
 	} else {
 		numstrings = sizeof(eight_ball_strings) / sizeof(eight_ball_strings[0]);
 		msgprefix = "The Purple 8 Ball says";
@@ -123,10 +137,11 @@ eight_ball_cmd_func(PurpleConversation *conv, const gchar *cmd, gchar **args,
 static gboolean
 plugin_load(PurplePlugin *plugin)
 {
-	const gchar *eight_ball_help, *sg_ball_help;
+	const gchar *eight_ball_help, *sg_ball_help, *fullcrap_help;
 
 	eight_ball_help = _("8ball:  sends a random 8ball message");
 	sg_ball_help = _("sgball:  sends a random Stargate Ball message");
+	fullcrap_help = _("fullcrap:  sends random fooling blabber");
 
 	eight_ball_cmd_id = purple_cmd_register("8ball", "w", PURPLE_CMD_P_PLUGIN,
 									PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT |
@@ -139,6 +154,12 @@ plugin_load(PurplePlugin *plugin)
 									PURPLE_CMD_FLAG_ALLOW_WRONG_ARGS, NULL,
 									PURPLE_CMD_FUNC(eight_ball_cmd_func),
 									sg_ball_help, NULL);
+
+	fullcrap_cmd_id = purple_cmd_register("fullcrap", "w", PURPLE_CMD_P_PLUGIN,
+									PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT |
+									PURPLE_CMD_FLAG_ALLOW_WRONG_ARGS, NULL,
+									PURPLE_CMD_FUNC(eight_ball_cmd_func),
+									fullcrap_help, NULL);
 
 	return TRUE;
 }

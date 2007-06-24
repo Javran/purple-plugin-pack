@@ -9,6 +9,7 @@ Version 1.1mtn:
 	* Added ignore plugin
 	* Added irc-more plugin
 	* Added highlight plugin
+	* Added more humorous stuff to eight_ball (resiak)
 	* Fixed build-by-default status for switchspell
 	* Fix crash in album when using Pidgin 2.0.2 or newer
 
