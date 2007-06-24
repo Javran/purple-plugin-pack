@@ -78,8 +78,14 @@ PKG_CHECK_MODULES(PURPLE, purple,
 HAVE_PURPLE="yes"
 AM_CONDITIONAL(HAVE_PURPLE, true)
 
-PURPLE_LIBDIR=`pkg-config --variable=libdir purple`
-PURPLE_DATADIR=`pkg-config --variable=datadir purple`
+if test x"$prefix" = x"NONE" ; then
+	PURPLE_LIBDIR=`pkg-config --variable=libdir purple`
+	PURPLE_DATADIR=`pkg-config --variable=datadir purple`
+else
+	PURPLE_LIBDIR="$libdir"
+	PURPLE_DATADIR="$datadir"
+fi
+
 PURPLE_PIXMAPSDIR=""
 
 # this is a hack but should work fine.
@@ -117,8 +123,14 @@ PKG_CHECK_MODULES(PIDGIN, pidgin,
 	AM_CONDITIONAL(HAVE_PIDGIN, false)
 ])
 
-PIDGIN_LIBDIR=`pkg-config --variable=libdir pidgin`
-PIDGIN_DATADIR=`pkg-config --variable=datadir pidgin`
+if test x"$prefix" = x"NONE" ; then
+	PIDGIN_LIBDIR=`pkg-config --variable=libdir pidgin`
+	PIDGIN_DATADIR=`pkg-config --variable=datadir pidgin`
+else
+	PIDGIN_LIBDIR="$libdir"
+	PIDGIN_DATADIR="$datadir"
+fi
+
 PIDGIN_PIXMAPSDIR=""
 
 if test x"$PIDGIN_LIBDIR" != x"" ; then
@@ -149,8 +161,14 @@ PKG_CHECK_MODULES(FINCH, finch,
 	AM_CONDITIONAL(HAVE_FINCH, false)
 ])
 
-FINCH_LIBDIR=`pkg-config --variable=libdir finch`
-FINCH_DATADIR=`pkg-config --variable=datadir finch`
+if test x"$prefix" = x"NONE" ; then
+	FINCH_LIBDIR=`pkg-config --variable=libdir finch`
+	FINCH_DATADIR=`pkg-config --variable=datadir finch`
+else
+	FINCH_LIBDIR="$libdir"
+	FINCH_DATADIR="$datadir"
+fi
+
 FINCH_PIXMAPSDIR=""
 
 if test x"$FINCH_LIBDIR" != x"" ; then
@@ -289,6 +307,7 @@ AC_OUTPUT([
 	broadcast/Makefile
 	buddytime/Makefile
 	chronic/Makefile
+	convbadger/Makefile
 	dice/Makefile
 	difftopic/Makefile
 	eight_ball/Makefile

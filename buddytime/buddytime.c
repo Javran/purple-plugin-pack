@@ -185,6 +185,9 @@ static void
 bt_blist_drawing_menu_cb(PurpleBlistNode *node, GList **menu) {
 	PurpleMenuAction *action;
 
+	if (purple_blist_node_get_flags(node) & PURPLE_BLIST_NODE_FLAG_NO_SAVE)
+		return;
+
 	/* ignore chats and groups */
 	if(PURPLE_BLIST_NODE_IS_CHAT(node) || PURPLE_BLIST_NODE_IS_GROUP(node))
 		return;

@@ -108,29 +108,19 @@ buddy_signedoff_cb(PurpleBuddy *buddy, void *data)
 	purple_blist_node_set_int((PurpleBlistNode*)buddy, "signedoff", time(NULL) );
 }
 
-#if PURPLE_VERSION_CHECK(2,0,0)
 static void
 drawing_tooltip_cb(PurpleBlistNode *node, GString *str, gboolean full, void *data)
-#else
-static void
-drawing_tooltip_cb(PurpleBlistNode *node, char **text, void *data)
-#endif
 {
 	PurpleBuddy *buddy = NULL;
 	PurpleBlistNode *n;
 	time_t last = 0, max = 0, off = 0, on = 0;
 	const gchar *tmp = NULL;
 	gchar *seen = NULL, *said = NULL, *offs = NULL, *ons = NULL;
-#if !PURPLE_VERSION_CHECK(2,0,0)
-	gchar *tmp2 = NULL;
-#endif
 
 	if(PURPLE_BLIST_NODE_IS_BUDDY(node))
 	{
-#if PURPLE_VERSION_CHECK(2,0,0)
 		if (!full)
 			return;
-#endif
 		node = (PurpleBlistNode *)purple_buddy_get_contact((PurpleBuddy *)node);
 	}
 
@@ -167,31 +157,15 @@ drawing_tooltip_cb(PurpleBlistNode *node, char **text, void *data)
 	if(tmp)
 		said = g_strchomp(g_markup_escape_text(tmp, -1));
 
-#if PURPLE_VERSION_CHECK(2,0,0)
 	g_string_append_printf(str,
-					  "%s %s" /* Last seen */
-					  "%s %s" /* Last said */
-					  "%s %s" /* Signed on */
-					  "%s %s", /* Signed off */
-					  seen ? _("\n<b>Last Seen:</b>") : "", seen ? seen : "",
-					  said ? _("\n<b>Last Said:</b>") : "", said ? said : "",
-					  ons ? _("\n<b>Signed On:</b>") : "", ons ? ons : "",
-					  offs ? _("\n<b>Signed Off:</b>") : "", offs ? offs : "");
-#else
-	tmp2 = g_strdup(*text);
-	*text = g_strdup_printf("%s" /* existing */
-					  "%s %s" /* Last seen */
-					  "%s %s" /* Last said */
-					  "%s %s" /* Signed on */
-					  "%s %s", /* Signed off */
-					  tmp2,
-					  seen ? _("\n<b>Last Seen:</b>") : "", seen ? seen : "",
-					  said ? _("\n<b>Last Said:</b>") : "", said ? said : "",
-					  ons ? _("\n<b>Signed On:</b>") : "", ons ? ons : "",
-					  offs ? _("\n<b>Signed Off:</b>") : "", offs ? offs : "");
-
-	g_free(tmp2);
-#endif
+					  "%s%s" /* Last seen */
+					  "%s%s" /* Last said */
+					  "%s%s" /* Signed on */
+					  "%s%s", /* Signed off */
+					  seen ? _("\n<b>Last Seen</b>: ") : "", seen ? seen : "",
+					  said ? _("\n<b>Last Said</b>: ") : "", said ? said : "",
+					  ons ? _("\n<b>Signed On</b>: ") : "", ons ? ons : "",
+					  offs ? _("\n<b>Signed Off</b>: ") : "", offs ? offs : "");
 	g_free(seen);
 	g_free(said);
 	g_free(ons);
