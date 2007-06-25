@@ -248,6 +248,16 @@ rim(PurpleConversation *conv, const gchar *cmd, gchar **args,
 		info->verse = TRUE;
 		info->time = 60000;
 	}
+	if(*args && !g_ascii_strcasecmp(*args,"quit"))
+	{
+		GList *list = NULL;
+		list = g_list_append(list, "Fine, I'll stop");
+		info->lyric = list;
+		info->verse = FALSE;
+		info->time = 5000;
+	}
+	else
+		purple_debug_info("grim","HINT: quit with quit\n");
 
 	if (info->lyric == NULL)
 	{
