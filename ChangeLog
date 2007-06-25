@@ -5,7 +5,7 @@ Version 1.1mtn:
 	  list window.  Resolves a number of Pidgin bug reports
 	* Listhandler now supports alias-only list exports and imports (rseeber)
 	* Listhandler now exports buddy notes created with the buddynote plugin
-	  but importing does not yet work
+	  but importing does not yet work for AIM and ICQ accounts.
 	* Added ignore plugin
 	* Added irc-more plugin
 	* Added highlight plugin
