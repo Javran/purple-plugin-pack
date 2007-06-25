@@ -38,7 +38,7 @@ lh_util_add_buddy(const gchar *group, PurpleGroup *purple_group,
 	purple_account_add_buddy(account, purple_buddy);
 
 	if(buddynotes)
-		purple_blist_node_set_string((PurpleBlistNode *)buddy, "notes", buddynotes);
+		purple_blist_node_set_string((PurpleBlistNode *)purple_buddy, "notes", buddynotes);
 
 	purple_debug_info("listhandler: import",
 			"group: %s\tbuddy: %s\talias: %s\thas been added to the list\n",
