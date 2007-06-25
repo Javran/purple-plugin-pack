@@ -239,7 +239,7 @@ rim(PurpleConversation *conv, const gchar *cmd, gchar **args,
 	}
 
 	if(*args && !g_ascii_strcasecmp(*args,"quit")) {
-		GList *list = NULL, tmp = NULL;
+		GList *list = NULL, *tmp = NULL;
 		tmp = info->lyric;
 		list = g_list_append(list, "Fine, I'll stop");
 		info->lyric = list;
