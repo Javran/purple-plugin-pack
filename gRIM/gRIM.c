@@ -119,8 +119,7 @@ timeout_func_cb(struct timeout_data *data)
 	GtkIMHtml *imhtml = GTK_IMHTML(gtkconv->entry);
 	GList *list;
 
-	if (data->info->lyric == NULL)
-	{
+	if (data->info->lyric == NULL) {
 		/* XXX: free the lyric if it was dyn-allocated */
 		g_free(data->info);
 		g_free(data);
@@ -131,8 +130,7 @@ timeout_func_cb(struct timeout_data *data)
 
 	list = data->info->lyric;
 
-	if (list->next == NULL)
-	{
+	if (list->next == NULL) {
 		/* Is this Ugly or is this UGLY? */
 		int len = strlen(list->data);
 		GdkColor gdkcolor;
@@ -140,17 +138,14 @@ timeout_func_cb(struct timeout_data *data)
 		char *s = list->data;
 
 		if (!gdk_color_parse(color, &gdkcolor))
-		{
 			gdkcolor.red = gdkcolor.green = gdkcolor.blue = 0;
-		}
 
 		inc_r = (255 - (gdkcolor.red >> 8))/len;
 		inc_g = (255 - (gdkcolor.green >> 8))/len;
 		inc_b = (255 - (gdkcolor.blue >> 8))/len;
 
 		msg = g_strdup("");
-		while(*s)
-		{
+		while(*s) {
 			char *temp = msg;
 			char t[2] = {*s++, 0};
 			char tag[16];
@@ -165,8 +160,7 @@ timeout_func_cb(struct timeout_data *data)
 			gdkcolor.green += inc_g << 8;
 			gdkcolor.blue += inc_b << 8;
 		}
-	}
-	else if (color)
+	} else if (color)
 		msg = g_strdup_printf("<font color=\"%s\">%s</font>", color, (char *)list->data);
 	else
 		msg = g_strdup(*(char*)list->data ? (char*)list->data : "&nbsp;");
@@ -199,8 +193,7 @@ rim_get_file_lines(const char *filename)
 	if (!file)				/* XXX: Show an error message that the file doesn't exist */
 		return NULL;
 
-	while (fgets(str, MAX_LENGTH, file))
-	{
+	while (fgets(str, MAX_LENGTH, file)) {
 		char *s = str + strlen(str) - 1;
 		if (*s == '\r' || *s == '\n')
 			*s = 0;
@@ -222,45 +215,41 @@ rim(PurpleConversation *conv, const gchar *cmd, gchar **args,
 	gint source;
 
 	/* XXX: Need to manually parse the arguments :-/ */
-	if (*args && *(args+1))
-	{
+	if (*args && *(args+1)) {
 		/* two parameters: filename duration (in seconds) */
 		info->lyric = rim_get_file_lines(*args);
 		sscanf(*(args+1), "%d", &info->time);
 		info->time *= 1000;
-	}
-	else if (*args)
-	{
+	} else if (*args) {
 		/* one parameter: filename */
 		info->lyric = rim_get_file_lines(*args);
 		info->time = g_list_length(info->lyric) * 5000;	/* at least 5 seconds between two lines */
-	}
-	else
-	{
+	} else {
 		int i = 0;
 		GList *list = NULL;
-		while (LYRICS[i])
-		{
+
+		while (LYRICS[i]) {
 			list = g_list_append(list, g_strdup(LYRICS[i]));
 			i++;
 		}
+
 		info->lyric = list;
 		info->verse = TRUE;
 		info->time = 60000;
 	}
-	if(*args && !g_ascii_strcasecmp(*args,"quit"))
-	{
-		GList *list = NULL;
+
+	if(*args && !g_ascii_strcasecmp(*args,"quit")) {
+		GList *list = NULL, tmp = NULL;
+		tmp = info->lyric;
 		list = g_list_append(list, "Fine, I'll stop");
 		info->lyric = list;
 		info->verse = FALSE;
 		info->time = 5000;
-	}
-	else
+		g_list_free(tmp);
+	} else
 		purple_debug_info("grim","HINT: quit with quit\n");
 
-	if (info->lyric == NULL)
-	{
+	if (info->lyric == NULL) {
 		g_free(info);
 		g_free(data);
 		return PURPLE_CMD_STATUS_FAILED;
