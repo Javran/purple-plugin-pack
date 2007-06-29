@@ -1,5 +1,6 @@
 EXTRA_DIST = \
 	.pidgin-plugin \
+	.incomplete \
 	callbacks.h \
 	ignorance.conf \
 	ignorance.h \
