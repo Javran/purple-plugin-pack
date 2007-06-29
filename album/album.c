@@ -155,6 +155,9 @@ static void store_buddy_icon(PurpleBuddyIcon *icon, PurpleBuddy *buddy)
 	char *filename;
 	char *path;
 	char *dir;
+	gconstpointer icon_data;
+	size_t len;
+	FILE *file;
 
 #ifndef _WIN32
 	int status;
@@ -178,10 +181,6 @@ static void store_buddy_icon(PurpleBuddyIcon *icon, PurpleBuddy *buddy)
 		if (status != EEXIST)
 		{
 #endif
-			gconstpointer icon_data;
-			size_t len;
-			FILE *file;
-
 			icon_data = purple_buddy_icon_get_data(icon, &len);
 
 			/* WRITE THE DATA */
