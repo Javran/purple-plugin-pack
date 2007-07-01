@@ -33,44 +33,48 @@ AC_DEFUN([AM_BUILD_PLUGIN_LIST],
 	dnl # Build a list of all the available plugins
 	dnl #######################################################################
 	for d in $srcdir/*; do
-		if ! test -d $d; then
+		if ! test -d "$d"; then
 			continue
+		fi
+
+		if test -f "$d/Makefile.am" -a ! "$d" = "$srcdir/common" -a ! "$d" = "$srcdir/doc" -a ! "$d" = "$srcdir/m4" -a ! -f "$d/.abusive" -a ! -f "$d/.build" -a ! -f "$d/.incomplete" -a ! -f "$d/.sanity" ; then
+			AC_ERROR([Directory $d missing sanity])
 		fi
 
 		base=`basename $d`
 
-		if test -f $d/.purple-plugin ; then
+		if test -f "$d/.purple-plugin" ; then
 			if test -f $d/.abusive ; then
 				PP_PURPLE_ABUSIVE="$PP_PURPLE_ABUSIVE $base"
-			elif test -f $d/.build ; then
+			elif test -f "$d/.build" ; then
 				PP_PURPLE_BUILD="$PP_PURPLE_BUILD $base"
 			fi
 
-			if test -f $d/.incomplete ; then
+			if test -f "$d/.incomplete" ; then
 				PP_PURPLE_INCOMPLETE="$PP_PURPLE_INCOMPLETE $base"
 			fi
 
 			PP_PURPLE="$PP_PURPLE $base"
-		elif test -f $d/.pidgin-plugin ; then
-			if test -f $d/.abusive ; then
+		elif test -f "$d/.pidgin-plugin" ; then
+			if test -f "$d/.abusive" ; then
 				PP_PIDGIN_ABUSIVE="$PP_PIDGIN_ABUSIVE $base"
-			elif test -f $d/.build ; then
+			elif test -f "$d/.build" ; then
 				PP_PIDGIN_BUILD="$PP_PIDGIN_BUILD $base"
 			fi
 
-			if test -f $d/.incomplete ; then
+			if test -f "$d/.incomplete" ; then
 				PP_PIDGIN_INCOMPLETE="$PP_PIDGIN_INCOMPLETE $base"
 			fi
 
 			PP_PIDGIN="$PP_PIDGIN $base"
-		elif test -f $d/.finch-plugin ; then
-			if test -f $d/.abusive ; then
+		elif test -f "$d/.finch-plugin" ; then
+			if test -f "$d/.abusive" ; then
 				PP_FINCH_ABUSIVE="$PP_FINCH_ABUSIVE $base"
-			elif test -f $d/.build ; then
+			elif test -f "$d/.build" ; then
 				PP_FINCH_BUILD="$PP_FINCH_BUILD $base"
 			fi
 
-			if test -f $d/.incomplete ; then
+			if test -f "$d/.incomplete" ; then
 				PP_FINCH_INCOMPLETE="$PP_FINCH_INCOMPLETE $base"
 			fi
 
@@ -88,7 +92,7 @@ AC_DEFUN([AM_BUILD_PLUGIN_LIST],
 	dnl #######################################################################
 	dnl # Now determine which ones have been selected
 	dnl #######################################################################
-	if test x$with_plugins = xdefault ; then
+	if test "x$with_plugins" = "xdefault" ; then
 		tmp_SUB="$PP_AVAILABLE"
 	else
 		exp_plugins=`echo "$with_plugins" | sed 's/,/ /g'`

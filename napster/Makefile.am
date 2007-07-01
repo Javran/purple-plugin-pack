@@ -1,4 +1,4 @@
-EXTRA_DIST = .purple-plugin
+EXTRA_DIST = .purple-plugin .incomplete
 
 napsterdir = $(PURPLE_LIBDIR)
 
