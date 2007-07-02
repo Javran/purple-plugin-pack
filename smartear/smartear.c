@@ -1,13 +1,13 @@
 /* SmartEar by Matt Perry
- * Works for gaim 2.0.0
+ * Works for purple 2.0.0
  * Plugin to assign different sounds to different buddies and groups.
  * TODO: figure out contact support
  */
 
-#include "config.h"
+//#include "config.h"
 #include "internal.h"
+#include "pidgin.h"
 
-#include "gtkgaim.h"
 #include "gtkplugin.h"
 #include "gtkutils.h"
 #include "version.h"
@@ -20,8 +20,8 @@
 #include "gtkblist.h"
 #include "signals.h"
 
-#ifndef GAIM_PLUGINS
-#define GAIM_PLUGINS
+#ifndef PURPLE_PLUGINS
+#define PURPLE_PLUGINS
 #endif
 
 #include <stdio.h>
@@ -61,7 +61,7 @@ struct timer_data {
 };
 
 struct message_data {
-	GaimAccount *account;
+	PurpleAccount *account;
 	char *buddy;
 	time_t last_active;
 	time_t last_sent;
@@ -128,7 +128,7 @@ static void on_treeselect_changed(GtkTreeSelection *selection, gpointer data);
 static void smartear_save(void);
 static void smartear_load(void);
 
-static void play_sound_alias(char *sound, GaimAccount* account);
+static void play_sound_alias(char *sound, PurpleAccount* account);
 
 /*** Glade's Support Function ***/
 
@@ -744,8 +744,8 @@ static void smartear_save(void)
 	GSList *lp;
 	struct smartear_entry *entry;
 
-	if (gaim_user_dir()) {
-		g_snprintf(file, sizeof(file), "%s/smartear.rc", gaim_user_dir());
+	if (purple_user_dir()) {
+		g_snprintf(file, sizeof(file), "%s/smartear.rc", purple_user_dir());
 		fp = fopen(file, "w");
 	}
 
@@ -783,8 +783,8 @@ static void smartear_load(void)
 	gboolean has_default = FALSE;
 	int rcfile_version = 1;
 
-	if (gaim_user_dir()) {
-		g_snprintf(file, sizeof(file), "%s/smartear.rc", gaim_user_dir());
+	if (purple_user_dir()) {
+		g_snprintf(file, sizeof(file), "%s/smartear.rc", purple_user_dir());
 		fp = fopen(file, "r");
 	}
 
@@ -887,9 +887,9 @@ static void smartear_load(void)
 	fclose(fp);
 }
 
-/*** Gaim callbacks ***/
+/*** Purple callbacks ***/
 
-static struct message_data *find_message_by_name(GaimAccount *account, const char *pname)
+static struct message_data *find_message_by_name(PurpleAccount *account, const char *pname)
 {
 	GSList *lp;
 	struct message_data *msg = NULL;
@@ -936,7 +936,7 @@ static void messagelist_free()
 	}
 }
 
-static void on_smartear_clicked(GaimBlistNode* node, gpointer data)
+static void on_smartear_clicked(PurpleBlistNode* node, gpointer data)
 {
 	struct smartear_entry tmp, *entry;
 	GSList *lp;
@@ -953,24 +953,24 @@ static void on_smartear_clicked(GaimBlistNode* node, gpointer data)
 	if (!node) {
 		return;
 	}
-	else if (GAIM_BLIST_NODE_IS_BUDDY(node)) {
+	else if (PURPLE_BLIST_NODE_IS_BUDDY(node)) {
 		tmp.type = 'B';
-		tmp.name = ((GaimBuddy*)node)->name;
-		gaim_debug(GAIM_DEBUG_INFO, "smartear", "adding buddy %s", tmp.name);
+		tmp.name = ((PurpleBuddy*)node)->name;
+		purple_debug(PURPLE_DEBUG_INFO, "smartear", "adding buddy %s", tmp.name);
 	}
-	else if (GAIM_BLIST_NODE_IS_CONTACT(node)) {
+	else if (PURPLE_BLIST_NODE_IS_CONTACT(node)) {
 		tmp.type = 'B';
-		tmp.name = ((GaimContact*)node)->alias;
+		tmp.name = ((PurpleContact*)node)->alias;
 		if (!tmp.name) {
-			tmp.name = ((GaimContact*)node)->priority->name;
+			tmp.name = ((PurpleContact*)node)->priority->name;
 		}
-		gaim_debug(GAIM_DEBUG_INFO, "smartear", "adding contact %s", tmp.name);
+		purple_debug(PURPLE_DEBUG_INFO, "smartear", "adding contact %s", tmp.name);
 	}
-	else if (GAIM_BLIST_NODE_IS_GROUP(node)) {
+	else if (PURPLE_BLIST_NODE_IS_GROUP(node)) {
 		tmp.type = 'G';
-		tmp.name = ((GaimGroup*)node)->name;
+		tmp.name = ((PurpleGroup*)node)->name;
 		g_warning("group %p, %p %s", node, tmp.name, tmp.name);
-		gaim_debug(GAIM_DEBUG_INFO, "smartear", "adding group %s", tmp.name);
+		purple_debug(PURPLE_DEBUG_INFO, "smartear", "adding group %s", tmp.name);
 	}
 	else {
 		return;
@@ -986,7 +986,7 @@ static void on_smartear_clicked(GaimBlistNode* node, gpointer data)
 	populate_edit_win(entry);
 }
 
-static void play_sound_alias(char *sound, GaimAccount* account)
+static void play_sound_alias(char *sound, PurpleAccount* account)
 {
 	struct smartear_entry tmp, *entry;
 	GSList *lp;
@@ -1003,17 +1003,17 @@ static void play_sound_alias(char *sound, GaimAccount* account)
 		play_sound_alias(entry->sound[EVENT_M], account);
 	}
 	else {
-		gaim_sound_play_file(sound, account);
+		purple_sound_play_file(sound, account);
 	}
 }
 
-void play_matching_sound(GaimBuddy *buddy, int event)
+void play_matching_sound(PurpleBuddy *buddy, int event)
 {
 	GSList *lp;
 	struct smartear_entry *entry;
 	char *sound = NULL;
 	char *name = buddy ? g_strdup(my_normalize(buddy->name)) : NULL;
-	GaimGroup *g = buddy ? gaim_buddy_get_group(buddy) : NULL;
+	PurpleGroup *g = buddy ? purple_buddy_get_group(buddy) : NULL;
 
 	for (lp = sounds_list; lp; lp = g_slist_next(lp)) {
 		entry = (struct smartear_entry*)lp->data;
@@ -1038,12 +1038,12 @@ void play_matching_sound(GaimBuddy *buddy, int event)
 		}
 	}
 	if (!IS_EMPTY(sound)) {
-		gaim_debug(GAIM_DEBUG_INFO, "smartear",
+		purple_debug(PURPLE_DEBUG_INFO, "smartear",
 				   "found %s for %s on event %d\n", sound, name, event);
-		play_sound_alias(sound, gaim_buddy_get_account(buddy));
+		play_sound_alias(sound, purple_buddy_get_account(buddy));
 	}
 	else {
-		gaim_debug(GAIM_DEBUG_INFO, "smartear",
+		purple_debug(PURPLE_DEBUG_INFO, "smartear",
 				   "no sound found for %s on event %d\n", name, event);
 	}
 	g_free(name);
@@ -1058,7 +1058,7 @@ static gint play_sound_timer_hook(gpointer data)
 		return FALSE;
 	}
 
-	play_matching_sound(gaim_find_buddy(msg->account, msg->buddy), msg->timer->event);
+	play_matching_sound(purple_find_buddy(msg->account, msg->buddy), msg->timer->event);
 
 	g_free(msg->timer);
 	msg->timer = NULL;
@@ -1066,12 +1066,12 @@ static gint play_sound_timer_hook(gpointer data)
 	return FALSE;
 }
 
-static gboolean on_im_recv(GaimAccount *account, char *who, char *what, gint32 flags, void *junk)
+static gboolean on_im_recv(PurpleAccount *account, char *who, char *what, gint32 flags, void *junk)
 {
 	struct message_data *msg;
 	time_t now = time(0);
-	GaimConversation *conv = gaim_find_conversation_with_account(GAIM_CONV_TYPE_ANY, who, account);
-	GaimGtkConversation *gtkconv = conv ? GAIM_GTK_CONVERSATION(conv) : NULL;
+	PurpleConversation *conv = purple_find_conversation_with_account(PURPLE_CONV_TYPE_ANY, who, account);
+	PidginConversation *gtkconv = conv ? PIDGIN_CONVERSATION(conv) : NULL;
 
 	// FIXME: message list is never trimmed. However, if we DO trim it,
 	// we need to consider race conditions on the msg field of the timer_hook
@@ -1089,7 +1089,7 @@ static gboolean on_im_recv(GaimAccount *account, char *who, char *what, gint32 f
 		}
 
 		if (msg->last_active + message_delay > now && conv) {
-			gaim_debug(GAIM_DEBUG_INFO, "smartear",
+			purple_debug(PURPLE_DEBUG_INFO, "smartear",
 					   "received IM from %s, but only %d/%d seconds passed.\n",
 					   who, now - msg->last_active, message_delay);
 			return FALSE;
@@ -1111,12 +1111,12 @@ static gboolean on_im_recv(GaimAccount *account, char *who, char *what, gint32 f
 	if (gtkconv && !gtkconv->make_sound)
 		return FALSE;
 
-	play_matching_sound(gaim_find_buddy(msg->account, msg->buddy), EVENT_M);
+	play_matching_sound(purple_find_buddy(msg->account, msg->buddy), EVENT_M);
 
 	return FALSE;
 }
 
-static void on_im_send(GaimAccount *account, char *who, char *what, void *junk)
+static void on_im_send(PurpleAccount *account, char *who, char *what, void *junk)
 {
 	struct message_data *msg;
 	time_t now = time(0);
@@ -1137,71 +1137,71 @@ static void on_im_send(GaimAccount *account, char *who, char *what, void *junk)
 	msg->last_sent = now;
 }
 
-static void on_buddy_signon(GaimBuddy *buddy, void *data)
+static void on_buddy_signon(PurpleBuddy *buddy, void *data)
 {
 	play_matching_sound(buddy, EVENT_S);
 }
 
-static void on_buddy_back(GaimBuddy *buddy, void *data)
+static void on_buddy_back(PurpleBuddy *buddy, void *data)
 {
 	play_matching_sound(buddy, EVENT_A);
 }
 
-static void on_buddy_unidle(GaimBuddy *buddy, void *data)
+static void on_buddy_unidle(PurpleBuddy *buddy, void *data)
 {
 	play_matching_sound(buddy, EVENT_I);
 }
 
-static void on_signon(GaimConnection *gc, void *m)
+static void on_signon(PurpleConnection *gc, void *m)
 {
 }
 
-static void on_signoff(GaimConnection *gc, void *m)
+static void on_signoff(PurpleConnection *gc, void *m)
 {
 	messagelist_free();
 }
 
-static void on_blist_node_extended_menu(GaimBlistNode *node, GList **menu)
+static void on_blist_node_extended_menu(PurpleBlistNode *node, GList **menu)
 {
-    GaimMenuAction *menu_action;
-    menu_action = gaim_menu_action_new(_("Edit SmartEar Entry"),
-            GAIM_CALLBACK(on_smartear_clicked), NULL, NULL);
+    PurpleMenuAction *menu_action;
+    menu_action = purple_menu_action_new(_("Edit SmartEar Entry"),
+            PURPLE_CALLBACK(on_smartear_clicked), NULL, NULL);
     *menu = g_list_append(*menu, menu_action);
 }
 
-static gboolean gaim_plugin_init(GaimPlugin *plugin)
+static gboolean purple_plugin_init(PurplePlugin *plugin)
 {
-	void *blist_handle = gaim_blist_get_handle();
-	void *conv_handle = gaim_conversations_get_handle();
+	void *blist_handle = purple_blist_get_handle();
+	void *conv_handle = purple_conversations_get_handle();
 
 	config = NULL;
 
 	smartear_load();
 
-	gaim_signal_connect(blist_handle, "blist-node-extended-menu",
-					   	plugin, GAIM_CALLBACK(on_blist_node_extended_menu), NULL);
+	purple_signal_connect(blist_handle, "blist-node-extended-menu",
+					   	plugin, PURPLE_CALLBACK(on_blist_node_extended_menu), NULL);
 
-	gaim_signal_connect(blist_handle, "buddy-signed-on",
-						plugin, GAIM_CALLBACK(on_buddy_signon), NULL);
-	gaim_signal_connect(blist_handle, "buddy-back",
-						plugin, GAIM_CALLBACK(on_buddy_back), NULL);
-	gaim_signal_connect(blist_handle, "buddy-unidle",
-						plugin, GAIM_CALLBACK(on_buddy_unidle), NULL);
+	purple_signal_connect(blist_handle, "buddy-signed-on",
+						plugin, PURPLE_CALLBACK(on_buddy_signon), NULL);
+	purple_signal_connect(blist_handle, "buddy-back",
+						plugin, PURPLE_CALLBACK(on_buddy_back), NULL);
+	purple_signal_connect(blist_handle, "buddy-unidle",
+						plugin, PURPLE_CALLBACK(on_buddy_unidle), NULL);
 
-	gaim_signal_connect(conv_handle, "received-im-msg",
-						plugin, GAIM_CALLBACK(on_im_recv), NULL);
-	gaim_signal_connect(conv_handle, "sent-im-msg",
-						plugin, GAIM_CALLBACK(on_im_send), NULL);
+	purple_signal_connect(conv_handle, "received-im-msg",
+						plugin, PURPLE_CALLBACK(on_im_recv), NULL);
+	purple_signal_connect(conv_handle, "sent-im-msg",
+						plugin, PURPLE_CALLBACK(on_im_send), NULL);
 
-	gaim_signal_connect(gaim_connections_get_handle(), "signed-on",
-						plugin, GAIM_CALLBACK(on_signon), NULL);
-	gaim_signal_connect(gaim_connections_get_handle(), "signed-off",
-						plugin, GAIM_CALLBACK(on_signoff), NULL);
+	purple_signal_connect(purple_connections_get_handle(), "signed-on",
+						plugin, PURPLE_CALLBACK(on_signon), NULL);
+	purple_signal_connect(purple_connections_get_handle(), "signed-off",
+						plugin, PURPLE_CALLBACK(on_signoff), NULL);
 
 	return TRUE;
 }
 
-static gboolean gaim_plugin_remove(GaimPlugin *h)
+static gboolean purple_plugin_remove(PurplePlugin *h)
 {
 	config = NULL;
 
@@ -1211,7 +1211,7 @@ static gboolean gaim_plugin_remove(GaimPlugin *h)
 	return TRUE;
 }
 
-static GtkWidget *gaim_plugin_config_gtk(GaimPlugin *plugin)
+static GtkWidget *purple_plugin_config_gtk(PurplePlugin *plugin)
 {
 	config = create_config();
 
@@ -1223,21 +1223,21 @@ static GtkWidget *gaim_plugin_config_gtk(GaimPlugin *plugin)
 	return config;
 }
 
-static GaimGtkPluginUiInfo ui_info = {
-	gaim_plugin_config_gtk,
+static PurplePluginUiInfo ui_info = {
+	purple_plugin_config_gtk,
 	0 /* page_num (reserved) */
 };
 
-static GaimPluginInfo info =
+static PurplePluginInfo info =
 {
-	GAIM_PLUGIN_MAGIC,
-	GAIM_MAJOR_VERSION,
-	GAIM_MINOR_VERSION,
-	GAIM_PLUGIN_STANDARD,
-	GAIM_GTK_PLUGIN_TYPE,
+	PURPLE_PLUGIN_MAGIC,
+	PURPLE_MAJOR_VERSION,
+	PURPLE_MINOR_VERSION,
+	PURPLE_PLUGIN_STANDARD,
+	PIDGIN_PLUGIN_TYPE,
 	0,
 	NULL,
-	GAIM_PRIORITY_DEFAULT,
+	PURPLE_PRIORITY_DEFAULT,
 
 	SMARTEAR_PLUGIN_ID,
 	N_("SmartEar"),
@@ -1248,12 +1248,12 @@ static GaimPluginInfo info =
 	   "SmartEar allows you to opt to play sounds when a buddy sends you an "
 	   "IM, signs on, returns from away or idle, or any combination of these, so "
 	   "you'll know by the sound what the important people are doing.  "),
-	"Matt Perry &lt;guy@somewhere.fscked.org>",
+	"Matt Perry <guy@fscked.org>",
 	"http://somewhere.fscked.org/smartear/",
 
 	// old
-	gaim_plugin_init, // load
-	gaim_plugin_remove, // unload
+	purple_plugin_init, // load
+	purple_plugin_remove, // unload
 	NULL, // destroy
 
 	&ui_info,
@@ -1262,8 +1262,8 @@ static GaimPluginInfo info =
 	NULL
 };
 
-static void init_plugin(GaimPlugin *plugin)
+static void init_plugin(PurplePlugin *plugin)
 {
 }
 
-GAIM_INIT_PLUGIN(smartear, init_plugin, info);
+PURPLE_INIT_PLUGIN(smartear, init_plugin, info);

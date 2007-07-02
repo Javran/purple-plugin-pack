@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # This is a script for converting the glade-generated interface.c file to a
-# smartear-interface.c which will be friendly with gaim's plugin interface.
+# smartear-interface.c which will be friendly with pidgin's plugin interface.
 
 IN=interface.c
 OUT=smartear-interface.c
