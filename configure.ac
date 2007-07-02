@@ -335,6 +335,7 @@ AC_OUTPUT([
 	showoffline/Makefile
 	simfix/Makefile
 	slashexec/Makefile
+	smartear/Makefile
 	sslinfo/Makefile
 	stocker/Makefile
 	switchspell/Makefile

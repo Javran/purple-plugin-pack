@@ -4,8 +4,11 @@
  * TODO: figure out contact support
  */
 
-//#include "config.h"
-#include "internal.h"
+#ifdef HAVE_CONFIG_H
+#   include "../pp_config.h"
+#endif
+#include "../common/i18n.h"
+
 #include "pidgin.h"
 
 #include "gtkplugin.h"
@@ -14,7 +17,6 @@
 
 #include "debug.h"
 #include "util.h"
-//#include "ui.h"
 #include "sound.h"
 #include "gtkprefs.h"
 #include "gtkblist.h"
@@ -35,7 +37,7 @@
 #endif
 
 #define RCFILE_VERSION 2
-#define RC_EMPTY_SOUND " " // must be at least 1 char long for sscanf
+#define RC_EMPTY_SOUND " " /* must be at least 1 char long for sscanf */
 
 #define SMARTEAR_PLUGIN_ID "smartear"
 #define SMARTEAR_VERSION VERSION ".1"
@@ -43,9 +45,9 @@
 #define FIND(s) lookup_widget(config, s)
 #define EFIND(s) lookup_widget(edit_win, s)
 
-// an entry in the prefs file to indicate what to play for who and when.
+/* an entry in the prefs file to indicate what to play for who and when. */
 struct smartear_entry {
-	char type; // B,G
+	char type; /* B,G */
 	char *name;
 #define EVENT_M	0
 #define EVENT_S	1
@@ -68,7 +70,7 @@ struct message_data {
 	struct timer_data *timer;
 };
 
-enum { // Treeview columns
+enum { /* Treeview columns */
 	DATA_COL = 0,
 	TYPE_COL = 0,
 	NAME_COL,
@@ -144,7 +146,7 @@ GtkWidget* lookup_widget (GtkWidget *widget, const gchar *widget_name)
 
 /*** GTK Callbacks ***/
 
-// Options Frame
+/* Options Frame */
 
 void on_delay_changed (GtkEditable *editable, gpointer user_data)
 {
@@ -163,7 +165,7 @@ void on_timer_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 	smartear_timers = gtk_toggle_button_get_active(togglebutton);
 }
 
-// Entries Frame
+/* Entries Frame */
 
 void on_cell_edited(GtkCellRendererText *cell, gchar *path, gchar *text, gpointer data)
 {
@@ -269,7 +271,7 @@ void on_revert_clicked (GtkButton *button, gpointer user_data)
 	set_option_entries();
 }
 
-// Edit Window
+/* Edit Window */
 
 void on_browse_ok_clicked (GtkButton *button, gpointer user_data)
 {
@@ -551,7 +553,7 @@ static gint sound_cmp(gconstpointer p1, gconstpointer p2)
 	if (!entry2 || IS_DEFAULT(entry2))
 		return 1;
 
-	// only compare types if both are nonzero
+	/* only compare types if both are nonzero */
 	if (entry1->type != entry2->type &&
 		entry1->type != 0 && entry2->type != 0)
 		return (entry1->type - entry2->type);
@@ -707,12 +709,12 @@ static void setup_list(void)
 	g_signal_connect(G_OBJECT(treeselect), "changed",
 					 G_CALLBACK(on_treeselect_changed), NULL);
 
-	// Type column
+	/* Type column */
 	cell = gtk_cell_renderer_text_new();
 	gtk_tree_view_insert_column_with_data_func(treeview, -1, "Type",
 											   cell, render_type, 0, 0);
 
-	// Name column
+	/* Name column */
 	cell = gtk_cell_renderer_text_new();
 	g_signal_connect(G_OBJECT(cell), "edited",
 					 G_CALLBACK(on_cell_edited), GINT_TO_POINTER(NAME_COL));
@@ -759,7 +761,7 @@ static void smartear_save(void)
 	fprintf(fp, "delay %d\n", message_delay);
 	fprintf(fp, "focused_quiet %d\n", focused_quiet);
 
-	// save empties as a single space so scanf doesn't get confused
+	/* save empties as a single space so scanf doesn't get confused */
 #define SAVE_STR(str) (IS_EMPTY(str) ? RC_EMPTY_SOUND : str)
 	for (lp = sounds_list; lp; lp = g_slist_next(lp)) {
 		entry = (struct smartear_entry*)lp->data;
@@ -994,8 +996,8 @@ static void play_sound_alias(char *sound, PurpleAccount* account)
 	if (!sound || !*sound)
 		return;
 
-	// sound aliases: mostly so you can put (Default) for sound, and it'll
-	// play that one
+	/* sound aliases: mostly so you can put (Default) for sound, and it'll
+	 * play that one */
 	tmp.type = 0;
 	tmp.name = sound;
 	if ((lp = g_slist_find_custom(sounds_list, &tmp, (GCompareFunc)sound_cmp))) {
@@ -1023,18 +1025,18 @@ void play_matching_sound(PurpleBuddy *buddy, int event)
 		if (entry->type == 'B' && name
 			&& g_strcasecmp(name, entry->name) == 0) {
 			sound = entry->sound[event];
-			// found a buddy match.. this takes precedence, so stop
+			/* found a buddy match.. this takes precedence, so stop */
 			break;
 		}
 		if (entry->type == 'G' && g
 			&& g_strcasecmp(my_normalize(g->name), entry->name) == 0) {
 			sound = entry->sound[event];
-			// keep going... buddy overrides group
+			/* keep going... buddy overrides group */
 		}
 		if (IS_DEFAULT(entry)) {
 			if (!sound)
 				sound = entry->sound[event];
-			// keep going.. other 2 override default
+			/* keep going.. other 2 override default */
 		}
 	}
 	if (!IS_EMPTY(sound)) {
@@ -1073,13 +1075,13 @@ static gboolean on_im_recv(PurpleAccount *account, char *who, char *what, gint32
 	PurpleConversation *conv = purple_find_conversation_with_account(PURPLE_CONV_TYPE_ANY, who, account);
 	PidginConversation *gtkconv = conv ? PIDGIN_CONVERSATION(conv) : NULL;
 
-	// FIXME: message list is never trimmed. However, if we DO trim it,
-	// we need to consider race conditions on the msg field of the timer_hook
+	/* FIXME: message list is never trimmed. However, if we DO trim it,
+	 * we need to consider race conditions on the msg field of the timer_hook */
 
 	if ((msg = find_message_by_name(account, who))) {
-		// only install a timer if there's no active timers and we've just
-		// sent a message. If we haven't just sent a message, then
-		// a beep will go off anyways when the IM arrives.
+		/* only install a timer if there's no active timers and we've just
+		 * sent a message. If we haven't just sent a message, then
+		 * a beep will go off anyways when the IM arrives. */
 		if(smartear_timers && !msg->timer
 		   && msg->last_sent + message_delay > now) {
 			msg->timer = g_new0(struct timer_data, 1);
@@ -1107,7 +1109,7 @@ static gboolean on_im_recv(PurpleAccount *account, char *who, char *what, gint32
 	msg->last_active = now;
 
 	if (focused_quiet && gtkconv && GTK_WIDGET_HAS_FOCUS(gtkconv->entry))
-		return FALSE; // don't play sounds for the focused convo
+		return FALSE; /* don't play sounds for the focused convo */
 	if (gtkconv && !gtkconv->make_sound)
 		return FALSE;
 
@@ -1238,25 +1240,21 @@ static PurplePluginInfo info =
 	0,
 	NULL,
 	PURPLE_PRIORITY_DEFAULT,
-
 	SMARTEAR_PLUGIN_ID,
-	N_("SmartEar"),
-	SMARTEAR_VERSION,
-	N_("Assign different sounds to different buddies and groups"),
-	N_("Allows you to assign different "
-	   "sounds to play for different buddies or whole groups of buddies.  "
-	   "SmartEar allows you to opt to play sounds when a buddy sends you an "
-	   "IM, signs on, returns from away or idle, or any combination of these, so "
-	   "you'll know by the sound what the important people are doing.  "),
+	NULL,
+	PP_VERSION,
+	NULL,
+	NULL,
 	"Matt Perry <guy@fscked.org>",
-	"http://somewhere.fscked.org/smartear/",
-
-	// old
-	purple_plugin_init, // load
-	purple_plugin_remove, // unload
-	NULL, // destroy
-
+	PP_WEBSITE,
+	purple_plugin_init,
+	purple_plugin_remove,
+	NULL,
 	&ui_info,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
 	NULL,
 	NULL,
 	NULL
@@ -1264,6 +1262,19 @@ static PurplePluginInfo info =
 
 static void init_plugin(PurplePlugin *plugin)
 {
+#ifdef ENABLE_NLS
+	bindtextdomain(GETTEXT_PACKAGE, PP_LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+#endif
+
+	info.name= _("Smart Ear");
+	info.summary = _("Assign different sounds to different buddies and groups");
+	info.description =
+		_("Allows you to assign different sounds to play for different buddies "
+			"or whole groups of buddies.  Smart Ear allows you to opt to play "
+			"sounds when a buddy sends you an IM, signs on, returns from away "
+			"or idle, or any combination of these, so you'll know by the sound "
+			"what the important people are doing.");
 }
 
 PURPLE_INIT_PLUGIN(smartear, init_plugin, info);
