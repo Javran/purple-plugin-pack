@@ -36,6 +36,8 @@
 #include "win32dep.h"
 #endif
 
+#define BUF_LEN 2048 /* lifted from libpurple's internal.h */
+
 #define RCFILE_VERSION 2
 #define RC_EMPTY_SOUND " " /* must be at least 1 char long for sscanf */
 
@@ -408,8 +410,6 @@ void on_config_destroy (GtkObject *object, gpointer user_data)
 {
 	config = NULL;
 }
-
-#include "smartear-interface.c"
 
 /*** Util Functions ***/
 
