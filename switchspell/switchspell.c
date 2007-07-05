@@ -45,7 +45,7 @@
 #include <gtkplugin.h>
 
 /* Pack/Local headers */
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 #include <aspell.h>
 #include <gtkspell/gtkspell.h>

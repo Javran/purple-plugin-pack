@@ -31,7 +31,7 @@
 #include <plugin.h>
 #include <cmds.h>
 
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 #include "textfmt.h"
 
 /******************************************************************************

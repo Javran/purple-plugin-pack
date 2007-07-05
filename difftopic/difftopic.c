@@ -46,7 +46,7 @@
 #include <gtkimhtml.h>
 
 /* Pack/Local headers */
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 #define SAME(a,b)  ((isalnum((a)) && isalnum((b))) || (!isalnum((a)) && !isalnum((b))))
 

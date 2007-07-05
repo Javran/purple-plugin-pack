@@ -34,7 +34,7 @@
 
 #include <string.h>
 
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 #define PREF_MY "/plugins/gtk/amc_grim"
 #define PREF_ROOT "/plugins/gtk/amc_grim/blistops"

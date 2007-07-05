@@ -33,7 +33,7 @@
 #include <plugin.h>
 #include <version.h>
 
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 static PurpleCmdId dice_cmd_id = 0;
 

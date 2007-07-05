@@ -30,7 +30,7 @@
 # include "../pp_config.h"
 #endif
 
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 #include <glib.h>
 #include <stdarg.h>

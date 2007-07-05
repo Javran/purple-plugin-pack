@@ -32,7 +32,7 @@
 #include <gtkplugin.h>
 #include <gtkblist.h>
 
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 /* global list of accounts connecting, to avoid inaccurate signon times
  * idea stolen from guifications :) - thanks Gary.

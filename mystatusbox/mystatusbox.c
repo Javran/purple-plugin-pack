@@ -52,7 +52,7 @@
 #include <gtkstatusbox.h>
 
 /* Pack/Local headers */
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 /* XXX: THIS NEEDS CHANGED WHEN PIDGIN DOES ITS PREFS MIGRATION!!!!! */
 #define PREF_PREFIX "/plugins/gtk/" PLUGIN_ID

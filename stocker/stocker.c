@@ -33,7 +33,7 @@
 #include <prefs.h>
 #include <version.h>
 
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 #include "gtkticker.h"
 #include "stocker_prefs.h"
