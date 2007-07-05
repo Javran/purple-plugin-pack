@@ -34,7 +34,7 @@
 #include <gtkconv.h>
 #include <gtkconvwin.h>
 
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 #define SEPANDTAB_PREF "/pidgin/conversations/placement"
 

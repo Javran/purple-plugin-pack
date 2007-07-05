@@ -35,7 +35,7 @@
 #include <string.h>
 
 /* Pack/Local headers */
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 #define PREF_ROOT "/plugins/ignore"
 

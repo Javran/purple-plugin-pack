@@ -22,7 +22,7 @@
 #endif
 
 #include "stocker_prefs.h"
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 #include <gtkprefs.h>
 #include <gtkutils.h>

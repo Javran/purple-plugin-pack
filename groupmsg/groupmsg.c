@@ -30,7 +30,7 @@
 #include <util.h>
 #include <version.h>
 
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 static void
 dont_do_it_cb(GList *list, const char *text)

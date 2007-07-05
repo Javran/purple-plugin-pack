@@ -47,7 +47,7 @@
 #include <plugin.h>
 #include <version.h>
 
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 #if GLIB_CHECK_VERSION(2,6,0)
 #include <glib/gstdio.h>

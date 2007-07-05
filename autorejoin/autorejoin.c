@@ -41,7 +41,7 @@
 #include <version.h>
 
 /* Pack/Local headers */
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 static gboolean
 show_them(gpointer data)

@@ -38,7 +38,7 @@
 #include <string.h>
 
 /* Pack/Local headers */
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 #define PREF_PREFIX "/plugins/core/highlight"
 #define PREF_WORDS PREF_PREFIX "/words"

@@ -32,7 +32,7 @@
 #include <plugin.h>
 #include <version.h>
 
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 static PurpleCmdId flip_cmd_id = 0;
 

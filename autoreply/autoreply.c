@@ -51,7 +51,7 @@
 #include <version.h>
 
 /* Plugin Pack Headers */
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 #define	PREFS_PREFIX		"/plugins/core/" PLUGIN_ID
 #define	PREFS_IDLE			PREFS_PREFIX "/idle"

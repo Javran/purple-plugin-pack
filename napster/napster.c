@@ -43,7 +43,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 #define NAP_SERVER "64.124.41.187"
 #define NAP_PORT 8888

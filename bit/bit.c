@@ -29,7 +29,7 @@
 #include <request.h>
 #include <version.h>
 
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 PurplePlugin *bit = NULL; /* the request api prefers this for a plugin */
 static PurpleBuddyList *buddies = NULL;
