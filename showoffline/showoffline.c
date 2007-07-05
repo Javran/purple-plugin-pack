@@ -29,7 +29,7 @@
 #include <util.h>
 #include <version.h>
 
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 static void
 showoffline_cb(PurpleBlistNode *node, gpointer data)

@@ -59,7 +59,7 @@
 #include "window.h"
 
 /* Pack/Local headers */
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 static gboolean
 irssi_load(PurplePlugin *plugin) {

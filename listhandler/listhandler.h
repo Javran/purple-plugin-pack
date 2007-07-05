@@ -40,7 +40,7 @@
 #include <version.h>
 #include <xmlnode.h>
 
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 #include "lh_util.h"
 

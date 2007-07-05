@@ -24,7 +24,7 @@
 
 #include <blist.h>
 
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 #define PLUGIN_STATIC_NAME "album"
 #define PLUGIN_ID          "gtk-rlaager-" PLUGIN_STATIC_NAME

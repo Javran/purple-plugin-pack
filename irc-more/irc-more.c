@@ -32,7 +32,7 @@
 #include <string.h>
 
 /* Pack/Local headers */
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 #define CTCP_REPLY    purple_account_get_string(account, "ctcp-message", "Purple IRC")
 #define PART_MESSAGE  purple_account_get_string(account, "part-message", "Leaving.")

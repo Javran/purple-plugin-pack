@@ -25,7 +25,7 @@
 #include <glib.h>
 
 /* Pack/Local headers */
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 #include <account.h>
 #include <debug.h>

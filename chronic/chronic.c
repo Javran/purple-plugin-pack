@@ -21,7 +21,7 @@
 # include "../pp_config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include "../common/i18n.h"
+#include "../common/pp_internal.h"
 
 /* libc */
 #include <string.h>
