@@ -278,4 +278,4 @@ static void init_plugin(PurplePlugin *plugin)
 	info.description = _(PLUGIN_DESCRIPTION);
 }
 
-PURPLE_INIT_PLUGIN(talkfilters, init_plugin, info)
+PURPLE_INIT_PLUGIN(switchspell, init_plugin, info)
