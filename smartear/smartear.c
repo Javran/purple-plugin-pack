@@ -34,15 +34,60 @@
 #include <plugin.h>
 #include <pluginpref.h>
 #include <sound.h>
+#include <signals.h>
 #include <version.h>
+
+static void
+smartear_cb_blistnode_menu_action(PurpleBlistNode *node, gpointer plugin)
+{
+	/* TODO: Finish me! */
+}
+
+static void
+smartear_cb_blistnode_menu(PurpleBlistNode *node, GList **menu, gpointer plugin)
+{
+	PurpleMenuAction *action = NULL;
+
+	/* don't crash when the blistnode is a transient */
+	if(purple_blist_node_get_flags(node) & PURPLE_BLIST_NODE_FLAG_NO_SAVE)
+		return;
+
+	action = purple_menu_action_new(_("Customize Sounds"),
+			PURPLE_CALLBACK(smartear_cb_blistnode_menu_action), plugin, NULL);
+
+	*menu = g_list_prepend(*menu, action);
+}
 
 static gboolean
 smartear_load(PurplePlugin *plugin)
 {
-	/* TODO: make this unset all the pidgin/finch sound prefs */
+	void *blist_handle = purple_blist_get_handle();
+	void *conv_handle = purple_conversations_get_handle();
+
+	/* TODO: make this unset all the pidgin/finch sound prefs 
+	 *  - probably can't do this if I plan to stay UI-neutral */
 
 	/* XXX: do we want to "migrate" the pidgin/finch sound prefs by making them
-	 * the default for each group if they're turned on? */
+	 * the default for each group if they're turned on? 
+	 *  - moot point; see the comment above. */
+
+	/* so we can hook into the blistnode menu and add an option */
+	purple_signal_connect(blist_handle, "blist-node-extended-menu", plugin,
+			PURPLE_CALLBACK(smartear_cb_blistnode_menu), NULL);
+
+	/* blist signals we need to detect the buddy's activities */
+	purple_signal_connect(blist_handle, "buddy-signed-on", plugin,
+			PURPLE_CALLBACK(smartear_cb_signonoff), NULL);
+	purple_signal_connect(blist_handle, "buddy-signed-off", plugin,
+			PURPLE_CALLBACK(smartear_cb_signonoff), NULL);
+	purple_signal_connect(blist_handle, "buddy-idle-changed", plugin,
+			PURPLE_CALLBACK(smartear_cb_idle), NULL);
+
+	/* conv signals we need to detect activities */
+	purple_signal_connect(conv_handle, "received-im-msg", plugin,
+			PURPLE_CALLBACK(smartear_cb_received_msg), NULL);
+	purple_signal_connect(conv_handle, "sent-im-msg", plugin,
+			PURPLE_CALLBACK(smartear_cb_sent_msg), NULL);
 
 	return TRUE;
 }
@@ -51,7 +96,8 @@ static gboolean
 smartear_unload(PurplePlugin *plugin)
 {
 	/* XXX: since we're going to unset all the pidgin and finch sound prefs,
-	 * do we want to keep track of their values and restore them on unload? */
+	 * do we want to keep track of their values and restore them on unload?
+	 *  - moot point; see smartear_load above. */
 
 	return TRUE;
 }
