@@ -78,14 +78,15 @@ pref_cb(const char *name, PurplePrefType type,
 		abracadabra(w_blist, value);
 	else if(!g_ascii_strcasecmp(name, PREF_MENU)) {
 		PidginBuddyList *gtkblist = pidgin_blist_get_default_gtk_blist();
-		abracadabra(w_menubar, value);
 		if (!value)
 			g_signal_handlers_disconnect_matched(G_OBJECT(gtkblist->treeview), G_SIGNAL_MATCH_FUNC,
 						0, 0, NULL, G_CALLBACK(motion_notify_cb), NULL);
 		else {
+			gtk_widget_show(w_menubar);
 			gtk_widget_size_request(w_menubar, &req);
 			g_signal_connect(gtkblist->treeview, "motion-notify-event", G_CALLBACK(motion_notify_cb), &req);
 		}
+		abracadabra(w_menubar, value);
 	}
 }
 
