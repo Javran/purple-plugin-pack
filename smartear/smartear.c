@@ -37,10 +37,42 @@
 #include <signals.h>
 #include <version.h>
 
+/* Callbacks */
+
+static void
+smartear_cb_sent_msg(PurpleAccount *account, const gchar *receiver, const gchar *message)
+{
+	/* TODO: Finish me! */
+#warning Finish me!!!
+}
+
+static void
+smartear_cb_received_msg(PurpleAccount *account, gchar *sender, char *message,
+		PurpleConversation *conv, PurpleMessageFlags flags)
+{
+	/* TODO: Finish me! */
+#warning Finish me!!!
+}
+
+static void
+smartear_cb_idle(PurpleBuddy *buddy, gboolean wasidle, gboolean nowidle)
+{
+	/* TODO: Finish me! */
+#warning Finish me!!!
+}
+
+static void
+smartear_cb_signonoff(PurpleBuddy *buddy)
+{
+	/* TODO: Finish me! */
+#warning Finish me!!!
+}
+
 static void
 smartear_cb_blistnode_menu_action(PurpleBlistNode *node, gpointer plugin)
 {
 	/* TODO: Finish me! */
+#warning Finish me!!!
 }
 
 static void
@@ -57,6 +89,8 @@ smartear_cb_blistnode_menu(PurpleBlistNode *node, GList **menu, gpointer plugin)
 
 	*menu = g_list_prepend(*menu, action);
 }
+
+/* Purple Plugin stuff */
 
 static gboolean
 smartear_load(PurplePlugin *plugin)
