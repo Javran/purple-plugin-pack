@@ -98,11 +98,11 @@ smartear_sound_determine(const char *bfile, const char *cfile, const char *gfile
 	const char *pfile = NULL;
 
 	/* if the string is "(Default)" then set the pointer to NULL */
-	if(!g_ascii_strcmp(bfile, "(Default)"))
+	if(!g_ascii_strcasecmp(bfile, "(Default)"))
 		bfile = NULL;
-	if(!g_ascii_strcmp(cfile, "(Default)"))
+	if(!g_ascii_strcasecmp(cfile, "(Default)"))
 		cfile = NULL;
-	if(!g_ascii_strcmp(gfile, "(Default)"))
+	if(!g_ascii_strcasecmp(gfile, "(Default)"))
 		gfile = NULL;
 
 	/* determine the sound to play - if the pointer is NULL, try falling back
@@ -125,7 +125,7 @@ smartear_sound_determine(const char *bfile, const char *cfile, const char *gfile
 static void
 smartear_sound_play(PurpleBuddy *buddy, PurpleAccount *account, SmartEarEvent event)
 {
-	char *bfile = NULL, *cfile = NULL, *gfile = NULL, pfile = NULL, setting = NULL;
+	const char *bfile = NULL, *cfile = NULL, *gfile = NULL, *pfile = NULL, *setting = NULL;
 	PurpleBlistNode *bnode = (PurpleBlistNode *)buddy,
 					*cnode = (PurpleBlistNode *)(bnode->parent),
 					*gnode = (PurpleBlistNode *)(cnode->parent);
@@ -243,7 +243,7 @@ PurplePluginInfo smartear_info =
 	NULL,							/* reserved 2 */
 	NULL,							/* reserved 3 */
 	NULL							/* reserved 4 */
-}
+};
 
 static void
 smartear_init(PurplePlugin *plugin)
@@ -253,9 +253,9 @@ smartear_init(PurplePlugin *plugin)
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif
 
-	info.name = _("Smart Ear - Hidden Core Plugin");
-	info.summary = _("The Core component of the Smart Ear plugins");
-	info.description = _("The Core component of the Smart Ear plugins");
+	smartear_info.name = _("Smart Ear - Hidden Core Plugin");
+	smartear_info.summary = _("The Core component of the Smart Ear plugins");
+	smartear_info.description = _("The Core component of the Smart Ear plugins");
 }
 
 PURPLE_INIT_PLUGIN(smartear, smartear_init, smartear_info)
