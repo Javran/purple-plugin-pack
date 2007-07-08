@@ -18,6 +18,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
  * 02111-1307, USA
+ *
+ * This plugin is a hidden plugin.  It follows preferences set by other plugins
+ * which are specific to the libpurple UI in use.  The GTK+ plugin for Pidgin
+ * and the GNT plugin for Finch will list this plugin as a dependency, causing
+ * libpurple to load this plugin.
  */
 
 #define PURPLE_PLUGINS
@@ -37,57 +42,146 @@
 #include <signals.h>
 #include <version.h>
 
+/* Glib header */
+#include <glib.h>
+
+/* Enumerations */
+
+typedef enum {
+	SMARTEAR_EVENT_SIGNON,
+	SMARTEAR_EVENT_SIGNOFF,
+	SMARTEAR_EVENT_IDLECHG,
+	SMARTEAR_EVENT_RECEIVEDMSG,
+	SMARTEAR_EVENT_SENTMSG
+} SmartEarEvent;
+
+/* Helpers */
+
+static const char *
+smartear_event_get_setting_string(SmartEarEvent event)
+{
+	const char *setting = NULL;
+
+	switch(event) {
+		case SMARTEAR_EVENT_SIGNON:
+			setting = "signon_sound";
+			break;
+		case SMARTEAR_EVENT_SIGNOFF:
+			setting = "signoff_sound";
+			break;
+		case SMARTEAR_EVENT_IDLECHG:
+			setting = "idlechg_sound";
+			break;
+		case SMARTEAR_EVENT_RECEIVEDMSG:
+			setting = "receivedmsg_sound";
+			break;
+		case SMARTEAR_EVENT_SENTMSG:
+			setting = "sentmsg_sound";
+			break;
+	}
+
+	return setting;
+}
+
+static const char *
+smartear_sound_get_default(SmartEarEvent event)
+{
+	/* TODO: Finish me! */
+#warning Finish me!!!
+
+	return NULL;
+}
+
+static const char *
+smartear_sound_determine(const char *bfile, const char *cfile, const char *gfile, SmartEarEvent event)
+{
+	const char *pfile = NULL;
+
+	/* if the string is "(Default)" then set the pointer to NULL */
+	if(!g_ascii_strcmp(bfile, "(Default)"))
+		bfile = NULL;
+	if(!g_ascii_strcmp(cfile, "(Default)"))
+		cfile = NULL;
+	if(!g_ascii_strcmp(gfile, "(Default)"))
+		gfile = NULL;
+
+	/* determine the sound to play - if the pointer is NULL, try falling back
+	 * to another sound - if no sound defined at any level, fall back to the
+	 * default */
+	if(!bfile)
+		if(!cfile)
+			if(!gfile)
+				pfile = smartear_sound_get_default(event);
+			else
+				pfile = gfile;
+		else
+			pfile = cfile;
+	else
+		pfile = bfile;
+
+	return pfile;
+}
+
+static void
+smartear_sound_play(PurpleBuddy *buddy, PurpleAccount *account, SmartEarEvent event)
+{
+	char *bfile = NULL, *cfile = NULL, *gfile = NULL, pfile = NULL, setting = NULL;
+	PurpleBlistNode *bnode = (PurpleBlistNode *)buddy,
+					*cnode = (PurpleBlistNode *)(bnode->parent),
+					*gnode = (PurpleBlistNode *)(cnode->parent);
+
+	/* get the setting string */
+	setting = smartear_event_get_setting_string(event);
+
+	/* grab the settings from each blist node in the hierarchy */
+	bfile = purple_blist_node_get_string(bnode, setting);
+	cfile = purple_blist_node_get_string(cnode, setting);
+	gfile = purple_blist_node_get_string(gnode, setting);
+
+	/* determine which sound to play */
+	pfile = smartear_sound_determine(bfile, cfile, gfile, event);
+
+	if(pfile)
+		purple_sound_play_file(pfile, account);
+}
+
 /* Callbacks */
 
 static void
 smartear_cb_sent_msg(PurpleAccount *account, const gchar *receiver, const gchar *message)
 {
-	/* TODO: Finish me! */
-#warning Finish me!!!
+	PurpleBuddy *buddy = purple_find_buddy(account, receiver);
+
+	smartear_sound_play(buddy, account, SMARTEAR_EVENT_SENTMSG);
 }
 
 static void
 smartear_cb_received_msg(PurpleAccount *account, gchar *sender, char *message,
 		PurpleConversation *conv, PurpleMessageFlags flags)
 {
-	/* TODO: Finish me! */
-#warning Finish me!!!
+	if(!(flags & PURPLE_MESSAGE_SYSTEM)) {
+		PurpleBuddy *buddy = purple_find_buddy(account, sender);
+
+		smartear_sound_play(buddy, account, SMARTEAR_EVENT_RECEIVEDMSG);
+	}
 }
 
 static void
 smartear_cb_idle(PurpleBuddy *buddy, gboolean wasidle, gboolean nowidle)
 {
-	/* TODO: Finish me! */
-#warning Finish me!!!
+	smartear_sound_play(buddy, purple_buddy_get_account(buddy), SMARTEAR_EVENT_IDLECHG);
 }
 
 static void
-smartear_cb_signonoff(PurpleBuddy *buddy)
+smartear_cb_signoff(PurpleBuddy *buddy)
 {
-	/* TODO: Finish me! */
-#warning Finish me!!!
+	smartear_sound_play(buddy, purple_buddy_get_account(buddy), SMARTEAR_EVENT_SIGNOFF);
 }
 
 static void
-smartear_cb_blistnode_menu_action(PurpleBlistNode *node, gpointer plugin)
+smartear_cb_signon(PurpleBuddy *buddy)
 {
-	/* TODO: Finish me! */
-#warning Finish me!!!
-}
-
-static void
-smartear_cb_blistnode_menu(PurpleBlistNode *node, GList **menu, gpointer plugin)
-{
-	PurpleMenuAction *action = NULL;
-
-	/* don't crash when the blistnode is a transient */
-	if(purple_blist_node_get_flags(node) & PURPLE_BLIST_NODE_FLAG_NO_SAVE)
-		return;
-
-	action = purple_menu_action_new(_("Customize Sounds"),
-			PURPLE_CALLBACK(smartear_cb_blistnode_menu_action), plugin, NULL);
-
-	*menu = g_list_prepend(*menu, action);
+	smartear_sound_play(buddy, purple_buddy_get_account(buddy), SMARTEAR_EVENT_SIGNON);
 }
 
 /* Purple Plugin stuff */
@@ -98,22 +192,11 @@ smartear_load(PurplePlugin *plugin)
 	void *blist_handle = purple_blist_get_handle();
 	void *conv_handle = purple_conversations_get_handle();
 
-	/* TODO: make this unset all the pidgin/finch sound prefs 
-	 *  - probably can't do this if I plan to stay UI-neutral */
-
-	/* XXX: do we want to "migrate" the pidgin/finch sound prefs by making them
-	 * the default for each group if they're turned on? 
-	 *  - moot point; see the comment above. */
-
-	/* so we can hook into the blistnode menu and add an option */
-	purple_signal_connect(blist_handle, "blist-node-extended-menu", plugin,
-			PURPLE_CALLBACK(smartear_cb_blistnode_menu), NULL);
-
 	/* blist signals we need to detect the buddy's activities */
 	purple_signal_connect(blist_handle, "buddy-signed-on", plugin,
-			PURPLE_CALLBACK(smartear_cb_signonoff), NULL);
+			PURPLE_CALLBACK(smartear_cb_signon), NULL);
 	purple_signal_connect(blist_handle, "buddy-signed-off", plugin,
-			PURPLE_CALLBACK(smartear_cb_signonoff), NULL);
+			PURPLE_CALLBACK(smartear_cb_signoff), NULL);
 	purple_signal_connect(blist_handle, "buddy-idle-changed", plugin,
 			PURPLE_CALLBACK(smartear_cb_idle), NULL);
 
@@ -129,10 +212,6 @@ smartear_load(PurplePlugin *plugin)
 static gboolean
 smartear_unload(PurplePlugin *plugin)
 {
-	/* XXX: since we're going to unset all the pidgin and finch sound prefs,
-	 * do we want to keep track of their values and restore them on unload?
-	 *  - moot point; see smartear_load above. */
-
 	return TRUE;
 }
 
@@ -142,8 +221,8 @@ PurplePluginInfo smartear_info =
 	PURPLE_MAJOR_VERSION,			/* libpurple major version */
 	PURPLE_MINOR_VERSION,			/* libpurple minor version */
 	PURPLE_PLUGIN_STANDARD,			/* plugin type - this is a normal plugin */
-	NULL,							/* UI requirement - we have none */
-	0,								/* flags - we have none */
+	NULL,							/* UI requirement - we're invisible! */
+	PURPLE_PLUGIN_FLAG_INVISIBLE,	/* flags - we have none */
 	NULL,							/* dependencies - we have none */
 	PURPLE_PRIORITY_DEFAULT,		/* priority - nothing special here */
 	"core-plugin_pack-smartear",	/* Plugin ID */
@@ -153,8 +232,8 @@ PurplePluginInfo smartear_info =
 	NULL,							/* description - defined later for i18n */
 	"John Bailey <rekkanoryo@rekkanoryo.org>",	/* author */
 	PP_WEBSITE,						/* plugin website - use plugin pack website */
-	gtksmartear_load,				/* plugin load - purple calls this when loading */
-	gtksmartear_unload,				/* plugin unload - purple calls this when unloading */
+	smartear_load,					/* plugin load - purple calls this when loading */
+	smartear_unload,				/* plugin unload - purple calls this when unloading */
 	NULL,							/* plugin destroy - we don't need one */
 	NULL,							/* ui_info - we don't need this */
 	NULL,							/* extra_info - we don't need this */
@@ -174,12 +253,9 @@ smartear_init(PurplePlugin *plugin)
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif
 
-	info.name = _("Smart Ear");
-	info.summary = _("Assign sounds on a per-buddy or per-group basis");
-	info.description = _("Smart Ear allows you to assign sounds on a per-buddy or "
-			"per-group basis.  You can configure sounds for sign on, sign off, IM, "
-			"and status change events.  Using these features, you can know by the "
-			"sounds Pidgin emits which person on your buddy list is doing what.");
+	info.name = _("Smart Ear - Hidden Core Plugin");
+	info.summary = _("The Core component of the Smart Ear plugins");
+	info.description = _("The Core component of the Smart Ear plugins");
 }
 
 PURPLE_INIT_PLUGIN(smartear, smartear_init, smartear_info)
