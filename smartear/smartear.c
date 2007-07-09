@@ -86,10 +86,16 @@ smartear_event_get_setting_string(SmartEarEvent event)
 static const char *
 smartear_sound_get_default(SmartEarEvent event)
 {
-	/* TODO: Finish me! */
-#warning Finish me!!!
+	const char *prefname = NULL, *prefval = NULL;
+	char *prefpath = NULL;
 
-	return NULL;
+	prefname = smartear_event_get_setting_string(event);
+	prefpath = g_strdup_printf("/plugins/core/smartear/%s", prefname);
+	prefval = purple_prefs_get_string(prefpath);
+
+	g_free(prefpath);
+
+	return prefval;
 }
 
 static const char *
