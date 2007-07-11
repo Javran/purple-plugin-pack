@@ -10,8 +10,11 @@ Version 1.1mtn:
 	* Added irc-more plugin
 	* Added highlight plugin
 	* Added incomplete convbadger plugin
+	* Added internationalization support to plonkers
 	* Added more humorous stuff to eight_ball (resiak)
+	* Added support for spaces in filenames to gRIM (rageboy04)
 	* Added a stop subcommand in gRIM (rageboy04)
+	* Changed order of arguments to gRIM command (rageboy04)
 	* Fixed build-by-default status for switchspell
 	* Fixed crash in album when using Pidgin 2.0.2 or newer
 	* Fixed potential crashes in some other plugins when using Pidgin 2.0.2 or
