@@ -26,6 +26,8 @@
 # include "../pp_config.h"
 #endif
 
+#include "../common/pp_internal.h"
+
 #define PURPLE_PLUGINS
 
 #include <cmds.h>
@@ -229,34 +231,34 @@ plonkers_get_config_frame(PurplePlugin *plugin) {
 	vbox = gtk_vbox_new(FALSE, 6);
 	gtk_container_set_border_width(GTK_CONTAINER(vbox), 12);
 
-	frame = pidgin_make_frame(vbox, "Ignored Plonkers");
+	frame = pidgin_make_frame(vbox, _("Ignored Plonkers"));
 
-	pidgin_prefs_labeled_entry(frame, "Plonkers singular format:",
+	pidgin_prefs_labeled_entry(frame, _("Plonkers singular format:"),
 								 "/plugins/core/plugin_pack/plonkers/plonkers/format_singular",
 								 NULL);
-	pidgin_prefs_labeled_entry(frame, "Plonkers plural format:",
+	pidgin_prefs_labeled_entry(frame, _("Plonkers plural format:"),
 								 "/plugins/core/plugin_pack/plonkers/plonkers/format_plural",
 								 NULL);
 
-	frame = pidgin_make_frame(vbox, "Plonking");
-	pidgin_prefs_labeled_entry(frame, "Plonked singular plural:",
+	frame = pidgin_make_frame(vbox, _("Plonking"));
+	pidgin_prefs_labeled_entry(frame, _("Plonked singular plural:"),
 								 "/plugins/core/plugin_pack/plonkers/plonked/format_singular",
 								 NULL);
-	pidgin_prefs_labeled_entry(frame, "Plonked plural format:",
+	pidgin_prefs_labeled_entry(frame, _("Plonked plural format:"),
 								 "/plugins/core/plugin_pack/plonkers/plonked/format_plural",
 								 NULL);
 	sg = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
 
 
-	frame = pidgin_make_frame(vbox, "Format information");
+	frame = pidgin_make_frame(vbox, _("Format information"));
 	hbox = gtk_hbox_new(FALSE, 6);
 	gtk_box_pack_start(GTK_BOX(frame), hbox, FALSE, FALSE, 0);
 	gtk_widget_show(hbox);
 
-	label = plonkers_make_label("%P: List of plonkers", sg);
+	label = plonkers_make_label(_("%P: List of plonkers"), sg);
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 
-	label = plonkers_make_label("%N: Number of plonkers", NULL);
+	label = plonkers_make_label(_("%N: Number of plonkers"), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 
 
@@ -274,8 +276,8 @@ plonkers_get_config_frame(PurplePlugin *plugin) {
  ******************************************************************************/
 static gboolean
 plonkers_load(PurplePlugin *plugin) {
-	const gchar *help = "<pre>plonkers;\n"
-						"Tell people in a chat what you really think of them\n</pre>";
+	const gchar *help = _("<pre>plonkers;\nTell people in a chat what you "
+			"really think of them\n</pre>");
 
 	/* register our command */
 	plonkers_cmd = purple_cmd_register("plonkers", "", PURPLE_CMD_P_PLUGIN,
@@ -295,23 +297,6 @@ plonkers_unload(PurplePlugin *plugin) {
 	purple_cmd_unregister(plonk_cmd);
 
 	return TRUE;
-}
-
-static void
-init_plugin(PurplePlugin *plugin) {
-	purple_prefs_add_none("/plugins/core/plugin_pack");
-	purple_prefs_add_none("/plugins/core/plugin_pack/plonkers");
-	purple_prefs_add_none("/plugins/core/plugin_pack/plonkers/plonkers");
-	purple_prefs_add_string("/plugins/core/plugin_pack/plonkers/plonkers/format_singular",
-						  "/me has identified %N plonker: %P.");
-	purple_prefs_add_string("/plugins/core/plugin_pack/plonkers/plonkers/format_plural",
-						  "/me has identified %N plonkers: %P.");
-	purple_prefs_add_none("/plugins/core/plugin_pack/plonkers/plonked");
-	purple_prefs_add_string("/plugins/core/plugin_pack/plonkers/plonked/format_singular",
-						  "/me plonks: %P.");
-	purple_prefs_add_string("/plugins/core/plugin_pack/plonkers/plonked/format_plural",
-						  "/me plonks: %P.");
-
 }
 
 static PidginPluginUiInfo ui_info = {
@@ -334,14 +319,10 @@ static PurplePluginInfo plonkers_info = {
 	PURPLE_PRIORITY_DEFAULT,							/* priority		*/
 
 	"core-plugin_pack-Plonkers",						/* id			*/
-	"Plonkers",											/* name			*/
+	NULL,												/* name			*/
 	PP_VERSION,											/* version		*/
-	"Tell plonkers what you really think",				/* summary		*/
-	"A small plugin that lets you announce"
-	" to a chat room your current ignores, as"
-	" well as providing other pointless ingore and"
-	" privacy tools for dealing with idiots.\n"
-	"Name inspired by en_IE/GB word for 'idiots'.",		/* description	*/
+	NULL,												/* summary		*/
+	NULL,												/* description	*/
 	"Peter Lawler <bleeter from users.sf.net>",			/* author		*/
 	PP_WEBSITE,											/* homepage		*/
 	plonkers_load,										/* load			*/
@@ -357,5 +338,29 @@ static PurplePluginInfo plonkers_info = {
 	NULL,												/* reserved 3	*/
 	NULL												/* reserved 4	*/
 };
+
+static void
+init_plugin(PurplePlugin *plugin) {
+	purple_prefs_add_none("/plugins/core/plugin_pack");
+	purple_prefs_add_none("/plugins/core/plugin_pack/plonkers");
+	purple_prefs_add_none("/plugins/core/plugin_pack/plonkers/plonkers");
+	purple_prefs_add_string("/plugins/core/plugin_pack/plonkers/plonkers/format_singular",
+						  _("/me has identified %N plonker: %P."));
+	purple_prefs_add_string("/plugins/core/plugin_pack/plonkers/plonkers/format_plural",
+						  _("/me has identified %N plonkers: %P."));
+	purple_prefs_add_none("/plugins/core/plugin_pack/plonkers/plonked");
+	purple_prefs_add_string("/plugins/core/plugin_pack/plonkers/plonked/format_singular",
+						  _("/me plonks: %P."));
+	purple_prefs_add_string("/plugins/core/plugin_pack/plonkers/plonked/format_plural",
+						  _("/me plonks: %P."));
+
+	plonkers_info.name = _("Plonkers");
+	plonkers_info.summary = _("Tell plonkers what you really think.");
+	plonkers_info.description = _("Plonkers is a small plugin that lets you "
+			"announce to a chat room your current list of ignores, as well as "
+			"providing other pointless ignore and privacy tools for dealing "
+			"with idiots.  The name is inspired by the British/Irish word for "
+			"'idiots.'");
+}
 
 PURPLE_INIT_PLUGIN(plonkers, init_plugin, plonkers_info)
