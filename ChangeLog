@@ -4,8 +4,8 @@ Version 1.1mtn:
 	* Blistops now shows the menu bar when hovering near the top of the buddy
 	  list window.  Resolves a number of Pidgin bug reports
 	* Listhandler now supports alias-only list exports and imports (rseeber)
-	* Listhandler now exports buddy notes created with the buddynote plugin
-	  but importing does not yet work for AIM and ICQ accounts.
+	* Listhandler now exports and imports buddy notes created with the
+	  buddynote plugin
 	* Added ignore plugin
 	* Added irc-more plugin
 	* Added highlight plugin
@@ -14,6 +14,8 @@ Version 1.1mtn:
 	* Added a stop subcommand in gRIM (rageboy04)
 	* Fixed build-by-default status for switchspell
 	* Fixed crash in album when using Pidgin 2.0.2 or newer
+	* Fixed potential crashes in some other plugins when using Pidgin 2.0.2 or
+	  newer
 	* Fixed potential random crashes in irssi plugin
 
 Version 1.0: 5/4/07

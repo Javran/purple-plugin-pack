@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purple plugin_pack 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-21 19:55-0400\n"
+"POT-Creation-Date: 2007-07-10 23:04-0400\n"
 "PO-Revision-Date: 2007-06-02 16:36+1100\n"
 "Last-Translator: Yannick LE NY <y.le.ny@ifrance.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -156,79 +156,79 @@ msgstr " Enregister"
 
 #: ../autoreply/autoreply.c:241 ../listhandler/aim_blt_files.c:301
 #: ../listhandler/aim_blt_files.c:465 ../listhandler/gen_xml_files.c:190
-#: ../listhandler/gen_xml_files.c:430 ../listhandler/gen_xml_files.c:546
-#: ../listhandler/gen_xml_files.c:623 ../listhandler/migrate.c:145
+#: ../listhandler/gen_xml_files.c:430 ../listhandler/gen_xml_files.c:545
+#: ../listhandler/gen_xml_files.c:622 ../listhandler/migrate.c:145
 #: ../listhandler/migrate.c:184
 msgid "_Cancel"
 msgstr " Annuler"
 
-#: ../autoreply/autoreply.c:254
+#: ../autoreply/autoreply.c:257
 msgid "Set _Autoreply Message"
 msgstr "Choisir une réponse automatique"
 
-#: ../autoreply/autoreply.c:263
+#: ../autoreply/autoreply.c:266
 msgid "Autoreply message"
 msgstr "Réponse automatique"
 
-#: ../autoreply/autoreply.c:350
+#: ../autoreply/autoreply.c:353
 msgid "Send autoreply messages when"
 msgstr "Envoyer une réponse automatique quand"
 
-#: ../autoreply/autoreply.c:354
+#: ../autoreply/autoreply.c:357
 msgid "When my account is _away"
 msgstr "Quand mon compte est en absence"
 
-#: ../autoreply/autoreply.c:358
+#: ../autoreply/autoreply.c:361
 msgid "When my account is _idle"
 msgstr "Quand mon compte est inactif"
 
-#: ../autoreply/autoreply.c:362
+#: ../autoreply/autoreply.c:365
 msgid "_Default reply"
 msgstr "Réponse par défaut"
 
-#: ../autoreply/autoreply.c:369
+#: ../autoreply/autoreply.c:372
 msgid ""
 "Autoreply Prefix\n"
 "(only when necessary)"
 msgstr ""
 
-#: ../autoreply/autoreply.c:372
+#: ../autoreply/autoreply.c:375
 msgid "Status message"
 msgstr "Message d'état"
 
-#: ../autoreply/autoreply.c:376
+#: ../autoreply/autoreply.c:379
 msgid "Autoreply with status message"
 msgstr "Répondre automatiquement avec le message d'état"
 
-#: ../autoreply/autoreply.c:378
+#: ../autoreply/autoreply.c:381
 msgid "Never"
 msgstr "Jamais"
 
-#: ../autoreply/autoreply.c:380
+#: ../autoreply/autoreply.c:383
 msgid "Always when there is a status message"
 msgstr "Toujours quand il y a un message d'état"
 
-#: ../autoreply/autoreply.c:382
+#: ../autoreply/autoreply.c:385
 msgid "Only when there's no autoreply message"
 msgstr "Seulement quand aucune réponse n'a été choisie"
 
-#: ../autoreply/autoreply.c:387
+#: ../autoreply/autoreply.c:390
 msgid "Delay between autoreplies"
 msgstr "Durée entre les réponses automatiques"
 
-#: ../autoreply/autoreply.c:391
+#: ../autoreply/autoreply.c:394
 msgid "_Minimum delay (mins)"
 msgstr "Durée  minimum (en minutes)"
 
-#: ../autoreply/autoreply.c:395
+#: ../autoreply/autoreply.c:398
 msgid "Times to send autoreplies"
 msgstr "Répétitions des réponses automatiques"
 
-#: ../autoreply/autoreply.c:399
+#: ../autoreply/autoreply.c:402
 msgid "Ma_ximum count"
 msgstr "Nombre ma ximum"
 
-#: ../autoreply/autoreply.c:454
+#: ../autoreply/autoreply.c:457
 msgid ""
 "I am currently not available. Please leave your message, and I will get back "
 "to you as soon as possible."
@@ -236,7 +236,7 @@ msgstr ""
 "Je ne suis pas disponible pour l'instant. Veuillez me laisser un message et "
 "j'y répondrai dès que possible."
 
-#: ../autoreply/autoreply.c:459
+#: ../autoreply/autoreply.c:462
 #, fuzzy
 msgid "This is an autoreply: "
 msgstr "Répétitions des réponses automatiques"
@@ -523,7 +523,7 @@ msgstr "GMT+12"
 msgid "Select timezone"
 msgstr "Selectionner un fuseau horaire"
 
-#: ../buddytime/buddytime.c:192
+#: ../buddytime/buddytime.c:195
 msgid "Timezone"
 msgstr "Fuseau horaire"
 
@@ -574,23 +574,27 @@ msgstr ""
 msgid "<BR>Topic changed from: <BR>%s<BR>To:<BR>%s"
 msgstr ""
 
-#: ../eight_ball/eight_ball.c:128
+#: ../eight_ball/eight_ball.c:142
 msgid "8ball:  sends a random 8ball message"
 msgstr "8ball:  envoie un message 8ball aléatoire"
 
-#: ../eight_ball/eight_ball.c:129
+#: ../eight_ball/eight_ball.c:143
 msgid "sgball:  sends a random Stargate Ball message"
 msgstr "sgball:  envoie un message Stargate Ball aléatoire"
 
-#: ../eight_ball/eight_ball.c:196
+#: ../eight_ball/eight_ball.c:144
+msgid "fullcrap:  sends random fooling blabber"
+msgstr ""
+
+#: ../eight_ball/eight_ball.c:217
 msgid "Magic 8 Ball"
 msgstr "Magic 8 Ball"
 
-#: ../eight_ball/eight_ball.c:197
+#: ../eight_ball/eight_ball.c:218
 msgid "Provides Magic 8-ball like functionality"
 msgstr "Fournit une fonctionnalité du type Magic 8-ball"
 
-#: ../eight_ball/eight_ball.c:198
+#: ../eight_ball/eight_ball.c:219
 msgid ""
 "Provides Magic 8-ball like functionality with the /8ball command, as well as "
 "similar functionality for common Stargate words or phrases with the /sg-ball "
@@ -622,7 +626,7 @@ msgstr ""
 
 #. should be completely mad and see if user has only one buddy (not a chat)
 #. *  on the blist and pluralise if appropriate
-#: ../gRIM/gRIM.c:281
+#: ../gRIM/gRIM.c:280
 msgid ""
 "gRIM: rim your pals\n"
 "/rim &lt;filename&gt; &lt;duration-in-secs&gt;"
@@ -630,15 +634,15 @@ msgstr ""
 "gRIM: Importuner vos contacts\n"
 "/rim &lt;nom-du-fichier&gt; &lt;durée-en-secondes&gt;"
 
-#: ../gRIM/gRIM.c:347
+#: ../gRIM/gRIM.c:346
 msgid "gRIM"
 msgstr "gRIM"
 
-#: ../gRIM/gRIM.c:348
+#: ../gRIM/gRIM.c:347
 msgid "A completely stupid and pointless plugin"
 msgstr "Un plugin complètement stupide et injustifié"
 
-#: ../gRIM/gRIM.c:349
+#: ../gRIM/gRIM.c:348
 msgid ""
 "Adds commands to annoy buddies with. Inspired by a dumb IRC convo and Red "
 "Dwarf."
@@ -1084,47 +1088,51 @@ msgstr ""
 #. Last said
 #. Signed on
 #. Signed off
-#: ../lastseen/lastseen.c:176 ../lastseen/lastseen.c:188
+#: ../lastseen/lastseen.c:165
+#, fuzzy
 msgid ""
 "\n"
-"<b>Last Seen:</b>"
+"<b>Last Seen</b>: "
 msgstr ""
 "\n"
 "<b>Vu récemment:</b>"
 
-#: ../lastseen/lastseen.c:177 ../lastseen/lastseen.c:189
+#: ../lastseen/lastseen.c:166
+#, fuzzy
 msgid ""
 "\n"
-"<b>Last Said:</b>"
+"<b>Last Said</b>: "
 msgstr ""
 "\n"
 "<b>Dernière parole:</b>"
 
-#: ../lastseen/lastseen.c:178 ../lastseen/lastseen.c:190
+#: ../lastseen/lastseen.c:167
+#, fuzzy
 msgid ""
 "\n"
-"<b>Signed On:</b>"
+"<b>Signed On</b>: "
 msgstr ""
 "\n"
 "<b>Dernière connection:</b>"
 
-#: ../lastseen/lastseen.c:179 ../lastseen/lastseen.c:191
+#: ../lastseen/lastseen.c:168
+#, fuzzy
 msgid ""
 "\n"
-"<b>Signed Off:</b>"
+"<b>Signed Off</b>: "
 msgstr ""
 "\n"
 "<b>Dernière déconnection:</b>"
 
-#: ../lastseen/lastseen.c:272
+#: ../lastseen/lastseen.c:246
 msgid "Last Seen"
 msgstr "Vu récemment"
 
-#: ../lastseen/lastseen.c:273
+#: ../lastseen/lastseen.c:247
 msgid "Record when a buddy was last seen."
 msgstr "Enregistre quand un contact a été vu pour la dernière fois"
 
-#: ../lastseen/lastseen.c:274
+#: ../lastseen/lastseen.c:248
 msgid ""
 "Logs the time of a last received message, what they said, when they logged "
 "in, and when they logged out, for buddies on your buddy list."
@@ -1136,7 +1144,7 @@ msgstr ""
 #. create a field
 #: ../listhandler/aim_blt_files.c:287 ../listhandler/aim_blt_files.c:453
 #: ../listhandler/gen_xml_files.c:175 ../listhandler/gen_xml_files.c:416
-#: ../listhandler/gen_xml_files.c:532 ../listhandler/gen_xml_files.c:608
+#: ../listhandler/gen_xml_files.c:531 ../listhandler/gen_xml_files.c:607
 #: ../listhandler/migrate.c:129 ../listhandler/migrate.c:169
 #: ../schedule/pidgin-schedule.c:292
 msgid "Account"
@@ -1149,12 +1157,12 @@ msgid "List Handler: Importing"
 msgstr "Traitement de listes - Importation"
 
 #: ../listhandler/aim_blt_files.c:298 ../listhandler/gen_xml_files.c:187
-#: ../listhandler/gen_xml_files.c:620
+#: ../listhandler/gen_xml_files.c:619
 msgid "Choose the account to import to:"
 msgstr "Choisissez le compte d'importation:"
 
 #: ../listhandler/aim_blt_files.c:299 ../listhandler/gen_xml_files.c:188
-#: ../listhandler/gen_xml_files.c:621
+#: ../listhandler/gen_xml_files.c:620
 msgid "_Import"
 msgstr " Importer"
 
@@ -1169,12 +1177,12 @@ msgid "List Handler: Exporting"
 msgstr "Traitement de listes - Exportation"
 
 #: ../listhandler/aim_blt_files.c:464 ../listhandler/gen_xml_files.c:429
-#: ../listhandler/gen_xml_files.c:545
+#: ../listhandler/gen_xml_files.c:544
 msgid "Choose the account to export from:"
 msgstr "Choisissez le compte d'exportation:"
 
 #: ../listhandler/aim_blt_files.c:465 ../listhandler/gen_xml_files.c:430
-#: ../listhandler/gen_xml_files.c:546
+#: ../listhandler/gen_xml_files.c:545
 msgid "_Export"
 msgstr " Exporter"
 
@@ -1183,7 +1191,7 @@ msgid "Choose An AIM .blt File To Import"
 msgstr "Choisissez un fichier AIM .blt à importer"
 
 #. and finally we can create the request
-#: ../listhandler/gen_xml_files.c:186 ../listhandler/gen_xml_files.c:619
+#: ../listhandler/gen_xml_files.c:186 ../listhandler/gen_xml_files.c:618
 msgid "Listhandler - Importing"
 msgstr "Traitement de listes - Importation"
 
@@ -1192,15 +1200,15 @@ msgid "Save Generic .blist File"
 msgstr "Enregistrer un fichier générique .blist"
 
 #. and finally we can create the request
-#: ../listhandler/gen_xml_files.c:428 ../listhandler/gen_xml_files.c:544
+#: ../listhandler/gen_xml_files.c:428 ../listhandler/gen_xml_files.c:543
 msgid "Listhandler - Exporting"
 msgstr "Traitement de listes - Exportation"
 
-#: ../listhandler/gen_xml_files.c:441 ../listhandler/gen_xml_files.c:650
+#: ../listhandler/gen_xml_files.c:441 ../listhandler/gen_xml_files.c:649
 msgid "Choose A Generic Buddy List File To Import"
 msgstr "Choisissez un fichier générique de liste de contacts à importer"
 
-#: ../listhandler/gen_xml_files.c:505
+#: ../listhandler/gen_xml_files.c:504
 #, fuzzy
 msgid "Save Generic .alist File"
 msgstr "Enregistrer un fichier générique .blist"
@@ -1720,15 +1728,15 @@ msgstr ""
 "contacts quand ils sont hors ligne, même avec \"Montrer contacts en ligne\" "
 "désactivé."
 
-#: ../simfix/simfix.c:136
+#: ../simfix/simfix.c:139
 msgid "SIM-fix"
 msgstr "Correction SIM"
 
-#: ../simfix/simfix.c:137
+#: ../simfix/simfix.c:140
 msgid "Fix messages from broken SIM clients."
 msgstr "Corrige les messages de clients SIM défectueux(buggés)"
 
-#: ../simfix/simfix.c:138
+#: ../simfix/simfix.c:141
 msgid ""
 "Fixes messages received from broken SIM clients by stripping HTML from them. "
 "The buddy must be on your list and set as a SIM user."
