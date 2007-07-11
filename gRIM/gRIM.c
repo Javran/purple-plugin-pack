@@ -217,13 +217,23 @@ rim(PurpleConversation *conv, const gchar *cmd, gchar **args,
 	/* XXX: Need to manually parse the arguments :-/ */
 	if (*args && *(args+1)) {
 		/* two parameters: filename duration (in seconds) */
-		info->lyric = rim_get_file_lines(*args);
-		sscanf(*(args+1), "%d", &info->time);
+		info->lyric = rim_get_file_lines(*(args + 1));
+		sscanf(*args, "%d", &info->time);
 		info->time *= 1000;
-	} else if (*args) {
-		/* one parameter: filename */
-		info->lyric = rim_get_file_lines(*args);
-		info->time = g_list_length(info->lyric) * 5000;	/* at least 5 seconds between two lines */
+	} else if(*args) {
+		if(!g_ascii_strcasecmp(*args, "quit")) {
+			GList *list = NULL;
+			list = g_list_append(list, "Fine, I'll stop");
+			g_list_foreach(info->lyric, (GFunc)g_free, NULL);
+			g_list_free(info->lyric);
+			info->lyric = list;
+			info->verse = FALSE;
+			info->time = 5000;
+		}
+		else {
+			g_list_free(info->lyric);
+			info->lyric = NULL;
+		}
 	} else {
 		int i = 0;
 		GList *list = NULL;
@@ -238,16 +248,7 @@ rim(PurpleConversation *conv, const gchar *cmd, gchar **args,
 		info->time = 60000;
 	}
 
-	if(*args && !g_ascii_strcasecmp(*args,"quit")) {
-		GList *list = NULL, *tmp = NULL;
-		tmp = info->lyric;
-		list = g_list_append(list, "Fine, I'll stop");
-		info->lyric = list;
-		info->verse = FALSE;
-		info->time = 5000;
-		g_list_free(tmp);
-	} else
-		purple_debug_info("grim","HINT: quit with quit\n");
+	purple_debug_info("gRIM", "HINT: quit with quit\n");
 
 	if (info->lyric == NULL) {
 		g_free(info);
@@ -278,10 +279,10 @@ plugin_load(PurplePlugin *plugin) {
 	/* should be completely mad and see if user has only one buddy (not a chat)
 	 *  on the blist and pluralise if appropriate */
 	help = _("gRIM: rim your pals\n"
-			"/rim &lt;filename&gt; &lt;duration-in-secs&gt;");
+			"/rim &lt;duration-in-secs&gt; &lt;filename&gt;");
 
 	rim_cmd_id = purple_cmd_register("rim", "ws", PURPLE_CMD_P_PLUGIN,
-									PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT,
+									PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT | PURPLE_CMD_FLAG_ALLOW_WRONG_ARGS,
 									NULL, PURPLE_CMD_FUNC(rim),
 									help, NULL);
 
@@ -353,7 +354,7 @@ grim suggested I should /base this plugin. By adding this in, I should get the
 guts of this thing able to handle different text inputs, so I thought it was
 a good thing to do.
 
-For the moment, I've thrown in the skeleton command registration, and the text 
+For the moment, I've thrown in the skeleton command registration, and the text
 here which I got from wikipedia.
 
     Narrator: In A.D. 2101, war was beginning.
@@ -376,7 +377,7 @@ here which I got from wikipedia.
     Captain: Take off every 'Zig'!!
     Captain: You know what you doing.
     Captain: Move 'Zig'.
-    Captain: For great justice. 
+    Captain: For great justice.
 */
 
 PURPLE_INIT_PLUGIN(flip, init_plugin, info)
