@@ -3,8 +3,7 @@ EXTRA_DIST = .build .pidgin-plugin Makefile.mingw
 if HAVE_GTKSPELL
 switchspelldir = $(PIDGIN_LIBDIR)
 
-switchspell_la_LDFLAGS = -module -avoid-version \
-	$(GTKSPELL_LIBS)
+switchspell_la_LDFLAGS = -module -avoid-version
 
 if HAVE_PIDGIN
 
@@ -15,7 +14,8 @@ switchspell_la_SOURCES = \
 
 switchspell_la_LIBADD = \
 	$(PIDGIN_LIBS) \
-	$(GTK_LIBS)
+	$(GTK_LIBS) \
+	$(GTKSPELL_LIBS)
 
 endif # PIDGIN
 
