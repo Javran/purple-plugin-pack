@@ -1,4 +1,4 @@
-Version 1.1mtn:
+Version 2.0.0: 7/13/07
 	* Blistops now offers the ability to stretch the display of screen names
 	  or aliases into the buddy icon column when no icon exists
 	* Blistops now shows the menu bar when hovering near the top of the buddy
@@ -20,6 +20,7 @@ Version 1.1mtn:
 	* Fixed potential crashes in some other plugins when using Pidgin 2.0.2 or
 	  newer
 	* Fixed potential random crashes in irssi plugin
+	* Fixed make distcheck in the development code
 
 Version 1.0: 5/4/07
 	* Updated for Pidgin 2.0.0
