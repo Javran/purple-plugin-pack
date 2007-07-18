@@ -15,9 +15,14 @@ napster_la_LIBADD = \
 	$(GLIB_LIBS) \
 	$(PURPLE_LIBS)
 
-napsterpixdir=$(PURPLE_PIXAMPSDIR)/status/default
+napsterpix16x16dir=$(PIDGIN_PIXAMPSDIR)/pidgin/protocols/16
+napsterpix16x16_DATA=napster16x16.png
 
-napsterpix_DATA=napster.png
+napsterpix22x22dir=$(PIDGIN_PIXMAPSDIR)/pidgin/protocols/22
+napsterpix22x22_DATA=napster22x22.png
+
+napsterpix48x48dir=$(PIDGIN_PIXMAPSDIR)/pidgin/protocols/48
+napsterpix48x48_DATA=napster48x48.png
 
 endif
 
