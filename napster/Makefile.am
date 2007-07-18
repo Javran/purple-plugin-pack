@@ -29,6 +29,12 @@ napsterpix22x22_DATA=napster22x22.png
 
 napsterpix48x48dir=$(PIDGIN_PIXMAPSDIR)/pidgin/protocols/48
 napsterpix48x48_DATA=napster48x48.png
+
+install-data-local:
+	mv $(PIDGIN_PIXMAPSDIR)/pidgin/protocols/16/napster16x16.png $(PIDGIN_PIXMAPSDIR)/pidgin/protocols/16/napster.png
+	mv $(PIDGIN_PIXMAPSDIR)/pidgin/protocols/22/napster22x22.png $(PIDGIN_PIXMAPSDIR)/pidgin/protocols/22/napster.png
+	mv $(PIDGIN_PIXMAPSDIR)/pidgin/protocols/48/napster48x48.png $(PIDGIN_PIXMAPSDIR)/pidgin/protocols/48/napster.png
+
 endif
 
 endif
