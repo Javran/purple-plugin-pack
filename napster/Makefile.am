@@ -1,4 +1,9 @@
-EXTRA_DIST = .purple-plugin .incomplete
+EXTRA_DIST=\
+	.purple-plugin \
+	.incomplete \
+	napster16x16.png \
+	napster22x22.png \
+	napster48x48.png
 
 napsterdir = $(PURPLE_LIBDIR)
 
@@ -15,6 +20,7 @@ napster_la_LIBADD = \
 	$(GLIB_LIBS) \
 	$(PURPLE_LIBS)
 
+if HAVE_PIDGIN
 napsterpix16x16dir=$(PIDGIN_PIXAMPSDIR)/pidgin/protocols/16
 napsterpix16x16_DATA=napster16x16.png
 
@@ -23,6 +29,7 @@ napsterpix22x22_DATA=napster22x22.png
 
 napsterpix48x48dir=$(PIDGIN_PIXMAPSDIR)/pidgin/protocols/48
 napsterpix48x48_DATA=napster48x48.png
+endif
 
 endif
 
