@@ -44,6 +44,7 @@ sepandtab/sepandtab.c
 showoffline/showoffline.c
 simfix/simfix.c
 slashexec/slashexec.c
+snpp/snpp.c
 sslinfo/sslinfo.c
 stocker/stocker.c
 stocker/stocker_prefs.c
