@@ -317,7 +317,7 @@ static void snpp_callback(gpointer data, gint source, PurpleInputCondition cond)
 	g_free(retcode);
 };
 
-static void snpp_connect_cb(gpointer data, gint source, PurpleInputCondition cond)
+static void snpp_connect_cb(gpointer data, gint source, const gchar *error_message)
 {
 	PurpleConnection *gc;
 	struct snpp_data *sd;
@@ -344,17 +344,17 @@ static void snpp_connect_cb(gpointer data, gint source, PurpleInputCondition con
 
 static void snpp_connect(PurpleConnection *gc)
 {
-	int err;
+	PurpleProxyConnectData *ppcd = NULL;
 
 	purple_debug_info("snpp", "snpp_connect\n");
 
-	err = purple_proxy_connect(gc->account,
+	ppcd =	purple_proxy_connect(gc->account, gc->account,
 			purple_account_get_string(gc->account, "server", SNPP_DEFAULT_SERVER),
 			purple_account_get_int(gc->account, "port", SNPP_DEFAULT_PORT),
 			snpp_connect_cb,
 			gc);
 
-	if (err || !gc->account->gc) {
+	if (!ppcd || !gc->account->gc) {
 		purple_connection_error(gc, _("Couldn't connect to SNPP server"));
 		return;
 	}
