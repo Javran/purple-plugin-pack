@@ -1,3 +1,6 @@
+Version 2.1.0mtn:
+	* Added the Pidgin-SNPP protocol plugin as snpp
+
 Version 2.0.0: 7/13/07
 	* Blistops now offers the ability to stretch the display of screen names
 	  or aliases into the buddy icon column when no icon exists
