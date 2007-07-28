@@ -1,5 +1,6 @@
 Version 2.1.0mtn:
 	* Added the Pidgin-SNPP protocol plugin as snpp
+	* Added the /notice command for the irc-more plugin.
 
 Version 2.0.0: 7/13/07
 	* Blistops now offers the ability to stretch the display of screen names
