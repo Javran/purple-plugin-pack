@@ -17,7 +17,16 @@ fr    - Yannick <y.le.ny@ifrance.com>
 
 Packagers
 =========
-Your name could be here!!
+Benjamin Seidenberg <benjamin@debian.org>
+	- Debian
+Stu Tomlinson <stu@nosnilmot.com>
+	- Source RPM
+	- Fedora Core 4
+	- Fedora Core 5
+	- Fedora Core 6
+	- Red Hat Enterprise Linux 4
+Daniel Attallah <datallah@users.sourceforge.net>
+	- Windows
 
 Accepted Patches
 ================
