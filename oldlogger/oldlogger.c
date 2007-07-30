@@ -29,6 +29,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include "../common/pp_internal.h"
+
 #include <account.h>
 #include <debug.h>
 #include <log.h>
@@ -37,8 +39,6 @@
 #include <stringref.h>
 #include <util.h>
 #include <version.h>
-
-#include "../common/pp_internal.h"
 
 #include <glib.h>
 

@@ -34,6 +34,9 @@
 /* System headers */
 #include <glib.h>
 
+/* Pack/Local headers */
+#include "../common/pp_internal.h"
+
 /* Purple headers */
 #include <plugin.h>
 #include <version.h>
@@ -43,9 +46,6 @@
 
 #include <gtkconv.h>
 #include <gtkplugin.h>
-
-/* Pack/Local headers */
-#include "../common/pp_internal.h"
 
 #include <aspell.h>
 #include <gtkspell/gtkspell.h>

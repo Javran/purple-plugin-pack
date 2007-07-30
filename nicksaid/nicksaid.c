@@ -44,6 +44,9 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
+/* Pack/Local headers */
+#include "../common/pp_internal.h"
+
 /* Purple headers */
 #include <gtkplugin.h>
 #include <version.h>
@@ -56,9 +59,6 @@
 #include <gtkmenutray.h>
 #include <pidginstock.h>
 #include <gtkutils.h>
-
-/* Pack/Local headers */
-#include "../common/pp_internal.h"
 
 #define DELIMS " .,;|<>?/\\`~!@#$%^&*()_-+={}[]:'\""
 

@@ -40,8 +40,10 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-/* Purple headers */
+/* Pack/Local headers */
+#include "../common/pp_internal.h"
 
+/* Purple headers */
 #include <conversation.h>
 #include <gtkconv.h>
 
@@ -49,9 +51,6 @@
 
 #include <gtkplugin.h>
 #include <version.h>
-
-/* Pack/Local headers */
-#include "../common/pp_internal.h"
 
 #include "xtext.h"
 

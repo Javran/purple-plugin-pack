@@ -22,14 +22,14 @@
 
 #define PURPLE_PLUGINS
 
+#include "../common/pp_internal.h"
+
 #include <debug.h>
 #include <notify.h>
 #include <request.h>
 #include <signals.h>
 #include <util.h>
 #include <version.h>
-
-#include "../common/pp_internal.h"
 
 static void
 showoffline_cb(PurpleBlistNode *node, gpointer data)

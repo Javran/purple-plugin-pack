@@ -23,6 +23,8 @@
 
 #define PURPLE_PLUGINS
 
+#include "../common/pp_internal.h"
+
 #define PLUGIN_ID			"gtk-schedule"
 #define PLUGIN_NAME			"Purple Schedule"
 #define PLUGIN_STATIC_NAME	"Purple Schedule"

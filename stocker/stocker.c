@@ -26,14 +26,14 @@
 
 #define PURPLE_PLUGINS
 
+#include "../common/pp_internal.h"
+
 #include <gtkplugin.h>
 #include <gtkprefs.h>
 #include <gtkblist.h>
 #include <gtkutils.h>
 #include <prefs.h>
 #include <version.h>
-
-#include "../common/pp_internal.h"
 
 #include "gtkticker.h"
 #include "stocker_prefs.h"

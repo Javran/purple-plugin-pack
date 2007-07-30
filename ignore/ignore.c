@@ -24,6 +24,9 @@
 
 #define PURPLE_PLUGINS
 
+/* Pack/Local headers */
+#include "../common/pp_internal.h"
+
 #include <plugin.h>
 
 #include <account.h>
@@ -33,9 +36,6 @@
 #include <debug.h>
 #include <version.h>
 #include <string.h>
-
-/* Pack/Local headers */
-#include "../common/pp_internal.h"
 
 #define PREF_ROOT "/plugins/ignore"
 

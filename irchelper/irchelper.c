@@ -31,6 +31,8 @@
 #define PURPLE_PLUGINS
 #endif
 
+#include "../common/pp_internal.h"
+
 #include <account.h>
 #include <accountopt.h>
 #include <cmds.h>
@@ -43,8 +45,6 @@
 #include <prefs.h>
 #include <util.h>
 #include <version.h>
-
-#include "../common/pp_internal.h"
 
 #define PLUGIN_STATIC_NAME "irchelper"
 #define PLUGIN_ID "core-rlaager-" PLUGIN_STATIC_NAME

@@ -34,6 +34,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include "../common/pp_internal.h"
+
 #include <debug.h>
 #include <signals.h>
 #include <util.h>
@@ -41,8 +43,6 @@
 
 #include <gtkplugin.h>
 #include <gtkutils.h>
-
-#include "../common/pp_internal.h"
 
 #include <talkfilters.h>
 

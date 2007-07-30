@@ -22,14 +22,14 @@
 
 #define PURPLE_PLUGINS
 
+#include "../common/pp_internal.h"
+
 #include <glib.h>
 #include <string.h>
 
 #include <notify.h>
 #include <plugin.h>
 #include <version.h>
-
-#include "../common/pp_internal.h"
 
 static PurplePlugin *my_plugin = NULL;
 

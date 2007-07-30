@@ -35,12 +35,12 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
+/* Pack/Local headers */
+#include "../common/pp_internal.h"
+
 /* Purple headers */
 #include <gtkplugin.h>
 #include <version.h>
-
-/* Pack/Local headers */
-#include "../common/pp_internal.h"
 
 #include <gtkconv.h>
 #include <gtkconvwin.h>

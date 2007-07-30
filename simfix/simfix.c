@@ -23,14 +23,14 @@
 
 #define PURPLE_PLUGINS
 
+#include "../common/pp_internal.h"
+
 #include <plugin.h>
 #include <debug.h>
 #include <blist.h>
 #include <signals.h>
 #include <util.h>
 #include <version.h>
-
-#include "../common/pp_internal.h"
 
 static gboolean
 receiving_im_msg_cb(PurpleAccount *account, char **sender, char **message,

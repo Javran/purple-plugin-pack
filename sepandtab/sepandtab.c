@@ -26,6 +26,8 @@
 
 #define PURPLE_PLUGINS
 
+#include "../common/pp_internal.h"
+
 #include <conversation.h>
 #include <plugin.h>
 #include <pidgin.h>
@@ -33,8 +35,6 @@
 #include <gtkplugin.h>
 #include <gtkconv.h>
 #include <gtkconvwin.h>
-
-#include "../common/pp_internal.h"
 
 #define SEPANDTAB_PREF "/pidgin/conversations/placement"
 
@@ -83,9 +83,11 @@ conv_placement_sep_chats_tab_ims(PidginConversation *conv) {
 	}
 }
 
+#if 0
 static void
 conv_placement_grp_type_sep_prpl(PidginConversation *conv) {
 }
+#endif
 
 static gboolean
 plugin_load(PurplePlugin *plugin) {
@@ -93,8 +95,10 @@ plugin_load(PurplePlugin *plugin) {
 							    &conv_placement_sep_ims_tab_chats);
 	pidgin_conv_placement_add_fnc("sep-chats-tab-ims", _("Separate Chats, group IMs"),
 								&conv_placement_sep_chats_tab_ims);
+#if 0
 	pidgin_conv_placement_add_fnc("grp-type-sep-prpl",	_("Group by Type, Separate by Protocol"),
 								&conv_placement_grp_type_sep_prpl);
+#endif
 	purple_prefs_trigger_callback(SEPANDTAB_PREF);
 
 	return TRUE;

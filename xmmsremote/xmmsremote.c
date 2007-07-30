@@ -30,6 +30,8 @@
 
 #define PURPLE_PLUGINS
 
+#include "../common/pp_internal.h"
+
 #include <cmds.h>
 #include <conversation.h>
 #include <debug.h>

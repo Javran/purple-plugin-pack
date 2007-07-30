@@ -31,6 +31,8 @@
 /* this has to be defined for the plugin to work properly */
 #define PURPLE_PLUGINS
 
+#include "../common/pp_internal.h"
+
 /* Purple headers */
 #include <account.h>
 #include <blist.h>
@@ -39,8 +41,6 @@
 #include <request.h>
 #include <version.h>
 #include <xmlnode.h>
-
-#include "../common/pp_internal.h"
 
 #include "lh_util.h"
 

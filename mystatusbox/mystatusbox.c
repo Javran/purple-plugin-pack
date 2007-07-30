@@ -39,6 +39,9 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
+/* Pack/Local headers */
+#include "../common/pp_internal.h"
+
 /* Purple headers */
 #include <version.h>
 
@@ -50,9 +53,6 @@
 #include <gtkmenutray.h>
 #include <gtkplugin.h>
 #include <gtkstatusbox.h>
-
-/* Pack/Local headers */
-#include "../common/pp_internal.h"
 
 /* XXX: THIS NEEDS CHANGED WHEN PIDGIN DOES ITS PREFS MIGRATION!!!!! */
 #define PREF_PREFIX "/plugins/gtk/" PLUGIN_ID

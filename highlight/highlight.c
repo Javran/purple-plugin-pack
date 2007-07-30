@@ -24,6 +24,9 @@
 
 #define PURPLE_PLUGINS
 
+/* Pack/Local headers */
+#include "../common/pp_internal.h"
+
 #include <plugin.h>
 
 #include <account.h>
@@ -36,9 +39,6 @@
 #include <version.h>
 
 #include <string.h>
-
-/* Pack/Local headers */
-#include "../common/pp_internal.h"
 
 #define PREF_PREFIX "/plugins/core/highlight"
 #define PREF_WORDS PREF_PREFIX "/words"

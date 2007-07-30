@@ -46,6 +46,9 @@
 /* System headers */
 #include <glib.h>
 
+/* Pack/Local headers */
+#include "../common/pp_internal.h"
+
 /* Purple headers */
 #include <gtkplugin.h>
 #include <plugin.h>
@@ -57,9 +60,6 @@
 #include "layout.h"
 #include "textfmt.h"
 #include "window.h"
-
-/* Pack/Local headers */
-#include "../common/pp_internal.h"
 
 static gboolean
 irssi_load(PurplePlugin *plugin) {
