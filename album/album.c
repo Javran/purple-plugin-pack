@@ -25,6 +25,8 @@
 
 #include <glib.h>
 
+#include "../common/pp_internal.h"
+
 /* We want to use the gstdio functions when possible so that non-ASCII
  * filenames are handled properly on Windows. */
 #if GLIB_CHECK_VERSION(2,6,0)

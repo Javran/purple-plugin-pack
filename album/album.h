@@ -22,9 +22,7 @@
 #ifndef _ALBUM_H_
 #define _ALBUM_H_
 
-#include <blist.h>
-
-#include "../common/pp_internal.h"
+#include <account.h>
 
 #define PLUGIN_STATIC_NAME "album"
 #define PLUGIN_ID          "gtk-rlaager-" PLUGIN_STATIC_NAME
