@@ -32,16 +32,16 @@
 
 #define PURPLE_PLUGINS
 
-#include <gtkconv.h>
-#include <gtkimhtml.h>
-#include <gtkplugin.h>
-
 #include <glib.h>
 #include <time.h>
 #include <string.h>
 #include <stdlib.h>
 
 #include "../common/pp_internal.h"
+
+#include <gtkconv.h>
+#include <gtkimhtml.h>
+#include <gtkplugin.h>
 
 #include <cmds.h>
 #include <conversation.h>
