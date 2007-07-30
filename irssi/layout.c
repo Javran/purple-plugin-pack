@@ -24,6 +24,8 @@
 # include "../pp_config.h"
 #endif
 
+#include "../common/pp_internal.h"
+
 #include <blist.h>
 #include <cmds.h>
 #include <plugin.h>
@@ -31,7 +33,6 @@
 #include <gtkblist.h>
 #include <gtkconv.h>
 
-#include "../common/pp_internal.h"
 #include "layout.h"
 
 #define IRSSI_LAYOUT_SETTING	"irssi::layout"

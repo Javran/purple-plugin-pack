@@ -26,6 +26,8 @@
 
 #include <string.h>
 
+#include "../common/pp_internal.h"
+
 #include <plugin.h>
 #include <cmds.h>
 #include <util.h>
@@ -33,7 +35,6 @@
 #include <gtkconv.h>
 #include <gtkimhtml.h>
 
-#include "../common/pp_internal.h"
 #include "lastlog.h"
 
 /******************************************************************************

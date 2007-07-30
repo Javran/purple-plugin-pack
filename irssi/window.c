@@ -26,13 +26,14 @@
 
 #include <gtk/gtk.h>
 
+#include "../common/pp_internal.h"
+
 #include <cmds.h>
 #include <conversation.h>
 #include <plugin.h>
 
 #include <gtkconv.h>
 
-#include "../common/pp_internal.h"
 #include "window.h"
 
 /******************************************************************************

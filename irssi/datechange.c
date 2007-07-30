@@ -26,10 +26,11 @@
 
 #include <time.h>
 
+#include "../common/pp_internal.h"
+
 #include <plugin.h>
 #include <cmds.h>
 
-#include "../common/pp_internal.h"
 #include "datechange.h"
 
 /******************************************************************************

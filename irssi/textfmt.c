@@ -28,10 +28,11 @@
 # include <regex.h>
 #endif
 
+#include "../common/pp_internal.h"
+
 #include <plugin.h>
 #include <cmds.h>
 
-#include "../common/pp_internal.h"
 #include "textfmt.h"
 
 /******************************************************************************
