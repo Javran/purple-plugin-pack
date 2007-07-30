@@ -21,6 +21,8 @@
 # include "../pp_config.h"
 #endif
 
+#include "../common/pp_internal.h"
+
 #define PURPLE_PLUGINS
 
 #define PLUGIN_ID			"core-plugin_pack-autorejoin"
@@ -39,9 +41,6 @@
 #include <plugin.h>
 #include <prpl.h>
 #include <version.h>
-
-/* Pack/Local headers */
-#include "../common/pp_internal.h"
 
 static gboolean
 show_them(gpointer data)
