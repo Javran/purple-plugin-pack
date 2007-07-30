@@ -17,6 +17,8 @@ fr    - Yannick <y.le.ny@ifrance.com>
 
 Packagers
 =========
+Daniel Attallah <datallah@users.sourceforge.net>
+	- Windows
 Benjamin Seidenberg <benjamin@debian.org>
 	- Debian
 Stu Tomlinson <stu@nosnilmot.com>
@@ -25,8 +27,6 @@ Stu Tomlinson <stu@nosnilmot.com>
 	- Fedora Core 5
 	- Fedora Core 6
 	- Red Hat Enterprise Linux 4
-Daniel Attallah <datallah@users.sourceforge.net>
-	- Windows
 
 Accepted Patches
 ================
@@ -43,3 +43,10 @@ Ankit Singla
 Anthony Sofocleous
 William Thompson
 Chris Weyl
+
+Special Thanks
+==============
+Kathryn Kulick - For providing a female presence on irc
+Robert O'Connor - Kicktoy... 'nuff said :)
+Dennis Ristuccia - For random gibberish that forces us to take a break from coding
+
