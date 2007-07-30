@@ -21,6 +21,8 @@
 # include "../pp_config.h"
 #endif /* HAVE_CONFIG_H */
 
+#include "../common/pp_internal.h"
+
 #define PURPLE_PLUGINS
 
 #define PLUGIN_ID			"core-plugin_pack-autoreply"
@@ -49,9 +51,6 @@
 #include <status.h>
 #include <util.h>
 #include <version.h>
-
-/* Plugin Pack Headers */
-#include "../common/pp_internal.h"
 
 #define	PREFS_PREFIX		"/plugins/core/" PLUGIN_ID
 #define	PREFS_IDLE			PREFS_PREFIX "/idle"
