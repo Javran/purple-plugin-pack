@@ -41,13 +41,13 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "../common/pp_internal.h"
+
 #include <cmds.h>
 #include <conversation.h>
 #include <debug.h>
 #include <plugin.h>
 #include <version.h>
-
-#include "../common/pp_internal.h"
 
 #if GLIB_CHECK_VERSION(2,6,0)
 #include <glib/gstdio.h>

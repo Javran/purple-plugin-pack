@@ -35,6 +35,9 @@
 #include <ctype.h>
 #include <string.h>
 
+/* Pack/Local headers */
+#include "../common/pp_internal.h"
+
 /* Purple headers */
 #include <plugin.h>
 #include <version.h>
@@ -44,9 +47,6 @@
 
 #include <gtkconv.h>
 #include <gtkimhtml.h>
-
-/* Pack/Local headers */
-#include "../common/pp_internal.h"
 
 #define SAME(a,b)  ((isalnum((a)) && isalnum((b))) || (!isalnum((a)) && !isalnum((b))))
 

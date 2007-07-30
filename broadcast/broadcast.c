@@ -23,13 +23,13 @@
 
 #define PURPLE_PLUGINS
 
+#include "../common/pp_internal.h"
+
 #include <blist.h>
 #include <debug.h>
 #include <request.h>
 #include <util.h>
 #include <version.h>
-
-#include "../common/pp_internal.h"
 
 #define BROADCAST_CATEGORY "plugin pack: broadcast"
 

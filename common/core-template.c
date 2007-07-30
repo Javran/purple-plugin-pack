@@ -33,12 +33,12 @@
 /* System headers */
 #include <glib.h>
 
+/* Pack/Local headers */
+#include "../common/pp_internal.h"
+
 /* Purple headers */
 #include <plugin.h>
 #include <version.h>
-
-/* Pack/Local headers */
-#include "../common/pp_internal.h"
 
 static gboolean
 plugin_load(PurplePlugin *plugin) {

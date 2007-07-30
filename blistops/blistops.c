@@ -26,6 +26,8 @@
 
 #define PURPLE_PLUGINS
 
+#include "../common/pp_internal.h"
+
 #include <gtkplugin.h>
 #include <gtkblist.h>
 #include <pluginpref.h>
@@ -33,8 +35,6 @@
 #include <version.h>
 
 #include <string.h>
-
-#include "../common/pp_internal.h"
 
 #define PREF_MY "/plugins/gtk/amc_grim"
 #define PREF_ROOT "/plugins/gtk/amc_grim/blistops"

@@ -27,13 +27,13 @@
 #include <time.h>
 #include <stdlib.h>
 
+#include "../common/pp_internal.h"
+
 #include <cmds.h>
 #include <conversation.h>
 #include <debug.h>
 #include <plugin.h>
 #include <version.h>
-
-#include "../common/pp_internal.h"
 
 static PurpleCmdId dice_cmd_id = 0;
 

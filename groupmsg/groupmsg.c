@@ -22,6 +22,8 @@
 
 #define PURPLE_PLUGINS
 
+#include "../common/pp_internal.h"
+
 #include <debug.h>
 #include <notify.h>
 #include <prpl.h>
@@ -29,8 +31,6 @@
 #include <signals.h>
 #include <util.h>
 #include <version.h>
-
-#include "../common/pp_internal.h"
 
 static void
 dont_do_it_cb(GList *list, const char *text)

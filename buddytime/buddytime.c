@@ -34,13 +34,13 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
+#include "../common/pp_internal.h"
+
 #include <version.h>
 #include <blist.h>
 #include <gtkutils.h>
 #include <gtkplugin.h>
 #include <request.h>
-
-#include "../common/pp_internal.h"
 
 /******************************************************************************
  * Defines
