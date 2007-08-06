@@ -80,9 +80,9 @@ plonkers_format_info(PurpleConversation *conv) {
 	}
 	plonkers_str = g_string_new("");
 	if (plonkers_size == 1) {
-		format = g_strdup(purple_prefs_get_string("/plugins/core/plugin_pack/plonkers/plonkers/format_singular"));
+		format = g_strdup(purple_prefs_get_string("/plugins/core/plonkers/plonkers/format_singular"));
 	} else {
-		format = g_strdup(purple_prefs_get_string("/plugins/core/plugin_pack/plonkers/plonkers/format_plural"));
+		format = g_strdup(purple_prefs_get_string("/plugins/core/plonkers/plonkers/format_plural"));
 	}
 
 	while(format) {
@@ -232,18 +232,18 @@ plonkers_get_config_frame(PurplePlugin *plugin) {
 	frame = pidgin_make_frame(vbox, "Ignored Plonkers");
 
 	pidgin_prefs_labeled_entry(frame, "Plonkers singular format:",
-								 "/plugins/core/plugin_pack/plonkers/plonkers/format_singular",
+								 "/plugins/core/plonkers/plonkers/format_singular",
 								 NULL);
 	pidgin_prefs_labeled_entry(frame, "Plonkers plural format:",
-								 "/plugins/core/plugin_pack/plonkers/plonkers/format_plural",
+								 "/plugins/core/plonkers/plonkers/format_plural",
 								 NULL);
 
 	frame = pidgin_make_frame(vbox, "Plonking");
 	pidgin_prefs_labeled_entry(frame, "Plonked singular plural:",
-								 "/plugins/core/plugin_pack/plonkers/plonked/format_singular",
+								 "/plugins/core/plonkers/plonked/format_singular",
 								 NULL);
 	pidgin_prefs_labeled_entry(frame, "Plonked plural format:",
-								 "/plugins/core/plugin_pack/plonkers/plonked/format_plural",
+								 "/plugins/core/plonkers/plonked/format_plural",
 								 NULL);
 	sg = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -299,19 +299,20 @@ plonkers_unload(PurplePlugin *plugin) {
 
 static void
 init_plugin(PurplePlugin *plugin) {
-	purple_prefs_add_none("/plugins/core/plugin_pack");
-	purple_prefs_add_none("/plugins/core/plugin_pack/plonkers");
-	purple_prefs_add_none("/plugins/core/plugin_pack/plonkers/plonkers");
-	purple_prefs_add_string("/plugins/core/plugin_pack/plonkers/plonkers/format_singular",
-						  "/me has identified %N plonker: %P.");
-	purple_prefs_add_string("/plugins/core/plugin_pack/plonkers/plonkers/format_plural",
-						  "/me has identified %N plonkers: %P.");
-	purple_prefs_add_none("/plugins/core/plugin_pack/plonkers/plonked");
-	purple_prefs_add_string("/plugins/core/plugin_pack/plonkers/plonked/format_singular",
-						  "/me plonks: %P.");
-	purple_prefs_add_string("/plugins/core/plugin_pack/plonkers/plonked/format_plural",
-						  "/me plonks: %P.");
+	purple_prefs_add_none("/plugins/core/plonkers");
+	purple_prefs_add_none("/plugins/core/plonkers/plonkers");
+	purple_prefs_add_string("/plugins/core/plonkers/plonkers/format_singular",
+							"/me has identified %N plonker: %P.");
+	purple_prefs_add_string("/plugins/core/plonkers/plonkers/format_plural",
+							"/me has identified %N plonkers: %P.");
+	purple_prefs_add_none("/plugins/core/plonkers/plonked");
+	purple_prefs_add_string("/plugins/core/plonkers/plonked/format_singular",
+							"/me plonks: %P.");
+	purple_prefs_add_string("/plugins/core/plonkers/plonked/format_plural",
+							"/me plonks: %P.");
 
+	purple_prefs_rename("/plugins/core/plugin_pack/plonkers",
+						"/plugins/core/plonkers");
 }
 
 static PidginPluginUiInfo ui_info = {
