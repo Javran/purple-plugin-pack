@@ -21,17 +21,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifdef HAVE_CONFIG_H
-#	include "../pp_config.h"
-#endif
+#include "../common/pp_internal.h"
 
-#include <glib.h>
 #include <string.h>
 
 /* this has to be defined for the plugin to work properly */
 #define PURPLE_PLUGINS
-
-#include "../common/pp_internal.h"
 
 /* Purple headers */
 #include <account.h>
@@ -39,7 +34,6 @@
 #include <debug.h>
 #include <plugin.h>
 #include <request.h>
-#include <version.h>
 #include <xmlnode.h>
 
 #include "lh_util.h"

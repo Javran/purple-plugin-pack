@@ -19,13 +19,7 @@
  * 02111-1307, USA.
  */
 
-/* pp_config.h provides necessary definitions that help us find/do stuff */
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif
-
-/* all Purple plugins need to define this */
-#define PURPLE_PLUGINS
+#include "../common/pp_internal.h"
 
 /* define these so the plugin info struct way at the bottom is cleaner */
 #define PLUGIN_ID			"gtk-plugin_pack-irssi"
@@ -43,16 +37,7 @@
 							"\tJohn Bailey <rekkanoryo@rekkanoryo.org>\n" \
 							"\tSadrul Habib Chowdhury <sadrul@users.sourceforge.net>"
 
-/* System headers */
-#include <glib.h>
-
-/* Pack/Local headers */
-#include "../common/pp_internal.h"
-
-/* Purple headers */
 #include <gtkplugin.h>
-#include <plugin.h>
-#include <version.h>
 
 /* irssi headers */
 #include "datechange.h"

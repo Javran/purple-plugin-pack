@@ -19,14 +19,9 @@
  * 02111-1307, USA.
  */
 
-/* pp_config.h provides necessary definitions that help us find/do stuff */
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif
+#include "../common/pp_internal.h"
 
 #include <gtk/gtk.h>
-
-#include "../common/pp_internal.h"
 
 #include <cmds.h>
 #include <conversation.h>
@@ -48,8 +43,7 @@ static PurpleCmdId irssi_win_cmd_id = 0;
 static gboolean
 irssi_window_close_cb(PurpleConversation *c) {
 	/* this gets called from a conversation since the conversation must exist
-	 * until all of the commands are processed, and the output is output.
-	 */
+	 * until all of the commands are processed, and the output is output. */
 
 	purple_conversation_destroy(c);
 

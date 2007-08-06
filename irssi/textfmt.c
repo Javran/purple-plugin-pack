@@ -19,11 +19,6 @@
  * 02111-1307, USA.
  */
 
-/* pp_config.h provides necessary definitions that help us find/do stuff */
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif
-
 #ifdef HAVE_REGEX_H
 # include <regex.h>
 #endif
