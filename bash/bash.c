@@ -21,10 +21,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifdef HAVE_CONFIG_H
-#	include "../pp_config.h"
-#endif
-
 #include "../common/pp_internal.h"
 
 /* libc */
@@ -33,16 +29,11 @@
 #include <string.h>
 #include <time.h>
 
-/* GLib */
-#include <glib.h>
-
 /* Purple */
-#define PURPLE_PLUGINS
 #include <cmds.h>
 #include <conversation.h>
 #include <debug.h>
 #include <plugin.h>
-#include <version.h>
 
 #define BASH_QUOTES 636661
 #define QDB_QUOTES 58841

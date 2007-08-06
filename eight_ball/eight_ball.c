@@ -20,10 +20,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifdef HAVE_CONFIG_H
-#	include "../pp_config.h"
-#endif
-
 #include "../common/pp_internal.h"
 
 /* libc */
@@ -32,16 +28,11 @@
 #include <string.h>
 #include <time.h>
 
-/* GLib */
-#include <glib.h>
-
 /* Purple */
-#define PURPLE_PLUGINS
 #include <cmds.h>
 #include <conversation.h>
 #include <debug.h>
 #include <plugin.h>
-#include <version.h>
 
 /* TODO: add to these, but be careful NOT to use real 8-ball messages!!! */
 static const gchar *eight_ball_strings[] = {

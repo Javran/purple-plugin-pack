@@ -20,12 +20,10 @@
  * 02111-1307, USA.
  */
 
+#include "album.h"
+
 #include <errno.h>
 #include <string.h>
-
-#include <glib.h>
-
-#include "../common/pp_internal.h"
 
 /* We want to use the gstdio functions when possible so that non-ASCII
  * filenames are handled properly on Windows. */
@@ -54,8 +52,6 @@
 #include <version.h>
 
 #include <cipher.h>
-
-#include "album.h"
 
 /* GUI */
 #include <gtkplugin.h>

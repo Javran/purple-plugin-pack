@@ -56,4 +56,12 @@
 #  endif
 #endif
 
+/* Every plugin for libpurple, Pidgin, or Finch needs to define PURPLE_PLUGINS
+ * in order to compile and run correctly. Define it here for simplicity */
+#define PURPLE_PLUGINS
+
+/* Every plugin for libpurple, Pidgin, or Finch needs to include version.h
+ * to ensure it has the version macros, so include it here for simplicity */
+#include <version.h>
+
 #endif /* PP_INTERNAL_H */

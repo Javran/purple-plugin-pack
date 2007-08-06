@@ -21,11 +21,7 @@
  * 02111-1307, USA.
  */
 
-#include "../common/pp_internal.h"
-
 #include "album-ui.h"
-
-#include <glib.h>
 
 /* We want to use the gstdio functions when possible so that non-ASCII
  * filenames are handled properly on Windows. */
@@ -50,7 +46,6 @@
 #include <plugin.h>
 #include <request.h>
 #include <util.h>
-#include <version.h>
 
 /* XXX: For DATADIR... There must be a better way. */
 #ifdef _WIN32

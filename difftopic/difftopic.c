@@ -17,11 +17,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
  * 02111-1307, USA.
  */
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif
 
-#define PURPLE_PLUGINS
+#include "../common/pp_internal.h"
 
 #define PLUGIN_ID			"gtk-plugin_pack-difftopic"
 #define PLUGIN_NAME			"DiffTopic"
@@ -31,22 +28,13 @@
 #define PLUGIN_AUTHOR		"Sadrul H Chowdhury <sadrul@users.sourceforge.net>"
 
 /* System headers */
-#include <glib.h>
 #include <ctype.h>
 #include <string.h>
 
-/* Pack/Local headers */
-#include "../common/pp_internal.h"
-
-/* Purple headers */
-#include <plugin.h>
-#include <version.h>
-#include <gtkplugin.h>
-
-#include <conversation.h>
-
+/* Pidgin Headers */
 #include <gtkconv.h>
 #include <gtkimhtml.h>
+#include <gtkplugin.h>
 
 #define SAME(a,b)  ((isalnum((a)) && isalnum((b))) || (!isalnum((a)) && !isalnum((b))))
 

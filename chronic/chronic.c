@@ -17,24 +17,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif /* HAVE_CONFIG_H */
-
 #include "../common/pp_internal.h"
 
 /* libc */
 #include <string.h>
 
-/* GLib */
-#include <glib.h>
-
 /* Purple */
-#define PURPLE_PLUGINS
 #include <conversation.h>
 #include <debug.h>
 #include <plugin.h>
-#include <version.h>
 
 static void
 chronic_received_cb(PurpleAccount *account, char *sender, char *message,
@@ -71,10 +62,10 @@ chronic_load(PurplePlugin *plugin)
 static PurplePluginInfo chronic_info =
 {
 	PURPLE_PLUGIN_MAGIC,		/* magic?  do you think i'm gullible enough to
-							 * believe in magic? */
-	PURPLE_MAJOR_VERSION,		/* bet you can't guess what this is */
-	PURPLE_MINOR_VERSION,		/* this either */
-	PURPLE_PLUGIN_STANDARD,	/* and what about this? */
+								 * believe in magic? */
+	PURPLE_MAJOR_VERSION,
+	PURPLE_MINOR_VERSION,
+	PURPLE_PLUGIN_STANDARD,
 	NULL,
 	0,
 	NULL,

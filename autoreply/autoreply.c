@@ -17,13 +17,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
  * 02111-1307, USA.
  */
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif /* HAVE_CONFIG_H */
 
 #include "../common/pp_internal.h"
-
-#define PURPLE_PLUGINS
 
 #define PLUGIN_ID			"core-plugin_pack-autoreply"
 #define PLUGIN_NAME			N_("Autoreply")
@@ -36,9 +31,6 @@
 							"account, go to the `Advanced' tab of the Account-edit dialog.")
 #define PLUGIN_AUTHOR		"Sadrul Habib Chowdhury <sadrul@users.sourceforge.net>"
 
-/* System headers */
-#include <glib.h>
-
 /* Purple headers */
 #include <account.h>
 #include <accountopt.h>
@@ -50,7 +42,6 @@
 #include <savedstatuses.h>
 #include <status.h>
 #include <util.h>
-#include <version.h>
 
 #define	PREFS_PREFIX		"/plugins/core/" PLUGIN_ID
 #define	PREFS_IDLE			PREFS_PREFIX "/idle"

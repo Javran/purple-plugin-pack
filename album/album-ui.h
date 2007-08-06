@@ -24,10 +24,7 @@
 
 #include "album.h"
 
-#include <glib.h>
-
 #include <blist.h>
-#include <version.h>
 
 #define PREF_WINDOW_HEIGHT  PREF_PREFIX "/window_height"
 #define PREF_WINDOW_WIDTH   PREF_PREFIX "/window_width"

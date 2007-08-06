@@ -17,11 +17,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
  * 02111-1307, USA.
  */
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif
 
-#define PURPLE_PLUGINS
+#include "../common/pp_internal.h"
 
 #define PLUGIN_ID			"gtk-plugin_pack-hideconv"
 #define PLUGIN_NAME			"Hide Conversation"
@@ -32,18 +29,12 @@
 
 /* System headers */
 #include <gdk/gdk.h>
-#include <glib.h>
 #include <gtk/gtk.h>
 
-/* Pack/Local headers */
-#include "../common/pp_internal.h"
-
 /* Purple headers */
-#include <gtkplugin.h>
-#include <version.h>
-
 #include <gtkconv.h>
 #include <gtkconvwin.h>
+#include <gtkplugin.h>
 #include <gtkutils.h>
 
 #define MENUSET "hideconv::menuset"

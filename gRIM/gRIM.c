@@ -26,28 +26,19 @@
  * 08:19 < grim> i was going to use my nick as an example but decided against that..
 */
 
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif /* HAVE_CONFIG_H */
+#include "../common/pp_internal.h"
 
-#define PURPLE_PLUGINS
-
-#include <glib.h>
 #include <time.h>
 #include <string.h>
 #include <stdlib.h>
 
-#include "../common/pp_internal.h"
+#include <cmds.h>
+#include <debug.h>
 
 #include <gtkconv.h>
 #include <gtkimhtml.h>
 #include <gtkplugin.h>
 
-#include <cmds.h>
-#include <conversation.h>
-#include <debug.h>
-#include <plugin.h>
-#include <version.h>
 
 #if GLIB_CHECK_VERSION(2,6,0)
 #include <glib/gstdio.h>

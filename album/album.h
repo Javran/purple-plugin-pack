@@ -22,6 +22,8 @@
 #ifndef _ALBUM_H_
 #define _ALBUM_H_
 
+#include "../common/pp_internal.h"
+
 #include <account.h>
 
 #define PLUGIN_STATIC_NAME "album"
