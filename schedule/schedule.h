@@ -18,13 +18,6 @@
  * 02111-1307, USA.
  */
 
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif
-
-#include <glib.h>
-
-/* Pack/Local headers */
 #include "../common/pp_internal.h"
 
 #include <account.h>

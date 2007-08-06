@@ -16,21 +16,15 @@
   along with this program; if not, write to the Free Software
   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 */
-#include <glib.h>
+
+#include "../common/pp_internal.h"
+
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 
 #include <xmmsctrl.h>
 
 #include <string.h>
-
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif
-
-#define PURPLE_PLUGINS
-
-#include "../common/pp_internal.h"
 
 #include <cmds.h>
 #include <conversation.h>
@@ -42,7 +36,6 @@
 #include <gtkprefs.h>
 #include <gtkutils.h>
 #include <prefs.h>
-#include <version.h>
 
 /*******************************************************************************
  * Constants

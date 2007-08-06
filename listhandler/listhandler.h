@@ -25,9 +25,6 @@
 
 #include <string.h>
 
-/* this has to be defined for the plugin to work properly */
-#define PURPLE_PLUGINS
-
 /* Purple headers */
 #include <account.h>
 #include <blist.h>

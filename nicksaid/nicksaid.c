@@ -17,11 +17,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
  * 02111-1307, USA.
  */
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif
 
-#define PURPLE_PLUGINS
+#include "../common/pp_internal.h"
 
 #define PLUGIN_ID			"gtk-plugin_pack-nicksaid"
 #define PLUGIN_NAME			"Nicksaid"
@@ -41,24 +38,18 @@
 /* System headers */
 #include <string.h>
 #include <gdk/gdk.h>
-#include <glib.h>
 #include <gtk/gtk.h>
 
-/* Pack/Local headers */
-#include "../common/pp_internal.h"
-
-/* Purple headers */
-#include <gtkplugin.h>
-#include <version.h>
-
-#include <conversation.h>
+/* libpurple headers */
 #include <notify.h>
 
+/* Pidgin headers */
 #include <gtkconv.h>
 #include <gtkimhtml.h>
 #include <gtkmenutray.h>
-#include <pidginstock.h>
+#include <gtkplugin.h>
 #include <gtkutils.h>
+#include <pidginstock.h>
 
 #define DELIMS " .,;|<>?/\\`~!@#$%^&*()_-+={}[]:'\""
 

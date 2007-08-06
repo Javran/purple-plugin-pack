@@ -16,11 +16,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif /* HAVE_CONFIG_H */
 
-#define PURPLE_PLUGINS
+#include "../common/pp_internal.h"
+
 #define OLDLOGGER_PLUGIN_ID "core-plugin_pack-oldlogger"
 
 #include <errno.h>
@@ -29,8 +27,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "../common/pp_internal.h"
-
 #include <account.h>
 #include <debug.h>
 #include <log.h>
@@ -38,9 +34,6 @@
 #include <prpl.h>
 #include <stringref.h>
 #include <util.h>
-#include <version.h>
-
-#include <glib.h>
 
 /* We want to use the gstdio functions when possible so that non-ASCII
  * filenames are handled properly on Windows. */
@@ -54,16 +47,9 @@
 #define g_unlink unlink
 #endif
 
-
-#if PURPLE_VERSION_CHECK(2,0,0)
 static PurpleLogLogger *oldtxt_logger;
 static PurpleLogLogger *oldhtml_logger;
 #define return_written return written
-#else
-static PurpleLogLogger oldtxt_logger;
-static PurpleLogLogger oldhtml_logger;
-#define return_written return
-#endif
 
 struct basic_logger_data {
 	FILE *file;
@@ -214,11 +200,7 @@ static void old_logger_finalize(PurpleLog *log)
  ** Ye Olde PLAIN TEXT LOGGER **
  *******************************/
 
-#if PURPLE_VERSION_CHECK(2,0,0)
 static gsize
-#else
-static void
-#endif
 oldtxt_logger_write(PurpleLog *log, PurpleMessageFlags type,
 			     const char *from, time_t time, const char *message)
 {
@@ -330,29 +312,10 @@ oldtxt_logger_write(PurpleLog *log, PurpleMessageFlags type,
 	return_written;
 }
 
-#if !PURPLE_VERSION_CHECK(2,0,0)
-static PurpleLogLogger oldtxt_logger = {
-	N_("Old plain text"), "oldtxt",
-	old_logger_create,
-	oldtxt_logger_write,
-	old_logger_finalize,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
-#endif
-
-
 /****************************
  ** Ye Olde HTML LOGGER *****
  ****************************/
-#if PURPLE_VERSION_CHECK(2,0,0)
 static gsize
-#else
-static void
-#endif
 oldhtml_logger_write(PurpleLog *log, PurpleMessageFlags type,
 					const char *from, time_t time, const char *message)
 {
@@ -461,24 +424,9 @@ oldhtml_logger_write(PurpleLog *log, PurpleMessageFlags type,
 	return_written;
 }
 
-#if !PURPLE_VERSION_CHECK(2,0,0)
-static PurpleLogLogger oldhtml_logger = {
-	N_("Old HTML"), "oldhtml",
-	old_logger_create,
-	oldhtml_logger_write,
-	old_logger_finalize,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
-#endif
-
 static gboolean
 plugin_load(PurplePlugin *plugin)
 {
-#if PURPLE_VERSION_CHECK(2,0,0)
 	oldtxt_logger = purple_log_logger_new("oldtxt", N_("Old plain text"), 3,
 										old_logger_create,
 										oldtxt_logger_write,
@@ -489,10 +437,6 @@ plugin_load(PurplePlugin *plugin)
 										 oldhtml_logger_write,
 										 old_logger_finalize);
 	purple_log_logger_add(oldhtml_logger);
-#else
-	purple_log_logger_add(&oldtxt_logger);
-	purple_log_logger_add(&oldhtml_logger);
-#endif
 	purple_prefs_trigger_callback("/purple/logging/format");
 	return TRUE;
 }
@@ -500,13 +444,8 @@ plugin_load(PurplePlugin *plugin)
 static gboolean
 plugin_unload(PurplePlugin *plugin)
 {
-#if PURPLE_VERSION_CHECK(2,0,0)
 	purple_log_logger_remove(oldtxt_logger);
 	purple_log_logger_remove(oldhtml_logger);
-#else
-	purple_log_logger_remove(&oldtxt_logger);
-	purple_log_logger_remove(&oldhtml_logger);
-#endif
 	purple_prefs_trigger_callback("/purple/logging/format");
 	return TRUE;
 }

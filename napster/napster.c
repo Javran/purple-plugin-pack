@@ -21,24 +21,17 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif
-
-#define PURPLE_PLUGINS
-
 #include "../common/pp_internal.h"
 
-#include "account.h"
-#include "accountopt.h"
-#include "blist.h"
-#include "conversation.h"
-#include "debug.h"
-#include "notify.h"
-#include "prpl.h"
-#include "proxy.h"
-#include "util.h"
-#include "version.h"
+#include <account.h>
+#include <accountopt.h>
+#include <blist.h>
+#include <conversation.h>
+#include <debug.h>
+#include <notify.h>
+#include <prpl.h>
+#include <proxy.h>
+#include <util.h>
 
 #include <errno.h>
 #include <fcntl.h>

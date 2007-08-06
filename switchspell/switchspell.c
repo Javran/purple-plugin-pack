@@ -17,11 +17,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
  * 02111-1307, USA.
  */
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif
 
-#define PURPLE_PLUGINS
+#include "../common/pp_internal.h"
 
 #define PLUGIN_ID           "gtk-plugin_pack-switchspell"
 #define PLUGIN_NAME         "Switch Spell"
@@ -31,19 +28,12 @@
 #define PLUGIN_AUTHOR       "Alfredo Raul Pena (arpena)\n" \
                             "Sadrul H Chowdhury <sadrul@users.sourceforge.net>"
 
-/* System headers */
-#include <glib.h>
-
-/* Pack/Local headers */
-#include "../common/pp_internal.h"
-
 /* Purple headers */
-#include <plugin.h>
-#include <version.h>
-
 #include <conversation.h>
 #include <debug.h>
+#include <plugin.h>
 
+/* Pidgin headers */
 #include <gtkconv.h>
 #include <gtkplugin.h>
 
@@ -54,8 +44,6 @@
 #define PROP_LANG     "switchspell::language"
 
 /* TODO: Add option to save the selected language for the dude and restore it */
-
-static void regenerate_switchspell_menu(PidginConversation *gtkconv);
 
 static void
 menu_conv_use_dict_cb(GObject *m, gpointer data)

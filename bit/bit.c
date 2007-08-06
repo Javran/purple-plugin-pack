@@ -16,20 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif /* HAVE_CONFIG_H */
-
-#define PURPLE_PLUGINS
+#include "../common/pp_internal.h"
 
 #include <buddyicon.h>
 #include <debug.h>
 #include <notify.h>
 #include <plugin.h>
 #include <request.h>
-#include <version.h>
-
-#include "../common/pp_internal.h"
 
 PurplePlugin *bit = NULL; /* the request api prefers this for a plugin */
 static PurpleBuddyList *buddies = NULL;

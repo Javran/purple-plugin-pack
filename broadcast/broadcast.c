@@ -17,19 +17,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif /* HAVE_CONFIG_H */
-
-#define PURPLE_PLUGINS
-
 #include "../common/pp_internal.h"
 
 #include <blist.h>
 #include <debug.h>
 #include <request.h>
 #include <util.h>
-#include <version.h>
 
 #define BROADCAST_CATEGORY "plugin pack: broadcast"
 

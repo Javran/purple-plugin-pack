@@ -1,10 +1,10 @@
 /*
- * slashexec - A CLI for pidgin
- * Copyright (C) 2004-2006 Gary Kramlich
- * Copyright (C) 2005-2006 Peter Lawler
- * Copyright (C) 2005-2006 Daniel Atallah
- * Copyright (C) 2005-2006 John Bailey
- * Copyright (C) 2006 Sadrul Habib Chowdhury
+ * slashexec - A CLI for libpurple clients
+ * Copyright (C) 2004-2007 Gary Kramlich
+ * Copyright (C) 2005-2007 Peter Lawler
+ * Copyright (C) 2005-2007 Daniel Atallah
+ * Copyright (C) 2005-2007 John Bailey
+ * Copyright (C) 2006-2007 Sadrul Habib Chowdhury
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,13 +26,8 @@
  * care to translate messages users will see in the main interface.  Debug
  * window messages are not important. - rekkanoryo */
 
-#if defined HAVE_CONFIG_H && !defined _WIN32
-# include "../pp_config.h"
-#endif
-
 #include "../common/pp_internal.h"
 
-#include <glib.h>
 #include <stdarg.h>
 #include <string.h>
 
@@ -41,15 +36,12 @@
 # include <unistd.h>
 #endif
 
-#define PURPLE_PLUGINS
-
 #include <cmds.h>
 #include <conversation.h>
 #include <debug.h>
 #include <notify.h>
 #include <plugin.h>
 #include <util.h>
-#include <version.h>
 
 #ifdef _WIN32
 /* Windows 2000 and earlier only allow 2047 bytes in an argv vector for cmd.exe

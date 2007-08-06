@@ -16,20 +16,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif /* HAVE_CONFIG_H */
-
-#define PURPLE_PLUGINS
 
 #include "../common/pp_internal.h"
 
-#include <glib.h>
 #include <string.h>
 
 #include <notify.h>
 #include <plugin.h>
-#include <version.h>
 
 static PurplePlugin *my_plugin = NULL;
 

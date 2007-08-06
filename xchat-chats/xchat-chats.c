@@ -17,11 +17,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
  * 02111-1307, USA.
  */
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif
 
-#define PURPLE_PLUGINS
+#include "../common/pp_internal.h"
 
 #define PLUGIN_ID			"gtk-plugin_pack-xchat-chats"
 #define PLUGIN_NAME			"XChat Chats"
@@ -35,22 +32,16 @@
 
 /* System headers */
 #include <string.h>
-
 #include <gdk/gdk.h>
-#include <glib.h>
 #include <gtk/gtk.h>
-
-/* Pack/Local headers */
-#include "../common/pp_internal.h"
 
 /* Purple headers */
 #include <conversation.h>
-#include <gtkconv.h>
-
 #include <util.h>
 
+/* Pidgin headers */
+#include <gtkconv.h>
 #include <gtkplugin.h>
-#include <version.h>
 
 #include "xtext.h"
 

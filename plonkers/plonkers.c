@@ -18,17 +18,11 @@
   along with this program; if not, write to the Free Software
   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 */
-#include <glib.h>
-#include <gtk/gtk.h>
-#include <gdk/gdk.h>
-
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif
 
 #include "../common/pp_internal.h"
 
-#define PURPLE_PLUGINS
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 
 #include <cmds.h>
 #include <conversation.h>
@@ -40,7 +34,6 @@
 #include <plugin.h>
 #include <prefs.h>
 #include <util.h>
-#include <version.h>
 
 /* #define PLONKERS_DEBUG */
 /*******************************************************************************

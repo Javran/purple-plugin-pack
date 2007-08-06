@@ -41,15 +41,10 @@
 #include <unistd.h>
 #endif
 
-#ifndef PURPLE_PLUGINS
-#define PURPLE_PLUGINS
-#endif
-
 #include <buddyicon.h>
 #include <debug.h>
 #include <plugin.h>
 #include <util.h>
-#include <version.h>
 
 #include <cipher.h>
 

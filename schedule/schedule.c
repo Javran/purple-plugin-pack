@@ -19,6 +19,7 @@
  */
 
 #include "schedule.h"
+
 #include <notify.h>
 #include <xmlnode.h>
 #include <util.h>

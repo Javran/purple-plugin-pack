@@ -19,24 +19,17 @@
  *
  */
 
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif
-
 #include "../common/pp_internal.h"
-
-#define PURPLE_PLUGINS
 
 #define _GNU_SOURCE
 
 #include <stdio.h>
-#include <glib.h>
 #include <string.h>
 
 #ifndef _WIN32
-#include <sys/socket.h>
+# include <sys/socket.h>
 #else
-#include <libc_interface.h>
+# include <libc_interface.h>
 #endif
 
 #include <sys/types.h>
@@ -50,7 +43,6 @@
 #include <debug.h>
 #include <blist.h>
 #include <util.h>
-#include <version.h>
 
 #define SNPP_DEFAULT_SERVER "localhost"
 #define SNPP_DEFAULT_PORT 444

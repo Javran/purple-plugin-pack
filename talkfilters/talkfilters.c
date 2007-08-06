@@ -8,23 +8,11 @@
  */
 
 /* TODO:
--- save filter preference
-	-- done (sadrul)
 -- slash commands (allowing it to be a one liner)
--- convert all gtk preference calls to pidgin internal calls
-	-- done (sadrul)
 -- allow saving different filters for different buddies (or accounts)
--- add an entry in the popup for the imhtml-entry in the conversation window
-   to allow changing the filter for that conversation. (so that I can quickly
-   turn it on when nosnilmot or Paco-Paco is around)
-   	-- done (added a menuitem in the conversation window instead)
 */
 
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif /* HAVE_CONFIG_H */
-
-#define PURPLE_PLUGINS
+#include "../common/pp_internal.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -34,12 +22,10 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include "../common/pp_internal.h"
 
 #include <debug.h>
 #include <signals.h>
 #include <util.h>
-#include <version.h>
 
 #include <gtkplugin.h>
 #include <gtkutils.h>
@@ -55,8 +41,6 @@
 static const gtf_filter_t *current_filter = NULL;
 static const gtf_filter_t *filter_list = NULL;
 static int filter_count = 0;
-
-static void regenerate_talkfilter_menu(PidginConversation *gtkconv);
 
 static void
 translate_message(char **message, const gtf_filter_t *filter) {

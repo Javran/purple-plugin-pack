@@ -17,11 +17,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
  * 02111-1307, USA.
  */
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif
-
-#define PURPLE_PLUGINS
 
 #include "../common/pp_internal.h"
 
@@ -34,14 +29,11 @@
 
 /* System headers */
 #include <gdk/gdk.h>
-#include <glib.h>
 #include <gtk/gtk.h>
 
-/* Purple headers */
-#include <gtkplugin.h>
-#include <version.h>
-
+/* Pidgin headers */
 #include <gtkimhtml.h>
+#include <gtkplugin.h>
 #include <gtkutils.h>
 
 #include "schedule.h"

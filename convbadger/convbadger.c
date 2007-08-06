@@ -16,15 +16,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#define PURPLE_PLUGINS
-
 #include "../common/pp_internal.h"
 
 #include <gtk/gtk.h>
 
 #include <conversation.h>
 #include <signals.h>
-#include <version.h>
 
 #include <gtkmenutray.h>
 #include <gtkutils.h>

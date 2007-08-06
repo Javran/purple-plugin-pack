@@ -20,21 +20,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif
-
-#define PURPLE_PLUGINS
 
 #include "../common/pp_internal.h"
 
 #include <conversation.h>
 #include <plugin.h>
-#include <pidgin.h>
-#include <version.h>
+
 #include <gtkplugin.h>
 #include <gtkconv.h>
 #include <gtkconvwin.h>
+#include <pidgin.h>
 
 #define SEPANDTAB_PREF "/pidgin/conversations/placement"
 

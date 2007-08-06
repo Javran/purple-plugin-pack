@@ -17,19 +17,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif
-
 #include "../common/pp_internal.h"
-
-#define PURPLE_PLUGINS
 
 #include <blist.h>
 #include <conversation.h>
 #include <debug.h>
 #include <signals.h>
-#include <version.h>
 
 #include <plugin.h>
 #include <pluginpref.h>
