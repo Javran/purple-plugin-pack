@@ -61,7 +61,8 @@ static const gchar *fullcrap_strings[] = {
 	"this is only fooling blabber",
 	"thats nots really nice",
 	"Oh I at all do not understand a pancake about what you here talk.",
-	"it shall be visible will be?"
+	"it shall be visible will be?",
+	"it becomes a complex rainbow of confusion."
 };
 
 static PurpleCmdId eight_ball_cmd_id = 0,
