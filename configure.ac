@@ -1,4 +1,4 @@
-AC_INIT([purple-plugin_pack], [1.1], [guifications-devel@lists.sourceforge.net])
+AC_INIT([purple-plugin_pack], [2.1.0mtn], [guifications-devel@lists.sourceforge.net])
 AC_CANONICAL_SYSTEM
 AM_CONFIG_HEADER(pre_config.h)
 
@@ -335,6 +335,7 @@ AC_OUTPUT([
 	showoffline/Makefile
 	simfix/Makefile
 	slashexec/Makefile
+	snpp/Makefile
 	smartear/Makefile
 	sslinfo/Makefile
 	stocker/Makefile

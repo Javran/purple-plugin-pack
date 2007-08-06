@@ -1,20 +1,30 @@
-Version 1.1mtn:
+Version 2.1.0mtn:
+	* Added the Pidgin-SNPP protocol plugin as snpp
+	* Added the /notice command for the irc-more plugin.
+
+Version 2.0.0: 7/13/07
 	* Blistops now offers the ability to stretch the display of screen names
 	  or aliases into the buddy icon column when no icon exists
 	* Blistops now shows the menu bar when hovering near the top of the buddy
 	  list window.  Resolves a number of Pidgin bug reports
 	* Listhandler now supports alias-only list exports and imports (rseeber)
-	* Listhandler now exports buddy notes created with the buddynote plugin
-	  but importing does not yet work for AIM and ICQ accounts.
+	* Listhandler now exports and imports buddy notes created with the
+	  buddynote plugin
 	* Added ignore plugin
 	* Added irc-more plugin
 	* Added highlight plugin
 	* Added incomplete convbadger plugin
+	* Added internationalization support to plonkers
 	* Added more humorous stuff to eight_ball (resiak)
+	* Added support for spaces in filenames to gRIM (rageboy04)
 	* Added a stop subcommand in gRIM (rageboy04)
+	* Changed order of arguments to gRIM command (rageboy04)
 	* Fixed build-by-default status for switchspell
 	* Fixed crash in album when using Pidgin 2.0.2 or newer
+	* Fixed potential crashes in some other plugins when using Pidgin 2.0.2 or
+	  newer
 	* Fixed potential random crashes in irssi plugin
+	* Fixed make distcheck in the development code
 
 Version 1.0: 5/4/07
 	* Updated for Pidgin 2.0.0
