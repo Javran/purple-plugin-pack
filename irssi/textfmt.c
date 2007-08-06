@@ -19,11 +19,11 @@
  * 02111-1307, USA.
  */
 
+#include "../common/pp_internal.h"
+
 #ifdef HAVE_REGEX_H
 # include <regex.h>
 #endif
-
-#include "../common/pp_internal.h"
 
 #include <plugin.h>
 #include <cmds.h>
