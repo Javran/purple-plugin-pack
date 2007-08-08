@@ -1,4 +1,6 @@
 Version 2.1.0mtn:
+	* Completed the convbadger plugin.  It adds a protocol icon to the menu
+	  bar of the conversation window.
 	* Added the Pidgin-SNPP protocol plugin as snpp
 	* Added the /notice command for the irc-more plugin.
 
