@@ -21,10 +21,7 @@
 #include "../common/pp_internal.h"
 
 #define PLUGIN_ID			"core-plugin_pack-autorejoin"
-#define PLUGIN_NAME			"Autorejoin (IRC)"
-#define PLUGIN_STATIC_NAME	"Autorejoin (IRC)"
-#define PLUGIN_SUMMARY		"Autorejoin on /kick on IRC"
-#define PLUGIN_DESCRIPTION	"Automatically rejoin a IRC chatroom when someone lovingly /kicks you."
+#define PLUGIN_STATIC_NAME	"autorejoin"
 #define PLUGIN_AUTHOR		"Sadrul H Chowdhury <sadrul@users.sourceforge.net>"
 
 /* System headers */
@@ -124,6 +121,7 @@ static PurplePluginInfo info = {
 	NULL,							/* extra_info			*/
 	NULL,							/* prefs_info			*/
 	NULL,							/* actions				*/
+
 	NULL,							/* reserved 1			*/
 	NULL,							/* reserved 2			*/
 	NULL,							/* reserved 3			*/
@@ -138,9 +136,10 @@ init_plugin(PurplePlugin *plugin)
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
-	info.name = _(PLUGIN_NAME);
-	info.summary = _(PLUGIN_SUMMARY);
-	info.description = _(PLUGIN_DESCRIPTION);
+	info.name = _("Autorejoin (IRC)");
+	info.summary = _("Autorejoin on /kick on IRC");
+	info.description = _("Automatically rejoin a IRC chatroom when someone "
+			"lovingly /kicks you.");
 }
 
 PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)
