@@ -20,11 +20,8 @@
 
 #include "../common/pp_internal.h"
 
-#define PLUGIN_ID			"gtk-schedule"
-#define PLUGIN_NAME			"Purple Schedule"
-#define PLUGIN_STATIC_NAME	"Purple Schedule"
-#define PLUGIN_SUMMARY		"Schedule reminders at specified times."
-#define PLUGIN_DESCRIPTION	"Schedule reminders at specified times."
+#define PLUGIN_ID			"gtk-plugin_pack-schedule"
+#define PLUGIN_STATIC_NAME	"schedule"
 #define PLUGIN_AUTHOR		"Sadrul H Chowdhury <sadrul@users.sourceforge.net>"
 
 /* System headers */
@@ -708,9 +705,9 @@ init_plugin(PurplePlugin *plugin)
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
-	info.name = _(PLUGIN_NAME);
-	info.summary = _(PLUGIN_SUMMARY);
-	info.description = _(PLUGIN_DESCRIPTION);
+	info.name = _("Schedule");
+	info.summary = _("Schedule reminders at specified times.");
+	info.description = _("Schedule reminders at specified times.");
 }
 
 PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)

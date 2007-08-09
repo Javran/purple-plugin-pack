@@ -21,10 +21,7 @@
 #include "../common/pp_internal.h"
 
 #define PLUGIN_ID			"gtk-plugin_pack-nicksaid"
-#define PLUGIN_NAME			"Nicksaid"
-#define PLUGIN_STATIC_NAME	"Nicksaid"
-#define PLUGIN_SUMMARY		"Record when someone said your nick in a chat."
-#define PLUGIN_DESCRIPTION	"Record when someone said your nick in a chat."
+#define PLUGIN_STATIC_NAME	"nicksaid"
 #define PLUGIN_AUTHOR		"Sadrul H Chowdhury <sadrul@users.sourceforge.net>"
 
 #define PREF_PREFIX			"/plugins/gtk/" PLUGIN_ID
@@ -650,9 +647,9 @@ init_plugin(PurplePlugin *plugin)
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
-	info.name = _(PLUGIN_NAME);
-	info.summary = _(PLUGIN_SUMMARY);
-	info.description = _(PLUGIN_DESCRIPTION);
+	info.name = _("Nicksaid");
+	info.summary = _("Record when someone said your nick in a chat.");
+	info.description = _("Record when someone said your nick in a chat.");
 
 	purple_prefs_add_none(PREF_PREFIX);
 	purple_prefs_add_string(PREF_HLWORDS, "");

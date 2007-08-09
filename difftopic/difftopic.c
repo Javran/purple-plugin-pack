@@ -21,10 +21,7 @@
 #include "../common/pp_internal.h"
 
 #define PLUGIN_ID			"gtk-plugin_pack-difftopic"
-#define PLUGIN_NAME			"DiffTopic"
-#define PLUGIN_STATIC_NAME	"DiffTopic"
-#define PLUGIN_SUMMARY		"Show the old topic when the topic in a chat room changes."
-#define PLUGIN_DESCRIPTION	"Show the old topic when the topic in a chat room changes."
+#define PLUGIN_STATIC_NAME	"difftopic"
 #define PLUGIN_AUTHOR		"Sadrul H Chowdhury <sadrul@users.sourceforge.net>"
 
 /* System headers */
@@ -218,9 +215,9 @@ init_plugin(PurplePlugin *plugin)
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
-	info.name = _(PLUGIN_NAME);
-	info.summary = _(PLUGIN_SUMMARY);
-	info.description = _(PLUGIN_DESCRIPTION);
+	info.name = _("DiffTopic");
+	info.summary = _("Show the old topic when the topic in a chat room changes.");
+	info.description = _("Show the old topic when the topic in a chat room changes.");
 }
 
 PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)

@@ -21,10 +21,7 @@
 #include "../common/pp_internal.h"
 
 #define PLUGIN_ID			"gtk-plugin_pack-xchat-chats"
-#define PLUGIN_NAME			"XChat Chats"
-#define PLUGIN_STATIC_NAME	"XChat Chats"
-#define PLUGIN_SUMMARY		"XChat-like chats with Purple"
-#define PLUGIN_DESCRIPTION	"You can chat in Purple using XChat's indented view."
+#define PLUGIN_NAME			"xchat-chats"
 #define PLUGIN_AUTHOR		"Sadrul Habib Chowdhury <sadrul@users.sourceforge.net>"
 
 #define	PREFS_PREFIX		"/plugins/gtk/" PLUGIN_ID
@@ -451,9 +448,9 @@ init_plugin(PurplePlugin *plugin) {
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
-	info.name = _(PLUGIN_NAME);
-	info.summary = _(PLUGIN_SUMMARY);
-	info.description = _(PLUGIN_DESCRIPTION);
+	info.name = _("XChat Chats");
+	info.summary = _("XChat-like chats with Pidgin");
+	info.description = _("You can chat in Pidgin using XChat's indented view.");
 
 	purple_prefs_add_none(PREFS_PREFIX);
 	purple_prefs_add_string(PREFS_DATE_FORMAT, "[%H:%M]");

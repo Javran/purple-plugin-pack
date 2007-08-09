@@ -21,10 +21,7 @@
 #include "../common/pp_internal.h"
 
 #define PLUGIN_ID			"unnamed plugin"
-#define PLUGIN_NAME			"unnamed"
 #define PLUGIN_STATIC_NAME	"unnamed"
-#define PLUGIN_SUMMARY		"summary"
-#define PLUGIN_DESCRIPTION	"description"
 #define PLUGIN_AUTHOR		"someone <someone@somewhere.tld>"
 
 /* System headers */
@@ -83,9 +80,9 @@ init_plugin(PurplePlugin *plugin) {
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
-	info.name = _(PLUGIN_NAME);
-	info.summary = _(PLUGIN_SUMMARY);
-	info.description = _(PLUGIN_DESCRIPTION);
+	info.name = _("unnamed");
+	info.summary = _("summary");
+	info.description = _("description");
 }
 
 PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)

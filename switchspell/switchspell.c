@@ -21,10 +21,7 @@
 #include "../common/pp_internal.h"
 
 #define PLUGIN_ID           "gtk-plugin_pack-switchspell"
-#define PLUGIN_NAME         "Switch Spell"
-#define PLUGIN_STATIC_NAME  "Switch Spell"
-#define PLUGIN_SUMMARY      "Switch Spell Checker Language"
-#define PLUGIN_DESCRIPTION  "Switch Spell Checker Language"
+#define PLUGIN_STATIC_NAME  "switchspell"
 #define PLUGIN_AUTHOR       "Alfredo Raul Pena (arpena)\n" \
                             "Sadrul H Chowdhury <sadrul@users.sourceforge.net>"
 
@@ -261,9 +258,9 @@ static void init_plugin(PurplePlugin *plugin)
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
-	info.name = _(PLUGIN_NAME);
-	info.summary = _(PLUGIN_SUMMARY);
-	info.description = _(PLUGIN_DESCRIPTION);
+	info.name = _("Switch Spell");
+	info.summary = _("Switch Spell Checker Language");
+	info.description = _("Switch Spell Checker Language");
 }
 
 PURPLE_INIT_PLUGIN(switchspell, init_plugin, info)

@@ -54,9 +54,6 @@
 
 GHashTable *buddy_windows;
 
-#define PLUGIN_NAME        "Album"
-#define PLUGIN_SUMMARY     "Archives buddy icons."
-#define PLUGIN_DESCRIPTION "Enable this plugin to automatically archive all buddy icons."
 #define PLUGIN_AUTHOR      "Richard Laager <rlaager@guifications.org>" \
                            "\n\t\t\tSadrul Habib Chowdhury <imadil@gmail.com>"
 
@@ -268,9 +265,9 @@ static void plugin_init(PurplePlugin *plugin)
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
-	info.name = _(PLUGIN_NAME);
-	info.summary = _(PLUGIN_SUMMARY);
-	info.description = _(PLUGIN_DESCRIPTION);
+	info.name = _("Album");
+	info.summary = _("Archives buddy icons.");
+	info.description = _("Enable this plugin to automatically archive all buddy icons.");
 
 	/* Setup preferences. */
 	purple_prefs_add_none(PREF_PREFIX);

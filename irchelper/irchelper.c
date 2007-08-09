@@ -42,10 +42,6 @@
 #define PLUGIN_STATIC_NAME "irchelper"
 #define PLUGIN_ID "core-rlaager-" PLUGIN_STATIC_NAME
 
-#define PLUGIN_NAME        "IRC Helper"
-#define PLUGIN_SUMMARY     "Handles the rough edges of the IRC protocol."
-#define PLUGIN_DESCRIPTION "- Transparent authentication with a variety of services.\n" \
-                           "- Suppression of various useless messages"
 #define PLUGIN_AUTHOR      "Richard Laager <rlaager@guifications.org>"
 
 
@@ -1262,9 +1258,10 @@ static void plugin_init(PurplePlugin *plugin)
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
-	info.name = _(PLUGIN_NAME);
-	info.summary = _(PLUGIN_SUMMARY);
-	info.description = _(PLUGIN_DESCRIPTION);
+	info.name = _("IRC Helper");
+	info.summary = _("Handles the rough edges of the IRC protocol.");
+	info.description = _("- Transparent authentication with a variety of "
+			"services.\n- Suppression of various useless messages");
 }
 
 PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, plugin_init, info)

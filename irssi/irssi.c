@@ -23,15 +23,7 @@
 
 /* define these so the plugin info struct way at the bottom is cleaner */
 #define PLUGIN_ID			"gtk-plugin_pack-irssi"
-#define PLUGIN_NAME			"Irssi Features"
 #define PLUGIN_STATIC_NAME	"irssi"
-#define PLUGIN_SUMMARY		"Implements features of the irssi IRC client for " \
-							"use in Purple."
-#define PLUGIN_DESCRIPTION	"Implements some features of the IRC client irssi " \
-							"to be used in Purple.  It lets you know in all open " \
-							"conversations when the day has changed, adds the " \
-							"lastlog command, adds the window command, etc.  " \
-							"The day changed message is not logged."
 #define PLUGIN_AUTHOR		"\n" \
 							"\tGary Kramlich <grim@reaperworld.com>\n" \
 							"\tJohn Bailey <rekkanoryo@rekkanoryo.org>\n" \
@@ -112,9 +104,13 @@ irssi_init(PurplePlugin *plugin) {
 #endif /* ENABLE_NLS */
 
 	/* set these here to allow for translations of the strings */
-	irssi_info.name = _(PLUGIN_NAME);
-	irssi_info.summary = _(PLUGIN_SUMMARY);
-	irssi_info.description = _(PLUGIN_DESCRIPTION);
+	irssi_info.name = _("Irssi Features");
+	irssi_info.summary = _("Implements features of the irssi IRC client for "
+			"use in Pidgin.");
+	irssi_info.description = _("Implements some features of the IRC client "
+			"irssi to be used in Purple.  It lets you know in all open "
+			"conversations when the day has changed, adds the lastlog command, "
+			"adds the window command, etc.  The day changed message is not logged.");
 }
 
 PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, irssi_init, irssi_info)

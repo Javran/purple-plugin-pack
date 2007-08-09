@@ -21,14 +21,7 @@
 #include "../common/pp_internal.h"
 
 #define PLUGIN_ID			"gtk-plugin_pack-mystatusbox"
-#define PLUGIN_NAME			"Mystatusbox (Show Statusboxes)"
 #define PLUGIN_STATIC_NAME	"mystatusbox"
-#define PLUGIN_SUMMARY		"Hide/Show the per-account statusboxes"
-#define PLUGIN_DESCRIPTION	"You can show all the per-account statusboxes, " \
-							"hide all of them, or just show the ones that are " \
-							"in a different status than the global status.\n\n" \
-							"For ease of use, you can bind keyboard-shortcuts " \
-							"for the menu-items."
 #define PLUGIN_AUTHOR		"Sadrul Habib Chowdhury <sadrul@users.sourceforge.net>"
 
 /* System headers */
@@ -563,9 +556,12 @@ init_plugin(PurplePlugin *plugin) {
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
-	info.name = _(PLUGIN_NAME);
-	info.summary = _(PLUGIN_SUMMARY);
-	info.description = _(PLUGIN_DESCRIPTION);
+	info.name = _("Mystatusbox (Show Statusboxes)");
+	info.summary = _("Hide/Show the per-account statusboxes");
+	info.description = _("You can show all the per-account statusboxes, hide "
+			"all of them, or just show the ones that are in a different status "
+			"from the global status.  For ease of use, you can bind keyboard "
+			"shortcuts for the menu items.");
 
 	purple_prefs_add_none(PREF_PREFIX);
 	purple_prefs_add_int(PREF_PANE, 300);

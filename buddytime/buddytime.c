@@ -21,10 +21,7 @@
 #include "../common/pp_internal.h"
 
 #define PLUGIN_ID			"gtk-plugin_pack-buddytime"
-#define PLUGIN_NAME			"Buddy Time"
 #define PLUGIN_STATIC_NAME	"buddytime"
-#define PLUGIN_SUMMARY		"summary"
-#define PLUGIN_DESCRIPTION	"description"
 #define PLUGIN_AUTHOR		"Gary Kramlich <grim@reaperworld.com>"
 
 #include <gdk/gdk.h>
@@ -255,9 +252,9 @@ init_plugin(PurplePlugin *plugin) {
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
-	info.name = _(PLUGIN_NAME);
-	info.summary = _(PLUGIN_SUMMARY);
-	info.description = _(PLUGIN_DESCRIPTION);
+	info.name = _("Buddy Time");
+	info.summary = _("summary");
+	info.description = _("description");
 }
 
 PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)

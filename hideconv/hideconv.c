@@ -21,10 +21,7 @@
 #include "../common/pp_internal.h"
 
 #define PLUGIN_ID			"gtk-plugin_pack-hideconv"
-#define PLUGIN_NAME			"Hide Conversation"
-#define PLUGIN_STATIC_NAME	"Hide Conversation"
-#define PLUGIN_SUMMARY		"Hide conversations without closing them."
-#define PLUGIN_DESCRIPTION	"Hide conversations without closing them."
+#define PLUGIN_STATIC_NAME	"hideconv"
 #define PLUGIN_AUTHOR		"Sadrul H Chowdhury <sadrul@users.sourceforge.net>"
 
 /* System headers */
@@ -285,9 +282,9 @@ init_plugin(PurplePlugin *plugin) {
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
-	info.name = _(PLUGIN_NAME);
-	info.summary = _(PLUGIN_SUMMARY);
-	info.description = _(PLUGIN_DESCRIPTION);
+	info.name = _("Hide Conversation");
+	info.summary = _("Hide conversations without closing them.");
+	info.description = _("Hide conversations without closing them.");
 }
 
 PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)
