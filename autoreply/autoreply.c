@@ -440,14 +440,14 @@ init_plugin(PurplePlugin *plugin)
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
-	info.name = _("Autoreply")
-	info.summary = _("Autoreply for all the protocols")
+	info.name = _("Autoreply");
+	info.summary = _("Autoreply for all the protocols");
 	info.description = _("This plugin lets you set autoreply message for any "
 			"protocol. You can set the global autoreply message from the "
 			"plugin options dialog. To set some specific autoreply message for "
 			"a particular buddy, right click on the buddy in the buddy-list "
 			"window. To set autoreply messages for some accounts, go to the "
-			"`Advanced' tab of the account edit dialog.")
+			"`Advanced' tab of the account edit dialog.");
 
 	purple_prefs_add_none(PREFS_PREFIX);
 	purple_prefs_add_bool(PREFS_IDLE, TRUE);

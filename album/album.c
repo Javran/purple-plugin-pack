@@ -82,7 +82,7 @@ static PurplePluginInfo info =
 	PLUGIN_ID,                         /**< id             */
 	NULL,                              /**< name           */
 	PP_VERSION,                        /**< version        */
-	PLUGIN_SUMMARY,                    /**< summary        */
+	NULL,                    /**< summary        */
 	NULL,                              /**< description    */
 	PLUGIN_AUTHOR,                     /**< author         */
 	PP_WEBSITE,                        /**< homepage       */
