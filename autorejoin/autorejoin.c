@@ -32,6 +32,9 @@
 #include <plugin.h>
 #include <prpl.h>
 
+#define PREF_PREFIX "/plugins/core/" PLUGIN_ID
+#define PREF_DELAY  PREF_PREFIX "/delay"
+
 static gboolean
 show_them(gpointer data)
 {
@@ -68,7 +71,7 @@ irc_receiving_text(PurpleConnection *gc, const char **incoming, gpointer null)
 				chats = chats->next;
 				if (purple_conversation_get_account(conv) == account
 						&& strcmp(purple_conversation_get_name(conv), name) == 0) {
-					g_timeout_add(1000, show_them, conv);
+					g_timeout_add(1000 * MAX(10, purple_prefs_get_int(PREF_DELAY)), show_them, conv);
 					break;
 				}
 			}
@@ -95,6 +98,34 @@ plugin_unload(PurplePlugin *plugin)
 	return TRUE;
 }
 
+static PurplePluginPrefFrame *
+get_plugin_pref_frame(PurplePlugin *plugin)
+{
+	PurplePluginPrefFrame *frame;
+	PurplePluginPref *pref;
+
+	frame = purple_plugin_pref_frame_new();
+
+	pref = purple_plugin_pref_new_with_name_and_label(PREF_DELAY,
+					_("Seconds to wait before rejoining"));
+	purple_plugin_pref_set_bounds(pref, 10, 9999);
+	purple_plugin_pref_frame_add(frame, pref);
+
+	return frame;
+}
+
+static PurplePluginUiInfo prefs_info = {
+	get_plugin_pref_frame,
+	0,
+	NULL,
+
+	/* padding */
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
 static PurplePluginInfo info = {
 	PURPLE_PLUGIN_MAGIC,			/* Magic				*/
 	PURPLE_MAJOR_VERSION,			/* Purple Major Version	*/
@@ -119,7 +150,7 @@ static PurplePluginInfo info = {
 
 	NULL,							/* ui_info				*/
 	NULL,							/* extra_info			*/
-	NULL,							/* prefs_info			*/
+	&prefs_info,					/* prefs_info			*/
 	NULL,							/* actions				*/
 
 	NULL,							/* reserved 1			*/
@@ -140,6 +171,9 @@ init_plugin(PurplePlugin *plugin)
 	info.summary = _("Autorejoin on /kick on IRC");
 	info.description = _("Automatically rejoin a IRC chatroom when someone "
 			"lovingly /kicks you.");
+
+	purple_prefs_add_none(PREF_PREFIX);
+	purple_prefs_add_int(PREF_DELAY, 30);
 }
 
 PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)
