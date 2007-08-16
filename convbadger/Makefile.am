@@ -1,4 +1,4 @@
-EXTRA_DIST = .pidgin-plugin .incomplete
+EXTRA_DIST = .pidgin-plugin
 
 convbadgerdir = $(PIDGIN_LIBDIR)
 
