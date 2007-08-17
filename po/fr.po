@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: purple plugin_pack 1.0\n"
+"Project-Id-Version: purple plugin_pack 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-17 03:53-0400\n"
-"PO-Revision-Date: 2007-06-02 16:36+1100\n"
+"PO-Revision-Date: 2007-07-30 19:36+0200\n"
 "Last-Translator: Yannick LE NY <y.le.ny@ifrance.com>\n"
 "Language-Team: fr <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -197,6 +197,8 @@ msgid ""
 "Autoreply Prefix\n"
 "(only when necessary)"
 msgstr ""
+"Préfix de réponse automatique\n"
+"(seulement quand celà est nécessaire)"
 
 #: ../autoreply/autoreply.c:358
 msgid "Status message"
@@ -267,9 +269,8 @@ msgstr ""
 "j'y répondrai dès que possible."
 
 #: ../autoreply/autoreply.c:460
-#, fuzzy
 msgid "This is an autoreply: "
-msgstr "Répétitions des réponses automatiques"
+msgstr "Ceci est une réponse automatique: "
 
 #: ../awaynotify/awaynotify.c:183
 #, c-format
@@ -388,11 +389,11 @@ msgstr "Cache le menu dans la fenêtre de la liste des contacts"
 
 #: ../blistops/blistops.c:236
 msgid "Stretch the buddyname if the buddy has no buddyicon."
-msgstr ""
+msgstr "Etirer le nom du contact si le contact n'a pas d'icône de contact."
 
 #: ../blistops/blistops.c:240
 msgid "Show email addresses for all the buddies."
-msgstr ""
+msgstr "Montrer les adresses e-mail pour tous les contacts."
 
 #: ../blistops/blistops.c:297
 msgid "Buddy List Options"
@@ -615,7 +616,7 @@ msgstr ""
 #: ../difftopic/difftopic.c:137
 #, c-format
 msgid "<BR>Topic changed from: <BR>%s<BR>To:<BR>%s"
-msgstr ""
+msgstr "<BR>Sujet changé depuis/par: <BR>%s<BR>To:<BR>%s"
 
 #: ../difftopic/difftopic.c:218
 msgid "DiffTopic"
@@ -635,7 +636,7 @@ msgstr "sgball:  envoie un message Stargate Ball aléatoire"
 
 #: ../eight_ball/eight_ball.c:136
 msgid "fullcrap:  sends random fooling blabber"
-msgstr ""
+msgstr "fullcrap : envoie le blabber dupant de manière aléatoire"
 
 #: ../eight_ball/eight_ball.c:209
 msgid "Magic 8 Ball"
@@ -768,9 +769,8 @@ msgid "Hide conversations without closing them."
 msgstr ""
 
 #: ../highlight/highlight.c:74
-#, fuzzy
 msgid "Highlight History"
-msgstr "Surbrillance"
+msgstr "Historique en surbrillance"
 
 #: ../highlight/highlight.c:246
 msgid ""
@@ -782,14 +782,20 @@ msgid ""
 "/highlight -&lt;word&gt;:  removes &lt;word&gt; from the highlight word list "
 "for this conversation only.\n"
 msgstr ""
+"/highlight history: montre la liste des phrases en surbrillance "
+"de l'historique.\n"
+"/highlight clear:   efface l'historique.\n"
+"/highlight +&lt;word&gt;:  ajoute &lt;word&gt; à la la liste des mots en "
+"surbrillance pour cette conversation seulement.\n"
+"/highlight -&lt;word&gt;:  supprime &lt;word&gt; de la la liste des mots en "
+"surbrillance pour cette conversation seulement.\n"
 
 #: ../highlight/highlight.c:274
-#, fuzzy
 msgid ""
 "Words to highlight on\n"
 "(separate words by space)"
 msgstr ""
-" Mots à mettre en surbrillance\n"
+" Mots à mettre en surbrillance sur\n"
 "(sépararer les mots avec un espace)"
 
 #: ../highlight/highlight.c:302 ../nicksaid/nicksaid.c:565
@@ -798,7 +804,7 @@ msgstr "Surbrillance"
 
 #: ../highlight/highlight.c:304 ../highlight/highlight.c:305
 msgid "Support for highlighting words."
-msgstr ""
+msgstr "Support pour la mise en surbrillance des mots."
 
 #: ../ignorance/ignorance.c:391
 #, c-format
@@ -926,18 +932,16 @@ msgid "Couldn't find pixmap file: %s"
 msgstr "Impossible de trouver le fichier pixmap: %s"
 
 #: ../ignore/ignore.c:126
-#, fuzzy
 msgid "Ignore Rules"
-msgstr "Ignorer"
+msgstr "Ignorer règles"
 
 #: ../ignore/ignore.c:126
-#, fuzzy
 msgid "The following are the current ignore rules"
-msgstr "Le texte suivant a été envoyé: %s"
+msgstr "Les choses suivantes sont les règles d'ignorance actuelles"
 
 #: ../ignore/ignore.c:127
 msgid "(Dear God! You are not ignoring any one!)"
-msgstr ""
+msgstr "(Bon Dieu ! Vous n'en ignorez aucun !)"
 
 #: ../ignore/ignore.c:229
 msgid ""
@@ -948,12 +952,22 @@ msgid ""
 "IM) Starts ignoring this person.<br>   'ignore -' \t - (in an IM) Starts "
 "unignoring this person.<br>   'ignore' \t - Lists the current ignore rules."
 msgstr ""
+"ignore [-c] [+&lt;ignore&gt; -&lt;unignore&gt;]<br>Exemples:<br>   'ignore "
+"+StupidBot -NotABot' \t - (dans une conversation) Lance l'ignorement de "
+"StupidBot, et supprime NotABot de la liste d'ignorance.<br>   "
+"'ignore -c +AnotherBot' \t - (dans une conversation) Lance l'ignorement de "
+"AnotherBot, mais seulement dans les conversations.<br>   'ignore +' \t - "
+"(dans une Messagerie Instantanée) Lance l'ignorement de cette personne.<br>"
+"   'ignore -' \t - (dans une Messagerie Instantanée) Lance le non ignorement "
+"de cette personne.<br>   'ignore' \t - Liste les règles d'ignorement actuelles."
 
 #: ../ignore/ignore.c:270
 msgid ""
 "Flexible plugin to selectively ignore people. Please do not use if you have "
 "amnesia."
 msgstr ""
+"Plugin(greffon) flexible pour ignorer sélectivement des gens. S'il vous plait, "
+"ne pas utiliser si vous avez une amnésie."
 
 #: ../ignore/ignore.c:271
 msgid ""
@@ -961,28 +975,29 @@ msgid ""
 "help.\n"
 "Please do not use if you have amnesia."
 msgstr ""
+"Plugin(greffon) flexible pour ignorer sélectivement des gens. Regardez "
+"'/help ignore' pour plus d'aide.\n"
+"S'il vous plait, ne pas utiliser si vous avez une amnésie."
 
 #: ../irc-more/irc-more.c:123
 msgid "notice target message:  Send a notice to the specified target."
 msgstr ""
 
 #: ../irc-more/irc-more.c:136
-#, fuzzy
 msgid "Default Quit Message"
-msgstr "Choisir une réponse automatique"
+msgstr "Message par défaut lorsqu'on quitte"
 
 #: ../irc-more/irc-more.c:139
-#, fuzzy
 msgid "Default Part Message"
-msgstr "Diffuse un message"
+msgstr "Message partiel par défaut"
 
 #: ../irc-more/irc-more.c:142
 msgid "CTCP Version reply"
-msgstr ""
+msgstr "Réponse version CTCP"
 
 #: ../irc-more/irc-more.c:194
 msgid "IRC More"
-msgstr ""
+msgstr "IRC Plus"
 
 #: ../irc-more/irc-more.c:195
 msgid "Adds additional IRC features."
@@ -993,6 +1008,9 @@ msgid ""
 "Adds additional IRC features, including a customizable quit message, a "
 "customizable CTCP VERSION reply, and the /notice command for notices."
 msgstr ""
+"Ajoute deux options pour IRC: message de départ par défaut personnalisé, et "
+"réponse de version de CTCP."
+
 
 #: ../irchelper/irchelper.c:937
 msgid "You have been added to the access list."
@@ -1189,40 +1207,36 @@ msgstr ""
 #. Signed on
 #. Signed off
 #: ../lastseen/lastseen.c:159
-#, fuzzy
 msgid ""
 "\n"
 "<b>Last Seen</b>: "
 msgstr ""
 "\n"
-"<b>Vu récemment:</b>"
+"<b>Vu récemment</b>: "
 
 #: ../lastseen/lastseen.c:160
-#, fuzzy
 msgid ""
 "\n"
 "<b>Last Said</b>: "
 msgstr ""
 "\n"
-"<b>Dernière parole:</b>"
+"<b>Dernière parole</b>: "
 
 #: ../lastseen/lastseen.c:161
-#, fuzzy
 msgid ""
 "\n"
 "<b>Signed On</b>: "
 msgstr ""
 "\n"
-"<b>Dernière connection:</b>"
+"<b>Dernière connection</b>: "
 
 #: ../lastseen/lastseen.c:162
-#, fuzzy
 msgid ""
 "\n"
 "<b>Signed Off</b>: "
 msgstr ""
 "\n"
-"<b>Dernière déconnection:</b>"
+"<b>Dernière déconnection</b>: "
 
 #: ../lastseen/lastseen.c:240
 msgid "Last Seen"
@@ -1252,9 +1266,8 @@ msgstr "Compte"
 
 #. and finally we can create the request
 #: ../listhandler/aim_blt_files.c:297
-#, fuzzy
 msgid "List Handler: Importing"
-msgstr "Traitement de listes - Importation"
+msgstr "Chargement de listes - Importation"
 
 #: ../listhandler/aim_blt_files.c:298 ../listhandler/gen_xml_files.c:187
 #: ../listhandler/gen_xml_files.c:619
@@ -1272,9 +1285,8 @@ msgstr "Enregister le fichier AIM .blt"
 
 #. and finally we can create the request
 #: ../listhandler/aim_blt_files.c:463
-#, fuzzy
 msgid "List Handler: Exporting"
-msgstr "Traitement de listes - Exportation"
+msgstr "Chargement de listes - Exportation"
 
 #: ../listhandler/aim_blt_files.c:464 ../listhandler/gen_xml_files.c:429
 #: ../listhandler/gen_xml_files.c:544
@@ -1309,24 +1321,20 @@ msgid "Choose A Generic Buddy List File To Import"
 msgstr "Choisissez un fichier générique de liste de contacts à importer"
 
 #: ../listhandler/gen_xml_files.c:504
-#, fuzzy
 msgid "Save Generic .alist File"
-msgstr "Enregistrer un fichier générique .blist"
+msgstr "Enregistrer un fichier générique .alist"
 
 #: ../listhandler/listhandler.c:37
-#, fuzzy
 msgid "Import AIM Buddy List File (.blt)"
-msgstr "Importer un fichier de liste de contacts AIM"
+msgstr "Importer un fichier de liste de contacts AIM (.blt)"
 
 #: ../listhandler/listhandler.c:41
-#, fuzzy
 msgid "Import Generic Buddy List File (.xml)"
-msgstr "Importer un fichier de liste de contacts générique"
+msgstr "Importer un fichier de liste de contacts générique (.xml)"
 
 #: ../listhandler/listhandler.c:45
-#, fuzzy
 msgid "Import Generic Alias List File"
-msgstr "Importer un fichier de liste de contacts générique"
+msgstr "Importer un fichier de liste d'alias générique"
 
 #: ../listhandler/listhandler.c:49
 msgid "Export AIM Buddy List File"
@@ -1337,9 +1345,8 @@ msgid "Export Generic Buddy List File"
 msgstr "Exporter un fichier de liste de contacts générique"
 
 #: ../listhandler/listhandler.c:57
-#, fuzzy
 msgid "Export Generic Alias List File"
-msgstr "Exporter un fichier de liste de contacts générique"
+msgstr "Exporter un fichier de liste d'alias générique"
 
 #: ../listhandler/listhandler.c:61
 msgid "Copy Buddies From One Account to Another"

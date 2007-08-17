@@ -13,7 +13,7 @@ Richard Laager <rlaager@guifications.org>
 Translators
 ===========
 es_ES - Máximo Castañeda <antiswen@yahoo.es>
-fr    - Yannick <y.le.ny@ifrance.com>
+fr    - Yannick LE NY <y.le.ny@ifrance.com>
 
 Packagers
 =========
@@ -26,7 +26,7 @@ Stu Tomlinson <stu@nosnilmot.com>
 	- Fedora Core 4
 	- Fedora Core 5
 	- Fedora Core 6
-	- Red Hat Enterprise Linux 4
+	- Red Hat Enterprise Linux 4/CentOS 4
 
 Accepted Patches
 ================
@@ -46,7 +46,7 @@ Chris Weyl
 
 Special Thanks
 ==============
-Kathryn Kulick - For providing a female presence on irc
+Kathryn Kulick - For providing a female presence in our IRC channel
 Robert O'Connor - Kicktoy... 'nuff said :)
 Dennis Ristuccia - For random gibberish that forces us to take a break from coding
-Ankit Singla - Ticket triaging!
+Ankit Singla - Ticket triaging! (and TLC for the gRIM plugin)
