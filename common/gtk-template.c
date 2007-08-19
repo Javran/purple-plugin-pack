@@ -67,6 +67,7 @@ static PurplePluginInfo info = {
 	NULL,						/* extra_info			*/
 	NULL,						/* prefs_info			*/
 	NULL,						/* actions				*/
+
 	NULL,						/* reserved 1			*/
 	NULL,						/* reserved 2			*/
 	NULL,						/* reserved 3			*/
