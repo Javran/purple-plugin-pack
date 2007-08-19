@@ -1,9 +1,11 @@
-Version 2.1.0mtn:
+Version 2.1.0: 8/18/07
 	* Completed the convbadger plugin.  It adds a protocol icon to the menu
 	  bar of the conversation window.
 	* Added the Pidgin-SNPP protocol plugin as snpp
 	* Added the /notice command for the irc-more plugin.
 	* Added an additional string to the eight_ball plugin (resiak)
+	* Autorejoin now has a preference to set the delay time before
+	  rejoining.  Fixes #372
 
 Version 2.0.0: 7/13/07
 	* Blistops now offers the ability to stretch the display of screen names
