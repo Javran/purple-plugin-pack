@@ -1,3 +1,6 @@
+Version 2.1.1: 8/19/07
+	* Fixed lack of .build, .pidgin-plugin, and Makefile.mingw for convbadger
+
 Version 2.1.0: 8/18/07
 	* Completed the convbadger plugin.  It adds a protocol icon to the menu
 	  bar of the conversation window.
