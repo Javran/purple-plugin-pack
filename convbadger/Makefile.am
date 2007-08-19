@@ -1,6 +1,7 @@
 EXTRA_DIST = \
 	.build \
-	.pidgin-plugin
+	.pidgin-plugin \
+	Makefile.mingw
 
 convbadgerdir = $(PIDGIN_LIBDIR)
 
