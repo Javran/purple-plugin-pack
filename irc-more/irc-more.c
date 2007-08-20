@@ -21,10 +21,11 @@
 /* Pack/Local headers */
 #include "../common/pp_internal.h"
 
-#include <cmds.h>
-#include <plugin.h>
 #include <accountopt.h>
+#include <cmds.h>
 #include <conversation.h>
+#include <plugin.h>
+#include <prpl.h>
 
 #include <string.h>
 
@@ -32,10 +33,61 @@
 #define PART_MESSAGE  purple_account_get_string(account, "part-message", "Leaving.")
 #define QUIT_MESSAGE  purple_account_get_string(account, "quit-message", "Leaving.")
 
+#define PLUGIN_ID "core-plugin_pack-irc-more"
+
+#define PREF_PREFIX "/plugins/core/" PLUGIN_ID
+#define PREF_DELAY PREF_PREFIX "/delay"
+
 #define MATCHES(string)   !strncmp(*msg, string, sizeof(string) - 1)
 
 static PurpleCmdId notice_cmd_id = 0;
 static PurplePluginProtocolInfo *irc_info = NULL;
+
+static gboolean
+show_them(gpointer data)
+{
+	/* So you think you can kick me? I'll show you! */
+	PurpleConversation *conv = data;
+	char *command = g_strdup_printf("join %s", purple_conversation_get_name(conv));
+	char *markup = g_markup_escape_text(command, -1);
+	char *error = NULL;
+	purple_cmd_do_command(conv, command, markup, &error);  /* Do anything with the return value? */
+	g_free(command);
+	g_free(markup);
+	g_free(error);
+	return FALSE;
+}
+
+static void
+irc_receiving_text(PurpleConnection *gc, const char **incoming, gpointer null)
+{
+	char **splits;
+
+	if (!incoming || !*incoming || !**incoming)   /* oh the fun .. I can do this all day! */
+		return;
+
+	splits = g_strsplit(*incoming, " ", -1);
+	if (splits[1]) {
+		PurpleAccount *account = purple_connection_get_account(gc);
+		char *str = g_ascii_strdown(splits[1], -1);
+
+		if (strcmp(str, "kick") == 0 && splits[2] && splits[3]) {
+			char *name = splits[2];
+			GList *chats = purple_get_chats();
+			while (chats) {
+				PurpleConversation *conv = chats->data;
+				chats = chats->next;
+				if (purple_conversation_get_account(conv) == account
+						&& strcmp(purple_conversation_get_name(conv), name) == 0) {
+					g_timeout_add(1000 * MAX(10, purple_prefs_get_int(PREF_DELAY)), show_them, conv);
+					break;
+				}
+			}
+		}
+		g_free(str);
+	}
+	g_strfreev(splits);
+}
 
 static PurpleCmdRet
 notice_cmd_cb(PurpleConversation *conv, const gchar *cmd, gchar **args,
@@ -116,20 +168,27 @@ irc_sending_text(PurpleConnection *gc, char **msg, gpointer null)
 static gboolean
 plugin_load(PurplePlugin *plugin)
 {
-	PurplePlugin *prpl = purple_find_prpl("prpl-irc");
+	PurplePlugin *prpl = NULL;
 	PurpleAccountOption *option;
 	gchar *notice_help = NULL;
 
+	prpl = purple_find_prpl("prpl-irc");
+
+	/* if we didn't find the prpl, bail */
+	if (!prpl)
+		return FALSE;
+
+	/* specify our help string and register our command */
 	notice_help = _("notice target message:  Send a notice to the specified target.");
 
 	notice_cmd_id = purple_cmd_register("notice", "ws", PURPLE_CMD_P_PLUGIN,
 			PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT | PURPLE_CMD_FLAG_PRPL_ONLY,
 			"prpl-irc", notice_cmd_cb, notice_help, NULL);
 
-	if (!prpl)
-		return FALSE;
 	purple_signal_connect(prpl, "irc-sending-text", plugin,
 				G_CALLBACK(irc_sending_text), NULL);
+	purple_signal_connect(prpl, "irc-receiving-text", plugin,
+				G_CALLBACK(irc_receiving_text), NULL);
 
 	irc_info = PURPLE_PLUGIN_PROTOCOL_INFO(prpl);
 
@@ -153,6 +212,34 @@ plugin_unload(PurplePlugin *plugin)
 	return TRUE;
 }
 
+static PurplePluginPrefFrame *
+get_plugin_pref_frame(PurplePlugin *plugin)
+{
+	PurplePluginPrefFrame *frame;
+	PurplePluginPref *pref;
+
+	frame = purple_plugin_pref_frame_new();
+
+	pref = purple_plugin_pref_new_with_name_and_label(PREF_DELAY,
+					_("Seconds to wait before rejoining"));
+	purple_plugin_pref_set_bounds(pref, 3, 3600);
+	purple_plugin_pref_frame_add(frame, pref);
+
+	return frame;
+}
+
+static PurplePluginUiInfo prefs_info = {
+	get_plugin_pref_frame,
+	0,
+	NULL,
+
+	/* padding */
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
 static PurplePluginInfo info =
 {
 	PURPLE_PLUGIN_MAGIC,
@@ -163,20 +250,24 @@ static PurplePluginInfo info =
 	0,
 	NULL,
 	PURPLE_PRIORITY_DEFAULT,
-	"irc-more",
+
+	PLUGIN_ID,
 	NULL,
 	PP_VERSION,
 	NULL,
 	NULL,
 	"Sadrul H Chowdhury <sadrul@users.sourceforge.net>",
 	PP_WEBSITE,
+
 	plugin_load,
 	plugin_unload,
 	NULL,
+
 	NULL,
 	NULL,
+	&prefs_info,
 	NULL,
-	NULL,
+
 	NULL,
 	NULL,
 	NULL,
@@ -196,6 +287,9 @@ init_plugin(PurplePlugin *plugin)
 	info.description = _("Adds additional IRC features, including a "
 			"customizable quit message, a customizable CTCP VERSION reply, "
 			"and the /notice command for notices.");
+
+	purple_prefs_add_none(PREF_PREFIX);
+	purple_prefs_add_int(PREF_DELAY, 30);
 }
 
 PURPLE_INIT_PLUGIN(irc_more, init_plugin, info)
