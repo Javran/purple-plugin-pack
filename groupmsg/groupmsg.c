@@ -39,9 +39,6 @@ do_it_cb(GList *list, const char *message)
 	GList *l;
 	PurpleBuddy *b;
 	PurpleConversation *conv = NULL;
-#if !PURPLE_VERSION_CHECK(2,0,0)
-	PurpleConvWindow *win;
-#endif
 
 	purple_markup_html_to_xhtml(message, NULL, &stripped);
 
@@ -55,12 +52,6 @@ do_it_cb(GList *list, const char *message)
 				purple_conv_im_send(PURPLE_CONV_IM(conv), stripped);
 		}
 	}
-#if !PURPLE_VERSION_CHECK(2,0,0)
-	if(conv) {
-		win = purple_conversation_get_window(conv);
-		purple_conv_window_raise(win);
-	}
-#endif
 
 	g_free(stripped);
 	g_list_free(list);
@@ -119,6 +110,7 @@ groupmsg_sendto_group(PurpleBlistNode *node, gpointer data)
 					   _("Send"), G_CALLBACK(do_it_cb),
 					   _("Cancel"), G_CALLBACK(dont_do_it_cb),
 					   NULL, NULL, NULL, list);
+
 	g_free(tmp);
 }
 
@@ -147,31 +139,36 @@ plugin_load(PurplePlugin *plugin)
 
 static PurplePluginInfo info =
 {
-	PURPLE_PLUGIN_MAGIC,								/**< magic			*/
-	PURPLE_MAJOR_VERSION,								/**< major version	*/
-	PURPLE_MINOR_VERSION,								/**< minor version	*/
-	PURPLE_PLUGIN_STANDARD,							/**< type			*/
-	NULL,											/**< ui_requirement	*/
-	0,												/**< flags			*/
-	NULL,											/**< dependencies	*/
-	PURPLE_PRIORITY_DEFAULT,							/**< priority		*/
+	PURPLE_PLUGIN_MAGIC,						/**< magic			*/
+	PURPLE_MAJOR_VERSION,						/**< major version	*/
+	PURPLE_MINOR_VERSION,						/**< minor version	*/
+	PURPLE_PLUGIN_STANDARD,						/**< type			*/
+	NULL,										/**< ui_requirement	*/
+	0,											/**< flags			*/
+	NULL,										/**< dependencies	*/
+	PURPLE_PRIORITY_DEFAULT,					/**< priority		*/
 
-	"core-plugin_pack-groupmsg",					/**< id				*/
-	NULL,											/**< name			*/
+	"core-plugin_pack-groupmsg",				/**< id				*/
+	NULL,										/**< name			*/
 	PP_VERSION,									/**< version		*/
-	NULL,											/**  summary		*/
-	NULL,											/**  description	*/
-	"Stu Tomlinson <stu@nosnilmot.com>",			/**< author			*/
+	NULL,										/**< summary		*/
+	NULL,										/**  description	*/
+	"Stu Tomlinson <stu@nosnilmot.com>",		/**< author			*/
 	PP_WEBSITE,									/**< homepage		*/
 
-	plugin_load,									/**< load			*/
-	NULL,											/**< unload			*/
-	NULL,											/**< destroy		*/
+	plugin_load,								/**< load			*/
+	NULL,										/**< unload			*/
+	NULL,										/**< destroy		*/
 
-	NULL,											/**< ui_info		*/
-	NULL,											/**< extra_info		*/
-	NULL,											/**< prefs_info		*/
-	NULL											/**< actions		*/
+	NULL,										/**< ui_info		*/
+	NULL,										/**< extra_info		*/
+	NULL,										/**< prefs_info		*/
+	NULL,										/**< actions		*/
+
+	NULL,										/**< reserved 1		*/
+	NULL,										/**< reserved 2		*/
+	NULL,										/**< reserved 3		*/
+	NULL										/**< reserved 4		*/
 };
 
 

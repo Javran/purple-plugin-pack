@@ -28,8 +28,6 @@
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 
-#if PURPLE_VERSION_CHECK(2,0,0) /* Stu is a chicken */
-
 #include <core.h>
 
 #include <gtkblist.h>
@@ -543,6 +541,7 @@ static PurplePluginInfo info =
 	NULL,							/* extra_info			*/
 	&prefs_info,					/* prefs_info			*/
 	actions,						/* actions				*/
+
 	NULL,							/* reserved 1			*/
 	NULL,							/* reserved 2			*/
 	NULL,							/* reserved 3			*/
@@ -571,4 +570,4 @@ init_plugin(PurplePlugin *plugin) {
 }
 
 PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)
-#endif
+
