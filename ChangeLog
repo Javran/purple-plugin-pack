@@ -1,3 +1,7 @@
+Version 2.2.0mtn:
+	* Merged autorejoin into irc-more.  No prefs migration will take place.
+	  You will need to reconfigure the delay yourself.
+
 Version 2.1.1: 8/19/07
 	* Fixed lack of .build, .pidgin-plugin, and Makefile.mingw for convbadger
 

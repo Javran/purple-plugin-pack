@@ -1,6 +1,5 @@
 album/album-ui.c
 album/album.c
-autorejoin/autorejoin.c
 autoreply/autoreply.c
 awaynotify/awaynotify.c
 bash/bash.c
