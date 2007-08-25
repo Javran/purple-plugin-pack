@@ -15,7 +15,8 @@ PP_SRC := \
 	gen_xml_files.c \
 	lh_util.c \
 	listhandler.c \
-	migrate.c
+	migrate.c \
+	purple_blist_xml.c
 
 include $(PP_TOP)/win_pp.mak
 

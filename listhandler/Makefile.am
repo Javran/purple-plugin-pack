@@ -7,7 +7,8 @@ EXTRA_DIST=\
 	gen_xml_files.h \
 	lh_util.h \
 	listhandler.h \
-	migrate.h
+	migrate.h \
+	purple_blist_xml.h
 
 listhandlerdir = $(PURPLE_LIBDIR)
 
@@ -23,7 +24,8 @@ listhandler_la_SOURCES = \
 	gen_xml_files.c \
 	lh_util.c \
 	migrate.c \
-	listhandler.c
+	listhandler.c \
+	purple_blist_xml.c
 
 listhandler_la_LIBADD = \
 	$(GLIB_LIBS) \
