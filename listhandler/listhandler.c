@@ -23,6 +23,7 @@
 
 #include "listhandler.h"
 #include "aim_blt_files.h"
+#include "alias_xml_files.h"
 #include "gen_xml_files.h"
 #include "migrate.h"
 
@@ -34,6 +35,14 @@ listhandler_actions(PurplePlugin *plugin, gpointer context)
 	GList *list = NULL;
 	PurplePluginAction *action = NULL;
 
+	action = purple_plugin_action_new(_("Copy Buddies From One Account to Another"),
+									lh_migrate_action_cb);
+	list = g_list_append(list, action);
+
+	action = purple_plugin_action_new(_("Import Alias List File"),
+									lh_alist_import_action_cb);
+	list = g_list_append(list, action);
+
 	action = purple_plugin_action_new(_("Import AIM Buddy List File (.blt)"),
 									lh_aim_import_action_cb);
 	list = g_list_append(list, action);
@@ -42,24 +51,16 @@ listhandler_actions(PurplePlugin *plugin, gpointer context)
 									lh_generic_import_action_cb);
 	list = g_list_append(list, action);
 
-	action = purple_plugin_action_new(_("Import Generic Alias List File"),
-									lh_generic_import_alist_action_cb);
-	list = g_list_append(list, action);
-
 	action = purple_plugin_action_new(_("Export AIM Buddy List File"),
 									lh_aim_export_action_cb);
 	list = g_list_append(list, action);
 
+	action = purple_plugin_action_new(_("Export Alias List File"),
+									lh_alist_export_action_cb);
+	list = g_list_append(list, action);
+
 	action = purple_plugin_action_new(_("Export Generic Buddy List File"),
 									lh_generic_export_action_cb);
-	list = g_list_append(list, action);
-
-	action = purple_plugin_action_new(_("Export Generic Alias List File"),
-									lh_generic_export_alist_action_cb);
-	list = g_list_append(list, action);
-
-	action = purple_plugin_action_new(_("Copy Buddies From One Account to Another"),
-									lh_migrate_action_cb);
 	list = g_list_append(list, action);
 
 	purple_debug_info("listhandler", "Action list created\n");

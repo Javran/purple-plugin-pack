@@ -11,6 +11,7 @@ PP = listhandler
 
 PP_SRC := \
 	aim_blt_files.c \
+	alias_xml_files.c \
 	gen_xml_files.c \
 	lh_util.c \
 	listhandler.c \
