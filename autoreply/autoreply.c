@@ -46,11 +46,16 @@
 #define	PREFS_PREFIX_MSG    PREFS_PREFIX "/prefix"
 
 typedef struct _PurpleAutoReply PurpleAutoReply;
+typedef struct _AutoReplyProtocolOptions	AutoReplyProtocolOptions;
 
 struct _PurpleAutoReply
 {
 	PurpleBuddy *buddy;
 	char *reply;
+};
+
+struct _AutoReplyProtocolOptions {
+	PurpleAccountOption *message;
 };
 
 typedef enum
@@ -243,32 +248,44 @@ context_menu(PurpleBlistNode *node, GList **menu, gpointer plugin)
 }
 
 static void
-add_option_for_protocol(PurplePlugin *plg)
+add_options_for_protocol(PurplePlugin *plg)
 {
+	AutoReplyProtocolOptions *arpo;
 	PurplePluginProtocolInfo *info = PURPLE_PLUGIN_PROTOCOL_INFO(plg);
-	PurpleAccountOption *option;
 	
-	option = purple_account_option_string_new(_("Autoreply message"),
-											  "autoreply", NULL);
+	arpo = g_new(AutoReplyProtocolOptions, 1);
 
-	info->protocol_options = g_list_append(info->protocol_options, option);
+	arpo->message = purple_account_option_string_new(_("Autoreply message"),
+													 "autoreply", NULL);
+	info->protocol_options = g_list_append(info->protocol_options,
+										   arpo->message);
 
 	if (!g_hash_table_lookup(options, plg))
-		g_hash_table_insert(options, plg, option);
+		g_hash_table_insert(options, plg, arpo);
 }
 
 static void
-remove_option_for_protocol(PurplePlugin *plg)
+remove_options_for_protocol(PurplePlugin *plg)
 {
 	PurplePluginProtocolInfo *info = PURPLE_PLUGIN_PROTOCOL_INFO(plg);
-	PurpleAccountOption *option = g_hash_table_lookup(options, plg);
+	AutoReplyProtocolOptions *arpo = g_hash_table_lookup(options, plg);
+	GList *l = NULL;
 
-	if (g_list_find(info->protocol_options, option))
+	if(!arpo)
+		return;
+	
+	/*
+	 * 22:55 < sadrul> grim: the check when removing is required, iirc, when
+	 *                 pidgin quits, and a prpl is unloaded before the plugin
+	 */
+	if ((l = g_list_find(info->protocol_options, arpo->message)))
 	{
-		info->protocol_options = g_list_remove(info->protocol_options, option);
-		purple_account_option_destroy(option);
+		info->protocol_options = g_list_remove_link(info->protocol_options, l);
+		purple_account_option_destroy(arpo->message);
 		g_hash_table_remove(options, plg);
 	}
+
+	g_free(arpo);
 }
 
 static void
@@ -277,9 +294,9 @@ plugin_load_cb(PurplePlugin *plugin, gboolean load)
 	if (plugin->info && plugin->info->type == PURPLE_PLUGIN_PROTOCOL)
 	{
 		if (load)
-			add_option_for_protocol(plugin);
+			add_options_for_protocol(plugin);
 		else
-			remove_option_for_protocol(plugin);
+			remove_options_for_protocol(plugin);
 	}
 }
 
@@ -302,7 +319,7 @@ plugin_load(PurplePlugin *plugin)
 	list = purple_plugins_get_protocols();
 	while (list)
 	{
-		add_option_for_protocol(list->data);
+		add_options_for_protocol(list->data);
 		list = list->next;
 	}
 	
@@ -320,7 +337,7 @@ plugin_unload(PurplePlugin *plugin)
 	list = purple_plugins_get_protocols();
 	while (list)
 	{
-		remove_option_for_protocol(list->data);
+		remove_options_for_protocol(list->data);
 		list = list->next;
 	}
 	g_hash_table_destroy(options);
