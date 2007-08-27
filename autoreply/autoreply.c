@@ -246,7 +246,11 @@ static void
 add_option_for_protocol(PurplePlugin *plg)
 {
 	PurplePluginProtocolInfo *info = PURPLE_PLUGIN_PROTOCOL_INFO(plg);
-	PurpleAccountOption *option; option = purple_account_option_string_new(_("Autoreply message"), "autoreply", NULL);
+	PurpleAccountOption *option;
+	
+	option = purple_account_option_string_new(_("Autoreply message"),
+											  "autoreply", NULL);
+
 	info->protocol_options = g_list_append(info->protocol_options, option);
 
 	if (!g_hash_table_lookup(options, plg))
