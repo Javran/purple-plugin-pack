@@ -300,7 +300,7 @@ static PurplePluginInfo info =
 	PURPLE_PRIORITY_DEFAULT,
 	"gnt-highlight",
 	N_("Highlight"),
-	VERSION,
+	PP_VERSION,
 	N_("Support for highlighting words."),
 	N_("Support for highlighting words."),
 	"Sadrul H Chowdhury <sadrul@users.sourceforge.net>",
@@ -312,7 +312,10 @@ static PurplePluginInfo info =
 	NULL,
 	&prefs_info,
 	NULL,
-	NULL, NULL, NULL, NULL
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
 
 static void
