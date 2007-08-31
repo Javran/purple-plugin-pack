@@ -37,8 +37,17 @@ AC_DEFUN([AM_BUILD_PLUGIN_LIST],
 			continue
 		fi
 
-		if test -f "$d/Makefile.am" -a ! "$d" = "$srcdir/common" -a ! "$d" = "$srcdir/doc" -a ! "$d" = "$srcdir/m4" -a ! -f "$d/.abusive" -a ! -f "$d/.build" -a ! -f "$d/.incomplete" -a ! -f "$d/.sanity" ; then
-			AC_ERROR([Directory $d missing sanity])
+		if test -f "$d/Makefile.am" -a ! "$d" = "$srcdir/common" -a ! "$d" = "$srcdir/doc" -a ! "$d" = "$srcdir/m4" -a ! -f "$d/.abusive" -a ! -f "$d/.build" -a ! -f "$d/.incomplete" ; then
+			AC_ERROR(
+[
+*** Plugin Directory $d is misconfigured
+***
+*** You should *NEVER* see this in a release.  If this is a release and not
+*** monotone, please file a ticket at http://plugins.guifications.org/
+***
+*** If you are a developer, please ensure that $d contains a .build,
+*** .incomplete, or .abusive file.
+])
 		fi
 
 		base=`basename $d`
