@@ -266,7 +266,7 @@ static PurplePluginInfo info =
 	PURPLE_PRIORITY_DEFAULT,
 	"gnt-ignore",
 	N_("Ignore"),
-	VERSION,
+	PP_VERSION,
 	N_("Flexible plugin to selectively ignore people. Please do not use if you have amnesia."),
 	N_("Flexible plugin to selectively ignore people. See '/help ignore' for more help.\nPlease do not use if you have amnesia."),
 	"Sadrul H Chowdhury <sadrul@users.sourceforge.net>",
@@ -278,7 +278,10 @@ static PurplePluginInfo info =
 	NULL,
 	NULL,
 	NULL,
-	0,0,0,0
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
 
 static void
