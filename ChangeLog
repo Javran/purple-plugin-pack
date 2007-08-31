@@ -2,6 +2,9 @@ Version 2.2.0mtn:
 	* Merged autorejoin into irc-more.  No prefs migration will take place.
 	  You will need to reconfigure the delay yourself.
 	* Slashexec's '/exec command' and '!command' are now optional (QuLogic)
+	* Fixed the version number for highlight and ignore so they show the
+	  correct Plugin Pack version instead of the version of Pidgin they were
+	  built against.
 
 Version 2.1.1: 8/19/07
 	* Fixed lack of .build, .pidgin-plugin, and Makefile.mingw for convbadger
