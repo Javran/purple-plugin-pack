@@ -50,8 +50,6 @@ menu_select_cb(GtkMenuItem * menuitem, GtkWidget * menu)
 {
     const char *label = menuitem_get_label(menuitem);
 
-//      printf( "menuitem = %s(%p), menu = %s(%p)\n", G_OBJECT_TYPE_NAME(menuitem), menuitem, G_OBJECT_TYPE_NAME(menu), menu );
-
     if(label[0] == '<')
     {
         GtkWidget *selection;
@@ -78,12 +76,10 @@ menu_select_cb(GtkMenuItem * menuitem, GtkWidget * menu)
             char *temp;
 
             parent = gtk_widget_get_parent(GTK_WIDGET(menuitem));
-//                      printf( "parent = %s(%p)\n", G_OBJECT_TYPE_NAME(parent), parent);
             if(menu == parent)
                 break;
 
             parentitem = GTK_MENU_ITEM(gtk_menu_get_attach_widget(GTK_MENU(parent)));
-//                      printf( "parentitem = %s(%p)\n", G_OBJECT_TYPE_NAME(parentitem), parentitem);
             label2 = menuitem_get_label(parentitem);
             if(strcmp(label2, MORE_STRING) != 0)
             {
@@ -236,10 +232,6 @@ get_timezone_menu_selection(void *widget)
     if(sel == 1)                /* Disabled */
         return "none";
 
-//    GtkMenu *m = GTK_MENU( gtk_option_menu_get_menu(menu) );
-//    GtkMenuItem *mi = GTK_MENU_ITEM( gtk_menu_get_active( m ));
     GtkLabel *l = GTK_LABEL(gtk_bin_get_child(GTK_BIN(menu)));
-//    printf("optionmenu=%p, menu=%p, menuitem=%p, label=%p\n", menu, m, mi, l );
     return gtk_label_get_text(l);
-//    return ;
 }
