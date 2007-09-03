@@ -2,7 +2,7 @@
  * Album (Buddy Icon Archiver)
  *
  * Copyright (C) 2005-2006, Sadrul Habib Chowdhury <imadil@gmail.com>
- * Copyright (C) 2005-2006, Richard Laager <rlaager@users.sf.net>
+ * Copyright (C) 2005-2006, Richard Laager <rlaager@pidgin.im>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
