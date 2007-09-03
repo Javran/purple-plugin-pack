@@ -1,7 +1,7 @@
 /*************************************************************************
  * Buddy Timezone Module
  *
- * A Gaim plugin that allows you to configure a timezone on a per-contact
+ * A Purple plugin that allows you to configure a timezone on a per-contact
  * basis so it can display the localtime of your contact when a conversation
  * starts. Convenient if you deal with contacts from many parts of the
  * world.
@@ -25,7 +25,7 @@
  * 02111-1307, USA.
  *************************************************************************/
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 
 #ifdef CUSTOM_GTK
 #define PLUGIN "gtk-kleptog-buddytimezone"
@@ -54,14 +54,7 @@
 #include "localtime.h"
 #include "recurse.h"
 
-void *gaim_gtk_blist_get_handle();
-
-#if defined(CUSTOM_GTK) && (GAIM_MAJOR_VERSION < 2)
-//#error Custom GTK Widget only works in Gaim 2
-#undef CUSTOM_GTK
-#endif
-
-//#include "gtkblist.h"   /* gaim_gtk_blist_get_handle */  Requires gtk-dev
+#include "gtkblist.h"
 
 #define TIMEZONE_FLAG  ((void*)1)
 #define DISABLED_FLAG ((void*)2)
@@ -70,7 +63,7 @@ void *gaim_gtk_blist_get_handle();
 /* Another possible format (hides seconds) */
 //#define TIME_FORMAT  "%H:%M"
 
-static GaimPlugin *plugin_self;
+static PurplePlugin *plugin_self;
 void *make_timezone_menu(const char *selected);
 const char *get_timezone_menu_selection(void *widget);
 
@@ -83,27 +76,27 @@ const char *get_timezone_menu_selection(void *widget);
  * that's what it is
  */
 static const char *
-buddy_get_timezone(GaimBlistNode * node, gboolean resolve)
+buddy_get_timezone(PurpleBlistNode * node, gboolean resolve)
 {
-    GaimBlistNode *datanode = NULL;
+    PurpleBlistNode *datanode = NULL;
     const char *timezone;
 
     switch (node->type)
     {
-        case GAIM_BLIST_BUDDY_NODE:
-            datanode = (GaimBlistNode *) gaim_buddy_get_contact((GaimBuddy *) node);
+        case PURPLE_BLIST_BUDDY_NODE:
+            datanode = (PurpleBlistNode *) purple_buddy_get_contact((PurpleBuddy *) node);
             break;
-        case GAIM_BLIST_CONTACT_NODE:
+        case PURPLE_BLIST_CONTACT_NODE:
             datanode = node;
             break;
-        case GAIM_BLIST_GROUP_NODE:
+        case PURPLE_BLIST_GROUP_NODE:
             datanode = node;
             break;
         default:
             return NULL;
     }
 
-    timezone = gaim_blist_node_get_string(datanode, SETTING_NAME);
+    timezone = purple_blist_node_get_string(datanode, SETTING_NAME);
 
     if(!resolve)
         return timezone;
@@ -115,11 +108,11 @@ buddy_get_timezone(GaimBlistNode * node, gboolean resolve)
     if(timezone)
         return timezone;
 
-    if(datanode->type == GAIM_BLIST_CONTACT_NODE)
+    if(datanode->type == PURPLE_BLIST_CONTACT_NODE)
     {
-        /* There is no gaim_blist_contact_get_group(), though there probably should be */
+        /* There is no purple_blist_contact_get_group(), though there probably should be */
         datanode = datanode->parent;
-        timezone = gaim_blist_node_get_string(datanode, SETTING_NAME);
+        timezone = purple_blist_node_get_string(datanode, SETTING_NAME);
     }
 
     if(timezone && strcmp(timezone, "none") == 0)
@@ -210,29 +203,24 @@ timezone_get_time(const char *timezone, struct tm *tm, float *diff)
 #endif
 
 static void
-timezone_createconv_cb(GaimConversation * conv, void *data)
+timezone_createconv_cb(PurpleConversation * conv, void *data)
 {
     const char *name;
-    GaimBuddy *buddy;
+    PurpleBuddy *buddy;
     struct tm tm;
     const char *timezone;
     float diff;
     int ret;
 
-#if GAIM_MAJOR_VERSION < 2
-    if(gaim_conversation_get_type(conv) != GAIM_CONV_IM)
+    if(purple_conversation_get_type(conv) != PURPLE_CONV_TYPE_IM)
         return;
-#else
-    if(gaim_conversation_get_type(conv) != GAIM_CONV_TYPE_IM)
-        return;
-#endif
 
-    name = gaim_conversation_get_name(conv);
-    buddy = gaim_find_buddy(gaim_conversation_get_account(conv), name);
+    name = purple_conversation_get_name(conv);
+    buddy = purple_find_buddy(purple_conversation_get_account(conv), name);
     if(!buddy)
         return;
 
-    timezone = buddy_get_timezone((GaimBlistNode *) buddy, TRUE);
+    timezone = buddy_get_timezone((PurpleBlistNode *) buddy, TRUE);
 
     if(!timezone)
         return;
@@ -241,29 +229,19 @@ timezone_createconv_cb(GaimConversation * conv, void *data)
 
     if(ret == 0)
     {
-#if GAIM_MAJOR_VERSION > 1
-        const char *text = gaim_time_format(&tm);
-#else
-        char text[64];
-        strftime(text, sizeof(text), TIME_FORMAT, &tm);
-#endif
+        const char *text = purple_time_format(&tm);
 
         char *str = g_strdup_printf("Remote Local Time: %s (%g hours %s)", text, fabs(diff),
                                     (diff < 0) ? "behind" : "ahead");
 
-        gaim_conversation_write(conv, PLUGIN, str, GAIM_MESSAGE_SYSTEM, time(NULL));
+        purple_conversation_write(conv, PLUGIN, str, PURPLE_MESSAGE_SYSTEM, time(NULL));
 
         g_free(str);
     }
 }
 
-#if GAIM_MAJOR_VERSION > 1
 static void
-buddytimezone_tooltip_cb(GaimBlistNode * node, char **text, gboolean full, void *data)
-#else
-static void
-buddytimezone_tooltip_cb(GaimBlistNode * node, char **text, void *data)
-#endif
+buddytimezone_tooltip_cb(PurpleBlistNode * node, char **text, gboolean full, void *data)
 {
     char *newtext;
     const char *timezone;
@@ -271,12 +249,10 @@ buddytimezone_tooltip_cb(GaimBlistNode * node, char **text, void *data)
     float diff;
     int ret;
 
-#if GAIM_MAJOR_VERSION > 1
     if(!full)
         return;
-#endif
 
-    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "type %d\n", node->type);
+    purple_debug(PURPLE_DEBUG_INFO, PLUGIN, "type %d\n", node->type);
     timezone = buddy_get_timezone(node, TRUE);
     if(!timezone)
         return;
@@ -286,12 +262,7 @@ buddytimezone_tooltip_cb(GaimBlistNode * node, char **text, void *data)
         newtext = g_strdup_printf("%s\n<b>Timezone:</b> %s (error)", *text, timezone);
     else if(ret == 0)
     {
-#if GAIM_MAJOR_VERSION > 1
-        const char *timetext = gaim_time_format(&tm);
-#else
-        char timetext[64];
-        strftime(timetext, sizeof(timetext), TIME_FORMAT, &tm);
-#endif
+        const char *timetext = purple_time_format(&tm);
 
         newtext =
             g_strdup_printf("%s\n<b>Local Time:</b> %s (%g hours %s)", *text, timetext, fabs(diff),
@@ -305,52 +276,52 @@ buddytimezone_tooltip_cb(GaimBlistNode * node, char **text, void *data)
 }
 
 static void
-buddytimezone_submitfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
+buddytimezone_submitfields_cb(PurpleRequestFields * fields, PurpleBlistNode * data)
 {
-    GaimBlistNode *node;
-    GaimRequestField *list;
+    PurpleBlistNode *node;
+    PurpleRequestField *list;
 
     /* timezone stuff */
-    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddytimezone_submitfields_cb(%p,%p)\n", fields, data);
+    purple_debug(PURPLE_DEBUG_INFO, PLUGIN, "buddytimezone_submitfields_cb(%p,%p)\n", fields, data);
 
     switch (data->type)
     {
-        case GAIM_BLIST_BUDDY_NODE:
-            node = (GaimBlistNode *) gaim_buddy_get_contact((GaimBuddy *) data);
+        case PURPLE_BLIST_BUDDY_NODE:
+            node = (PurpleBlistNode *) purple_buddy_get_contact((PurpleBuddy *) data);
             break;
-        case GAIM_BLIST_CONTACT_NODE:
-        case GAIM_BLIST_GROUP_NODE:
+        case PURPLE_BLIST_CONTACT_NODE:
+        case PURPLE_BLIST_GROUP_NODE:
             /* code handles either case */
             node = data;
             break;
-        case GAIM_BLIST_CHAT_NODE:
-        case GAIM_BLIST_OTHER_NODE:
+        case PURPLE_BLIST_CHAT_NODE:
+        case PURPLE_BLIST_OTHER_NODE:
         default:
             /* Not applicable */
             return;
     }
 
-    list = gaim_request_fields_get_field(fields, CONTROL_NAME);
+    list = purple_request_fields_get_field(fields, CONTROL_NAME);
 #ifdef CUSTOM_GTK
     const char *seldata = get_timezone_menu_selection(list->ui_data);
     if(seldata == NULL)
-        gaim_blist_node_remove_setting(node, SETTING_NAME);
+        purple_blist_node_remove_setting(node, SETTING_NAME);
     else
-        gaim_blist_node_set_string(node, SETTING_NAME, seldata);
+        purple_blist_node_set_string(node, SETTING_NAME, seldata);
 #else
     const GList *sellist;
     void *seldata = NULL;
-    sellist = gaim_request_field_list_get_selected(list);
+    sellist = purple_request_field_list_get_selected(list);
     if(sellist)
-        seldata = gaim_request_field_list_get_data(list, sellist->data);
+        seldata = purple_request_field_list_get_data(list, sellist->data);
 
     /* Otherwise, it's fixed value and this means deletion */
     if(seldata == TIMEZONE_FLAG)
-        gaim_blist_node_set_string(node, SETTING_NAME, sellist->data);
+        purple_blist_node_set_string(node, SETTING_NAME, sellist->data);
     else if(seldata == DISABLED_FLAG)
-        gaim_blist_node_set_string(node, SETTING_NAME, "none");
+        purple_blist_node_set_string(node, SETTING_NAME, "none");
     else
-        gaim_blist_node_remove_setting(node, SETTING_NAME);
+        purple_blist_node_remove_setting(node, SETTING_NAME);
 #endif
 }
 
@@ -358,118 +329,118 @@ buddytimezone_submitfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
 static int
 buddy_add_timezone_cb(char *filename, void *data)
 {
-    GaimRequestField *field = (GaimRequestField *) data;
+    PurpleRequestField *field = (PurpleRequestField *) data;
     if(isupper(filename[0]))
-        gaim_request_field_list_add(field, filename, TIMEZONE_FLAG);
+        purple_request_field_list_add(field, filename, TIMEZONE_FLAG);
     return 0;
 }
 #endif
 
 static void
-buddytimezone_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
+buddytimezone_createfields_cb(PurpleRequestFields * fields, PurpleBlistNode * data)
 {
-    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddytimezone_createfields_cb(%p,%p)\n", fields, data);
-    GaimRequestField *field;
-    GaimRequestFieldGroup *group;
+    purple_debug(PURPLE_DEBUG_INFO, PLUGIN, "buddytimezone_createfields_cb(%p,%p)\n", fields, data);
+    PurpleRequestField *field;
+    PurpleRequestFieldGroup *group;
     const char *timezone;
     gboolean is_default;
 
     switch (data->type)
     {
-        case GAIM_BLIST_BUDDY_NODE:
-        case GAIM_BLIST_CONTACT_NODE:
+        case PURPLE_BLIST_BUDDY_NODE:
+        case PURPLE_BLIST_CONTACT_NODE:
             is_default = FALSE;
             break;
-        case GAIM_BLIST_GROUP_NODE:
+        case PURPLE_BLIST_GROUP_NODE:
             is_default = TRUE;
             break;
-        case GAIM_BLIST_CHAT_NODE:
-        case GAIM_BLIST_OTHER_NODE:
+        case PURPLE_BLIST_CHAT_NODE:
+        case PURPLE_BLIST_OTHER_NODE:
         default:
             /* Not applicable */
             return;
     }
 
-    group = gaim_request_field_group_new(NULL);
-    gaim_request_fields_add_group(fields, group);
+    group = purple_request_field_group_new(NULL);
+    purple_request_fields_add_group(fields, group);
 
     timezone = buddy_get_timezone(data, FALSE);
 
 #ifdef CUSTOM_GTK
     field =
-        gaim_request_field_new(CONTROL_NAME,
+        purple_request_field_new(CONTROL_NAME,
                                is_default ? "Default timezone for group" : "Timezone of contact",
-                               GAIM_REQUEST_FIELD_LIST);
+                               PURPLE_REQUEST_FIELD_LIST);
     field->ui_data = make_timezone_menu(timezone);
 #else
     field =
-        gaim_request_field_list_new(CONTROL_NAME,
+        purple_request_field_list_new(CONTROL_NAME,
                                     is_default ? "Default timezone for group" :
                                     "Timezone of contact (type to select)");
-    gaim_request_field_list_set_multi_select(field, FALSE);
-    gaim_request_field_list_add(field, "<Default>", "");
-    gaim_request_field_list_add(field, "<Disabled>", DISABLED_FLAG);
+    purple_request_field_list_set_multi_select(field, FALSE);
+    purple_request_field_list_add(field, "<Default>", "");
+    purple_request_field_list_add(field, "<Disabled>", DISABLED_FLAG);
 
     recurse_directory("/usr/share/zoneinfo/", buddy_add_timezone_cb, field);
 
     if(timezone)
     {
         if(strcmp(timezone, "none") == 0)
-            gaim_request_field_list_add_selected(field, "<Disabled>");
+            purple_request_field_list_add_selected(field, "<Disabled>");
         else
-            gaim_request_field_list_add_selected(field, timezone);
+            purple_request_field_list_add_selected(field, timezone);
     }
     else
-        gaim_request_field_list_add_selected(field, "<Default>");
+        purple_request_field_list_add_selected(field, "<Default>");
 #endif
 
-    gaim_request_field_group_add_field(group, field);
+    purple_request_field_group_add_field(group, field);
 }
 
 static gboolean
-plugin_load(GaimPlugin * plugin)
+plugin_load(PurplePlugin * plugin)
 {
     plugin_self = plugin;
 
-    gaim_signal_connect(gaim_blist_get_handle(), "core-kleptog-buddyedit-create-fields", plugin,
-                        GAIM_CALLBACK(buddytimezone_createfields_cb), NULL);
-    gaim_signal_connect(gaim_blist_get_handle(), "core-kleptog-buddyedit-submit-fields", plugin,
-                        GAIM_CALLBACK(buddytimezone_submitfields_cb), NULL);
-    gaim_signal_connect(gaim_gtk_blist_get_handle(), "drawing-tooltip", plugin,
-                        GAIM_CALLBACK(buddytimezone_tooltip_cb), NULL);
-    gaim_signal_connect(gaim_conversations_get_handle(), "conversation-created", plugin,
-                        GAIM_CALLBACK(timezone_createconv_cb), NULL);
+    purple_signal_connect(purple_blist_get_handle(), "core-kleptog-buddyedit-create-fields", plugin,
+                        PURPLE_CALLBACK(buddytimezone_createfields_cb), NULL);
+    purple_signal_connect(purple_blist_get_handle(), "core-kleptog-buddyedit-submit-fields", plugin,
+                        PURPLE_CALLBACK(buddytimezone_submitfields_cb), NULL);
+    purple_signal_connect(pidgin_blist_get_handle(), "drawing-tooltip", plugin,
+                        PURPLE_CALLBACK(buddytimezone_tooltip_cb), NULL);
+    purple_signal_connect(purple_conversations_get_handle(), "conversation-created", plugin,
+                        PURPLE_CALLBACK(timezone_createconv_cb), NULL);
 
 #ifdef PRIVATE_TZLIB
-    const char *zoneinfo_dir = gaim_prefs_get_string("/plugins/timezone/zoneinfo_dir");
+    const char *zoneinfo_dir = purple_prefs_get_string("/plugins/timezone/zoneinfo_dir");
     if(tz_init(zoneinfo_dir) < 0)
-        gaim_debug_error(PLUGIN, "Problem opening zoneinfo dir (%s): %s\n", zoneinfo_dir,
+        purple_debug_error(PLUGIN, "Problem opening zoneinfo dir (%s): %s\n", zoneinfo_dir,
                          strerror(errno));
 #endif
 
     return TRUE;
 }
 
-static GaimPluginInfo info = {
-    GAIM_PLUGIN_MAGIC,
-    GAIM_MAJOR_VERSION,
-    GAIM_MINOR_VERSION,
-    GAIM_PLUGIN_STANDARD,
+static PurplePluginInfo info = {
+    PURPLE_PLUGIN_MAGIC,
+    PURPLE_MAJOR_VERSION,
+    0,
+    PURPLE_PLUGIN_STANDARD,
     NULL,
     0,
     NULL,
-    GAIM_PRIORITY_DEFAULT,
+    PURPLE_PRIORITY_DEFAULT,
 
     PLUGIN,
     "Buddy Timezone Module",
     G_STRINGIFY(PLUGIN_VERSION),
 
     "Quickly see the local time of a buddy",
-    "A Gaim plugin that allows you to configure a timezone on a per-contact "
+    "A Purple plugin that allows you to configure a timezone on a per-contact "
         "basis so it can display the localtime of your contact when a conversation "
         "starts. Convenient if you deal with contacts from many parts of the " "world.",
     "Martijn van Oosterhout <kleptog@svana.org>",
-    "http://svana.org/kleptog/gaim/",
+    "http://svana.org/kleptog/purple/",
 
     plugin_load,
     NULL,
@@ -482,9 +453,9 @@ static GaimPluginInfo info = {
 };
 
 static void
-init_plugin(GaimPlugin * plugin)
+init_plugin(PurplePlugin * plugin)
 {
     info.dependencies = g_list_append(info.dependencies, "core-kleptog-buddyedit");
 }
 
-GAIM_INIT_PLUGIN(buddytimezone, init_plugin, info);
+PURPLE_INIT_PLUGIN(buddytimezone, init_plugin, info);

@@ -30,6 +30,8 @@
 #include <glib.h>
 #include <string.h>
 
+#include "gaim-compat.h"
+
 #include "notify.h"
 #include "plugin.h"
 #include "version.h"
@@ -108,7 +110,11 @@ buddylang_createconv_cb(GaimConversation * conv, void *data)
     const char *name;
     GaimBuddy *buddy;
     const char *language;
+#ifdef PIDGIN_CONVERSATION
+    PidginConversation *gtkconv;
+#else
     GaimGtkConversation *gtkconv;
+#endif
     GtkSpell *gtkspell;
     char *str;
     GError *error = NULL;
@@ -131,7 +137,11 @@ buddylang_createconv_cb(GaimConversation * conv, void *data)
     if(!language)
         return;
 
+#ifdef PIDGIN_CONVERSATION
+    gtkconv = PIDGIN_CONVERSATION(conv);
+#else
     gtkconv = GAIM_GTK_CONVERSATION(conv);
+#endif
     gtkspell = gtkspell_get_from_text_view(GTK_TEXT_VIEW(gtkconv->entry));
 
     if(!gtkspell)

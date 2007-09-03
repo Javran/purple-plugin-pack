@@ -29,6 +29,8 @@
 
 #include <glib.h>
 
+#include "gaim-compat.h"
+
 #include "notify.h"
 #include "plugin.h"
 #include "version.h"
@@ -38,9 +40,7 @@
 #include "request.h"            /* Requests stuff */
 #include "conversation.h"       /* Conversation stuff */
 
-void *gaim_gtk_blist_get_handle();
-
-//#include "gtkblist.h"   /* gaim_gtk_blist_get_handle */  Requires gtk-dev
+#include "gtkblist.h"
 
 #define TIMEZONE_FLAG  ((void*)1)
 

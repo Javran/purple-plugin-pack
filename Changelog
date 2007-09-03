@@ -1,3 +1,6 @@
+version 0.6 (3 Sep 2007)
+	* Support Pidgin (rlaager)
+
 version 0.5 (9 Apr 2006)
 	* Add initial "Edit Chat" functionality. Works at least for IRC. (kleptog)
 	* The usual bug fixes

@@ -30,6 +30,8 @@
 #include <glib.h>
 #include <string.h>
 
+#include "gaim-compat.h"
+
 #include "notify.h"
 #include "plugin.h"
 #include "util.h"
@@ -424,4 +426,4 @@ init_plugin(GaimPlugin * plugin)
 {
 }
 
-GAIM_INIT_PLUGIN(buddyedit, init_plugin, info);
+PURPLE_INIT_PLUGIN(buddyedit, init_plugin, info);

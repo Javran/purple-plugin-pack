@@ -13,15 +13,12 @@ PRIVATE_TZLIB ?= yes
 CUSTOM_GTK ?= yes
 
 # For choosing which version to compile against
-# This is name of the pkgconfig file to use
-
-GAIM_NAME ?= gaim
 
 # Where to install the modules
-INSTALL_PATH=$(HOME)/.$(GAIM_NAME)/plugins/
+INSTALL_PATH=$(HOME)/.purple/plugins/
 
-CFLAGS=-O2 -g -Wall `pkg-config --cflags glib-2.0 $(GAIM_NAME)` -DPLUGIN_VERSION=$(VERSION)
-LDFLAGS=`pkg-config --libs glib-2.0 $(GAIM_NAME)`
+CFLAGS=-O2 -g -Wall `pkg-config --cflags glib-2.0 purple pidgin` -DPLUGIN_VERSION=$(VERSION)
+LDFLAGS=`pkg-config --libs glib-2.0 purple pidgin`
 CC=gcc
 
 ifeq ($(PRIVATE_TZLIB),yes)
@@ -80,13 +77,4 @@ bundle:
 	ln -s . buddyedit-$(VERSION)
 	tar cvzf ../buddyedit-$(VERSION).tar.gz buddyedit-$(VERSION)/{*.c,*.h,Makefile,README,COPYING,Changelog}
 	rm buddyedit-$(VERSION)
-
-# Tests that all the different combinations compile. Probably only
-# meaningful on my computer where 'gaim' = Gaim1.5 and 'gaim2' = Gaim2.0
-# - Martijn
-compiletest:
-	for i in gaim gaim2 ; do for j in yes no ; do for k in yes no ; do \
-		make clean ; \
-		make all GAIM_NAME=$$i CUSTOM_GTK=$$j PRIVATE_TZLIB=$$k ; \
-	done ; done ; done
 
