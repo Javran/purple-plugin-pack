@@ -96,7 +96,7 @@ lh_pbx_import_file_parse(const char *file)
 	LhPbxInfo tmpinfo = NULL;
 	gchar *contents = NULL;
 	gsize length = 0;
-	xmlnode *root = NULL, blist = NULL, giter = NULL, citer = NULL, biter = NULL;
+	xmlnode *root = NULL, blist = NULL, giter = NULL, citer = NULL, biter = NULL, siter = NULL;
 
 	/* grab the file contents, but bail out if there's an error */
 	if(!g_file_get_contents(file, &contents, &length, &error)) {
@@ -146,14 +146,15 @@ lh_pbx_import_file_parse(const char *file)
 					} else if(g_ascii_strcasecmp("last_seen", setting_name)) {
 						tmpinfo->last_seen = atoi(data);
 						g_free(data);
-					} else if(g_ascii_strcasecmp("guifications-theme", setting_name))
+					} else if(g_ascii_strcasecmp("guifications-theme", setting_name)) {
 						tmpinfo->gf_theme = data;
-					else if(g_ascii_strcasecmp("buddy_icon", setting_name))
+					} else if(g_ascii_strcasecmp("buddy_icon", setting_name)) {
 						tmpinfo->icon_file = data;
-					else if(g_ascii_strcasecmp("lastsaid", setting_name))
+					} else if(g_ascii_strcasecmp("lastsaid", setting_name)) {
 						tmpinfo->lastsaid = data;
-					else if(g_ascii_strcasecmp("notes", setting_name))
+					} else if(g_ascii_strcasecmp("notes", setting_name)) {
 						tmpinfo->notes = data;
+					}
 				}
 
 				list = g_list_prepend(list, tmpinfo);
