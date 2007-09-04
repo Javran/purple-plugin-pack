@@ -2,6 +2,9 @@ Version 2.2.0mtn:
 	* Merged autorejoin into irc-more.  No prefs migration will take place.
 	  You will need to reconfigure the delay yourself.
 	* Slashexec's '/exec command' and '!command' are now optional (QuLogic)
+	* Fixed a crash in Slashexec that has only shown itself when using the
+	  Offline Message Emulation plugin to emulate an offline message at the
+	  same time as Slashexec is loaded.
 	* Fixed the version number for highlight and ignore so they show the
 	  correct Plugin Pack version instead of the version of Pidgin they were
 	  built against.
