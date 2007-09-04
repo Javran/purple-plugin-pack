@@ -312,6 +312,7 @@ AC_OUTPUT([
 	dice/Makefile
 	difftopic/Makefile
 	eight_ball/Makefile
+	findip/Makefile
 	flip/Makefile
 	groupmsg/Makefile
 	gRIM/Makefile
