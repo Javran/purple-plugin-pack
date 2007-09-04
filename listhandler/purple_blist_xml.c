@@ -48,6 +48,11 @@ typedef struct {
 
 } LhPbxInfo;
 
+/*****************************************************************************
+ * Globals
+ ****************************************************************************/
+static GList *infolist = NULL;
+static GList *accountlist = NULL;
 
 /*****************************************************************************
  * "API"
@@ -79,20 +84,19 @@ lh_pbx_info_destroy(LhPbxInfo *l)
 }
 
 /*****************************************************************************
- * Plugin Stuff
+ * Helpers
  ****************************************************************************/
 
 static void
-lh_pbx_import_target_request(GList *l)
+lh_pbx_find_accounts(void)
 {
 	return;
 }
 
-static GList *
+static void
 lh_pbx_import_file_parse(const char *file)
 {
 	GError *error = NULL;
-	GList *list = NULL;
 	LhPbxInfo tmpinfo = NULL;
 	gchar *contents = NULL;
 	gsize length = 0;
@@ -103,7 +107,7 @@ lh_pbx_import_file_parse(const char *file)
 		purple_debug_error("listhandler: import: blist.xml", "Error reading %s: %s\n",
 				file ? file : "(null)", error->message ? error->message : "(null)");
 
-		return NULL;
+		return;
 	}
 
 	/* if we get here, we have the file's contents--parse into xmlnode tree */
@@ -157,12 +161,22 @@ lh_pbx_import_file_parse(const char *file)
 					}
 				}
 
-				list = g_list_prepend(list, tmpinfo);
+				infolist = g_list_prepend(infolist, tmpinfo);
 			}
 		}
 	}
 
-	return list;
+	return;
+}
+
+/*****************************************************************************
+ * Plugin Stuff
+ ****************************************************************************/
+
+static void
+lh_pbx_import_target_request(void)
+{
+	return;
 }
 
 static void
@@ -172,7 +186,10 @@ lh_pbx_import_request_cb(void *user_data, const char *file)
 
 	purple_debug_info("listhandler: import", "In request callback\n");
 
-	lh_pbx_import_target_request(lh_pbx_file_parse(file));
+	lh_pbx_file_parse(file);
+	lh_pbx_find_accounts();
+
+	lh_pbx_import_target_request();
 
 	return;
 }
