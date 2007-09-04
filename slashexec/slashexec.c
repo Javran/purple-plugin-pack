@@ -299,14 +299,14 @@ se_cmd_cb(PurpleConversation *conv, const gchar *cmd, gchar **args, gchar **erro
 static void
 se_sending_msg_helper(PurpleConversation *conv, char **message)
 {
-	char *string = *message, *strip;
+	char *string = *message, *strip = NULL;
 	gboolean send = TRUE;
 
 	if(conv == NULL || !purple_prefs_get_bool(PREF_BANG)) return;
 
 	strip = purple_markup_strip_html(string);
 
-	if(*strip != '!') {
+	if(strip && *strip != '!') {
 		g_free(strip);
 		return;
 	}
