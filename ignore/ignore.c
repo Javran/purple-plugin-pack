@@ -58,6 +58,7 @@ add_ignore_rule(IgnoreContext context, const char *name, PurpleAccount *account)
 {
 	GString *string;
 	char *pref;
+	char *lower_case_username;
 
 	string = g_string_new(PREF_ROOT);
 	string = g_string_append_c(string, '/');
@@ -66,8 +67,10 @@ add_ignore_rule(IgnoreContext context, const char *name, PurpleAccount *account)
 		purple_prefs_add_none(string->str);
 	string = g_string_append_c(string, '/');
 	string = g_string_append(string, purple_account_get_username(account));
-	if (!purple_prefs_exists(string->str))
-		purple_prefs_add_none(string->str);
+	lower_case_username = g_ascii_strdown(string->str, string->len);
+	if (!purple_prefs_exists(lower_case_username))
+		purple_prefs_add_none(lower_case_username);
+	g_free(lower_case_username);
 	string = g_string_append_c(string, '/');
 	string = g_string_append(string, name);
 	pref = g_ascii_strdown(string->str, string->len);
