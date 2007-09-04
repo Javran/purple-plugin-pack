@@ -2,6 +2,8 @@ Version 2.2.0mtn:
 	* Merged autorejoin into irc-more.  No prefs migration will take place.
 	  You will need to reconfigure the delay yourself.
 	* Slashexec's '/exec command' and '!command' are now optional (QuLogic)
+	* Added support for initial user modes to irc-more (incomplete)
+	* Fixed a possible double-free crash in /notice support in irc-more.
 	* Fixed a crash in Slashexec that has only shown itself when using the
 	  Offline Message Emulation plugin to emulate an offline message at the
 	  same time as Slashexec is loaded.
