@@ -32,6 +32,7 @@
 #define CTCP_REPLY    purple_account_get_string(account, "ctcp-message", "Purple IRC")
 #define PART_MESSAGE  purple_account_get_string(account, "part-message", "Leaving.")
 #define QUIT_MESSAGE  purple_account_get_string(account, "quit-message", "Leaving.")
+#define UMODES        purple_account_get_string(account, "umodes", "i")
 
 #define PLUGIN_ID "core-plugin_pack-irc-more"
 
@@ -89,6 +90,25 @@ irc_receiving_text(PurpleConnection *gc, const char **incoming, gpointer null)
 	g_strfreev(splits);
 }
 
+static void
+signed_on_cb(PurpleConnection *gc)
+{
+	/* should this be done on a timeout? */
+	PurpleAccount *account = NULL;
+	gchar *nick = NULL, *modes = NULL, *msg = NULL;
+
+	account = purple_connection_get_account(gc)
+	nick = purple_connection_get_display_name(gc);
+	modes = UMODES;
+	msg = g_strdup_printf("MODE %s +%s\r\n", nick, modes);
+
+	irc_info->send_raw(gc, msg, strlen(msg));
+
+	g_free(msg);
+
+	return;
+}
+
 static PurpleCmdRet
 notice_cmd_cb(PurpleConversation *conv, const gchar *cmd, gchar **args,
 		gchar **error, void *data)
@@ -130,8 +150,11 @@ notice_cmd_cb(PurpleConversation *conv, const gchar *cmd, gchar **args,
 
 	irc_info->send_raw(gc, msg, len);
 
+	/* avoid a possible double-free crash */
+	if(msg != tmp);
+		g_free(tmp);
+
 	g_free(msg);
-	g_free(tmp);
 
 	return PURPLE_CMD_RET_OK;
 }
@@ -171,6 +194,7 @@ plugin_load(PurplePlugin *plugin)
 	PurplePlugin *prpl = NULL;
 	PurpleAccountOption *option;
 	gchar *notice_help = NULL;
+	void *gc_handle = NULL;
 
 	prpl = purple_find_prpl("prpl-irc");
 
@@ -185,12 +209,22 @@ plugin_load(PurplePlugin *plugin)
 			PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT | PURPLE_CMD_FLAG_PRPL_ONLY,
 			"prpl-irc", notice_cmd_cb, notice_help, NULL);
 
+	/* we need this handle for the signed-on signal */
+	gc_handle = purple_connections_get_handle();
+
+	/* list signals in alphabetical order for consistency */
 	purple_signal_connect(prpl, "irc-sending-text", plugin,
 				G_CALLBACK(irc_sending_text), NULL);
 	purple_signal_connect(prpl, "irc-receiving-text", plugin,
 				G_CALLBACK(irc_receiving_text), NULL);
+	purple_signal_connect(gc_handle, "signed-on", plugin,
+				G_CALLBACK(signed_on_cb), NULL);
 
 	irc_info = PURPLE_PLUGIN_PROTOCOL_INFO(prpl);
+
+	/* Alphabetize the option label strings */
+	option = purple_account_option_string_new(_("CTCP Version reply"), "ctcp-message", "Purple IRC");
+	irc_info->protocol_options = g_list_append(irc_info->protocol_options, option);
 
 	option = purple_account_option_string_new(_("Default Quit Message"), "quit-message", "Leaving.");
 	irc_info->protocol_options = g_list_append(irc_info->protocol_options, option);
@@ -198,8 +232,8 @@ plugin_load(PurplePlugin *plugin)
 	option = purple_account_option_string_new(_("Default Part Message"), "part-message", "Leaving.");
 	irc_info->protocol_options = g_list_append(irc_info->protocol_options, option);
 
-	option = purple_account_option_string_new(_("CTCP Version reply"), "ctcp-message", "Purple IRC");
-	irc_info->protocol_options = g_list_append(irc_info->protocol_options, option);
+	option = purple_account_option_string_new(_("User Modes On Connect"), "umodes", "i");
+	irc_info->protocol_options = g_list append(irc_info->protocol_options, option);
 
 	return TRUE;
 }
