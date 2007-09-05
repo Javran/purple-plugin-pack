@@ -362,6 +362,9 @@ static void
 se_sending_im_msg_cb(PurpleAccount *account, const char *who, char **message)
 {
 	PurpleConversation *conv;
+	if (message == NULL || *message == NULL)  /* It's possible if some other callback to
+												 to the signal resets the message */
+		return;
 	conv = purple_find_conversation_with_account(PURPLE_CONV_TYPE_IM, who, account);
 	se_sending_msg_helper(conv, message);
 }
