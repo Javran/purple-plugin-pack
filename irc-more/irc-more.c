@@ -234,7 +234,7 @@ plugin_load(PurplePlugin *plugin)
 	irc_info->protocol_options = g_list_append(irc_info->protocol_options, option);
 
 	option = purple_account_option_string_new(_("User Modes On Connect"), "umodes", "i");
-	irc_info->protocol_options = g_list append(irc_info->protocol_options, option);
+	irc_info->protocol_options = g_list_append(irc_info->protocol_options, option);
 
 	return TRUE;
 }
