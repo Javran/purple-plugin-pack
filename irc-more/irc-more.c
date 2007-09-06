@@ -99,6 +99,11 @@ signed_on_cb(PurpleConnection *gc)
 	gchar *msg = NULL;
 
 	account = purple_connection_get_account(gc);
+
+	/* hopefully prevent crashes related to non-IRC accounts signing on */
+	if(strcmp("prpl-irc", purple_account_get_protocol_id(account)))
+		return;
+
 	nick = purple_connection_get_display_name(gc);
 	modes = UMODES;
 	msg = g_strdup_printf("MODE %s +%s\r\n", nick, modes);
