@@ -95,7 +95,8 @@ signed_on_cb(PurpleConnection *gc)
 {
 	/* should this be done on a timeout? */
 	PurpleAccount *account = NULL;
-	gchar *nick = NULL, *modes = NULL, *msg = NULL;
+	const gchar *nick = NULL, *modes = NULL;
+	gchar *msg = NULL;
 
 	account = purple_connection_get_account(gc);
 	nick = purple_connection_get_display_name(gc);
