@@ -97,7 +97,7 @@ signed_on_cb(PurpleConnection *gc)
 	PurpleAccount *account = NULL;
 	gchar *nick = NULL, *modes = NULL, *msg = NULL;
 
-	account = purple_connection_get_account(gc)
+	account = purple_connection_get_account(gc);
 	nick = purple_connection_get_display_name(gc);
 	modes = UMODES;
 	msg = g_strdup_printf("MODE %s +%s\r\n", nick, modes);
