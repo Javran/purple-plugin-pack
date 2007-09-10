@@ -1,0 +1,8 @@
+<todo version="0.1.19">
+    <note priority="high" time="1189373878">
+        Investigate using the pre-processor to template stuff
+    </note>
+    <note priority="low" time="1189373907">
+        make it possible to compile a plugin outside of the plugin-pack
+    </note>
+</todo>
