@@ -187,8 +187,7 @@ irssi_textfmt_writing_cb(PurpleAccount *account, const gchar *who,
 						 gchar **message, PurpleConversation *conv,
 						 PurpleMessageFlags flags)
 {
-	if(flags & PURPLE_MESSAGE_SYSTEM || flags & PURPLE_MESSAGE_NO_LOG ||
-		(!(flags & PURPLE_MESSAGE_SEND) && !(flags & PURPLE_MESSAGE_RECV)))
+	if(!(flags & (PURPLE_MESSAGE_SEND | PURPLE_MESSAGE_RECV)))
 	{
 		return FALSE;
 	}
