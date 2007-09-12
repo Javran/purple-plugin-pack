@@ -8,6 +8,7 @@ blistops/blistops.c
 broadcast/broadcast.c
 buddytime/buddytime.c
 chronic/chronic.c
+convbadger/convbadger.c
 dice/dice.c
 difftopic/difftopic.c
 eight_ball/eight_ball.c
