@@ -298,11 +298,11 @@ static PurplePluginInfo info =
 	0,
 	NULL,
 	PURPLE_PRIORITY_DEFAULT,
-	"gnt-highlight",
-	N_("Highlight"),
+	"core-plugin_pack-highlight",
+	NULL,
 	PP_VERSION,
-	N_("Support for highlighting words."),
-	N_("Support for highlighting words."),
+	NULL,
+	NULL,
 	"Sadrul H Chowdhury <sadrul@users.sourceforge.net>",
 	PP_WEBSITE,
 	plugin_load,
@@ -327,6 +327,10 @@ init_plugin(PurplePlugin *plugin)
 #endif /* ENABLE_NLS */
 	purple_prefs_add_none(PREF_PREFIX);
 	purple_prefs_add_string(PREF_WORDS, "");
+
+	info.name = _("Highlight");
+	info.summary = _("Support for highlighting words.");
+	info.description = _("Support for highlighting words.");
 }
 
 PURPLE_INIT_PLUGIN(ignore, init_plugin, info)

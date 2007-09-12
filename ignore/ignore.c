@@ -267,11 +267,11 @@ static PurplePluginInfo info =
 	0,
 	NULL,
 	PURPLE_PRIORITY_DEFAULT,
-	"gnt-ignore",
-	N_("Ignore"),
+	"core-plugin_pack-ignore",
+	NULL,
 	PP_VERSION,
-	N_("Flexible plugin to selectively ignore people. Please do not use if you have amnesia."),
-	N_("Flexible plugin to selectively ignore people. See '/help ignore' for more help.\nPlease do not use if you have amnesia."),
+	NULL,
+	NULL,
 	"Sadrul H Chowdhury <sadrul@users.sourceforge.net>",
 	PP_WEBSITE,
 	plugin_load,
@@ -297,6 +297,12 @@ init_plugin(PurplePlugin *plugin)
 
 	purple_prefs_add_none(PREF_ROOT);
 	purple_prefs_add_string_list(PREF_ROOT "/rules", NULL);
+
+	info.name = _("Ignore");
+	info.summary =
+		_("Flexible plugin to selectively ignore people. Please do not use if you have amnesia.");
+	info.description =
+		_("Flexible plugin to selectively ignore people. See '/help ignore' for more help.\nPlease do not use if you have amnesia.");
 }
 
 PURPLE_INIT_PLUGIN(ignore, init_plugin, info)
