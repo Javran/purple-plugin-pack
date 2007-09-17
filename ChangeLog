@@ -13,6 +13,8 @@ Version 2.2.0mtn:
 	* Fixed the version number for highlight and ignore so they show the
 	  correct Plugin Pack version instead of the version of Pidgin they were
 	  built against.
+	* Removed the .build file from hideconv to remove it from default
+	  builds.  Pidgin 2.2.1 will have persistent conversations.
 
 Version 2.1.1: 8/19/07
 	* Fixed lack of .build, .pidgin-plugin, and Makefile.mingw for convbadger
