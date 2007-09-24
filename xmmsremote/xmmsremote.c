@@ -723,7 +723,7 @@ gxr_conv_destroyed_cb(PurpleConversation *conv, gpointer data) {
 
 	win = pidgin_conv_get_window(PIDGIN_CONVERSATION(conv));
 
-	if(pidgin_conv_window_get_gtkconv_count(win) != 1)
+	if(win == NULL || pidgin_conv_window_get_gtkconv_count(win) != 1)
 		return;
 
 	for(l = buttons; l != NULL; l = l_next) {
