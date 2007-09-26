@@ -186,8 +186,8 @@ lh_generic_build_config_tree(xmlnode *parent)
 { /* we may need/want to expand the config area later for future feature
 	 enhancements; this is why this tree gets its own building function. */
 
-	xmlnode_set_attrib(xmlnode_new_child(parent, "config-version"),
-			"version", "1");
+	xmlnode_set_attrib(xmlnode_new_child(parent, "config-version"), "version", "2");
+	xmlnode_set_attrib(xmlnode_new_child(parent, "config-type"), "type", "buddy-list");
 	xmlnode_set_attrib(xmlnode_new_child(parent, "prpl"), "id",
 			purple_account_get_protocol_id(source_account));
 	xmlnode_set_attrib(xmlnode_new_child(parent, "source"), "account",
