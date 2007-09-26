@@ -31,10 +31,10 @@
 typedef struct {
 	/* important stuff for adding the buddies back */
 	gchar *screenname;
-	gchar *alias
-	gchar *group;
-	gchar *account;
-	gchar *prpl_id;
+	gchar *alias;
+	const gchar *group;
+	const gchar *account;
+	const gchar *prpl_id;
 
 	/* useful blistnode settings */
 	gint signed_on;
@@ -69,9 +69,6 @@ lh_pbx_info_destroy(LhPbxInfo *l)
 	/* clean up the allocated memory returned by the xmlnode api */
 	g_free(l->screenname);
 	g_free(l->alias);
-	g_free(l->group);
-	g_free(l->account);
-	g_free(l->prpl_id);
 	g_free(l->gf_theme);
 	g_free(l->icon_file);
 	g_free(l->lastsaid);
@@ -97,10 +94,10 @@ static void
 lh_pbx_import_file_parse(const char *file)
 {
 	GError *error = NULL;
-	LhPbxInfo tmpinfo = NULL;
+	LhPbxInfo *tmpinfo = NULL;
 	gchar *contents = NULL;
 	gsize length = 0;
-	xmlnode *root = NULL, blist = NULL, giter = NULL, citer = NULL, biter = NULL, siter = NULL;
+	xmlnode *root = NULL, *blist = NULL, *giter = NULL, *citer = NULL, *biter = NULL, *siter = NULL;
 
 	/* grab the file contents, but bail out if there's an error */
 	if(!g_file_get_contents(file, &contents, &length, &error)) {
@@ -133,32 +130,28 @@ lh_pbx_import_file_parse(const char *file)
 				tmpinfo->prpl_id = xmlnode_get_attrib(biter, "proto");
 
 				for(; siter; siter = xmlnode_get_next_twin(siter)) {
-					gchar *setting_name = NULL, *data = NULL;
+					const gchar *setting_name = NULL;
+					gchar *data = NULL;
 					
 					setting_name = xmlnode_get_attrib(siter, "name");
 					data = xmlnode_get_data(siter);
 
-					if(g_ascii_strcasecmp("signedon", setting_name)) {
+					if(g_ascii_strcasecmp("signedon", setting_name))
 						tmpinfo->signed_on = atoi(data);
-						g_free(data);
-					} else if(g_ascii_strcasecmp("signedoff", setting_name)) {
+					else if(g_ascii_strcasecmp("signedoff", setting_name))
 						tmpinfo->signed_off =  atoi(data);
-						g_free(data);
-					} else if(g_ascii_strcasecmp("lastseen", setting_name)) {
+					else if(g_ascii_strcasecmp("lastseen", setting_name))
 						tmpinfo->lastseen = atoi(data);
-						g_free(data);
-					} else if(g_ascii_strcasecmp("last_seen", setting_name)) {
+					else if(g_ascii_strcasecmp("last_seen", setting_name))
 						tmpinfo->last_seen = atoi(data);
-						g_free(data);
-					} else if(g_ascii_strcasecmp("guifications-theme", setting_name)) {
+					else if(g_ascii_strcasecmp("guifications-theme", setting_name))
 						tmpinfo->gf_theme = data;
-					} else if(g_ascii_strcasecmp("buddy_icon", setting_name)) {
+					else if(g_ascii_strcasecmp("buddy_icon", setting_name))
 						tmpinfo->icon_file = data;
-					} else if(g_ascii_strcasecmp("lastsaid", setting_name)) {
+					else if(g_ascii_strcasecmp("lastsaid", setting_name))
 						tmpinfo->lastsaid = data;
-					} else if(g_ascii_strcasecmp("notes", setting_name)) {
+					else if(g_ascii_strcasecmp("notes", setting_name))
 						tmpinfo->notes = data;
-					}
 				}
 
 				infolist = g_list_prepend(infolist, tmpinfo);
@@ -176,17 +169,29 @@ lh_pbx_import_file_parse(const char *file)
 static void
 lh_pbx_import_target_request(void)
 {
+	GList *tmp = infolist;
+	LhPbxInfo *itmp = NULL;
+
+	for(; tmp; tmp = tmp->next) {
+		itmp = tmp->data;
+		purple_debug_info("listhandler: import", "Buddy in infolist:\n\tScreenname: %s\n\tAlias: "
+				"%s\n\tGroup: %s\n\tAccount name: %s\n\tProtocol ID: %s\n\tSigned on/off: "
+				"%i/%i\n\tLast seens: %i/%i\n\tGuifications theme: %s\n\tIcon file: %s\n\t"
+				"Last said: %s\n\tBuddy Notes: %s\n\n\n", itmp->screenname, itmp->alias,
+				itmp->alias, itmp->group, itmp->account, itmp->prpl_id, itmp->signed_on,
+				itmp->signed_off, itmp->lastseen, itmp->last_seen, itmp->gf_theme, itmp->icon_file,
+				itmp->lastsaid, itmp->notes);
+	}
+
 	return;
 }
 
 static void
 lh_pbx_import_request_cb(void *user_data, const char *file)
 {
-	GList *tmp = NULL;
-
 	purple_debug_info("listhandler: import", "In request callback\n");
 
-	lh_pbx_file_parse(file);
+	lh_pbx_import_file_parse(file);
 	lh_pbx_find_accounts();
 
 	lh_pbx_import_target_request();

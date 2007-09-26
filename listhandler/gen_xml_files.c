@@ -207,7 +207,7 @@ lh_generic_build_privacy_tree(xmlnode *parent)
 static void
 lh_generic_build_blist_tree(xmlnode *parent)
 {
-	/*            root of tree           group      contact    buddy */
+	/*               root of tree           group      contact    buddy */
 	PurpleBlistNode *root = buddies->root, *g = NULL, *c = NULL, *b = NULL;
 	xmlnode *group = NULL, *buddy = NULL;
 	PurpleBuddy *tmpbuddy = NULL;
