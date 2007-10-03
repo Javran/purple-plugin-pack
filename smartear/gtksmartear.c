@@ -1,6 +1,6 @@
 /*
- * Plugin Name - Summary
- * Copyright (C) 2004
+ * gktsmartear.c - GTK+ configuration UI plugin to accompany smartear.
+ * Copyright (C) 2007 John Bailey <rekkanoryo@rekkanoryo.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -14,22 +14,29 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02111-1301, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
  */
 
-#include "../common/pp_internal.h"
+#ifdef HAVE_CONFIG_H
+# include "../pp_config.h"
+#endif
 
-#define PLUGIN_ID			"unnamed plugin"
-#define PLUGIN_STATIC_NAME	"unnamed"
-#define PLUGIN_AUTHOR		"someone <someone@somewhere.tld>"
+#define PURPLE_PLUGINS
+
+#define PLUGIN_AUTHOR		"John Bailey <rekkanoryo@rekkanoryo.org>"
 
 /* System headers */
 #include <gdk/gdk.h>
+#include <glib.h>
 #include <gtk/gtk.h>
 
 /* Purple headers */
 #include <gtkplugin.h>
+#include <version.h>
+
+/* Pack/Local headers */
+#include "../common/pp_internal.h"
 
 static gboolean
 plugin_load(PurplePlugin *plugin) {
@@ -51,7 +58,7 @@ static PurplePluginInfo info = {
 	NULL,						/* dependencies			*/
 	PURPLE_PRIORITY_DEFAULT,	/* priority				*/
 
-	PLUGIN_ID,					/* plugin id			*/
+	"gtk-plugin_pack-smartear",	/* plugin id			*/
 	NULL,						/* name					*/
 	PP_VERSION,					/* version				*/
 	NULL,						/* summary				*/
@@ -81,9 +88,9 @@ init_plugin(PurplePlugin *plugin) {
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
-	info.name = _("unnamed");
-	info.summary = _("summary");
-	info.description = _("description");
+	info.name = _(PLUGIN_NAME);
+	info.summary = _(PLUGIN_SUMMARY);
+	info.description = _(PLUGIN_DESCRIPTION);
 }
 
 PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)
