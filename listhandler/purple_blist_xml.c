@@ -52,7 +52,6 @@ typedef struct {
  * Globals
  ****************************************************************************/
 static GList *infolist = NULL;
-static GList *accountlist = NULL;
 
 /*****************************************************************************
  * "API"
@@ -85,8 +84,15 @@ lh_pbx_info_destroy(LhPbxInfo *l)
  ****************************************************************************/
 
 static void
-lh_pbx_find_accounts(void)
+lh_pbx_import_cleanup(void)
 {
+	GList *tmp = infolist;
+
+	for(; tmp; tmp = g_list_next(tmp))
+		lh_pbx_info_destroy((LhPbxInfo *)(tmp->data));
+
+	g_list_free(infolist);
+
 	return;
 }
 
@@ -137,13 +143,13 @@ lh_pbx_import_file_parse(const char *file)
 					data = xmlnode_get_data(siter);
 
 					if(g_ascii_strcasecmp("signedon", setting_name))
-						tmpinfo->signed_on = atoi(data);
+						tmpinfo->signed_on = data ? atoi(data) : 0;
 					else if(g_ascii_strcasecmp("signedoff", setting_name))
-						tmpinfo->signed_off =  atoi(data);
+						tmpinfo->signed_off = data ? atoi(data) : 0;
 					else if(g_ascii_strcasecmp("lastseen", setting_name))
-						tmpinfo->lastseen = atoi(data);
+						tmpinfo->lastseen = data ? atoi(data) : 0;
 					else if(g_ascii_strcasecmp("last_seen", setting_name))
-						tmpinfo->last_seen = atoi(data);
+						tmpinfo->last_seen = data ? atoi(data) : 0;
 					else if(g_ascii_strcasecmp("guifications-theme", setting_name))
 						tmpinfo->gf_theme = data;
 					else if(g_ascii_strcasecmp("buddy_icon", setting_name))
@@ -167,21 +173,60 @@ lh_pbx_import_file_parse(const char *file)
  ****************************************************************************/
 
 static void
-lh_pbx_import_target_request(void)
+lh_pbx_import_add_buddies(void *ignored, PurpleRequestFields *fields)
 {
 	GList *tmp = infolist;
 	LhPbxInfo *itmp = NULL;
+	PurpleAccount *target = NULL;
+	const gchar *target_name = NULL, *target_prpl = NULL;
+
+	target = purple_request_fields_get_account(fields, "pbx_target_acct");
+
+	target_name = purple_account_get_username(target);
+	target_prpl = purple_account_get_protocol_id(target);
+
+	purple_debug_info("listhandler: import", "Got target account: %s on %s\n",
+			target_name, target_prpl);
 
 	for(; tmp; tmp = tmp->next) {
 		itmp = tmp->data;
-		purple_debug_info("listhandler: import", "Buddy in infolist:\n\tScreenname: %s\n\tAlias: "
-				"%s\n\tGroup: %s\n\tAccount name: %s\n\tProtocol ID: %s\n\tSigned on/off: "
-				"%i/%i\n\tLast seens: %i/%i\n\tGuifications theme: %s\n\tIcon file: %s\n\t"
-				"Last said: %s\n\tBuddy Notes: %s\n\n\n", itmp->screenname, itmp->alias,
-				itmp->alias, itmp->group, itmp->account, itmp->prpl_id, itmp->signed_on,
-				itmp->signed_off, itmp->lastseen, itmp->last_seen, itmp->gf_theme, itmp->icon_file,
-				itmp->lastsaid, itmp->notes);
+
+		if(!strcmp(itmp->account, target_name) && !strcmp(itmp->prpl_id, target_prpl)) {
+			purple_debug_info("listhandler: import",
+					"Current entry in infolist matches target account!\n");
+
+			lh_util_add_buddy(itmp->group, purple_group_new(itmp->group), itmp->screenname,
+					itmp->alias, target, itmp->notes, itmp->signed_on, itmp->signed_off,
+					itmp->lastseen, itmp->last_seen, itmp->gf_theme, itmp->icon_file,
+					itmp->lastsaid);
+		}
+
 	}
+
+	return;
+}
+
+static void
+lh_pbx_import_target_request(void)
+{
+	PurpleRequestField *field = NULL;
+	PurpleRequestFields *request = NULL;
+	PurpleRequestFieldGroup *group = NULL;
+
+	request = purple_request_fields_new();
+	group = purple_request_field_group_new(NULL);
+
+	purple_request_fields_add_group(request, group);
+
+	field = purple_request_field_account_new("pbx_target_acct", _("Account"), NULL);
+
+	purple_request_field_set_required(field, TRUE);
+	purple_request_field_group_add_field(group, field);
+
+	purple_request_fields(purple_get_blist(), _("Listhandler - Importing"),
+			_("Choose the account whose buddy list you wish to restore:"),
+			NULL, request, _("_Import"), G_CALLBACK(lh_pbx_import_add_buddies),
+			_("_Cancel"), NULL, NULL, NULL, NULL, NULL);
 
 	return;
 }
@@ -192,9 +237,10 @@ lh_pbx_import_request_cb(void *user_data, const char *file)
 	purple_debug_info("listhandler: import", "In request callback\n");
 
 	lh_pbx_import_file_parse(file);
-	lh_pbx_find_accounts();
 
 	lh_pbx_import_target_request();
+
+	lh_pbx_import_cleanup();
 
 	return;
 }

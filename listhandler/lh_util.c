@@ -26,19 +26,34 @@
 void
 lh_util_add_buddy(const gchar *group, PurpleGroup *purple_group,
 			const gchar *buddy, const gchar *alias, PurpleAccount *account,
-			const gchar *buddynotes)
+			const gchar *buddynotes, gint signed_on, gint signed_off, gint lastseen,
+			gint last_seen, const gchar *gf_theme, const gchar *icon_file, gchar *lastsaid)
 {
-	/* create a PurpleBuddy and add it to the list in the specified group.
-	 * The first NULL is because we have no contact.  Let the user do that.
-	 * The second NULL is because we're prepending to the group.  Let the
-	 * user organize in whatever order he/she wants. This also is surprisingly
-	 * easy to do. */
-	PurpleBuddy *purple_buddy = purple_buddy_new(account, buddy, alias);
+	PurpleBuddy *purple_buddy = NULL;
+	PurpleBlistNode *node = NULL;
+	
+	purple_buddy = purple_buddy_new(account, buddy, alias);
+	node = (PurpleBlistNode *)purple_buddy;
+
 	purple_blist_add_buddy(purple_buddy, NULL, purple_group, NULL);
 	purple_account_add_buddy(account, purple_buddy);
 
 	if(buddynotes)
-		purple_blist_node_set_string((PurpleBlistNode *)purple_buddy, "notes", buddynotes);
+		purple_blist_node_set_string(node, "notes", buddynotes);
+	if(signed_on)
+		purple_blist_node_set_int(node, "signedon", signed_on);
+	if(signed_off)
+		purple_blist_node_set_int(node, "signedoff", signed_off);
+	if(lastseen)
+		purple_blist_node_set_int(node, "lastseen", lastseen);
+	if(last_seen)
+		purple_blist_node_set_int(node, "last_seen", last_seen);
+	if(gf_theme)
+		purple_blist_node_set_string(node, "guifications-theme", gf_theme);
+	if(icon_file)
+		purple_blist_node_set_string(node, "buddy_icon", icon_file);
+	if(lastsaid)
+		purple_blist_node_set_string(node, "lastsaid", lastsaid);
 
 	purple_debug_info("listhandler: import",
 			"group: %s\tbuddy: %s\talias: %s\thas been added to the list\n",

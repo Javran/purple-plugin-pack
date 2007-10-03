@@ -22,8 +22,10 @@
  */
 
 void lh_util_add_buddy(const gchar *group, PurpleGroup *purple_group,
-					const gchar *buddy, const gchar *alias,
-					PurpleAccount *account, const gchar *buddynotes);
+			const gchar *buddy, const gchar *alias, PurpleAccount *account,
+			const gchar *buddynotes, gint signed_on, gint signed_off,
+			gint lastseen, gint last_seen, const gchar *gf_theme,
+			const gchar *icon_file, gchar *lastsaid);
 
 void lh_util_add_to_blist(GList *buddies, GList *groups);
 

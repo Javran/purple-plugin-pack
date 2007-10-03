@@ -80,7 +80,7 @@ lh_generic_import_blist(xmlnode *blist)
 			lh_util_add_buddy(group_name, purple_group,
 					xmlnode_get_attrib(buddy, "screenname"),
 					xmlnode_get_attrib(buddy, "alias"), target_account,
-					xmlnode_get_attrib(buddy, "notes"));
+					xmlnode_get_attrib(buddy, "notes"), 0, 0, 0, 0, NULL, NULL, NULL);
 
 			/* get the next buddy in the current group */
 			buddy = xmlnode_get_next_twin(buddy);
