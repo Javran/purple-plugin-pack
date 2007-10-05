@@ -44,11 +44,12 @@ static const char *
 rule_key(PurpleAccount *account, const char *name)
 {
 	static char key[1024];
+	char *k = key;
 
-	snprintf(key, sizeof(key), PREF_ROOT "/%s/%s/%s",
+	k += snprintf(key, sizeof(key), PREF_ROOT "/%s/%s/",
 			purple_account_get_protocol_id(account),
-			purple_account_get_username(account),
-			name);
+			purple_normalize(account, purple_account_get_username(account)));
+	snprintf(k, sizeof(key) - (k - key) - 1, "%s", purple_normalize(account, name));
 
 	return key;
 }
@@ -66,13 +67,13 @@ add_ignore_rule(IgnoreContext context, const char *name, PurpleAccount *account)
 	if (!purple_prefs_exists(string->str))
 		purple_prefs_add_none(string->str);
 	string = g_string_append_c(string, '/');
-	string = g_string_append(string, purple_account_get_username(account));
+	string = g_string_append(string, purple_normalize(account, purple_account_get_username(account)));
 	lower_case_username = g_ascii_strdown(string->str, string->len);
 	if (!purple_prefs_exists(lower_case_username))
 		purple_prefs_add_none(lower_case_username);
 	g_free(lower_case_username);
 	string = g_string_append_c(string, '/');
-	string = g_string_append(string, name);
+	string = g_string_append(string, purple_normalize(account, name));
 	pref = g_ascii_strdown(string->str, string->len);
 	if (!purple_prefs_exists(pref)) {
 		GList *list = purple_prefs_get_string_list(PREF_ROOT "/rules");
