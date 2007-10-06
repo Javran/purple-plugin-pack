@@ -2,6 +2,8 @@ Version 2.2.0mtn:
 	* Merged autorejoin into irc-more.  No prefs migration will take place.
 	  You will need to reconfigure the delay yourself.
 	* Slashexec's '/exec command' and '!command' are now optional (QuLogic)
+	* Listhandler now supports restoring a buddy list from a backed-up
+	  blist.xml file created by backing up ~/.purple.
 	* Added support for initial user modes to irc-more
 	* Added the abusive findip plugin
 	* Fixed a crash in ignore where a nickname that is not all lowercase
