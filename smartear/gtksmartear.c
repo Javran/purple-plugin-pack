@@ -22,7 +22,8 @@
 # include "../pp_config.h"
 #endif
 
-#define PURPLE_PLUGINS
+/* Pack/Local headers */
+#include "../common/pp_internal.h"
 
 #define PLUGIN_AUTHOR		"John Bailey <rekkanoryo@rekkanoryo.org>"
 
@@ -31,12 +32,8 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-/* Purple headers */
+/* Pidgin headers */
 #include <gtkplugin.h>
-#include <version.h>
-
-/* Pack/Local headers */
-#include "../common/pp_internal.h"
 
 static gboolean
 plugin_load(PurplePlugin *plugin) {
