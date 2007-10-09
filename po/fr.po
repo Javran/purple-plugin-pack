@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purple plugin_pack 2.1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-12 01:41-0400\n"
+"POT-Creation-Date: 2007-10-09 00:11-0400\n"
 "PO-Revision-Date: 2007-09-04 19:36+0200\n"
 "Last-Translator: Yannick LE NY <y.le.ny@ifrance.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -875,7 +875,7 @@ msgstr "Répéter"
 msgid "Filter"
 msgstr "Filtrer"
 
-#: ../ignorance/interface.c:172 ../ignore/ignore.c:301
+#: ../ignorance/interface.c:172 ../ignore/ignore.c:302
 msgid "Ignore"
 msgstr "Ignorer"
 
@@ -924,19 +924,19 @@ msgstr "Invitations"
 msgid "Couldn't find pixmap file: %s"
 msgstr "Impossible de trouver le fichier pixmap: %s"
 
-#: ../ignore/ignore.c:129
+#: ../ignore/ignore.c:130
 msgid "Ignore Rules"
 msgstr "Ignorer règles"
 
-#: ../ignore/ignore.c:129
+#: ../ignore/ignore.c:130
 msgid "The following are the current ignore rules"
 msgstr "Les choses suivantes sont les règles d'ignorance actuelles"
 
-#: ../ignore/ignore.c:130
+#: ../ignore/ignore.c:131
 msgid "(Dear God! You are not ignoring any one!)"
 msgstr "(Bon Dieu ! Vous n'en ignorez aucun !)"
 
-#: ../ignore/ignore.c:232
+#: ../ignore/ignore.c:233
 msgid ""
 "ignore [-c] [+&lt;ignore&gt; -&lt;unignore&gt;]<br>Examples:<br>   'ignore "
 "+StupidBot -NotABot' \t - (in a chat) Starts ignoring StupidBot, and removes "
@@ -954,7 +954,7 @@ msgstr ""
 "-' \t - (dans une Messagerie Instantanée) Lance le non ignorement de cette "
 "personne.<br>   'ignore' \t - Liste les règles d'ignorement actuelles."
 
-#: ../ignore/ignore.c:303
+#: ../ignore/ignore.c:304
 msgid ""
 "Flexible plugin to selectively ignore people. Please do not use if you have "
 "amnesia."
@@ -962,7 +962,7 @@ msgstr ""
 "Plugin(greffon) flexible pour ignorer sélectivement des gens. S'il vous "
 "plait, ne l'utilisez pas si vous avez une amnésie."
 
-#: ../ignore/ignore.c:305
+#: ../ignore/ignore.c:306
 msgid ""
 "Flexible plugin to selectively ignore people. See '/help ignore' for more "
 "help.\n"
@@ -1330,47 +1330,51 @@ msgstr "Traitement de listes - Exportation"
 msgid "Choose A Generic Buddy List File To Import"
 msgstr "Choisissez un fichier générique de liste de contacts à importer"
 
-#: ../listhandler/listhandler.c:38
+#: ../listhandler/listhandler.c:39
 msgid "Copy Buddies From One Account to Another"
 msgstr "Copier les contacts d'un compte vers un autre"
 
-#: ../listhandler/listhandler.c:42
+#: ../listhandler/listhandler.c:43
 #, fuzzy
 msgid "Import Alias List File"
 msgstr "Importer un fichier de liste d'alias générique"
 
-#: ../listhandler/listhandler.c:46
+#: ../listhandler/listhandler.c:47
 msgid "Import AIM Buddy List File (.blt)"
 msgstr "Importer un fichier de liste de contacts AIM (.blt)"
 
-#: ../listhandler/listhandler.c:50
+#: ../listhandler/listhandler.c:51
 msgid "Import Generic Buddy List File (.xml)"
 msgstr "Importer un fichier de liste de contacts générique (.xml)"
 
-#: ../listhandler/listhandler.c:54
+#: ../listhandler/listhandler.c:55
+msgid "Import A blist.xml From libpurple"
+msgstr ""
+
+#: ../listhandler/listhandler.c:59
 msgid "Export AIM Buddy List File"
 msgstr "Exporter un fichier de liste de contacts AIM"
 
-#: ../listhandler/listhandler.c:58
+#: ../listhandler/listhandler.c:63
 #, fuzzy
 msgid "Export Alias List File"
 msgstr "Exporter un fichier de liste d'alias générique"
 
-#: ../listhandler/listhandler.c:62
+#: ../listhandler/listhandler.c:67
 msgid "Export Generic Buddy List File"
 msgstr "Exporter un fichier de liste de contacts générique"
 
-#: ../listhandler/listhandler.c:109
+#: ../listhandler/listhandler.c:114
 msgid "List Handler"
 msgstr "Traitement de listes"
 
-#: ../listhandler/listhandler.c:111
+#: ../listhandler/listhandler.c:116
 msgid "Provides numerous user-requested list-handling capabilities."
 msgstr ""
 "Fournit de nombreuses fonctionnalités de traitement de liste demandées par "
 "les utilisateurs"
 
-#: ../listhandler/listhandler.c:114
+#: ../listhandler/listhandler.c:119
 msgid ""
 "Provides numerous user-requested list-handling capabilities, such as "
 "importing and exporting of AIM .blt files and generic protocol-agnostic XML ."
@@ -1608,12 +1612,12 @@ msgstr "Sessions Messagerie Instantanée avec %s\n"
 msgid "(%s) %s <AUTO-REPLY>: %s\n"
 msgstr "(%s) %s <REPONSE-AUTOMATIQUE>: %s\n"
 
-#: ../oldlogger/oldlogger.c:371
+#: ../oldlogger/oldlogger.c:373
 #, c-format
 msgid "IM Sessions with %s"
 msgstr "Sessions Messagerie Instantanée avec %s"
 
-#: ../oldlogger/oldlogger.c:401
+#: ../oldlogger/oldlogger.c:407
 #, c-format
 msgid ""
 "<FONT COLOR=\"#16569E\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> "
@@ -1622,7 +1626,7 @@ msgstr ""
 "<FONT COLOR=\"#16569E\" sml=\"%s\">(%s) <B>%s &lt;REPONSE-AUTOMATIQUE&gt;:</"
 "B></FONT> %s<BR>\n"
 
-#: ../oldlogger/oldlogger.c:403
+#: ../oldlogger/oldlogger.c:409
 #, c-format
 msgid ""
 "<FONT COLOR=\"#A82F2F\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> "
@@ -1631,19 +1635,19 @@ msgstr ""
 "<FONT COLOR=\"#A82F2F\" sml=\"%s\">(%s) <B>%s &lt;AREPONSE-AUTOMATIQUE&gt;:</"
 "B></FONT> %s<BR>\n"
 
-#: ../oldlogger/oldlogger.c:430
+#: ../oldlogger/oldlogger.c:436
 msgid "Old plain text"
 msgstr "Vieux texte plein"
 
-#: ../oldlogger/oldlogger.c:435
+#: ../oldlogger/oldlogger.c:441
 msgid "Old HTML"
 msgstr "Vieux HTML"
 
-#: ../oldlogger/oldlogger.c:493
+#: ../oldlogger/oldlogger.c:499
 msgid "Old Logger"
 msgstr "Vieux enregistreur de logs"
 
-#: ../oldlogger/oldlogger.c:494 ../oldlogger/oldlogger.c:495
+#: ../oldlogger/oldlogger.c:500 ../oldlogger/oldlogger.c:501
 msgid "Re-implements the legacy, deficient, logging"
 msgstr "Réimplémente l'enregistreur de logs vieux, obsolète et déficient"
 
@@ -2122,15 +2126,15 @@ msgstr "Code:"
 msgid "Options"
 msgstr "Options"
 
-#: ../switchspell/switchspell.c:85
+#: ../switchspell/switchspell.c:113
 msgid "Spe_ll Check"
 msgstr "Verificateur orthographique"
 
-#: ../switchspell/switchspell.c:261
+#: ../switchspell/switchspell.c:300
 msgid "Switch Spell"
 msgstr "Changer l'orthographe"
 
-#: ../switchspell/switchspell.c:262 ../switchspell/switchspell.c:263
+#: ../switchspell/switchspell.c:301 ../switchspell/switchspell.c:302
 msgid "Switch Spell Checker Language"
 msgstr "Changer la langue du correcteur orthographique"
 

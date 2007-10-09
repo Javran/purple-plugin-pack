@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugin_pack 0.1cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-12 01:41-0400\n"
+"POT-Creation-Date: 2007-10-09 00:11-0400\n"
 "PO-Revision-Date: 2005-11-21 10:36+1100\n"
 "Last-Translator: Peter Lawler <trans@six-by-nine.com.au>\n"
 "Language-Team: English/AU <trans@six-by-nine.com.au>\n"
@@ -801,7 +801,7 @@ msgstr ""
 msgid "Filter"
 msgstr ""
 
-#: ../ignorance/interface.c:172 ../ignore/ignore.c:301
+#: ../ignorance/interface.c:172 ../ignore/ignore.c:302
 msgid "Ignore"
 msgstr ""
 
@@ -850,19 +850,19 @@ msgstr ""
 msgid "Couldn't find pixmap file: %s"
 msgstr ""
 
-#: ../ignore/ignore.c:129
+#: ../ignore/ignore.c:130
 msgid "Ignore Rules"
 msgstr ""
 
-#: ../ignore/ignore.c:129
+#: ../ignore/ignore.c:130
 msgid "The following are the current ignore rules"
 msgstr ""
 
-#: ../ignore/ignore.c:130
+#: ../ignore/ignore.c:131
 msgid "(Dear God! You are not ignoring any one!)"
 msgstr ""
 
-#: ../ignore/ignore.c:232
+#: ../ignore/ignore.c:233
 msgid ""
 "ignore [-c] [+&lt;ignore&gt; -&lt;unignore&gt;]<br>Examples:<br>   'ignore "
 "+StupidBot -NotABot' \t - (in a chat) Starts ignoring StupidBot, and removes "
@@ -872,13 +872,13 @@ msgid ""
 "unignoring this person.<br>   'ignore' \t - Lists the current ignore rules."
 msgstr ""
 
-#: ../ignore/ignore.c:303
+#: ../ignore/ignore.c:304
 msgid ""
 "Flexible plugin to selectively ignore people. Please do not use if you have "
 "amnesia."
 msgstr ""
 
-#: ../ignore/ignore.c:305
+#: ../ignore/ignore.c:306
 msgid ""
 "Flexible plugin to selectively ignore people. See '/help ignore' for more "
 "help.\n"
@@ -1197,43 +1197,47 @@ msgstr ""
 msgid "Choose A Generic Buddy List File To Import"
 msgstr ""
 
-#: ../listhandler/listhandler.c:38
+#: ../listhandler/listhandler.c:39
 msgid "Copy Buddies From One Account to Another"
 msgstr ""
 
-#: ../listhandler/listhandler.c:42
+#: ../listhandler/listhandler.c:43
 msgid "Import Alias List File"
 msgstr ""
 
-#: ../listhandler/listhandler.c:46
+#: ../listhandler/listhandler.c:47
 msgid "Import AIM Buddy List File (.blt)"
 msgstr ""
 
-#: ../listhandler/listhandler.c:50
+#: ../listhandler/listhandler.c:51
 msgid "Import Generic Buddy List File (.xml)"
 msgstr ""
 
-#: ../listhandler/listhandler.c:54
+#: ../listhandler/listhandler.c:55
+msgid "Import A blist.xml From libpurple"
+msgstr ""
+
+#: ../listhandler/listhandler.c:59
 msgid "Export AIM Buddy List File"
 msgstr ""
 
-#: ../listhandler/listhandler.c:58
+#: ../listhandler/listhandler.c:63
 msgid "Export Alias List File"
 msgstr ""
 
-#: ../listhandler/listhandler.c:62
+#: ../listhandler/listhandler.c:67
 msgid "Export Generic Buddy List File"
 msgstr ""
 
-#: ../listhandler/listhandler.c:109
+#: ../listhandler/listhandler.c:114
 msgid "List Handler"
 msgstr ""
 
-#: ../listhandler/listhandler.c:111
+#: ../listhandler/listhandler.c:116
 msgid "Provides numerous user-requested list-handling capabilities."
 msgstr ""
 
-#: ../listhandler/listhandler.c:114
+#: ../listhandler/listhandler.c:119
 msgid ""
 "Provides numerous user-requested list-handling capabilities, such as "
 "importing and exporting of AIM .blt files and generic protocol-agnostic XML ."
@@ -1457,38 +1461,38 @@ msgstr ""
 msgid "(%s) %s <AUTO-REPLY>: %s\n"
 msgstr ""
 
-#: ../oldlogger/oldlogger.c:371
+#: ../oldlogger/oldlogger.c:373
 #, c-format
 msgid "IM Sessions with %s"
 msgstr ""
 
-#: ../oldlogger/oldlogger.c:401
+#: ../oldlogger/oldlogger.c:407
 #, c-format
 msgid ""
 "<FONT COLOR=\"#16569E\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> "
 "%s<BR>\n"
 msgstr ""
 
-#: ../oldlogger/oldlogger.c:403
+#: ../oldlogger/oldlogger.c:409
 #, c-format
 msgid ""
 "<FONT COLOR=\"#A82F2F\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> "
 "%s<BR>\n"
 msgstr ""
 
-#: ../oldlogger/oldlogger.c:430
+#: ../oldlogger/oldlogger.c:436
 msgid "Old plain text"
 msgstr ""
 
-#: ../oldlogger/oldlogger.c:435
+#: ../oldlogger/oldlogger.c:441
 msgid "Old HTML"
 msgstr ""
 
-#: ../oldlogger/oldlogger.c:493
+#: ../oldlogger/oldlogger.c:499
 msgid "Old Logger"
 msgstr ""
 
-#: ../oldlogger/oldlogger.c:494 ../oldlogger/oldlogger.c:495
+#: ../oldlogger/oldlogger.c:500 ../oldlogger/oldlogger.c:501
 msgid "Re-implements the legacy, deficient, logging"
 msgstr ""
 
@@ -1931,15 +1935,15 @@ msgstr ""
 msgid "Options"
 msgstr ""
 
-#: ../switchspell/switchspell.c:85
+#: ../switchspell/switchspell.c:113
 msgid "Spe_ll Check"
 msgstr ""
 
-#: ../switchspell/switchspell.c:261
+#: ../switchspell/switchspell.c:300
 msgid "Switch Spell"
 msgstr ""
 
-#: ../switchspell/switchspell.c:262 ../switchspell/switchspell.c:263
+#: ../switchspell/switchspell.c:301 ../switchspell/switchspell.c:302
 msgid "Switch Spell Checker Language"
 msgstr ""
 
