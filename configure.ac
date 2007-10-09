@@ -1,4 +1,4 @@
-AC_INIT([purple-plugin_pack], [2.2.0mtn], [guifications-devel@lists.sourceforge.net])
+AC_INIT([purple-plugin_pack], [2.2.0mtn], [plugins-devel@lists.guifications.org])
 AC_CANONICAL_SYSTEM
 AM_CONFIG_HEADER(pre_config.h)
 
