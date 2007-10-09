@@ -18,13 +18,14 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
 #include "listhandler.h"
 #include "aim_blt_files.h"
 #include "alias_xml_files.h"
 #include "gen_xml_files.h"
+#include "purple_blist_xml.h"
 #include "migrate.h"
 
 PurplePlugin *listhandler = NULL; /* the request api prefers this for a plugin */
@@ -49,6 +50,10 @@ listhandler_actions(PurplePlugin *plugin, gpointer context)
 
 	action = purple_plugin_action_new(_("Import Generic Buddy List File (.xml)"),
 									lh_generic_import_action_cb);
+	list = g_list_append(list, action);
+
+	action = purple_plugin_action_new(_("Import A blist.xml From libpurple"),
+									lh_pbx_import_action_cb);
 	list = g_list_append(list, action);
 
 	action = purple_plugin_action_new(_("Export AIM Buddy List File"),

@@ -14,7 +14,7 @@
 
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1301, USA.
 */
 
 #include "../common/pp_internal.h"
@@ -723,7 +723,7 @@ gxr_conv_destroyed_cb(PurpleConversation *conv, gpointer data) {
 
 	win = pidgin_conv_get_window(PIDGIN_CONVERSATION(conv));
 
-	if(pidgin_conv_window_get_gtkconv_count(win) != 1)
+	if(win == NULL || pidgin_conv_window_get_gtkconv_count(win) != 1)
 		return;
 
 	for(l = buttons; l != NULL; l = l_next) {

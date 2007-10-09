@@ -1,4 +1,5 @@
 EXTRA_DIST = \
-	core-template.c \
-	gtk-template.c \
+	core_template.c \
+	glib_compat.h \
+	gtk_template.c \
 	pp_internal.h

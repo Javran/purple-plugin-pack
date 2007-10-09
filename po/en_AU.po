@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugin_pack 0.1cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-17 03:53-0400\n"
+"POT-Creation-Date: 2007-10-09 00:11-0400\n"
 "PO-Revision-Date: 2005-11-21 10:36+1100\n"
 "Last-Translator: Peter Lawler <trans@six-by-nine.com.au>\n"
 "Language-Team: English/AU <trans@six-by-nine.com.au>\n"
@@ -91,7 +91,7 @@ msgid "OK"
 msgstr ""
 
 #: ../album/album-ui.c:1142 ../broadcast/broadcast.c:117
-#: ../buddytime/buddytime.c:163 ../groupmsg/groupmsg.c:120
+#: ../buddytime/buddytime.c:163 ../groupmsg/groupmsg.c:111
 msgid "Cancel"
 msgstr ""
 
@@ -111,125 +111,108 @@ msgstr ""
 msgid "Enable this plugin to automatically archive all buddy icons."
 msgstr ""
 
-#: ../autorejoin/autorejoin.c:110
-msgid "Seconds to wait before rejoining"
-msgstr ""
-
-#: ../autorejoin/autorejoin.c:170
-msgid "Autorejoin (IRC)"
-msgstr ""
-
-#: ../autorejoin/autorejoin.c:171
-msgid "Autorejoin on /kick on IRC"
-msgstr ""
-
-#: ../autorejoin/autorejoin.c:172
-msgid "Automatically rejoin a IRC chatroom when someone lovingly /kicks you."
-msgstr ""
-
 #. XXX: There should be a way to reset to the default/account-default autoreply
-#: ../autoreply/autoreply.c:216
+#: ../autoreply/autoreply.c:221
 #, c-format
 msgid "Set autoreply message for %s"
 msgstr ""
 
-#: ../autoreply/autoreply.c:218
+#: ../autoreply/autoreply.c:223
 msgid "Set Autoreply Message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:219
+#: ../autoreply/autoreply.c:224
 msgid ""
 "The following message will be sent to the buddy when the buddy sends you a "
 "message and autoreply is enabled."
 msgstr ""
 
-#: ../autoreply/autoreply.c:223
+#: ../autoreply/autoreply.c:228
 msgid "_Save"
 msgstr ""
 
-#: ../autoreply/autoreply.c:224 ../listhandler/aim_blt_files.c:301
-#: ../listhandler/aim_blt_files.c:465 ../listhandler/gen_xml_files.c:190
-#: ../listhandler/gen_xml_files.c:430 ../listhandler/gen_xml_files.c:545
-#: ../listhandler/gen_xml_files.c:622 ../listhandler/migrate.c:145
+#: ../autoreply/autoreply.c:229 ../listhandler/aim_blt_files.c:301
+#: ../listhandler/aim_blt_files.c:465 ../listhandler/gen_xml_files.c:163
+#: ../listhandler/gen_xml_files.c:355 ../listhandler/migrate.c:145
 #: ../listhandler/migrate.c:184
 msgid "_Cancel"
 msgstr ""
 
-#: ../autoreply/autoreply.c:240
+#: ../autoreply/autoreply.c:245
 msgid "Set _Autoreply Message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:249
+#: ../autoreply/autoreply.c:258
 msgid "Autoreply message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:336
+#: ../autoreply/autoreply.c:357
 msgid "Send autoreply messages when"
 msgstr ""
 
-#: ../autoreply/autoreply.c:340
+#: ../autoreply/autoreply.c:361
 msgid "When my account is _away"
 msgstr ""
 
-#: ../autoreply/autoreply.c:344
+#: ../autoreply/autoreply.c:365
 msgid "When my account is _idle"
 msgstr ""
 
-#: ../autoreply/autoreply.c:348
+#: ../autoreply/autoreply.c:369
 msgid "_Default reply"
 msgstr ""
 
-#: ../autoreply/autoreply.c:355
+#: ../autoreply/autoreply.c:376
 msgid ""
 "Autoreply Prefix\n"
 "(only when necessary)"
 msgstr ""
 
-#: ../autoreply/autoreply.c:358
+#: ../autoreply/autoreply.c:379
 msgid "Status message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:362
+#: ../autoreply/autoreply.c:383
 msgid "Autoreply with status message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:364
+#: ../autoreply/autoreply.c:385
 msgid "Never"
 msgstr ""
 
-#: ../autoreply/autoreply.c:366
+#: ../autoreply/autoreply.c:387
 msgid "Always when there is a status message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:368
+#: ../autoreply/autoreply.c:389
 msgid "Only when there's no autoreply message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:373
+#: ../autoreply/autoreply.c:394
 msgid "Delay between autoreplies"
 msgstr ""
 
-#: ../autoreply/autoreply.c:377
+#: ../autoreply/autoreply.c:398
 msgid "_Minimum delay (mins)"
 msgstr ""
 
-#: ../autoreply/autoreply.c:381
+#: ../autoreply/autoreply.c:402
 msgid "Times to send autoreplies"
 msgstr ""
 
-#: ../autoreply/autoreply.c:385
+#: ../autoreply/autoreply.c:406
 msgid "Ma_ximum count"
 msgstr ""
 
-#: ../autoreply/autoreply.c:443
+#: ../autoreply/autoreply.c:464
 msgid "Autoreply"
 msgstr ""
 
-#: ../autoreply/autoreply.c:444
+#: ../autoreply/autoreply.c:465
 msgid "Autoreply for all the protocols"
 msgstr ""
 
-#: ../autoreply/autoreply.c:445
+#: ../autoreply/autoreply.c:466
 msgid ""
 "This plugin lets you set autoreply message for any protocol. You can set the "
 "global autoreply message from the plugin options dialog. To set some "
@@ -238,13 +221,13 @@ msgid ""
 "the `Advanced' tab of the account edit dialog."
 msgstr ""
 
-#: ../autoreply/autoreply.c:455
+#: ../autoreply/autoreply.c:476
 msgid ""
 "I am currently not available. Please leave your message, and I will get back "
 "to you as soon as possible."
 msgstr ""
 
-#: ../autoreply/autoreply.c:460
+#: ../autoreply/autoreply.c:481
 msgid "This is an autoreply: "
 msgstr ""
 
@@ -381,7 +364,7 @@ msgstr ""
 msgid "Enter the message to send"
 msgstr ""
 
-#: ../broadcast/broadcast.c:117 ../groupmsg/groupmsg.c:119
+#: ../broadcast/broadcast.c:117 ../groupmsg/groupmsg.c:110
 msgid "Send"
 msgstr ""
 
@@ -546,6 +529,14 @@ msgid ""
 "FUNCTIONAL!  IT IS USELESS!"
 msgstr ""
 
+#: ../convbadger/convbadger.c:192
+msgid "Conversation Badger"
+msgstr ""
+
+#: ../convbadger/convbadger.c:193 ../convbadger/convbadger.c:194
+msgid "Badges conversations with the protocol icon."
+msgstr ""
+
 #: ../dice/dice.c:81
 msgid "dice [dice] [sides]:  rolls dice number of sides sided dice"
 msgstr ""
@@ -647,35 +638,35 @@ msgstr ""
 "Adds a command (/rim) to annoy Bruces and Sheilas with. Inspired by a dumb "
 "IRC convo and Red Dwarf."
 
-#: ../groupmsg/groupmsg.c:104
+#: ../groupmsg/groupmsg.c:95
 #, c-format
 msgid "There are no buddies online in group %s"
 msgstr ""
 
-#: ../groupmsg/groupmsg.c:112
+#: ../groupmsg/groupmsg.c:103
 #, c-format
 msgid ""
 "Your message will be sent to these buddies:\n"
 "%s"
 msgstr ""
 
-#: ../groupmsg/groupmsg.c:115
+#: ../groupmsg/groupmsg.c:106
 msgid "Spam"
 msgstr ""
 
-#: ../groupmsg/groupmsg.c:116
+#: ../groupmsg/groupmsg.c:107
 msgid "Please enter the message to send"
 msgstr ""
 
-#: ../groupmsg/groupmsg.c:185
+#: ../groupmsg/groupmsg.c:182
 msgid "Group IM"
 msgstr ""
 
-#: ../groupmsg/groupmsg.c:186
+#: ../groupmsg/groupmsg.c:183
 msgid "Send an IM to a group of buddies."
 msgstr ""
 
-#: ../groupmsg/groupmsg.c:187
+#: ../groupmsg/groupmsg.c:184
 msgid "Adds the option to send an IM to every online buddy in a group."
 msgstr ""
 
@@ -728,11 +719,11 @@ msgid ""
 "(separate words by space)"
 msgstr ""
 
-#: ../highlight/highlight.c:302 ../nicksaid/nicksaid.c:565
+#: ../highlight/highlight.c:331 ../nicksaid/nicksaid.c:565
 msgid "Highlight"
 msgstr ""
 
-#: ../highlight/highlight.c:304 ../highlight/highlight.c:305
+#: ../highlight/highlight.c:332 ../highlight/highlight.c:333
 msgid "Support for highlighting words."
 msgstr ""
 
@@ -810,7 +801,7 @@ msgstr ""
 msgid "Filter"
 msgstr ""
 
-#: ../ignorance/interface.c:172 ../ignore/ignore.c:268
+#: ../ignorance/interface.c:172 ../ignore/ignore.c:302
 msgid "Ignore"
 msgstr ""
 
@@ -859,19 +850,19 @@ msgstr ""
 msgid "Couldn't find pixmap file: %s"
 msgstr ""
 
-#: ../ignore/ignore.c:126
+#: ../ignore/ignore.c:130
 msgid "Ignore Rules"
 msgstr ""
 
-#: ../ignore/ignore.c:126
+#: ../ignore/ignore.c:130
 msgid "The following are the current ignore rules"
 msgstr ""
 
-#: ../ignore/ignore.c:127
+#: ../ignore/ignore.c:131
 msgid "(Dear God! You are not ignoring any one!)"
 msgstr ""
 
-#: ../ignore/ignore.c:229
+#: ../ignore/ignore.c:233
 msgid ""
 "ignore [-c] [+&lt;ignore&gt; -&lt;unignore&gt;]<br>Examples:<br>   'ignore "
 "+StupidBot -NotABot' \t - (in a chat) Starts ignoring StupidBot, and removes "
@@ -881,44 +872,54 @@ msgid ""
 "unignoring this person.<br>   'ignore' \t - Lists the current ignore rules."
 msgstr ""
 
-#: ../ignore/ignore.c:270
+#: ../ignore/ignore.c:304
 msgid ""
 "Flexible plugin to selectively ignore people. Please do not use if you have "
 "amnesia."
 msgstr ""
 
-#: ../ignore/ignore.c:271
+#: ../ignore/ignore.c:306
 msgid ""
 "Flexible plugin to selectively ignore people. See '/help ignore' for more "
 "help.\n"
 "Please do not use if you have amnesia."
 msgstr ""
 
-#: ../irc-more/irc-more.c:123
+#. specify our help string and register our command
+#: ../irc-more/irc-more.c:212
 msgid "notice target message:  Send a notice to the specified target."
 msgstr ""
 
-#: ../irc-more/irc-more.c:136
-msgid "Default Quit Message"
-msgstr ""
-
-#: ../irc-more/irc-more.c:139
-msgid "Default Part Message"
-msgstr ""
-
-#: ../irc-more/irc-more.c:142
+#. Alphabetize the option label strings
+#: ../irc-more/irc-more.c:232
 msgid "CTCP Version reply"
 msgstr ""
 
-#: ../irc-more/irc-more.c:194
+#: ../irc-more/irc-more.c:235
+msgid "Default Quit Message"
+msgstr ""
+
+#: ../irc-more/irc-more.c:238
+msgid "Default Part Message"
+msgstr ""
+
+#: ../irc-more/irc-more.c:241
+msgid "User Modes On Connect"
+msgstr ""
+
+#: ../irc-more/irc-more.c:264
+msgid "Seconds to wait before rejoining"
+msgstr ""
+
+#: ../irc-more/irc-more.c:325
 msgid "IRC More"
 msgstr ""
 
-#: ../irc-more/irc-more.c:195
+#: ../irc-more/irc-more.c:326
 msgid "Adds additional IRC features."
 msgstr ""
 
-#: ../irc-more/irc-more.c:196
+#: ../irc-more/irc-more.c:327
 msgid ""
 "Adds additional IRC features, including a customizable quit message, a "
 "customizable CTCP VERSION reply, and the /notice command for notices."
@@ -1138,8 +1139,7 @@ msgstr ""
 
 #. create a field
 #: ../listhandler/aim_blt_files.c:287 ../listhandler/aim_blt_files.c:453
-#: ../listhandler/gen_xml_files.c:175 ../listhandler/gen_xml_files.c:416
-#: ../listhandler/gen_xml_files.c:531 ../listhandler/gen_xml_files.c:607
+#: ../listhandler/gen_xml_files.c:148 ../listhandler/gen_xml_files.c:341
 #: ../listhandler/migrate.c:129 ../listhandler/migrate.c:169
 #: ../schedule/pidgin-schedule.c:283
 msgid "Account"
@@ -1150,13 +1150,11 @@ msgstr ""
 msgid "List Handler: Importing"
 msgstr ""
 
-#: ../listhandler/aim_blt_files.c:298 ../listhandler/gen_xml_files.c:187
-#: ../listhandler/gen_xml_files.c:619
+#: ../listhandler/aim_blt_files.c:298 ../listhandler/gen_xml_files.c:160
 msgid "Choose the account to import to:"
 msgstr ""
 
-#: ../listhandler/aim_blt_files.c:299 ../listhandler/gen_xml_files.c:188
-#: ../listhandler/gen_xml_files.c:620
+#: ../listhandler/aim_blt_files.c:299 ../listhandler/gen_xml_files.c:161
 msgid "_Import"
 msgstr ""
 
@@ -1169,13 +1167,11 @@ msgstr ""
 msgid "List Handler: Exporting"
 msgstr ""
 
-#: ../listhandler/aim_blt_files.c:464 ../listhandler/gen_xml_files.c:429
-#: ../listhandler/gen_xml_files.c:544
+#: ../listhandler/aim_blt_files.c:464 ../listhandler/gen_xml_files.c:354
 msgid "Choose the account to export from:"
 msgstr ""
 
-#: ../listhandler/aim_blt_files.c:465 ../listhandler/gen_xml_files.c:430
-#: ../listhandler/gen_xml_files.c:545
+#: ../listhandler/aim_blt_files.c:465 ../listhandler/gen_xml_files.c:355
 msgid "_Export"
 msgstr ""
 
@@ -1184,64 +1180,64 @@ msgid "Choose An AIM .blt File To Import"
 msgstr ""
 
 #. and finally we can create the request
-#: ../listhandler/gen_xml_files.c:186 ../listhandler/gen_xml_files.c:618
+#: ../listhandler/gen_xml_files.c:159
 msgid "Listhandler - Importing"
 msgstr ""
 
-#: ../listhandler/gen_xml_files.c:390
+#: ../listhandler/gen_xml_files.c:315
 msgid "Save Generic .blist File"
 msgstr ""
 
 #. and finally we can create the request
-#: ../listhandler/gen_xml_files.c:428 ../listhandler/gen_xml_files.c:543
+#: ../listhandler/gen_xml_files.c:353
 msgid "Listhandler - Exporting"
 msgstr ""
 
-#: ../listhandler/gen_xml_files.c:441 ../listhandler/gen_xml_files.c:649
+#: ../listhandler/gen_xml_files.c:366
 msgid "Choose A Generic Buddy List File To Import"
 msgstr ""
 
-#: ../listhandler/gen_xml_files.c:504
-msgid "Save Generic .alist File"
-msgstr ""
-
-#: ../listhandler/listhandler.c:37
-msgid "Import AIM Buddy List File (.blt)"
-msgstr ""
-
-#: ../listhandler/listhandler.c:41
-msgid "Import Generic Buddy List File (.xml)"
-msgstr ""
-
-#: ../listhandler/listhandler.c:45
-msgid "Import Generic Alias List File"
-msgstr ""
-
-#: ../listhandler/listhandler.c:49
-msgid "Export AIM Buddy List File"
-msgstr ""
-
-#: ../listhandler/listhandler.c:53
-msgid "Export Generic Buddy List File"
-msgstr ""
-
-#: ../listhandler/listhandler.c:57
-msgid "Export Generic Alias List File"
-msgstr ""
-
-#: ../listhandler/listhandler.c:61
+#: ../listhandler/listhandler.c:39
 msgid "Copy Buddies From One Account to Another"
 msgstr ""
 
-#: ../listhandler/listhandler.c:108
+#: ../listhandler/listhandler.c:43
+msgid "Import Alias List File"
+msgstr ""
+
+#: ../listhandler/listhandler.c:47
+msgid "Import AIM Buddy List File (.blt)"
+msgstr ""
+
+#: ../listhandler/listhandler.c:51
+msgid "Import Generic Buddy List File (.xml)"
+msgstr ""
+
+#: ../listhandler/listhandler.c:55
+msgid "Import A blist.xml From libpurple"
+msgstr ""
+
+#: ../listhandler/listhandler.c:59
+msgid "Export AIM Buddy List File"
+msgstr ""
+
+#: ../listhandler/listhandler.c:63
+msgid "Export Alias List File"
+msgstr ""
+
+#: ../listhandler/listhandler.c:67
+msgid "Export Generic Buddy List File"
+msgstr ""
+
+#: ../listhandler/listhandler.c:114
 msgid "List Handler"
 msgstr ""
 
-#: ../listhandler/listhandler.c:110
+#: ../listhandler/listhandler.c:116
 msgid "Provides numerous user-requested list-handling capabilities."
 msgstr ""
 
-#: ../listhandler/listhandler.c:113
+#: ../listhandler/listhandler.c:119
 msgid ""
 "Provides numerous user-requested list-handling capabilities, such as "
 "importing and exporting of AIM .blt files and generic protocol-agnostic XML ."
@@ -1270,43 +1266,43 @@ msgstr ""
 msgid "C_opy"
 msgstr ""
 
-#: ../mystatusbox/mystatusbox.c:378
+#: ../mystatusbox/mystatusbox.c:376
 msgid "All"
 msgstr ""
 
-#: ../mystatusbox/mystatusbox.c:381 ../nicksaid/nicksaid.c:252
+#: ../mystatusbox/mystatusbox.c:379 ../nicksaid/nicksaid.c:252
 msgid "None"
 msgstr ""
 
-#: ../mystatusbox/mystatusbox.c:384
+#: ../mystatusbox/mystatusbox.c:382
 msgid "Out of sync ones"
 msgstr ""
 
-#: ../mystatusbox/mystatusbox.c:389
+#: ../mystatusbox/mystatusbox.c:387
 msgid "Toggle icon selectors"
 msgstr ""
 
-#: ../mystatusbox/mystatusbox.c:392
+#: ../mystatusbox/mystatusbox.c:390
 msgid "Toggle global selector"
 msgstr ""
 
-#: ../mystatusbox/mystatusbox.c:500
+#: ../mystatusbox/mystatusbox.c:498
 msgid "Hide global status selector"
 msgstr ""
 
-#: ../mystatusbox/mystatusbox.c:503
+#: ../mystatusbox/mystatusbox.c:501
 msgid "Hide icon-selectors"
 msgstr ""
 
-#: ../mystatusbox/mystatusbox.c:559
+#: ../mystatusbox/mystatusbox.c:558
 msgid "Mystatusbox (Show Statusboxes)"
 msgstr ""
 
-#: ../mystatusbox/mystatusbox.c:560
+#: ../mystatusbox/mystatusbox.c:559
 msgid "Hide/Show the per-account statusboxes"
 msgstr ""
 
-#: ../mystatusbox/mystatusbox.c:561
+#: ../mystatusbox/mystatusbox.c:560
 msgid ""
 "You can show all the per-account statusboxes, hide all of them, or just show "
 "the ones that are in a different status from the global status.  For ease of "
@@ -1465,38 +1461,38 @@ msgstr ""
 msgid "(%s) %s <AUTO-REPLY>: %s\n"
 msgstr ""
 
-#: ../oldlogger/oldlogger.c:371
+#: ../oldlogger/oldlogger.c:373
 #, c-format
 msgid "IM Sessions with %s"
 msgstr ""
 
-#: ../oldlogger/oldlogger.c:401
+#: ../oldlogger/oldlogger.c:407
 #, c-format
 msgid ""
 "<FONT COLOR=\"#16569E\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> "
 "%s<BR>\n"
 msgstr ""
 
-#: ../oldlogger/oldlogger.c:403
+#: ../oldlogger/oldlogger.c:409
 #, c-format
 msgid ""
 "<FONT COLOR=\"#A82F2F\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> "
 "%s<BR>\n"
 msgstr ""
 
-#: ../oldlogger/oldlogger.c:430
+#: ../oldlogger/oldlogger.c:436
 msgid "Old plain text"
 msgstr ""
 
-#: ../oldlogger/oldlogger.c:435
+#: ../oldlogger/oldlogger.c:441
 msgid "Old HTML"
 msgstr ""
 
-#: ../oldlogger/oldlogger.c:493
+#: ../oldlogger/oldlogger.c:499
 msgid "Old Logger"
 msgstr ""
 
-#: ../oldlogger/oldlogger.c:494 ../oldlogger/oldlogger.c:495
+#: ../oldlogger/oldlogger.c:500 ../oldlogger/oldlogger.c:501
 msgid "Re-implements the legacy, deficient, logging"
 msgstr ""
 
@@ -1801,49 +1797,61 @@ msgid ""
 "The buddy must be on your list and set as a SIM user."
 msgstr ""
 
-#: ../slashexec/slashexec.c:150
+#: ../slashexec/slashexec.c:154
 #, c-format
 msgid "Unable to parse \"%s\""
 msgstr ""
 
-#: ../slashexec/slashexec.c:161
+#: ../slashexec/slashexec.c:165
 #, c-format
 msgid "Parse error message: %s"
 msgstr ""
 
-#: ../slashexec/slashexec.c:191
+#: ../slashexec/slashexec.c:195
 #, c-format
 msgid "Unable to execute \"%s\""
 msgstr ""
 
-#: ../slashexec/slashexec.c:202
+#: ../slashexec/slashexec.c:206
 #, c-format
 msgid "Execute error message: %s"
 msgstr ""
 
-#: ../slashexec/slashexec.c:259
+#: ../slashexec/slashexec.c:263
 msgid "There was an error executing your command."
 msgstr ""
 
 #. I really want to eventually make this cleaner, like by making it
 #. * change the actual message that gets printed to the conv window...
-#: ../slashexec/slashexec.c:323
+#: ../slashexec/slashexec.c:330
 #, c-format
 msgid "The following text was sent: %s"
 msgstr ""
 
-#: ../slashexec/slashexec.c:367
+#: ../slashexec/slashexec.c:377
 msgid ""
 "exec [-o] &lt;command&gt;, runs the command.\n"
 "If the -o flag is used then output is sent to thecurrent conversation; "
 "otherwise it is printed to the current text box."
 msgstr ""
 
-#: ../slashexec/slashexec.c:450
+#: ../slashexec/slashexec.c:428
+msgid "Execute commands starting with: "
+msgstr ""
+
+#: ../slashexec/slashexec.c:432
+msgid "/exec Command (/exec some_command)"
+msgstr ""
+
+#: ../slashexec/slashexec.c:436
+msgid "Exclamation point (!some_command)"
+msgstr ""
+
+#: ../slashexec/slashexec.c:494
 msgid "/exec a la UNIX IRC CLI"
 msgstr ""
 
-#: ../slashexec/slashexec.c:451
+#: ../slashexec/slashexec.c:495
 msgid ""
 "A plugin that adds the /exec command line interpreter like most UNIX/Linux "
 "IRC clients have.  Also included is the ability to execute commands with an "
@@ -1927,15 +1935,15 @@ msgstr ""
 msgid "Options"
 msgstr ""
 
-#: ../switchspell/switchspell.c:85
+#: ../switchspell/switchspell.c:113
 msgid "Spe_ll Check"
 msgstr ""
 
-#: ../switchspell/switchspell.c:261
+#: ../switchspell/switchspell.c:300
 msgid "Switch Spell"
 msgstr ""
 
-#: ../switchspell/switchspell.c:262 ../switchspell/switchspell.c:263
+#: ../switchspell/switchspell.c:301 ../switchspell/switchspell.c:302
 msgid "Switch Spell Checker Language"
 msgstr ""
 

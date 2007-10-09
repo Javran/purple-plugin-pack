@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
 #include "../common/pp_internal.h"
@@ -293,8 +293,10 @@ oldtxt_logger_write(PurpleLog *log, PurpleMessageFlags type,
 					written += fprintf(data->file, "(%s) %s: %s\n", date, from,
 							stripped);
 			}
-		} else if (type & PURPLE_MESSAGE_SYSTEM)
+		} else if ((type & PURPLE_MESSAGE_SYSTEM) || (type & PURPLE_MESSAGE_ERROR))
 			written += fprintf(data->file, "(%s) %s\n", date, stripped);
+		else if (type & PURPLE_MESSAGE_RAW)
+			written += fprintf(data->file, "%s\n", stripped);
 		else if (type & PURPLE_MESSAGE_NO_LOG) {
 			/* This shouldn't happen */
 			g_free(stripped);
@@ -393,6 +395,10 @@ oldhtml_logger_write(PurpleLog *log, PurpleMessageFlags type,
 		strftime(date, sizeof(date), "%H:%M:%S", localtime(&time));
 		if (type & PURPLE_MESSAGE_SYSTEM)
 			written += fprintf(data->file, "<FONT COLOR=\"#000000\" sml=\"%s\">(%s) <B>%s</B></FONT><BR>\n", prpl, date, msg_fixed);
+		else if (type & PURPLE_MESSAGE_ERROR)
+			written += fprintf(data->file, "<FONT COLOR=\"#FF0000\" sml=\"%s\">(%s) <B>%s</B></FONT><BR>\n", prpl, date, msg_fixed);
+		else if (type & PURPLE_MESSAGE_RAW)
+			written += fprintf(data->file, "%s<BR>\n", msg_fixed);
 		else if (type & PURPLE_MESSAGE_WHISPER)
 			written += fprintf(data->file, "<FONT COLOR=\"#6C2585\" sml=\"%s\">(%s) <B>%s:</B></FONT> %s<BR>\n",
 					prpl, date, from, msg_fixed);

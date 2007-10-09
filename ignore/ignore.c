@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02111-1301  USA
  */
 
 /* Pack/Local headers */
@@ -44,11 +44,12 @@ static const char *
 rule_key(PurpleAccount *account, const char *name)
 {
 	static char key[1024];
+	char *k = key;
 
-	snprintf(key, sizeof(key), PREF_ROOT "/%s/%s/%s",
+	k += snprintf(key, sizeof(key), PREF_ROOT "/%s/%s/",
 			purple_account_get_protocol_id(account),
-			purple_account_get_username(account),
-			name);
+			purple_normalize(account, purple_account_get_username(account)));
+	snprintf(k, sizeof(key) - (k - key) - 1, "%s", purple_normalize(account, name));
 
 	return key;
 }
@@ -58,6 +59,7 @@ add_ignore_rule(IgnoreContext context, const char *name, PurpleAccount *account)
 {
 	GString *string;
 	char *pref;
+	char *lower_case_username;
 
 	string = g_string_new(PREF_ROOT);
 	string = g_string_append_c(string, '/');
@@ -65,11 +67,13 @@ add_ignore_rule(IgnoreContext context, const char *name, PurpleAccount *account)
 	if (!purple_prefs_exists(string->str))
 		purple_prefs_add_none(string->str);
 	string = g_string_append_c(string, '/');
-	string = g_string_append(string, purple_account_get_username(account));
-	if (!purple_prefs_exists(string->str))
-		purple_prefs_add_none(string->str);
+	string = g_string_append(string, purple_normalize(account, purple_account_get_username(account)));
+	lower_case_username = g_ascii_strdown(string->str, string->len);
+	if (!purple_prefs_exists(lower_case_username))
+		purple_prefs_add_none(lower_case_username);
+	g_free(lower_case_username);
 	string = g_string_append_c(string, '/');
-	string = g_string_append(string, name);
+	string = g_string_append(string, purple_normalize(account, name));
 	pref = g_ascii_strdown(string->str, string->len);
 	if (!purple_prefs_exists(pref)) {
 		GList *list = purple_prefs_get_string_list(PREF_ROOT "/rules");
@@ -264,11 +268,11 @@ static PurplePluginInfo info =
 	0,
 	NULL,
 	PURPLE_PRIORITY_DEFAULT,
-	"gnt-ignore",
-	N_("Ignore"),
-	VERSION,
-	N_("Flexible plugin to selectively ignore people. Please do not use if you have amnesia."),
-	N_("Flexible plugin to selectively ignore people. See '/help ignore' for more help.\nPlease do not use if you have amnesia."),
+	"core-plugin_pack-ignore",
+	NULL,
+	PP_VERSION,
+	NULL,
+	NULL,
 	"Sadrul H Chowdhury <sadrul@users.sourceforge.net>",
 	PP_WEBSITE,
 	plugin_load,
@@ -278,7 +282,10 @@ static PurplePluginInfo info =
 	NULL,
 	NULL,
 	NULL,
-	0,0,0,0
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
 
 static void
@@ -291,6 +298,12 @@ init_plugin(PurplePlugin *plugin)
 
 	purple_prefs_add_none(PREF_ROOT);
 	purple_prefs_add_string_list(PREF_ROOT "/rules", NULL);
+
+	info.name = _("Ignore");
+	info.summary =
+		_("Flexible plugin to selectively ignore people. Please do not use if you have amnesia.");
+	info.description =
+		_("Flexible plugin to selectively ignore people. See '/help ignore' for more help.\nPlease do not use if you have amnesia.");
 }
 
 PURPLE_INIT_PLUGIN(ignore, init_plugin, info)

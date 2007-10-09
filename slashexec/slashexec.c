@@ -18,7 +18,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
 /* XXX: Translations of strings - Several strings are NOT marked as needing to
@@ -299,14 +299,14 @@ se_cmd_cb(PurpleConversation *conv, const gchar *cmd, gchar **args, gchar **erro
 static void
 se_sending_msg_helper(PurpleConversation *conv, char **message)
 {
-	char *string = *message, *strip;
+	char *string = *message, *strip = NULL;
 	gboolean send = TRUE;
 
 	if(conv == NULL || !purple_prefs_get_bool(PREF_BANG)) return;
 
 	strip = purple_markup_strip_html(string);
 
-	if(*strip != '!') {
+	if(strip && *strip != '!') {
 		g_free(strip);
 		return;
 	}
@@ -362,6 +362,9 @@ static void
 se_sending_im_msg_cb(PurpleAccount *account, const char *who, char **message)
 {
 	PurpleConversation *conv;
+	if (message == NULL || *message == NULL)  /* It's possible if some other callback to
+												 to the signal resets the message */
+		return;
 	conv = purple_find_conversation_with_account(PURPLE_CONV_TYPE_IM, who, account);
 	se_sending_msg_helper(conv, message);
 }

@@ -15,8 +15,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
- * 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02111-1301, USA.
  */
 
 #include "../common/pp_internal.h"
@@ -187,8 +187,10 @@ irssi_textfmt_writing_cb(PurpleAccount *account, const gchar *who,
 						 gchar **message, PurpleConversation *conv,
 						 PurpleMessageFlags flags)
 {
-	if(flags & PURPLE_MESSAGE_SYSTEM)
+	if(!(flags & (PURPLE_MESSAGE_SEND | PURPLE_MESSAGE_RECV)))
+	{
 		return FALSE;
+	}
 
 	FORMAT(account, message);
 }

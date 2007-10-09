@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02111-1301  USA
  */
 
 /* Pack/Local headers */
@@ -298,11 +298,11 @@ static PurplePluginInfo info =
 	0,
 	NULL,
 	PURPLE_PRIORITY_DEFAULT,
-	"gnt-highlight",
-	N_("Highlight"),
-	VERSION,
-	N_("Support for highlighting words."),
-	N_("Support for highlighting words."),
+	"core-plugin_pack-highlight",
+	NULL,
+	PP_VERSION,
+	NULL,
+	NULL,
 	"Sadrul H Chowdhury <sadrul@users.sourceforge.net>",
 	PP_WEBSITE,
 	plugin_load,
@@ -312,7 +312,10 @@ static PurplePluginInfo info =
 	NULL,
 	&prefs_info,
 	NULL,
-	NULL, NULL, NULL, NULL
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
 
 static void
@@ -324,6 +327,10 @@ init_plugin(PurplePlugin *plugin)
 #endif /* ENABLE_NLS */
 	purple_prefs_add_none(PREF_PREFIX);
 	purple_prefs_add_string(PREF_WORDS, "");
+
+	info.name = _("Highlight");
+	info.summary = _("Support for highlighting words.");
+	info.description = _("Support for highlighting words.");
 }
 
 PURPLE_INIT_PLUGIN(ignore, init_plugin, info)

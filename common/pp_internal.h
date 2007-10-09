@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 #ifndef PP_INTERNAL_H
 #define PP_INTERNAL_H
@@ -26,21 +26,7 @@
 
 #include <glib.h>
 
-/* This works around the lack of i18n support in old glib.  Needed because
- * we moved to using intltool and glib wrappings. */
-#if GLIB_CHECK_VERSION(2,4,0)
-#  include <glib/gi18n-lib.h>
-#else
-#  include <locale.h>
-#  include <libintl.h>
-#  define _(String) dgettext (GETTEXT_PACKAGE, String)
-#  define Q_(String) g_strip_context ((String), dgettext (GETTEXT_PACKAGE, String))
-#  ifdef gettext_noop
-#    define N_(String) gettext_noop (String)
-#  else
-#    define N_(String) (String)
-#  endif
-#endif
+#include "../common/glib_compat.h"
 
 #ifdef _WIN32
 # include <win32dep.h>

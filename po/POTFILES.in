@@ -1,5 +1,5 @@
-album/album-ui.c
 album/album.c
+album/album-ui.c
 autoreply/autoreply.c
 awaynotify/awaynotify.c
 bash/bash.c
@@ -8,9 +8,16 @@ blistops/blistops.c
 broadcast/broadcast.c
 buddytime/buddytime.c
 chronic/chronic.c
+common/core_template.c
+common/core_template.c
+common/gtk_template.c
+common/gtk_template.c
+convbadger/convbadger.c
 dice/dice.c
 difftopic/difftopic.c
 eight_ball/eight_ball.c
+findip/findip.c
+findip/findip.c
 flip/flip.c
 gRIM/gRIM.c
 groupmsg/groupmsg.c
@@ -20,8 +27,10 @@ ignorance/ignorance.c
 ignorance/interface.c
 ignorance/support.c
 ignore/ignore.c
-irc-more/irc-more.c
+infopane/infopane.c
+infopane/infopane.c
 irchelper/irchelper.c
+irc-more/irc-more.c
 irssi/datechange.c
 irssi/irssi.c
 irssi/lastlog.c
@@ -29,9 +38,13 @@ irssi/layout.c
 irssi/window.c
 lastseen/lastseen.c
 listhandler/aim_blt_files.c
+listhandler/alias_xml_files.c
+listhandler/alias_xml_files.c
 listhandler/gen_xml_files.c
 listhandler/listhandler.c
 listhandler/migrate.c
+listhandler/purple_blist_xml.c
+listhandler/purple_blist_xml.c
 mystatusbox/mystatusbox.c
 napster/napster.c
 nicksaid/nicksaid.c
@@ -49,3 +62,5 @@ stocker/stocker.c
 stocker/stocker_prefs.c
 switchspell/switchspell.c
 talkfilters/talkfilters.c
+xchat-chats/xchat-chats.c
+xchat-chats/xchat-chats.c

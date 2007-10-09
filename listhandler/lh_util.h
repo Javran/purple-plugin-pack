@@ -18,12 +18,14 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
 void lh_util_add_buddy(const gchar *group, PurpleGroup *purple_group,
-					const gchar *buddy, const gchar *alias,
-					PurpleAccount *account, const gchar *buddynotes);
+			const gchar *buddy, const gchar *alias, PurpleAccount *account,
+			const gchar *buddynotes, gint signed_on, gint signed_off,
+			gint lastseen, gint last_seen, const gchar *gf_theme,
+			const gchar *icon_file, gchar *lastsaid);
 
 void lh_util_add_to_blist(GList *buddies, GList *groups);
 

@@ -1,4 +1,4 @@
-AC_INIT([purple-plugin_pack], [2.2.0mtn], [guifications-devel@lists.sourceforge.net])
+AC_INIT([purple-plugin_pack], [2.2.0mtn], [plugins-devel@lists.guifications.org])
 AC_CANONICAL_SYSTEM
 AM_CONFIG_HEADER(pre_config.h)
 
@@ -312,6 +312,7 @@ AC_OUTPUT([
 	dice/Makefile
 	difftopic/Makefile
 	eight_ball/Makefile
+	findip/Makefile
 	flip/Makefile
 	groupmsg/Makefile
 	gRIM/Makefile
@@ -319,6 +320,7 @@ AC_OUTPUT([
 	highlight/Makefile
 	ignorance/Makefile
 	ignore/Makefile
+	infopane/Makefile
 	irc-more/Makefile
 	irchelper/Makefile
 	irssi/Makefile

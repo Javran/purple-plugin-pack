@@ -1,7 +1,7 @@
 /*
  * IRC Helper Plugin for libpurple
  *
- * Copyright (C) 2005-2007, Richard Laager <rlaager@users.sf.net>
+ * Copyright (C) 2005-2007, Richard Laager <rlaager@pidgin.im>
  * Copyright (C) 2004-2005, Mathias Hasselmann <mathias@taschenorakel.de>
  * Copyright (C) 2005, Daniel Beardsmore <uilleann@users.sf.net>
  * Copyright (C) 2005, Björn Nilsson <BNI on irc.freenode.net>
@@ -19,8 +19,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
- * 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02111-1301, USA.
  */
 
 #include "../common/pp_internal.h"

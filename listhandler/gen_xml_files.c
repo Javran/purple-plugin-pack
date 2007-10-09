@@ -18,7 +18,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
 #include "listhandler.h"
@@ -80,7 +80,7 @@ lh_generic_import_blist(xmlnode *blist)
 			lh_util_add_buddy(group_name, purple_group,
 					xmlnode_get_attrib(buddy, "screenname"),
 					xmlnode_get_attrib(buddy, "alias"), target_account,
-					xmlnode_get_attrib(buddy, "notes"));
+					xmlnode_get_attrib(buddy, "notes"), 0, 0, 0, 0, NULL, NULL, NULL);
 
 			/* get the next buddy in the current group */
 			buddy = xmlnode_get_next_twin(buddy);
@@ -186,8 +186,8 @@ lh_generic_build_config_tree(xmlnode *parent)
 { /* we may need/want to expand the config area later for future feature
 	 enhancements; this is why this tree gets its own building function. */
 
-	xmlnode_set_attrib(xmlnode_new_child(parent, "config-version"),
-			"version", "1");
+	xmlnode_set_attrib(xmlnode_new_child(parent, "config-version"), "version", "2");
+	xmlnode_set_attrib(xmlnode_new_child(parent, "config-type"), "type", "buddy-list");
 	xmlnode_set_attrib(xmlnode_new_child(parent, "prpl"), "id",
 			purple_account_get_protocol_id(source_account));
 	xmlnode_set_attrib(xmlnode_new_child(parent, "source"), "account",
@@ -207,7 +207,7 @@ lh_generic_build_privacy_tree(xmlnode *parent)
 static void
 lh_generic_build_blist_tree(xmlnode *parent)
 {
-	/*            root of tree           group      contact    buddy */
+	/*               root of tree           group      contact    buddy */
 	PurpleBlistNode *root = buddies->root, *g = NULL, *c = NULL, *b = NULL;
 	xmlnode *group = NULL, *buddy = NULL;
 	PurpleBuddy *tmpbuddy = NULL;

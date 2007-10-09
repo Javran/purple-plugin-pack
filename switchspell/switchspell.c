@@ -14,8 +14,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
- * 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02111-1301, USA.
  */
 
 #include "../common/pp_internal.h"
@@ -40,7 +40,27 @@
 
 #define PROP_LANG     "switchspell::language"
 
-/* TODO: Add option to save the selected language for the dude and restore it */
+static PurpleBlistNode *
+blist_node_for_conv(PurpleConversation *conv)
+{
+	PurpleBlistNode *node = NULL;
+
+	switch (purple_conversation_get_type(conv)) {
+		case PURPLE_CONV_TYPE_IM:
+		{
+			PurpleBuddy *buddy = purple_find_buddy(conv->account, conv->name);
+			if (buddy)
+				node = (PurpleBlistNode *)purple_buddy_get_contact(buddy);
+			break;
+		}
+		case PURPLE_CONV_TYPE_CHAT:
+			node = (PurpleBlistNode *)purple_blist_find_chat(conv->account, conv->name);
+			break;
+		default:
+			break;
+	}
+	return node;
+}
 
 static void
 menu_conv_use_dict_cb(GObject *m, gpointer data)
@@ -51,6 +71,10 @@ menu_conv_use_dict_cb(GObject *m, gpointer data)
 	PidginConversation *gtkconv;
 	GtkSpell *spell;
 	GError *error = NULL;
+	PurpleBlistNode *node;
+
+	if (!gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(m)))
+		return;
 
 	conv = pidgin_conv_window_get_active_conversation(win);
 
@@ -59,6 +83,10 @@ menu_conv_use_dict_cb(GObject *m, gpointer data)
 	if (spell != NULL)
 		gtkspell_set_language(spell, lang, &error);  /* XXX: error can possibly leak here */
 	g_object_set_data(G_OBJECT(gtkconv->entry), PROP_LANG, lang);
+
+	node = blist_node_for_conv(gtkconv->active_conv);
+	if (node)
+		purple_blist_node_set_string(node, "switchspell", lang);
 }
 
 static void
@@ -119,7 +147,7 @@ update_switchspell_selection(PidginConversation *gtkconv)
 	PidginWindow *win;
 	GtkWidget *menu;
 	GList *item;
-	const char *curlang;
+	char *curlang;
 
 	if (gtkconv == NULL)
 		return;
@@ -133,7 +161,7 @@ update_switchspell_selection(PidginConversation *gtkconv)
 		return;
 	menu = gtk_menu_item_get_submenu(GTK_MENU_ITEM(menu));
 
-	curlang = g_object_get_data(G_OBJECT(gtkconv->entry), PROP_LANG);
+	curlang = g_strdup(g_object_get_data(G_OBJECT(gtkconv->entry), PROP_LANG));
 
 	g_list_foreach(gtk_container_get_children(GTK_CONTAINER(menu)),
 				(GFunc)gtk_check_menu_item_set_active, GINT_TO_POINTER(FALSE));
@@ -146,12 +174,17 @@ update_switchspell_selection(PidginConversation *gtkconv)
 			break;
 		}		
 	}
+	g_free(curlang);
 }
+
+static gboolean make_sure_gtkconv(PurpleConversation *conv);
 
 static void
 conversation_switched_cb(PurpleConversation *conv)
 {
 	PidginConversation *gtkconv = PIDGIN_CONVERSATION(conv);
+	if (!g_object_get_data(G_OBJECT(gtkconv->entry), PROP_LANG))
+		make_sure_gtkconv(conv);
 	regenerate_switchspell_menu(gtkconv);
 	update_switchspell_selection(gtkconv);
 }
@@ -160,9 +193,15 @@ static gboolean
 make_sure_gtkconv(PurpleConversation *conv)
 {
 	PidginConversation *gtkconv = PIDGIN_CONVERSATION(conv);
+	const char *lang = NULL;
+	PurpleBlistNode *node;
 	if (gtkconv == NULL)
 		return TRUE;
-	g_object_set_data(G_OBJECT(gtkconv->entry), PROP_LANG, getenv("LANG"));
+
+	node = blist_node_for_conv(conv);
+	if (node)
+		lang = purple_blist_node_get_string(node, "switchspell");
+	g_object_set_data(G_OBJECT(gtkconv->entry), PROP_LANG, lang ? (char *)lang : getenv("LANG"));
 	update_switchspell_selection(gtkconv);
 	return FALSE;
 }
