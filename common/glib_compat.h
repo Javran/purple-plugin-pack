@@ -22,7 +22,7 @@
 
 #include <string.h>
 
-#if !G_VERSION_CHECK(2,2,0)
+#if !GLIB_VERSION_CHECK(2,2,0)
 gboolean
 g_str_has_suffix (const gchar  *str,
 		  const gchar  *suffix)
@@ -142,7 +142,7 @@ g_strsplit_set (const gchar *string,
 }
 #endif
 
-#if !G_VERSION_CHECK(2,6,0)
+#if !GLIB_VERSION_CHECK(2,6,0)
 static guint
 g_strv_length (gchar **str_array)
 {
