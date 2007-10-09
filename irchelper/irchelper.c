@@ -24,7 +24,6 @@
  */
 
 #include "../common/pp_internal.h"
-#include "../common/glib-compat.h"
 
 #include <string.h>
 
