@@ -320,6 +320,7 @@ AC_OUTPUT([
 	highlight/Makefile
 	ignorance/Makefile
 	ignore/Makefile
+	infopane/Makefile
 	irc-more/Makefile
 	irchelper/Makefile
 	irssi/Makefile
