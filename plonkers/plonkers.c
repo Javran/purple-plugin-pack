@@ -20,6 +20,7 @@
 */
 
 #include "../common/pp_internal.h"
+#include "../common/glib-compat.h"
 
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>

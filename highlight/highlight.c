@@ -20,6 +20,7 @@
 
 /* Pack/Local headers */
 #include "../common/pp_internal.h"
+#include "../common/glib-compat.h"
 
 #include <plugin.h>
 

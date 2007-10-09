@@ -24,6 +24,8 @@
 #include "listhandler.h"
 #include "aim_blt_files.h"
 
+#include "../common/glib-compat.h"
+
 static gchar *filename = NULL, *file_contents = NULL;
 static gsize length;
 static GString *bltfile_string = NULL;
