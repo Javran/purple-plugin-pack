@@ -29,7 +29,6 @@
 #include "prefs.h"
 #include "signals.h"
 #include "util.h"
-#include "version.h"
 
 #include "gtkconv.h"
 #include "gtkimhtml.h"
@@ -138,9 +137,21 @@ pref_changed(gpointer data, ...)
 static gboolean
 plugin_load(PurplePlugin *plugin)
 {
-	purple_signal_connect(pidgin_conversations_get_handle(),
+	guint regsuccess = 0;
+
+	regsuccess = purple_signal_connect(pidgin_conversations_get_handle(),
 			"conversation-displayed",
 			plugin, PURPLE_CALLBACK(set_conv_window_prefs), NULL);
+
+	if(regsuccess == 0) {
+		purple_debug_error(PLUGIN_ID, "Libpurple and Pidgin are too old!\n");
+		purple_debug_error(PLUGIN_ID, _("Libpurple and Pidgin are too old!\n"));
+		purple_notify_error(plugin, _("Incompatible Plugin"),
+				_("You need to update Pidgin!"),
+				_("This plugin is incompatible with the running version of Pidgin and Libpurple because it is too old.  Please upgrade to the newest version of Pidgin."));
+		return FALSE;
+	}
+
 #if 0
 	purple_signal_connect(purple_conversations_get_handle(),
 			"deleting-conversation",
@@ -207,10 +218,10 @@ static PurplePluginInfo info =
 	NULL,
 	PURPLE_PRIORITY_DEFAULT,
 	PLUGIN_ID,
-	N_("Infopane"),
+	NULL,
 	VERSION,
-	N_("Infopane craziness."),
-	N_("Infopane craziness."),
+	NULL,
+	NULL,
 	"Sadrul H Chowdhury <sadrul@pidgin.im>",
 	PP_WEBSITE,
 	plugin_load,
@@ -236,15 +247,24 @@ init_plugin(PurplePlugin *plugin)
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
-	info.name = _("Infopane");
-	info.summary = _("Allow customizing the details information in conversation windows.");
-	info.description = _("Allow customizing the details information in conversation windows.");
+	if(purple_version_check(2,2,0)  == NULL) {
+		info.name = _("Infopane Options");
+		info.summary = _("Allow customizing the details information in conversation windows.");
+		info.description = _("Allow customizing the details information in conversation windows.");
 
-	purple_prefs_add_none(PREF_PREFIX);
-	purple_prefs_add_string(PREF_POSITION, "top");
-	purple_prefs_add_bool(PREF_DRAG, FALSE);
-	purple_prefs_add_bool(PREF_SINGLE, TRUE);
-	purple_prefs_add_bool(PREF_ICON, TRUE);
+		purple_prefs_add_none(PREF_PREFIX);
+		purple_prefs_add_string(PREF_POSITION, "top");
+		purple_prefs_add_bool(PREF_DRAG, FALSE);
+		purple_prefs_add_bool(PREF_SINGLE, TRUE);
+		purple_prefs_add_bool(PREF_ICON, TRUE);
+	} else {
+		purple_debug_error(PLUGIN_ID, "Libpurple and Pidgin are too old!\n");
+		purple_debug_error(PLUGIN_ID, _("Libpurple and Pidgin are too old!\n"));
+
+		info.name = _("Incompatible Plugin! - Check plugin details!");
+		info.summary = _("This plugin is NOT compatible with this version of Pidgin!");
+		info.description = _("This plugin is NOT compatible with this version of Pidgin!");
+	}
 }
 
 PURPLE_INIT_PLUGIN(infopane, init_plugin, info)
