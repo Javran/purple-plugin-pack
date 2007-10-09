@@ -62,7 +62,20 @@ g_str_has_prefix (const gchar  *str,
 }
 #endif
 
-#if !G_VERSION_CHECK(2,4,0)
+/* this check is backwards now because we need to do stuff both if the builder
+ * has 2.4.0 and if the builder doesn't have 2.4.0 */
+#if GLIB_CHECK_VERSION(2,4,0)
+#  include <glib/gi18n-lib.h>
+#else
+#  include <locale.h>
+#  include <libintl.h>
+#  define _(String) dgettext (GETTEXT_PACKAGE, String)
+#  define Q_(String) g_strip_context ((String), dgettext (GETTEXT_PACKAGE, String))
+#  ifdef gettext_noop
+#    define N_(String) gettext_noop (String)
+#  else
+#    define N_(String) (String)
+#  endif
 static gchar **
 g_strsplit_set (const gchar *string,
 		const gchar *delimiters,

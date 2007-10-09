@@ -26,21 +26,7 @@
 
 #include <glib.h>
 
-/* This works around the lack of i18n support in old glib.  Needed because
- * we moved to using intltool and glib wrappings. */
-#if GLIB_CHECK_VERSION(2,4,0)
-#  include <glib/gi18n-lib.h>
-#else
-#  include <locale.h>
-#  include <libintl.h>
-#  define _(String) dgettext (GETTEXT_PACKAGE, String)
-#  define Q_(String) g_strip_context ((String), dgettext (GETTEXT_PACKAGE, String))
-#  ifdef gettext_noop
-#    define N_(String) gettext_noop (String)
-#  else
-#    define N_(String) (String)
-#  endif
-#endif
+#include "../common/glib_compat.h"
 
 #ifdef _WIN32
 # include <win32dep.h>
