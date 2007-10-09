@@ -1,15 +1,28 @@
+/*
+ * Purple Plugin Pack - GLib Compatibility Header
+ *
+ * This code borrowed from GLib (http://www.gtk.org/) for backward
+ * compatibility with ancient versions of GLib.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02111-1301, USA.
+ */
+
 #include <string.h>
 
-#ifndef g_str_has_suffix
-/**
- * g_str_has_suffix:
- * @str: a nul-terminated string.
- * @suffix: the nul-terminated suffix to look for.
- *
- * Looks whether the string @str ends with @suffix.
- *
- * Return value: TRUE if @str end with @suffix, FALSE otherwise.
- **/
+#if !G_VERSION_CHECK(2,2,0)
 gboolean
 g_str_has_suffix (const gchar  *str,
 		  const gchar  *suffix)
@@ -28,18 +41,7 @@ g_str_has_suffix (const gchar  *str,
 
   return strcmp (str + str_len - suffix_len, suffix) == 0;
 }
-#endif
 
-#ifndef g_str_has_prefix
-/**
- * g_str_has_prefix:
- * @str: a nul-terminated string.
- * @prefix: the nul-terminated prefix to look for.
- *
- * Looks whether the string @str begins with @prefix.
- *
- * Return value: TRUE if @str begins with @prefix, FALSE otherwise.
- **/
 gboolean
 g_str_has_prefix (const gchar  *str,
 		  const gchar  *prefix)
@@ -60,42 +62,7 @@ g_str_has_prefix (const gchar  *str,
 }
 #endif
 
-#ifndef g_strsplit_set
-/**
-  * g_strsplit_set:
-  * @string: The string to be tokenized
-  * @delimiters: A nul-terminated string containing bytes that are used
-  *              to split the string.
-  * @max_tokens: The maximum number of tokens to split @string into. 
-  *              If this is less than 1, the string is split completely
-  * 
-  * Splits @string into a number of tokens not containing any of the characters
-  * in @delimiter. A token is the (possibly empty) longest string that does not
-  * contain any of the characters in @delimiters. If @max_tokens is reached, the
-  * remainder is appended to the last token.
-  *
-  * For example the result of g_strsplit_set ("abc:def/ghi", ":/", -1) is a
-  * %NULL-terminated vector containing the three strings "abc", "def", 
-  * and "ghi".
-  *
-  * The result if g_strsplit_set (":def/ghi:", ":/", -1) is a %NULL-terminated
-  * vector containing the four strings "", "def", "ghi", and "".
-  * 
-  * As a special case, the result of splitting the empty string "" is an empty
-  * vector, not a vector containing a single string. The reason for this
-  * special case is that being able to represent a empty vector is typically
-  * more useful than consistent handling of empty elements. If you do need
-  * to represent empty elements, you'll need to check for the empty string
-  * before calling g_strsplit_set().
-  *
-  * Note that this function works on bytes not characters, so it can't be used 
-  * to delimit UTF-8 strings for anything but ASCII characters.
-  * 
-  * Return value: a newly-allocated %NULL-terminated array of strings. Use 
-  *    g_strfreev() to free it.
-  * 
-  * Since: 2.4
-  **/
+#if !G_VERSION_CHECK(2,4,0)
 static gchar **
 g_strsplit_set (const gchar *string,
 		const gchar *delimiters,
@@ -162,20 +129,7 @@ g_strsplit_set (const gchar *string,
 }
 #endif
 
-#ifndef g_strv_length
-/**
- * g_strv_length:
- * @str_array: a %NULL-terminated array of strings.
- * 
- * Returns the length of the given %NULL-terminated 
- * string array @str_array.
- * 
- * Return value: length of @str_array.
- *
- * From the file gstrfuncs.c
- *
- * Since: 2.6
- **/
+#if !G_VERSION_CHECK(2,6,0)
 static guint
 g_strv_length (gchar **str_array)
 {
