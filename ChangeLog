@@ -1,4 +1,6 @@
 Version 2.2.0mtn:
+	* Added 'menuconfig' script to make it easier to select what plugins to
+	  build.
 	* Merged autorejoin into irc-more.  No prefs migration will take place.
 	  You will need to reconfigure the delay yourself.  Autorejoin no longer
 	  exists.
@@ -9,7 +11,7 @@ Version 2.2.0mtn:
 	* Added support for initial user modes to irc-more
 	* Added the abusive findip plugin
 	* Added infopane plugin
-	* Fixed autoreply so it doesn't  reply with an empty message (rageboy04)
+	* Fixed autoreply so it doesn't reply with an empty message (rageboy04)
 	* Fixed a crash in ignore where a nickname that is not all lowercase
 	  causes unintended behavior resulting in a crash (rageboy04, qwert)
 	* Fixed a possible double-free crash in /notice support in irc-more.
