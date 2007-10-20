@@ -6,7 +6,7 @@ Version 2.2.0mtn:
 	* Listhandler now supports restoring a buddy list from a backed-up
 	  blist.xml file created by backing up ~/.purple.
 	* Slashexec's '/exec command' and '!command' are now optional (QuLogic)
-	* Added support for initial user modes to irc-more
+	* Added support for initial setting/unsetting of user modes to irc-more
 	* Added the abusive findip plugin
 	* Added infopane plugin
 	* Fixed autoreply so it doesn't  reply with an empty message (rageboy04)
