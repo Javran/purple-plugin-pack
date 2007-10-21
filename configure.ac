@@ -342,6 +342,7 @@ AC_OUTPUT([
 	stocker/Makefile
 	switchspell/Makefile
 	talkfilters/Makefile
+	timelog/Makefile
 	xchat-chats/Makefile
 	xmmsremote/Makefile
 	xmmsremote/pixmaps/Makefile

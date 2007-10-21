@@ -1,0 +1,21 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for timelog plugin.
+#
+
+PP_TOP :=		..
+
+PP = timelog
+
+
+PP_SRC := \
+	log-widget.c \
+	log-widget.h \
+	range-widget.c \
+	range-widget.h \
+	timelog.c \
+	timelog.h
+
+include $(PP_TOP)/win_pp.mak
+
