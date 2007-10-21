@@ -1,0 +1,12 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for irc-more plugin.
+#
+
+PP_TOP :=		..
+
+PP = irc-more
+
+include $(PP_TOP)/win_pp.mak
+

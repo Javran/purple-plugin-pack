@@ -1,0 +1,3 @@
+- At some point, the number of stored icons will become unwieldy.
+	- We should find a way to load the icons as scrolling happens.
+

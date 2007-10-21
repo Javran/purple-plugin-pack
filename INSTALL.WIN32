@@ -1,0 +1,41 @@
+Install
+=======
+
+To install the Purple Plugin Pack, simply extract the contents of this zip file
+to your purple install directory, which is C:\Program Files\Purple by
+default.
+
+To Compile
+==========
+
+You need a complete Purple build environment set up, and Purple already compiled.
+
+Then extract the Purple Plugin Pack source into:
+
+  purple-source-tree/plugins/
+
+purple-source being what ever path you extracted the gaim source tree to.
+
+For example, if your purple source tree is in /home/user/gaim-VERSION
+you want to "cd" over to /home/user/purple-VERSION/plugins/ and type:
+
+  tar zxvf purple-plugin-pack-VERSION.tar.gz
+
+Then cd into the source dir
+
+  cd purple-plugin-pack
+
+Followed by
+
+  make -f Makefile.mingw
+  make -f Makefile.mingw install
+
+When it's done building copy
+
+  win32-install-dir/plugins/*.dll
+
+to your purple install dir, (Keeping the already defined tree structure of
+course)
+
+And you should be good to go.  Restart purple and load 'em up.
+

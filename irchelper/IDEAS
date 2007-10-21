@@ -1,0 +1,37 @@
+This file is a list of ideas for future development on this plugin.  See the
+PHILOSOPHY file for information on what is considered within scope.
+
+
+USER FEATURES:
+
+NickServ (on FreeNode at least) allows accounts to be linked.  When adding an
+account, this plugin should query NickServ for linked accounts and
+automatically build a contact.
+
+It should be possible to interact with IRC services via the GUI (in the Account
+Actions menu, for example).
+
+
+OPER FEATURES:
+
+It would be nice to have a feature where a channel op could /kick someone
+without being opped.  The /kick command would be caught by this plugin which
+would ask ChanServ to op the user, then the /kick command would be issued,
+then the user would be deopped automatically after a timeout had expired.  (The
+same thing would apply to other commands which require a specific permission
+level.)
+
+	In cases where a user has multiple accounts and issues a command like
+	/kick from one that is not a channel op, it should still work if they
+	have another account that is an IRCop or has ChanServ op privileges.
+
+	Since this will only be activated for networks where it's been tested
+	and known for certain it'll work, it should be possible to hide
+	operator commands when the plugin knows they won't succeed.
+
+It would be cool to show a faded icon in the chat user list when a given user
+could +o (or +v) themself via ChanServ.  This should work for both linked
+usernames (even if there wasn't a contact created) and contacts.  In other
+words, if someone has username_a and username_b and they're not linked with
+NickServ, but the user has them grouped into a contact, he/she should see a
+faded op icon for both if either one has ChanServ op privileges.

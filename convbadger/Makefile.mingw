@@ -1,0 +1,12 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for convbadger plugin.
+#
+
+PP_TOP :=		..
+
+PP = convbadger
+
+include $(PP_TOP)/win_pp.mak
+

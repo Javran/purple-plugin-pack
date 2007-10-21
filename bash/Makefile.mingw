@@ -1,0 +1,12 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for bash plugin.
+#
+
+PP_TOP :=		..
+
+PP = bash
+
+include $(PP_TOP)/win_pp.mak
+

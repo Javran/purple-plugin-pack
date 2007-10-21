@@ -1,0 +1,15 @@
+This plugin archives all buddy icons.
+
+Bug reports and patches are welcome: http://plugins.guifications.org
+
+This plugin is known to not compile against versions of GTK+ < 2.4. If this is
+important to you, file a support request with a copy of the compiler errors
+you get when attempting to compile so it can be fixed.
+
+Once you have the plugin installed, activate it in the plugins dialog
+(Tools -> Plugins).  The plugin will save all buddy icons as they arrive.
+To view the icons, right-click on a buddy and choose View Buddy Icons. You
+can also use Tools -> Album -> View Buddy Icon and then type in a
+buddy's name. This is useful if the person is offline and you have Show
+Offline Buddies unchecked or if you don't have the person on your buddy
+list.

@@ -1,0 +1,91 @@
+PURPOSE
+
+This plugin was developed to enhance the usability of the IRC protocol in
+Pidgin.  See the PHILOSOPHY file for more details.
+
+
+COMPATIBILITY
+
+This plugin is designed for Pidgin 2.0.0 and later.  It's developed as a plugin
+for libpurple, so it should work in other libpurple-based clients such as Finch
+and even Adium, but this has not been tested.
+
+NOTE: This plugin may not compile with old versions of GTK+ or glib.
+If that's important to you, please file a feature request with a copy of the
+compiler errors you get when attempting to build the plugin.
+
+This plugin has (at some point) been tested on the following networks:
+	DALnet
+	FreeNode
+	GameSurge
+	Jeux (by BNI on irc.freenode.net)
+	QuakeNet
+	SlashNET (by uilleann@users.sf.net)
+	Undernet
+
+If it doesn't work on these networks, please file that as a bug.
+
+It may work with other networks.  Users are encouraged to report networks that
+it works on and to request support for other networks.
+
+
+BUG REPORTS & FEEDBACK
+
+Bug reports and patches are welcome: http://plugins.guifications.org
+
+
+USAGE
+
+Once you have the plugin installed, activate it (Tools -> Plugins).  All of the
+options are customized on a per account basis (see Accounts -> [an IRC account]
+-> Edit Account -> Advanced).
+
+The plugin suppresses lots of useless messages with no configuration.  However,
+a few features require configuration.  The options currently available are:
+
+Auth name:
+	Set a username to use when authenticating to AuthServ.
+
+	If an auth name is not set, the account's screen name (i.e. the IRC
+	nickname) is used instead.  This is normally what you want anyway.
+	This option is only necessary if your nickname and AuthServ username
+	differ.
+
+	NOTE: This only applies to networks that use an AuthServ.  It does not
+	apply to those using a NickServ, as all currently supported
+	implementations of NickServ have no concept of a auth username.
+
+Nick password:
+	Set a password to use when authenticating to AuthServ, NickServ or
+	Q (for QuakeNet).
+
+	SECURITY NOTE:
+		Do not set a nick password on any network (other than those
+		listed above as supported networks) that doesn't use NickServ
+		for authentication or you could expose your credentials to a
+		user impersonating NickServ.
+
+Disconnect ghosts (Duplicate nicknames):
+	Disconnect duplicate copies of your nickname.
+
+	Typically, this is used to kill ghosted usernames.  A username is
+	referred to as "ghosted" when your connection to the IRC server is
+	disconnected, but the server hasn't noticed yet.
+
+	When this option is activated and the plugin notices your username
+	immediately after signing on is different than the nickname set on the
+	account, it will ask NickServ to kill your (regular) nickname, wait for
+	NickServ to report the nickname was killed, and then change your
+	nickname to what it should be.
+
+	NOTE:
+		This is currently not supported on QuakeNet.  The QuakeNet
+		General FAQ (http://quakenet.org/faq/faq.php?c=4&f=8#8) seems
+		to imply that the Q bot does not provide the ability to
+		disconnect ghosted usernames.
+
+Operator password:
+	Set a password to use to become an IRCop.
+
+	This will issue the following IRC command on signon:
+		OPER your_nickname specified_password

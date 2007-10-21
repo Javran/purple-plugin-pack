@@ -1,0 +1,54 @@
+Authors
+=======
+Gary Kramlich <grim@reaperworld.com>
+Stu Tomlinson <stu@nosnilmot.com>
+Peter Lawler <bleeter@users.sf.net>
+John Bailey <rekkanoryo@rekkanoryo.org>
+Kevin Stange <kstange@users.sourceforge.net>
+Lennert Van Alboom <alverino@users.sourceforge.net>
+Daniel Atallah <datallah@users.sourceforge.net>
+Sadrul H Chowdhury <sadrul@users.sourceforge.net>
+Richard Laager <rlaager@guifications.org>
+
+Translators
+===========
+es_ES - Máximo Castañeda <antiswen@yahoo.es>
+fr    - Yannick LE NY <y.le.ny@ifrance.com>
+
+Packagers
+=========
+Daniel Attallah <datallah@users.sourceforge.net>
+	- Windows
+Benjamin Seidenberg <benjamin@debian.org>
+	- Debian
+Stu Tomlinson <stu@nosnilmot.com>
+	- Source RPM
+	- Fedora Core 4
+	- Fedora Core 5
+	- Fedora Core 6
+	- Red Hat Enterprise Linux 4/CentOS 4
+
+Accepted Patches
+================
+Elliott Sales de Andrade
+Chris Banal
+Daniel Beardsmore
+Joshua Cowan
+Mathias Hasselmann
+Björn Nilsson
+Chris Petersen
+Jérôme Poulin (TiCPU)
+Lee Roach
+Ryan Seeber
+Ankit Singla
+Anthony Sofocleous
+William Thompson
+Chris Weyl
+qwert - realphabetize or replace with real name before release!
+
+Special Thanks
+==============
+Kathryn Kulick - For providing a female presence in our IRC channel
+Robert O'Connor - Kicktoy... 'nuff said :)
+Dennis Ristuccia - For random gibberish that forces us to take a break from coding
+Ankit Singla - Ticket triaging! (and TLC for the gRIM plugin)

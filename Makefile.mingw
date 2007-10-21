@@ -1,0 +1,39 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for win32 (mingw) purple plugin pack
+#
+
+VERSION := $(shell cat ./VERSION)
+
+all:
+	list='$(shell ls -D)'; for subdir in $$list; do \
+	  if test -d $$subdir; then if test -e $$subdir/.build; then if test -e $$subdir/Makefile.mingw; then \
+	    $(MAKE) -C $$subdir -f Makefile.mingw || exit 1; \
+	  fi; fi; fi; \
+	done;
+
+install: all
+	list='$(shell ls -D)'; for subdir in $$list; do \
+	  if test -d $$subdir; then if test -e $$subdir/.build; then if test -e $$subdir/Makefile.mingw; then \
+	    $(MAKE) -C $$subdir -f Makefile.mingw install || exit 1;\
+	  fi; fi; fi; \
+	done;
+
+clean:
+	list='$(shell ls -D)'; for subdir in $$list; do \
+	  if test -d $$subdir; then if test -e $$subdir/.build; then if test -e $$subdir/Makefile.mingw; then \
+	    $(MAKE) -C $$subdir -f Makefile.mingw clean || exit 1;\
+	  fi; fi; fi; \
+	done; \
+	rm -rf pp_config.h win32-dist purple-plugin_pack*.zip
+
+install_zip:
+	list='$(shell ls -D)'; for subdir in $$list; do \
+	  if test -d $$subdir; then if test -e $$subdir/.build; then if test -e $$subdir/Makefile.mingw; then \
+	    $(MAKE) -C $$subdir -f Makefile.mingw install_zip || exit 1;\
+	  fi; fi; fi; \
+	done; \
+	pushd win32-dist; \
+	zip ../purple-plugin_pack-$(VERSION).zip *.dll; \
+	popd

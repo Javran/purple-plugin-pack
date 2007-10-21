@@ -1,0 +1,165 @@
+Version 2.2.0mtn:
+	* Added 'menuconfig' script to make it easier to select what plugins to
+	  build.
+	* Merged autorejoin into irc-more.  No prefs migration will take place.
+	  You will need to reconfigure the delay yourself.  Autorejoin no longer
+	  exists.
+	* Autoreply now can be disabled per-account (rageboy04)
+	* Listhandler now supports restoring a buddy list from a backed-up
+	  blist.xml file created by backing up ~/.purple.
+	* Slashexec's '/exec command' and '!command' are now optional (QuLogic)
+	* Added support for initial setting/unsetting of user modes to irc-more
+	* Added the abusive findip plugin
+	* Added infopane plugin
+	* Fixed autoreply so it doesn't reply with an empty message (rageboy04)
+	* Fixed a crash in ignore where a nickname that is not all lowercase
+	  causes unintended behavior resulting in a crash (rageboy04, qwert)
+	* Fixed a possible double-free crash in /notice support in irc-more.
+	* Fixed a crash in Slashexec that has only shown itself when using the
+	  Offline Message Emulation plugin to emulate an offline message at the
+	  same time as Slashexec is loaded.
+	* Fixed the version number for highlight and ignore so they show the
+	  correct Plugin Pack version instead of the version of Pidgin they were
+	  built against.
+	* Fixed building with ancient glib. (Bodo Bellut)
+	* Removed the .build file from hideconv to remove it from default
+	  builds.  Pidgin will have persistent conversations soon.
+	* Added dewysiwygification plugin
+
+Version 2.1.1: 8/19/07
+	* Fixed lack of .build, .pidgin-plugin, and Makefile.mingw for convbadger
+
+Version 2.1.0: 8/18/07
+	* Completed the convbadger plugin.  It adds a protocol icon to the menu
+	  bar of the conversation window.
+	* Added the Pidgin-SNPP protocol plugin as snpp
+	* Added the /notice command for the irc-more plugin.
+	* Added an additional string to the eight_ball plugin (resiak)
+	* Autorejoin now has a preference to set the delay time before
+	  rejoining.  Fixes #372
+
+Version 2.0.0: 7/13/07
+	* Blistops now offers the ability to stretch the display of screen names
+	  or aliases into the buddy icon column when no icon exists
+	* Blistops now shows the menu bar when hovering near the top of the buddy
+	  list window.  Resolves a number of Pidgin bug reports
+	* Listhandler now supports alias-only list exports and imports (rseeber)
+	* Listhandler now exports and imports buddy notes created with the
+	  buddynote plugin
+	* Added ignore plugin
+	* Added irc-more plugin
+	* Added highlight plugin
+	* Added incomplete convbadger plugin
+	* Added internationalization support to plonkers
+	* Added more humorous stuff to eight_ball (resiak)
+	* Added support for spaces in filenames to gRIM (rageboy04)
+	* Added a stop subcommand in gRIM (rageboy04)
+	* Changed order of arguments to gRIM command (rageboy04)
+	* Fixed build-by-default status for switchspell
+	* Fixed crash in album when using Pidgin 2.0.2 or newer
+	* Fixed potential crashes in some other plugins when using Pidgin 2.0.2 or
+	  newer
+	* Fixed potential random crashes in irssi plugin
+	* Fixed make distcheck in the development code
+
+Version 1.0: 5/4/07
+	* Updated for Pidgin 2.0.0
+	* Fixed build-by-default and win32 building for several plugins
+	* Added hideconv plugin
+	* Took autoreply back from Pidgin
+
+Version 1.0beta7: 4/30/07
+	* Added the Ignorance plugin to the main development line
+	* Added broadcast plugin
+	* Imported the IRC Helper plugin
+	* Imported the "Gaim Album" plugin, as "Album"
+	* Updated all namespaces for purple, pidgin, and finch API
+	* Completed Broadcaster plugin (abusive)
+	* Changed .plugin files to .purple-plugin, .pidgin-plugin, and
+	  .finch-plugin
+	* Added .incomplete to specify plugins that shouldn't ever build
+	  automagically.
+
+Version 1.0beta6: 1/19/07
+	* Extensive changes to the irssi plugin, especially in its text formatting.
+	* Added a menuconfig script that allows a text-mode menu selection of
+	  which plugins to build.  Inspired by the Linux kernel's 'make
+	  menuconfig'.
+	* Fixed a bug in blistops that caused the saved preferences not to take
+	  effect after restarting Gaim.
+	* Slashexec no longer prints annoying system messages to the conversation
+	* Moved autoaccept to Gaim
+	* Moved autoreply to Gaim
+	* Moved buddynote to Gaim
+	* Moved convcolors to Gaim
+	* Moved markerline to Gaim
+	* Moved newline to Gaim
+	* Moved offlinemsg to Gaim
+
+Version 1.0beta5: 11/11/06
+	* Removed chronic.wav due to potential copyright issues
+	* Fixed some missing library links in Makefiles
+	* Fixed irssi plugin's text formatting so that it isn't so aggressive
+
+Version 1.0beta4: 10/18/06
+	* Updated to work with Gaim 2.0.0beta4
+	* Moved from gettext to intltool
+	* Added difftopic plugin
+	* Added /layout and text formatting capabilities to irssi plugin
+	* Added bangexec features to slashexec plugin.  Commands can be executed
+	  by typing "!command" in the entry area for a conversation.  Check
+	  http://gaim.guifications.org/wiki/slashexec for details.
+
+Version 1.0beta3.1: 8/22/06
+	* Updated to work with Gaim 2.0.0beta3.1
+	* Renamed gaim-xmms-remote plugin to xmmsremote for consistency within the
+	  plugin's directory
+	* Added .abusive marking to conditional building.  Plugins with .abusive
+	  files in their directories never build automatically.
+	* Renamed irssidate plugin to irssi and added /win and /window commands.
+
+Version 1.0beta3: 3/29/06
+	* Added slashexec plugin - formerly a separate package
+	* Added gaim-xmms-remote plugin - formerly a separate package
+	* Fixed bugs in the m4 code that controls the conditional building
+	* Updated to work with Gaim 2.0.0beta3
+
+Version 1.0beta2: 1/25/06
+	* Added plonkers plugin
+	* Updated to work with Gaim 2.0.0beta2
+
+Version 1.0beta1: 12/17/05
+	* Added adium_xml_logger plugin
+	* Added autoaccept plugin
+	* Added autoreply plugin
+	* Added bash plugin
+	* Added bit plugin - DANGEROUS!!!
+	* Added blistops plugin
+	* Added buddynote plugin
+	* Added dice plugin
+	* Added eight_ball plugin
+	* Added flip plugin
+	* Added gRIM plugin
+	* Added gaim-schedule
+	* Added gaim-xchat plugin
+	* Added groupmsg plugin
+	* Added irssidate plugin
+	* Added lastseen plugin
+	* Added listhandler plugin
+	* Added markerline plugin
+	* Added mystatusbox plugin
+	* Added newline plugin
+	* Added nicksaid plugin
+	* Added offlinemsg plugin
+	* Added oldlogger plugin
+	* Added sepandtab plugin
+	* Added showoffline plugin
+	* Added simfix plugin
+	* Added sslinfo plugin
+	* Added stocker plugin - not yet functional
+	* Added template plugins
+	* Added talkfilters plugin
+	* Added conditional building - all plugins require .plugin files in their
+	  directories.  To build by default, plugins require .build files in their
+	  directories.
+

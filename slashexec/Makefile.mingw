@@ -1,0 +1,11 @@
+#
+# Makefile.mingw #
+# Description: Makefile for slashexec plugin.
+#
+
+PP_TOP :=		..
+
+PP = slashexec
+
+include $(PP_TOP)/win_pp.mak
+
