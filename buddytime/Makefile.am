@@ -1,22 +1,44 @@
-EXTRA_DIST = .incomplete .pidgin-plugin
+EXTRA_DIST = .incomplete .purple-plugin .pidgin-plugin
 
-buddytimedir = $(PIDGIN_LIBDIR)
+noinst_PROGRAMS = recursetest
 
-buddytime_la_LDFLAGS = -module -avoid-version
+recursetest_SOURCES = \
+	recurse.c \
+	recursetest.c
 
 if HAVE_PIDGIN
 
-buddytime_LTLIBRARIES = buddytime.la
+noinst_PROGRAMS += gtktimezonetest
 
-buddytime_la_SOURCES = \
-	buddytime.c
+gtktimezonetest_SOURCES = \
+	gtktimezone.c \
+	gtktimezonetest.c \
+	recurse.c
 
-buddytime_la_LIBADD = \
+gtktimezonetest_LDADD = \
+	$(GTK_LIBS)
+
+gtkbuddytimedir = $(PIDGIN_LIBDIR)
+gtkbuddytime_la_LDFLAGS = -module -avoid-version
+gtkbuddytime_LTLIBRARIES = gtkbuddytime.la
+gtkbuddytime_la_SOURCES = \
+	gtkbuddytime.c
+gtkbuddytime_la_LIBADD = \
 	$(PIDGIN_LIBS) \
 	$(GLIB_LIBS) \
 	$(GTK_LIBS)
 
 endif
+
+buddytimedir = $(PURPLE_LIBDIR)
+buddytime_la_LDFLAGS = -module -avoid-version
+buddytime_LTLIBRARIES = buddytime.la
+buddytime_la_SOURCES = \
+	buddytime.c
+buddytime_la_LIBADD = \
+	$(PURPLE_LIBS) \
+	$(GLIB_LIBS)
+
 
 AM_CPPFLAGS = \
 	-DLIBDIR=\"$(PIDGIN_LIBDIR)\" \
