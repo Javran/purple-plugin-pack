@@ -25,6 +25,7 @@ Version 2.2.0mtn:
 	* Removed the .build file from hideconv to remove it from default
 	  builds.  Pidgin will have persistent conversations soon.
 	* Added dewysiwygification plugin
+	* Added timelog plugin, from Jon Oberheide's gaim-timelog
 	* Merged buddytimezone from the buddytools package into the existing
 	  (incomplete) buddytime plugin
 
