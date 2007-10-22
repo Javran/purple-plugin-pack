@@ -25,6 +25,8 @@ Version 2.2.0mtn:
 	* Removed the .build file from hideconv to remove it from default
 	  builds.  Pidgin will have persistent conversations soon.
 	* Added dewysiwygification plugin
+	* Merged buddytimezone from the buddytools package into the existing
+	  (incomplete) buddytime plugin
 
 Version 2.1.1: 8/19/07
 	* Fixed lack of .build, .pidgin-plugin, and Makefile.mingw for convbadger

@@ -4,6 +4,8 @@
 .+\.spec
 .*\.dll
 aclocal.m4
+buddytime/gtktimezonetest
+buddytime/recursetest
 config.(cache|guess|log|status|sub)
 configure
 depcomp
