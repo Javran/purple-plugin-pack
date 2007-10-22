@@ -4,7 +4,7 @@
 .+\.spec
 .*\.dll
 aclocal.m4
-config.(guess|log|status|sub)
+config.(cache|guess|log|status|sub)
 configure
 depcomp
 install-sh
@@ -14,6 +14,8 @@ local.mak
 ltmain.sh
 missing
 po/Makefile.in.in
+po/missing
+po/notexist
 po/POTFILES
 po/stamp-it
 po/.+\.pot
