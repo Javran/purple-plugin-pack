@@ -119,7 +119,7 @@ init_plugin(PurplePlugin *plugin)
 
 	info.name = _(info.name);
 	info.summary = _(info.summary);
-	info.description _(info.description);
+	info.description  = _(info.description);
 }
 
 PURPLE_INIT_PLUGIN(dewysiwygification, init_plugin, info)
