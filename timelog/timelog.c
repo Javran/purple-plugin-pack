@@ -125,9 +125,9 @@ cb_select_account(PurplePluginAction *action)
 	purple_request_fields_add_group(request, group);
 
 	purple_request_fields(action->plugin, TIMELOG_TITLE,
-			"Select account to view logs for:", NULL, request,
-			"Select Account", G_CALLBACK(cb_select_time),
-			"Cancel", NULL, NULL, NULL, NULL, NULL);
+			_("Select account to view logs for:"), NULL, request,
+			_("Select Account"), G_CALLBACK(cb_select_time),
+			_("Cancel"), NULL, NULL, NULL, NULL, NULL);
 }
 
 static GList *
@@ -136,7 +136,7 @@ actions(PurplePlugin *plugin, gpointer context)
 	GList *l = NULL;
 	PurplePluginAction *act = NULL;
 
-	act = purple_plugin_action_new("Select Account/Time", cb_select_account);
+	act = purple_plugin_action_new(_("Select Account/Time"), cb_select_account);
 	l = g_list_append(l, act);
 
 	return l;
@@ -163,14 +163,14 @@ static PurplePluginInfo info =
 	PIDGIN_PLUGIN_TYPE,				/**< ui_req	*/
 	0,						/**< flags	*/
 	NULL,						/**< deps	*/
-	PURPLE_PRIORITY_DEFAULT,				/**< priority	*/
+	PURPLE_PRIORITY_DEFAULT,			/**< priority	*/
 	TIMELOG_PLUGIN_ID,				/**< id		*/
-	TIMELOG_TITLE,					/**< name	*/
+	NULL,						/**< name	*/
 	PP_VERSION,					/**< version	*/
 							/**  summary	*/
-	"Allows the viewing of Pidgin logs within a specific time range",
+	N_("Allows the viewing of Pidgin logs within a specific time range"),
 							/**  desc	*/
-	"Allows the viewing of Pidgin logs within a specific time range",
+	N_("Allows the viewing of Pidgin logs within a specific time range"),
 	"Jon Oberheide <jon@oberheide.org>",		/**< author	*/
 	"http://jon.oberheide.org/projects/gaim-timelog/",
 							/**< homepage	*/
@@ -186,6 +186,14 @@ static PurplePluginInfo info =
 static void
 init_plugin(PurplePlugin *plugin)
 {
+#ifdef ENABLE_NLS
+	bindtextdomain(GETTEXT_PACKAGE, PP_LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+#endif
+
+	info.name = TIMELOG_TITLE;
+	info.summary = _(info.summary);
+	info.description = _(info.description);
 }
 
 PURPLE_INIT_PLUGIN(timelog, init_plugin, info)

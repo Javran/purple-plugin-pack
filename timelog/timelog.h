@@ -25,7 +25,7 @@
 #define _TIMELOG_H
 
 #define TIMELOG_PLUGIN_ID	"gtk-binaryjono-timelog"
-#define TIMELOG_TITLE		"TimeLog"
+#define TIMELOG_TITLE		_("TimeLog")
 
 #define tl_debug(fmt, ...)	purple_debug(PURPLE_DEBUG_INFO, TIMELOG_TITLE, \
 							fmt, ## __VA_ARGS__);

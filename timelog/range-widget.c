@@ -223,11 +223,11 @@ range_widget_create()
 	gtk_widget_show(hbox46);
 	gtk_box_pack_start(GTK_BOX(vbox7), hbox46, FALSE, FALSE, 5);
 
-	label43 = gtk_label_new("Start Time");
+	label43 = gtk_label_new(_("Start Time"));
 	gtk_widget_show(label43);
 	gtk_box_pack_start(GTK_BOX(hbox46), label43, TRUE, TRUE, 0);
 
-	label44 = gtk_label_new("End Time");
+	label44 = gtk_label_new(_("End Time"));
 	gtk_widget_show(label44);
 	gtk_box_pack_start(GTK_BOX(hbox46), label44, TRUE, TRUE, 0);
 
@@ -327,7 +327,7 @@ range_widget_create()
 	gtk_widget_show(image49);
 	gtk_box_pack_start(GTK_BOX(hbox341), image49, FALSE, FALSE, 0);
 
-	label97 = gtk_label_new_with_mnemonic("Select Time Range");
+	label97 = gtk_label_new_with_mnemonic(_("Select Time Range"));
 	gtk_widget_show(label97);
 	gtk_box_pack_start(GTK_BOX(hbox341), label97, FALSE, FALSE, 0);
 

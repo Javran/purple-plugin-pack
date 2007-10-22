@@ -221,9 +221,9 @@ log_select_cb(GtkTreeSelection *sel, PidginLogViewer *viewer)
 		strftime(time, sizeof(time), "%c", localtime(&log->time));
 
 		if (log->type == PURPLE_LOG_CHAT)
-			title = g_strdup_printf("Conversation in %s on %s", log->name, time);
+			title = g_strdup_printf(_("Conversation in %s on %s"), log->name, time);
 		else
-			title = g_strdup_printf("Conversation with %s on %s", log->name, time);
+			title = g_strdup_printf(_("Conversation with %s on %s"), log->name, time);
 
 		title_utf8 = purple_utf8_try_convert(title);
 		g_free(title);
@@ -285,7 +285,7 @@ log_widget_display_logs(GList *logs)
 
 	if (logs == NULL) {
 		/* No logs were found. */
-		purple_notify_info(NULL, TIMELOG_TITLE, "No logs were found", NULL);
+		purple_notify_info(NULL, TIMELOG_TITLE, _("No logs were found"), NULL);
 		return;
 	}
 
