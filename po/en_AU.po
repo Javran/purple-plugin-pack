@@ -8,13 +8,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugin_pack 0.1cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-09 00:11-0400\n"
+"POT-Creation-Date: 2007-10-22 00:43-0400\n"
 "PO-Revision-Date: 2005-11-21 10:36+1100\n"
 "Last-Translator: Peter Lawler <trans@six-by-nine.com.au>\n"
 "Language-Team: English/AU <trans@six-by-nine.com.au>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ../album/album.c:268
+msgid "Album"
+msgstr ""
+
+#: ../album/album.c:269
+msgid "Archives buddy icons."
+msgstr ""
+
+#: ../album/album.c:270
+msgid "Enable this plugin to automatically archive all buddy icons."
+msgstr ""
 
 #: ../album/album-ui.c:293
 msgid ""
@@ -92,6 +104,7 @@ msgstr ""
 
 #: ../album/album-ui.c:1142 ../broadcast/broadcast.c:117
 #: ../buddytime/buddytime.c:163 ../groupmsg/groupmsg.c:111
+#: ../timelog/timelog.c:130
 msgid "Cancel"
 msgstr ""
 
@@ -99,120 +112,113 @@ msgstr ""
 msgid "_View Buddy Icons"
 msgstr ""
 
-#: ../album/album.c:268
-msgid "Album"
-msgstr ""
-
-#: ../album/album.c:269
-msgid "Archives buddy icons."
-msgstr ""
-
-#: ../album/album.c:270
-msgid "Enable this plugin to automatically archive all buddy icons."
-msgstr ""
-
 #. XXX: There should be a way to reset to the default/account-default autoreply
-#: ../autoreply/autoreply.c:221
+#: ../autoreply/autoreply.c:226
 #, c-format
 msgid "Set autoreply message for %s"
 msgstr ""
 
-#: ../autoreply/autoreply.c:223
+#: ../autoreply/autoreply.c:228
 msgid "Set Autoreply Message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:224
+#: ../autoreply/autoreply.c:229
 msgid ""
 "The following message will be sent to the buddy when the buddy sends you a "
 "message and autoreply is enabled."
 msgstr ""
 
-#: ../autoreply/autoreply.c:228
+#: ../autoreply/autoreply.c:233
 msgid "_Save"
 msgstr ""
 
-#: ../autoreply/autoreply.c:229 ../listhandler/aim_blt_files.c:301
-#: ../listhandler/aim_blt_files.c:465 ../listhandler/gen_xml_files.c:163
+#: ../autoreply/autoreply.c:234 ../listhandler/aim_blt_files.c:301
+#: ../listhandler/aim_blt_files.c:465 ../listhandler/alias_xml_files.c:210
+#: ../listhandler/alias_xml_files.c:269 ../listhandler/gen_xml_files.c:163
 #: ../listhandler/gen_xml_files.c:355 ../listhandler/migrate.c:145
-#: ../listhandler/migrate.c:184
+#: ../listhandler/migrate.c:184 ../listhandler/purple_blist_xml.c:229
 msgid "_Cancel"
 msgstr ""
 
-#: ../autoreply/autoreply.c:245
+#: ../autoreply/autoreply.c:250
 msgid "Set _Autoreply Message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:258
+#: ../autoreply/autoreply.c:263
 msgid "Autoreply message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:357
+#: ../autoreply/autoreply.c:265
+msgid "Turn off autoreply"
+msgstr ""
+
+#: ../autoreply/autoreply.c:370
 msgid "Send autoreply messages when"
 msgstr ""
 
-#: ../autoreply/autoreply.c:361
+#: ../autoreply/autoreply.c:374
 msgid "When my account is _away"
 msgstr ""
 
-#: ../autoreply/autoreply.c:365
+#: ../autoreply/autoreply.c:378
 msgid "When my account is _idle"
 msgstr ""
 
-#: ../autoreply/autoreply.c:369
+#: ../autoreply/autoreply.c:382
 msgid "_Default reply"
 msgstr ""
 
-#: ../autoreply/autoreply.c:376
+#: ../autoreply/autoreply.c:389
 msgid ""
 "Autoreply Prefix\n"
 "(only when necessary)"
 msgstr ""
 
-#: ../autoreply/autoreply.c:379
+#: ../autoreply/autoreply.c:392
 msgid "Status message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:383
+#: ../autoreply/autoreply.c:396
 msgid "Autoreply with status message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:385
+#: ../autoreply/autoreply.c:398
 msgid "Never"
 msgstr ""
 
-#: ../autoreply/autoreply.c:387
+#: ../autoreply/autoreply.c:400
 msgid "Always when there is a status message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:389
+#: ../autoreply/autoreply.c:402
 msgid "Only when there's no autoreply message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:394
+#: ../autoreply/autoreply.c:407
 msgid "Delay between autoreplies"
 msgstr ""
 
-#: ../autoreply/autoreply.c:398
+#: ../autoreply/autoreply.c:411
 msgid "_Minimum delay (mins)"
 msgstr ""
 
-#: ../autoreply/autoreply.c:402
+#: ../autoreply/autoreply.c:415
 msgid "Times to send autoreplies"
 msgstr ""
 
-#: ../autoreply/autoreply.c:406
+#: ../autoreply/autoreply.c:419
 msgid "Ma_ximum count"
 msgstr ""
 
-#: ../autoreply/autoreply.c:464
+#: ../autoreply/autoreply.c:477
 msgid "Autoreply"
 msgstr ""
 
-#: ../autoreply/autoreply.c:465
+#: ../autoreply/autoreply.c:478
 msgid "Autoreply for all the protocols"
 msgstr ""
 
-#: ../autoreply/autoreply.c:466
+#: ../autoreply/autoreply.c:479
 msgid ""
 "This plugin lets you set autoreply message for any protocol. You can set the "
 "global autoreply message from the plugin options dialog. To set some "
@@ -221,13 +227,13 @@ msgid ""
 "the `Advanced' tab of the account edit dialog."
 msgstr ""
 
-#: ../autoreply/autoreply.c:476
+#: ../autoreply/autoreply.c:489
 msgid ""
 "I am currently not available. Please leave your message, and I will get back "
 "to you as soon as possible."
 msgstr ""
 
-#: ../autoreply/autoreply.c:481
+#: ../autoreply/autoreply.c:494
 msgid "This is an autoreply: "
 msgstr ""
 
@@ -505,11 +511,13 @@ msgstr ""
 msgid "Buddy Time"
 msgstr ""
 
-#: ../buddytime/buddytime.c:256
+#: ../buddytime/buddytime.c:256 ../common/core_template.c:80
+#: ../common/gtk_template.c:84
 msgid "summary"
 msgstr ""
 
-#: ../buddytime/buddytime.c:257
+#: ../buddytime/buddytime.c:257 ../common/core_template.c:81
+#: ../common/gtk_template.c:85
 msgid "description"
 msgstr ""
 
@@ -529,12 +537,30 @@ msgid ""
 "FUNCTIONAL!  IT IS USELESS!"
 msgstr ""
 
+#: ../common/core_template.c:79 ../common/gtk_template.c:83
+msgid "unnamed"
+msgstr ""
+
 #: ../convbadger/convbadger.c:192
 msgid "Conversation Badger"
 msgstr ""
 
 #: ../convbadger/convbadger.c:193 ../convbadger/convbadger.c:194
 msgid "Badges conversations with the protocol icon."
+msgstr ""
+
+#: ../dewysiwygification/dewysiwygification.c:99
+msgid "DeWYSIWYGification Plugin"
+msgstr ""
+
+#: ../dewysiwygification/dewysiwygification.c:101
+msgid "Lets you type in HTML without it being escaped to entities."
+msgstr ""
+
+#: ../dewysiwygification/dewysiwygification.c:102
+msgid ""
+"Lets you type in HTML without it being escaped to entities. This will not "
+"work well for some protocols. Use \"&lt;\" for a literal \"<\"."
 msgstr ""
 
 #: ../dice/dice.c:81
@@ -568,31 +594,51 @@ msgstr ""
 msgid "Show the old topic when the topic in a chat room changes."
 msgstr ""
 
-#: ../eight_ball/eight_ball.c:134
+#: ../eight_ball/eight_ball.c:135
 msgid "8ball:  sends a random 8ball message"
 msgstr ""
 
-#: ../eight_ball/eight_ball.c:135
+#: ../eight_ball/eight_ball.c:136
 msgid "sgball:  sends a random Stargate Ball message"
 msgstr ""
 
-#: ../eight_ball/eight_ball.c:136
+#: ../eight_ball/eight_ball.c:137
 msgid "fullcrap:  sends random fooling blabber"
 msgstr ""
 
-#: ../eight_ball/eight_ball.c:209
+#: ../eight_ball/eight_ball.c:210
 msgid "Magic 8 Ball"
 msgstr ""
 
-#: ../eight_ball/eight_ball.c:210
+#: ../eight_ball/eight_ball.c:211
 msgid "Provides Magic 8-ball like functionality"
 msgstr ""
 
-#: ../eight_ball/eight_ball.c:211
+#: ../eight_ball/eight_ball.c:212
 msgid ""
 "Provides Magic 8-ball like functionality with the /8ball command, as well as "
 "similar functionality for common Stargate words or phrases with the /sg-ball "
 "command."
+msgstr ""
+
+#: ../findip/findip.c:60
+msgid "Looked up IP: 127.0.0.1\n"
+msgstr ""
+
+#: ../findip/findip.c:64
+msgid "Yo! What's your IP?"
+msgstr ""
+
+#: ../findip/findip.c:83
+msgid "Looking up the IP ...\n"
+msgstr ""
+
+#: ../findip/findip.c:96
+msgid "Find IP"
+msgstr ""
+
+#: ../findip/findip.c:124
+msgid "Notify the user that you are trying to get the IP"
 msgstr ""
 
 #: ../flip/flip.c:60
@@ -885,44 +931,51 @@ msgid ""
 "Please do not use if you have amnesia."
 msgstr ""
 
-#. specify our help string and register our command
-#: ../irc-more/irc-more.c:212
-msgid "notice target message:  Send a notice to the specified target."
+#: ../infopane/infopane.c:148 ../infopane/infopane.c:262
+msgid "Libpurple and Pidgin are too old!\n"
 msgstr ""
 
-#. Alphabetize the option label strings
-#: ../irc-more/irc-more.c:232
-msgid "CTCP Version reply"
+#: ../infopane/infopane.c:149
+msgid "Incompatible Plugin"
 msgstr ""
 
-#: ../irc-more/irc-more.c:235
-msgid "Default Quit Message"
+#: ../infopane/infopane.c:150
+msgid "You need to update Pidgin!"
 msgstr ""
 
-#: ../irc-more/irc-more.c:238
-msgid "Default Part Message"
-msgstr ""
-
-#: ../irc-more/irc-more.c:241
-msgid "User Modes On Connect"
-msgstr ""
-
-#: ../irc-more/irc-more.c:264
-msgid "Seconds to wait before rejoining"
-msgstr ""
-
-#: ../irc-more/irc-more.c:325
-msgid "IRC More"
-msgstr ""
-
-#: ../irc-more/irc-more.c:326
-msgid "Adds additional IRC features."
-msgstr ""
-
-#: ../irc-more/irc-more.c:327
+#: ../infopane/infopane.c:151
 msgid ""
-"Adds additional IRC features, including a customizable quit message, a "
-"customizable CTCP VERSION reply, and the /notice command for notices."
+"This plugin is incompatible with the running version of Pidgin and Libpurple "
+"because it is too old.  Please upgrade to the newest version of Pidgin."
+msgstr ""
+
+#. XXX: Is there a better way than this? There really should be.
+#: ../infopane/infopane.c:183
+msgid "Position of the infopane ('top', 'bottom' or 'none')"
+msgstr ""
+
+#: ../infopane/infopane.c:187
+msgid "Show icon in the tabs"
+msgstr ""
+
+#: ../infopane/infopane.c:191
+msgid "Always show the tab"
+msgstr ""
+
+#: ../infopane/infopane.c:251
+msgid "Infopane Options"
+msgstr ""
+
+#: ../infopane/infopane.c:252 ../infopane/infopane.c:253
+msgid "Allow customizing the details information in conversation windows."
+msgstr ""
+
+#: ../infopane/infopane.c:264
+msgid "Incompatible Plugin! - Check plugin details!"
+msgstr ""
+
+#: ../infopane/infopane.c:265 ../infopane/infopane.c:266
+msgid "This plugin is NOT compatible with this version of Pidgin!"
 msgstr ""
 
 #: ../irchelper/irchelper.c:937
@@ -996,6 +1049,50 @@ msgstr ""
 msgid ""
 "- Transparent authentication with a variety of services.\n"
 "- Suppression of various useless messages"
+msgstr ""
+
+#. specify our help string and register our command
+#: ../irc-more/irc-more.c:219
+msgid "notice target message:  Send a notice to the specified target."
+msgstr ""
+
+#. Alphabetize the option label strings
+#: ../irc-more/irc-more.c:239
+msgid "CTCP Version reply"
+msgstr ""
+
+#: ../irc-more/irc-more.c:242
+msgid "Default Quit Message"
+msgstr ""
+
+#: ../irc-more/irc-more.c:245
+msgid "Default Part Message"
+msgstr ""
+
+#: ../irc-more/irc-more.c:248
+msgid "Set User Modes On Connect"
+msgstr ""
+
+#: ../irc-more/irc-more.c:251
+msgid "Unset User Modes On Connect"
+msgstr ""
+
+#: ../irc-more/irc-more.c:273
+msgid "Seconds to wait before rejoining"
+msgstr ""
+
+#: ../irc-more/irc-more.c:334
+msgid "IRC More"
+msgstr ""
+
+#: ../irc-more/irc-more.c:335
+msgid "Adds additional IRC features."
+msgstr ""
+
+#: ../irc-more/irc-more.c:336
+msgid ""
+"Adds additional IRC features, including a customizable quit message, a "
+"customizable CTCP VERSION reply, and the /notice command for notices."
 msgstr ""
 
 #: ../irssi/datechange.c:79
@@ -1139,9 +1236,10 @@ msgstr ""
 
 #. create a field
 #: ../listhandler/aim_blt_files.c:287 ../listhandler/aim_blt_files.c:453
+#: ../listhandler/alias_xml_files.c:203 ../listhandler/alias_xml_files.c:260
 #: ../listhandler/gen_xml_files.c:148 ../listhandler/gen_xml_files.c:341
 #: ../listhandler/migrate.c:129 ../listhandler/migrate.c:169
-#: ../schedule/pidgin-schedule.c:283
+#: ../listhandler/purple_blist_xml.c:221 ../schedule/pidgin-schedule.c:283
 msgid "Account"
 msgstr ""
 
@@ -1150,11 +1248,13 @@ msgstr ""
 msgid "List Handler: Importing"
 msgstr ""
 
-#: ../listhandler/aim_blt_files.c:298 ../listhandler/gen_xml_files.c:160
+#: ../listhandler/aim_blt_files.c:298 ../listhandler/alias_xml_files.c:266
+#: ../listhandler/gen_xml_files.c:160
 msgid "Choose the account to import to:"
 msgstr ""
 
-#: ../listhandler/aim_blt_files.c:299 ../listhandler/gen_xml_files.c:161
+#: ../listhandler/aim_blt_files.c:299 ../listhandler/alias_xml_files.c:267
+#: ../listhandler/gen_xml_files.c:161 ../listhandler/purple_blist_xml.c:228
 msgid "_Import"
 msgstr ""
 
@@ -1167,11 +1267,13 @@ msgstr ""
 msgid "List Handler: Exporting"
 msgstr ""
 
-#: ../listhandler/aim_blt_files.c:464 ../listhandler/gen_xml_files.c:354
+#: ../listhandler/aim_blt_files.c:464 ../listhandler/alias_xml_files.c:209
+#: ../listhandler/gen_xml_files.c:354
 msgid "Choose the account to export from:"
 msgstr ""
 
-#: ../listhandler/aim_blt_files.c:465 ../listhandler/gen_xml_files.c:355
+#: ../listhandler/aim_blt_files.c:465 ../listhandler/alias_xml_files.c:210
+#: ../listhandler/gen_xml_files.c:355
 msgid "_Export"
 msgstr ""
 
@@ -1179,22 +1281,27 @@ msgstr ""
 msgid "Choose An AIM .blt File To Import"
 msgstr ""
 
+#: ../listhandler/alias_xml_files.c:182
+msgid "Save Generic .alist File"
+msgstr ""
+
 #. and finally we can create the request
-#: ../listhandler/gen_xml_files.c:159
+#: ../listhandler/alias_xml_files.c:208 ../listhandler/gen_xml_files.c:353
+msgid "Listhandler - Exporting"
+msgstr ""
+
+#. and finally we can create the request
+#: ../listhandler/alias_xml_files.c:265 ../listhandler/gen_xml_files.c:159
+#: ../listhandler/purple_blist_xml.c:226
 msgid "Listhandler - Importing"
+msgstr ""
+
+#: ../listhandler/alias_xml_files.c:296 ../listhandler/gen_xml_files.c:366
+msgid "Choose A Generic Buddy List File To Import"
 msgstr ""
 
 #: ../listhandler/gen_xml_files.c:315
 msgid "Save Generic .blist File"
-msgstr ""
-
-#. and finally we can create the request
-#: ../listhandler/gen_xml_files.c:353
-msgid "Listhandler - Exporting"
-msgstr ""
-
-#: ../listhandler/gen_xml_files.c:366
-msgid "Choose A Generic Buddy List File To Import"
 msgstr ""
 
 #: ../listhandler/listhandler.c:39
@@ -1264,6 +1371,14 @@ msgstr ""
 
 #: ../listhandler/migrate.c:183
 msgid "C_opy"
+msgstr ""
+
+#: ../listhandler/purple_blist_xml.c:227
+msgid "Choose the account whose buddy list you wish to restore:"
+msgstr ""
+
+#: ../listhandler/purple_blist_xml.c:253
+msgid "Choose a Libpurple blist.xml File To Import"
 msgstr ""
 
 #: ../mystatusbox/mystatusbox.c:376
@@ -1979,6 +2094,75 @@ msgid ""
 "available as a single integrated package. The filters include austro, b1ff, "
 "brooklyn, chef, cockney, drawl, dubya, fudd, funetak, jethro, jive, kraut, "
 "pansy, pirate, postmodern, redneck, valspeak, and warez."
+msgstr ""
+
+#: ../timelog/log-widget.c:224
+#, c-format
+msgid "Conversation in %s on %s"
+msgstr ""
+
+#: ../timelog/log-widget.c:226
+#, c-format
+msgid "Conversation with %s on %s"
+msgstr ""
+
+#. No logs were found.
+#: ../timelog/log-widget.c:288
+msgid "No logs were found"
+msgstr ""
+
+#: ../timelog/range-widget.c:226
+msgid "Start Time"
+msgstr ""
+
+#: ../timelog/range-widget.c:230
+msgid "End Time"
+msgstr ""
+
+#: ../timelog/range-widget.c:330
+msgid "Select Time Range"
+msgstr ""
+
+#: ../timelog/timelog.c:128
+msgid "Select account to view logs for:"
+msgstr ""
+
+#: ../timelog/timelog.c:129
+msgid "Select Account"
+msgstr ""
+
+#: ../timelog/timelog.c:139
+msgid "Select Account/Time"
+msgstr ""
+
+#. *< type
+#. *< ui_req
+#. *< flags
+#. *< deps
+#. *< priority
+#. *< id
+#. *< name
+#. *< version
+#. *  summary
+#. *  desc
+#: ../timelog/timelog.c:171 ../timelog/timelog.c:173
+msgid "Allows the viewing of Pidgin logs within a specific time range"
+msgstr ""
+
+#: ../timelog/timelog.h:28
+msgid "TimeLog"
+msgstr ""
+
+#: ../xchat-chats/xchat-chats.c:451
+msgid "XChat Chats"
+msgstr ""
+
+#: ../xchat-chats/xchat-chats.c:452
+msgid "XChat-like chats with Pidgin"
+msgstr ""
+
+#: ../xchat-chats/xchat-chats.c:453
+msgid "You can chat in Pidgin using XChat's indented view."
 msgstr ""
 
 #~ msgid "gRIM: rim your pals"
