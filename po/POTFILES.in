@@ -13,6 +13,7 @@ common/core_template.c
 common/gtk_template.c
 common/gtk_template.c
 convbadger/convbadger.c
+dewysiwygification/dewysiwygification.c
 dice/dice.c
 difftopic/difftopic.c
 eight_ball/eight_ball.c
