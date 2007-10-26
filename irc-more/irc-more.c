@@ -164,7 +164,7 @@ notice_cmd_cb(PurpleConversation *conv, const gchar *cmd, gchar **args,
 	irc_info->send_raw(gc, msg, len);
 
 	/* avoid a possible double-free crash */
-	if(msg != tmp);
+	if(msg != tmp)
 		g_free(tmp);
 
 	g_free(msg);
