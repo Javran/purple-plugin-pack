@@ -1,16 +1,11 @@
-Version 2.2.0mtn:
+Version 2.2.0: 10/25/07
 	* Added 'menuconfig' script to make it easier to select what plugins to
 	  build.
-	* Merged autorejoin into irc-more.  No prefs migration will take place.
-	  You will need to reconfigure the delay yourself.  Autorejoin no longer
-	  exists.
-	* Autoreply now can be disabled per-account (rageboy04)
-	* Listhandler now supports restoring a buddy list from a backed-up
-	  blist.xml file created by backing up ~/.purple.
-	* Slashexec's '/exec command' and '!command' are now optional (QuLogic)
 	* Added support for initial setting/unsetting of user modes to irc-more
 	* Added the abusive findip plugin
 	* Added infopane plugin
+	* Added dewysiwygification plugin
+	* Added timelog plugin, from Jon Oberheide's gaim-timelog
 	* Fixed autoreply so it doesn't reply with an empty message (rageboy04)
 	* Fixed a crash in ignore where a nickname that is not all lowercase
 	  causes unintended behavior resulting in a crash (rageboy04, qwert)
@@ -24,10 +19,15 @@ Version 2.2.0mtn:
 	* Fixed building with ancient glib. (Bodo Bellut)
 	* Removed the .build file from hideconv to remove it from default
 	  builds.  Pidgin will have persistent conversations soon.
-	* Added dewysiwygification plugin
-	* Added timelog plugin, from Jon Oberheide's gaim-timelog
 	* Partially merged buddytimezone from the buddytools package into the
 	  existing (incomplete) buddytime plugin
+	* Autoreply now can be disabled per-account (rageboy04)
+	* Listhandler now supports restoring a buddy list from a backed-up
+	  blist.xml file created by backing up ~/.purple.
+	* Merged autorejoin into irc-more.  No prefs migration will take place.
+	  You will need to reconfigure the delay yourself.  Autorejoin no longer
+	  exists.
+	* Slashexec's '/exec command' and '!command' are now optional (QuLogic)
 
 Version 2.1.1: 8/19/07
 	* Fixed lack of .build, .pidgin-plugin, and Makefile.mingw for convbadger
