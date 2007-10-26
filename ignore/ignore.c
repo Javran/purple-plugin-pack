@@ -27,6 +27,7 @@
 #include <conversation.h>
 #include <debug.h>
 #include <plugin.h>
+#include <util.h>
 
 #include <string.h>
 
