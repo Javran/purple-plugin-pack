@@ -23,7 +23,8 @@ URL:        http://plugins.guifications.org/
 Source0:    %{name}-%{version}.tar.bz2
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires: pkgconfig, libtool, gettext, xmms-devel
+BuildRequires: pkgconfig, libtool, gettext
+%{!?_without_xmms:BuildRequires: xmms-devel}
 BuildRequires: pidgin-devel >= %{pidgin_major_ver}.%{pidgin_minor_ver}, pidgin-devel < %{pidgin_next_major_ver}
 %if "%{_vendor}" == "MandrakeSoft" || "%{_vendor}" == "Mandrakesoft"
 BuildRequires: libgtk+2.0_0-devel
@@ -74,6 +75,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Oct 27 2007 Stu Tomlinson <stu@nosnilmot.com>
+- Add --without xmms option to build without xmms plugin
+
 * Mon Apr 30 2007 Stu Tomlinson <stu@nosnilmot.com>
 - Update for the rename of Gaim to Pidgin
 - New URL for our new website
