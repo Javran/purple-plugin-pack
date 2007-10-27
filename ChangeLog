@@ -1,5 +1,8 @@
 Version 2.2.1mtn:
 	* Fixed a typo in irc-more's source that allowed a potential double-free
+	* Fixed unregistering commands when unloading gRIM and Magic 8 ball plugin
+	* Added /bollocks command to Magic 8 ball plugin inspired by (and ported
+	  from) /dev/bollocks kernel module
 
 Version 2.2.0: 10/25/07
 	* Added 'menuconfig' script to make it easier to select what plugins to
