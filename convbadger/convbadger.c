@@ -48,7 +48,7 @@ conv_badger_data_free(ConvBadgerData *cbd) {
 	cbd->win = NULL;
 	cbd->conv = NULL;
 
-	if(cbd->icon != NULL && GTK_IS_IMAGE(cbd->icon))
+	if(GTK_IS_IMAGE(cbd->icon))
 		gtk_widget_destroy(cbd->icon);
 
 	cbd->icon = NULL;
