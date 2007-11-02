@@ -24,6 +24,7 @@
 #include <signals.h>
 
 #include <gtkmenutray.h>
+#include <gtkplugin.h>
 #include <gtkutils.h>
 
 /******************************************************************************
