@@ -97,7 +97,7 @@ static PurplePluginInfo info =
 	PURPLE_PRIORITY_DEFAULT,
 	DEWYSIWYGIFICATION_PLUGIN_ID,
 	N_("DeWYSIWYGification Plugin"),
-	VERSION,
+	PP_VERSION,
 	N_("Lets you type in HTML without it being escaped to entities."),
 	N_("Lets you type in HTML without it being escaped to entities. This will not work well for some protocols. Use \"&lt;\" for a literal \"<\"."),
 	"Tim Ringenbach <omarvo@hotmail.com>",

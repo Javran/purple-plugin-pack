@@ -225,7 +225,7 @@ static PurplePluginInfo info =
 	PURPLE_PRIORITY_DEFAULT,
 	PLUGIN_ID,
 	NULL,
-	VERSION,
+	PP_VERSION,
 	NULL,
 	NULL,
 	"Sadrul H Chowdhury <sadrul@pidgin.im>",
