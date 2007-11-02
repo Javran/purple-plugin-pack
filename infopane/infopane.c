@@ -123,6 +123,12 @@ static void conversation_deleted(PurpleConversation *conv)
 #endif
 
 static void
+call_ensure_tabs_are_showing(PurpleConversation *conv)
+{
+	g_timeout_add(0, (GSourceFunc)ensure_tabs_are_showing, conv);
+}
+
+static void
 pref_changed(gpointer data, ...)
 {
 	GList *wins = pidgin_conv_windows_get_list();
@@ -159,7 +165,7 @@ plugin_load(PurplePlugin *plugin)
 #endif
 	purple_signal_connect(pidgin_conversations_get_handle(),
 			"conversation-switched",
-			plugin, PURPLE_CALLBACK(ensure_tabs_are_showing), NULL);
+			plugin, PURPLE_CALLBACK(call_ensure_tabs_are_showing), NULL);
 
 	purple_prefs_connect_callback(plugin, PREF_POSITION, (PurplePrefCallback)pref_changed, NULL);
 	purple_prefs_connect_callback(plugin, PREF_DRAG, (PurplePrefCallback)pref_changed, NULL);
