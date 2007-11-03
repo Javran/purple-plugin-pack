@@ -245,6 +245,11 @@ static void
 conversation_created_cb(PurpleConversation *conv)
 {
 	PidginConversation *gtkconv = PIDGIN_CONVERSATION(conv);
+
+	/* hopefully fix a crash related to persistent convs */
+	if(gtkconv == NULL)
+		return;
+
 	g_object_set_data(G_OBJECT(gtkconv->imhtml), PROP_FILTER, (gpointer)current_filter);
 	update_talkfilter_selection(gtkconv);
 }
