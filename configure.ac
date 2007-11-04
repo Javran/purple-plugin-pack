@@ -388,7 +388,7 @@ if test x"$HAVE_FINCH" = x"yes" ; then
 	echo Installing finch plugins to......: `eval eval echo $FINCH_LIBDIR`
 	echo Installing finch plugin data to..: `eval eval echo $FINCH_DATADIR`
 	if test x"$PP_FINCH_BUILD" = x"" ; then
-		echo Finch plugins to be built........: none
+		echo Finch plugins to be built........: none - THIS IS NORMAL
 	else
 		echo Finch plugins to be built........:
 		echo $PP_FINCH_BUILD | xargs -n 4 echo "	"
