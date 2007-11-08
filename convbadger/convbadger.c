@@ -49,10 +49,8 @@ conv_badger_data_free(ConvBadgerData *cbd) {
 	cbd->win = NULL;
 	cbd->conv = NULL;
 
-	if(GTK_IS_IMAGE(cbd->icon))
+	if(cbd->icon && GTK_IS_IMAGE(cbd->icon))
 		gtk_widget_destroy(cbd->icon);
-
-	cbd->icon = NULL;
 
 	g_free(cbd);
 
@@ -86,6 +84,9 @@ conv_badger_update(PidginWindow *win, PurpleConversation *conv) {
 		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), cbd->icon,
 								NULL);
 		gtk_widget_show(cbd->icon);
+
+		g_signal_connect_swapped(G_OBJECT(cbd->icon), "destroy",
+				G_CALLBACK(g_nullify_pointer), &cbd->icon);
 	}
 
 	cbd->conv = conv;
