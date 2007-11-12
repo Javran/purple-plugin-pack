@@ -38,7 +38,15 @@
 #include "debug.h"
 #include "time.h"
 
-#define HISTORY_PLUGIN_ID "gtk-enhanced-history"
+#define ENHANCED_HISTORY_ID "gtk-plugin_pack-enhanced_history",
+
+#define PREF_ROOT_PATH		"/plugins/gtk/plugin_pack/enhanced_history"
+#define PREF_NUMBER_PATH	"/plugins/gtk/plugin_pack/enhanced_history/number"
+#define PREF_MINS_PATH		"/plugins/gtk/plugin_pack/enhanced_history/minutes"
+#define PREF_HOURS_PATH		"/plugins/gtk/plugin_pack/enhanced_history/hours"
+#define PREF_DAYS_PATH		"/plugins/gtk/plugin_pack/enhanced_history/days"
+#define PREF_IM_PATH		"/plugins/gtk/plugin_pack/enhanced_history/im"
+#define PREF_CHAT_PATH		"/plugins/gtk/plugin_pack/enhanced_history/chat"
 
 #define NUM_OF_CHATS (purple_prefs_get_int("/plugins/core/enhanced_history/int"))
 #define NUM_MINS (purple_prefs_get_int("/plugins/core/enhanced_history/mins"))
@@ -316,13 +324,13 @@ static PurplePluginInfo info =
 	NULL,
 	PURPLE_PRIORITY_DEFAULT,
 
-	"gtk-plugin_pack-enhanced_history",
+	ENHANCED_HISTORY_ID,
 	"Enhanced History",
-	VERSION,
+	PP_VERSION,
 	"An enhanced version of the history plugin.",
 	"An enhanced versoin of the history plugin. Grants ability to select the number of previous conversations to show instead of just one.",
 	"Andrew Pangborn <gaim@andrewpangborn.com>",
-	PURPLE_WEBSITE,
+	PP_WEBSITE,
 	plugin_load,
 	NULL,
 	NULL, 
@@ -339,15 +347,16 @@ static PurplePluginInfo info =
 static void
 init_plugin(PurplePlugin *plugin)
 {
-	purple_prefs_add_none("/plugins/core/enhanced_history");
-	purple_prefs_add_int("/plugins/core/enhanced_history/int", 3);
-	purple_prefs_add_int("/plugins/core/enhanced_history/mins",0);
-	purple_prefs_add_int("/plugins/core/enhanced_history/hours",0);
-	purple_prefs_add_int("/plugins/core/enhanced_history/days",0);
-	purple_prefs_add_string("/plugins/core/enhanced_history/string_date","yes");
-	purple_prefs_add_string("/plugins/core/enhanced_history/string_im","yes");
-	purple_prefs_add_string("/plugins/core/enhanced_history/string_chat","yes");
+	purple_prefs_add_none(PREF_ROOT_PATH);
+	purple_prefs_rename("/plugins/core/enhanced_history/int", PREF_NUMBER_PATH);
+	purple_prefs_rename("/plugins/core/enhanced_history/mins", PREF_MINS_PATH);
+	purple_prefs_rename("/plugins/core/enhanced_history/hours", PREF_HOURS_PATH);
+	purple_prefs_rename("/plugins/core/enhanced_history/days", PREF_DAYS_PATH);
+	purple_prefs_rename("/plugins/core/enhanced_history/string_date", PREF_DATE_PATH);
+	purple_prefs_rename("/plugins/core/enhanced_history/string_im", PREF_IM_PATH);
+	purple_prefs_rename("/plugins/core/enhanced_history/string_chat",PREF_CHAT_PATH);
 
+	purple_prefs_remove("/plugins/core/enhanced_history");
 }
 
 PURPLE_INIT_PLUGIN(enhanced_history, init_plugin, info)
