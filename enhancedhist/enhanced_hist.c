@@ -23,40 +23,44 @@
  *         Ankit Singla
  */
 
+#include "../common/pp_internal.h"
 
+/* Purple headers */
 #include "conversation.h"
 #include "debug.h"
 #include "log.h"
+#include "pluginpref.h"
 #include "prefs.h"
 #include "signals.h"
 #include "util.h"
-#include "version.h"
-#include "pluginpref.h"
+
+/* Pidgin headers */
 #include "gtkconv.h"
 #include "gtkimhtml.h"
 #include "gtkplugin.h"
-#include "debug.h"
-#include "time.h"
+#include "pidgin.h"
 
-#define ENHANCED_HISTORY_ID "gtk-plugin_pack-enhanced_history",
+/* libc headers */
+#include <time.h>
+
+#define ENHANCED_HISTORY_ID "gtk-plugin_pack-enhanced_history"
 
 #define PREF_ROOT_PATH		"/plugins/gtk/plugin_pack/enhanced_history"
 #define PREF_NUMBER_PATH	"/plugins/gtk/plugin_pack/enhanced_history/number"
 #define PREF_MINS_PATH		"/plugins/gtk/plugin_pack/enhanced_history/minutes"
 #define PREF_HOURS_PATH		"/plugins/gtk/plugin_pack/enhanced_history/hours"
 #define PREF_DAYS_PATH		"/plugins/gtk/plugin_pack/enhanced_history/days"
+#define PREF_DATES_PATH		"/plugins/gtk/plugin_pack/enhanced_history/dates"
 #define PREF_IM_PATH		"/plugins/gtk/plugin_pack/enhanced_history/im"
 #define PREF_CHAT_PATH		"/plugins/gtk/plugin_pack/enhanced_history/chat"
 
-#define NUM_OF_CHATS (purple_prefs_get_int("/plugins/core/enhanced_history/int"))
-#define NUM_MINS (purple_prefs_get_int("/plugins/core/enhanced_history/mins"))
-#define NUM_HOURS (purple_prefs_get_int("/plugins/core/enhanced_history/hours"))
-#define NUM_DAYS (purple_prefs_get_int("/plugins/core/enhanced_history/days"))
-#define	PREF_DATE (purple_prefs_get_string("/plugins/core/enhanced_history/string_date"))
-#define	PREF_IM (purple_prefs_get_string("/plugins/core/enhanced_history/string_im"))
-#define PREF_CHAT (purple_prefs_get_string("/plugins/core/enhanced_history/string_chat"))
-
-PurplePluginPref *ppref;
+#define PREF_NUMBER_VAL		purple_prefs_get_int(PREF_NUMBER_PATH)
+#define PREF_MINS_VAL		purple_prefs_get_int(PREF_MINS_PATH)
+#define PREF_HOURS_VAL		purple_prefs_get_int(PREF_HOURS_PATH)
+#define PREF_DAYS_VAL		purple_prefs_get_int(PREF_DAYS_PATH)
+#define PREF_DATES_VAL		purple_prefs_get_bool(PREF_DATES_PATH)
+#define PREF_IM_VAL			purple_prefs_get_bool(PREF_IM_PATH)
+#define PREF_CHAT_VAL		purple_prefs_get_bool(PREF_CHAT_PATH)
 
 static gboolean _scroll_imhtml_to_end(gpointer data)
 {
@@ -68,14 +72,14 @@ static gboolean _scroll_imhtml_to_end(gpointer data)
 
 static void historize(PurpleConversation *c)
 {
-	PurpleAccount *account = purple_conversation_get_account(c);
+	PurpleAccount *account = NULL;
 	PurpleConversationType convtype;
 	PidginConversation *gtkconv = NULL;
 	GtkIMHtmlOptions options;
 	GList *logs = NULL;
 	GSList *buddies = NULL;
 	const char *name = NULL, *alias = NULL, *LOG_MODE = NULL;
-	char *header, *protocol, *history;
+	char *header = NULL, *protocol = NULL, *history = NULL;
 	guint flags;
 	int size = 0;
 	int counter;
@@ -91,7 +95,7 @@ static void historize(PurpleConversation *c)
 		return;
 	
 	/* If the user wants to show 0 logs, stop now */
-	if(NUM_OF_CHATS == 0) {
+	if(PREF_NUMBER_VAL == 0) {
 		return;
 	}
 	
@@ -113,12 +117,12 @@ static void historize(PurpleConversation *c)
 	/* Determine whether this is an IM or a chat. In either case, if the user has that
 	 * particular log type disabled, the logs file doesnt not get specified */
 	convtype = purple_conversation_get_type(c);
-	if (convtype == PURPLE_CONV_TYPE_IM && !strcmp(PREF_IM,"yes")) {
+	if (convtype == PURPLE_CONV_TYPE_IM && PREF_IM_VAL) {
 		logs = purple_log_get_logs(PURPLE_LOG_IM,
 				purple_conversation_get_name(c), purple_conversation_get_account(c));
 		logs = purple_log_get_logs(PURPLE_LOG_IM,
 				purple_conversation_get_name(c), purple_conversation_get_account(c));
-	} else if (convtype == PURPLE_CONV_TYPE_CHAT && !strcmp(PREF_CHAT,"yes")) {
+	} else if (convtype == PURPLE_CONV_TYPE_CHAT && PREF_CHAT_VAL) {
 		logs = purple_log_get_logs(PURPLE_LOG_CHAT,
 			purple_conversation_get_name(c), purple_conversation_get_account(c));
 	}
@@ -128,13 +132,13 @@ static void historize(PurpleConversation *c)
 		return;
 	}
 
-	gtkconv = PURPLE_GTK_CONVERSATION(c);
+	gtkconv = PIDGIN_CONVERSATION(c);
 
 	size = g_list_length(logs);
 	
 	/* Make sure the user selected number of chats does not exceed the number of logs. */
-	if(size > NUM_OF_CHATS) {
-		size=NUM_OF_CHATS;
+	if(size > PREF_NUMBER_VAL) {
+		size=PREF_NUMBER_VAL;
 	}
 
 	/* No idea wth this does, it was in the original history plugin */
@@ -144,9 +148,9 @@ static void historize(PurpleConversation *c)
 
 	/* Deal with time limitations */
 	counter = 0;
-	if(NUM_MINS ==0 && NUM_HOURS ==0 && NUM_DAYS ==0) {
-		/* No time limitations, advance the logs NUM_OF_CHATS-1 forward */
-		while( logs->next && counter < (NUM_OF_CHATS-1)) {
+	if(PREF_MINS_VAL ==0 && PREF_HOURS_VAL ==0 && PREF_DAYS_VAL ==0) {
+		/* No time limitations, advance the logs PREF_NUMBER_VAL-1 forward */
+		while( logs->next && counter < (PREF_NUMBER_VAL-1)) {
 			logs = logs->next;
 			counter++;
 			printf("Counter: %d\n",counter);
@@ -166,7 +170,7 @@ static void historize(PurpleConversation *c)
 		log_time = mktime(log_tm);
 		printf("Local Time as int: %d \n",(int)t);
 		printf("Log Time as int: %d \n",(int) mktime(log_tm));
-		limit_time = NUM_MINS*60.0 + NUM_HOURS*60.0*60.0 + NUM_DAYS*60.0*60.0*24.0;
+		limit_time = PREF_MINS_VAL*60.0 + PREF_HOURS_VAL*60.0*60.0 + PREF_DAYS_VAL*60.0*60.0*24.0;
 		diff_time = difftime( t, log_time );
 		printf("Time difference between local and log: %.21f \n",diff_time);
 		
@@ -176,7 +180,7 @@ static void historize(PurpleConversation *c)
 		}
 		/* Iterate to the end of the list, stop while messages are under limit, we just
 		 * want a count here */
-		while( logs->next && diff_time <= limit_time && counter < (NUM_OF_CHATS-1)) {
+		while( logs->next && diff_time <= limit_time && counter < (PREF_NUMBER_VAL-1)) {
 			logs = logs->next;
 			log_tm = gmtime(&((PurpleLog*)logs->data)->time);
 			log_time = mktime(log_tm);
@@ -204,7 +208,7 @@ static void historize(PurpleConversation *c)
 		header = g_strdup_printf(_("<b>Conversation with %s on %s:</b><br>"), alias,
 							 purple_date_format_full(localtime(&((PurpleLog *)logs->data)->time)));
 		
-		if(strcmp(PREF_DATE,"yes")==0) {
+		if(PREF_DATES_VAL) {
 			gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), header, options);
 		}
 		g_free(header);
@@ -243,6 +247,7 @@ plugin_load(PurplePlugin *plugin)
 
 static PurplePluginPrefFrame *
 get_plugin_pref_frame(PurplePlugin *plugin) {
+	PurplePluginPref *ppref;
 	PurplePluginPrefFrame *frame;
 
 	frame = purple_plugin_pref_frame_new();
@@ -319,16 +324,16 @@ static PurplePluginInfo info =
 	PURPLE_MAJOR_VERSION,
 	PURPLE_MINOR_VERSION,
 	PURPLE_PLUGIN_STANDARD,
-	NULL,
+	PIDGIN_PLUGIN_TYPE,
 	0,
 	NULL,
 	PURPLE_PRIORITY_DEFAULT,
 
 	ENHANCED_HISTORY_ID,
-	"Enhanced History",
+	NULL,
 	PP_VERSION,
-	"An enhanced version of the history plugin.",
-	"An enhanced versoin of the history plugin. Grants ability to select the number of previous conversations to show instead of just one.",
+	NULL,
+	NULL,
 	"Andrew Pangborn <gaim@andrewpangborn.com>",
 	PP_WEBSITE,
 	plugin_load,
@@ -347,16 +352,47 @@ static PurplePluginInfo info =
 static void
 init_plugin(PurplePlugin *plugin)
 {
-	purple_prefs_add_none(PREF_ROOT_PATH);
-	purple_prefs_rename("/plugins/core/enhanced_history/int", PREF_NUMBER_PATH);
-	purple_prefs_rename("/plugins/core/enhanced_history/mins", PREF_MINS_PATH);
-	purple_prefs_rename("/plugins/core/enhanced_history/hours", PREF_HOURS_PATH);
-	purple_prefs_rename("/plugins/core/enhanced_history/days", PREF_DAYS_PATH);
-	purple_prefs_rename("/plugins/core/enhanced_history/string_date", PREF_DATE_PATH);
-	purple_prefs_rename("/plugins/core/enhanced_history/string_im", PREF_IM_PATH);
-	purple_prefs_rename("/plugins/core/enhanced_history/string_chat",PREF_CHAT_PATH);
+	gboolean dates = FALSE, ims = FALSE, chats = FALSE;
 
-	purple_prefs_remove("/plugins/core/enhanced_history");
+	purple_prefs_add_none(PREF_ROOT_PATH);
+
+	if(purple_prefs_exists("/plugins/core/enhanced_history/int")) {
+		/* Rename these prefs to fit within the Plugin Pack scheme */
+		purple_prefs_rename("/plugins/core/enhanced_history/int", PREF_NUMBER_PATH);
+		purple_prefs_rename("/plugins/core/enhanced_history/mins", PREF_MINS_PATH);
+		purple_prefs_rename("/plugins/core/enhanced_history/hours", PREF_HOURS_PATH);
+		purple_prefs_rename("/plugins/core/enhanced_history/days", PREF_DAYS_PATH);
+
+		if(strcmp(purple_prefs_get_string("/plugins/core/enhanced_history/string_date"), "no"))
+			dates = TRUE;
+		if(strcmp(purple_prefs_get_string("/plugins/core/enhanced_history/string_im"), "no"))
+			ims = TRUE;
+		if(strcmp(purple_prefs_get_string("/plugins/core/enhanced_history/string_chat"), "no"))
+			chats = TRUE;
+
+		purple_prefs_remove("/plugins/core/enhanced_history/string_date");
+		purple_prefs_remove("/plugins/core/enhanced_history/string_im");
+		purple_prefs_remove("/plugins/core/enhanced_history/string_chat");
+		purple_prefs_remove("/plugins/core/enhanced_history");
+
+		purple_prefs_add_bool(PREF_DATES_PATH, dates);
+		purple_prefs_add_bool(PREF_IM_PATH, ims);
+		purple_prefs_add_bool(PREF_CHAT_PATH, chats);
+	} else {
+		/* Create these prefs with sensible defaults */
+		purple_prefs_add_int(PREF_NUMBER_PATH, 1);
+		purple_prefs_add_int(PREF_MINS_PATH, 0);
+		purple_prefs_add_int(PREF_HOURS_PATH, 0);
+		purple_prefs_add_int(PREF_DAYS_PATH, 0);
+		purple_prefs_add_bool(PREF_DATES_PATH, TRUE);
+		purple_prefs_add_bool(PREF_IM_PATH, TRUE);
+		purple_prefs_add_bool(PREF_CHAT_PATH, FALSE);
+	}
+
+	info.name = _("Enhanced History");
+	info.summary = _("An enhanced version of the history plugin.");
+	info.description = _("An enhanced versoin of the history plugin. Grants ability to "
+			"select the number of previous conversations to show instead of just one.");
 }
 
 PURPLE_INIT_PLUGIN(enhanced_history, init_plugin, info)
