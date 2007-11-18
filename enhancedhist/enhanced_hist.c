@@ -250,8 +250,10 @@ plugin_load(PurplePlugin *plugin)
 static GtkWidget *
 eh_prefs_get_frame(PurplePlugin *plugin)
 {
+	GtkSizeGroup *sg = NULL;
 	GtkWidget *vbox = NULL, *frame = NULL, *option = NULL;
 
+	sg = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
 	vbox = gtk_vbox_new(TRUE, PIDGIN_HIG_BOX_SPACE);
 
 	frame = pidgin_make_frame(vbox, _("Display Options"));
@@ -267,11 +269,11 @@ eh_prefs_get_frame(PurplePlugin *plugin)
 
 	frame = pidgin_make_frame(vbox, _("Age Limit for Logs (0 to disable):"));
 
-	option = pidgin_prefs_labeled_spin_button(frame, "Days:", PREF_DAYS_PATH, 0, 255, NULL);
+	option = pidgin_prefs_labeled_spin_button(frame, "Days:", PREF_DAYS_PATH, 0, 255, sg);
 
-	option = pidgin_prefs_labeled_spin_button(frame, "Hours:", PREF_HOURS_PATH, 0, 255, NULL);
+	option = pidgin_prefs_labeled_spin_button(frame, "Hours:", PREF_HOURS_PATH, 0, 255, sg);
 
-	option = pidgin_prefs_labeled_spin_button(frame, "Minutes:", PREF_MINS_PATH, 0, 255, NULL);
+	option = pidgin_prefs_labeled_spin_button(frame, "Minutes:", PREF_MINS_PATH, 0, 255, sg);
 
 	gtk_widget_show_all(vbox);
 
