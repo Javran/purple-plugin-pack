@@ -26,19 +26,21 @@
 #include "../common/pp_internal.h"
 
 /* Purple headers */
-#include "conversation.h"
-#include "debug.h"
-#include "log.h"
-#include "pluginpref.h"
-#include "prefs.h"
-#include "signals.h"
-#include "util.h"
+#include <conversation.h>
+#include <debug.h>
+#include <log.h>
+#include <pluginpref.h>
+#include <prefs.h>
+#include <signals.h>
+#include <util.h>
 
 /* Pidgin headers */
-#include "gtkconv.h"
-#include "gtkimhtml.h"
-#include "gtkplugin.h"
-#include "pidgin.h"
+#include <gtkconv.h>
+#include <gtkimhtml.h>
+#include <gtkplugin.h>
+#include <gtkprefs.h>
+#include <gtkutils.h>
+#include <pidgin.h>
 
 /* libc headers */
 #include <time.h>
@@ -248,7 +250,7 @@ plugin_load(PurplePlugin *plugin)
 static GtkWidget *
 eh_prefs_get_frame(PurplePlugin *plugin)
 {
-	GtkWidget *vbox = NULL, frame = NULL, option = NULL;
+	GtkWidget *vbox = NULL, *frame = NULL, *option = NULL;
 
 	vbox = gtk_vbox_new(TRUE, PIDGIN_HIG_BOX_SPACE);
 
