@@ -245,76 +245,46 @@ plugin_load(PurplePlugin *plugin)
 	return TRUE;
 }
 
-static PurplePluginPrefFrame *
-get_plugin_pref_frame(PurplePlugin *plugin) {
-	PurplePluginPref *ppref;
-	PurplePluginPrefFrame *frame;
+static GtkWidget *
+eh_prefs_get_frame(PurplePlugin *plugin)
+{
+	GtkWidget *vbox = NULL, frame = NULL, option = NULL;
 
-	frame = purple_plugin_pref_frame_new();
+	vbox = gtk_vbox_new(TRUE, PIDGIN_HIG_BOX_SPACE);
 
-	/* Label for the number of chats */
-	ppref = purple_plugin_pref_new_with_label("# Of Previous Conversations to Display");
-	purple_plugin_pref_frame_add(frame, ppref);
+	frame = pidgin_make_frame(vbox, _("Display Options"));
 
-	/*Integer input-box for number of chats */
-	ppref = purple_plugin_pref_new_with_name_and_label("/plugins/core/enhanced_history/int","# of Chats:");
-	purple_plugin_pref_set_bounds(ppref, 0, 255);
-	purple_plugin_pref_frame_add(frame, ppref);
+	pidgin_prefs_labeled_spin_button(frame, _("Number of previous conversations to display:"),
+			PREF_NUMBER_PATH, 0, 255, NULL);
 
-	/* Label for the date option */
-	ppref = purple_plugin_pref_new_with_label("Would you like the date of the log displayed in-line with the text?");
-	purple_plugin_pref_frame_add(frame, ppref);
-	
-	/* Drop-down selection for Date insertion */
-	ppref = purple_plugin_pref_new_with_name_and_label("/plugins/core/enhanced_history/string_date","Dates:");
-    purple_plugin_pref_set_type(ppref, PURPLE_PLUGIN_PREF_CHOICE);
-    purple_plugin_pref_add_choice(ppref, "yes", "yes");
-    purple_plugin_pref_add_choice(ppref, "no", "no");
-	purple_plugin_pref_frame_add(frame, ppref);
-	
-	/* Label for the log display */
-	ppref = purple_plugin_pref_new_with_label("For which conversation types would you like to display the log?");
-	purple_plugin_pref_frame_add(frame, ppref);
+	option = pidgin_prefs_checkbox(_("Show dates with text"), PREF_DATES_PATH, frame);
 
-	/* Drop-down selection for IM Log displaying */
-	ppref = purple_plugin_pref_new_with_name_and_label("/plugins/core/enhanced_history/string_im","Instant Messages:");
-    purple_plugin_pref_set_type(ppref, PURPLE_PLUGIN_PREF_CHOICE);
-    purple_plugin_pref_add_choice(ppref, "yes", "yes");
-    purple_plugin_pref_add_choice(ppref, "no", "no");
-	purple_plugin_pref_frame_add(frame, ppref);
+	option = pidgin_prefs_checkbox(_("Show logs for IMs"), PREF_IM_PATH, frame);
 
-	/* Drop-down selection for Chat Log displaying */
-	ppref = purple_plugin_pref_new_with_name_and_label("/plugins/core/enhanced_history/string_chat","Chat Rooms / IRC:");
-    purple_plugin_pref_set_type(ppref, PURPLE_PLUGIN_PREF_CHOICE);
-    purple_plugin_pref_add_choice(ppref, "yes", "yes");
-    purple_plugin_pref_add_choice(ppref, "no", "no");
-	purple_plugin_pref_frame_add(frame, ppref);
-	
-	/* Label for maximum log age option */
-	ppref = purple_plugin_pref_new_with_label("Maximum age for logs view (0 for no limit):");
-	purple_plugin_pref_frame_add(frame, ppref);
-	
-	/* Input for minutes */
-	ppref = purple_plugin_pref_new_with_name_and_label("/plugins/core/enhanced_history/mins","# Mins:");
-	purple_plugin_pref_set_bounds(ppref, 0, 60);
-	purple_plugin_pref_frame_add(frame, ppref);
+	option = pidgin_prefs_checkbox(_("Show logs for chats"), PREF_CHAT_PATH, frame);
 
-	/* Input for hours */
-	ppref = purple_plugin_pref_new_with_name_and_label("/plugins/core/enhanced_history/hours","# Hours:");
-	purple_plugin_pref_set_bounds(ppref, 0, 24);
-	purple_plugin_pref_frame_add(frame, ppref);
-		
-	/* Input for days */
-	ppref = purple_plugin_pref_new_with_name_and_label("/plugins/core/enhanced_history/days","# Days:");
-	purple_plugin_pref_set_bounds(ppref, 0, 255);
-	purple_plugin_pref_frame_add(frame, ppref);
+	frame = pidgin_make_frame(vbox, _("Age Limit for Logs (0 to disable):"));
 
-	
-	return frame;
+	option = pidgin_prefs_labeled_spin_button(frame, "Days:", PREF_DAYS_PATH, 0, 255, NULL);
+
+	option = pidgin_prefs_labeled_spin_button(frame, "Hours:", PREF_HOURS_PATH, 0, 255, NULL);
+
+	option = pidgin_prefs_labeled_spin_button(frame, "Minutes:", PREF_MINS_PATH, 0, 255, NULL);
+
+	gtk_widget_show_all(vbox);
+
+	return vbox;
 }
 
-static PurplePluginUiInfo prefs_info = {
-	get_plugin_pref_frame
+
+static PidginPluginUiInfo ui_info = {
+	eh_prefs_get_frame, /* get prefs frame */
+	0, /* page number - reserved */
+	/* reserved pointers */
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
 
 
@@ -334,14 +304,17 @@ static PurplePluginInfo info =
 	PP_VERSION,
 	NULL,
 	NULL,
+
 	"Andrew Pangborn <gaim@andrewpangborn.com>",
 	PP_WEBSITE,
+
 	plugin_load,
 	NULL,
 	NULL, 
+
+	&ui_info,
 	NULL,
 	NULL,
-	&prefs_info,
 	NULL,
 	NULL,
 	NULL,
