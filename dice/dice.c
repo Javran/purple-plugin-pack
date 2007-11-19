@@ -76,7 +76,8 @@ is_dice_notation(const gchar *str) {
 static gchar *
 dice_notation_roll_helper(const gchar *dn, gint *value) {
 	GString *str = g_string_new("");
-	gchar *ret = NULL;
+	gchar *ret = NULL, *ms = NULL;
+	gchar op = '\0';
 	gint dice = 0, sides = 0, i = 0, t = 0, v = 0;
 	gdouble multiplier = 1.0;
 
@@ -127,19 +128,20 @@ dice_notation_roll_helper(const gchar *dn, gint *value) {
 		purple_debug_info("dice", "looking for the next operator: %s\n", dn);
 	}
 
+	purple_debug_info("dice", "next operator: %s\n", dn);
+
 	/* check if we're multiplying or dividing this block */
 	if(*dn == 'x' || *dn == '/') {
-		gchar op;
-
-		v = atof(dn);
-
 		op = *dn;
 		dn++;
 
-		multiplier = v;
+		multiplier = v = atof(dn);
+
+		ms = g_strdup_printf("%d", (gint)multiplier);
 
 		/* move past our multiplier */
 		for(t = v; t > 0; t /= 10) {
+			purple_debug_info("dice", "moving past the multiplier: %s\n", dn);
 			dn++;
 		}
 
@@ -155,13 +157,21 @@ dice_notation_roll_helper(const gchar *dn, gint *value) {
 		t = rand() % sides + 1;
 		v = ROUND(t * multiplier);
 
-		g_string_append_printf(str, "%s%d", (i > 0) ? " " : "", v);
+		g_string_append_printf(str, "%s%d", (i > 0) ? " " : "", t);
 		
 		purple_debug_info("dice", "die %d: %d(%d)\n", i, v, t);
 
 		*value += v;
 	}
+
 	g_string_append_printf(str, ")");
+
+	/* if we have a multiplier, we need to output it as well */
+	if(multiplier != 1.0)
+		g_string_append_printf(str, "%c(%s)", op, ms);
+
+	/* free our string of the multiplier */
+	g_free(ms);
 
 	purple_debug_info("dice", "value=%d;str=%s\n", *value, str->str);
 
