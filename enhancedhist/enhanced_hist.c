@@ -103,7 +103,7 @@ static void historize(PurpleConversation *c)
 	
 	/* If the logging mode is html, set the output options to include no newline.
 	 * Otherwise, it's normal text, so we don't need extra lines */
-	if(strcasecmp(LOG_MODE,"html")==0) {
+	if(strcasecmp(LOG_MODE, "html")==0) {
 		options = GTK_IMHTML_NO_NEWLINE;
 	} else {
 		options = GTK_IMHTML_NO_COLOURS;
@@ -120,8 +120,6 @@ static void historize(PurpleConversation *c)
 	 * particular log type disabled, the logs file doesnt not get specified */
 	convtype = purple_conversation_get_type(c);
 	if (convtype == PURPLE_CONV_TYPE_IM && PREF_IM_VAL) {
-		logs = purple_log_get_logs(PURPLE_LOG_IM,
-				purple_conversation_get_name(c), purple_conversation_get_account(c));
 		logs = purple_log_get_logs(PURPLE_LOG_IM,
 				purple_conversation_get_name(c), purple_conversation_get_account(c));
 	} else if (convtype == PURPLE_CONV_TYPE_CHAT && PREF_CHAT_VAL) {
@@ -150,16 +148,16 @@ static void historize(PurpleConversation *c)
 
 	/* Deal with time limitations */
 	counter = 0;
-	if(PREF_MINS_VAL ==0 && PREF_HOURS_VAL ==0 && PREF_DAYS_VAL ==0) {
+	if(PREF_MINS_VAL == 0 && PREF_HOURS_VAL == 0 && PREF_DAYS_VAL == 0) {
 		/* No time limitations, advance the logs PREF_NUMBER_VAL-1 forward */
-		while( logs->next && counter < (PREF_NUMBER_VAL-1)) {
+		while(logs->next && counter < (PREF_NUMBER_VAL - 1)) {
 			logs = logs->next;
 			counter++;
-			printf("Counter: %d\n",counter);
+			purple_debug_info("ehnahcedhist:", "Counter: %d\n", counter);
 		}
 	} else {
-		struct tm *log_tm, *local_tm;
-		time_t t,log_time;
+		struct tm *log_tm = NULL, *local_tm = NULL;
+		time_t t, log_time;
 		double limit_time, diff_time;
 		
 		/* Grab current time and normalize it to UTC */
@@ -170,10 +168,13 @@ static void historize(PurpleConversation *c)
 		/* Pull the local time from the purple log, convert it to UTC time */
 		log_tm = gmtime(&((PurpleLog*)logs->data)->time);
 		log_time = mktime(log_tm);
-		printf("Local Time as int: %d \n",(int)t);
-		printf("Log Time as int: %d \n",(int) mktime(log_tm));
-		limit_time = PREF_MINS_VAL*60.0 + PREF_HOURS_VAL*60.0*60.0 + PREF_DAYS_VAL*60.0*60.0*24.0;
-		diff_time = difftime( t, log_time );
+
+		purple_debug_info("Local Time as int: %d \n", (int)t);
+		purple_debug_info("Log Time as int: %d \n", (int)mktime(log_tm));
+
+		limit_time = (PREF_MINS_VAL * 60.0) + (PREF_HOURS_VAL * 60.0 * 60.0) +
+			(PREF_DAYS_VAL * 60.0 * 60.0 * 24.0);
+		diff_time = difftime(t, log_time);
 		printf("Time difference between local and log: %.21f \n",diff_time);
 		
 		/* The most recent log is already too old, so lets return */
@@ -182,11 +183,11 @@ static void historize(PurpleConversation *c)
 		}
 		/* Iterate to the end of the list, stop while messages are under limit, we just
 		 * want a count here */
-		while( logs->next && diff_time <= limit_time && counter < (PREF_NUMBER_VAL-1)) {
+		while(logs->next && diff_time <= limit_time && counter < (PREF_NUMBER_VAL - 1)) {
 			logs = logs->next;
 			log_tm = gmtime(&((PurpleLog*)logs->data)->time);
 			log_time = mktime(log_tm);
-			diff_time = difftime( t, log_time );
+			diff_time = difftime(t, log_time);
 			counter++;
 		}
 		if(diff_time > limit_time) {
@@ -200,19 +201,23 @@ static void historize(PurpleConversation *c)
 	/* Loop through the logs and print them to the window */
 	while(logs) {
 		protocol = g_strdup(gtk_imhtml_get_protocol_name(GTK_IMHTML(gtkconv->imhtml)));
-		gtk_imhtml_set_protocol_name(GTK_IMHTML(gtkconv->imhtml),purple_account_get_protocol_name(((PurpleLog*)logs->data)->account));
+		gtk_imhtml_set_protocol_name(GTK_IMHTML(gtkconv->imhtml),
+			purple_account_get_protocol_name(((PurpleLog*)logs->data)->account));
 		
-		if (gtk_text_buffer_get_char_count(gtk_text_view_get_buffer(GTK_TEXT_VIEW(gtkconv->imhtml)))) {
+		if (gtk_text_buffer_get_char_count(gtk_text_view_get_buffer(
+				GTK_TEXT_VIEW(gtkconv->imhtml))))
+		{
 			gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), "<BR>", options);
 		}
 
 		/* Print a header at the beginning of the log */
 		header = g_strdup_printf(_("<b>Conversation with %s on %s:</b><br>"), alias,
-							 purple_date_format_full(localtime(&((PurpleLog *)logs->data)->time)));
+				purple_date_format_full(localtime(&((PurpleLog *)logs->data)->time)));
 		
 		if(PREF_DATES_VAL) {
 			gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), header, options);
 		}
+
 		g_free(header);
 
 		/* Copy the log string into the history array */
@@ -232,7 +237,7 @@ static void historize(PurpleConversation *c)
 	g_idle_add(_scroll_imhtml_to_end, gtkconv->imhtml);
 	
 	/* Clear the allocated memory that the logs are using */
-	g_list_foreach(logs,(GFunc)purple_log_free, NULL);
+	g_list_foreach(logs, (GFunc)purple_log_free, NULL);
 	g_list_free(logs);
 	
 }
@@ -241,8 +246,7 @@ static gboolean
 plugin_load(PurplePlugin *plugin)
 {
 	purple_signal_connect(purple_conversations_get_handle(),
-						"conversation-created",
-						plugin, PURPLE_CALLBACK(historize), NULL);
+			"conversation-created", plugin, PURPLE_CALLBACK(historize), NULL);
 
 	return TRUE;
 }
@@ -256,23 +260,24 @@ eh_prefs_get_frame(PurplePlugin *plugin)
 	sg = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
 	vbox = gtk_vbox_new(TRUE, PIDGIN_HIG_BOX_SPACE);
 
+	/* heading for the more general options */
 	frame = pidgin_make_frame(vbox, _("Display Options"));
 
+	/* the integer pref for the number of logs to display */
 	pidgin_prefs_labeled_spin_button(frame, _("Number of previous conversations to display:"),
 			PREF_NUMBER_PATH, 0, 255, NULL);
 
+	/* the boolean preferences */
 	option = pidgin_prefs_checkbox(_("Show dates with text"), PREF_DATES_PATH, frame);
-
 	option = pidgin_prefs_checkbox(_("Show logs for IMs"), PREF_IM_PATH, frame);
-
 	option = pidgin_prefs_checkbox(_("Show logs for chats"), PREF_CHAT_PATH, frame);
 
+	/* heading for the age limit options */
 	frame = pidgin_make_frame(vbox, _("Age Limit for Logs (0 to disable):"));
 
+	/* the integer preferences for time limiting */
 	option = pidgin_prefs_labeled_spin_button(frame, "Days:", PREF_DAYS_PATH, 0, 255, sg);
-
 	option = pidgin_prefs_labeled_spin_button(frame, "Hours:", PREF_HOURS_PATH, 0, 255, sg);
-
 	option = pidgin_prefs_labeled_spin_button(frame, "Minutes:", PREF_MINS_PATH, 0, 255, sg);
 
 	gtk_widget_show_all(vbox);
@@ -284,6 +289,7 @@ eh_prefs_get_frame(PurplePlugin *plugin)
 static PidginPluginUiInfo ui_info = {
 	eh_prefs_get_frame, /* get prefs frame */
 	0, /* page number - reserved */
+
 	/* reserved pointers */
 	NULL,
 	NULL,
