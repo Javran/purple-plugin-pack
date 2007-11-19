@@ -16,44 +16,215 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"	/* Purple Plugin Pack common configuration header. */
-#endif /* HAVE_CONFIG_H */
 
-#define PURPLE_PLUGINS	/* I get the impression this is necessary somehow... */
+#include "../common/pp_internal.h"
 
-#include <glib.h>	/* For glib wrappers of the standard C types and my beloved string functions. */
-#include <time.h>	/* For the random number seed. */
-#include <stdlib.h>	/* Gratuitous, Ubiquitous, Includimust! */
+#include <time.h>
+#include <stdlib.h>
 
-#include <cmds.h>			/* Must be related to extending Purple's /command set. */
-#include <conversation.h>	/* For being able to put stuff in a conversation? */
-#include <debug.h>			/* Always a good idea. */
-#include <plugin.h>			/* 'Cause this is a plugin, I'd think. */
-#include <version.h>		/* Also always a good idea. */
+#include <cmds.h>
+#include <conversation.h>
+#include <debug.h>
+#include <plugin.h>
 
-#include "../common/pp_internal.h"	/* No idea what this is for. */
+#define DEFAULT_DICE	2
+#define DEFAULT_SIDES	6
 
-static PurpleCmdId dice_cmd_id = 0;	/* No idea what this does. */
+#define BOUNDS_CHECK(var, min, min_def, max, max_def) { \
+	if((var) < (min)) \
+		(var) = (min_def); \
+	else if((var) > (max)) \
+		(var) = (max_def); \
+}
+
+#define ROUND(val) ((gdouble)(val) + 0.5f)
+
+static PurpleCmdId dice_cmd_id = 0;
+
+static gchar *
+old_school_roll(gint dice, gint sides) {
+	GString *str = g_string_new("");
+	gchar *ret = NULL;
+	gint c = 0, v = 0;
+
+	BOUNDS_CHECK(dice, 1, 2, 15, 15);
+	BOUNDS_CHECK(sides, 2, 2, 999, 999);
+
+	g_string_append_printf(str, "Rolls %d %d-sided %s:",
+						   dice, sides,
+						   (dice == 1) ? "die" : "dice");
+
+	for(c = 0; c < dice; c++) {
+		v = rand() % sides + 1;
+
+		g_string_append_printf(str, " %d", v);
+	}
+
+	ret = str->str;
+	g_string_free(str, FALSE);
+
+	return ret;
+}
+
+static inline gboolean
+is_dice_notation(const gchar *str) {
+	return (g_utf8_strchr(str, -1, 'd') != NULL);
+}
+
+static gchar *
+dice_notation_roll_helper(const gchar *dn, gint *value) {
+	GString *str = g_string_new("");
+	gchar *ret = NULL;
+	gint dice = 0, sides = 0, i = 0, t = 0, v = 0;
+	gdouble multiplier = 1.0;
+
+	if(!dn || *dn == '\0')
+		return NULL;
+
+	/* at this point, all we have is +/- number for our bonus, so we add it to
+	 * our value
+	 */
+	if(!is_dice_notation(dn)) {
+		gint bonus = atoi(dn);
+
+		*value += bonus;
+
+		/* the + makes sure we always have a + or - */
+		g_string_append_printf(str, "%s %d",
+							   (bonus < 0) ? "-" : "+",
+							   ABS(bonus));
+
+		ret = str->str;
+		g_string_free(str, FALSE);
+
+		return ret;
+	}
+
+	/**************************************************************************
+	 * Process our block
+	 *************************************************************************/
+	purple_debug_info("dice", "processing '%s'\n", dn);
+
+	/* get the number of dice */
+	dice = atoi(dn);
+	BOUNDS_CHECK(dice, 1, 1, 999, 999);
+
+	/* find and move to the character after the d */
+	dn = g_utf8_strchr(dn, -1, 'd');
+	dn++;
+
+	/* get the number of sides */
+	sides = atoi(dn);
+	BOUNDS_CHECK(sides, 2, 2, 999, 999);
+
+	/* i've struggled with a better way to determine the next operator, i've 
+	 * opted for this.
+	 */
+	for(t = sides; t > 0; t /= 10) {
+		dn++;
+		purple_debug_info("dice", "looking for the next operator: %s\n", dn);
+	}
+
+	/* check if we're multiplying or dividing this block */
+	if(*dn == 'x' || *dn == '/') {
+		gchar op;
+
+		v = atof(dn);
+
+		op = *dn;
+		dn++;
+
+		multiplier = v;
+
+		/* move past our multiplier */
+		for(t = v; t > 0; t /= 10) {
+			dn++;
+		}
+
+		if(op == '/')
+			multiplier = 1 / multiplier;
+	}
+
+	purple_debug_info("dice", "d=%d;s=%d;m=%f;\n", dice, sides, multiplier);
+
+	/* calculate and output our block */
+	g_string_append_printf(str, " (");
+	for(i = 0; i < dice; i++) {
+		t = rand() % sides + 1;
+		v = ROUND(t * multiplier);
+
+		g_string_append_printf(str, "%s%d", (i > 0) ? " " : "", v);
+		
+		purple_debug_info("dice", "die %d: %d(%d)\n", i, v, t);
+
+		*value += v;
+	}
+	g_string_append_printf(str, ")");
+
+	purple_debug_info("dice", "value=%d;str=%s\n", *value, str->str);
+
+	/* we have more in our string, recurse! */
+	if(*dn != '\0') {
+		gchar *s = dice_notation_roll_helper(dn, value);
+		
+		if(s)
+			str = g_string_append(str, s);
+
+		g_free(s);
+	}
+
+	ret = str->str;
+	g_string_free(str, FALSE);
+
+	return ret;
+}
+
+static gchar *
+dice_notation_roll(const gchar *dn) {
+	GString *str = g_string_new("");
+	gchar *ret = NULL, *normalized = NULL;
+	gint value = 0;
+
+	g_string_append_printf(str, "%s:", dn);
+
+	/* normalize the input and process it */
+	normalized = g_utf8_strdown(dn, -1);
+	g_string_append_printf(str, "%s",
+						   dice_notation_roll_helper(normalized, &value));
+	g_free(normalized);
+
+	g_string_append_printf(str, " = %d", value);
+
+	ret = str->str;
+	g_string_free(str, FALSE);
+
+	return ret;
+}
 
 static PurpleCmdRet
-roll(PurpleConversation *conv, const gchar *cmd, gchar **args,
-	 gchar *error, void *data)
+roll(PurpleConversation *conv, const gchar *cmd, gchar **args, gchar *error,
+	 void *data)
 {
-	gchar **splitted = NULL, **resplitted = NULL;	/* Variables for splitting up a dice notation string */
-	GString *str = NULL;	/* Our output */
-	gint dice = 2, sides = 6, bonus = 0, accumulator = 0, roll, i = 0;	/* How many dice, sides for each, the bonus for each, an accumulator to gather the total, our roll each time, and an iterator which I abuse before it's used. */
+	gchar *str = NULL;
 
-	srand(time(NULL));	/* Seed our random number generator. */
-
-	if(args[0]) /* If we got an argument */
-	{
-		if(g_strstr_len(args[0], -1, "d") == NULL) /* There's no 'd' in our string. */
+	if(!args[0]) {
+		str = old_school_roll(DEFAULT_DICE, DEFAULT_SIDES);
+	} else {
+		if(is_dice_notation(args[0])) {
+			str = dice_notation_roll(args[0]);
+		} else {
+			gint dice, sides;
+			
 			dice = atoi(args[0]);
-		else	/* Process dice notation: xdy+-z */
-		{
+			sides = (args[1]) ? atoi(args[1]) : DEFAULT_SIDES;
+
+			str = old_school_roll(dice, sides);
+		}
+	}
+
+#if 0
 			i = 1;	/* Abuse that iterator!  We're saying "We think this is dice notation!" */
 			splitted = g_strsplit(args[0], "d", 2);	/* Split the description into two parts: (1)d(20+5); discard the 'd'. */
 			dice = atoi(splitted[0]);	/* We should have the number of dice easily now. */
@@ -80,33 +251,7 @@ roll(PurpleConversation *conv, const gchar *cmd, gchar **args,
 	if(args[1] && i == 0)	/* If there was a second argument, and we care about it (not dice notation) */
 		sides = atoi(args[1]);	/* Grab it and make it the number of sides the dice have. */
 
-	/*
-	 * These next four lines make sure we're rolling a sane
-	 * number of dice.
-	 */
-	if(dice < 1)
-		dice = 2;
-	if(dice > 15)
-		dice = 15;
-
-	/*
-	 * These next four lines make sure our dice have a (relatively)
-	 * sane number of sides each.
-	 */
-	if(sides < 2)
-		sides = 2;
-	if(sides > 999)
-		sides = 999;
-	
-	/*
-	 * These next four lines make sure our bonus/penalty is sane.
-	 */
-	if(bonus < -999)
-		bonus = -999;
-	if(bonus > 999)
-		bonus = 999;
-
-	str = g_string_new("");	/* Allocate ourselves an empty string for output. */
+	str = g_string_new("");
 	if(i)	/* Show the output in dice notation format. */
 	{
 		g_string_append_printf(str, "%dd%d", dice, sides);	/* For example, 1d20 */
@@ -115,11 +260,6 @@ roll(PurpleConversation *conv, const gchar *cmd, gchar **args,
 		else if(bonus < 0)
 			g_string_append_printf(str, "%d", bonus);	/* 1d20-3 (saying "-%d" would be redundant, since the '-' gets output with bonus automatically) */
 		g_string_append_printf(str, ":");	/* Final colon.  1d20-4: */
-	}
-	else	/* Show the output in legacy format. */
-	{
-		g_string_append_printf(str, "Rolls %d %d-sided %s:", dice, sides,
-								(dice == 1) ? "die" : "dice");	/* If we have one die use the singular, else the plural (dice). */
 	}
 
 	for(i = 0; i < dice; i++)	/* For each die... */
@@ -138,15 +278,16 @@ roll(PurpleConversation *conv, const gchar *cmd, gchar **args,
 	{
 		g_string_append_printf(str, " = %d", accumulator);	/* Append our accumulator */
 	}
+#endif
 
-	if(conv->type == PURPLE_CONV_TYPE_IM)	/* If we're in a one-on-one IM */
-		purple_conv_im_send(PURPLE_CONV_IM(conv), str->str);	/* Send our output as an IM */
-	else if(conv->type == PURPLE_CONV_TYPE_CHAT)	/* If we're in a chat room */
-		purple_conv_chat_send(PURPLE_CONV_CHAT(conv), str->str);	/* Send our output to the channel */
+	if(conv->type == PURPLE_CONV_TYPE_IM)
+		purple_conv_im_send(PURPLE_CONV_IM(conv), str);
+	else if(conv->type == PURPLE_CONV_TYPE_CHAT)
+		purple_conv_chat_send(PURPLE_CONV_CHAT(conv), str);
 
-	g_string_free(str, TRUE);	/* Free our output string, as we're done with it now. */
+	g_free(str);
 
-	return PURPLE_CMD_RET_OK;	/* Never give up!  Never surrender! */
+	return PURPLE_CMD_RET_OK;
 }
 
 static gboolean
@@ -154,13 +295,22 @@ plugin_load(PurplePlugin *plugin)
 {
 	const gchar *help;
 
-	help = _("dice [dice] [sides]:  rolls dice number of sides sided dice OR\ndice XdY+-Z:  rolls X number of Y sided dice, giving a Z bonus/penalty to each.  e.g. 1d20+2");
+	help = _("dice [dice] [sides]:  rolls dice number of sides sided dice OR\n"
+			 "dice [XdY+-Z]:  rolls X number of Y sided dice, giving a Z "
+			 "bonus/penalty to each.  e.g. 1d20+2");
 
 	dice_cmd_id = purple_cmd_register("dice", "wws", PURPLE_CMD_P_PLUGIN,
 									PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT |
 									PURPLE_CMD_FLAG_ALLOW_WRONG_ARGS,
 									NULL, PURPLE_CMD_FUNC(roll),
 									help, NULL);
+
+	/* we only want to seed this off of the seconds since the epoch once.  If
+	 * we do it every time, we'll give the same results for each time we
+	 * process a roll within the same second.  This is bad because it's not
+	 * really random then.
+	 */
+	srand(time(NULL));
 
 	return TRUE;
 }
@@ -175,35 +325,35 @@ plugin_unload(PurplePlugin *plugin)
 
 static PurplePluginInfo info =
 {
-	PURPLE_PLUGIN_MAGIC,								/**< magic			*/
-	PURPLE_MAJOR_VERSION,								/**< major version	*/
-	PURPLE_MINOR_VERSION,								/**< minor version	*/
-	PURPLE_PLUGIN_STANDARD,								/**< type			*/
-	NULL,												/**< ui_requirement	*/
-	0,													/**< flags			*/
-	NULL,												/**< dependencies	*/
-	PURPLE_PRIORITY_DEFAULT,							/**< priority		*/
+	PURPLE_PLUGIN_MAGIC,
+	PURPLE_MAJOR_VERSION,
+	PURPLE_MINOR_VERSION,
+	PURPLE_PLUGIN_STANDARD,	
+	NULL,
+	0,
+	NULL,
+	PURPLE_PRIORITY_DEFAULT,
 
-	"core-plugin_pack-dice",							/**< id				*/
-	NULL,												/**< name			*/
-	PP_VERSION,											/**< version		*/
-	NULL,												/**  summary		*/
-	NULL,												/**  description	*/
-	"Gary Kramlich <grim@reaperworld.com>",				/**< author			*/
-	PP_WEBSITE,											/**< homepage		*/
+	"core-plugin_pack-dice",
+	NULL,
+	PP_VERSION,	
+	NULL,
+	NULL,
+	"Gary Kramlich <grim@reaperworld.com>",	
+	PP_WEBSITE,	
 
-	plugin_load,										/**< load			*/
-	plugin_unload,										/**< unload			*/
-	NULL,												/**< destroy		*/
+	plugin_load,
+	plugin_unload,
+	NULL,
 
-	NULL,												/**< ui_info		*/
-	NULL,												/**< extra_info		*/
-	NULL,												/**< prefs_info		*/
-	NULL,												/**< actions		*/
-	NULL,												/**< reserved 1		*/
-	NULL,												/**< reserved 2		*/
-	NULL,												/**< reserved 3		*/
-	NULL												/**< reserved 4		*/
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
 
 static void
