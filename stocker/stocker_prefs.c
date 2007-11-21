@@ -17,12 +17,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02111-1301, USA.
  */
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif
+
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
+#include "../common/pp_internal.h"
 
 #include "stocker_prefs.h"
-#include "../common/pp_internal.h"
 
 #include <gtkprefs.h>
 #include <gtkutils.h>

@@ -23,12 +23,14 @@
  *         Ankit Singla
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 /* Purple headers */
 #include <conversation.h>
 #include <debug.h>
 #include <log.h>
+#include <plugin.h>
 #include <pluginpref.h>
 #include <prefs.h>
 #include <signals.h>
