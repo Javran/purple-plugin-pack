@@ -1,8 +1,13 @@
-Version 2.2.1mtn:
+Version 2.3.0mtn:
 	* Fixed a typo in irc-more's source that allowed a potential double-free
 	* Fixed unregistering commands when unloading gRIM and Magic 8 ball plugin
 	* Added /bollocks command to Magic 8 ball plugin inspired by (and ported
 	  from) /dev/bollocks kernel module
+	* Added Andrew Pangborn's Enhanced History plugin and ported it to the
+	  Pidgin and libpurple APIs.  Cleaned up some preferences as well.
+	* Dice plugin now supports dice notation
+	  (http://en.wikipedia.org/wiki/Dice_notation), but it's not perfect yet.
+	  (Lucas Paul)
 
 Version 2.2.0: 10/25/07
 	* Added 'menuconfig' script to make it easier to select what plugins to
