@@ -1,6 +1,6 @@
 /*
  * Stocker - Adds a stock ticker to the buddy list
- * Copyright (C) 2005 Gary Kramlich <grim@reaperworld.com>
+ * Copyright (C) 2005-2007 Gary Kramlich <grim@reaperworld.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -17,12 +17,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02111-1301, USA.
  */
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif
+
+#include "../common/pp_internal.h"
 
 #include "stocker_prefs.h"
-#include "../common/pp_internal.h"
 
 #include <gtkprefs.h>
 #include <gtkutils.h>
@@ -211,9 +209,8 @@ stocker_prefs_init(void) {
 
 	def_syms = g_list_append(def_syms, "GOOG");
 	def_syms = g_list_append(def_syms, "YHOO");
-	def_syms = g_list_append(def_syms, "MSFT");
-	def_syms = g_list_append(def_syms, "UYE");
-	def_syms = g_list_append(def_syms, "TWX");
+	def_syms = g_list_append(def_syms, "RHT");
+	def_syms = g_list_append(def_syms, "VMW");
 
 	purple_prefs_add_none(PREF_MY);
 	purple_prefs_add_none(PREF_ROOT);
