@@ -312,7 +312,7 @@ stocker_prefs_get_frame(PurplePlugin *plugin) {
 	 *********************************/
 	frame = pidgin_make_frame(ret, _("Options"));
 
-	pidgin_prefs_labeled_spin_button(frame, "Update interval:",
+	pidgin_prefs_labeled_spin_button(frame, "Update interval (minutes):",
 									   PREF_INTERVAL, 1, 1440, sg);
 
 	/* show and return it already! */
