@@ -155,7 +155,7 @@ static void historize(PurpleConversation *c)
 		while(logs->next && counter < (PREF_NUMBER_VAL - 1)) {
 			logs = logs->next;
 			counter++;
-			purple_debug_info("ehnahcedhist:", "Counter: %d\n", counter);
+			purple_debug_info("ehnahcedhist", "Counter: %d\n", counter);
 		}
 	} else {
 		struct tm *log_tm = NULL, *local_tm = NULL;
@@ -171,13 +171,14 @@ static void historize(PurpleConversation *c)
 		log_tm = gmtime(&((PurpleLog*)logs->data)->time);
 		log_time = mktime(log_tm);
 
-		purple_debug_info("Local Time as int: %d \n", (int)t);
-		purple_debug_info("Log Time as int: %d \n", (int)mktime(log_tm));
+		purple_debug_info("enhancedhist", "Local Time as int: %d \n", (int)t);
+		purple_debug_info("enhancedhist", "Log Time as int: %d \n", (int)mktime(log_tm));
 
 		limit_time = (PREF_MINS_VAL * 60.0) + (PREF_HOURS_VAL * 60.0 * 60.0) +
-			(PREF_DAYS_VAL * 60.0 * 60.0 * 24.0);
+				(PREF_DAYS_VAL * 60.0 * 60.0 * 24.0);
 		diff_time = difftime(t, log_time);
-		printf("Time difference between local and log: %.21f \n",diff_time);
+		purple_debug_info("enhancedhist", "Time difference between local and log: %.21f \n",
+				diff_time);
 		
 		/* The most recent log is already too old, so lets return */
 		if(diff_time > limit_time) {
