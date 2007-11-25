@@ -305,7 +305,6 @@ AC_OUTPUT([
 	bash/Makefile
 	bit/Makefile
 	blistops/Makefile
-	broadcast/Makefile
 	buddytime/Makefile
 	chronic/Makefile
 	convbadger/Makefile
