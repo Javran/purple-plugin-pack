@@ -12,6 +12,7 @@
 -- allow saving different filters for different buddies (or accounts)
 */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #include <stdio.h>

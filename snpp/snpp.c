@@ -19,6 +19,7 @@
  *
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #define _GNU_SOURCE

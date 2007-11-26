@@ -1,4 +1,4 @@
-AC_INIT([purple-plugin_pack], [2.2.1mtn], [plugins-devel@lists.guifications.org])
+AC_INIT([purple-plugin_pack], [2.3.0mtn], [plugins-devel@lists.guifications.org])
 AC_CANONICAL_SYSTEM
 AM_CONFIG_HEADER(pre_config.h)
 
@@ -305,7 +305,6 @@ AC_OUTPUT([
 	bash/Makefile
 	bit/Makefile
 	blistops/Makefile
-	broadcast/Makefile
 	buddytime/Makefile
 	chronic/Makefile
 	convbadger/Makefile
