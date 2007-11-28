@@ -91,6 +91,7 @@ calendar_update(GtkWidget *calendar, gint add)
 static void
 cb_time_value_changed(GtkSpinButton *widget, gpointer data)
 {
+	gchar *val;
 	gint value = gtk_spin_button_get_value(widget);
 
 	if (widget == GTK_SPIN_BUTTON(start_seconds)) {
@@ -143,7 +144,7 @@ cb_time_value_changed(GtkSpinButton *widget, gpointer data)
 		}
 	}
 
-	gchar *val = g_strdup_printf("%02d", value);
+	val = g_strdup_printf("%02d", value);
 	gtk_entry_set_text(GTK_ENTRY(widget), val);
 	g_free(val);
 }
