@@ -52,7 +52,8 @@ calendar_update(GtkWidget *calendar, gint add)
 		{ 0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }
 	};
 
-	guint day, month, year;
+	gint day, month;
+	guint year;
 	gint days_in_month;
 	gboolean leap_year;
 
