@@ -210,6 +210,7 @@ range_widget_create()
 	GtkWidget *hbox341;
 	GtkWidget *image49;
 	GtkWidget *label97;
+	gchar *val;
 
 	range_dialog = gtk_dialog_new();
 	gtk_window_set_title(GTK_WINDOW(range_dialog), TIMELOG_TITLE);
@@ -348,7 +349,7 @@ range_widget_create()
 	g_signal_connect((gpointer) end_seconds, "value_changed",
 			G_CALLBACK(cb_time_value_changed), NULL);
 
-	gchar *val = g_strdup_printf("%02d", 0);
+	val = g_strdup_printf("%02d", 0);
 	gtk_entry_set_text(GTK_ENTRY(start_hours), val);
 	gtk_entry_set_text(GTK_ENTRY(start_minutes), val);
 	gtk_entry_set_text(GTK_ENTRY(start_seconds), val);
