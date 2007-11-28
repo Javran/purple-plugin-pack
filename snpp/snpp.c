@@ -550,7 +550,7 @@ static PurplePluginInfo info =
 	PURPLE_PRIORITY_DEFAULT,		/* priority */
 	"prpl-snpp",					/* id */
 	NULL,							/* name */
-	VERSION,						/* version */
+	PP_VERSION,						/* version */
 	NULL,							/* summary */
 	NULL,							/* description */
 	"Don Seiler <don@seiler.us>",	/* author */
