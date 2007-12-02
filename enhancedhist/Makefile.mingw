@@ -1,0 +1,12 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for enhancedhist plugin.
+#
+
+PP_TOP :=		..
+
+PP = enhancedhist
+
+include $(PP_TOP)/win_pp.mak
+
