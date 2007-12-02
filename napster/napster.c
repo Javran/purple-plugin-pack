@@ -705,21 +705,21 @@ static PurplePluginInfo info = {
 	PURPLE_PLUGIN_MAGIC,
 	PURPLE_MAJOR_VERSION,
 	PURPLE_MINOR_VERSION,
-	PURPLE_PLUGIN_PROTOCOL,                             /**< type           */
+	PURPLE_PLUGIN_PROTOCOL,                           /**< type           */
 	NULL,                                             /**< ui_requirement */
 	0,                                                /**< flags          */
 	NULL,                                             /**< dependencies   */
-	PURPLE_PRIORITY_DEFAULT,                            /**< priority       */
+	PURPLE_PRIORITY_DEFAULT,                          /**< priority       */
 
 	"prpl-napster",                                   /**< id             */
-	"Napster",                                        /**< name           */
+	N_("Napster"),                                    /**< name           */
 	VERSION,                                          /**< version        */
 	                                                  /**  summary        */
 	N_("NAPSTER Protocol Plugin"),
 	                                                  /**  description    */
 	N_("NAPSTER Protocol Plugin"),
 	NULL,                                             /**< author         */
-	PP_WEBSITE,                                     /**< homepage       */
+	PP_WEBSITE,                                       /**< homepage       */
 
 	NULL,                                             /**< load           */
 	NULL,                                             /**< unload         */
@@ -739,16 +739,21 @@ static void
 init_plugin(PurplePlugin *plugin) {
 	PurpleAccountOption *option;
 
-	option = purple_account_option_string_new(_("Server"), "server",
-											NAP_SERVER);
-	prpl_info.protocol_options = g_list_append(prpl_info.protocol_options,
-											   option);
+#ifdef ENABLE_NLS
+	bindtextdomain(GETTEXT_PACKAGE, PP_LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+#endif /* ENABLE_NLS */
+
+	option = purple_account_option_string_new(_("Server"), "server", NAP_SERVER);
+	prpl_info.protocol_options = g_list_append(prpl_info.protocol_options, option);
 
 	option = purple_account_option_int_new(_("Port"), "port", 8888);
-	prpl_info.protocol_options = g_list_append(prpl_info.protocol_options,
-											   option);
+	prpl_info.protocol_options = g_list_append(prpl_info.protocol_options, option);
 
 	my_protocol = plugin;
+
+	info.description = _(info.description);
+	info.summary = _(info.summary);
 }
 
 PURPLE_INIT_PLUGIN(napster, init_plugin, info);

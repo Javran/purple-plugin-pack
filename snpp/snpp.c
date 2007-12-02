@@ -580,11 +580,10 @@ static void _init_plugin(PurplePlugin *plugin)
 
 	_snpp_plugin = plugin;
 
-	info.name = _("SNPP Plugin");
+	info.name = _("SNPP");
 	info.summary = _("SNPP Plugin");
 	info.description =
-		_("Allows libpurple to send messages over the Simple Network Paging "
-			"Protocol (SNPP).");
+		_("Allows libpurple to send messages over the Simple Network Paging Protocol (SNPP).");
 };
 
 PURPLE_INIT_PLUGIN(snpp, _init_plugin, info);
