@@ -5,7 +5,6 @@ awaynotify/awaynotify.c
 bash/bash.c
 bit/bit.c
 blistops/blistops.c
-broadcast/broadcast.c
 buddytime/buddytime.c
 buddytime/gtkbuddytime.c
 chronic/chronic.c
@@ -18,6 +17,7 @@ dewysiwygification/dewysiwygification.c
 dice/dice.c
 difftopic/difftopic.c
 eight_ball/eight_ball.c
+enhancedhist/enhancedhist.c
 findip/findip.c
 findip/findip.c
 flip/flip.c
@@ -70,3 +70,4 @@ timelog/timelog.c
 timelog/timelog.h
 xchat-chats/xchat-chats.c
 xchat-chats/xchat-chats.c
+xmmsremote/xmmsremote.c
