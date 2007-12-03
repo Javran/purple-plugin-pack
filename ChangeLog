@@ -8,8 +8,8 @@ Version 2.3.0mtn:
 	* Dice plugin now supports dice notation
 	  (http://en.wikipedia.org/wiki/Dice_notation), but it's not perfect yet.
 	  (Lucas Paul)
+	* Dice plugin now calls the /me command with its output.
 	* Removed the broadcast plugin.
-	* Made the dice plugin call the /me command with it's output.
 
 Version 2.2.0: 10/25/07
 	* Added 'menuconfig' script to make it easier to select what plugins to
