@@ -9,6 +9,7 @@ Version 2.3.0mtn:
 	  (http://en.wikipedia.org/wiki/Dice_notation), but it's not perfect yet.
 	  (Lucas Paul)
 	* Removed the broadcast plugin.
+	* Made the dice plugin call the /me command with it's output.
 
 Version 2.2.0: 10/25/07
 	* Added 'menuconfig' script to make it easier to select what plugins to
