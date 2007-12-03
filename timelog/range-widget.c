@@ -52,7 +52,8 @@ calendar_update(GtkWidget *calendar, gint add)
 		{ 0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }
 	};
 
-	guint day, month, year;
+	gint day, month;
+	guint year;
 	gint days_in_month;
 	gboolean leap_year;
 
@@ -91,6 +92,7 @@ calendar_update(GtkWidget *calendar, gint add)
 static void
 cb_time_value_changed(GtkSpinButton *widget, gpointer data)
 {
+	gchar *val;
 	gint value = gtk_spin_button_get_value(widget);
 
 	if (widget == GTK_SPIN_BUTTON(start_seconds)) {
@@ -143,7 +145,7 @@ cb_time_value_changed(GtkSpinButton *widget, gpointer data)
 		}
 	}
 
-	gchar *val = g_strdup_printf("%02d", value);
+	val = g_strdup_printf("%02d", value);
 	gtk_entry_set_text(GTK_ENTRY(widget), val);
 	g_free(val);
 }
@@ -209,6 +211,7 @@ range_widget_create()
 	GtkWidget *hbox341;
 	GtkWidget *image49;
 	GtkWidget *label97;
+	gchar *val;
 
 	range_dialog = gtk_dialog_new();
 	gtk_window_set_title(GTK_WINDOW(range_dialog), TIMELOG_TITLE);
@@ -347,7 +350,7 @@ range_widget_create()
 	g_signal_connect((gpointer) end_seconds, "value_changed",
 			G_CALLBACK(cb_time_value_changed), NULL);
 
-	gchar *val = g_strdup_printf("%02d", 0);
+	val = g_strdup_printf("%02d", 0);
 	gtk_entry_set_text(GTK_ENTRY(start_hours), val);
 	gtk_entry_set_text(GTK_ENTRY(start_minutes), val);
 	gtk_entry_set_text(GTK_ENTRY(start_seconds), val);
