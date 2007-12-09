@@ -18,6 +18,7 @@
  * 02111-1301, USA.
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #include "pidgin.h"
@@ -225,7 +226,7 @@ static PurplePluginInfo info =
 	PURPLE_PRIORITY_DEFAULT,
 	PLUGIN_ID,
 	NULL,
-	VERSION,
+	PP_VERSION,
 	NULL,
 	NULL,
 	"Sadrul H Chowdhury <sadrul@pidgin.im>",

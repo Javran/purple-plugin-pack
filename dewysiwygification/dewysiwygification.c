@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #include <debug.h>
@@ -97,7 +98,7 @@ static PurplePluginInfo info =
 	PURPLE_PRIORITY_DEFAULT,
 	DEWYSIWYGIFICATION_PLUGIN_ID,
 	N_("DeWYSIWYGification Plugin"),
-	VERSION,
+	PP_VERSION,
 	N_("Lets you type in HTML without it being escaped to entities."),
 	N_("Lets you type in HTML without it being escaped to entities. This will not work well for some protocols. Use \"&lt;\" for a literal \"<\"."),
 	"Tim Ringenbach <omarvo@hotmail.com>",

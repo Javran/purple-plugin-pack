@@ -26,6 +26,7 @@
  * 08:19 < grim> i was going to use my nick as an example but decided against that..
 */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #include <time.h>

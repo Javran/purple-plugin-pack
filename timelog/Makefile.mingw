@@ -11,11 +11,8 @@ PP = timelog
 
 PP_SRC := \
 	log-widget.c \
-	log-widget.h \
 	range-widget.c \
-	range-widget.h \
-	timelog.c \
-	timelog.h
+	timelog.c
 
 include $(PP_TOP)/win_pp.mak
 

@@ -1,4 +1,4 @@
-AC_INIT([purple-plugin_pack], [2.2.1mtn], [plugins-devel@lists.guifications.org])
+AC_INIT([purple-plugin_pack], [2.3.0mtn], [plugins-devel@lists.guifications.org])
 AC_CANONICAL_SYSTEM
 AM_CONFIG_HEADER(pre_config.h)
 
@@ -305,7 +305,6 @@ AC_OUTPUT([
 	bash/Makefile
 	bit/Makefile
 	blistops/Makefile
-	broadcast/Makefile
 	buddytime/Makefile
 	chronic/Makefile
 	convbadger/Makefile
@@ -313,6 +312,7 @@ AC_OUTPUT([
 	dice/Makefile
 	difftopic/Makefile
 	eight_ball/Makefile
+	enhancedhist/Makefile
 	findip/Makefile
 	flip/Makefile
 	groupmsg/Makefile
@@ -388,7 +388,7 @@ if test x"$HAVE_FINCH" = x"yes" ; then
 	echo Installing finch plugins to......: `eval eval echo $FINCH_LIBDIR`
 	echo Installing finch plugin data to..: `eval eval echo $FINCH_DATADIR`
 	if test x"$PP_FINCH_BUILD" = x"" ; then
-		echo Finch plugins to be built........: none
+		echo Finch plugins to be built........: none - THIS IS NORMAL
 	else
 		echo Finch plugins to be built........:
 		echo $PP_FINCH_BUILD | xargs -n 4 echo "	"
