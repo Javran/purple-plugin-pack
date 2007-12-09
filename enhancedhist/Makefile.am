@@ -3,19 +3,19 @@ EXTRA_DIST = \
 	.pidgin-plugin \
 	Makefile.mingw
 
-enhanced_histdir = $(PIDGIN_LIBDIR)
+enhancedhistdir = $(PIDGIN_LIBDIR)
 
-enhanced_hist_la_LDFLAGS = -module -avoid-version
+enhancedhist_la_LDFLAGS = -module -avoid-version
 
 if HAVE_PIDGIN
 
-enhanced_hist_LTLIBRARIES = enhanced_hist.la
+enhancedhist_LTLIBRARIES = enhancedhist.la
 
-enhanced_hist_la_LIBADD = \
+enhancedhist_la_LIBADD = \
 	$(PIDGIN_LIBS) \
 	$(GLIB_LIBS)
 
-enhanced_hist_la_SOURCES = enhanced_hist.c
+enhancedhist_la_SOURCES = enhancedhist.c
 
 endif
 

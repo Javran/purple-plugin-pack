@@ -53,7 +53,7 @@ old_school_roll(gint dice, gint sides) {
 	BOUNDS_CHECK(dice, 1, 2, 15, 15);
 	BOUNDS_CHECK(sides, 2, 2, 999, 999);
 
-	g_string_append_printf(str, "Rolls %d %d-sided %s:",
+	g_string_append_printf(str, "%d %d-sided %s:",
 						   dice, sides,
 						   (dice == 1) ? "die" : "dice");
 
@@ -218,7 +218,8 @@ static PurpleCmdRet
 roll(PurpleConversation *conv, const gchar *cmd, gchar **args, gchar *error,
 	 void *data)
 {
-	gchar *str = NULL;
+	PurpleCmdStatus ret;
+	gchar *str = NULL, *newcmd = NULL;
 
 	if(!args[0]) {
 		str = old_school_roll(DEFAULT_DICE, DEFAULT_SIDES);
@@ -291,14 +292,14 @@ roll(PurpleConversation *conv, const gchar *cmd, gchar **args, gchar *error,
 	}
 #endif
 
-	if(conv->type == PURPLE_CONV_TYPE_IM)
-		purple_conv_im_send(PURPLE_CONV_IM(conv), str);
-	else if(conv->type == PURPLE_CONV_TYPE_CHAT)
-		purple_conv_chat_send(PURPLE_CONV_CHAT(conv), str);
+	newcmd = g_strdup_printf("me rolls %s", str);
+
+	ret = purple_cmd_do_command(conv, newcmd, newcmd, &error);
 
 	g_free(str);
+	g_free(newcmd);
 
-	return PURPLE_CMD_RET_OK;
+	return ret;
 }
 
 static gboolean
