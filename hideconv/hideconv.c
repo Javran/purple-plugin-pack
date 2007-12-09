@@ -149,7 +149,7 @@ conv_created_to(PurpleConversation *conv)
 {
 	PidginConversation *gtkconv = PIDGIN_CONVERSATION(conv);
 
-	if (!gtkconv)
+	if (!gtkconv || !gtkconv->win || !gtkconv->win->window)
 		return TRUE;
 	if (!GTK_WIDGET_VISIBLE(gtkconv->win->window))
 		return TRUE;
