@@ -222,7 +222,7 @@ show_all(GtkWidget *w, PidginConversation *gtkconv)
 	while (list)
 	{
 		NickSaid *said = list->data;
-		g_string_append_printf(str, "%s\n", said->what);
+		g_string_append_printf(str, "%s<br/>\n", said->what);
 		list = list->next;
 	}
 
