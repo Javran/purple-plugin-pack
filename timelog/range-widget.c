@@ -57,7 +57,7 @@ calendar_update(GtkWidget *calendar, gint add)
 	gint days_in_month;
 	gboolean leap_year;
 
-	gtk_calendar_get_date(GTK_CALENDAR(calendar), &year, &month, &day);
+	gtk_calendar_get_date(GTK_CALENDAR(calendar), &year, (guint*)&month, (guint*)&day);
 
 	leap_year = g_date_is_leap_year(year);
 	days_in_month = month_length[leap_year][month+1];
