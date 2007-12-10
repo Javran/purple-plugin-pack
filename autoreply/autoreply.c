@@ -45,6 +45,7 @@
 #define	PREFS_MAXSEND		PREFS_PREFIX "/maxsend"
 #define	PREFS_USESTATUS		PREFS_PREFIX "/usestatus"
 #define	PREFS_PREFIX_MSG    PREFS_PREFIX "/prefix"
+#define PREFS_X_INVISIBLE     PREFS_PREFIX "/invisible"
 
 typedef struct _PurpleAutoReply PurpleAutoReply;
 typedef struct _AutoReplyProtocolOptions	AutoReplyProtocolOptions;
@@ -137,17 +138,20 @@ written_msg(PurpleAccount *account, const char *who, const char *message,
 	if (!message || !*message)
 		return;
 
-	/* Do not send an autoreply for an autoreply */
-	if (flags & PURPLE_MESSAGE_AUTO_RESP)
+	/* Do not send an autoreply for an autoreply or a 'delayed' (offline?) message */
+	if (flags & (PURPLE_MESSAGE_AUTO_RESP | PURPLE_MESSAGE_DELAYED))
 		return;
 
 	if(purple_account_get_bool(account, "ar_off", FALSE))
 		return;
 
-
 	g_return_if_fail(purple_conversation_get_type(conv) == PURPLE_CONV_TYPE_IM);
 
 	presence = purple_account_get_presence(account);
+
+	if (purple_prefs_get_bool(PREFS_X_INVISIBLE) &&
+			purple_presence_is_status_primitive_active(presence, PURPLE_STATUS_INVISIBLE))
+		return;
 
 	if (purple_prefs_get_bool(PREFS_AWAY) && !purple_presence_is_available(presence))
 		trigger = TRUE;
@@ -390,6 +394,10 @@ get_plugin_pref_frame(PurplePlugin *plugin)
 					_("Autoreply Prefix\n(only when necessary)"));
 	purple_plugin_pref_frame_add(frame, pref);
 
+	pref = purple_plugin_pref_new_with_name_and_label(PREFS_X_INVISIBLE,
+					_("Do not autoreply when invisible."));
+	purple_plugin_pref_frame_add(frame, pref);
+
 	pref = purple_plugin_pref_new_with_label(_("Status message"));
 	purple_plugin_pref_frame_add(frame, pref);
 
@@ -493,6 +501,7 @@ init_plugin(PurplePlugin *plugin)
 	purple_prefs_add_int(PREFS_MAXSEND, 10);
 	purple_prefs_add_int(PREFS_USESTATUS, STATUS_NEVER);
 	purple_prefs_add_string(PREFS_PREFIX_MSG, _("This is an autoreply: "));
+	purple_prefs_add_bool(PREFS_X_INVISIBLE, TRUE);
 }
 
 PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)
