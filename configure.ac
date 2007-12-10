@@ -230,10 +230,20 @@ fi
 
 # switchspell
 gtkspell=yes
-PKG_CHECK_MODULES(GTKSPELL, gtkspell-2.0 >= 2.0.2, , [gtkspell=no])
+PKG_CHECK_MODULES(GTKSPELL, gtkspell-2.0 >= 2.0.2, [], [gtkspell=no])
 AC_SUBST(GTKSPELL_CFLAGS)
 AC_SUBST(GTKSPELL_LIBS)
-AM_CONDITIONAL(HAVE_GTKSPELL, test x"$gtkspell" = x"yes")
+
+BUILD_SWITCH_SPELL=no
+if test x"$gtkspell" = x"yes" ; then
+	AC_CHECK_HEADER([aspell.h], HAVE_ASPELL_H=yes, HAVE_ASPELL_H=no)
+	if test x"$HAVE_ASPELL_H" = x"yes" ; then
+		AC_CHECK_LIB([aspell], [new_aspell_config],BUILD_SWITCH_SPELL=yes,BUILD_SWITCH_SPELL=no)
+	else
+		BUILD_SWITCH_SPELL=no
+	fi
+fi
+AM_CONDITIONAL(BUILD_SWITCH_SPELL, test x"$BUILD_SWITCH_SPELL" = x"yes")
 
 # xmmsremote
 XMMS_LIBS=""
