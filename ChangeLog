@@ -1,6 +1,7 @@
 Version 2.3.0mtn:
 	* Fixed a typo in irc-more's source that allowed a potential double-free
 	* Fixed unregistering commands when unloading gRIM and Magic 8 ball plugin
+	* Fixed napster plugin.  It builds cleanly and loads properly now.
 	* Added /bollocks command to Magic 8 ball plugin inspired by (and ported
 	  from) /dev/bollocks kernel module
 	* Added Andrew Pangborn's Enhanced History plugin and ported it to the
@@ -9,6 +10,7 @@ Version 2.3.0mtn:
 	  (http://en.wikipedia.org/wiki/Dice_notation), but it's not perfect yet.
 	  (Lucas Paul)
 	* Dice plugin now calls the /me command with its output.
+	* Napster plugin now builds by default.
 	* Removed the broadcast plugin.
 
 Version 2.2.0: 10/25/07
