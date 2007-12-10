@@ -137,8 +137,8 @@ written_msg(PurpleAccount *account, const char *who, const char *message,
 	if (!message || !*message)
 		return;
 
-	/* Do not send an autoreply for an autoreply */
-	if (flags & PURPLE_MESSAGE_AUTO_RESP)
+	/* Do not send an autoreply for an autoreply or a 'delayed' (offline?) message */
+	if (flags & (PURPLE_MESSAGE_AUTO_RESP | PURPLE_MESSAGE_DELAYED))
 		return;
 
 	if(purple_account_get_bool(account, "ar_off", FALSE))
