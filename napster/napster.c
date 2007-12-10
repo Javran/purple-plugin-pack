@@ -586,14 +586,6 @@ nap_list_icon(PurpleAccount *a, PurpleBuddy *b) {
 	return "napster";
 }
 
-static void
-nap_list_emblems(PurpleBuddy *b, const char **se, const char **sw,
-				 const char **nw, const char **ne)
-{
-	if(!PURPLE_BUDDY_IS_ONLINE(b))
-		*se = "offline";
-}
-
 static GList *
 nap_status_types(PurpleAccount *account) {
 	GList *types = NULL;
@@ -645,7 +637,7 @@ static PurplePluginProtocolInfo prpl_info = {
 	NULL,					/* protocol_options */
 	NO_BUDDY_ICONS,			/* icon_spec */
 	nap_list_icon,			/* list_icon */
-	nap_list_emblems,		/* list_emblems */
+	NULL,					/* list_emblems */
 	NULL,					/* status_text */
 	NULL,					/* tooltip_text */
 	nap_status_types,		/* status_types */
