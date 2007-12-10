@@ -1,6 +1,7 @@
 EXTRA_DIST=\
 	.purple-plugin \
 	.incomplete \
+	Makefile.mingw \
 	napster16x16.png \
 	napster22x22.png \
 	napster48x48.png

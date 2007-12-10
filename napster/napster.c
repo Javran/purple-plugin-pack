@@ -270,13 +270,16 @@ static void
 nap_callback(gpointer data, gint source, PurpleInputCondition condition) {
 	PurpleConnection *gc = data;
 	struct nap_data *ndata = gc->proto_data;
-	PurpleAccount *account = purple_connection_get_account(gc);
-	PurpleConversation *c;
-	gchar *buf, *buf2, *buf3, **res;
-	unsigned short header[2];
-	int len;
-	int command;
+	PurpleAccount *account = NULL;
+	PurpleConversation *c = NULL;
+	PurpleNotifyUserInfo *pnui = NULL;
+	gchar *buf = NULL, *buf2 = NULL, *buf3 = NULL, **res = NULL;
+	unsigned short header[2] = { 0 , 0 };
+	int len = 0;
+	int command = 0;
 	int i;
+
+	account = purple_connection_get_account(gc);
 
 	if (read(source, (void*)header, 4) != 4) {
 		purple_connection_error(gc, _("Unable to read header from server"));
@@ -442,7 +445,9 @@ nap_callback(gpointer data, gint source, PurpleInputCondition condition) {
 		/* XXX - Format is:   "Elite" 37 " " "Active" 0 0 0 0 "purple 0.63cvs" 0 0 192.168.1.41 32798 0 unknown flounder */
 		res = g_strsplit(buf, " ", 2);
 		/* res[0] == username */
-		purple_notify_userinfo(gc, res[0], res[1], NULL, NULL);
+		pnui = purple_notify_user_info_new();
+		purple_notify_user_info_add_pair(pnui, _("Napster User Info:"), res[1]);
+		purple_notify_userinfo(gc, res[0], pnui, NULL, NULL);
 		g_strfreev(res);
 		break;
 
@@ -581,14 +586,6 @@ nap_list_icon(PurpleAccount *a, PurpleBuddy *b) {
 	return "napster";
 }
 
-static void
-nap_list_emblems(PurpleBuddy *b, const char **se, const char **sw,
-				 const char **nw, const char **ne)
-{
-	if(!PURPLE_BUDDY_IS_ONLINE(b))
-		*se = "offline";
-}
-
 static GList *
 nap_status_types(PurpleAccount *account) {
 	GList *types = NULL;
@@ -640,7 +637,7 @@ static PurplePluginProtocolInfo prpl_info = {
 	NULL,					/* protocol_options */
 	NO_BUDDY_ICONS,			/* icon_spec */
 	nap_list_icon,			/* list_icon */
-	nap_list_emblems,		/* list_emblems */
+	NULL,					/* list_emblems */
 	NULL,					/* status_text */
 	NULL,					/* tooltip_text */
 	nap_status_types,		/* status_types */
