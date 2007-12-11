@@ -296,7 +296,7 @@ nap_callback(gpointer data, gint source, PurpleInputCondition condition) {
 		int tmp = read(source, buf + i, len - i);
 		if (tmp <= 0) {
 			g_free(buf);
-			buf = g_strdup_printf(_("Unable to read message from server: %s.  Command is %hd, length is %hd."), strerror(errno), len, command); 
+			buf = g_strdup_printf(_("Unable to read message from server: %s.  Command is %hd, length is %hd."), strerror(errno), len, command);
 			purple_connection_error(gc, buf);
 			g_free(buf);
 			return;
@@ -544,7 +544,7 @@ nap_login_connect(gpointer data, gint source, const gchar *error_message) {
 	/* Write our signon data */
 	nap_write_packet(gc, 2, "%s %s 0 \"purple %s\" 0",
 			purple_account_get_username(gc->account),
-			purple_connection_get_password(gc), VERSION);
+			purple_connection_get_password(gc), PP_VERSION);
 
 	/* And set up the input watcher */
 	gc->inpa = purple_input_add(ndata->fd, PURPLE_INPUT_READ, nap_callback, gc);
@@ -710,7 +710,7 @@ static PurplePluginInfo info = {
 
 	"prpl-napster",                                   /**< id             */
 	N_("Napster"),                                    /**< name           */
-	VERSION,                                          /**< version        */
+	PP_VERSION,                                          /**< version        */
 	                                                  /**  summary        */
 	N_("NAPSTER Protocol Plugin"),
 	                                                  /**  description    */
