@@ -35,8 +35,34 @@
 /* Pidgin headers */
 #include <gtkplugin.h>
 
+static void
+gtksmartear_blist_menu_cb(PurpleBlistNode *node, gpointer data) {
+}
+
+static void
+gtksmartear_drawing_blist_menu_cb(PurpleBlistNode *node, GList **menu) {
+	/* Don't do anything if the blistnode won't be saved */
+	if(purple_blist_node_get_flags(node) & PURPLE_BLIST_NODE_FLAG_NO_SAVE)
+		return;
+
+	/* We don't support setting anything for a chat, since there's no way
+	 * to get the name of a chat */
+	if(PURPLE_BLIST_NODE_IS_CHAT(node))
+		return;
+
+	(*menu) = g_list_append(*menu, purple_menu_action_new(_("SmartEar Options"),
+							PURPLE_CALLBACK(gtksmartear_blist_menu_cb),
+							NULL, NULL));
+}
+
 static gboolean
 plugin_load(PurplePlugin *plugin) {
+	purple_signal_connect(purple_blist_get_handle(),
+						"blist-node-extended-menu",
+						plugin,
+						PURPLE_CALLBACK(gtksmartear_drawing_blist_menu_cb),
+						NULL);
+
 	return TRUE;
 }
 
@@ -85,9 +111,14 @@ init_plugin(PurplePlugin *plugin) {
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
-	info.name = _(PLUGIN_NAME);
-	info.summary = _(PLUGIN_SUMMARY);
-	info.description = _(PLUGIN_DESCRIPTION);
+	info.name = _("SmartEar");
+	info.summary = _("The GTK+ (Pidgin) component of the SmartEar plugin suite");
+	info.description = _("This plugin provides the Pidgin interface to the "
+						"SmartEar plugin suite's functionality.  The suite "
+						"allows you to specify sounds per-buddy, per-contact, "
+						"or per-group for specific events.");
+
+	info.dependencies = g_list_append(NULL, "core-plugin_pack-smartear");
 }
 
 PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)
