@@ -40,7 +40,6 @@
 #include <pluginpref.h>
 #include <sound.h>
 #include <signals.h>
-#include <version.h>
 
 /* Glib header */
 #include <glib.h>
@@ -228,7 +227,7 @@ PurplePluginInfo smartear_info =
 	PURPLE_MINOR_VERSION,			/* libpurple minor version */
 	PURPLE_PLUGIN_STANDARD,			/* plugin type - this is a normal plugin */
 	NULL,							/* UI requirement - we're invisible! */
-	PURPLE_PLUGIN_FLAG_INVISIBLE,	/* flags - we have none */
+	PURPLE_PLUGIN_FLAG_INVISIBLE,	/* flags - we're invisible! */
 	NULL,							/* dependencies - we have none */
 	PURPLE_PRIORITY_DEFAULT,		/* priority - nothing special here */
 	"core-plugin_pack-smartear",	/* Plugin ID */
