@@ -1,4 +1,4 @@
-AC_INIT([purple-plugin_pack], [2.2.0mtn], [plugins-devel@lists.guifications.org])
+AC_INIT([purple-plugin_pack], [2.3.0mtn], [plugins-devel@lists.guifications.org])
 AC_CANONICAL_SYSTEM
 AM_CONFIG_HEADER(pre_config.h)
 
@@ -230,10 +230,20 @@ fi
 
 # switchspell
 gtkspell=yes
-PKG_CHECK_MODULES(GTKSPELL, gtkspell-2.0 >= 2.0.2, , [gtkspell=no])
+PKG_CHECK_MODULES(GTKSPELL, gtkspell-2.0 >= 2.0.2, [], [gtkspell=no])
 AC_SUBST(GTKSPELL_CFLAGS)
 AC_SUBST(GTKSPELL_LIBS)
-AM_CONDITIONAL(HAVE_GTKSPELL, test x"$gtkspell" = x"yes")
+
+BUILD_SWITCH_SPELL=no
+if test x"$gtkspell" = x"yes" ; then
+	AC_CHECK_HEADER([aspell.h], HAVE_ASPELL_H=yes, HAVE_ASPELL_H=no)
+	if test x"$HAVE_ASPELL_H" = x"yes" ; then
+		AC_CHECK_LIB([aspell], [new_aspell_config],BUILD_SWITCH_SPELL=yes,BUILD_SWITCH_SPELL=no)
+	else
+		BUILD_SWITCH_SPELL=no
+	fi
+fi
+AM_CONDITIONAL(BUILD_SWITCH_SPELL, test x"$BUILD_SWITCH_SPELL" = x"yes")
 
 # xmmsremote
 XMMS_LIBS=""
@@ -305,13 +315,14 @@ AC_OUTPUT([
 	bash/Makefile
 	bit/Makefile
 	blistops/Makefile
-	broadcast/Makefile
 	buddytime/Makefile
 	chronic/Makefile
 	convbadger/Makefile
+	dewysiwygification/Makefile
 	dice/Makefile
 	difftopic/Makefile
 	eight_ball/Makefile
+	enhancedhist/Makefile
 	findip/Makefile
 	flip/Makefile
 	groupmsg/Makefile
@@ -342,6 +353,7 @@ AC_OUTPUT([
 	stocker/Makefile
 	switchspell/Makefile
 	talkfilters/Makefile
+	timelog/Makefile
 	xchat-chats/Makefile
 	xmmsremote/Makefile
 	xmmsremote/pixmaps/Makefile
@@ -387,7 +399,7 @@ if test x"$HAVE_FINCH" = x"yes" ; then
 	echo Installing finch plugins to......: `eval eval echo $FINCH_LIBDIR`
 	echo Installing finch plugin data to..: `eval eval echo $FINCH_DATADIR`
 	if test x"$PP_FINCH_BUILD" = x"" ; then
-		echo Finch plugins to be built........: none
+		echo Finch plugins to be built........: none - THIS IS NORMAL
 	else
 		echo Finch plugins to be built........:
 		echo $PP_FINCH_BUILD | xargs -n 4 echo "	"

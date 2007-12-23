@@ -26,6 +26,7 @@
  * care to translate messages users will see in the main interface.  Debug
  * window messages are not important. - rekkanoryo */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #include <stdarg.h>

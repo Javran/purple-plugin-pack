@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #define OLDLOGGER_PLUGIN_ID "core-plugin_pack-oldlogger"
@@ -99,6 +100,7 @@ static void old_logger_create(PurpleLog *log)
 					"Could not create log file %s\n", filename);
 			g_free(filename);
 			g_free(data);
+			log->logger_data = NULL;
 			return;
 		}
 		data->filename = filename;
@@ -227,6 +229,11 @@ oldtxt_logger_write(PurpleLog *log, PurpleMessageFlags type,
 		char *logfile;
 		struct stat st;
 
+		for (filename = guy; *filename != '\0'; filename++) {
+			if (*filename == '/')
+				*filename = '.';
+		}
+
 		if (log->type == PURPLE_LOG_CHAT) {
 			chat = g_strdup_printf("%s.chat", guy);
 			g_free(guy);
@@ -254,6 +261,7 @@ oldtxt_logger_write(PurpleLog *log, PurpleMessageFlags type,
 			purple_debug(PURPLE_DEBUG_ERROR, "log", "Could not create log file %s\n", filename);
 			g_free(filename);
 			g_free(data);
+			log->logger_data = NULL;
 			return_written;
 		}
 		data->filename = filename;
@@ -336,6 +344,11 @@ oldhtml_logger_write(PurpleLog *log, PurpleMessageFlags type,
 		char *logfile;
 		struct stat st;
 
+		for (filename = guy; *filename != '\0'; filename++) {
+			if (*filename == '/')
+				*filename = '.';
+		}
+
 		if (log->type == PURPLE_LOG_CHAT) {
 			chat = g_strdup_printf("%s.chat", guy);
 			g_free(guy);
@@ -364,6 +377,7 @@ oldhtml_logger_write(PurpleLog *log, PurpleMessageFlags type,
 					"Could not create log file %s\n", filename);
 			g_free(filename);
 			g_free(data);
+			log->logger_data = NULL;
 			return_written;
 		}
 		data->filename = filename;

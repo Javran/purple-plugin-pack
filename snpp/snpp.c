@@ -19,6 +19,7 @@
  *
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #define _GNU_SOURCE
@@ -549,7 +550,7 @@ static PurplePluginInfo info =
 	PURPLE_PRIORITY_DEFAULT,		/* priority */
 	"prpl-snpp",					/* id */
 	NULL,							/* name */
-	VERSION,						/* version */
+	PP_VERSION,						/* version */
 	NULL,							/* summary */
 	NULL,							/* description */
 	"Don Seiler <don@seiler.us>",	/* author */
@@ -579,11 +580,10 @@ static void _init_plugin(PurplePlugin *plugin)
 
 	_snpp_plugin = plugin;
 
-	info.name = _("SNPP Plugin");
+	info.name = _("SNPP");
 	info.summary = _("SNPP Plugin");
 	info.description =
-		_("Allows libpurple to send messages over the Simple Network Paging "
-			"Protocol (SNPP).");
+		_("Allows libpurple to send messages over the Simple Network Paging Protocol (SNPP).");
 };
 
 PURPLE_INIT_PLUGIN(snpp, _init_plugin, info);

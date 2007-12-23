@@ -1,6 +1,6 @@
 EXTRA_DIST = .build .pidgin-plugin Makefile.mingw
 
-if HAVE_GTKSPELL
+if BUILD_SWITCH_SPELL
 switchspelldir = $(PIDGIN_LIBDIR)
 
 switchspell_la_LDFLAGS = -module -avoid-version
@@ -28,4 +28,4 @@ AM_CPPFLAGS = \
 	$(PIDGIN_CFLAGS) \
 	$(GTKSPELL_CFLAGS)
 
-endif # HAVE_GTKSPELL
+endif # BUILD_SWITCH_SPELL

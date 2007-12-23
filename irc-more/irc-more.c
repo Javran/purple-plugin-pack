@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02111-1301  USA
  */
 
-/* Pack/Local headers */
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #include <accountopt.h>
@@ -32,7 +32,8 @@
 #define CTCP_REPLY    purple_account_get_string(account, "ctcp-message", "Purple IRC")
 #define PART_MESSAGE  purple_account_get_string(account, "part-message", "Leaving.")
 #define QUIT_MESSAGE  purple_account_get_string(account, "quit-message", "Leaving.")
-#define UMODES        purple_account_get_string(account, "umodes", "i")
+#define SET_UMODES    purple_account_get_string(account, "umodes", "i")
+#define UNSET_UMODES  purple_account_get_string(account, "umodes", NULL)
 
 #define PLUGIN_ID "core-plugin_pack-irc-more"
 
@@ -95,8 +96,8 @@ signed_on_cb(PurpleConnection *gc)
 {
 	/* should this be done on a timeout? */
 	PurpleAccount *account = NULL;
-	const gchar *nick = NULL, *modes = NULL;
-	gchar *msg = NULL;
+	const gchar *nick = NULL, *setmodes = NULL, *unsetmodes = NULL;
+	gchar *msg = NULL, *msg2 = NULL;
 
 	account = purple_connection_get_account(gc);
 
@@ -105,12 +106,18 @@ signed_on_cb(PurpleConnection *gc)
 		return;
 
 	nick = purple_connection_get_display_name(gc);
-	modes = UMODES;
-	msg = g_strdup_printf("MODE %s +%s\r\n", nick, modes);
+	setmodes = SET_UMODES;
+	unsetmodes = UNSET_UMODES;
 
+	msg = g_strdup_printf("MODE %s +%s\r\n", nick, setmodes);
 	irc_info->send_raw(gc, msg, strlen(msg));
-
 	g_free(msg);
+
+	if(unsetmodes && *unsetmodes) {
+		msg2 = g_strdup_printf("MODE %s -%s\r\n", nick, unsetmodes);
+		irc_info->send_raw(gc, msg2, strlen(msg2));
+		g_free(msg2);
+	}
 
 	return;
 }
@@ -157,7 +164,7 @@ notice_cmd_cb(PurpleConversation *conv, const gchar *cmd, gchar **args,
 	irc_info->send_raw(gc, msg, len);
 
 	/* avoid a possible double-free crash */
-	if(msg != tmp);
+	if(msg != tmp)
 		g_free(tmp);
 
 	g_free(msg);
@@ -238,9 +245,11 @@ plugin_load(PurplePlugin *plugin)
 	option = purple_account_option_string_new(_("Default Part Message"), "part-message", "Leaving.");
 	irc_info->protocol_options = g_list_append(irc_info->protocol_options, option);
 
-	option = purple_account_option_string_new(_("User Modes On Connect"), "umodes", "i");
+	option = purple_account_option_string_new(_("Set User Modes On Connect"), "setumodes", "i");
 	irc_info->protocol_options = g_list_append(irc_info->protocol_options, option);
 
+	option = purple_account_option_string_new(_("Unset User Modes On Connect"), "unsetumodes", "");
+	irc_info->protocol_options = g_list_append(irc_info->protocol_options, option);
 	return TRUE;
 }
 

@@ -18,6 +18,7 @@
  * 02111-1301, USA.
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #define PLUGIN_ID			"gtk-plugin_pack-hideconv"
@@ -149,7 +150,7 @@ conv_created_to(PurpleConversation *conv)
 {
 	PidginConversation *gtkconv = PIDGIN_CONVERSATION(conv);
 
-	if (!gtkconv)
+	if (!gtkconv || !gtkconv->win || !gtkconv->win->window)
 		return TRUE;
 	if (!GTK_WIDGET_VISIBLE(gtkconv->win->window))
 		return TRUE;

@@ -20,6 +20,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 /* libc */
@@ -62,12 +63,199 @@ static const gchar *fullcrap_strings[] = {
 	"thats nots really nice",
 	"Oh I at all do not understand a pancake about what you here talk.",
 	"it shall be visible will be?",
-	"it becomes a complex rainbow of confusion."
+	"it becomes a complex rainbow of confusion.",
+	"dont sent any message any more stupit n idiot"
 };
+
+#define MAXCRAPLEN 25
+#define BOLLOCKS_SIZE 1024
+
+static const char verbs[][MAXCRAPLEN]={
+	"aggregate",
+	"architect",
+	"benchmark",
+	"brand",
+	"cultivate",
+	"deliver",
+	"deploy",
+	"disintermediate",
+	"drive",
+	"e-enable",
+	"embrace",
+	"empower",
+	"enable",
+	"engage",
+	"engineer",
+	"enhance",
+	"envisioneer",
+	"evolve",
+	"expedite",
+	"exploit",
+	"extend",
+	"facilitate",
+	"generate",
+	"grow",
+	"harness",
+	"implement",
+	"incentivize",
+	"incubate",
+	"innovate",
+	"integrate",
+	"iterate",
+	"leverage",
+	"maximize",
+	"mesh",
+	"monetize",
+	"morph",
+	"optimize",
+	"orchestrate",
+	"reintermediate",
+	"reinvent",
+	"repurpose",
+	"revolutionize",
+	"scale",
+	"seize",
+	"strategize",
+	"streamline",
+	"syndicate",
+	"synergize",
+	"synthesize",
+	"target",
+	"transform",
+	"transition",
+	"unleash",
+	"utilize",
+	"visualize",
+	"whiteboard" }
+;
+
+static const char adjectives[][MAXCRAPLEN]= {
+	"24/365",
+	"24/7",
+	"B2B",
+	"B2C",
+	"back-end",
+	"best-of-breed",
+	"bleeding-edge",
+	"bricks-and-clicks",
+	"clicks-and-mortar",
+	"collaborative",
+	"compelling",
+	"cross-platform",
+	"cross-media",
+	"customized",
+	"cutting-edge",
+	"distributed",
+	"dot-com",
+	"dynamic",
+	"e-business",
+	"efficient",
+	"end-to-end",
+	"enterprise",
+	"extensible",
+	"frictionless",
+	"front-end",
+	"global",
+	"granular",
+	"holistic",
+	"impactful",
+	"innovative",
+	"integrated",
+	"interactive",
+	"intuitive",
+	"killer",
+	"leading-edge",
+	"magnetic",
+	"mission-critical",
+	"next-generation",
+	"one-to-one",
+	"open-source",
+	"out-of-the-box",
+	"plug-and-play",
+	"proactive",
+	"real-time",
+	"revolutionary",
+	"robust",
+	"scalable",
+	"seamless",
+	"sexy",
+	"sticky",
+	"strategic",
+	"synergistic",
+	"transparent",
+	"turn-key",
+	"ubiquitous",
+	"user-centric",
+	"value-added",
+	"vertical",
+	"viral",
+	"virtual",
+	"visionary",
+	"web-enabled",
+	"wireless",
+	"world-class"} ;
+
+static const char nouns[][MAXCRAPLEN]={
+	"action-items",
+	"applications",
+	"architectures",
+	"bandwidth",
+	"channels",
+	"communities",
+	"content",
+	"convergence",
+	"deliverables",
+	"e-business",
+	"e-commerce",
+	"e-markets",
+	"e-services",
+	"e-tailers",
+	"experiences",
+	"eyeballs",
+	"functionalities",
+	"infomediaries",
+	"infrastructures",
+	"initiatives",
+	"interfaces",
+	"markets",
+	"methodologies",
+	"metrics",
+	"mindshare",
+	"models",
+	"networks",
+	"niches",
+	"paradigms",
+	"partnerships",
+	"platforms",
+	"portals",
+	"relationships",
+	"ROI",
+	"synergies",
+	"web-readiness",
+	"schemas",
+	"solutions",
+	"supply-chains",
+	"systems",
+	"technologies",
+	"users",
+	"portals" };
+
 
 static PurpleCmdId eight_ball_cmd_id = 0,
                    sg_ball_cmd_id = 0,
-                   fullcrap_cmd_id = 0;
+				   fullcrap_cmd_id = 0,
+				   bollocks_cmd_id = 0;
+
+static char *mkbollocks(void)
+{
+	int verb,adjective,noun;
+
+	verb = rand() % G_N_ELEMENTS(verbs);
+	adjective = (rand()+2) % G_N_ELEMENTS(adjectives);
+	noun = (rand()+69) % G_N_ELEMENTS(nouns);
+	return g_strdup_printf("%s %s %s\n", verbs[verb], adjectives[adjective], nouns[noun]);
+}
+
 
 static PurpleCmdRet
 eight_ball_cmd_func(PurpleConversation *conv, const gchar *cmd, gchar **args,
@@ -90,6 +278,10 @@ eight_ball_cmd_func(PurpleConversation *conv, const gchar *cmd, gchar **args,
 		numstrings = sizeof(fullcrap_strings) / sizeof(fullcrap_strings[0]);
 		msgprefix = "The Purple Fullcrap Ball says";
 		msgs = fullcrap_strings;
+	} else if(!strcmp(cmd, "bollocks")) {
+		numstrings = -1;
+		msgprefix = "/dev/bollocks says";
+		msgs = NULL;
 	} else {
 		numstrings = sizeof(eight_ball_strings) / sizeof(eight_ball_strings[0]);
 		msgprefix = "The Purple 8 Ball says";
@@ -107,7 +299,12 @@ eight_ball_cmd_func(PurpleConversation *conv, const gchar *cmd, gchar **args,
 	if(index > numstrings)
 		index %= numstrings;
 
-	g_string_append_printf(msgstr, "%s:  %s", msgprefix, msgs[index]);
+	if (!strcmp(cmd, "bollocks")) {
+		char *tmp = mkbollocks();
+		g_string_append_printf(msgstr, "%s:  %s", msgprefix, tmp);
+		g_free(tmp);
+	} else
+		g_string_append_printf(msgstr, "%s:  %s", msgprefix, msgs[index]);
 
 	switch(purple_conversation_get_type(conv)) {
 		case PURPLE_CONV_TYPE_IM:
@@ -129,11 +326,12 @@ eight_ball_cmd_func(PurpleConversation *conv, const gchar *cmd, gchar **args,
 static gboolean
 plugin_load(PurplePlugin *plugin)
 {
-	const gchar *eight_ball_help, *sg_ball_help, *fullcrap_help;
+	const gchar *eight_ball_help, *sg_ball_help, *fullcrap_help, *bollocks_help;
 
 	eight_ball_help = _("8ball:  sends a random 8ball message");
 	sg_ball_help = _("sgball:  sends a random Stargate Ball message");
 	fullcrap_help = _("fullcrap:  sends random fooling blabber");
+	bollocks_help = _("bollocks:  sends random middle-manager bollocks");
 
 	eight_ball_cmd_id = purple_cmd_register("8ball", "w", PURPLE_CMD_P_PLUGIN,
 									PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT |
@@ -153,6 +351,12 @@ plugin_load(PurplePlugin *plugin)
 									PURPLE_CMD_FUNC(eight_ball_cmd_func),
 									fullcrap_help, NULL);
 
+	bollocks_cmd_id = purple_cmd_register("bollocks", "w", PURPLE_CMD_P_PLUGIN,
+									PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT |
+									PURPLE_CMD_FLAG_ALLOW_WRONG_ARGS, NULL,
+									PURPLE_CMD_FUNC(eight_ball_cmd_func),
+									bollocks_help, NULL);
+
 	return TRUE;
 }
 
@@ -161,6 +365,8 @@ plugin_unload(PurplePlugin *plugin)
 {
 	purple_cmd_unregister(eight_ball_cmd_id);
 	purple_cmd_unregister(sg_ball_cmd_id);
+	purple_cmd_unregister(fullcrap_cmd_id);
+	purple_cmd_unregister(bollocks_cmd_id);
 
 	return TRUE;
 }

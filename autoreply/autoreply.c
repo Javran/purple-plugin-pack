@@ -18,6 +18,7 @@
  * 02111-1301, USA.
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #define PLUGIN_ID			"core-plugin_pack-autoreply"
@@ -44,6 +45,7 @@
 #define	PREFS_MAXSEND		PREFS_PREFIX "/maxsend"
 #define	PREFS_USESTATUS		PREFS_PREFIX "/usestatus"
 #define	PREFS_PREFIX_MSG    PREFS_PREFIX "/prefix"
+#define PREFS_X_INVISIBLE     PREFS_PREFIX "/invisible"
 
 typedef struct _PurpleAutoReply PurpleAutoReply;
 typedef struct _AutoReplyProtocolOptions	AutoReplyProtocolOptions;
@@ -56,6 +58,7 @@ struct _PurpleAutoReply
 
 struct _AutoReplyProtocolOptions {
 	PurpleAccountOption *message;
+	PurpleAccountOption *off;
 };
 
 typedef enum
@@ -87,31 +90,31 @@ get_autoreply_message(PurpleBuddy *buddy, PurpleAccount *account)
 			reply = purple_savedstatus_get_message(purple_savedstatus_get_current());
 	}
 
-	if (!reply && buddy)
+	if ((!reply || !*reply) && buddy)
 	{
 		/* Is there any special auto-reply for this buddy? */
 		reply = purple_blist_node_get_string((PurpleBlistNode*)buddy, "autoreply");
 
-		if (!reply && PURPLE_BLIST_NODE_IS_BUDDY((PurpleBlistNode*)buddy))
+		if ((!reply || !*reply) && PURPLE_BLIST_NODE_IS_BUDDY((PurpleBlistNode*)buddy))
 		{
 			/* Anything for the contact, then? */
 			reply = purple_blist_node_get_string(((PurpleBlistNode*)buddy)->parent, "autoreply");
 		}
 	}
 
-	if (!reply)
+	if (!reply || !*reply)
 	{
 		/* Is there any specific auto-reply for this account? */
 		reply = purple_account_get_string(account, "autoreply", NULL);
 	}
 
-	if (!reply)
+	if (!reply || !*reply)
 	{
 		/* Get the global auto-reply message */
 		reply = purple_prefs_get_string(PREFS_GLOBAL);
 	}
 
-	if (*reply == ' ')
+	if (*reply == ' ' || *reply == '\0')
 		reply = NULL;
 
 	if (!reply && use_status == STATUS_FALLBACK)
@@ -135,13 +138,20 @@ written_msg(PurpleAccount *account, const char *who, const char *message,
 	if (!message || !*message)
 		return;
 
-	/* Do not send an autoreply for an autoreply */
-	if (flags & PURPLE_MESSAGE_AUTO_RESP)
+	/* Do not send an autoreply for an autoreply or a 'delayed' (offline?) message */
+	if (flags & (PURPLE_MESSAGE_AUTO_RESP | PURPLE_MESSAGE_DELAYED))
+		return;
+
+	if(purple_account_get_bool(account, "ar_off", FALSE))
 		return;
 
 	g_return_if_fail(purple_conversation_get_type(conv) == PURPLE_CONV_TYPE_IM);
 
 	presence = purple_account_get_presence(account);
+
+	if (purple_prefs_get_bool(PREFS_X_INVISIBLE) &&
+			purple_presence_is_status_primitive_active(presence, PURPLE_STATUS_INVISIBLE))
+		return;
 
 	if (purple_prefs_get_bool(PREFS_AWAY) && !purple_presence_is_available(presence))
 		trigger = TRUE;
@@ -149,7 +159,7 @@ written_msg(PurpleAccount *account, const char *who, const char *message,
 	   trigger = TRUE;
 
 	if (!trigger)
-		return;	
+		return;
 
 	buddy = purple_find_buddy(account, who);
 	reply = get_autoreply_message(buddy, account);
@@ -226,7 +236,7 @@ set_auto_reply(PurpleBlistNode *node, gpointer plugin)
 					get_autoreply_message(buddy, account), TRUE, FALSE,
 					(gc->flags & PURPLE_CONNECTION_HTML) ? "html" : NULL,
 					_("_Save"), G_CALLBACK(set_auto_reply_cb),
-					_("_Cancel"), NULL, 
+					_("_Cancel"), NULL,
 					account, purple_buddy_get_name(buddy), NULL, node);
 	g_free(message);
 }
@@ -252,13 +262,16 @@ add_options_for_protocol(PurplePlugin *plg)
 {
 	AutoReplyProtocolOptions *arpo;
 	PurplePluginProtocolInfo *info = PURPLE_PLUGIN_PROTOCOL_INFO(plg);
-	
+
 	arpo = g_new(AutoReplyProtocolOptions, 1);
 
 	arpo->message = purple_account_option_string_new(_("Autoreply message"),
 													 "autoreply", NULL);
+	arpo->off = purple_account_option_bool_new(_("Turn off autoreply"),
+													 "ar_off", FALSE);
 	info->protocol_options = g_list_append(info->protocol_options,
 										   arpo->message);
+	info->protocol_options = g_list_append(info->protocol_options, arpo->off);
 
 	if (!g_hash_table_lookup(options, plg))
 		g_hash_table_insert(options, plg, arpo);
@@ -273,7 +286,7 @@ remove_options_for_protocol(PurplePlugin *plg)
 
 	if(!arpo)
 		return;
-	
+
 	/*
 	 * 22:55 < sadrul> grim: the check when removing is required, iirc, when
 	 *                 pidgin quits, and a prpl is unloaded before the plugin
@@ -282,9 +295,14 @@ remove_options_for_protocol(PurplePlugin *plg)
 	{
 		info->protocol_options = g_list_remove_link(info->protocol_options, l);
 		purple_account_option_destroy(arpo->message);
-		g_hash_table_remove(options, plg);
+	}
+	if ((l = g_list_find(info->protocol_options, arpo->off)))
+	{
+		info->protocol_options = g_list_remove_link(info->protocol_options, l);
+		purple_account_option_destroy(arpo->off);
 	}
 
+	g_hash_table_remove(options, plg);
 	g_free(arpo);
 }
 
@@ -322,7 +340,7 @@ plugin_load(PurplePlugin *plugin)
 		add_options_for_protocol(list->data);
 		list = list->next;
 	}
-	
+
 	return TRUE;
 }
 
@@ -376,13 +394,17 @@ get_plugin_pref_frame(PurplePlugin *plugin)
 					_("Autoreply Prefix\n(only when necessary)"));
 	purple_plugin_pref_frame_add(frame, pref);
 
+	pref = purple_plugin_pref_new_with_name_and_label(PREFS_X_INVISIBLE,
+					_("Do not autoreply when invisible."));
+	purple_plugin_pref_frame_add(frame, pref);
+
 	pref = purple_plugin_pref_new_with_label(_("Status message"));
 	purple_plugin_pref_frame_add(frame, pref);
 
 	pref = purple_plugin_pref_new_with_name_and_label(PREFS_USESTATUS,
 						_("Autoreply with status message"));
 	purple_plugin_pref_set_type(pref, PURPLE_PLUGIN_PREF_CHOICE);
-	purple_plugin_pref_add_choice(pref, _("Never"),	
+	purple_plugin_pref_add_choice(pref, _("Never"),
 						GINT_TO_POINTER(STATUS_NEVER));
 	purple_plugin_pref_add_choice(pref, _("Always when there is a status message"),
 						GINT_TO_POINTER(STATUS_ALWAYS));
@@ -479,6 +501,7 @@ init_plugin(PurplePlugin *plugin)
 	purple_prefs_add_int(PREFS_MAXSEND, 10);
 	purple_prefs_add_int(PREFS_USESTATUS, STATUS_NEVER);
 	purple_prefs_add_string(PREFS_PREFIX_MSG, _("This is an autoreply: "));
+	purple_prefs_add_bool(PREFS_X_INVISIBLE, TRUE);
 }
 
 PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)

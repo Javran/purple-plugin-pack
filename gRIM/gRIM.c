@@ -26,6 +26,7 @@
  * 08:19 < grim> i was going to use my nick as an example but decided against that..
 */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #include <time.h>
@@ -99,7 +100,7 @@ struct timeout_data
 	PurpleConversation *conv;
 };
 
-static PurpleCmdId rim_cmd_id = 0;
+static PurpleCmdId rim_cmd_id = 0, base_cmd_id = 0;
 
 static gboolean
 timeout_func_cb(struct timeout_data *data)
@@ -280,7 +281,7 @@ plugin_load(PurplePlugin *plugin) {
 	/* THIS LINE IS NOT TRANSLATABLE. Patches to make it NLS capable will be
 	 * rejected without response */
 	help = "gRIM: Take off every 'Zig'!!";
-	rim_cmd_id = purple_cmd_register("base", "", PURPLE_CMD_P_PLUGIN,
+	base_cmd_id = purple_cmd_register("base", "", PURPLE_CMD_P_PLUGIN,
 									PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT,
 									NULL, PURPLE_CMD_FUNC(rim),
 									help, NULL);
@@ -290,6 +291,7 @@ plugin_load(PurplePlugin *plugin) {
 static gboolean
 plugin_unload(PurplePlugin *plugin) {
 	purple_cmd_unregister(rim_cmd_id);
+	purple_cmd_unregister(base_cmd_id);
 
 	return TRUE;
 }
