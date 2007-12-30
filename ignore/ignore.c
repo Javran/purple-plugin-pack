@@ -117,7 +117,7 @@ list_ignore_rules()
 		char *split = strrchr(pref, '/');
 		*split++ = '\0';
 
-		if (*rule != 'n') {
+		if (rule && *rule != 'n') {
 			if (last == NULL || g_strcasecmp(last, pref)) {
 				g_free(last);
 				last = g_strdup(pref);
