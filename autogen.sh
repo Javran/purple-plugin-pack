@@ -1,6 +1,6 @@
 #! /bin/sh
 # Guifications - The end-all, be-all notification framework
-# Copyright (C) 2003-2007 Gary Kramlich <grim@reaperworld.com>
+# Copyright (C) 2003-2008 Gary Kramlich <grim@reaperworld.com>
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free

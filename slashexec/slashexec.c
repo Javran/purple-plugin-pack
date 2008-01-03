@@ -1,10 +1,10 @@
 /*
  * slashexec - A CLI for libpurple clients
- * Copyright (C) 2004-2007 Gary Kramlich
- * Copyright (C) 2005-2007 Peter Lawler
- * Copyright (C) 2005-2007 Daniel Atallah
- * Copyright (C) 2005-2007 John Bailey
- * Copyright (C) 2006-2007 Sadrul Habib Chowdhury
+ * Copyright (C) 2004-2008 Gary Kramlich
+ * Copyright (C) 2005-2008 Peter Lawler
+ * Copyright (C) 2005-2008 Daniel Atallah
+ * Copyright (C) 2005-2008 John Bailey
+ * Copyright (C) 2006-2008 Sadrul Habib Chowdhury
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

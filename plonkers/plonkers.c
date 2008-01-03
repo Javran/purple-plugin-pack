@@ -1,6 +1,6 @@
 /*
-  Purple-Plonkers - Manager the plonkers out in cyberland
-  Copyright (C) 2005 Peter Lawler
+  Purple-Plonkers - Manage the plonkers out in cyberland
+  Copyright (C) 2005-2008 Peter Lawler
 
   Very loosely based on gxr, Copyright (C) 2004 Gary Kramlich
 

@@ -24,8 +24,7 @@
 
 #if !GLIB_CHECK_VERSION(2,2,0)
 gboolean
-g_str_has_suffix (const gchar  *str,
-		  const gchar  *suffix)
+g_str_has_suffix (const gchar *str, const gchar *suffix)
 {
   int str_len;
   int suffix_len;
@@ -43,8 +42,7 @@ g_str_has_suffix (const gchar  *str,
 }
 
 gboolean
-g_str_has_prefix (const gchar  *str,
-		  const gchar  *prefix)
+g_str_has_prefix (const gchar *str, const gchar *prefix)
 {
   int str_len;
   int prefix_len;
@@ -77,9 +75,7 @@ g_str_has_prefix (const gchar  *str,
 #    define N_(String) (String)
 #  endif
 static gchar **
-g_strsplit_set (const gchar *string,
-		const gchar *delimiters,
-		gint         max_tokens)
+g_strsplit_set (const gchar *string, const gchar *delimiters, gint max_tokens)
 {
 	gboolean delim_table[256];
 	GSList *tokens, *list;

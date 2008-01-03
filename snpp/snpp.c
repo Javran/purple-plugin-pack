@@ -1,7 +1,7 @@
 /*
  * gaim-snpp Protocol Plugin
  *
- * Copyright (C) 2004, Don Seiler <don@seiler.us>
+ * Copyright (C) 2004-2008 Don Seiler <don@seiler.us>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

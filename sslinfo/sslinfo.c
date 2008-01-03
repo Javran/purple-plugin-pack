@@ -1,6 +1,6 @@
 /*
  * sslinfo - Gets info about your currently loaded ssl plugin
- * Copyright (C) 2004 Gary Kramlich <grim@reaperworld.com>
+ * Copyright (C) 2004-2008 Gary Kramlich <grim@reaperworld.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

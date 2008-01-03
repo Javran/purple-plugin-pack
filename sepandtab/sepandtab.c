@@ -1,6 +1,6 @@
 /*
  * Extra conversation placement options for Purple
- * Copyright (C) 2004 Gary Kramlich <grim@reaperworld.com>
+ * Copyright (C) 2004-2008 Gary Kramlich <grim@reaperworld.com>
  *
  * Purple is the legal property of its developers, whose names are too numerous
  * to list here.  Please refer to the COPYRIGHT file distributed with this

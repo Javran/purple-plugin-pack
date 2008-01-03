@@ -1,8 +1,8 @@
 /*
  * Adds a command to roll an arbitrary number of dice with an arbitrary 
  * number of sides
- * Copyright (C) 2005 Gary Kramlich <grim@reaperworld.com>
- * Modified and commented 2007-11 by Lucas <reilithion@gmail.com>
+ * Copyright (C) 2005-2008 Gary Kramlich <grim@reaperworld.com>
+ * Copyright (C) 2007 Lucas <reilithion@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

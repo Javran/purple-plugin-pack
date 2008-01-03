@@ -1,6 +1,6 @@
 /*
   xmms-remote - Control xmms from Pidgin conversations
-  Copyright (C) 2004 Gary Kramlich
+  Copyright (C) 2004-2008 Gary Kramlich
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License

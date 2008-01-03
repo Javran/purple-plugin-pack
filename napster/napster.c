@@ -4,7 +4,8 @@
  * Copyright (C) 2000-2001, Rob Flynn <rob@marko.net>
  *
  * Assimilated for inclusion in the Plugin Pack:
- * Copyright (C) 2006, Gary Kramlich <grim@reaperworld.com>
+ * Copyright (C) 2006-2008 Gary Kramlich <grim@reaperworld.com>
+ * Copyright (C) 2007 John Bailey <rekkanoryo@rekkanoryo.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

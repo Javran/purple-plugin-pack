@@ -1,6 +1,6 @@
 /*
  * Purple Plugin Pack
- * Copyright (C) 2003-2005
+ * Copyright (C) 2003-2008
  * See ../AUTHORS for a list of all authors
  *
  * eight_ball: Provides Magic 8-ball-like functionality
