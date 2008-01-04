@@ -2,7 +2,11 @@
  * A completely stupid plugin, inspired by a dumb conversation in #gaim
  * and needing some light relief from 'real' work.
  * Also as a tribute to our fearless project leader.
- * Copyright (C) 2005 Peter Lawler <bleeter from users.sf.net>
+ *
+ * Copyright (C) 2005-2008 Peter Lawler <bleeter from users.sf.net>
+ * Copyright (C) 2006-2008 Sadrul Habib Chowdhury <sadrul@users.sourceforge.net>
+ * Copyright (C) 2006-2008 John Bailey <rekkanoryo@rekkanoryo.org>
+ * Copyright (C) 2007 Ankit Singla
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

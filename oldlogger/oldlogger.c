@@ -1,6 +1,6 @@
 /*
  * Old Logger - Re-implements the legacy, deficient, logging
- * Copyright (C) 2004 Stu Tomlinson <stu@nosnilmot.com>
+ * Copyright (C) 2004-2008 Stu Tomlinson <stu@nosnilmot.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

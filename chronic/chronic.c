@@ -1,6 +1,6 @@
 /*
  * Chronic - Remote sound play triggering
- * Copyright (C) 2006 John Bailey <rekkanoryo@rekkanoryo.org>
+ * Copyright (C) 2006-2008 John Bailey <rekkanoryo@rekkanoryo.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

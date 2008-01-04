@@ -1,6 +1,6 @@
 /*
  * DiffTopic - Show the old topic when the topic in a chat room changes.
- * Copyright (C) 2006
+ * Copyright (C) 2006-2008 Sadrul Habib Chowdhury <sadrul@users.sourceforge.net>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as

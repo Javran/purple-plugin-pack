@@ -1,6 +1,6 @@
 /*
  * DeWYSIWYGification - Lets you type in HTML without it being escaped to entities.
- * Copyright (C) 2004 Tim Ringenbach <omarvo@hotmail.com>
+ * Copyright (C) 2004-2008 Tim Ringenbach <omarvo@hotmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

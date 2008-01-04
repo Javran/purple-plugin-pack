@@ -1,6 +1,7 @@
 /*
  * Hides the blist on signon (or when it's created)
- * Copyright (C) 2004 Gary Kramlich.
+ * Copyright (C) 2004-2008 Gary Kramlich
+ * Copyright (C) 2007-2008 Sadrul Habib Chowdhury
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as

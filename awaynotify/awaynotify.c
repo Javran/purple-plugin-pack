@@ -1,6 +1,6 @@
 /*
  * awaynotify - show notices when status changes
- * Copyright (C) 2005-2006 Matt Perry <guy@somewhere.fscked.org>
+ * Copyright (C) 2005-2008 Matt Perry <guy@somewhere.fscked.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

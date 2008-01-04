@@ -1,11 +1,10 @@
 /*
  * TimeLog plugin.
  *
- * Copyright (c) 2006 Jon Oberheide.
+ * Copyright (C) 2006 Jon Oberheide.
+ * Copyright (C) 2007-2008 Stu Tomlinson
  *
  * Based on code from Gaim's gtklog.c
- *
- * $Id: log-widget.c,v 1.30 2005/12/24 05:14:55 binaryjono Exp $
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as

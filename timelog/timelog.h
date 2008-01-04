@@ -1,9 +1,8 @@
 /*
  * TimeLog plugin.
  *
- * Copyright (c) 2006 Jon Oberheide.
- *
- * $Id: gaim-timelog.h,v 1.30 2005/12/24 05:14:55 binaryjono Exp $
+ * Copyright (C) 2006 Jon Oberheide
+ * Copyright (C) 2007-2008 Stu Tomlinson
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as

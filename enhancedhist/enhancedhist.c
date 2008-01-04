@@ -1,5 +1,8 @@
 /*
  * enhanced_hist.c - Enhanced History Plugin for libpurple
+ * Copyright (C) 2004-2008 Andrew Pangborn <gaim@andrewpangborn.com>
+ * Copyright (C) 2007-2008 John Bailey <rekkanoryo@rekkanoryo.org>
+ * Copyright (C) 2007 Ankit Singla
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as

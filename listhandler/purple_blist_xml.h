@@ -1,6 +1,6 @@
 /*
  * Purple Plugin Pack
- * Copyright (C) 2003-2005
+ * Copyright (C) 2003-2008
  * See ../AUTHORS for a list of all authors
  *
  * listhandler: Provides importing, exporting, and copying functions
