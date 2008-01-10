@@ -21,7 +21,7 @@
  */
 
 #ifndef _TIMELOG_H_
-#define _TIMELOG_H
+#define _TIMELOG_H_
 
 #define TIMELOG_PLUGIN_ID	"gtk-binaryjono-timelog"
 #define TIMELOG_TITLE		_("TimeLog")
