@@ -346,12 +346,6 @@ init_plugin(PurplePlugin *plugin)
 	purple_prefs_add_none(PREF_ROOT_PATH);
 
 	if(purple_prefs_exists("/plugins/core/enhanced_history/int")) {
-		/* Rename these prefs to fit within the Plugin Pack scheme */
-		purple_prefs_rename("/plugins/core/enhanced_history/int", PREF_NUMBER_PATH);
-		purple_prefs_rename("/plugins/core/enhanced_history/mins", PREF_MINS_PATH);
-		purple_prefs_rename("/plugins/core/enhanced_history/hours", PREF_HOURS_PATH);
-		purple_prefs_rename("/plugins/core/enhanced_history/days", PREF_DAYS_PATH);
-
 		if(strcmp(purple_prefs_get_string("/plugins/core/enhanced_history/string_date"), "no"))
 			dates = TRUE;
 		if(strcmp(purple_prefs_get_string("/plugins/core/enhanced_history/string_im"), "no"))
@@ -359,14 +353,22 @@ init_plugin(PurplePlugin *plugin)
 		if(strcmp(purple_prefs_get_string("/plugins/core/enhanced_history/string_chat"), "no"))
 			chats = TRUE;
 
+		purple_prefs_add_int(PREF_NUMBER_PATH, purple_prefs_get_int("/plugins/core/enhanced_history/int"));
+		purple_prefs_add_int(PREF_MINS_PATH, purple_prefs_get_int("/plugins/core/enhanced_history/mins"));
+		purple_prefs_add_int(PREF_HOURS_PATH, purple_prefs_get_int("/plugins/core/enhanced_history/hours"));
+		purple_prefs_add_int(PREF_DAYS_PATH, purple_prefs_get_int("/plugins/core/enhanced_history/days"));
+		purple_prefs_add_bool(PREF_DATES_PATH, dates);
+		purple_prefs_add_bool(PREF_IM_PATH, ims);
+		purple_prefs_add_bool(PREF_CHAT_PATH, chats);
+
+		purple_prefs_remove("/plugins/core/enhanced_history/int");
+		purple_prefs_remove("/plugins/core/enhanced_history/mins");
+		purple_prefs_remove("/plugins/core/enhanced_history/hours");
+		purple_prefs_remove("/plugins/core/enhanced_history/days");
 		purple_prefs_remove("/plugins/core/enhanced_history/string_date");
 		purple_prefs_remove("/plugins/core/enhanced_history/string_im");
 		purple_prefs_remove("/plugins/core/enhanced_history/string_chat");
 		purple_prefs_remove("/plugins/core/enhanced_history");
-
-		purple_prefs_add_bool(PREF_DATES_PATH, dates);
-		purple_prefs_add_bool(PREF_IM_PATH, ims);
-		purple_prefs_add_bool(PREF_CHAT_PATH, chats);
 	} else {
 		/* Create these prefs with sensible defaults */
 		purple_prefs_add_int(PREF_NUMBER_PATH, 1);
