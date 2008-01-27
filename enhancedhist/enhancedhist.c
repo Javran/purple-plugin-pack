@@ -52,6 +52,8 @@
 
 #define ENHANCED_HISTORY_ID "gtk-plugin_pack-enhanced_history"
 
+#define PREF_ROOT_GPPATH	"/plugins/gtk"
+#define PREF_ROOT_PPATH		"/plugins/gtk/plugin_pack"
 #define PREF_ROOT_PATH		"/plugins/gtk/plugin_pack/enhanced_history"
 #define PREF_NUMBER_PATH	"/plugins/gtk/plugin_pack/enhanced_history/number"
 #define PREF_MINS_PATH		"/plugins/gtk/plugin_pack/enhanced_history/minutes"
@@ -343,6 +345,8 @@ init_plugin(PurplePlugin *plugin)
 {
 	gboolean dates = FALSE, ims = FALSE, chats = FALSE;
 
+	purple_prefs_add_none(PREF_ROOT_GPPATH);
+	purple_prefs_add_none(PREF_ROOT_PPATH);
 	purple_prefs_add_none(PREF_ROOT_PATH);
 
 	if(purple_prefs_exists("/plugins/core/enhanced_history/int")) {
