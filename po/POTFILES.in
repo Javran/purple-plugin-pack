@@ -8,9 +8,7 @@ blistops/blistops.c
 buddytime/buddytime.c
 buddytime/gtkbuddytime.c
 chronic/chronic.c
-common/core_template.c
-common/core_template.c
-common/gtk_template.c
+common/purple_template.c
 common/gtk_template.c
 convbadger/convbadger.c
 dewysiwygification/dewysiwygification.c
