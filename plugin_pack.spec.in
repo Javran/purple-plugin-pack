@@ -37,6 +37,7 @@ Requires:      libpurple >= %{pidgin_major_ver}.%{pidgin_build_minor_ver}, libpu
 Summary:    Plugin Pack for Pidgin
 Group:      Applications/Internet
 Requires:   pidgin >= %{pidgin_major_ver}.%{pidgin_build_minor_ver}, pidgin < %{pidgin_next_major_ver}
+Requires:	purple-plugin_pack = %{version}
 
 %description
 All the other plugins for all libpurple derived clients
@@ -75,6 +76,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Mar 01 2008 Stu Tomlinson <stu@nosnilmot.com>
+- make the pidgin plugin pack depend on the purple plugin pack
+
 * Sat Oct 27 2007 Stu Tomlinson <stu@nosnilmot.com>
 - Add --without xmms option to build without xmms plugin
 
