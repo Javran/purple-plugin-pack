@@ -177,7 +177,7 @@ static void
 irc_sending_text(PurpleConnection *gc, char **msg, gpointer null)
 {
 	PurpleAccount *account = purple_connection_get_account(gc);
-	char **old = msg;
+	char *old = *msg;
 
 	if (MATCHES("QUIT ")) {
 		char *message = strchr(*msg, ':');
@@ -198,8 +198,8 @@ irc_sending_text(PurpleConnection *gc, char **msg, gpointer null)
 		*version = '\0';
 		*msg = g_strdup_printf("%s:\001VERSION %s\001\r\n", *msg, CTCP_REPLY);
 	}
-	if (msg != old)
-		g_free(*old);
+	if (*msg != old)
+		g_free(old);
 }
 
 static gboolean
