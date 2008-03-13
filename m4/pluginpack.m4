@@ -37,7 +37,7 @@ AC_DEFUN([AM_BUILD_PLUGIN_LIST],
 			continue
 		fi
 
-		if test -f "$d/Makefile.am" -a ! "$d" = "$srcdir/common" -a ! "$d" = "$srcdir/doc" -a ! "$d" = "$srcdir/m4" -a ! -f "$d/.abusive" -a ! -f "$d/.build" -a ! -f "$d/.incomplete" ; then
+		if test -f "$d/Makefile.am" -a ! "$d" = "$srcdir/common" -a ! "$d" = "$srcdir/doc" -a ! "$d" = "$srcdir/m4" -a ! -f "$d/configure" -a ! -f "$d/.abusive" -a ! -f "$d/.build" -a ! -f "$d/.incomplete" ; then
 			AC_ERROR(
 [
 *** Plugin Directory $d is misconfigured
