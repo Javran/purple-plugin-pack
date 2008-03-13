@@ -127,7 +127,6 @@ regenerate_switchspell_menu(PidginConversation *gtkconv)
 	delete_aspell_config(config);
 
 	dels = aspell_dict_info_list_elements(dlist);
-	aspell_dict_info_list_empty(dlist);
 	while ((entry = aspell_dict_info_enumeration_next(dels)) != 0) {
 		GtkWidget *menuitem = gtk_radio_menu_item_new_with_label(group, entry->name);
 		group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(menuitem));
