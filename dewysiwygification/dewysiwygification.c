@@ -50,7 +50,7 @@ substitute_words_send_im(PurpleAccount *account, const char *receiver,
 	g_free(*message);
 	*message = tmp;
 
-	purple_debug_misc("dewysiwygification", "it's now: %s", tmp);
+	purple_debug_misc("dewysiwygification", "it's now: %s\n", tmp);
 
 	return FALSE;
 }
@@ -67,9 +67,21 @@ substitute_words_send_chat(PurpleAccount *account, char **message, int id)
 	g_free(*message);
 	*message = tmp;
 
-	purple_debug_misc("dewysiwygification", "it's now: %s", tmp);
+	purple_debug_misc("dewysiwygification", "it's now: %s\n", tmp);
 
 	return FALSE;
+}
+
+static gboolean
+disable_linkify(PurpleAccount *account, const char *who, char **buffer,
+					PurpleConversation *conv, PurpleMessageFlags flags, void *data)
+{
+	if ((flags & PURPLE_MESSAGE_NO_LINKIFY) || !(flags & PURPLE_MESSAGE_SEND))
+		return FALSE;
+	purple_debug_misc("dewysywig", "Turning no linkify flag on for message: %s and resubmitting\n", *buffer);
+	flags |= PURPLE_MESSAGE_NO_LINKIFY;
+	purple_conversation_write(conv, who, *buffer, flags, time(NULL));
+	return TRUE;
 }
 
 static gboolean
@@ -77,6 +89,10 @@ plugin_load(PurplePlugin *plugin)
 {
 	void *conv_handle = purple_conversations_get_handle();
 
+	purple_signal_connect(conv_handle, "writing-im-msg",
+						plugin, PURPLE_CALLBACK(disable_linkify), NULL);
+	purple_signal_connect(conv_handle, "writing-chat-msg",
+						plugin, PURPLE_CALLBACK(disable_linkify), NULL);
 
 	purple_signal_connect(conv_handle, "sending-im-msg",
 						plugin, PURPLE_CALLBACK(substitute_words_send_im), NULL);
