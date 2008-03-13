@@ -104,8 +104,10 @@ irssi_textfmt_regex_helper(gchar *message, const gchar *token,
 	/* now let's replce the matches.
 	 * If we don't have any, drop out right away.
 	 */
-	if(regexec(&regex, iter, GROUP_TOTAL, matches, 0) != 0)
+	if(regexec(&regex, iter, GROUP_TOTAL, matches, 0) != 0) {
+		regfree(&regex);
 		return message;
+	}
 
 	/* create our GString.  Heh heh */
 	str = g_string_new("");
@@ -144,6 +146,8 @@ irssi_textfmt_regex_helper(gchar *message, const gchar *token,
 		/* move iter to the end of the match */
 		iter += matches[GROUP_ALL].rm_eo;
 	} while(regexec(&regex, iter, GROUP_TOTAL, matches, REG_NOTBOL) == 0);
+
+	regfree(&regex);
 
 	/* at this point, iter is either the remains of the text, of a single null
 	 * terminator.  So throw it onto the GString.
