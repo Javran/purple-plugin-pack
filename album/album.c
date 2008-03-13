@@ -253,7 +253,7 @@ static gboolean plugin_load(PurplePlugin *plugin)
 
 	cache_existing_icons(NULL);
 
-	buddy_windows = g_hash_table_new_full(icon_viewer_hash, icon_viewer_equal, g_free, g_free);
+	buddy_windows = g_hash_table_new_full(icon_viewer_hash, icon_viewer_equal, icon_viewer_key_free, g_free);
 
 	return TRUE;
 }
