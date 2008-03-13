@@ -13,6 +13,8 @@ Version 2.3.0mtn:
 	* Napster plugin now builds by default.
 	* Removed the broadcast plugin.
 	* Memory leak fixes
+	* Fixed the --with-plugins configure argument.  It now correctly handles
+	  all, default, and a comma separated list of plugins.
 
 Version 2.2.0: 10/25/07
 	* Added 'menuconfig' script to make it easier to select what plugins to

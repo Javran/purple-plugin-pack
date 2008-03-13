@@ -96,29 +96,64 @@ AC_DEFUN([AM_BUILD_PLUGIN_LIST],
 	dnl #######################################################################
 	AC_ARG_WITH(plugins,
 				AC_HELP_STRING([--with-plugins], [what plugins to build]),
-				,with_plugins=all)
+				,with_plugins=default)
 
 	dnl #######################################################################
 	dnl # Now determine which ones have been selected
 	dnl #######################################################################
-	if test "x$with_plugins" = "xdefault" ; then
-		tmp_SUB="$PP_AVAILABLE"
-	else
-		exp_plugins=`echo "$with_plugins" | sed 's/,/ /g'`
-		for p in "$PP_AVAILABLE $PP_ABUSIVE"; do
-			for r in $exp_plugins; do
-				if test x"$r" = x"$p" ; then
-					tmp_SUB="$tmp_SUB $p"
-				fi
+	case "$with_plugins" in
+		all)
+			PP_FINCH_BUILD="$PP_FINCH_ABUSIVE $PP_FINCH_BUILD"
+			PP_PIDGIN_BUILD="$PP_PIDGIN_ABUSIVE $PP_PIDGIN_BUILD"
+			PP_PURPLE_BUILD="$PP_PURPLE_ABUSIVE $PP_PURPLE_BUILD"
+			;;
+		default)
+			dnl # we don't do anything if the defaults are selected, they're
+			dnl # already set up :)
+			;;
+		*)
+			dnl # clear out the build variables
+			PP_FINCH_BUILD=""
+			PP_PIDGIN_BUILD=""
+			PP_PURPLE_BUILD=""
+
+			dnl # turn the with plugins variable into a space delimited list
+			exp_plugins=`echo "$with_plugins" | sed 's/,/ /g'`
+
+			dnl # loop through the with plugins list and update the build variables
+			dnl # as we find the plugins in each type.
+			for w in $exp_plugins
+			do
+				for p in $PP_FINCH
+				do
+					if test x"$w" = x"$p"
+					then
+						PP_FINCH_BUILD="$PP_FINCH_BUILD $p"
+					fi
+				done
+
+				for p in $PP_PIDGIN
+				do
+					if test x"$w" = x"$p"
+					then
+						PP_PIDGIN_BUILD="$PP_PIDGIN_BUILD $p"
+					fi
+				done
+
+				for p in $PP_PURPLE
+				do
+					if test x"$w" = x"$p"
+					then
+						PP_PURPLE_BUILD="$PP_PURPLE_BUILD $p"
+					fi
+				done
 			done
-		done
-	fi
+	esac
 
-	dnl # remove duplicates
-	PP_BUILD=`echo $tmp_SUB | awk '{for (i = 1; i <= NF; i++) { print $i } }' | sort | uniq | xargs echo `
-
-	dnl # add the abusive plugins to the dist
-	PP_DIST="$PP_AVAILABLE $PP_ABUSIVE"
+	dnl # sort everything
+	PP_FINCH_BUILD=`echo $PP_FINCH_BUILD | awk '{for (i = 1; i <=NF; i++) { print $i } }' | sort | uniq | xargs echo`
+	PP_PIDGIN_BUILD=`echo $PP_PIDGIN_BUILD | awk '{for (i = 1; i <=NF; i++) { print $i } } ' | sort | uniq | xargs echo`
+	PP_PURPLE_BUILD=`echo $PP_PURPLE_BUILD | awk '{for (i = 1; i <=NF; i++) { print $i } } ' | sort | uniq | xargs echo`
 
 	dnl #######################################################################
 	dnl # substitue our sub dirs
