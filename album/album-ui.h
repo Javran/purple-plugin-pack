@@ -36,6 +36,8 @@ guint icon_viewer_hash(gconstpointer data);
 
 gboolean icon_viewer_equal(gconstpointer y, gconstpointer z);
 
+void icon_viewer_key_free(void *key);
+
 GList *album_get_plugin_actions(PurplePlugin *plugin, gpointer data);
 
 void album_blist_node_menu_cb(PurpleBlistNode *node, GList **menu);

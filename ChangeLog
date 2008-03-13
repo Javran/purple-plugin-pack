@@ -12,6 +12,7 @@ Version 2.3.0mtn:
 	* Dice plugin now calls the /me command with its output.
 	* Napster plugin now builds by default.
 	* Removed the broadcast plugin.
+	* Memory leak fixes
 
 Version 2.2.0: 10/25/07
 	* Added 'menuconfig' script to make it easier to select what plugins to
