@@ -17,6 +17,10 @@ Version 2.3.0mtn:
 	* Memory leak fixes
 	* Fixed the --with-plugins configure argument.  It now correctly handles
 	  all, default, and a comma separated list of plugins.
+	* Fixed a crash in the xchat-chats plugin which occurs due to the changes
+	  to the conversation window in 2.4.0.
+	* Fixed a missing header include in the timelog plugin which caused a
+	  plugin load failure under some circumstances.
 
 Version 2.2.0: 10/25/07
 	* Added 'menuconfig' script to make it easier to select what plugins to
