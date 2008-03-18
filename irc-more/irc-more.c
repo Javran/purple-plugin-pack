@@ -123,6 +123,7 @@ signed_on_cb(PurpleConnection *gc)
 	return;
 }
 
+#if !PURPLE_VERSION_CHECK(2,4,0)
 static PurpleCmdRet
 notice_cmd_cb(PurpleConversation *conv, const gchar *cmd, gchar **args,
 		gchar **error, void *data)
@@ -172,6 +173,7 @@ notice_cmd_cb(PurpleConversation *conv, const gchar *cmd, gchar **args,
 
 	return PURPLE_CMD_RET_OK;
 }
+#endif
 
 static void
 irc_sending_text(PurpleConnection *gc, char **msg, gpointer null)
@@ -219,9 +221,11 @@ plugin_load(PurplePlugin *plugin)
 	/* specify our help string and register our command */
 	notice_help = _("notice target message:  Send a notice to the specified target.");
 
+#if !PURPLE_VERSION_CHECK(2,4,0)
 	notice_cmd_id = purple_cmd_register("notice", "ws", PURPLE_CMD_P_PLUGIN,
 			PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT | PURPLE_CMD_FLAG_PRPL_ONLY,
 			"prpl-irc", notice_cmd_cb, notice_help, NULL);
+#endif
 
 	/* we need this handle for the signed-on signal */
 	gc_handle = purple_connections_get_handle();

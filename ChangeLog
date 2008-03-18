@@ -10,6 +10,8 @@ Version 2.3.0mtn:
 	  (http://en.wikipedia.org/wiki/Dice_notation), but it's not perfect yet.
 	  (Lucas Paul)
 	* Dice plugin now calls the /me command with its output.
+	* Irc-more plugin adds notice support only when built against libpurple
+	  older than 2.4.0.
 	* Napster plugin now builds by default.
 	* Removed the broadcast plugin.
 	* Memory leak fixes
