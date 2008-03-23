@@ -26,6 +26,8 @@
 
 #include "gtkimhtml.h"
 
+#include <ctype.h>
+
 static GtkWidget *entry_username = NULL;
 static GtkWidget *entry_url = NULL;
 

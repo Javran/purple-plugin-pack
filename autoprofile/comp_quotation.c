@@ -214,7 +214,7 @@ static void quotation_edit_dialog (struct widget *w, const gchar *quote)
                       quote,
                       TRUE, FALSE, "html",
                       _("Save"), G_CALLBACK(quotation_edit_dialog_cb),
-                      _("Cancel"), NULL,
+                      _("Cancel"), NULL, NULL, NULL, NULL,
                       w);
 }
 
@@ -320,8 +320,8 @@ static void quotation_delete_all_cb (struct widget *w)
 static void quotation_delete_all (GtkMenuItem *item, struct widget *w)
 {
   purple_request_ok_cancel (ap_get_plugin_handle (),
-                          NULL, _("Delete all quotes?"), NULL, 0,
-                          w, G_CALLBACK(quotation_delete_all_cb), NULL);
+                          NULL, _("Delete all quotes?"), NULL, 0, NULL, NULL,
+						  NULL, w, G_CALLBACK(quotation_delete_all_cb), NULL);
 }
 
 static void quotation_more_menu (GtkWidget *button, struct widget *w)
