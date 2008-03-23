@@ -30,6 +30,8 @@
 
 #include "comp_logstats.h"
 
+#include <string.h>
+
 struct conversation_time {
   time_t *start_time;
   char *name;

@@ -21,6 +21,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA *
  *--------------------------------------------------------------------------*/
 
+#include "../common/pp_internal.h"
+
 #include "component.h"
 
 static GHashTable *refresh_timeouts = NULL;
@@ -48,12 +50,12 @@ static char* http_generate (struct widget *w)
 
   url = ap_prefs_get_string (w, "http_url");
   if (!url || url[0] == '\0') {
-    return strdup (_("[AutoProfile error: No URL specified]"));
+    return g_strdup (_("[AutoProfile error: No URL specified]"));
   }
 
   result = ap_prefs_get_string (w, "http_data");
-  if (result == NULL) return strdup ("");
-  return strdup (result);
+  if (result == NULL) return g_strdup ("");
+  return g_strdup (result);
 }
 
 static gboolean http_refresh_update (gpointer user_data)
@@ -62,7 +64,7 @@ static gboolean http_refresh_update (gpointer user_data)
   char *http_url;
 
   w = (struct widget *) user_data;
-  http_url = strdup (ap_prefs_get_string (w, "http_url"));
+  http_url = g_strdup (ap_prefs_get_string (w, "http_url"));
 
   if( http_url && (http_url[0] != '\0') ) {
     purple_util_fetch_url(http_url, TRUE, NULL, FALSE, http_response, w);
