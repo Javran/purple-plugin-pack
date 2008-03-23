@@ -21,8 +21,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA *
  *--------------------------------------------------------------------------*/
 
+#include "../common/pp_internal.h"
+
 #include "component.h"
 #include "utility.h"
+
+#include <string.h>
 
 /*---------- EXECUTABLE: STDOUT from a program ----------*/
 static GtkWidget *file_selector;
@@ -43,7 +47,7 @@ char *executable_generate (struct widget *w)
   if (!exec) {
     /* Excution failed */
     ap_debug ("executable", "command failed to execute");
-    return strdup (_("[ERROR: command failed to execute]"));
+    return g_strdup (_("[ERROR: command failed to execute]"));
   }
 
   if (strlen (text_start) < max)

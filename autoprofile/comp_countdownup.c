@@ -21,9 +21,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA *
  *--------------------------------------------------------------------------*/
 
+#include "../common/pp_internal.h"
+
 #include "component.h"
 #include "gtkprefs.h"
 #include "utility.h"
+
+#include <math.h>
 
 static GtkWidget *spin_secs;
 static GtkWidget *spin_mins;
@@ -94,24 +98,24 @@ char *count_generate (struct widget *w)
     d_secs = d_secs + (d_mins * 60);
 
   if (d_days == 1.0)
-    s_days = strdup ("day");
+    s_days = g_strdup ("day");
   else
-    s_days = strdup ("days");
+    s_days = g_strdup ("days");
 
   if (d_hours == 1.0)
-    s_hours = strdup ("hour");
+    s_hours = g_strdup ("hour");
   else
-    s_hours = strdup ("hours");
+    s_hours = g_strdup ("hours");
 
   if (d_mins == 1.0)
-    s_mins = strdup ("minute");
+    s_mins = g_strdup ("minute");
   else
-    s_mins = strdup ("minutes");
+    s_mins = g_strdup ("minutes");
 
   if (d_secs == 1.0)
-    s_secs = strdup ("second");
+    s_secs = g_strdup ("second");
   else
-    s_secs = strdup ("seconds");
+    s_secs = g_strdup ("seconds");
 
   switch (l) {
     case 3:
