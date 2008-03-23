@@ -310,6 +310,7 @@ AC_OUTPUT([
 	VERSION
 	plugin_pack.spec
 	album/Makefile
+	autoprofile/Makefile
 	autoreply/Makefile
 	awaynotify/Makefile
 	bash/Makefile
