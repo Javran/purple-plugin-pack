@@ -534,7 +534,16 @@ static PurplePluginProtocolInfo prpl_info =
 	NULL,							/* roomlist_cancel */
 	NULL,							/* roomlist_expand_catagory */
 	NULL,							/* can_receive_file */
-	NULL							/* send_file */
+	NULL,							/* send_file */
+	NULL,							/* new_xfer */
+	NULL,							/* offline_message */
+	NULL,							/* whiteboard_prpl_ops */
+	NULL,							/* send_raw */
+	NULL,							/* roomlist_room_serialize */
+	NULL,							/* unregister_user */
+	NULL,							/* send_attention */
+	NULL,							/* get_attention_types */
+	NULL							/* reserved 4 */
 };
 
 
