@@ -30,6 +30,7 @@
 
 #include "comp_logstats.h"
 
+#include <ctype.h>
 #include <string.h>
 
 struct conversation_time {
