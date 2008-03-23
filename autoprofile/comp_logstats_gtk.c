@@ -132,7 +132,7 @@ static void alias_add (GtkButton *button, gpointer data)
     fields,
     _("OK"), G_CALLBACK(new_alias),
     _("Cancel"), NULL,
-    NULL);
+    NULL, NULL, NULL, NULL);
 }
 
 static void alias_delete (GtkButton *button, gpointer data)
