@@ -43,7 +43,7 @@ autoprofile_la_SOURCES = \
 	widget.c \
 	widget.h
 
-listhandler_la_LIBADD = \
+autoprofile_la_LIBADD = \
 	$(PIDGIN_LIBS) \
 	$(GLIB_LIBS)
 
