@@ -693,9 +693,11 @@ static PurplePluginProtocolInfo prpl_info = {
 	NULL,					/* new_xfer */
 	NULL,					/* offline_message */
 	NULL,					/* whiteboard_prpl_ops */
-	NULL,					/* reserved 1 */
-	NULL,					/* reserved 2 */
-	NULL,					/* reserved 3 */
+	NULL,					/* send_raw */
+	NULL,					/* roomlist_room_serialize */
+	NULL,					/* unregister_user */
+	NULL,					/* send_attention */
+	NULL,					/* get_attention_types */
 	NULL					/* reserved 4 */
 };
 
