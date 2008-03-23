@@ -32,7 +32,7 @@
 #include "notify.h"
 #include "util.h"
 
-#include "gtkgaim.h"
+#include "pidgin.h"
 #include "gtkutils.h"
 
 /* A component is composed of code that generates some sort of content,

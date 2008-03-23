@@ -26,7 +26,7 @@
 
 #include "component.h"
 
-#include "gtkgaim.h"
+#include "pidgin.h"
 #include "gtkutils.h"
 
 /* The heart of everything */
