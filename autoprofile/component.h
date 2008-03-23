@@ -28,7 +28,6 @@
 
 #include "sizes.h"
 
-#include "internal.h"
 #include "prefs.h"
 #include "notify.h"
 #include "util.h"
