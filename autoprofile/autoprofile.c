@@ -133,15 +133,15 @@ static PurplePluginInfo info =
   PURPLE_PLUGIN_MAGIC,
   PURPLE_MAJOR_VERSION,
   PURPLE_MINOR_VERSION,
-  PURPLE_PLUGIN_STANDARD,                                   /* type           */
-  PIDGIN_PLUGIN_TYPE,                                   /* ui_requirement */
+  PURPLE_PLUGIN_STANDARD,                                 /* type           */
+  PIDGIN_PLUGIN_TYPE,                                     /* ui_requirement */
   0,                                                      /* flags          */
   NULL,                                                   /* dependencies   */
-  PURPLE_PRIORITY_DEFAULT,                                  /* priority       */
+  PURPLE_PRIORITY_DEFAULT,                                /* priority       */
 
   N_("gtk-kluge-autoprofile"),                            /* id             */
   N_("AutoProfile"),                                      /* name           */
-  AUTOPROFILE_VERSION,                                    /* version        */
+  PP_VERSION,                                             /* version        */
   N_("User profile and status message content generator"),/* summary        */
                                                           /* description    */
   N_("Allows user to place dynamic text into profiles\n"

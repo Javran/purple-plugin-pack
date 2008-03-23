@@ -45,7 +45,7 @@ static GtkWidget *get_info_page () {
   /* AutoProfile title */
   labeltext = g_strdup_printf (
     _("<span weight=\"bold\" size=\"larger\">AutoProfile %s</span>"),
-    AUTOPROFILE_VERSION);
+    PP_VERSION);
   label = gtk_label_new (NULL);
   gtk_label_set_markup (GTK_LABEL(label), labeltext);
   gtk_label_set_line_wrap (GTK_LABEL(label), TRUE);

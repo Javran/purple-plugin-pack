@@ -24,9 +24,7 @@
 #ifndef AUTOPROFILE_H
 #define AUTOPROFILE_H
 
-#define AUTOPROFILE_VERSION "3.00-beta2"
-
-#include "internal.h"
+#include "../common/pp_internal.h"
 
 #include "sizes.h"
 #include "widget.h"
