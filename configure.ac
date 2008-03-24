@@ -209,6 +209,13 @@ PKG_CHECK_MODULES(GTK, [gtk+-2.0], HAVE_GTK="yes", HAVE_GTK="no")
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
 
+HAVE_GNT="no"
+GNT_CFLAGS=""
+GNT_LIBS=""
+PKG_CHECK_MODULES(GNT, [gnt], HAVE_GNT="yes", HAVE_GNT="no")
+AC_SUBST(GNT_CFLAGS)
+AC_SUBST(GNT_CFLAGS)
+
 dnl #######################################################################
 dnl # Plugin dependency checking
 dnl #######################################################################

@@ -25,8 +25,6 @@
 /* Pack/Local headers */
 #include "../common/pp_internal.h"
 
-#define PLUGIN_AUTHOR		"John Bailey <rekkanoryo@rekkanoryo.org>"
-
 /* System headers */
 #include <gdk/gdk.h>
 #include <glib.h>
@@ -60,7 +58,7 @@ static PurplePluginInfo info = {
 	PP_VERSION,					/* version				*/
 	NULL,						/* summary				*/
 	NULL,						/* description			*/
-	PLUGIN_AUTHOR,				/* author				*/
+	"John Bailey <rekkanoryo@rekkanoryo.org>",
 	PP_WEBSITE,					/* website				*/
 
 	plugin_load,				/* load					*/
@@ -85,9 +83,10 @@ init_plugin(PurplePlugin *plugin) {
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
-	info.name = _(PLUGIN_NAME);
-	info.summary = _(PLUGIN_SUMMARY);
-	info.description = _(PLUGIN_DESCRIPTION);
+	info.name = _("gtksmartear");
+	info.summary = _("GTK+ Configuration for smartear");
+	info.description = _("This plugin is just a frontend for the libpurple "
+						 "plugin, smartear");
 }
 
 PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)
