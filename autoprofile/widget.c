@@ -26,6 +26,7 @@
 #include "widget.h"
 #include "utility.h"
 
+#include <ctype.h>
 #include <string.h>
 
 static GStaticMutex widget_mutex = G_STATIC_MUTEX_INIT;
