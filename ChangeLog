@@ -1,3 +1,6 @@
+Version 2.3.1:
+    * Fixed convbadger's failure to update on conversation switch.
+
 Version 2.3.0: 03/17/08
 	* Fixed a typo in irc-more's source that allowed a potential double-free
 	* Fixed unregistering commands when unloading gRIM and Magic 8 ball plugin
