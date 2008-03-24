@@ -319,7 +319,7 @@ static void rename_cb (GtkWidget *button, GtkTreeSelection *sel)
     _("Enter a new name for this widget."), w->alias, 
     FALSE, FALSE, NULL,
     _("Rename"), G_CALLBACK(widget_popup_rename_cb),
-    _("Cancel"), NULL, w);
+    _("Cancel"), NULL, NULL, NULL, NULL, w);
 }
 
 static void add_cb (GtkWidget *button, GtkTreeSelection *sel)

@@ -234,7 +234,7 @@ static void create_dialog () {
   imhtml = gtk_imhtml_new (NULL, NULL);
   
   /* Create main display window */
-  PURPLE_DIALOG(dialog);
+  PIDGIN_DIALOG(dialog);
   gtk_window_set_title (GTK_WINDOW(dialog), _("AutoProfile Summary"));
   gtk_widget_realize (dialog);
 
