@@ -1,13 +1,41 @@
-Version 2.2.0mtn:
-	* Merged autorejoin into irc-more.  No prefs migration will take place.
-	  You will need to reconfigure the delay yourself.  Autorejoin no longer
-	  exists.
-	* Slashexec's '/exec command' and '!command' are now optional (QuLogic)
-	* Listhandler now supports restoring a buddy list from a backed-up
-	  blist.xml file created by backing up ~/.purple.
-	* Added support for initial user modes to irc-more
+Version 2.4.0mtn:
+	* Merged the Autoprofile plugin into our build system.
+	* Fixed convbadger's failure to update on conversation switch.
+
+Version 2.3.0: 03/17/08
+	* Fixed a typo in irc-more's source that allowed a potential double-free
+	* Fixed unregistering commands when unloading gRIM and Magic 8 ball plugin
+	* Fixed napster plugin.  It builds cleanly and loads properly now.
+	* Added /bollocks command to Magic 8 ball plugin inspired by (and ported
+	  from) /dev/bollocks kernel module
+	* Added Andrew Pangborn's Enhanced History plugin and ported it to the
+	  Pidgin and libpurple APIs.  Cleaned up some preferences as well.
+	* Dice plugin now supports dice notation
+	  (http://en.wikipedia.org/wiki/Dice_notation), but it's not perfect yet.
+	  (Lucas Paul)
+	* Dice plugin now calls the /me command with its output.
+	* Irc-more plugin adds notice support only when built against libpurple
+	  older than 2.4.0.
+	* Napster plugin now builds by default.
+	* Removed the broadcast plugin.
+	* Memory leak fixes
+	* Fixed the --with-plugins configure argument.  It now correctly handles
+	  all, default, and a comma separated list of plugins.
+	* Fixed a crash in the xchat-chats plugin which occurs due to the changes
+	  to the conversation window in 2.4.0.
+	* Fixed a missing header include in the timelog plugin which caused a
+	  plugin load failure under some circumstances.
+	* Finally added some content to README
+
+Version 2.2.0: 10/25/07
+	* Added 'menuconfig' script to make it easier to select what plugins to
+	  build.
+	* Added support for initial setting/unsetting of user modes to irc-more
 	* Added the abusive findip plugin
 	* Added infopane plugin
+	* Added dewysiwygification plugin
+	* Added timelog plugin, from Jon Oberheide's gaim-timelog
+	* Fixed autoreply so it doesn't reply with an empty message (rageboy04)
 	* Fixed a crash in ignore where a nickname that is not all lowercase
 	  causes unintended behavior resulting in a crash (rageboy04, qwert)
 	* Fixed a possible double-free crash in /notice support in irc-more.
@@ -19,7 +47,16 @@ Version 2.2.0mtn:
 	  built against.
 	* Fixed building with ancient glib. (Bodo Bellut)
 	* Removed the .build file from hideconv to remove it from default
-	  builds.  Pidgin 2.2.1 will have persistent conversations.
+	  builds.  Pidgin will have persistent conversations soon.
+	* Partially merged buddytimezone from the buddytools package into the
+	  existing (incomplete) buddytime plugin
+	* Autoreply now can be disabled per-account (rageboy04)
+	* Listhandler now supports restoring a buddy list from a backed-up
+	  blist.xml file created by backing up ~/.purple.
+	* Merged autorejoin into irc-more.  No prefs migration will take place.
+	  You will need to reconfigure the delay yourself.  Autorejoin no longer
+	  exists.
+	* Slashexec's '/exec command' and '!command' are now optional (QuLogic)
 
 Version 2.1.1: 8/19/07
 	* Fixed lack of .build, .pidgin-plugin, and Makefile.mingw for convbadger

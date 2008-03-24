@@ -1,9 +1,10 @@
 EXTRA_DIST=\
+	.build \
 	.purple-plugin \
-	.incomplete \
-	napster16x16.png \
-	napster22x22.png \
-	napster48x48.png
+	Makefile.mingw \
+	16/napster.png \
+	22/napster.png \
+	48/napster.png
 
 napsterdir = $(PURPLE_LIBDIR)
 
@@ -21,19 +22,14 @@ napster_la_LIBADD = \
 	$(PURPLE_LIBS)
 
 if HAVE_PIDGIN
-napsterpix16x16dir=$(PIDGIN_PIXMAPSDIR)/protocols/16
-napsterpix16x16_DATA=napster16x16.png
+napsterpix16dir=$(PIDGIN_PIXMAPSDIR)/protocols/16
+napsterpix16_DATA=16/napster.png
 
-napsterpix22x22dir=$(PIDGIN_PIXMAPSDIR)/protocols/22
-napsterpix22x22_DATA=napster22x22.png
+napsterpix22dir=$(PIDGIN_PIXMAPSDIR)/protocols/22
+napsterpix22_DATA=22/napster.png
 
-napsterpix48x48dir=$(PIDGIN_PIXMAPSDIR)/protocols/48
-napsterpix48x48_DATA=napster48x48.png
-
-install-data-hook:
-	mv $(PIDGIN_PIXMAPSDIR)/protocols/16/napster16x16.png $(PIDGIN_PIXMAPSDIR)//protocols/16/napster.png
-	mv $(PIDGIN_PIXMAPSDIR)/protocols/22/napster22x22.png $(PIDGIN_PIXMAPSDIR)//protocols/22/napster.png
-	mv $(PIDGIN_PIXMAPSDIR)/protocols/48/napster48x48.png $(PIDGIN_PIXMAPSDIR)//protocols/48/napster.png
+napsterpix48dir=$(PIDGIN_PIXMAPSDIR)/protocols/48
+napsterpix48_DATA=48/napster.png
 
 endif
 
@@ -45,3 +41,5 @@ AM_CPPFLAGS = \
 	$(DEBUG_CFLAGS) \
 	$(PURPLE_CFLAGS)
 
+bullshit:
+	echo $(DESTDIR)

@@ -1,6 +1,6 @@
 /*
   xmms-remote - Control xmms from Pidgin conversations
-  Copyright (C) 2004 Gary Kramlich
+  Copyright (C) 2004-2008 Gary Kramlich
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -17,6 +17,7 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1301, USA.
 */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #include <gtk/gtk.h>
@@ -364,7 +365,7 @@ gxr_make_menu(PidginWindow *win) {
 	menu = gtk_menu_new();
 
 	if(!xmms_remote_is_running(session)) {
-		item = pidgin_new_item_from_stock(menu, "Please start XMMS",
+		item = pidgin_new_item_from_stock(menu, _("Please start XMMS"),
 										GXR_STOCK_XMMS, NULL, NULL, 0, 0, NULL);
 		gtk_widget_set_sensitive(item, FALSE);
 
@@ -372,14 +373,14 @@ gxr_make_menu(PidginWindow *win) {
 	}
 
 	/* play */
-	item = pidgin_new_item_from_stock(menu, "Play", GXR_STOCK_PLAY,
+	item = pidgin_new_item_from_stock(menu, _("Play"), GXR_STOCK_PLAY,
 									G_CALLBACK(gxr_menu_play_cb), NULL, 0,
 									0, NULL);
 	if(xmms_remote_is_playing(session) && !xmms_remote_is_paused(session))
 		gtk_widget_set_sensitive(item, FALSE);
 
 	/* pause */
-	item = pidgin_new_item_from_stock(menu, "Pause", GXR_STOCK_PAUSE,
+	item = pidgin_new_item_from_stock(menu, _("Pause"), GXR_STOCK_PAUSE,
 									G_CALLBACK(gxr_menu_pause_cb), NULL, 0,
 									0, NULL);
 	if(!xmms_remote_is_playing(session) && !xmms_remote_is_paused(session))
@@ -388,19 +389,19 @@ gxr_make_menu(PidginWindow *win) {
 		gtk_widget_set_sensitive(item, FALSE);
 
 	/* stop */
-	item = pidgin_new_item_from_stock(menu, "Stop", GXR_STOCK_STOP,
+	item = pidgin_new_item_from_stock(menu, _("Stop"), GXR_STOCK_STOP,
 									G_CALLBACK(gxr_menu_stop_cb), NULL, 0,
 									0, NULL);
 	if(!xmms_remote_is_playing(session) && !xmms_remote_is_paused(session))
 		gtk_widget_set_sensitive(item, FALSE);
 
 	/* next */
-	pidgin_new_item_from_stock(menu, "Next", GXR_STOCK_NEXT,
+	pidgin_new_item_from_stock(menu, _("Next"), GXR_STOCK_NEXT,
 							 G_CALLBACK(gxr_menu_next_cb), NULL, 0, 0,
 							 NULL);
 
 	/* previous */
-	pidgin_new_item_from_stock(menu, "Previous", GXR_STOCK_PREVIOUS,
+	pidgin_new_item_from_stock(menu, _("Previous"), GXR_STOCK_PREVIOUS,
 							 G_CALLBACK(gxr_menu_prev_cb), NULL, 0, 0,
 							 NULL);
 
@@ -408,11 +409,11 @@ gxr_make_menu(PidginWindow *win) {
 	pidgin_separator(menu);
 
 	/* repeat */
-	pidgin_new_check_item(menu, "Repeat", G_CALLBACK(gxr_menu_repeat_cb),
+	pidgin_new_check_item(menu, _("Repeat"), G_CALLBACK(gxr_menu_repeat_cb),
 						NULL, xmms_remote_is_repeat(session));
 
 	/* shuffle */
-	pidgin_new_check_item(menu, "Shuffle", G_CALLBACK(gxr_menu_shuffle_cb),
+	pidgin_new_check_item(menu, _("Shuffle"), G_CALLBACK(gxr_menu_shuffle_cb),
 						NULL, xmms_remote_is_shuffle(session));
 
 	if(purple_prefs_get_bool("/plugins/gtk/plugin_pack/xmms-remote/show_playlist")) {
@@ -420,7 +421,7 @@ gxr_make_menu(PidginWindow *win) {
 		pidgin_separator(menu);
 
 		/* playlist */
-		item = gxr_make_item(menu, "Playlist", NULL, NULL);
+		item = gxr_make_item(menu, _("Playlist"), NULL, NULL);
 		gxr_make_playlist(item);
 	}
 
@@ -430,7 +431,7 @@ gxr_make_menu(PidginWindow *win) {
 		pidgin_separator(menu);
 
 		/* title */
-		item = gxr_make_item(menu, "Display title",
+		item = gxr_make_item(menu, _("Display title"),
 							 G_CALLBACK(gxr_menu_display_title_cb),
 							 (gpointer)win);
 	}
@@ -480,7 +481,7 @@ gxr_add_button(PidginWindow *win) {
 		/* Show the minimal control */
 		button = gxr_make_button(GXR_STOCK_XMMS, G_CALLBACK(gxr_button_clicked_cb), win, win);
 		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), button,
-								"XMMS Remote Control Options");
+								_("XMMS Remote Control Options"));
 		buttons = g_list_append(buttons, (gpointer)button);
 	} else {
 		/* Show extended control */
@@ -490,27 +491,27 @@ gxr_add_button(PidginWindow *win) {
 		 */
 		button = gxr_make_button(GXR_STOCK_NEXT,
 								 G_CALLBACK(gxr_button_next_cb), NULL, win);
-		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), button, "Next");
+		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), button, _("Next"));
 		buttons = g_list_append(buttons, (gpointer)button);
 		
 		button = gxr_make_button(GXR_STOCK_STOP,
 								 G_CALLBACK(gxr_button_stop_cb), NULL, win);
-		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), button, "Stop");
+		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), button, _("Stop"));
 		buttons = g_list_append(buttons, (gpointer)button);
 
 		button = gxr_make_button(GXR_STOCK_PAUSE,
 								 G_CALLBACK(gxr_button_pause_cb), NULL, win);
-		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), button, "Pause");
+		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), button, _("Pause"));
 		buttons = g_list_append(buttons, (gpointer)button);
 
 		button = gxr_make_button(GXR_STOCK_PLAY,
 								 G_CALLBACK(gxr_button_play_cb), NULL, win);
-		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), button, "Play");
+		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), button, _("Play"));
 		buttons = g_list_append(buttons, (gpointer)button);
 
 		button = gxr_make_button(GXR_STOCK_PREVIOUS,
 								 G_CALLBACK(gxr_button_prev_cb), NULL, win);
-		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), button, "Previous");
+		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), button, _("Previous"));
 		buttons = g_list_append(buttons, (gpointer)button);
 
 		if(purple_prefs_get_bool("/plugins/gtk/plugin_pack/xmms-remote/volume")) {
@@ -523,7 +524,7 @@ gxr_add_button(PidginWindow *win) {
 			gtk_range_set_value(GTK_RANGE(slider),
 								xmms_remote_get_main_volume(GXR_SESSION));
 			pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray),
-									slider, "XMMS Volume Control");
+									slider, _("XMMS Volume Control"));
 
 			g_object_set_data(G_OBJECT(slider), "win", win);
 			buttons = g_list_prepend(buttons, slider);
@@ -619,7 +620,7 @@ gxr_popup_cb(GtkWidget *w, GtkMenu *menu, gpointer data) {
 
 	pidgin_separator(GTK_WIDGET(menu));
 
-	item = pidgin_new_item_from_stock(GTK_WIDGET(menu), "XMMS Remote Control",
+	item = pidgin_new_item_from_stock(GTK_WIDGET(menu), _("XMMS Remote Control"),
 									GXR_STOCK_XMMS, NULL, NULL, 0, 0, NULL);
 
 	submenu = gxr_make_menu((PidginWindow *)data);
@@ -749,7 +750,7 @@ gxr_cmd_cb(PurpleConversation *c, const gchar *cmd, gchar **args, gchar **error,
 	win = pidgin_conv_get_window(PIDGIN_CONVERSATION(c));
 
 	if(!xmms_remote_is_running(session)) {
-		*error = g_strdup("XMMS is not running");
+		*error = g_strdup(_("XMMS is not running"));
 		return PURPLE_CMD_RET_FAILED;
 	}
 
@@ -781,7 +782,7 @@ gxr_cmd_cb(PurpleConversation *c, const gchar *cmd, gchar **args, gchar **error,
 	else if(!strcmp(lower, "hide"))
 		xmms_remote_main_win_toggle(session, FALSE);
 	else {
-		*error = g_strdup("unknown argument");
+		*error = g_strdup(_("unknown argument"));
 		return PURPLE_CMD_RET_FAILED;
 	}
 
@@ -815,9 +816,9 @@ gxr_get_config_frame(PurplePlugin *plugin) {
 	vbox = gtk_vbox_new(FALSE, 6);
 	gtk_container_set_border_width(GTK_CONTAINER(vbox), 12);
 
-	frame = pidgin_make_frame(vbox, "Info");
+	frame = pidgin_make_frame(vbox, _("Info"));
 
-	pidgin_prefs_labeled_entry(frame, "Info Format:",
+	pidgin_prefs_labeled_entry(frame, _("Info Format:"),
 								 "/plugins/gtk/plugin_pack/xmms-remote/format",
 								 NULL);
 
@@ -827,97 +828,97 @@ gxr_get_config_frame(PurplePlugin *plugin) {
 	gtk_box_pack_start(GTK_BOX(frame), hbox, FALSE, FALSE, 0);
 	gtk_widget_show(hbox);
 
-	label = gxr_make_label("%T: Song title", sg);
+	label = gxr_make_label(_("%T: Song title"), sg);
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 
-	label = gxr_make_label("%C: Number of channels", NULL);
-	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-
-	hbox = gtk_hbox_new(FALSE, 6);
-	gtk_box_pack_start(GTK_BOX(frame), hbox, FALSE, FALSE, 0);
-	gtk_widget_show(hbox);
-
-	label = gxr_make_label("%P: Current song playlist number", sg);
-	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-
-	label = gxr_make_label("%L: Total songs in the playlist", NULL);
+	label = gxr_make_label(_("%C: Number of channels"), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 
 	hbox = gtk_hbox_new(FALSE, 6);
 	gtk_box_pack_start(GTK_BOX(frame), hbox, FALSE, FALSE, 0);
 	gtk_widget_show(hbox);
 
-	label = gxr_make_label("%t: Total time", sg);
+	label = gxr_make_label(_("%P: Current song playlist number"), sg);
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 
-	label = gxr_make_label("%e: Elapsed time", sg);
+	label = gxr_make_label(_("%L: Total songs in the playlist"), NULL);
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+
+	hbox = gtk_hbox_new(FALSE, 6);
+	gtk_box_pack_start(GTK_BOX(frame), hbox, FALSE, FALSE, 0);
+	gtk_widget_show(hbox);
+
+	label = gxr_make_label(_("%t: Total time"), sg);
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+
+	label = gxr_make_label(_("%e: Elapsed time"), sg);
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 	
 	hbox = gtk_hbox_new(FALSE, 6);
 	gtk_box_pack_start(GTK_BOX(frame), hbox, FALSE, FALSE, 0);
 	gtk_widget_show(hbox);
 
-	label = gxr_make_label("%r: Remaining time", sg);
+	label = gxr_make_label(_("%r: Remaining time"), sg);
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 
-	label = gxr_make_label("%V: Current volume", sg);
+	label = gxr_make_label(_("%V: Current volume"), sg);
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 
 	hbox = gtk_hbox_new(FALSE, 6);
 	gtk_box_pack_start(GTK_BOX(frame), hbox, FALSE, FALSE, 0);
 	gtk_widget_show(hbox);
 	
-	label = gxr_make_label("%f: Frequency in Hz", sg);
+	label = gxr_make_label(_("%f: Frequency in Hz"), sg);
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 
-	label = gxr_make_label("%F: Frequency in kHz", NULL);
+	label = gxr_make_label(_("%F: Frequency in kHz"), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 
 	hbox = gtk_hbox_new(FALSE, 6);
 	gtk_box_pack_start(GTK_BOX(frame), hbox, FALSE, FALSE, 0);
 	gtk_widget_show(hbox);
 
-	label = gxr_make_label("%b: Bitrate in bps", sg);
+	label = gxr_make_label(_("%b: Bitrate in bps"), sg);
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 
-	label = gxr_make_label("%B: Bitrate in kBps", NULL);
+	label = gxr_make_label(_("%B: Bitrate in kBps"), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 
-	frame = pidgin_make_frame(vbox, "Appearance");
+	frame = pidgin_make_frame(vbox, _("Appearance"));
 
-	checkbox = pidgin_prefs_checkbox("Show playlist in the control menu",
+	checkbox = pidgin_prefs_checkbox(_("Show playlist in the control menu"),
 							"/plugins/gtk/plugin_pack/xmms-remote/show_playlist",
 							frame);
 	g_object_set_data(G_OBJECT(checkbox), "gxr-id", GINT_TO_POINTER(GXR_PREF_PLAYLIST));
 	checkboxes = g_list_prepend(checkboxes, checkbox);
 
-	checkbox = pidgin_prefs_checkbox("Show controls in buddy list",
+	checkbox = pidgin_prefs_checkbox(_("Show controls in buddy list"),
 							"/plugins/gtk/plugin_pack/xmms-remote/blist",
 							frame);
 	g_object_set_data(G_OBJECT(checkbox), "gxr-id", GINT_TO_POINTER(GXR_PREF_BLIST));
 	checkboxes = g_list_prepend(checkboxes, checkbox);
 	
-	checkbox = pidgin_prefs_checkbox("Show controls in conversation windows",
+	checkbox = pidgin_prefs_checkbox(_("Show controls in conversation windows"),
 							"/plugins/gtk/plugin_pack/xmms-remote/conv",
 							frame);
 	g_object_set_data(G_OBJECT(checkbox), "gxr-id", GINT_TO_POINTER(GXR_PREF_CONV_WINDOW));
 	checkboxes = g_list_prepend(checkboxes, checkbox);
 
-	checkbox = pidgin_prefs_checkbox("Show extended controls (Conversation windows only)",
+	checkbox = pidgin_prefs_checkbox(_("Show extended controls (Conversation windows only)"),
 							"/plugins/gtk/plugin_pack/xmms-remote/extended",
 							frame);
 	g_object_set_data(G_OBJECT(checkbox), "gxr-id", GINT_TO_POINTER(GXR_PREF_EXTENDED_CTRL));
 	checkboxes = g_list_prepend(checkboxes, checkbox);
 
-	checkbox = pidgin_prefs_checkbox("Show volume control (Conversation windows only)",
+	checkbox = pidgin_prefs_checkbox(_("Show volume control (Conversation windows only)"),
 							"/plugins/gtk/plugin_pack/xmms-remote/volume",
 							frame);
 	g_object_set_data(G_OBJECT(checkbox), "gxr-id", GINT_TO_POINTER(GXR_PREF_VOLUME_CTRL));
 	checkboxes = g_list_prepend(checkboxes, checkbox);
 
-	frame = pidgin_make_frame(vbox, "Advanced");
+	frame = pidgin_make_frame(vbox, _("Advanced"));
 
-	pidgin_prefs_labeled_spin_button(frame, "XMMS instance to control",
+	pidgin_prefs_labeled_spin_button(frame, _("XMMS instance to control"),
 								   "/plugins/gtk/plugin_pack/xmms-remote/session",
 								   0, 65535, NULL);
 
@@ -990,7 +991,7 @@ gxr_hook_blist(const char *name, PurplePrefType type, gconstpointer val,
 		blist_button = gxr_make_button(GXR_STOCK_XMMS,
 								G_CALLBACK(gxr_button_clicked_cb), NULL, NULL);
 		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(gtkblist->menutray),
-								blist_button, "XMMS Remote Control Options");
+								blist_button, _("XMMS Remote Control Options"));
 	} else {
 		if(blist_button) {
 			gtk_widget_destroy(blist_button);
@@ -1010,19 +1011,22 @@ gxr_gtkblist_created_cb(void) {
 
 static gboolean
 gxr_load(PurplePlugin *plugin) {
-	void *conv_handle = purple_conversations_get_handle();
-	const gchar *help = "<pre>xmms &lt;[play][pause][stop][next][prev][repeat][shuffle][show][hide][info]&gt;\n"
-						"Play     Starts playback\n"
-						"Pause    Pauses playback\n"
-						"Stop     Stops playback\n"
-						"Next     Goes to the next song in the playlist\n"
-						"Prev     Goes to the previous song in the playlist\n"
-						"Repeat   Toggles repeat\n"
-						"Shuffle  Toggles shuffling\n"
-						"Show     Show the XMMS window\n"
-						"Hide     Hide the XMMS window\n"
-						"Info     Displays currently playing song in the conversation\n</pre>";
+	void *conv_handle = NULL;
 
+	/* XXX: Translators: leave "xmms" and the argument names untranslated */
+	const gchar *help = _("<pre>xmms &lt;[play][pause][stop][next][prev][repeat][shuffle][show][hide][info]&gt;\n"
+						"play     Starts playback\n"
+						"pause    Pauses playback\n"
+						"stop     Stops playback\n"
+						"next     Goes to the next song in the playlist\n"
+						"prev     Goes to the previous song in the playlist\n"
+						"repeat   Toggles repeat\n"
+						"shuffle  Toggles shuffling\n"
+						"show     Show the XMMS window\n"
+						"hide     Hide the XMMS window\n"
+						"info     Displays currently playing song in the conversation\n</pre>");
+
+	conv_handle = purple_conversations_get_handle();
 	/* init our stock */
 	gxr_init_stock();
 
@@ -1090,20 +1094,6 @@ gxr_unload(PurplePlugin *plugin) {
 	return TRUE;
 }
 
-static void
-init_plugin(PurplePlugin *plugin) {
-	purple_prefs_add_none("/plugins/gtk/plugin_pack");
-	purple_prefs_add_none("/plugins/gtk/plugin_pack/xmms-remote");
-	purple_prefs_add_string("/plugins/gtk/plugin_pack/xmms-remote/format",
-						  "/me is listening to %T");
-	purple_prefs_add_int("/plugins/gtk/plugin_pack/xmms-remote/session", 0);
-	purple_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/show_playlist", TRUE);
-	purple_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/conv", TRUE);
-	purple_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/blist", TRUE);
-	purple_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/extended", TRUE);
-	purple_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/volume", TRUE);
-}
-
 static PidginPluginUiInfo ui_info = {
 	gxr_get_config_frame,
 	0,
@@ -1124,12 +1114,10 @@ static PurplePluginInfo gxr_info = {
 	PURPLE_PRIORITY_DEFAULT,								/* priority		*/
 
 	"gtk-plugin_pack-xmmsremote",							/* id			*/
-	"XMMS Remote Control",									/* name			*/
+	NULL,													/* name			*/
 	PP_VERSION,												/* version		*/
-	"Control XMMS from Purple conversations",				/* summary		*/
-	"A small plugin that adds a menu or buttons to the "
-	"Purple conversation windows' menubars, so that you "
-	"can control XMMS from within Purple.",					/* description	*/
+	NULL,													/* summary		*/
+	NULL,													/* description	*/
 
 	"Gary Kramlich <grim@reaperworld.com>",					/* author		*/
 	PP_WEBSITE,												/* homepage		*/
@@ -1147,5 +1135,30 @@ static PurplePluginInfo gxr_info = {
 	NULL,													/* reserved 3	*/
 	NULL													/* reserved 4	*/
 };
+static void
+init_plugin(PurplePlugin *plugin) {
+#ifdef ENABLE_NLS
+	bindtextdomain(GETTEXT_PACKAGE, PP_LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+#endif /* ENABLE_NLS */
+
+	gxr_info.name = _("XMMS Remote Control");
+	gxr_info.summary = _("Control XMMS from Pidgin conversations");
+	gxr_info.description = _("A small plugin that adds a menu or buttons to the menu"
+		" bars of Pidgin conversation windows so that you can control XMMS from within Pidgin.");
+
+	purple_prefs_add_none("/plugins/gtk/plugin_pack");
+	purple_prefs_add_none("/plugins/gtk/plugin_pack/xmms-remote");
+
+	/* XXX: Translators: Please leave the %T in this string.  It is used internally.  */
+	purple_prefs_add_string("/plugins/gtk/plugin_pack/xmms-remote/format",
+						  _("/me is listening to %T"));
+	purple_prefs_add_int("/plugins/gtk/plugin_pack/xmms-remote/session", 0);
+	purple_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/show_playlist", TRUE);
+	purple_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/conv", TRUE);
+	purple_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/blist", TRUE);
+	purple_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/extended", TRUE);
+	purple_prefs_add_bool("/plugins/gtk/plugin_pack/xmms-remote/volume", TRUE);
+}
 
 PURPLE_INIT_PLUGIN(xmmsremote, init_plugin, gxr_info)

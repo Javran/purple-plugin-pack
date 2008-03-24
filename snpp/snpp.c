@@ -1,7 +1,7 @@
 /*
  * gaim-snpp Protocol Plugin
  *
- * Copyright (C) 2004, Don Seiler <don@seiler.us>
+ * Copyright (C) 2004-2008 Don Seiler <don@seiler.us>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
  *
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #define _GNU_SOURCE
@@ -533,7 +534,16 @@ static PurplePluginProtocolInfo prpl_info =
 	NULL,							/* roomlist_cancel */
 	NULL,							/* roomlist_expand_catagory */
 	NULL,							/* can_receive_file */
-	NULL							/* send_file */
+	NULL,							/* send_file */
+	NULL,							/* new_xfer */
+	NULL,							/* offline_message */
+	NULL,							/* whiteboard_prpl_ops */
+	NULL,							/* send_raw */
+	NULL,							/* roomlist_room_serialize */
+	NULL,							/* unregister_user */
+	NULL,							/* send_attention */
+	NULL,							/* get_attention_types */
+	NULL							/* reserved 4 */
 };
 
 
@@ -549,7 +559,7 @@ static PurplePluginInfo info =
 	PURPLE_PRIORITY_DEFAULT,		/* priority */
 	"prpl-snpp",					/* id */
 	NULL,							/* name */
-	VERSION,						/* version */
+	PP_VERSION,						/* version */
 	NULL,							/* summary */
 	NULL,							/* description */
 	"Don Seiler <don@seiler.us>",	/* author */
@@ -579,11 +589,10 @@ static void _init_plugin(PurplePlugin *plugin)
 
 	_snpp_plugin = plugin;
 
-	info.name = _("SNPP Plugin");
+	info.name = _("SNPP");
 	info.summary = _("SNPP Plugin");
 	info.description =
-		_("Allows libpurple to send messages over the Simple Network Paging "
-			"Protocol (SNPP).");
+		_("Allows libpurple to send messages over the Simple Network Paging Protocol (SNPP).");
 };
 
 PURPLE_INIT_PLUGIN(snpp, _init_plugin, info);

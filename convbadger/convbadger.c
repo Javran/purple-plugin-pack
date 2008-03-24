@@ -1,6 +1,6 @@
 /*
  * ConvBadger - Adds the protocol icon to the menu tray of a conversation
- * Copyright (C) 2007 Gary Kramlich <grim@reaperworld.com>
+ * Copyright (C) 2007-2008 Gary Kramlich <grim@reaperworld.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,6 +16,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1301, USA.
  */
+
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #include <gtk/gtk.h>
@@ -24,6 +26,7 @@
 #include <signals.h>
 
 #include <gtkmenutray.h>
+#include <gtkplugin.h>
 #include <gtkutils.h>
 
 /******************************************************************************
@@ -48,10 +51,8 @@ conv_badger_data_free(ConvBadgerData *cbd) {
 	cbd->win = NULL;
 	cbd->conv = NULL;
 
-	if(GTK_IS_IMAGE(cbd->icon))
+	if(cbd->icon && GTK_IS_IMAGE(cbd->icon))
 		gtk_widget_destroy(cbd->icon);
-
-	cbd->icon = NULL;
 
 	g_free(cbd);
 
@@ -85,6 +86,9 @@ conv_badger_update(PidginWindow *win, PurpleConversation *conv) {
 		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), cbd->icon,
 								NULL);
 		gtk_widget_show(cbd->icon);
+
+		g_signal_connect_swapped(G_OBJECT(cbd->icon), "destroy",
+				G_CALLBACK(g_nullify_pointer), &cbd->icon);
 	}
 
 	cbd->conv = conv;
@@ -158,7 +162,7 @@ static PurplePluginInfo info = {
 	PURPLE_MAJOR_VERSION,
 	PURPLE_MINOR_VERSION,
 	PURPLE_PLUGIN_STANDARD,
-	NULL,
+	PIDGIN_PLUGIN_TYPE,
 	0,
 	NULL,
 	PURPLE_PRIORITY_DEFAULT,
@@ -173,6 +177,11 @@ static PurplePluginInfo info = {
 
 	plugin_load,
 	plugin_unload,
+	NULL,
+
+	NULL,
+	NULL,
+	NULL,
 	NULL,
 
 	NULL,

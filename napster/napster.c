@@ -4,7 +4,8 @@
  * Copyright (C) 2000-2001, Rob Flynn <rob@marko.net>
  *
  * Assimilated for inclusion in the Plugin Pack:
- * Copyright (C) 2006, Gary Kramlich <grim@reaperworld.com>
+ * Copyright (C) 2006-2008 Gary Kramlich <grim@reaperworld.com>
+ * Copyright (C) 2007 John Bailey <rekkanoryo@rekkanoryo.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +22,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02111-1301  USA
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #include <account.h>
@@ -269,13 +271,16 @@ static void
 nap_callback(gpointer data, gint source, PurpleInputCondition condition) {
 	PurpleConnection *gc = data;
 	struct nap_data *ndata = gc->proto_data;
-	PurpleAccount *account = purple_connection_get_account(gc);
-	PurpleConversation *c;
-	gchar *buf, *buf2, *buf3, **res;
-	unsigned short header[2];
-	int len;
-	int command;
+	PurpleAccount *account = NULL;
+	PurpleConversation *c = NULL;
+	PurpleNotifyUserInfo *pnui = NULL;
+	gchar *buf = NULL, *buf2 = NULL, *buf3 = NULL, **res = NULL;
+	unsigned short header[2] = { 0 , 0 };
+	int len = 0;
+	int command = 0;
 	int i;
+
+	account = purple_connection_get_account(gc);
 
 	if (read(source, (void*)header, 4) != 4) {
 		purple_connection_error(gc, _("Unable to read header from server"));
@@ -292,7 +297,7 @@ nap_callback(gpointer data, gint source, PurpleInputCondition condition) {
 		int tmp = read(source, buf + i, len - i);
 		if (tmp <= 0) {
 			g_free(buf);
-			buf = g_strdup_printf(_("Unable to read message from server: %s.  Command is %hd, length is %hd."), strerror(errno), len, command); 
+			buf = g_strdup_printf(_("Unable to read message from server: %s.  Command is %hd, length is %hd."), strerror(errno), len, command);
 			purple_connection_error(gc, buf);
 			g_free(buf);
 			return;
@@ -441,7 +446,9 @@ nap_callback(gpointer data, gint source, PurpleInputCondition condition) {
 		/* XXX - Format is:   "Elite" 37 " " "Active" 0 0 0 0 "purple 0.63cvs" 0 0 192.168.1.41 32798 0 unknown flounder */
 		res = g_strsplit(buf, " ", 2);
 		/* res[0] == username */
-		purple_notify_userinfo(gc, res[0], res[1], NULL, NULL);
+		pnui = purple_notify_user_info_new();
+		purple_notify_user_info_add_pair(pnui, _("Napster User Info:"), res[1]);
+		purple_notify_userinfo(gc, res[0], pnui, NULL, NULL);
 		g_strfreev(res);
 		break;
 
@@ -538,7 +545,7 @@ nap_login_connect(gpointer data, gint source, const gchar *error_message) {
 	/* Write our signon data */
 	nap_write_packet(gc, 2, "%s %s 0 \"purple %s\" 0",
 			purple_account_get_username(gc->account),
-			purple_connection_get_password(gc), VERSION);
+			purple_connection_get_password(gc), PP_VERSION);
 
 	/* And set up the input watcher */
 	gc->inpa = purple_input_add(ndata->fd, PURPLE_INPUT_READ, nap_callback, gc);
@@ -578,14 +585,6 @@ nap_close(PurpleConnection *gc) {
 static const char *
 nap_list_icon(PurpleAccount *a, PurpleBuddy *b) {
 	return "napster";
-}
-
-static void
-nap_list_emblems(PurpleBuddy *b, const char **se, const char **sw,
-				 const char **nw, const char **ne)
-{
-	if(!PURPLE_BUDDY_IS_ONLINE(b))
-		*se = "offline";
 }
 
 static GList *
@@ -639,7 +638,7 @@ static PurplePluginProtocolInfo prpl_info = {
 	NULL,					/* protocol_options */
 	NO_BUDDY_ICONS,			/* icon_spec */
 	nap_list_icon,			/* list_icon */
-	nap_list_emblems,		/* list_emblems */
+	NULL,					/* list_emblems */
 	NULL,					/* status_text */
 	NULL,					/* tooltip_text */
 	nap_status_types,		/* status_types */
@@ -694,9 +693,11 @@ static PurplePluginProtocolInfo prpl_info = {
 	NULL,					/* new_xfer */
 	NULL,					/* offline_message */
 	NULL,					/* whiteboard_prpl_ops */
-	NULL,					/* reserved 1 */
-	NULL,					/* reserved 2 */
-	NULL,					/* reserved 3 */
+	NULL,					/* send_raw */
+	NULL,					/* roomlist_room_serialize */
+	NULL,					/* unregister_user */
+	NULL,					/* send_attention */
+	NULL,					/* get_attention_types */
 	NULL					/* reserved 4 */
 };
 
@@ -704,21 +705,21 @@ static PurplePluginInfo info = {
 	PURPLE_PLUGIN_MAGIC,
 	PURPLE_MAJOR_VERSION,
 	PURPLE_MINOR_VERSION,
-	PURPLE_PLUGIN_PROTOCOL,                             /**< type           */
+	PURPLE_PLUGIN_PROTOCOL,                           /**< type           */
 	NULL,                                             /**< ui_requirement */
 	0,                                                /**< flags          */
 	NULL,                                             /**< dependencies   */
-	PURPLE_PRIORITY_DEFAULT,                            /**< priority       */
+	PURPLE_PRIORITY_DEFAULT,                          /**< priority       */
 
 	"prpl-napster",                                   /**< id             */
-	"Napster",                                        /**< name           */
-	VERSION,                                          /**< version        */
+	N_("Napster"),                                    /**< name           */
+	PP_VERSION,                                          /**< version        */
 	                                                  /**  summary        */
 	N_("NAPSTER Protocol Plugin"),
 	                                                  /**  description    */
 	N_("NAPSTER Protocol Plugin"),
 	NULL,                                             /**< author         */
-	PP_WEBSITE,                                     /**< homepage       */
+	PP_WEBSITE,                                       /**< homepage       */
 
 	NULL,                                             /**< load           */
 	NULL,                                             /**< unload         */
@@ -738,16 +739,21 @@ static void
 init_plugin(PurplePlugin *plugin) {
 	PurpleAccountOption *option;
 
-	option = purple_account_option_string_new(_("Server"), "server",
-											NAP_SERVER);
-	prpl_info.protocol_options = g_list_append(prpl_info.protocol_options,
-											   option);
+#ifdef ENABLE_NLS
+	bindtextdomain(GETTEXT_PACKAGE, PP_LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+#endif /* ENABLE_NLS */
+
+	option = purple_account_option_string_new(_("Server"), "server", NAP_SERVER);
+	prpl_info.protocol_options = g_list_append(prpl_info.protocol_options, option);
 
 	option = purple_account_option_int_new(_("Port"), "port", 8888);
-	prpl_info.protocol_options = g_list_append(prpl_info.protocol_options,
-											   option);
+	prpl_info.protocol_options = g_list_append(prpl_info.protocol_options, option);
 
 	my_protocol = plugin;
+
+	info.description = _(info.description);
+	info.summary = _(info.summary);
 }
 
 PURPLE_INIT_PLUGIN(napster, init_plugin, info);

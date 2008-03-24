@@ -1,6 +1,6 @@
 /*
  * Purple-Schedule - Schedule reminders at specified times.
- * Copyright (C) 2006
+ * Copyright (C) 2006-2008
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -18,6 +18,7 @@
  * 02111-1301, USA.
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #define PLUGIN_ID			"gtk-plugin_pack-schedule"

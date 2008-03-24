@@ -1,6 +1,6 @@
 /*
  * Purple Plugin Pack
- * Copyright (C) 2003-2005
+ * Copyright (C) 2003-2008
  * See AUTHORS for a list of all authors
  *
  * This program is free software; you can redistribute it and/or

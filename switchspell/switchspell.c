@@ -1,6 +1,6 @@
 /*
  * Switchspell - Switch spelling language during run time.
- * Copyright (C) 2007
+ * Copyright (C) 2007-2008
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -18,6 +18,7 @@
  * 02111-1301, USA.
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #define PLUGIN_ID           "gtk-plugin_pack-switchspell"
@@ -126,6 +127,7 @@ regenerate_switchspell_menu(PidginConversation *gtkconv)
 	delete_aspell_config(config);
 
 	dels = aspell_dict_info_list_elements(dlist);
+	aspell_dict_info_list_empty(dlist);
 	while ((entry = aspell_dict_info_enumeration_next(dels)) != 0) {
 		GtkWidget *menuitem = gtk_radio_menu_item_new_with_label(group, entry->name);
 		group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(menuitem));

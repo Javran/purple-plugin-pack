@@ -1,6 +1,6 @@
 /*
  * Infopane - Use different views for the details information in conversation windows.
- * Copyright (C) 2007
+ * Copyright (C) 2007-2008 Sadrul Habib Chowdhury <sadrul@users.sourceforge.net>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -18,6 +18,7 @@
  * 02111-1301, USA.
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #include "pidgin.h"
@@ -123,6 +124,12 @@ static void conversation_deleted(PurpleConversation *conv)
 #endif
 
 static void
+call_ensure_tabs_are_showing(PurpleConversation *conv)
+{
+	g_timeout_add(0, (GSourceFunc)ensure_tabs_are_showing, conv);
+}
+
+static void
 pref_changed(gpointer data, ...)
 {
 	GList *wins = pidgin_conv_windows_get_list();
@@ -159,7 +166,7 @@ plugin_load(PurplePlugin *plugin)
 #endif
 	purple_signal_connect(pidgin_conversations_get_handle(),
 			"conversation-switched",
-			plugin, PURPLE_CALLBACK(ensure_tabs_are_showing), NULL);
+			plugin, PURPLE_CALLBACK(call_ensure_tabs_are_showing), NULL);
 
 	purple_prefs_connect_callback(plugin, PREF_POSITION, (PurplePrefCallback)pref_changed, NULL);
 	purple_prefs_connect_callback(plugin, PREF_DRAG, (PurplePrefCallback)pref_changed, NULL);
@@ -219,7 +226,7 @@ static PurplePluginInfo info =
 	PURPLE_PRIORITY_DEFAULT,
 	PLUGIN_ID,
 	NULL,
-	VERSION,
+	PP_VERSION,
 	NULL,
 	NULL,
 	"Sadrul H Chowdhury <sadrul@pidgin.im>",

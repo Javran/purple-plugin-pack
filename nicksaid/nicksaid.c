@@ -1,6 +1,6 @@
 /*
  * Nicksaid - Record when someone said your nick in a chat.
- * Copyright (C) 2006
+ * Copyright (C) 2006-2008 Sadrul Habib Chowdhury <sadrul@users.sourceforge.net>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -18,6 +18,7 @@
  * 02111-1301, USA.
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #define PLUGIN_ID			"gtk-plugin_pack-nicksaid"
@@ -221,7 +222,7 @@ show_all(GtkWidget *w, PidginConversation *gtkconv)
 	while (list)
 	{
 		NickSaid *said = list->data;
-		g_string_append_printf(str, "%s\n", said->what);
+		g_string_append_printf(str, "%s<br/>\n", said->what);
 		list = list->next;
 	}
 

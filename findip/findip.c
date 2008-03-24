@@ -1,6 +1,6 @@
 /*
  * Find IP - Find the IP of a person in the buddylist
- * Copyright (C) 2007
+ * Copyright (C) 2007-2008
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -17,17 +17,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02111-1301, USA.
  */
-#ifdef HAVE_CONFIG_H
-# include "../pp_config.h"
-#endif
 
-#define PURPLE_PLUGINS
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
+#include "../common/pp_internal.h"
 
-#define PLUGIN_ID			"findip"
-#define PLUGIN_NAME			"Find IP"
+#define PLUGIN_ID			"core-plugin_pack-findip"
 #define PLUGIN_STATIC_NAME	"findip"
-#define PLUGIN_SUMMARY		"Find the IP of a person in the buddylist."
-#define PLUGIN_DESCRIPTION	"Find the IP of a person in the buddylist. This doesn't really work."
 #define PLUGIN_AUTHOR		"someone <someone@somewhere.tld>"
 
 /* System headers */
@@ -40,10 +35,10 @@
 #include <server.h>
 #include <version.h>
 
-/* Pack/Local headers */
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
-#define PREF_ROOT "/plugins/core/" PLUGIN_ID
+#define PREF_ROOT "/plugins/core/plugin_pack/" PLUGIN_STATIC_NAME
 #define PREF_NOTIFY PREF_ROOT "/notify"
 
 static gboolean
@@ -138,22 +133,22 @@ static PurplePluginUiInfo pref_info = {
 };
 
 static PurplePluginInfo info = {
-	PURPLE_PLUGIN_MAGIC,			/* Magic				*/
-	PURPLE_MAJOR_VERSION,			/* Purple Major Version	*/
-	PURPLE_MINOR_VERSION,			/* Purple Minor Version	*/
+	PURPLE_PLUGIN_MAGIC,		/* Magic				*/
+	PURPLE_MAJOR_VERSION,		/* Purple Major Version	*/
+	PURPLE_MINOR_VERSION,		/* Purple Minor Version	*/
 	PURPLE_PLUGIN_STANDARD,		/* plugin type			*/
 	NULL,						/* ui requirement		*/
 	0,							/* flags				*/
 	NULL,						/* dependencies			*/
-	PURPLE_PRIORITY_DEFAULT,		/* priority				*/
+	PURPLE_PRIORITY_DEFAULT,	/* priority				*/
 
 	PLUGIN_ID,					/* plugin id			*/
 	NULL,						/* name					*/
-	PP_VERSION,				/* version				*/
+	PP_VERSION,					/* version				*/
 	NULL,						/* summary				*/
 	NULL,						/* description			*/
 	PLUGIN_AUTHOR,				/* author				*/
-	PP_WEBSITE,				/* website				*/
+	PP_WEBSITE	,				/* website				*/
 
 	plugin_load,				/* load					*/
 	plugin_unload,				/* unload				*/
@@ -172,9 +167,9 @@ init_plugin(PurplePlugin *plugin) {
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
-	info.name = _(PLUGIN_NAME);
-	info.summary = _(PLUGIN_SUMMARY);
-	info.description = _(PLUGIN_DESCRIPTION);
+	info.name = _("Find IP");
+	info.summary = _("Find the IP of a person in the buddylist.");
+	info.description = _("Find the IP of a person in the buddylist. This doesn't really work.");
 
 	purple_prefs_add_none(PREF_ROOT);
 	purple_prefs_add_bool(PREF_NOTIFY, TRUE);

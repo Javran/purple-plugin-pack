@@ -1,6 +1,6 @@
 /*
  * Stocker - Adds a stock ticker to the buddy list
- * Copyright (C) 2005 Gary Kramlich <grim@reaperworld.com>
+ * Copyright (C) 2005-2008 Gary Kramlich <grim@reaperworld.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -18,6 +18,7 @@
  * 02111-1301, USA.
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #include <gdk/gdk.h>
@@ -32,29 +33,176 @@
 #include "gtkticker.h"
 #include "stocker_prefs.h"
 
-#define CHANGE_INCREASE	"<span color=\"green\">+%0.02f</span>"
-#define CHANGE_DECREASE	"<span color=\"red\">%0.02f</span>"
-#define CHANGE_NONE		"%0.02f"
+#define URL_REQUEST "http://quotewebvip-m01.blue.aol.com/?action=aim&syms=%s&fields=nspg"
+
+#define CHANGE_INCREASE	"<span color=\"green3\">%+0.04g</span>"
+#define CHANGE_DECREASE	"<span color=\"red\">%+0.04g</span>"
+#define CHANGE_NONE		"%0.04g"
 
 /******************************************************************************
  * structs
  *****************************************************************************/
-typedef struct {
-	GtkWidget *box;
-	GtkWidget *change;
+#define STOCKER_QUOTE(obj)	((StockerQuote *)(obj))
 
+typedef struct {
 	gchar *symbol;
+
+	GtkWidget *label;
+
+	guint ref;
 } StockerQuote;
 
 /******************************************************************************
  * globals
  *****************************************************************************/
 static GtkWidget *ticker = NULL;
-static GList *quotes = NULL;
+static GHashTable *quotes = NULL;
+static guint quotes_id = 0, interval_id = 0, interval_timer = 0;
 
 /******************************************************************************
- * other crap
+ * Quote stuff
  *****************************************************************************/
+static StockerQuote *
+stocker_quote_new(const gchar *symbol) {
+	StockerQuote *ret = g_new0(StockerQuote, 1);
+	gchar *label = NULL;
+
+	ret->symbol = g_strdup(symbol);
+
+	label = g_strdup_printf("%s (refreshing)", symbol);
+	ret->label = gtk_label_new(label);
+	g_free(label);
+	
+	gtk_ticker_add(GTK_TICKER(ticker), ret->label);
+	gtk_widget_show(ret->label);
+
+	ret->ref = 1;
+
+	return ret;
+}
+
+static void
+stocker_quote_ref(StockerQuote *quote) {
+	quote->ref++;
+}
+
+static void
+stocker_quote_unref(StockerQuote *quote) {
+	quote->ref--;
+
+	if(quote->ref != 0)
+		return;
+
+	g_free(quote->symbol);
+
+	gtk_widget_destroy(quote->label);
+
+	g_free(quote);
+
+	quote = NULL;
+}
+
+static void
+stocker_quote_update(StockerQuote *quote, const gchar *name, gdouble current,
+					 gdouble change)
+{
+	GString *str = g_string_sized_new(512);
+
+	g_string_append_printf(str,
+						   "<span weight=\"bold\">%s</span> "
+						   "<span size=\"small\">(%s)</span> $%g ",
+						   name, quote->symbol, current);
+	if(change < 0.0)
+		g_string_append_printf(str, CHANGE_DECREASE, change);
+	else if(change > 0.0)
+		g_string_append_printf(str, CHANGE_INCREASE, change);
+	else
+		g_string_append_printf(str, CHANGE_NONE, change);
+
+	gtk_label_set_markup(GTK_LABEL(quote->label), str->str);
+
+	g_string_free(str, TRUE);
+}
+
+/******************************************************************************
+ * main stuff
+ *****************************************************************************/
+static void
+stocker_refresh_url_cb(PurpleUtilFetchUrlData *url_data, gpointer data,
+					   const gchar *text, gsize len, const gchar *errmsg)
+{
+	const gchar *p = text;
+	gchar *t;
+
+	while((p = g_strstr_len(p, strlen(p), "DATA="))) {
+		const gchar *name = NULL, *symbol = NULL;
+		gdouble current = 0.0, change = 0.0;
+
+		/* move paste the data text */
+		p += 5;
+
+		/* find the name */
+		t = strchr(p, ';');
+		*t = '\0';
+		name = p;
+		
+		/* find the symbol */
+		p = t + 1;
+		t = strchr(p, ';');
+		*t = '\0';
+		symbol = p;
+
+		/* find the current price */
+		p = t + 1;
+		t = strchr(p, ';');
+		*t = '\0';
+		current = atof(p);
+
+		/* find the change */
+		p = t + 1;
+		t = strchr(p, '\r');
+		*t = '\0';
+		change = atof(p);
+
+		/* now move p to the EOL */
+		p = t + 1;
+
+		if(symbol) {
+			StockerQuote *quote = g_hash_table_lookup(quotes, symbol);
+
+			if(quote) {
+				stocker_quote_update(quote, name, current, change);
+			}
+		}
+	}
+}
+
+static void
+stocker_refresh_helper(gpointer k, gpointer v, gpointer d) {
+	GString *str = (GString *)d;
+	gchar *symbol = (gchar *)k;
+
+	g_string_append_printf(str, "%s%s",
+						   (str->len > 0) ? "," : "",
+						   symbol);
+}
+
+static void
+stocker_refresh(void) {
+	GString *syms = g_string_sized_new(64);
+	gchar *url = NULL;
+
+	g_hash_table_foreach(quotes, stocker_refresh_helper, syms);
+
+	url = g_strdup_printf(URL_REQUEST, syms->str);
+	g_string_free(syms, TRUE);
+
+	purple_util_fetch_url(url, TRUE, "purple", TRUE,
+						  stocker_refresh_url_cb,
+						  NULL);
+	g_free(url);
+}
+
 static gboolean
 stocker_create() {
 	PurpleBuddyList *blist;
@@ -71,11 +219,10 @@ stocker_create() {
 
 	ticker = gtk_ticker_new();
 	gtk_box_pack_start(GTK_BOX(gtkblist->vbox), ticker, FALSE, FALSE, 0);
-	gtk_widget_show(ticker);
+	gtk_ticker_set_spacing(GTK_TICKER(ticker), 16);
+	gtk_ticker_start_scroll(GTK_TICKER(ticker));
+	gtk_widget_show_all(ticker);
 
-	GtkWidget *t = gtk_label_new("test");
-	gtk_ticker_add(GTK_TICKER(ticker), t);
-	gtk_widget_show(t);
 	return TRUE;
 }
 
@@ -84,27 +231,131 @@ stocker_blist_created(PurpleBuddyList *blist, gpointer data) {
 	stocker_create();
 }
 
+static void
+stocker_quotes_refresh(GList *symbols) {
+	StockerQuote *quote = NULL;
+	GHashTable *new_quotes = NULL, *temp = NULL;
+	GList *l = NULL;
+
+	/* this is a bit more complicated than I'd like, but we need a way to be
+	 * able to remove quotes that we don't know by name.  So we create a new
+	 * hashtable, copy all the existing quotes over to it, add the new ones,
+	 * then delete the old table and use the new one.
+	 */
+
+	new_quotes = g_hash_table_new_full(g_str_hash, g_str_equal, g_free,
+									   (GDestroyNotify)stocker_quote_unref);
+
+	for(l = symbols; l; l = l->next) {
+		gchar *symbol = l->data;
+		
+		/* sanity check to make sure we have a symbol */
+		if(!symbol)
+			continue;
+
+		/* look for a quote */
+		quote = g_hash_table_lookup(quotes, symbol);
+
+		if(quote) {
+			/* ref the quote so it stays alive */
+			stocker_quote_ref(quote);
+		} else {
+			/* this is a new symbol, create a quote for it */
+			quote = stocker_quote_new(symbol);
+		}
+
+		/* insert the quote into the new hashtable */
+		g_hash_table_insert(new_quotes, g_strdup(symbol), quote);
+	}
+
+	/* hold onto the old pointer */
+	temp = quotes;
+
+	/* update the pointer to the updated list */
+	quotes = new_quotes;
+
+	/* kill the old table */
+	g_hash_table_destroy(temp);
+
+	/* refresh everything */
+	stocker_refresh();
+}
+
+static void
+stocker_quotes_changed_cb(const gchar *name, PurplePrefType type,
+						  gconstpointer value, gpointer data)
+{
+	stocker_quotes_refresh((GList *)value);
+}
+
+static gboolean
+stocker_refresh_cb(gpointer data) {
+	stocker_refresh();
+
+	return TRUE;
+}
+
+static void
+stocker_interval_changed_cb(const gchar *name, PurplePrefType type,
+							gconstpointer value, gpointer data)
+{
+	gint new_time = GPOINTER_TO_INT(value);
+
+	/* remove the old timer */
+	purple_timeout_remove(interval_timer);
+
+	/* add the new one */
+	interval_timer = purple_timeout_add_seconds(new_time * 60,
+												stocker_refresh_cb, NULL);
+}
+
 /******************************************************************************
  * plugin crap
  *****************************************************************************/
 static gboolean
 stocker_load(PurplePlugin *plugin) {
-	if(!stocker_create()) {
-		purple_signal_connect(pidgin_blist_get_handle(), "gtkblist-created",
-							plugin,
-							PURPLE_CALLBACK(stocker_blist_created), NULL);
-	}
+	void *prefs_handle = purple_prefs_get_handle();
+	gint interval;
+
+	stocker_create();
+
+	quotes = g_hash_table_new_full(g_str_hash, g_str_equal, g_free,
+								   (GDestroyNotify)stocker_quote_unref);
+
+	purple_signal_connect(pidgin_blist_get_handle(), "gtkblist-created",
+						  plugin,
+						  PURPLE_CALLBACK(stocker_blist_created), NULL);
+
+	quotes_id = purple_prefs_connect_callback(prefs_handle, PREF_SYMBOLS,
+											  stocker_quotes_changed_cb,
+											  NULL);
+	interval_id = purple_prefs_connect_callback(prefs_handle, PREF_INTERVAL,
+												stocker_interval_changed_cb,
+												NULL);
+
+	interval = 60 * purple_prefs_get_int(PREF_INTERVAL);
+	interval_timer = purple_timeout_add_seconds(interval, stocker_refresh_cb,
+												NULL);
+
+	stocker_quotes_refresh(purple_prefs_get_string_list(PREF_SYMBOLS));
+
+	stocker_refresh();
 
 	return TRUE;
 }
 
 static gboolean
 stocker_unload(PurplePlugin *plugin) {
+	return FALSE;
+}
+
+static void
+stocker_destroy(PurplePlugin *plugin) {
+	purple_timeout_remove(interval_timer);
+
 	if(GTK_IS_WIDGET(ticker))
 		gtk_widget_destroy(ticker);
 	ticker = NULL;
-
-	return TRUE;
 }
 
 static PidginPluginUiInfo stocker_ui_info = { stocker_prefs_get_frame };
@@ -130,7 +381,7 @@ static PurplePluginInfo stocker_info =
 
 	stocker_load,
 	stocker_unload,
-	NULL,
+	stocker_destroy,
 
 	&stocker_ui_info,
 	NULL,

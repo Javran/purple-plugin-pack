@@ -1,6 +1,6 @@
 /*
  * awaynotify - show notices when status changes
- * Copyright (C) 2005-2006 Matt Perry <guy@somewhere.fscked.org>
+ * Copyright (C) 2005-2008 Matt Perry <guy@somewhere.fscked.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #include <blist.h>

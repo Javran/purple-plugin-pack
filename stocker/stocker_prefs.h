@@ -1,6 +1,6 @@
 /*
  * Stocker - Adds a stock ticker to the buddy list
- * Copyright (C) 2005 Gary Kramlich <grim@reaperworld.com>
+ * Copyright (C) 2005-2008 Gary Kramlich <grim@reaperworld.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -24,10 +24,10 @@
 
 #include <plugin.h>
 
-#define PREF_MY			"/plugins/gtk/amc_grim"
-#define PREF_ROOT		"/plugins/gtk/amc_grim/stocker"
-#define PREF_SYMBOLS	"/plugins/gtk/amc_grim/stocker/symbols"
-#define PREF_INTERVAL	"/plugins/gtk/amc_grim/stocker/interval"
+#define PREF_MY			"/plugins/gtk/plugin_pack"
+#define PREF_ROOT		"/plugins/gtk/plugin_pack/stocker"
+#define PREF_SYMBOLS	"/plugins/gtk/plugin_pack/stocker/symbols"
+#define PREF_INTERVAL	"/plugins/gtk/plugin_pack/stocker/interval"
 
 G_BEGIN_DECLS
 

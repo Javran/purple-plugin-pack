@@ -1,7 +1,8 @@
 /*
  * irssi - Implements several irssi features for Purple
- * Copyright (C) 2005-2007 Gary Kramlich <grim@reaperworld.com>
- * Copyright (C) 2007 John Bailey <rekkanoryo@rekkanoryo.org>
+ * Copyright (C) 2005-2008 Gary Kramlich <grim@reaperworld.com>
+ * Copyright (C) 2006-2008 John Bailey <rekkanoryo@rekkanoryo.org>
+ * Copyright (C) 2006-2008 Sadrul Habib Chowdhury <sadrul@users.sourceforge.net>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as

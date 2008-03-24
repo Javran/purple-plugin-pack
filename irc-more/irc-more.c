@@ -1,7 +1,8 @@
 /**
  * @file irc-more.c A couple of additional IRC features.
  *
- * Copyright (C) 2007 Sadrul Habib Chowdhury <sadrul@users.sourceforge.net>
+ * Copyright (C) 2007-2008 Sadrul Habib Chowdhury <sadrul@users.sourceforge.net>
+ * Copyright (C) 2007-2008 John Bailey <rekkanoryo@rekkanoryo.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02111-1301  USA
  */
 
-/* Pack/Local headers */
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #include <accountopt.h>
@@ -32,7 +33,8 @@
 #define CTCP_REPLY    purple_account_get_string(account, "ctcp-message", "Purple IRC")
 #define PART_MESSAGE  purple_account_get_string(account, "part-message", "Leaving.")
 #define QUIT_MESSAGE  purple_account_get_string(account, "quit-message", "Leaving.")
-#define UMODES        purple_account_get_string(account, "umodes", "i")
+#define SET_UMODES    purple_account_get_string(account, "umodes", "i")
+#define UNSET_UMODES  purple_account_get_string(account, "umodes", NULL)
 
 #define PLUGIN_ID "core-plugin_pack-irc-more"
 
@@ -95,8 +97,8 @@ signed_on_cb(PurpleConnection *gc)
 {
 	/* should this be done on a timeout? */
 	PurpleAccount *account = NULL;
-	const gchar *nick = NULL, *modes = NULL;
-	gchar *msg = NULL;
+	const gchar *nick = NULL, *setmodes = NULL, *unsetmodes = NULL;
+	gchar *msg = NULL, *msg2 = NULL;
 
 	account = purple_connection_get_account(gc);
 
@@ -105,16 +107,23 @@ signed_on_cb(PurpleConnection *gc)
 		return;
 
 	nick = purple_connection_get_display_name(gc);
-	modes = UMODES;
-	msg = g_strdup_printf("MODE %s +%s\r\n", nick, modes);
+	setmodes = SET_UMODES;
+	unsetmodes = UNSET_UMODES;
 
+	msg = g_strdup_printf("MODE %s +%s\r\n", nick, setmodes);
 	irc_info->send_raw(gc, msg, strlen(msg));
-
 	g_free(msg);
+
+	if(unsetmodes && *unsetmodes) {
+		msg2 = g_strdup_printf("MODE %s -%s\r\n", nick, unsetmodes);
+		irc_info->send_raw(gc, msg2, strlen(msg2));
+		g_free(msg2);
+	}
 
 	return;
 }
 
+#if !PURPLE_VERSION_CHECK(2,4,0)
 static PurpleCmdRet
 notice_cmd_cb(PurpleConversation *conv, const gchar *cmd, gchar **args,
 		gchar **error, void *data)
@@ -157,19 +166,20 @@ notice_cmd_cb(PurpleConversation *conv, const gchar *cmd, gchar **args,
 	irc_info->send_raw(gc, msg, len);
 
 	/* avoid a possible double-free crash */
-	if(msg != tmp);
+	if(msg != tmp)
 		g_free(tmp);
 
 	g_free(msg);
 
 	return PURPLE_CMD_RET_OK;
 }
+#endif
 
 static void
 irc_sending_text(PurpleConnection *gc, char **msg, gpointer null)
 {
 	PurpleAccount *account = purple_connection_get_account(gc);
-	char **old = msg;
+	char *old = *msg;
 
 	if (MATCHES("QUIT ")) {
 		char *message = strchr(*msg, ':');
@@ -190,8 +200,8 @@ irc_sending_text(PurpleConnection *gc, char **msg, gpointer null)
 		*version = '\0';
 		*msg = g_strdup_printf("%s:\001VERSION %s\001\r\n", *msg, CTCP_REPLY);
 	}
-	if (msg != old)
-		g_free(*old);
+	if (*msg != old)
+		g_free(old);
 }
 
 static gboolean
@@ -211,9 +221,11 @@ plugin_load(PurplePlugin *plugin)
 	/* specify our help string and register our command */
 	notice_help = _("notice target message:  Send a notice to the specified target.");
 
+#if !PURPLE_VERSION_CHECK(2,4,0)
 	notice_cmd_id = purple_cmd_register("notice", "ws", PURPLE_CMD_P_PLUGIN,
 			PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT | PURPLE_CMD_FLAG_PRPL_ONLY,
 			"prpl-irc", notice_cmd_cb, notice_help, NULL);
+#endif
 
 	/* we need this handle for the signed-on signal */
 	gc_handle = purple_connections_get_handle();
@@ -238,9 +250,11 @@ plugin_load(PurplePlugin *plugin)
 	option = purple_account_option_string_new(_("Default Part Message"), "part-message", "Leaving.");
 	irc_info->protocol_options = g_list_append(irc_info->protocol_options, option);
 
-	option = purple_account_option_string_new(_("User Modes On Connect"), "umodes", "i");
+	option = purple_account_option_string_new(_("Set User Modes On Connect"), "setumodes", "i");
 	irc_info->protocol_options = g_list_append(irc_info->protocol_options, option);
 
+	option = purple_account_option_string_new(_("Unset User Modes On Connect"), "unsetumodes", "");
+	irc_info->protocol_options = g_list_append(irc_info->protocol_options, option);
 	return TRUE;
 }
 

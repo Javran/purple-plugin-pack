@@ -1,6 +1,6 @@
 /*
  * Show Offline - Show specific buddies while offline
- * Copyright (C) 2004 Stu Tomlinson <stu@nosnilmot.com>
+ * Copyright (C) 2004-2008 Stu Tomlinson <stu@nosnilmot.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #include <debug.h>

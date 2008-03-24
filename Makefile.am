@@ -44,6 +44,9 @@ pp_config.h: pre_config.h
 
 ACLOCAL_AMFLAGS = -I m4
 
+signatures: dist
+	echo $(DIST_ARCHIVES) | xargs -n 1 gpg -a -b
+
 info:
 	@echo "---------------------------------------"
 	@echo "Plugin Pack Info"

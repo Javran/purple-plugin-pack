@@ -1,7 +1,7 @@
 /**
  * @file ignore.c Ignore people.
  *
- * Copyright (C) 2007 Sadrul Habib Chowdhury <sadrul@users.sourceforge.net>
+ * Copyright (C) 2007-2008 Sadrul Habib Chowdhury <sadrul@users.sourceforge.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02111-1301  USA
  */
 
-/* Pack/Local headers */
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #include <account.h>
@@ -27,6 +27,7 @@
 #include <conversation.h>
 #include <debug.h>
 #include <plugin.h>
+#include <util.h>
 
 #include <string.h>
 
@@ -116,7 +117,7 @@ list_ignore_rules()
 		char *split = strrchr(pref, '/');
 		*split++ = '\0';
 
-		if (*rule != 'n') {
+		if (rule && *rule != 'n') {
 			if (last == NULL || g_strcasecmp(last, pref)) {
 				g_free(last);
 				last = g_strdup(pref);

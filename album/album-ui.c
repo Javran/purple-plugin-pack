@@ -1,8 +1,8 @@
 /*
  * Album (Buddy Icon Archiver)
  *
- * Copyright (C) 2005-2006, Sadrul Habib Chowdhury <imadil@gmail.com>
- * Copyright (C) 2005-2006, Richard Laager <rlaager@pidgin.im>
+ * Copyright (C) 2005-2008, Sadrul Habib Chowdhury <imadil@gmail.com>
+ * Copyright (C) 2005-2008, Richard Laager <rlaager@pidgin.im>
  * Copyright (C) 2006, Jérôme Poulin (TiCPU) <jeromepoulin@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
@@ -125,6 +125,13 @@ struct _icon_viewer_key
 
 static void update_icon_view(icon_viewer_key *key);
 static void show_buddy_icon_window(icon_viewer_key *key, const char *name);
+
+void icon_viewer_key_free(void *data)
+{
+	icon_viewer_key *key = (icon_viewer_key *)data;
+	g_free(key->screenname);
+	g_free(key);
+}
 
 guint icon_viewer_hash(gconstpointer data)
 {
@@ -932,6 +939,7 @@ static void show_buddy_icon_window(icon_viewer_key *key, const char *name)
 	/* Return if a window is already opened for the buddy. */
 	if ((bw = g_hash_table_lookup(buddy_windows, key)) != NULL)
 	{
+		icon_viewer_key_free(key);
 		gtk_window_present(GTK_WINDOW(bw->window));
 		return;
 	}
@@ -942,6 +950,7 @@ static void show_buddy_icon_window(icon_viewer_key *key, const char *name)
 	if (key->contact == NULL &&
 	    (bw = g_hash_table_find(buddy_windows, (GHRFunc)compare_buddy_keys, key)) != NULL)
 	{
+		icon_viewer_key_free(key);
 		gtk_window_present(GTK_WINDOW(bw->window));
 		return;
 	}

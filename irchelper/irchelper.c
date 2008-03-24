@@ -1,7 +1,7 @@
 /*
  * IRC Helper Plugin for libpurple
  *
- * Copyright (C) 2005-2007, Richard Laager <rlaager@pidgin.im>
+ * Copyright (C) 2005-2008, Richard Laager <rlaager@pidgin.im>
  * Copyright (C) 2004-2005, Mathias Hasselmann <mathias@taschenorakel.de>
  * Copyright (C) 2005, Daniel Beardsmore <uilleann@users.sf.net>
  * Copyright (C) 2005, Björn Nilsson <BNI on irc.freenode.net>
@@ -23,6 +23,7 @@
  * 02111-1301, USA.
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #include <string.h>
@@ -198,7 +199,12 @@ static PurpleConversation *get_conversation(PurpleAccount *account)
 
 	conv = g_new0(PurpleConversation, 1);
 	conv->type = PURPLE_CONV_TYPE_IM;
-	purple_conversation_set_account(conv, account);
+	/* If we use this then the conversation updated signal is fired and
+	 * other plugins might start doing things to our conversation, such as
+	 * setting data on it which we would then need to free etc. It's easier
+	 * just to be more hacky by setting account directly. */
+	/* purple_conversation_set_account(conv, account); */
+	conv->account = account;
 
 	return conv;
 }

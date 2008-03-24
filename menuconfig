@@ -17,10 +17,11 @@ show_dialog() {
 
 # build the list of plugins to pass to dialog
 PLUGIN_LIST=""
-AVAILABLE_PLUGINS=`find -name .plugin | cut -d/ -f2 | sort`
+AVAILABLE_PLUGINS=`find -regextype posix-extended -regex '^.+/\.(finch|pidgin|purple)-plugin' | \
+				   cut -d/ -f2 | sort`
 for P in ${AVAILABLE_PLUGINS}
 do
-	if [ -f ${P}/.abusive ] ; then
+	if [ -f ${P}/.abusive -o -f ${P}/.incomplete ] ; then
 		continue
 	fi
 
@@ -41,6 +42,7 @@ echo "--title \"Plugins to build\" --checklist \"\" 19 60 13 ${PLUGIN_LIST}" > $
 show_dialog --single-quoted --file ${PC_CONFIG} 2>${PC_RESULT}
 
 if [ $? != 0 ] ; then
+	rm -f ${PC_CONFIG} ${PC_RESULT}
 	exit 1
 fi
 
@@ -48,9 +50,11 @@ PLUGINS=`cat ${PC_RESULT} | sed 's/\ /,/g'`
 
 rm -f ${PC_CONFIG} ${PC_RESULT}
 
-CONFIGURE_ARGS=""
 if [ -f configure.args ] ; then
-	CONFIGURE_ARGS=`cat configure.args`
+	. configure.args
 fi
+
+echo "Running configure with '${CONFIGURE_ARGS} --with-plugins=${PLUGINS}"
+echo;
 
 ./configure ${CONFIGURE_ARGS} --with-plugins=${PLUGINS}

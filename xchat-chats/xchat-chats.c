@@ -1,6 +1,6 @@
 /*
  * Purple-XChat - Use XChat-like chats
- * Copyright (C) 2005
+ * Copyright (C) 2005-2008
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -18,6 +18,7 @@
  * 02111-1301, USA.
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #define PLUGIN_ID			"gtk-plugin_pack-xchat-chats"
@@ -146,7 +147,14 @@ mg_word_check (GtkWidget * xtext, char *word, int len)
 }
 #endif
 
-GtkWidget *get_xtext(PurpleConversation *conv)
+static gboolean
+is_2_4_0_or_above(void)
+{
+	return (purple_version_check(2, 4, 0) == NULL);
+}
+
+
+static GtkWidget *get_xtext(PurpleConversation *conv)
 {
 	PurpleXChat *gx;
 
@@ -257,35 +265,44 @@ static void purple_xchat_write_conv(PurpleConversation *conv, const char *name, 
 	g_free(msg);
 }
 
+#define	DEBUG_INFO(x)	\
+	name = G_OBJECT_TYPE_NAME(x);	\
+	printf("%s\n", name)
+
 static GtkWidget*
 hack_and_get_widget(PidginConversation *gtkconv)
 {
-	GtkWidget *tab_cont, *pane, *vbox, *hpaned, *frame;
+	GtkWidget *tab_cont, *vbox, *hpaned, *frame;
 	GList *list;
 	const char *name;
 
 	/* If you think this is ugly, you are right. */
-#define	DEBUG_INFO(x)	\
-	name = G_OBJECT_TYPE_NAME(x);	\
-	printf("%s\n", name)
-	
 	tab_cont = gtkconv->tab_cont;
 	DEBUG_INFO(tab_cont);
 
 	list = gtk_container_get_children(GTK_CONTAINER(tab_cont));
-	pane = list->data;
-	g_list_free(list);
-	DEBUG_INFO(pane);
+	if (!is_2_4_0_or_above()) {
+		GtkWidget *pane = list->data;
+		DEBUG_INFO(pane);
 
-	vbox = GTK_PANED(pane)->child1;
+		vbox = GTK_PANED(pane)->child1;
+	} else {
+		vbox = list->data;
+	}
+	g_list_free(list);
+
 	DEBUG_INFO(vbox);
 	list = GTK_BOX(vbox)->children;
-	while (list->next)
+	while (list) {
+		if (GTK_IS_PANED(((GtkBoxChild*)list->data)->widget))
+			break;
 		list = list->next;
+	}
 	hpaned = ((GtkBoxChild*)list->data)->widget;
 	DEBUG_INFO(hpaned);
 
 	frame = GTK_PANED(hpaned)->child1;
+
 	return frame;
 }
 
@@ -309,6 +326,7 @@ purple_conversation_use_xtext(PurpleConversation *conv)
 
 	box = gtk_hbox_new(FALSE, 0);
 	xtext = get_xtext(conv);
+
 	GTK_PANED(parent)->child1 = NULL;
 	gtk_paned_pack1(GTK_PANED(parent), box, TRUE, TRUE);
 
@@ -344,6 +362,17 @@ purple_xchat_destroy_conv(PurpleConversation *conv)
 	}
 }
 
+static void
+workaround_for_hidden_convs(PidginConversation *gtkconv)
+{
+	PurpleConversation *conv = gtkconv->active_conv;
+
+	if (purple_conversation_get_type(conv) != PURPLE_CONV_TYPE_CHAT ||
+			g_hash_table_lookup(xchats, conv))
+		return;
+	purple_conversation_use_xtext(conv);
+}
+
 static gboolean
 plugin_load(PurplePlugin *plugin)
 {
@@ -369,10 +398,17 @@ plugin_load(PurplePlugin *plugin)
 	list = purple_get_chats();
 	while (list)
 	{
+		/* TODO: We can get the message history of the conversation and populate
+		 * the next xtext with that data.
+		 * Note: purple_conversation_get_message_history
+		 */
 		purple_conversation_use_xtext(list->data);
 		list = list->next;
 	}
-	
+
+	purple_signal_connect(pidgin_conversations_get_handle(), "conversation-displayed",
+			plugin, G_CALLBACK(workaround_for_hidden_convs), NULL);
+
 	return TRUE;
 }
 
@@ -400,7 +436,7 @@ plugin_unload(PurplePlugin *plugin)
 	uiops->write_conv = default_write_conv;
 	uiops->create_conversation = default_create_conversation;
 	uiops->destroy_conversation = default_destroy_conversation;
-	
+
 	/* Clear up everything */
 	g_hash_table_foreach(xchats, (GHFunc)remove_xtext, NULL);
 	g_hash_table_destroy(xchats);

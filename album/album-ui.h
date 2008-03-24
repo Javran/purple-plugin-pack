@@ -1,8 +1,8 @@
 /*
  * Album (Buddy Icon Archiver)
  *
- * Copyright (C) 2005-2006, Sadrul Habib Chowdhury <imadil@gmail.com>
- * Copyright (C) 2005-2006, Richard Laager <rlaager@pidgin.im>
+ * Copyright (C) 2005-2008, Sadrul Habib Chowdhury <imadil@gmail.com>
+ * Copyright (C) 2005-2008, Richard Laager <rlaager@pidgin.im>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -35,6 +35,8 @@ extern GHashTable *buddy_windows;
 guint icon_viewer_hash(gconstpointer data);
 
 gboolean icon_viewer_equal(gconstpointer y, gconstpointer z);
+
+void icon_viewer_key_free(void *key);
 
 GList *album_get_plugin_actions(PurplePlugin *plugin, gpointer data);
 

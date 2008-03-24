@@ -1,7 +1,8 @@
 /*
  * irssi - Implements several irssi features for Purple
- * Copyright (C) 2005-2007 Gary Kramlich <grim@reaperworld.com>
- * Copyright (C) 2007 John Bailey <rekkanoryo@rekkanoryo.org>
+ * Copyright (C) 2005-2008 Gary Kramlich <grim@reaperworld.com>
+ * Copyright (C) 2006-2008 John Bailey <rekkanoryo@rekkanoryo.org>
+ * Copyright (C) 2006-2008 Sadrul Habib Chowdhury <sadrul@users.sourceforge.net>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -19,6 +20,7 @@
  * 02111-1301, USA.
  */
 
+/* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
 #ifdef HAVE_REGEX_H
@@ -102,8 +104,10 @@ irssi_textfmt_regex_helper(gchar *message, const gchar *token,
 	/* now let's replce the matches.
 	 * If we don't have any, drop out right away.
 	 */
-	if(regexec(&regex, iter, GROUP_TOTAL, matches, 0) != 0)
+	if(regexec(&regex, iter, GROUP_TOTAL, matches, 0) != 0) {
+		regfree(&regex);
 		return message;
+	}
 
 	/* create our GString.  Heh heh */
 	str = g_string_new("");
@@ -142,6 +146,8 @@ irssi_textfmt_regex_helper(gchar *message, const gchar *token,
 		/* move iter to the end of the match */
 		iter += matches[GROUP_ALL].rm_eo;
 	} while(regexec(&regex, iter, GROUP_TOTAL, matches, REG_NOTBOL) == 0);
+
+	regfree(&regex);
 
 	/* at this point, iter is either the remains of the text, of a single null
 	 * terminator.  So throw it onto the GString.
