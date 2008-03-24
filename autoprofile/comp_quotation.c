@@ -48,7 +48,7 @@ static void append_quote (struct widget *w, GtkListStore *ls, gchar *quote)
 
   quote_tmp = purple_markup_strip_html (quote); 
   s = g_string_new ("");
-  g_string_printf (s, "%ld bytes", g_utf8_strlen (quote));
+  g_string_printf (s, "%ld bytes", g_utf8_strlen (quote, -1));
 
   gtk_list_store_set (ls, &iter, 
                       0, quote_tmp, 
@@ -184,7 +184,7 @@ static void quotation_edit_dialog_cb (struct widget *w, const char *quote)
         /* Update list store */ 
         quote_tmp = purple_markup_strip_html (quote); 
         s = g_string_new ("");
-        g_string_printf (s, "%ld bytes", g_utf8_strlen (quote));
+        g_string_printf (s, "%ld bytes", g_utf8_strlen (quote, -1));
 
         gtk_list_store_set (GTK_LIST_STORE (model), &iter, 
                             0, quote_tmp, 
