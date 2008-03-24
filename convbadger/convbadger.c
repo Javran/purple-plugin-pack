@@ -130,6 +130,7 @@ convbadger_conv_switched_cb(PurpleConversation *conv, gpointer data) {
 static gboolean
 plugin_load(PurplePlugin *plugin) {
 	void *conv_handle = purple_conversations_get_handle();
+	void *gtk_conv_handle = pidgin_conversations_get_handle();
 
 	data = g_hash_table_new_full(g_direct_hash, g_direct_equal,
 								 NULL, NULL);
@@ -139,7 +140,7 @@ plugin_load(PurplePlugin *plugin) {
 	purple_signal_connect(conv_handle, "deleting-conversation", plugin,
 						  PURPLE_CALLBACK(convbadger_conv_destroyed_cb), NULL);
 
-	purple_signal_connect(conv_handle, "conversation-switched", plugin,
+	purple_signal_connect(gtk_conv_handle, "conversation-switched", plugin,
 						  PURPLE_CALLBACK(convbadger_conv_switched_cb), NULL);
 
 	return TRUE;
