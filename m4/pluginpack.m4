@@ -64,7 +64,9 @@ AC_DEFUN([AM_BUILD_PLUGIN_LIST],
 			fi
 
 			PP_PURPLE="$PP_PURPLE $base"
-		elif test -f "$d/.pidgin-plugin" ; then
+		fi
+
+		if test -f "$d/.pidgin-plugin" ; then
 			if test -f "$d/.abusive" ; then
 				PP_PIDGIN_ABUSIVE="$PP_PIDGIN_ABUSIVE $base"
 			elif test -f "$d/.build" ; then
@@ -76,7 +78,9 @@ AC_DEFUN([AM_BUILD_PLUGIN_LIST],
 			fi
 
 			PP_PIDGIN="$PP_PIDGIN $base"
-		elif test -f "$d/.finch-plugin" ; then
+		fi
+
+		if test -f "$d/.finch-plugin" ; then
 			if test -f "$d/.abusive" ; then
 				PP_FINCH_ABUSIVE="$PP_FINCH_ABUSIVE $base"
 			elif test -f "$d/.build" ; then
