@@ -21,8 +21,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA *
  *--------------------------------------------------------------------------*/
 
+#include "../common/pp_internal.h"
+
 #include "widget.h"
 #include "utility.h"
+
+#include <string.h>
 
 static GStaticMutex widget_mutex = G_STATIC_MUTEX_INIT;
 static GList *widgets = NULL;
@@ -52,7 +56,7 @@ void ap_widget_init () {
         
   ap_widget_init_default_statuses ();
 
-  node = g_list_append (NULL, strdup ("42"));
+  node = g_list_append (NULL, g_strdup ("42"));
   purple_prefs_add_string_list (widget_pref, node);
   free_string_list (node);
 }
@@ -66,7 +70,7 @@ static gchar *strip_whitespace (const gchar *text) {
   }
 
   end = NULL;
-  search = result = strdup (text);
+  search = result = g_strdup (text);
   
   while (*search) {
     if (end == NULL && isspace (*search)) {
@@ -191,8 +195,8 @@ void ap_widget_start () {
     }
 
     w = (struct widget *) malloc (sizeof (struct widget));
-    w->alias = strdup (identifier);
-    w->wid = strdup ((gchar *) widget_identifiers->data);
+    w->alias = g_strdup (identifier);
+    w->wid = g_strdup ((gchar *) widget_identifiers->data);
     w->component = comp;
 		w->data = g_hash_table_new (NULL, NULL);
 
@@ -307,13 +311,13 @@ struct widget *ap_widget_create (struct component *comp)
   alias = NULL; // Stupid compiler
 
   if (w == NULL) {
-    alias = strdup (comp->identifier);
+    alias = g_strdup (comp->identifier);
   } else {
     for (i = 1; i < 10000; i++) {
       g_string_printf (s, "%s%d", comp->identifier, i);
       w = ap_widget_find_internal (s->str);
       if (w == NULL) {
-        alias = strdup (s->str);
+        alias = g_strdup (s->str);
         break;
       }
     }
@@ -343,7 +347,7 @@ struct widget *ap_widget_create (struct component *comp)
     }
 
     if (node == NULL) {
-      identifier = strdup (s->str);
+      identifier = g_strdup (s->str);
       break;
     }
   }
@@ -453,7 +457,7 @@ gboolean ap_widget_rename (struct widget *orig, const gchar *new_alias) {
   }
 
   orig_alias = orig->alias;
-  orig->alias = strdup (new_alias);
+  orig->alias = g_strdup (new_alias);
 
   s = g_string_new ("");
 
