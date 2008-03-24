@@ -21,6 +21,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA *
  *--------------------------------------------------------------------------*/
 
+#include "../common/pp_internal.h"
+
 #include "component.h"
 #include "utility.h"
 

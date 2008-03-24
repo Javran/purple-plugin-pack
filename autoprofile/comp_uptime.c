@@ -21,8 +21,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA *
  *--------------------------------------------------------------------------*/
 
+#include "../common/pp_internal.h"
+
 #include "component.h"
 #include "utility.h"
+
+#include <string.h>
 
 /*---------- UPTIME: Display the computer uptime --*/
 char *uptime_generate (struct widget *w) {
@@ -75,7 +79,7 @@ char *uptime_generate (struct widget *w) {
     return working;
   } else {
     ap_debug ("uptime", "command failed to execute");
-    return strdup(_("[ERROR: failed to execute uptime command]"));
+    return g_strdup(_("[ERROR: failed to execute uptime command]"));
     return NULL;
   }
 }

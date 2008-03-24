@@ -209,7 +209,7 @@ static void text_handler (GMarkupParseContext *context,
     if (e->url) {
       free (e->url);
     }
-    e->url = strdup (text);
+    e->url = g_strdup (text);
   }
     
   else if (item_description) {
@@ -227,14 +227,14 @@ static void text_handler (GMarkupParseContext *context,
     if (e->comments) {
       free (e->comments);
     }
-    e->comments = strdup (text);
+    e->comments = g_strdup (text);
   }
 
   else if (item_title) {
     if (e->title) {
       free (e->title);
     }
-    e->title = strdup (text);
+    e->title = g_strdup (text);
   }
 
   else if (item_pubdate) {
