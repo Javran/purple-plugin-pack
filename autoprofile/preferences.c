@@ -729,7 +729,7 @@ void ap_preferences_display ()
 
   g_object_set (notebook, "homogeneous", TRUE, NULL); 
 
-  dialog = gtk_dialog_new_with_buttons(PURPLE_ALERT_TITLE, NULL,
+  dialog = gtk_dialog_new_with_buttons(PIDGIN_ALERT_TITLE, NULL,
     GTK_DIALOG_NO_SEPARATOR,
     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
     NULL);
