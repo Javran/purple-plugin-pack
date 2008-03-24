@@ -21,7 +21,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA *
  *--------------------------------------------------------------------------*/
 
+#include "../common/pp_internal.h"
+
 #include "component.h"
+
+#include <string.h>
 
 /*---------- TEXT FILE: Text from a file ----------*/
 static GtkWidget *file_entry;
@@ -38,11 +42,11 @@ char *text_file_generate (struct widget *w)
   filename = ap_prefs_get_string (w, "text_file");
 
   if (!g_file_test (filename, G_FILE_TEST_EXISTS)) {
-    return strdup (_("[ERROR: File does not exist]"));
+    return g_strdup (_("[ERROR: File does not exist]"));
   }
 
   if (!g_file_get_contents (filename, &text, NULL, NULL)) {
-    return strdup (_("[ERROR: Unable to open file]"));
+    return g_strdup (_("[ERROR: Unable to open file]"));
   } 
 
   converted = purple_utf8_try_convert (text);

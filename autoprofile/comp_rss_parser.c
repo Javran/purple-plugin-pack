@@ -340,7 +340,7 @@ void parse_rss (struct widget *w)
 
   url = get_url (w);
   if (strcmp (url, "") != 0) {
-    purple_url_fetch (url, TRUE, NULL, FALSE, url_callback, w);
+    purple_util_fetch_url (url, TRUE, NULL, FALSE, url_callback, w);
   }
   free (url);
 }
