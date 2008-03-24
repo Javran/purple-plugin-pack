@@ -695,7 +695,7 @@ static void logstats_conv_created (PurpleConversation *conv)
 /*--------------------------- Main functions -------------------------*/
 
 /* Component load */
-void logstats_load ()
+void logstats_load (struct widget *w)
 {
   int count;
   char *msg;
@@ -746,7 +746,7 @@ void logstats_load ()
 }
 
 /* Component unload */
-void logstats_unload ()
+void logstats_unload (struct widget *w)
 {
   struct log_date *cur_date;
   struct conversation_time *cur_time;
@@ -801,7 +801,7 @@ void logstats_unload ()
 }
 
 /* Generate the output */
-static char *logstats_generate ()
+static char *logstats_generate (struct widget *w)
 { 
   char *buf, *output, *date;
   int state;
@@ -1005,7 +1005,7 @@ static char *logstats_generate ()
 }
 
 /* Initialize preferences */
-static void logstats_init ()
+static void logstats_init (struct widget *w)
 {
   purple_prefs_add_none ("/plugins/gtk/autoprofile/components/logstat");
   purple_prefs_add_bool (
@@ -1032,11 +1032,11 @@ struct component logstats =
   N_("Purple log statistics"),
   N_("Display various statistics about your message and system logs"),
   identifiers,
-  &logstats_generate,
-  &logstats_init,
-  &logstats_load,
-  &logstats_unload,
+  logstats_generate,
+  logstats_init,
+  logstats_load,
+  logstats_unload,
   NULL,
-  &logstats_prefs
+  logstats_prefs
 };
 

@@ -21,8 +21,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA *
  *--------------------------------------------------------------------------*/
 
-void logstats_load (void);
-void logstats_unload (void);
-GtkWidget *logstats_prefs (void);
+void logstats_load (struct widget *w);
+void logstats_unload (struct widget *w);
+GtkWidget *logstats_prefs (struct widget *w);
 
 

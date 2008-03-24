@@ -23,6 +23,8 @@
 
 #include "component.h"
 
+#include <string.h>
+
 static GList *components = NULL;
 
 static GList *get_components ();

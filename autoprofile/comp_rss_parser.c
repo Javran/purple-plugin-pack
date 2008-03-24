@@ -24,6 +24,8 @@
 #include "comp_rss.h"
 #include "utility.h"
 
+#include <string.h>
+
 static gboolean parsing_rss = FALSE;
 static gboolean parsing_item = FALSE;
 

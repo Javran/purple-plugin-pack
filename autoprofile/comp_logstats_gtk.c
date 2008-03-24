@@ -36,7 +36,7 @@ static void logstats_response_cb (GtkDialog *dialog, gint id,
 {
   purple_prefs_set_bool (
     "/plugins/gtk/autoprofile/components/logstat/enabled", TRUE);
-  logstats_load ();
+  logstats_load (NULL);
   gtk_widget_set_sensitive (widget, TRUE);
 
   gtk_widget_destroy (GTK_WIDGET(dialog));
@@ -49,7 +49,7 @@ static void toggle_enable (GtkButton *button, gpointer data)
 
   if (purple_prefs_get_bool (
     "/plugins/gtk/autoprofile/components/logstat/enabled")) {
-    logstats_unload ();
+    logstats_unload (NULL);
     purple_prefs_set_bool (
       "/plugins/gtk/autoprofile/components/logstat/enabled", FALSE);
     gtk_widget_set_sensitive (vbox, FALSE);
@@ -191,7 +191,7 @@ static void alias_what (GtkButton *button, gpointer data)
 }
 
 /* The main window */
-GtkWidget *logstats_prefs (void) 
+GtkWidget *logstats_prefs (struct widget *w) 
 {
   GtkWidget *ret, *vbox, *hbox;
   GtkWidget *label, *button, *entry, *sw;
