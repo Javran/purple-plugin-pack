@@ -139,7 +139,8 @@ plugin_load(PurplePlugin *plugin) {
 	purple_signal_connect(conv_handle, "deleting-conversation", plugin,
 						  PURPLE_CALLBACK(convbadger_conv_destroyed_cb), NULL);
 
-	purple_signal_connect(conv_handle, "conversation-switched", plugin,
+	purple_signal_connect(pidgin_conversations_get_handle(),
+						  "conversation-switched", plugin,
 						  PURPLE_CALLBACK(convbadger_conv_switched_cb), NULL);
 
 	return TRUE;
