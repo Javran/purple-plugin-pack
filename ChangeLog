@@ -1,6 +1,7 @@
 Version 2.4.0mtn:
 	* Merged the Autoprofile plugin into our build system.
 	* Fixed convbadger's failure to update on conversation switch.
+	* Added Ike Gingerich's colorize plugin
 
 Version 2.3.0: 03/17/08
 	* Fixed a typo in irc-more's source that allowed a potential double-free

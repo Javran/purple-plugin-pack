@@ -1,4 +1,4 @@
-EXTRA_DIST = .purple-plugin .incomplete Makefile.mingw
+EXTRA_DIST = .purple-plugin .build Makefile.mingw
 
 colorizedir = $(PURPLE_LIBDIR)
 
