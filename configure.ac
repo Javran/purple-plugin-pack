@@ -350,6 +350,7 @@ AC_OUTPUT([
 	simfix/Makefile
 	slashexec/Makefile
 	snpp/Makefile
+	splitter/Makefile
 	sslinfo/Makefile
 	stocker/Makefile
 	switchspell/Makefile
