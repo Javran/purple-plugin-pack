@@ -318,6 +318,7 @@ AC_OUTPUT([
 	blistops/Makefile
 	buddytime/Makefile
 	chronic/Makefile
+	colorize/Makefile
 	convbadger/Makefile
 	dewysiwygification/Makefile
 	dice/Makefile
