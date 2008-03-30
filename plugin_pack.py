@@ -161,26 +161,26 @@ class PluginPack:
 		print '\tlabel="Dependency Graph";'
 		print '\tlabelloc="t";'
 		print '\tsplines=TRUE;'
-		print '\toverlap=scale;'
+		print '\toverlap=FALSE;'
 		print
-		print '\tnode[fontname="sans", style="filled", shape="box"];'
+		print '\tnode[fontname="sans", fontsize="8", style="filled"];'
 		print
 
 		# run through the default plugins
 		print '\t/* default plugins */'
-		print '\tnode[fillcolor="palegreen"];'
+		print '\tnode[fillcolor="palegreen",shape="tab"];'
 		print_plugins(self.default_plugins())
 		print
 
 		# run through the incomplete plugins
 		print '\t/* incomplete plugins */'
-		print '\tnode[fillcolor="lightyellow1"];'
+		print '\tnode[fillcolor="lightyellow1",shape="note"];'
 		print_plugins(self.incomplete_plugins())
 		print
 
 		# run through the abusive plugins
 		print '\t/* abusive plugins */'
-		print '\tnode[fillcolor="lightpink"];'
+		print '\tnode[fillcolor="lightpink",shape="octagon"];'
 		print_plugins(self.abusive_plugins())
 		print
 
@@ -188,7 +188,7 @@ class PluginPack:
 		print '\t/* dependencies'
 		print '\t * exteranl ones that don\'t have nodes get colored to the following'
 		print '\t */'
-		print '\tnode[fillcolor="powderblue"];'
+		print '\tnode[fillcolor="powderblue", shape="egg"];'
 
 		for name in self.plugins.keys():
 			plugin = self.plugins[name]
