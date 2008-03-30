@@ -44,34 +44,47 @@ def printerr(msg):
 
 class Plugin:
 	name = ''
+	directory = ''
+	type = ''
+	depends = []
 	provides = ''
 	summary = ''
 	description = ''
-	directory = ''
-	depends = []
-	type = ''
+	authors = []
+	introduced = ''
+	notes = ''
 
 	def __init__(self, directory, name, parser):
-		self.directory = directory
 		self.name = name
 
+		self.directory = directory
+
+		self.type = parser.get(name, 'type')
+		self.depends = parser.get(name, 'depends').split()
 		self.provides = parser.get(name, 'provides')
 		self.summary = parser.get(name, 'summary')
 		self.description = parser.get(name, 'description')
-		self.depends = parser.get(name, 'depends').split()
-		self.type = parser.get(name, 'type')
+		self.authors = parser.get(name, 'authors').split(',')
+		self.introduced = parser.get(name, 'introduced')
+
+		if parser.has_option(name, 'notes'):
+			self.notes = parser.get(name, 'notes')
 
 		if self.type != 'default' and self.type != 'incomplete' and self.type != 'abusive':
 			printerr('\'%s\' has an unknown type of \'%s\'!' % (self.name, self.type))
 
 	def __str__(self):
 		output  = 'name: %s\n' % self.name
+		output += 'authors: %s\n' % string.join(self.authors, ',')
 		output += 'type: %s\n' % self.type
 		output += 'depends: %s\n' % string.join(self.depends, ' ')
 		output += 'provides: %s\n' % self.provides
 		output += 'directory: %s\n' % self.directory
 		output += 'summary: %s\n' % self.summary
-		output += '%s\n' % self.description
+		output += 'description: %s\n' % self.description
+
+		if self.notes:
+			output += 'notes: %s\n' % self.notes
 
 		return output
 
