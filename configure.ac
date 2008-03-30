@@ -280,11 +280,6 @@ AC_SUBST(XMMS_CFLAGS)
 AC_CHECK_HEADERS(regex.h)
 
 dnl #######################################################################
-dnl # Run our plugin checking
-dnl #######################################################################
-AM_BUILD_PLUGIN_LIST()
-
-dnl #######################################################################
 dnl # Version stuff
 dnl #######################################################################
 AC_CONFIG_COMMANDS_PRE([
@@ -305,7 +300,6 @@ AC_OUTPUT([
 	Makefile
 	common/Makefile
 	doc/Makefile
-	m4/Makefile
 	po/Makefile.in
 	VERSION
 	plugin_pack.spec

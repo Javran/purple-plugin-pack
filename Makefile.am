@@ -22,9 +22,9 @@ EXTRA_DIST = \
 	po/Makefile.in.in \
 	po/Makefile.mingw
 
-DIST_SUBDIRS = common doc m4 po $(PP_PURPLE) $(PP_PIDGIN) $(PP_FINCH)
+DIST_SUBDIRS = common doc po $(PP_PURPLE) $(PP_PIDGIN) $(PP_FINCH)
 
-SUBDIRS = common doc m4 po $(PP_PURPLE_BUILD) $(PP_PIDGIN_BUILD) $(PP_FINCH_BUILD)
+SUBDIRS = common doc po $(PP_PURPLE_BUILD) $(PP_PIDGIN_BUILD) $(PP_FINCH_BUILD)
 
 DISTCLEANFILES=\
 	pp_config.h \
