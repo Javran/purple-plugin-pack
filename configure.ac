@@ -327,8 +327,9 @@ AC_OUTPUT([
 	enhancedhist/Makefile
 	findip/Makefile
 	flip/Makefile
-	groupmsg/Makefile
+	google/Makefile
 	gRIM/Makefile
+	groupmsg/Makefile
 	hideconv/Makefile
 	highlight/Makefile
 	ignorance/Makefile
