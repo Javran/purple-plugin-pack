@@ -282,7 +282,7 @@ AC_CHECK_HEADERS(regex.h)
 dnl #######################################################################
 dnl # Disable installation of translation files
 dnl #######################################################################
-AC_ARG_ENABLE(nls, AC_HELP_STRING([--enable-nls], [enable installation of translation files]), enable_i18n="$enableval", enable_i18n=yes))
+AC_ARG_ENABLE(nls, AC_HELP_STRING([--enable-nls], [enable installation of translation files]), enable_i18n="$enableval", enable_i18n=yes)
 
 AM_CONDITIONAL(INSTALL_I18N, test "x$enable_i18n" = "xyes")
 
