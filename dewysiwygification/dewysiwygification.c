@@ -50,7 +50,7 @@ substitute_words_send_im(PurpleAccount *account, const char *receiver,
 	g_free(*message);
 	*message = tmp;
 
-	purple_debug_misc("dewysiwygification", "it's now: %s", tmp);
+	purple_debug_misc("dewysiwygification", "it's now: %s\n", tmp);
 
 	return FALSE;
 }
@@ -67,7 +67,7 @@ substitute_words_send_chat(PurpleAccount *account, char **message, int id)
 	g_free(*message);
 	*message = tmp;
 
-	purple_debug_misc("dewysiwygification", "it's now: %s", tmp);
+	purple_debug_misc("dewysiwygification", "it's now: %s\n", tmp);
 
 	return FALSE;
 }
