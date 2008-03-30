@@ -1,7 +1,7 @@
 #
 # Makefile.mingw
 #
-# Description: Makefile for flip plugin.
+# Description: Makefile for the google plugin.
 #
 
 PP_TOP :=		..
