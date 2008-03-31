@@ -4,25 +4,26 @@ EXTRA_DIST = \
 	ChangeLog \
 	INSTALL \
 	INSTALL.WIN32 \
-	intltool-extract.in \
-	intltool-merge.in \
-	intltool-update.in \
 	Makefile.am \
 	Makefile.mingw \
 	NEWS \
 	README \
 	VERSION \
 	VERSION.in \
-	pp_config.h.mingw \
-	plugin_pack.spec \
+	intltool-extract.in \
+	intltool-merge.in \
+	intltool-update.in \
 	menuconfig \
-	win_pp.mak \
+	plugin_pack.py \
+	plugin_pack.spec \
 	po/AUTHORS \
 	po/ChangeLog \
 	po/Makefile.in.in \
-	po/Makefile.mingw
+	po/Makefile.mingw \
+	pp_config.h.mingw \
+	win_pp.mak
 
-DIST_SUBDIRS = common doc po $(PP_PURPLE) $(PP_PIDGIN) $(PP_FINCH)
+DIST_SUBDIRS = common doc po $(PP_DIST_DIRS)
 
 SUBDIRS = common doc po $(PP_PURPLE_BUILD) $(PP_PIDGIN_BUILD) $(PP_FINCH_BUILD)
 
@@ -48,25 +49,4 @@ signatures: dist
 	echo $(DIST_ARCHIVES) | xargs -n 1 gpg -a -b
 
 info:
-	@echo "---------------------------------------"
-	@echo "Plugin Pack Info"
-	@echo "---------------------------------------"
-	@echo "Purple Plugins:"
-	@echo "	Available..: $(PP_PURPLE)"
-	@echo "	Abusive....: $(PP_PURPLE_ABUSIVE)"
-	@echo "	Incomplete.: $(PP_PURPLE_INCOMPLETE)"
-	@echo "	Building...: $(PP_PURPLE_BUILD)"
-	@echo "---------------------------------------"
-	@echo "Pidgin Plugins:"
-	@echo "	Available..: $(PP_PIDGIN)"
-	@echo "	Abusive....: $(PP_PIDGIN_ABUSIVE)"
-	@echo "	Incomplete.: $(PP_PIDGIN_INCOMPLETE)"
-	@echo "	Building...: $(PP_PIDGIN_BUILD)"
-	@echo "---------------------------------------"
-	@echo "Finch Plugins:"
-	@echo "	Available..: $(PP_FINCH)"
-	@echo "	Abusive....: $(PP_FINCH_ABUSIVE)"
-	@echo "	Incomplete.: $(PP_FINCH_INCOMPLETE)"
-	@echo "	Building...: $(PP_FINCH_BUILD)"
-	@echo "---------------------------------------"
-
+	@echo $(PP_DIST_DIRS)

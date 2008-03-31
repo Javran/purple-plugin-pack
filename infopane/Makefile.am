@@ -1,7 +1,6 @@
 EXTRA_DIST = \
-	.pidgin-plugin \
 	Makefile.mingw \
-	.build
+	plugins.cfg
 
 infopanedir = $(PIDGIN_LIBDIR)
 

@@ -1,4 +1,6 @@
-EXTRA_DIST = .purple-plugin .build Makefile.mingw
+EXTRA_DIST = \
+	Makefile.mingw \
+	plugins.cfg
 
 showofflinedir = $(PURPLE_LIBDIR)
 

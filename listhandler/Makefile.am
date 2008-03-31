@@ -1,7 +1,4 @@
-EXTRA_DIST=\
-	.build \
-	.purple-plugin \
-	Makefile.mingw \
+INCLUDES = \
 	aim_blt_files.h \
 	alias_xml_files.h \
 	gen_xml_files.h \
@@ -9,6 +6,11 @@ EXTRA_DIST=\
 	listhandler.h \
 	migrate.h \
 	purple_blist_xml.h
+
+EXTRA_DIST=\
+	Makefile.mingw \
+	plugins.cfg \
+	$(INCLUDES)
 
 listhandlerdir = $(PURPLE_LIBDIR)
 

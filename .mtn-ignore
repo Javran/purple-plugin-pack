@@ -18,7 +18,7 @@ missing
 po/Makefile.in.in
 po/missing
 po/notexist
-po/POTFILES
+po/POTFILES$
 po/stamp-it
 po/.+\.pot
 purple-plugin_pack-[0-9]+\.[0-9]+([Bb][Ee][Tt][Aa][0-9]+)?(mtn)?\/?

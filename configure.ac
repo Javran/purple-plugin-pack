@@ -11,11 +11,6 @@ AC_DEFINE_UNQUOTED(PP_VERSION, "AC_PACKAGE_VERSION", [Plugin Pack Version])
 AC_PATH_PROG(sedpath, sed)
 AC_DISABLE_STATIC
 
-dnl This disables check of libtool for these compilers
-CXX=no
-F77=no
-GCJ=no
-
 dnl #######################################################################
 dnl # Setup libtool
 dnl #######################################################################
@@ -292,6 +287,16 @@ AC_CONFIG_COMMANDS_POST([
 	cmp VERSION VERSION.ac-save || touch -r VERSION.ac-save VERSION
 	rm -f VERSION.ac-save
 ])
+
+dnl #######################################################################
+dnl # We've looked for all our dependencies and everything, now we need
+dnl # to check for python, and pass everything on to plugin_pack.py
+dnl #######################################################################
+AC_PATH_PROG([PYTHON], [python], [no])
+
+PP_DIST_DIRS="`$srcdir/plugin_pack.py -D`"
+AC_SUBST(PP_DIST_DIRS)
+echo $PP_DIST_DIRS
 
 dnl #######################################################################
 dnl # Finish up

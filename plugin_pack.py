@@ -128,12 +128,11 @@ class PluginPack:
 	def dist_dirs(self):
 		dirs = {}
 		for name in self.plugins.keys():
-			dirs[name] = 1
+			dirs[self.plugins[name].directory] = 1
 
 		dirs = dirs.keys()
 		dirs.sort()
-		for dir in dirs:
-			print dir
+		print string.join(dirs, ' ')
 
 	def default_plugins(self):
 		return self.list_type('default')
