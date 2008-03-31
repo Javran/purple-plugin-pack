@@ -12,6 +12,11 @@ AC_PATH_PROG(sedpath, sed)
 AC_DISABLE_STATIC
 
 dnl #######################################################################
+dnl # Initialize some variables that get passed to plugin_pack.py
+dnl #######################################################################
+DEPENDENCIES=""
+
+dnl #######################################################################
 dnl # Setup libtool
 dnl #######################################################################
 AM_PROG_LIBTOOL
@@ -72,6 +77,7 @@ PKG_CHECK_MODULES(PURPLE, purple,
 
 HAVE_PURPLE="yes"
 AM_CONDITIONAL(HAVE_PURPLE, true)
+DEPENDENCIES="$DEPENDENCIES purple"
 
 if test x"$prefix" = x"NONE" ; then
 	PURPLE_LIBDIR=`pkg-config --variable=libdir purple`
@@ -113,6 +119,7 @@ PKG_CHECK_MODULES(PIDGIN, pidgin,
 	AC_DEFINE(HAVE_PIDGIN, 1, [Define if we've found pidgin.])
 	HAVE_PIDGIN="yes"
 	AM_CONDITIONAL(HAVE_PIDGIN, true)
+	DEPENDENCIES="$DEPENDENCIES pidgin"
 ], [
 	AC_MSG_RESULT([no])
 	HAVE_PIDGIN="no"
@@ -152,6 +159,7 @@ PKG_CHECK_MODULES(FINCH, finch,
 	AC_DEFINE(HAVE_FINCH, 1, [Define if we've found finch.])
 	HAVE_FINCH="yes"
 	AM_CONDITIONAL(HAVE_FINCH, true)
+	DEPENDENCIES="$DEPENDENCIES finch"
 ], [
 	AC_MSG_RESULT([no])
 	HAVE_FINCH="no"
@@ -205,10 +213,8 @@ AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
 
 dnl #######################################################################
-dnl # Plugin dependency checking
+dnl # Check for talkfilters
 dnl #######################################################################
-
-# talkfilters
 AC_CHECK_HEADER(talkfilters.h, HAVE_TALKFILTERS=yes, AC_MSG_WARN([
 *** GNU Talk Filters is required to build the talkfilters plugin;
 *** please make sure you have the GNU Talk Filters development headers installed.
@@ -221,9 +227,13 @@ if test x"$HAVE_TALKFILTERS" = x"yes"; then
 	dnl work out that the library exists
 	AC_CHECK_LIB(talkfilters, gtf_filter_count, TALKFILTERS_LIBS="-ltalkfilters")
 	AC_SUBST(TALKFILTERS_LIBS)
+
+	DEPENDENCIES="$DEPENDENCIES talkfilters"
 fi
 
-# switchspell
+dnl #######################################################################
+dnl # Check for switchspell
+dnl #######################################################################
 gtkspell=yes
 PKG_CHECK_MODULES(GTKSPELL, gtkspell-2.0 >= 2.0.2, [], [gtkspell=no])
 AC_SUBST(GTKSPELL_CFLAGS)
@@ -238,9 +248,16 @@ if test x"$gtkspell" = x"yes" ; then
 		BUILD_SWITCH_SPELL=no
 	fi
 fi
+
 AM_CONDITIONAL(BUILD_SWITCH_SPELL, test x"$BUILD_SWITCH_SPELL" = x"yes")
 
-# xmmsremote
+if test x"$BUILD_SWITCH_SPELL" = x"yes" ; then
+	DEPENDENCIES="$DEPENDENCIES switchspell"
+fi
+
+dnl #######################################################################
+dnl # Check for xmms
+dnl #######################################################################
 XMMS_LIBS=""
 XMMS_CFLAGS=""
 HAVE_XMMS="no"
@@ -264,6 +281,8 @@ if test x"$XMMS_CONFIG" != x"no" ; then
 
 	if test x"$HAVE_XMMS" = x"yes" ; then
 		AC_MSG_RESULT([yes])
+
+		DEPENDENCIES="$DEPENDENCIES xmms"
 	else
 		AC_MSG_RESULT([no])
 	fi
@@ -272,6 +291,9 @@ AM_CONDITIONAL(USE_XMMS, test x"$HAVE_XMMS" = x"yes")
 AC_SUBST(XMMS_LIBS)
 AC_SUBST(XMMS_CFLAGS)
 
+dnl #######################################################################
+dnl # Check for some basic headers
+dnl #######################################################################
 AC_CHECK_HEADERS(regex.h)
 
 dnl #######################################################################
@@ -296,7 +318,6 @@ AC_PATH_PROG([PYTHON], [python], [no])
 
 PP_DIST_DIRS="`$srcdir/plugin_pack.py -D`"
 AC_SUBST(PP_DIST_DIRS)
-echo $PP_DIST_DIRS
 
 dnl #######################################################################
 dnl # Finish up
