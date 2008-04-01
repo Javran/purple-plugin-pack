@@ -91,7 +91,13 @@ class Plugin:
 class PluginPack:
 	plugins = {}
 
-	def load_plugins(self):
+	def load_plugins(self, types, depends):
+		if len(types) == 0:
+			types = None
+
+		if len(depends) == 0:
+			depends = None
+
 		for file in glob.glob('*/plugins.cfg'):
 			parser = ConfigParser.ConfigParser()
 
@@ -103,6 +109,20 @@ class PluginPack:
 
 			for plugin in parser.sections():
 				p = Plugin(os.path.dirname(file), plugin, parser)
+
+				# this is kind of hacky, but if we have types, we check to see
+				# if the type is in list of types to load.
+				if types:
+					try:
+						types.index(p.type)
+					except ValueError:
+						continue
+				
+				# now we check if the give plugins depends match the search
+				# depends
+				if depends:
+					if len(set(depends).intersection(set(p.depends))) == 0:
+						continue
 
 				self.plugins[p.name] = p
 
@@ -204,47 +224,36 @@ def main():
 	# create our main instance
 	pp = PluginPack()
 
-	# load all our plugin data
-	pp.load_plugins()
+	types = []
+	depends = []
 
 	try:
-		shortopts = 'aDdhip:'
-		longopts = [
-			'abusive-plugins',
-			'dependency-graph',
-			'default-plugins',
-			'dist-dirs',
-			'help',
-			'incomplete-plugins',
-			'plugin',
-		]
+		shortopts = 'adfiPp'
 
-		opts, args = getopt.getopt(sys.argv[1:], shortopts, longopts)
+		opts, args = getopt.getopt(sys.argv[1:], shortopts)
 	except getopt.error, msg:
 		print msg
 		print __doc__
 		sys.exit(1)
 
-	if not opts:
-		print __doc__
-		sys.exit(1)
-
 	for o, a in opts:
-		if o in ('-a', '--abusive-plugins'):
-			pp.print_names(pp.abusive_plugins())
-		elif o == '--dependency-graph':
-			pp.dependency_graph()
-		elif o in ('-D', '--dist-dirs'):
-			pp.dist_dirs()
-		elif o in ('-d', '--default-plugins'):
-			pp.print_names(pp.default_plugins())
-		elif o in ('-h', '--help'):
-			print __doc__
-			sys.exit(0)
-		elif o in ('-i', '--incomplete-plugins'):
-			pp.print_names(pp.incomplete_plugins())
-		elif o in ('-p', '--plugin'):
-			print pp.plugins[a]
+		if o == '-a':
+			types.append('abusive')
+		elif o == '-d':
+			types.append('default')
+		elif o == '-i':
+			types.append('incomplete')
+		elif o == '-f':
+			depends.append('finch')
+		elif o == '-P':
+			depends.append('pidgin')
+		elif o == '-p':
+			depends.append('purple')
+
+	print "args: %s"  % (string.join(args, ' '))
+
+	pp.load_plugins(types, depends)
+	pp.print_names(pp.plugins.values())
 
 if __name__ == "__main__":
 	main()
