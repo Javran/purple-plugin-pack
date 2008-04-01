@@ -267,7 +267,7 @@ AC_SUBST(ASPELL_LIBS)
 AM_CONDITIONAL(BUILD_SWITCH_SPELL, test x"$BUILD_SWITCH_SPELL" = x"yes")
 
 if test x"$BUILD_SWITCH_SPELL" = x"yes" ; then
-	DEPENDENCIES="$DEPENDENCIES switchspell"
+	DEPENDENCIES="$DEPENDENCIES gtkspell aspell"
 fi
 
 dnl #######################################################################
