@@ -17,19 +17,19 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1301, USA.
 
-"""Usage: plugin_pack.py [options]
+"""Usage: plugin_pack.py [OPTION...] command
 
-  -a, --abusive-plugins     Outputs a comma-separated list of the abusive
-                            plugins
-  -D, --dist-dirs           Outputs the list of all directories that have
-                            plugins and should be included in the distribution
-  -d, --default-plugins     Outputs a comma-separated list of the default
-                            plugins
-      --dependency-graph    Outputs a graphviz diagram showing dependencies
-  -h, --help                Shows usage information
-  -i, --incomplete-plugins  Outputs a comma-separated list of the incomplete
-                            plugins
-  -p, --plugin=<name>       Outputs all info about <name>
+  -a  Load abusive plugins
+  -d  Load default plugins
+  -f  Load finch plugins
+  -i  Load incomplate plugins
+  -p  Load purple plugins
+  -P  Load pidgin plugins
+
+Commands:
+
+  dependency-graph  Outputs a graphviz script of the plugin's dependencies
+  info <plugin>     Display information about plugin.
 """
 
 import ConfigParser
@@ -75,7 +75,7 @@ class Plugin:
 
 	def __str__(self):
 		output  = 'name: %s\n' % self.name
-		output += 'authors: %s\n' % string.join(self.authors, ',')
+		output += 'authors: %s\n' % string.join(self.authors, ', ')
 		output += 'type: %s\n' % self.type
 		output += 'depends: %s\n' % string.join(self.depends, ' ')
 		output += 'provides: %s\n' % self.provides
@@ -89,6 +89,7 @@ class Plugin:
 		return output
 
 class PluginPack:
+	commands = {}
 	plugins = {}
 
 	def load_plugins(self, types, depends):
@@ -124,7 +125,7 @@ class PluginPack:
 					if len(set(depends).intersection(set(p.depends))) == 0:
 						continue
 
-				self.plugins[p.name] = p
+				self.plugins[p.provides] = p
 
 	def list_type(self, type):
 		list = []
@@ -145,15 +146,6 @@ class PluginPack:
 
 		print string.join(names, ',')
 
-	def dist_dirs(self):
-		dirs = {}
-		for name in self.plugins.keys():
-			dirs[self.plugins[name].directory] = 1
-
-		dirs = dirs.keys()
-		dirs.sort()
-		print string.join(dirs, ' ')
-
 	def default_plugins(self):
 		return self.list_type('default')
 
@@ -163,7 +155,29 @@ class PluginPack:
 	def incomplete_plugins(self):
 		return self.list_type('incomplete')
 
-	def dependency_graph(self):
+	def help(self, args):
+		try:
+			cmd = self.commands[args[0]]
+			print cmd.__doc__
+		except KeyError:
+			print 'command \'%s\' was not found' % args[0]
+		except IndexError:
+			pass
+	commands['help'] = help
+
+	def dist_dirs(self, args):
+		"""Outputs a list of all plugin directories to included in the distribution"""
+		dirs = {}
+		for name in self.plugins.keys():
+			dirs[self.plugins[name].directory] = 1
+
+		dirs = dirs.keys()
+		dirs.sort()
+		print string.join(dirs, ' ')
+	commands['dist_dirs'] = dist_dirs
+
+	def dependency_graph(self, args):
+		"""Outputs a graphviz script of dependencies"""
 		def node_label(plugin):
 			node = plugin.provides.replace('-', '_')
 			label = plugin.name
@@ -219,6 +233,18 @@ class PluginPack:
 				print '\t%s -> %s;' % (node, dep)
 
 		print '}'
+	commands['dependency_graph'] = dependency_graph
+
+	def info(self, args):
+		"""Outputs all information about the given plugins"""
+		for p in args:
+			try:
+				print self.plugins[p].__str__().strip()
+			except KeyError:
+				print 'Failed to find a plugin that provides \'%s\'' % (p)
+
+			print
+	commands['info'] = info
 
 def main():
 	# create our main instance
@@ -250,10 +276,22 @@ def main():
 		elif o == '-p':
 			depends.append('purple')
 
-	print "args: %s"  % (string.join(args, ' '))
-
+	# load the plugins that have been requested, if both lists are empty, all
+	# plugins are loaded
 	pp.load_plugins(types, depends)
-	pp.print_names(pp.plugins.values())
 
-if __name__ == "__main__":
+	if(len(args) == 0):
+		print __doc__
+		sys.exit(1)
+
+	cmd = args[0]
+	args = args[1:]
+
+	try:
+		pp.commands[cmd](pp, args)
+	except KeyError:
+		printerr('\'%s\' command not found' % (cmd))
+
+
+if __name__ == '__main__':
 	main()
