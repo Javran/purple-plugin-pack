@@ -43,7 +43,7 @@ static GList * books_connected = NULL;
 static GtkWidget *
 find_placed_object(GtkWidget * w, int * client_height) {
         GtkWidget * ret;
-        int border_width;
+        gint border_width;
         border_width = gtk_container_get_border_width( GTK_CONTAINER(w) );
         if ((w->allocation.height > 1)||(gtk_widget_get_parent(w)==NULL)) {
                 *client_height = w->allocation.height;
@@ -122,14 +122,14 @@ rebuild_container(PidginConversation * conv) {
 	GtkWidget * vpaned = gtk_vpaned_new();
 	GtkNotebook * notebook = GTK_NOTEBOOK(get_notebook(top));
 	gboolean chat = (conv->active_conv->type == PURPLE_CONV_TYPE_CHAT);
-	int handle_size = 0;
-	int parent_area = 0;
-	int border_size = 0;
-	int new_pos;
+	gint handle_size = 0;
+	gint parent_area = 0;
+	gint border_size = 0;
+	gint new_pos;
 	GtkPositionType tabpos = -1;
 	GValue v;
 
-	int stored_height = (chat)?
+	gint stored_height = (chat)?
 		purple_prefs_get_int( "/plugins/manualsize/chat_entry_height" )
 		:
 		purple_prefs_get_int( "/plugins/manualsize/im_entry_height" );
