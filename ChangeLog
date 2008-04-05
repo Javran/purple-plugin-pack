@@ -5,6 +5,8 @@ Version 2.4.0mtn:
 	* Added Ike Gingerich's splitter plugin
 	* Fixed dewysiwygification's debug messages not properly ending lines.
 	* Added google plugin for "I'm Feeling Lucky" searches.
+	* Fixed aspell dependency in switchspell (fixes gentoo bug #196693)
+	* Added nodashi's manualsize plugin
 
 Version 2.3.0: 03/17/08
 	* Fixed a typo in irc-more's source that allowed a potential double-free

@@ -14,8 +14,9 @@ switchspell_la_SOURCES = \
 	switchspell.c
 
 switchspell_la_LIBADD = \
-	$(PIDGIN_LIBS) \
-	$(GTK_LIBS)
+	$(ASPELL_LIBS) \
+	$(GTK_LIBS) \
+	$(PIDGIN_LIBS)
 
 endif # PIDGIN
 
@@ -23,6 +24,7 @@ AM_CPPFLAGS = \
 	-DLIBDIR=\"$(PIDGIN_LIBDIR)\" \
 	-DDATADIR=\"$(PIDGIN_DATADIR)\" \
 	-DPIXMAPSDIR=\"$(PIDGIN_PIXMAPSDIR)\" \
+	$(ASPELL_CFLAGS) \
 	$(GTK_CFLAGS) \
 	$(DEBUG_CFLAGS) \
 	$(PIDGIN_CFLAGS) \
