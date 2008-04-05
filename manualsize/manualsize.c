@@ -45,18 +45,20 @@ static GList * books_connected = NULL;
  * use it as a base for evaluating position of separator in a GtkVPaned
  */
 static GtkWidget *
-find_placed_object(GtkWidget * w, int * client_height) {
-        GtkWidget * ret;
-        gint border_width;
-        border_width = gtk_container_get_border_width( GTK_CONTAINER(w) );
-        if ((w->allocation.height > 1)||(gtk_widget_get_parent(w)==NULL)) {
-                *client_height = w->allocation.height;
-                return w;
-        } else {
-                ret = find_placed_object( gtk_widget_get_parent(w), client_height );
-                *client_height = *client_height - border_width + 2;
-                return ret;
-        }
+find_placed_object(GtkWidget *w, gint *client_height) {
+	GtkWidget * ret;
+	gint border_width;
+
+	border_width = gtk_container_get_border_width(GTK_CONTAINER(w));
+
+	if((w->allocation.height > 1) || (gtk_widget_get_parent(w)==NULL)) {
+		*client_height = w->allocation.height;
+		return w;
+	} else {
+		ret = find_placed_object(gtk_widget_get_parent(w), client_height);
+		*client_height = *client_height - border_width + 2;
+		return ret;
+	}
 }
 
 /*
@@ -66,8 +68,16 @@ find_placed_object(GtkWidget * w, int * client_height) {
  */
 static GtkWidget *
 get_notebook(GtkWidget * w) {
-	if (strcmp(GTK_OBJECT_TYPE_NAME(w),"GtkNotebook")==0) return w;
-	if (gtk_widget_get_parent(w)==NULL) return NULL;
+	const gchar *name = NULL;
+
+	name = G_OBJECT_TYPE_NAME(w);
+
+	if (name && strcmp("GtkNotebook", name) == 0)
+		return w;
+
+	if(gtk_widget_get_parent(w) == NULL)
+		return NULL;
+
 	return get_notebook(gtk_widget_get_parent(w));
 }
 
@@ -75,7 +85,9 @@ get_notebook(GtkWidget * w) {
  * Signal handler. Triggers a page_added flag.
  */
 static void
-on_page_add( GtkNotebook * book, GtkWidget * widget, guint page_num, gpointer user_data ) {
+on_page_add(GtkNotebook *book, GtkWidget *widget, guint page_num,
+            gpointer user_data)
+{
 	page_added = TRUE;
 	return;
 }
@@ -84,9 +96,11 @@ on_page_add( GtkNotebook * book, GtkWidget * widget, guint page_num, gpointer us
  * When removing last page, forget this notebook
  */
 static void
-on_page_remove( GtkNotebook * book, GtkWidget * widget, guint page_num, gpointer user_data ) {
-	if (gtk_notebook_get_n_pages(book) == 0) {
-		books_connected = g_list_remove( books_connected, book );
+on_page_remove(GtkNotebook *book, GtkWidget *widget, guint page_num,
+               gpointer user_data)
+{
+	if(gtk_notebook_get_n_pages(book) == 0) {
+		books_connected = g_list_remove(books_connected, book);
 		printf("Removed!\n");
 	}
 }
@@ -97,8 +111,9 @@ on_page_remove( GtkNotebook * book, GtkWidget * widget, guint page_num, gpointer
  */
 static void
 connect_notebook_handler(GtkNotebook * notebook) {
-	GList * item = g_list_find( books_connected, notebook );
-	if (!item) {
+	GList * item = g_list_find(books_connected, notebook);
+
+	if(!item) {
 		g_signal_connect_after(notebook, "page-added",
 		                       G_CALLBACK(on_page_add), NULL);
 		g_signal_connect_after(notebook, "page-removed",
@@ -119,8 +134,7 @@ connect_notebook_handler(GtkNotebook * notebook) {
  * Change "vpaned" divider position
  */
 static void
-rebuild_container(PidginConversation * conv) {
-
+rebuild_container(PidginConversation *conv) {
 	GtkWidget * pane = gtk_widget_get_parent(GTK_WIDGET(conv->lower_hbox));
 	GtkWidget * top = gtk_widget_get_parent( pane );
 	GtkWidget * vpaned = gtk_vpaned_new();
@@ -133,7 +147,7 @@ rebuild_container(PidginConversation * conv) {
 	GValue v = {0, };
 	gint stored_height = 0;
 	
-	if(purple_conversation_get_type(conv) == PURPLE_CONV_TYPE_CHAT)
+	if(purple_conversation_get_type(conv->active_conv) == PURPLE_CONV_TYPE_CHAT)
 		stored_height = purple_prefs_get_int(PREF_CHAT_ENTRY_HEIGHT);
 	else
 		stored_height = purple_prefs_get_int(PREF_IM_ENTRY_HEIGHT);
@@ -185,29 +199,35 @@ rebuild_container(PidginConversation * conv) {
  * Store input area size depending on a conversation type
  */
 static void
-store_area_size(PidginConversation * conv) {
+store_area_size(PidginConversation *gtkconv) {
+	GtkWidget *parent = NULL;
+	const gchar *name = NULL;
 
-	gboolean chat = (conv->active_conv->type == PURPLE_CONV_TYPE_CHAT);
-	
-	if (strcmp("GtkVPaned",(GTK_OBJECT_TYPE_NAME(gtk_widget_get_parent( GTK_WIDGET(conv->lower_hbox)))))==0) {
-		if (chat) {
+	parent = gtk_widget_get_parent(GTK_WIDGET(gtkconv->lower_hbox));
+	name = G_OBJECT_TYPE_NAME(parent);
+
+	if(name && strcmp("GtkVPaned", name) == 0) {
+		PurpleConversation *conv = gtkconv->active_conv;
+
+		if(purple_conversation_get_type(conv) == PURPLE_CONV_TYPE_CHAT) {
 			purple_prefs_set_int(PREF_CHAT_ENTRY_HEIGHT,
-			                     conv->lower_hbox->allocation.height);
+			                     gtkconv->lower_hbox->allocation.height);
 		} else {
 			purple_prefs_set_int(PREF_IM_ENTRY_HEIGHT,
-			                     conv->lower_hbox->allocation.height);
+			                     gtkconv->lower_hbox->allocation.height);
 		}
 	}
-	return;
 }
 
 /*
  * Signal handler. Called when conversation created, and rebuilds a conversation pane
  */
 static void
-on_display(void* data) {
-	PidginConversation * gtkconv = (PidginConversation*)data;
-	rebuild_container( gtkconv );
+on_display(gpointer data) {
+	PidginConversation *gtkconv = (PidginConversation *)data;
+
+	if(gtkconv)
+		rebuild_container(gtkconv);
 }
 
 /*
@@ -215,13 +235,11 @@ on_display(void* data) {
  */
 static void
 on_destroy(void * data) {
-	PurpleConversation * conv = (PurpleConversation*)data;
-	PidginConversation * gtkconv;
-	if (conv) {
-    	        gtkconv = PIDGIN_CONVERSATION( conv );
-	        if (gtkconv) {
-			store_area_size( gtkconv );
-		}
+	PurpleConversation *conv = (PurpleConversation*)data;
+	if(conv) {
+		PidginConversation * gtkconv = PIDGIN_CONVERSATION(conv);
+        if (gtkconv)
+			store_area_size(gtkconv);
 	}
 }
 
@@ -236,8 +254,8 @@ cleanup_callback(gpointer data, gpointer user_data) {
 
 static gboolean
 plugin_load(PurplePlugin *plugin) {
-	void * gtk_conv_handle = pidgin_conversations_get_handle();
-	void * conv_handle = purple_conversations_get_handle();
+	void *gtk_conv_handle = pidgin_conversations_get_handle();
+	void *conv_handle = purple_conversations_get_handle();
 
 	purple_prefs_add_none(PREF_PREFIX);
 	purple_prefs_add_int(PREF_CHAT_ENTRY_HEIGHT, 128);
@@ -253,8 +271,9 @@ plugin_load(PurplePlugin *plugin) {
 
 static gboolean
 plugin_unload(PurplePlugin *plugin) {
-	g_list_foreach( books_connected, cleanup_callback, NULL );
-	g_list_free( books_connected );
+	g_list_foreach(books_connected, cleanup_callback, NULL);
+	g_list_free(books_connected);
+
 	return TRUE;
 }
 
