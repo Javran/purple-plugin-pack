@@ -285,14 +285,14 @@ static PurplePluginInfo info =
 	PURPLE_PRIORITY_DEFAULT,                          /**< priority       */
 
 	NOTIFY_PLUGIN_ID,                                 /**< id             */
-	N_("Entry area manual sizing"),                   /**< name           */
-	DISPLAY_VERSION,                                  /**< version        */
+	NULL,                                             /**< name           */
+	PP_VERSION,                                       /**< version        */
 	                                                  
-	N_("Allows you to change entry area height"),     /**  summary        */
-	N_("Allows you to change entry area height"),     /**  description    */
+	NULL,                                             /**  summary        */
+	NULL,                                             /**  description    */
 	                                                  
 	"Artemy Kapitula <dalt74@gmail.com>",             /**< author         */
-	PURPLE_WEBSITE,                                   /**< homepage       */
+	PP_WEBSITE,                                       /**< homepage       */
 
 	plugin_load,                                      /**< load           */
 	plugin_unload,                                    /**< unload         */
@@ -311,9 +311,15 @@ static PurplePluginInfo info =
 };
 
 static void
-init_plugin(PurplePlugin *plugin)
-{
-    return;
+init_plugin(PurplePlugin *plugin) {
+#ifdef ENABLE_NLS
+	bindtextdomain(GETTEXT_PACKAGE, PP_LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+#endif /* ENABLE_NLS */
+
+	info.name = _("Entry area manual sizing");
+	info.summary = _("Allows you to change entry area height");
+	info.description = info.summary;
 }
 
 PURPLE_INIT_PLUGIN(manualsize, init_plugin, info)
