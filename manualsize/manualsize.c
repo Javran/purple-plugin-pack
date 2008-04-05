@@ -46,7 +46,8 @@ static GList * books_connected = NULL;
  * the widget of the added page has allocation->heigth = 1, and we cannot
  * use it as a base for evaluating position of separator in a GtkVPaned
  */
-static GtkWidget * find_placed_object(GtkWidget * w, int * client_height) {
+static GtkWidget *
+find_placed_object(GtkWidget * w, int * client_height) {
         GtkWidget * ret;
         int border_width;
         border_width = gtk_container_get_border_width( GTK_CONTAINER(w) );
@@ -65,7 +66,8 @@ static GtkWidget * find_placed_object(GtkWidget * w, int * client_height) {
  * It's used to find a GtkNotebook in a conversation window
  * to attach a "page-added" signal handler
  */
-static GtkWidget * get_notebook(GtkWidget * w) {
+static GtkWidget *
+get_notebook(GtkWidget * w) {
 	if (strcmp(GTK_OBJECT_TYPE_NAME(w),"GtkNotebook")==0) return w;
 	if (gtk_widget_get_parent(w)==NULL) return NULL;
 	return get_notebook(gtk_widget_get_parent(w));
@@ -238,8 +240,7 @@ cleanup_callback(gpointer data, gpointer user_data) {
 }
 
 static gboolean
-plugin_load(PurplePlugin *plugin)
-{
+plugin_load(PurplePlugin *plugin) {
 	void * gtk_conv_handle = pidgin_conversations_get_handle();
 	void * conv_handle = purple_conversations_get_handle();
 
@@ -257,8 +258,7 @@ plugin_load(PurplePlugin *plugin)
 }
 
 static gboolean
-plugin_unload(PurplePlugin *plugin)
-{
+plugin_unload(PurplePlugin *plugin) {
 	g_list_foreach( books_connected, cleanup_callback, NULL );
 	g_list_free( books_connected );
 	return TRUE;
