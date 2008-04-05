@@ -358,6 +358,7 @@ AC_OUTPUT([
 	irssi/Makefile
 	lastseen/Makefile
 	listhandler/Makefile
+	manualsize/Makefile
 	mystatusbox/Makefile
 	napster/Makefile
 	nicksaid/Makefile
