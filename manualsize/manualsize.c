@@ -22,12 +22,6 @@
 #include <gtkutils.h>
 #include <gtkimhtml.h>
 
-#ifndef _WIN32
-#include <X11/Xatom.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#endif
-
 #define NOTIFY_PLUGIN_ID "pidgin-entry-manual-height"
 
 static gboolean page_added = FALSE;    // The flag of page has been added.
