@@ -7,19 +7,20 @@
  *
  */
 
-#include "internal.h"
-#include "pidgin.h"
-#include "gtkprefs.h"
+#include "../common/pp_internal.h"
 
-#include "conversation.h"
-#include "prefs.h"
-#include "signals.h"
-#include "version.h"
-#include "debug.h"
+#include <pidgin.h>
+#include <gtkprefs.h>
 
-#include "gtkplugin.h"
-#include "gtkutils.h"
-#include "gtkimhtml.h"
+#include <conversation.h>
+#include <prefs.h>
+#include <signals.h>
+#include <version.h>
+#include <debug.h>
+
+#include <gtkplugin.h>
+#include <gtkutils.h>
+#include <gtkimhtml.h>
 
 #ifndef _WIN32
 #include <X11/Xatom.h>
