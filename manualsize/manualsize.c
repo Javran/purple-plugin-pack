@@ -42,14 +42,14 @@ static GList * books_connected = NULL;
     // List of notebooks we connected to. When plugin is unloaded,
     // we will disconnect our handler for a "page-added" signal
 
-//
-// Find a first "placed" objects (the object that has allocation with a height > 1)
-// and it's internal height.
-//
-// It's required because when creating a non-first page in the notebook,
-// the widget of the added page has allocation->heigth = 1, and we cannot
-// use it as a base for evaluating position of separator in a GtkVPaned
-//
+/*
+ * Find a first "placed" objects (the object that has allocation with a height > 1)
+ * and it's internal height.
+ *
+ * It's required because when creating a non-first page in the notebook,
+ * the widget of the added page has allocation->heigth = 1, and we cannot
+ * use it as a base for evaluating position of separator in a GtkVPaned
+ */
 static GtkWidget * find_placed_object(GtkWidget * w, int * client_height) {
         GtkWidget * ret;
         int border_width;
@@ -64,29 +64,29 @@ static GtkWidget * find_placed_object(GtkWidget * w, int * client_height) {
         }
 }
 
-//
-// Find a GtkNotebook in the widget's parents
-// It's used to find a GtkNotebook in a conversation window
-// to attach a "page-added" signal handler
-//
+/*
+ * Find a GtkNotebook in the widget's parents
+ * It's used to find a GtkNotebook in a conversation window
+ * to attach a "page-added" signal handler
+ */
 static GtkWidget * get_notebook(GtkWidget * w) {
 	if (strcmp(GTK_OBJECT_TYPE_NAME(w),"GtkNotebook")==0) return w;
 	if (gtk_widget_get_parent(w)==NULL) return NULL;
 	return get_notebook(gtk_widget_get_parent(w));
 }
 
-//
-// Signal handler. Triggers a page_added flag.
-//
+/*
+ * Signal handler. Triggers a page_added flag.
+ */
 static void
 on_page_add( GtkNotebook * book, GtkWidget * widget, guint page_num, gpointer user_data ) {
 	page_added = TRUE;
 	return;
 }
 
-//
-// When removing last page, forget this notebook
-//
+/*
+ * When removing last page, forget this notebook
+ */
 static void
 on_page_remove( GtkNotebook * book, GtkWidget * widget, guint page_num, gpointer user_data ) {
 	if (gtk_notebook_get_n_pages(book) == 0) {
@@ -95,10 +95,10 @@ on_page_remove( GtkNotebook * book, GtkWidget * widget, guint page_num, gpointer
 	}
 }
 
-//
-// Attach a handlers on a notebook if it is not already attached
-// Adds a notebook into a tracked objects list
-//
+/*
+ * Attach a handlers on a notebook if it is not already attached
+ * Adds a notebook into a tracked objects list
+ */
 static void
 connect_notebook_handler(GtkNotebook * notebook) {
 	GList * item = g_list_find( books_connected, notebook );
@@ -110,16 +110,16 @@ connect_notebook_handler(GtkNotebook * notebook) {
 	}
 }
 
-//
-// Rebuild conversation pane.
-// Find a conversation pane ("pane")
-// Find a parent for a pane ("top")
-// Create GtkVPaned ("vpaned")
-// Move "pane" from a "top" to the up of "vpaned"
-// Move "lower_hbox" of conversation to the bottom "vpaned"
-// Insert "vpaned" into a "top"
-// Change "vpaned" divider position
-//
+/*
+ * Rebuild conversation pane.
+ * Find a conversation pane ("pane")
+ * Find a parent for a pane ("top")
+ * Create GtkVPaned ("vpaned")
+ * Move "pane" from a "top" to the up of "vpaned"
+ * Move "lower_hbox" of conversation to the bottom "vpaned"
+ * Insert "vpaned" into a "top"
+ * Change "vpaned" divider position
+ */
 static void
 rebuild_container(PidginConversation * conv) {
 
@@ -184,9 +184,9 @@ rebuild_container(PidginConversation * conv) {
 
 }
 
-//
-// Store input area size depending on a conversation type
-//
+/*
+ * Store input area size depending on a conversation type
+ */
 static void
 store_area_size(PidginConversation * conv) {
 
@@ -208,18 +208,18 @@ store_area_size(PidginConversation * conv) {
 	return;
 }
 
-//
-// Signal handler. Called when conversation created, and rebuilds a conversation pane
-//
+/*
+ * Signal handler. Called when conversation created, and rebuilds a conversation pane
+ */
 static void
 on_display(void* data) {
 	PidginConversation * gtkconv = (PidginConversation*)data;
 	rebuild_container( gtkconv );
 }
 
-//
-// Signal handler. Called when conversation destroyed, to store an input area size
-//
+/*
+ * Signal handler. Called when conversation destroyed, to store an input area size
+ */
 static void
 on_destroy(void * data) {
 	PurpleConversation * conv = (PurpleConversation*)data;
@@ -232,9 +232,9 @@ on_destroy(void * data) {
 	}
 }
 
-//
-// Traverse connected notebooks and remove our signal handler
-//
+/*
+ * Traverse connected notebooks and remove our signal handler
+ */
 static void
 cleanup_callback(gpointer data, gpointer user_data) {
 	g_signal_handlers_disconnect_by_func( data, on_page_add, NULL );
