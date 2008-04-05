@@ -101,8 +101,10 @@ static void
 connect_notebook_handler(GtkNotebook * notebook) {
 	GList * item = g_list_find( books_connected, notebook );
 	if (!item) {
-		g_signal_connect_after( notebook, "page-added", on_page_add, NULL );
-		g_signal_connect_after( notebook, "page-removed", on_page_remove, NULL );
+		g_signal_connect_after(notebook, "page-added",
+		                       G_CALLBACK(on_page_add), NULL);
+		g_signal_connect_after(notebook, "page-removed",
+		                       G_CALLBACK(on_page_remove), NULL);
 		books_connected = g_list_append( books_connected, notebook );
 		printf("Added!\n");
 	}
