@@ -24,6 +24,10 @@
 
 #define NOTIFY_PLUGIN_ID "pidgin-entry-manual-height"
 
+#define PREF_PREFIX	                       "/plugins/manualsize"
+#define PREF_CHAT_ENTRY_HEIGHT PREF_PREFIX "/chat_entry_height"
+#define PREF_IM_ENTRY_HEIGHT   PREF_PREFIX "/im_entry_height"
+
 static gboolean page_added = FALSE;    // The flag of page has been added.
     // It's used to track a case when we add a second page and should to do some
     // additional work to track a page resize issues
@@ -121,18 +125,18 @@ rebuild_container(PidginConversation * conv) {
 	GtkWidget * top = gtk_widget_get_parent( pane );
 	GtkWidget * vpaned = gtk_vpaned_new();
 	GtkNotebook * notebook = GTK_NOTEBOOK(get_notebook(top));
-	gboolean chat = (conv->active_conv->type == PURPLE_CONV_TYPE_CHAT);
 	gint handle_size = 0;
 	gint parent_area = 0;
 	gint border_size = 0;
 	gint new_pos;
 	GtkPositionType tabpos = -1;
-	GValue v;
-
-	gint stored_height = (chat)?
-		purple_prefs_get_int( "/plugins/manualsize/chat_entry_height" )
-		:
-		purple_prefs_get_int( "/plugins/manualsize/im_entry_height" );
+	GValue v = {0, };
+	gint stored_height = 0;
+	
+	if(purple_conversation_get_type(conv) == PURPLE_CONV_TYPE_CHAT)
+		stored_height = purple_prefs_get_int(PREF_CHAT_ENTRY_HEIGHT);
+	else
+		stored_height = purple_prefs_get_int(PREF_IM_ENTRY_HEIGHT);
 
 	if (stored_height < 0) stored_height = 128;
 
@@ -141,7 +145,6 @@ rebuild_container(PidginConversation * conv) {
 		connect_notebook_handler( notebook );
 	}
 
-	memset( &v, 0, sizeof(v) );
 	g_value_init( &v, G_TYPE_BOOLEAN );
 	
 	gtk_widget_show( vpaned );
@@ -188,15 +191,11 @@ store_area_size(PidginConversation * conv) {
 	
 	if (strcmp("GtkVPaned",(GTK_OBJECT_TYPE_NAME(gtk_widget_get_parent( GTK_WIDGET(conv->lower_hbox)))))==0) {
 		if (chat) {
-			purple_prefs_set_int(
-				"/plugins/manualsize/chat_entry_height",
-				conv->lower_hbox->allocation.height
-			);
+			purple_prefs_set_int(PREF_CHAT_ENTRY_HEIGHT,
+			                     conv->lower_hbox->allocation.height);
 		} else {
-			purple_prefs_set_int(
-				"/plugins/manualsize/im_entry_height",
-				conv->lower_hbox->allocation.height
-			);
+			purple_prefs_set_int(PREF_IM_ENTRY_HEIGHT,
+			                     conv->lower_hbox->allocation.height);
 		}
 	}
 	return;
@@ -240,10 +239,9 @@ plugin_load(PurplePlugin *plugin) {
 	void * gtk_conv_handle = pidgin_conversations_get_handle();
 	void * conv_handle = purple_conversations_get_handle();
 
-	purple_prefs_add_none( "/plugins" );
-	purple_prefs_add_none( "/plugins/manualsize" );
-	purple_prefs_add_int( "/plugins/manualsize/chat_entry_height", 128 );
-	purple_prefs_add_int( "/plugins/manualsize/im_entry_height", 128 );
+	purple_prefs_add_none(PREF_PREFIX);
+	purple_prefs_add_int(PREF_CHAT_ENTRY_HEIGHT, 128);
+	purple_prefs_add_int(PREF_IM_ENTRY_HEIGHT, 128);
 
 	purple_signal_connect(gtk_conv_handle, "conversation-displayed", plugin,
 	                    PURPLE_CALLBACK(on_display), NULL);
