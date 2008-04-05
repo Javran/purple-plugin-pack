@@ -30,11 +30,6 @@
 
 #define NOTIFY_PLUGIN_ID "pidgin-entry-manual-height"
 
-static PurplePlugin * myself = NULL;
-
-static PurplePlugin *my_plugin = NULL;
-    // Static plugin registration info
-
 static gboolean page_added = FALSE;    // The flag of page has been added.
     // It's used to track a case when we add a second page and should to do some
     // additional work to track a page resize issues
@@ -248,13 +243,10 @@ plugin_load(PurplePlugin *plugin)
 	void * gtk_conv_handle = pidgin_conversations_get_handle();
 	void * conv_handle = purple_conversations_get_handle();
 
-	myself = plugin;
 	purple_prefs_add_none( "/plugins" );
 	purple_prefs_add_none( "/plugins/manualsize" );
 	purple_prefs_add_int( "/plugins/manualsize/chat_entry_height", 128 );
 	purple_prefs_add_int( "/plugins/manualsize/im_entry_height", 128 );
-
-	my_plugin = plugin;
 
 	purple_signal_connect(gtk_conv_handle, "conversation-displayed", plugin,
 	                    PURPLE_CALLBACK(on_display), NULL);
@@ -267,7 +259,6 @@ plugin_load(PurplePlugin *plugin)
 static gboolean
 plugin_unload(PurplePlugin *plugin)
 {
-	myself = NULL;
 	g_list_foreach( books_connected, cleanup_callback, NULL );
 	g_list_free( books_connected );
 	return TRUE;
