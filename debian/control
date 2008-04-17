@@ -1,0 +1,106 @@
+Source: purple-plugin-pack
+Section: net
+Priority: optional
+Maintainer: Benjamin Seidenberg <benjamin@debian.org>
+Build-Depends: debhelper (>= 5), pidgin-dev, pkg-config, libgtk2.0-dev, libglib2.0-dev, libxml-parser-perl
+Standards-Version: 3.7.2
+
+Package: pidgin-plugin-pack
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Enhances: pidgin, xmms
+Description: 30 useful plugins for pidgin
+ Plugin pack is a collection of many simple-yet-useful plugins for pidgin. A 
+ brief description of each is below. For more information about an individual
+ plugin, please see http://plugins.guifications.org/trac/wiki/PluginPack
+ .
+ /exec: execute commands and optionaly send their output in an IM/chat window
+ .
+ Album: archives all buddy icons for all buddies in the user's buddy list
+ .
+ Auto Reply: auto-replies on any protocol, also can be specific to each buddy
+ .
+ Bash.org: provides links to random or select quotes on bash.org and qdb.us 
+ .
+ Buddy List Options: options to hide buddy list on creation and hide menu in it
+ .
+ Conversation Badge: shows the protocol icon in the conversation menu tray
+ .
+ DeWYSIWYGification: allows user to type in HTML without it being rendered
+ .
+ Dice: simulates the rolling of dice
+ .
+ DiffTopic: shows changes when the topic is changed in a chatroom
+ .
+ InfoPane: use different views for the "details" information  in conversations
+ .
+ Magic 8 Ball: shows random expressions from a Magic 8 Ball toy
+ .              
+ Flip: flips a coin and shows the result in the current conversation
+ .
+ gRIM: annoy your buddies with a timed series of messages
+ .
+ Highlight: adds support for highlighting user specified words.
+ .
+ Ignore: ignore either all or just chat communication from a specific person
+ .
+ IRC More - adds a couple options to the IRC protocol:
+        - Customized default quit/part messages.
+        - A CTCP version reply. 
+ .
+ IRC Helper: Handles the rough edges of the IRC protocol
+ .
+ Irssi Features: implements many features of irssi 
+        - day change notifications
+        - /window, /layout, /lastlog commands
+        - auto-text formatting
+ .
+ Last Seen: tooltip with time a buddy has been offline and their last message
+ .
+ List Handler: import and export buddy lists in various formats
+ .
+ My Status Box: per-account status selectors with other features
+ .
+ Nick Said: to jump to where your name or other words were said in a chat 
+ .
+ Offline Message: saves messages sent to an offline user until they log in
+ .
+ Old Logger: stores buddy logs in flat files (legacy format)
+ .
+ Plonkers: announce your ignore list to a chat room and other privacy features
+ .
+ Purple Schedule: Schedule reminders at specific times
+ .
+ Separate and Tab: adds two new window positioning methods 
+ .
+ Show Offline: allows you to show certain offline buddies in the buddylist
+ .
+ Sim Fix: fixes messages received from buddies using broken SIM clients
+ .
+ Simple Network Paging Protocol (SNPP):
+ 	allows sending to pager servers (like sendpage or qpage) via SNPP
+ .
+ SSL Info: adds a menu item to display info about the SSL plugin in use
+ .
+ Switch Spell: allows changing the spell-check language for each conversation
+ .
+ Talk Filters: adds support for GNU Talk Filters in Gaim conversations. 
+        Note: Talk Filters must be installed for this plugin to work.
+ .
+ Timelog: view Pidgin logs that fall within specific time ranges.
+ .
+ Xchat-chats: makes Gaim use the chat-widget (GtkXText) used by XChat for chats
+ .
+ XMMS Remote: adds a button to IM and/or chat windows to control xmms.
+ .
+  Homepage: http://plugins.guifications.org/
+
+Package: gaim-irchelper
+Architecture: all
+Depends: pidgin-plugin-pack
+Description: IRC extensions for Pidgin (dummy transitional package)
+ This plugin enhances the usability of the IRC protocol in Pidgin.
+ . 
+ This dummy package depends upon pidgin-plugin-pack, which provides
+ the IRC helper starting with the Debian release codename Lenny. It 
+ can safely be removed after the upgrade to Lenny is complete.

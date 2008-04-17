@@ -1,0 +1,73 @@
+purple-plugin-pack (2.2.0-1) unstable; urgency=low
+
+  * New Upstream Release
+    + Adds new plugins
+      - convbadger
+      - dewisygification
+      - infopane
+      - snpp
+      - switchspell
+      - timelog
+    + Remove plugin hideconv (merged into Pidgin)
+    + Various stability fixes
+  * Fix debian/watch to reflect gaim->pidgin transition in upstream's
+    repository (Closes: #450286)
+  * Apply patch from Stu Tomlinson to fix timelog symbol issue.
+
+ -- Benjamin Seidenberg <benjamin@debian.org>  Mon, 17 Mar 2008 15:25:08 -0400
+
+purple-plugin-pack (2.0.0-1) unstable; urgency=low
+
+  * New upstream release (Closes: #434958)
+    - Blistops now offers the ability to stretch the display of screen names
+      or aliases into the buddy icon column when no icon exists
+    - Blistops now shows the menu bar when hovering near the top of the buddy
+      list window.  Resolves a number of Pidgin bug reports (Closes: #431178)
+    - Listhandler now supports alias-only list exports and imports (rseeber)
+    - Listhandler now exports and imports buddy notes created with the
+      buddynote plugin
+    - Added ignore plugin
+    - Added irc-more plugin
+    - Added highlight plugin
+    - Added incomplete convbadger plugin
+    - Added internationalization support to plonkers
+    - Added more humorous stuff to eight_ball (resiak)
+    - Added support for spaces in filenames to gRIM (rageboy04)
+    - Added a stop subcommand in gRIM (rageboy04)
+    - Changed order of arguments to gRIM command (rageboy04)
+    - Fixed build-by-default status for switchspell
+    - Fixed crash in album when using Pidgin 2.0.2 or newer
+       (Closes: #434136, #433632, #434400)
+    - Fixed potential crashes in some other plugins when using Pidgin 2.0.2 or
+      newer
+    - Fixed potential random crashes in irssi plugin (Closes: #432218)
+  * Enabled new plugins ignore, irc-more and highlight
+  * Applied upstream patch to sepandtab (Thanks: John Bailey)
+    (Part of upstream commit r7241930964f41f9b0fddf83ab3f68f7b55de5870)
+
+ -- Benjamin Seidenberg <benjamin@debian.org>  Mon, 30 Jul 2007 01:23:10 -0400
+
+purple-plugin-pack (1.0-3) unstable; urgency=low
+
+  * The "Third try's the charm" release
+  * Add emtpy transitional package for gaim-irchelper (Closes: #428457) 
+  * Fix reference to gaim in package description (Closes: #427846)
+
+ -- Benjamin Seidenberg <benjamin@debian.org>  Mon, 11 Jun 2007 20:16:31 -0400
+
+purple-plugin-pack (1.0-2) unstable; urgency=low
+
+  * The "Look before you leap" release (Thanks: Ari Pollak)
+  * Enhance Pidgin, not gaim
+  * Remove Conflict/Replace on gaim-irchelper to allow a transitional package
+
+ -- Benjamin Seidenberg <benjamin@debian.org>  Tue, 05 Jun 2007 18:03:08 -0400
+
+purple-plugin-pack (1.0-1) unstable; urgency=low
+
+  * Initial release (Closes: #353641, #291973)
+  * Adjust all Makefiles.in to remove duplicate dependency on pidgin
+  * Remove unneeded .la files 
+
+ -- Benjamin Seidenberg <benjamin@debian.org>  Sun, 27 May 2007 15:24:21 -0400
+

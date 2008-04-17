@@ -1,0 +1,67 @@
+This package was debianized by Benjamin Seidenberg <benjamin@debian.org> on
+Thu, 26 Oct 2006 22:37:45 -0400 as gaim-plugin-pack. However, due to delays in 
+stabalizing the gaim ABI it was not released until May, 2007 
+as purple-plugin-pack.
+
+It was downloaded from http://plugins.guifications.org/trac/downloads
+
+Upstream Authors: Gary Kramlich <grim@reaperworld.com>
+	Stu Tomlinson <stu@nosnilmot.com>
+	Peter Lawler <bleeter@users.sf.net>
+	John Bailey <rekkanoryo@users.sourceforge.net>
+	Kevin Stange <kstange@users.sourceforge.net>
+	Lennert Van Alboom <alverino@users.sourceforge.net>
+	Daniel Atallah <datallah@users.sourceforge.net>
+	Sadrul H Chowdhury <sadrul@users.sourceforge.net>
+	Richard Laager <rlaager@guifications.org>
+
+Copyright (c) 2004-2007 Gary Kramlich <grim@reaperworld.com>, 
+	Stu Tomlinson <stu@nosnilmot.com>,
+	Peter Lawler <bleeter@users.sf.net>,
+        John Bailey <rekkanoryo@users.sourceforge.net>,
+        Kevin Stange <kstange@users.sourceforge.net>,
+        Lennert Van Alboom <alverino@users.sourceforge.net>,
+        Daniel Atallah <datallah@users.sourceforge.net>,
+        Sadrul H Chowdhury <sadrul@users.sourceforge.net>,
+	Richard Laager <rlaager@guifications.org>,
+
+Individual Files Copyright:
+
+gaim-xchat/xtext.c: * Copyright (C) 1998 Peter Zelezny.
+stocker/gtkticker.c: * Copyright (C) 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald
+stocker/gtkticker.c: * GtkTicker Copyright 2000 Syd Logan
+stocker/gtkticker.h: * Copyright (C) 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald
+stocker/gtkticker.h: * Copyright 2000 Syd Logan 
+irchelper/irchelper.c: * Copyright (C) 2005-2007, Richard Laager <rlaager@users.sf.net>
+irchelper/irchelper.c: * Copyright (C) 2004-2005, Mathias Hasselmann <mathias@taschenorakel.de>
+irchelper/irchelper.c: * Copyright (C) 2005, Daniel Beardsmore <uilleann@users.sf.net>
+irchelper/irchelper.c: * Copyright (C) 2005, Björn Nilsson <BNI on irc.freenode.net>
+irchelper/irchelper.c: * Copyright (C) 2005, Anthony Sofocleous <itchysoft_ant@users.sf.net>
+ignorance/regex.h:   Copyright (C) 1985, 1989, 1990, 1991, 1992, 1993 Free Software Foundation, Inc.
+ignorance/ignorance.c: * Copyright (c) 200?-2006 Levi Bard
+ignorance/ignorance.c: * Copyright (c) 2005-2006 Peter Lawler
+ignorance/ignorance.c: * Copyright (c) 2005-2006 John Baile
+napster/napster.c: * Copyright (C) 2000-2001, Rob Flynn <rob@marko.net>
+switchspell/switchspell.c: Copyright (C) 2007, Alfredo Raul Pena <arpena@users.sourceforge.net>, Sadrul H Chowdhury <sadrul@users.sourceforge.net>
+
+License:
+
+   This package is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+
+   This package is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this package; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+On Debian systems, the complete text of the GNU General
+Public License can be found in `/usr/share/common-licenses/GPL'.
+
+The Debian packaging is (C) 2006, 2007 Benjamin Seidenberg <benjamin@debian.org>
+and is licensed under the GPL, see above.
