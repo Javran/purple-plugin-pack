@@ -366,6 +366,7 @@ AC_OUTPUT([
 	lastseen/Makefile
 	listhandler/Makefile
 	manualsize/Makefile
+	msglen/Makefile
 	mystatusbox/Makefile
 	napster/Makefile
 	nicksaid/Makefile
