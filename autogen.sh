@@ -55,7 +55,7 @@ check () {
 	CMD=$1
 
 	echo -n "checking for ${CMD}... "
-	BIN=`which ${CMD}`
+	BIN=`which ${CMD} 2>/dev/null`
 
 	if [ x"${BIN}" = x"" ] ; then
 		echo "not found."
@@ -70,17 +70,23 @@ run_or_die () { # beotch
 	CMD=$1
 	shift
 
+	OUTPUT=`mktemp autogen-XXXX`
+
 	echo -n "running ${CMD} ${@}... "
-	OUTPUT=`${CMD} ${@} 2>&1`
+	${CMD} ${@} >${OUTPUT} 2>&1
+
 	if [ $? != 0 ] ; then
 		echo "failed."
-		echo ${OUTPUT}
+		cat ${OUTPUT}
+		rm -f ${OUTPUT}
 		exit 1
 	else
 		echo "done."
-		if [ x"${OUTPUT}" != x"" ] ; then
-			echo ${OUTPUT}
+		if [ `stat --printf="%s" ${OUTPUT}` -ge 0 ] ; then
+			cat ${OUTPUT}
 		fi
+		
+		rm -f ${OUTPUT}
 	fi
 }
 
