@@ -331,70 +331,34 @@ dnl # to check for python, and pass everything on to plugin_pack.py
 dnl #######################################################################
 AC_PATH_PROG([PYTHON], [python], [no])
 
-PP_DIST_DIRS="`$srcdir/plugin_pack.py -D`"
+PP_DIST_DIRS="`$srcdir/plugin_pack.py dist_dirs`"
 AC_SUBST(PP_DIST_DIRS)
+
+PP_DIST_MAKE=""
+for dir in $PP_DIST_DIRS
+do
+	PP_DIST_MAKE="$PP_DIST_MAKE $dir/Makefile"
+done
 
 dnl #######################################################################
 dnl # Finish up
 dnl #######################################################################
-AC_OUTPUT([
-	Makefile
-	common/Makefile
-	doc/Makefile
-	po/Makefile.in
-	VERSION
-	plugin_pack.spec
-	album/Makefile
-	autoprofile/Makefile
-	autoreply/Makefile
-	awaynotify/Makefile
-	bash/Makefile
-	bit/Makefile
-	blistops/Makefile
-	buddytime/Makefile
-	chronic/Makefile
-	colorize/Makefile
-	convbadger/Makefile
-	dewysiwygification/Makefile
-	dice/Makefile
-	difftopic/Makefile
-	eight_ball/Makefile
-	enhancedhist/Makefile
-	findip/Makefile
-	flip/Makefile
-	google/Makefile
-	gRIM/Makefile
-	groupmsg/Makefile
-	hideconv/Makefile
-	highlight/Makefile
-	ignorance/Makefile
-	ignore/Makefile
-	infopane/Makefile
-	irc-more/Makefile
-	irchelper/Makefile
-	irssi/Makefile
-	lastseen/Makefile
-	listhandler/Makefile
-	mystatusbox/Makefile
-	napster/Makefile
-	nicksaid/Makefile
-	oldlogger/Makefile
-	plonkers/Makefile
-	schedule/Makefile
-	sepandtab/Makefile
-	showoffline/Makefile
-	simfix/Makefile
-	slashexec/Makefile
-	snpp/Makefile
-	splitter/Makefile
-	sslinfo/Makefile
-	stocker/Makefile
-	switchspell/Makefile
-	talkfilters/Makefile
-	timelog/Makefile
-	xchat-chats/Makefile
-	xmmsremote/Makefile
-	xmmsremote/pixmaps/Makefile
+dnl # This is a hack to have a dynamically generated list of files for
+dnl # AC_OUTPUT.  AC_OUTPUT still needs to be called, but as long as this
+dnl # is tweaked before hand everything is fine.
+dnl #
+dnl # So to make this work, we call AC_OUTPUT with our static config files
+dnl # after we've updated ac_config_files to have our dynamic list, we do
+dnl # our normal AC_OUTPUT and all is well.
+dnl #######################################################################
+ac_config_files="$ac_config_files ${PP_DIST_MAKE}"
+
+AC_OUTPUT([Makefile
+		   common/Makefile
+		   doc/Makefile
+		   po/Makefile.in
+		   VERSION
+		   plugin_pack.spec
 ])
 
 dnl #######################################################################
