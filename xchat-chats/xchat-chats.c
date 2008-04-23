@@ -362,6 +362,7 @@ purple_xchat_destroy_conv(PurpleConversation *conv)
 	}
 }
 
+#if 0
 static void
 workaround_for_hidden_convs(PidginConversation *gtkconv)
 {
@@ -372,6 +373,7 @@ workaround_for_hidden_convs(PidginConversation *gtkconv)
 		return;
 	purple_conversation_use_xtext(conv);
 }
+#endif
 
 static gboolean
 plugin_load(PurplePlugin *plugin)
@@ -406,8 +408,10 @@ plugin_load(PurplePlugin *plugin)
 		list = list->next;
 	}
 
+#if 0
 	purple_signal_connect(pidgin_conversations_get_handle(), "conversation-displayed",
 			plugin, G_CALLBACK(workaround_for_hidden_convs), NULL);
+#endif
 
 	return TRUE;
 }
