@@ -199,7 +199,9 @@ go_selected(GtkWidget *w, PidginConversation *gtkconv)
 static void
 clear_list(GtkWidget *w, PidginConversation *gtkconv)
 {
-	GList *list = g_object_get_data(G_OBJECT(gtkconv->imhtml), "nicksaid:list");
+	GList *ll, *list;
+
+	ll = list = g_object_get_data(G_OBJECT(gtkconv->imhtml), "nicksaid:list");
 
 	while (list)
 	{
@@ -209,6 +211,7 @@ clear_list(GtkWidget *w, PidginConversation *gtkconv)
 		g_free(said);
 		list = list->next;
 	}
+	g_list_free(ll);
 
 	g_object_set_data(G_OBJECT(gtkconv->imhtml), "nicksaid:list", NULL);
 }
