@@ -428,9 +428,8 @@ static void remove_xtext(PurpleConversation *conv, PurpleXChat *gx, gpointer nul
 	gtk_paned_add1(GTK_PANED(parent), gx->imhtml);
 	g_object_unref(gx->imhtml);
 
-	gtk_widget_show_all(gx->imhtml);
-
 	gtk_widget_destroy(frame);
+	gtk_widget_show_all(gx->imhtml);
 }
 
 static gboolean
