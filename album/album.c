@@ -141,7 +141,7 @@ char *album_buddy_icon_get_dir(PurpleAccount *account, const char *name)
 
 static void store_buddy_icon(PurpleBuddyIcon *icon, PurpleBuddy *buddy)
 {
-	const char *icon_path;
+	char *icon_path;
 	char *filename;
 	char *path;
 	char *dir;
@@ -194,6 +194,7 @@ static void store_buddy_icon(PurpleBuddyIcon *icon, PurpleBuddy *buddy)
 		}
 	}
 #endif
+	g_free(icon_path);
 	g_free(path);
 }
 
