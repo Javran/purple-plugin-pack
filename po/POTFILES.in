@@ -1,5 +1,22 @@
 album/album.c
 album/album-ui.c
+autoprofile/autoaway.c
+autoprofile/autoprofile.c
+autoprofile/autoreply.c
+autoprofile/comp_countdownup.c
+autoprofile/comp_executable.c
+autoprofile/comp_http.c
+autoprofile/comp_logstats.c
+autoprofile/comp_logstats_gtk.c
+autoprofile/comp_quotation.c
+autoprofile/comp_rss.c
+autoprofile/comp_textfile.c
+autoprofile/comp_timestamp.c
+autoprofile/comp_uptime.c
+autoprofile/gtk_actions.c
+autoprofile/gtk_away_msgs.c
+autoprofile/gtk_widget.c
+autoprofile/preferences.c
 autoreply/autoreply.c
 awaynotify/awaynotify.c
 bash/bash.c
@@ -8,6 +25,7 @@ blistops/blistops.c
 buddytime/buddytime.c
 buddytime/gtkbuddytime.c
 chronic/chronic.c
+colorize/colorize.c
 common/purple_template.c
 common/gtk_template.c
 convbadger/convbadger.c
@@ -19,6 +37,7 @@ enhancedhist/enhancedhist.c
 findip/findip.c
 findip/findip.c
 flip/flip.c
+google/google.c
 gRIM/gRIM.c
 groupmsg/groupmsg.c
 hideconv/hideconv.c
@@ -57,6 +76,7 @@ showoffline/showoffline.c
 simfix/simfix.c
 slashexec/slashexec.c
 snpp/snpp.c
+splitter/splitter.c
 sslinfo/sslinfo.c
 stocker/stocker.c
 stocker/stocker_prefs.c

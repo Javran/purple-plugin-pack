@@ -1,0 +1,91 @@
+Message Splitter Plugin v0.95
+Ike Gingerich <ike_@users.sourceforge.net>
+
+
+------------
+INTRODUCTION
+------------
+
+This is a simple plugin to split up outgoing messages that are larger
+than a specified threshold in characters.
+
+
+--------
+FEATURES
+--------
+
+ - The split size and delay between messages are configurable from the
+   plugin preferences menu.
+ - Splits yield valid and balanced HTML taking into account tags that may
+   have been opened or closed outside the split itself.
+ - Splitting is done using Pango to split the message as appropriate 
+   according to the current locale.
+
+
+----
+TODO
+----
+
+ - fix conflicts with plugins like Slashexec that don't expect to be 
+   supplied an empty message during the 'sending-im' signal.
+ - fix bug with characters disappearing when splitting heavily marked-up 
+   lines.
+ - find any remaining bugs and memory leaks.
+
+------------
+INSTALLATION
+------------
+
+ - *NIX users:
+	$ make install
+
+	If you have build problems make sure you have the 
+	appropriate pidgin-dev and build-essential files
+	installed.
+
+	Alternately you can copy spliter.c to
+	(unzipped-source)/pidgin/plugins and
+	after building Pidgin:
+
+	$ make splitter.so
+
+	then copy splitter.so to ~/.purple/plugins/ and launch Pidgin.
+
+
+ - Windows users:
+	I try to keep a pre-built current version of the plugin here:
+	<http://ikebo.hypermart.net/splitter/splitter-current.dll> and
+	on the Sourceforge message splitter plugin tracker.
+
+	Otherwise you must compile it manually with Cygwin:
+
+	        copy splitter.c to the plugin directory where the Pidgin
+		source code is extracted to and type:
+
+		$ make -f Makefile.mingw splitter.dll
+
+	and copy splitter.dll to your plugin directory
+	(e.x. C:\Program Files\Pidgin\plugins)
+
+
+------------
+CONTRIBUTORS
+------------
+
+xx3nvyxx - caught disappearing text bug in v0.9
+
+itchysoft_ant - isolated crash in v0.7 and submitted backtrace logs
+		suggested delay/chat features for v0.6/v0.7
+
+mgilb81 - notified of crash in v0.7 and filed report
+
+rageboy04 - a number of other issues/feedback throughout
+	  - notified/fixed alias issues for v0.2
+
+
+-------
+CONTACT
+-------
+
+Feel free to contact me at <ike_@users.sourceforge.net> about problems,
+suggestions, or contributions.

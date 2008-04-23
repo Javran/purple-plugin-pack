@@ -229,6 +229,8 @@ if test x"$HAVE_TALKFILTERS" = x"yes"; then
 fi
 
 # switchspell
+
+# check for gtkspell
 gtkspell=yes
 PKG_CHECK_MODULES(GTKSPELL, gtkspell-2.0 >= 2.0.2, [], [gtkspell=no])
 AC_SUBST(GTKSPELL_CFLAGS)
@@ -243,6 +245,22 @@ if test x"$gtkspell" = x"yes" ; then
 		BUILD_SWITCH_SPELL=no
 	fi
 fi
+
+# check for aspell
+ASPELL_CFLAGS=""
+ASPELL_LIBS=""
+AC_CHECK_HEADER([aspell.h], HAVE_ASPELL_H=yes, AC_MSG_WARN([
+*** libaspell is required to build the switchspell plugin.])
+HAVE_ASPELL_H=no
+)
+
+if test x"$HAVE_ASPELL_H" = x"yes" ; then
+	AC_CHECK_LIB([aspell], [new_aspell_config], ASPELL_LIBS="-laspell", BUILD_SWITCH_SPELL=no)
+fi
+
+AC_SUBST(ASPELL_CFLAGS)
+AC_SUBST(ASPELL_LIBS)
+
 AM_CONDITIONAL(BUILD_SWITCH_SPELL, test x"$BUILD_SWITCH_SPELL" = x"yes")
 
 # xmmsremote
@@ -278,6 +296,13 @@ AC_SUBST(XMMS_LIBS)
 AC_SUBST(XMMS_CFLAGS)
 
 AC_CHECK_HEADERS(regex.h)
+
+dnl #######################################################################
+dnl # Disable installation of translation files
+dnl #######################################################################
+AC_ARG_ENABLE(nls, AC_HELP_STRING([--enable-nls], [enable installation of translation files]), enable_i18n="$enableval", enable_i18n=yes)
+
+AM_CONDITIONAL(INSTALL_I18N, test "x$enable_i18n" = "xyes")
 
 dnl #######################################################################
 dnl # Run our plugin checking
@@ -318,6 +343,7 @@ AC_OUTPUT([
 	blistops/Makefile
 	buddytime/Makefile
 	chronic/Makefile
+	colorize/Makefile
 	convbadger/Makefile
 	dewysiwygification/Makefile
 	dice/Makefile
@@ -326,8 +352,9 @@ AC_OUTPUT([
 	enhancedhist/Makefile
 	findip/Makefile
 	flip/Makefile
-	groupmsg/Makefile
+	google/Makefile
 	gRIM/Makefile
+	groupmsg/Makefile
 	hideconv/Makefile
 	highlight/Makefile
 	ignorance/Makefile
@@ -338,6 +365,8 @@ AC_OUTPUT([
 	irssi/Makefile
 	lastseen/Makefile
 	listhandler/Makefile
+	manualsize/Makefile
+	msglen/Makefile
 	mystatusbox/Makefile
 	napster/Makefile
 	nicksaid/Makefile
@@ -349,6 +378,7 @@ AC_OUTPUT([
 	simfix/Makefile
 	slashexec/Makefile
 	snpp/Makefile
+	splitter/Makefile
 	sslinfo/Makefile
 	stocker/Makefile
 	switchspell/Makefile

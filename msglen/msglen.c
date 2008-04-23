@@ -1,6 +1,6 @@
 /*
- * ConvBadger - Adds the protocol icon to the menu tray of a conversation
- * Copyright (C) 2007-2008 Gary Kramlich <grim@reaperworld.com>
+ * msglen - Adds the current message's length to the menutray of a conversation
+ * Copyright (C) 2008 Gary Kramlich <grim@reaperworld.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,6 +25,7 @@
 #include <conversation.h>
 #include <signals.h>
 
+#include <gtkconv.h>
 #include <gtkmenutray.h>
 #include <gtkplugin.h>
 #include <gtkutils.h>
@@ -33,10 +34,10 @@
  * Structs
  *****************************************************************************/
 typedef struct {
-	PidginWindow *win;
 	PurpleConversation *conv;
-	GtkWidget *icon;
-} ConvBadgerData;
+	PidginWindow *win;
+	GtkWidget *label;
+} MsgLenData;
 
 /******************************************************************************
  * Globals
@@ -47,81 +48,90 @@ static GHashTable *data = NULL;
  * helpers
  *****************************************************************************/
 static void
-conv_badger_data_free(ConvBadgerData *cbd) {
-	cbd->win = NULL;
-	cbd->conv = NULL;
+msg_len_data_free(MsgLenData *mld) {
+	mld->win = NULL;
+	mld->conv = NULL;
 
-	if(cbd->icon && GTK_IS_IMAGE(cbd->icon))
-		gtk_widget_destroy(cbd->icon);
+	if(mld->label && GTK_IS_LABEL(mld->label))
+		gtk_widget_destroy(mld->label);
 
-	g_free(cbd);
+	g_free(mld);
 
-	cbd = NULL;
+	mld = NULL;
 }
 
 static void
-conv_badger_data_free_helper(gpointer k, gpointer v, gpointer d) {
-	ConvBadgerData *cbd = (ConvBadgerData *)v;
+msg_len_data_free_helper(gpointer k, gpointer v, gpointer d) {
+	MsgLenData *mld = (MsgLenData *)v;
 
-	conv_badger_data_free(cbd);
+	msg_len_data_free(mld);
 }
 
 static void
-conv_badger_update(PidginWindow *win, PurpleConversation *conv) {
-	ConvBadgerData *cbd = NULL;
-	GdkPixbuf *pixbuf = NULL;
-	PurpleAccount *account = NULL;
+msg_len_update(PidginWindow *win, PurpleConversation *conv) {
+	PidginConversation *gtkconv = NULL;
+	MsgLenData *mld = NULL;
+	gchar *text = NULL;
+	gint count = 0;
 
 	g_return_if_fail(win);
 	g_return_if_fail(conv);
 
-	cbd = g_hash_table_lookup(data, win);
+	mld = g_hash_table_lookup(data, conv);
 
-	if(cbd == NULL) {
-		cbd = g_new0(ConvBadgerData, 1);
+	if(mld == NULL) {
+		mld = g_new0(MsgLenData, 1);
 
-		cbd->win = win;
+		mld->win = win;
+		mld->conv
 
-		cbd->icon = gtk_image_new();
-		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), cbd->icon,
+		mld->label = gtk_label_new("");
+		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), mld->label,
 								NULL);
-		gtk_widget_show(cbd->icon);
+		gtk_widget_show(mld->label);
 
-		g_signal_connect_swapped(G_OBJECT(cbd->icon), "destroy",
-				G_CALLBACK(g_nullify_pointer), &cbd->icon);
+		g_signal_connect_swapped(G_OBJECT(mld->label), "destroy",
+								 G_CALLBACK(g_nullify_pointer), &mld->label);
 	}
 
-	cbd->conv = conv;
+	mld->conv = conv;
 
-	account = purple_conversation_get_account(conv);
-	pixbuf = pidgin_create_prpl_icon(account, PIDGIN_PRPL_ICON_SMALL);
-	gtk_image_set_from_pixbuf(GTK_IMAGE(cbd->icon), pixbuf);
-	g_object_unref(G_OBJECT(pixbuf));
+	gtkconv = PIDGIN_CONVERSATION(conv);
+	count = gtk_text_buffer_get_char_count(gtkconv->entry_buffer);
 
-	g_hash_table_insert(data, win, cbd);
+	text = g_strdup_printf("%d", count);
+	gtk_label_set_text(GTK_LABEL(mld->label), text);
+	g_free(text);
+
+	g_hash_table_insert(data, win, mld);
 }
 
 /******************************************************************************
  * Callbacks
  *****************************************************************************/
 static void
-conv_badger_conv_created_cb(PurpleConversation *conv, gpointer data) {
+msg_len_conv_created_cb(PurpleConversation *conv, gpointer data) {
 	PidginConversation *pconv = PIDGIN_CONVERSATION(conv);
 	PidginWindow *win = pidgin_conv_get_window(pconv);
 
-	conv_badger_update(win, conv);
+	purple_debug_info("msglen", "created\n");
+
+	msg_len_update(win, conv);
 }
 
 static void
-conv_badger_conv_destroyed_cb(PurpleConversation *conv, gpointer data) {
+msg_len_conv_destroyed_cb(PurpleConversation *conv, gpointer data) {
+	purple_debug_info("msglen", "destroyed\n");
 }
 
 static void
-conv_badger_conv_switched_cb(PurpleConversation *conv, gpointer data) {
+msg_len_conv_switched_cb(PurpleConversation *conv, gpointer data) {
 	PidginConversation *pconv = PIDGIN_CONVERSATION(conv);
 	PidginWindow *win = pidgin_conv_get_window(pconv);
 
-	conv_badger_update(win, conv);
+	purple_debug_info("msglen", "switched\n");
+
+	msg_len_update(win, conv);
 }
 
 /******************************************************************************
@@ -135,20 +145,20 @@ plugin_load(PurplePlugin *plugin) {
 								 NULL, NULL);
 
 	purple_signal_connect(conv_handle, "conversation-created", plugin,
-						  PURPLE_CALLBACK(conv_badger_conv_created_cb), NULL);
+						  PURPLE_CALLBACK(msg_len_conv_created_cb), NULL);
 	purple_signal_connect(conv_handle, "deleting-conversation", plugin,
-						  PURPLE_CALLBACK(conv_badger_conv_destroyed_cb), NULL);
+						  PURPLE_CALLBACK(msg_len_conv_destroyed_cb), NULL);
 
 	purple_signal_connect(pidgin_conversations_get_handle(),
 						  "conversation-switched", plugin,
-						  PURPLE_CALLBACK(conv_badger_conv_switched_cb), NULL);
+						  PURPLE_CALLBACK(msg_len_conv_switched_cb), NULL);
 
 	return TRUE;
 }
 
 static gboolean
 plugin_unload(PurplePlugin *plugin) {
-	g_hash_table_foreach(data, conv_badger_data_free_helper, NULL);
+	g_hash_table_foreach(data, msg_len_data_free_helper, NULL);
 
 	g_hash_table_destroy(data);
 
@@ -167,7 +177,7 @@ static PurplePluginInfo info = {
 	NULL,
 	PURPLE_PRIORITY_DEFAULT,
 
-	"gtk-plugin_pack-convbadger",
+	"gtk-plugin_pack-msglen",
 	NULL,
 	PP_VERSION,
 	NULL,
@@ -198,9 +208,10 @@ init_plugin(PurplePlugin *plugin) {
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
 
-	info.name = _("Conversation Badger");
-	info.summary = _("Badges conversations with the protocol icon.");
-	info.description = _("Badges conversations with the protocol icon.");
+	info.name = _("Message Length");
+	info.summary = _("Shows the length of your current message in the menu "
+					 "tray");
+	info.description = info.summary;
 }
 
-PURPLE_INIT_PLUGIN(convbadger, init_plugin, info)
+PURPLE_INIT_PLUGIN(msg_len, init_plugin, info)

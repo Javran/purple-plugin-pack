@@ -60,7 +60,7 @@ enum {
 	if(!(account)->gc) \
 		return FALSE; \
 	\
-	if(!(account)->gc->flags & PURPLE_CONNECTION_HTML) \
+	if(!((account)->gc->flags & PURPLE_CONNECTION_HTML)) \
 		return FALSE; \
 	\
 	if(!(message)) \
