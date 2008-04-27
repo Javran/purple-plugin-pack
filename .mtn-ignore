@@ -15,6 +15,7 @@ libtool
 local.mak
 ltmain.sh
 missing
+^plugin_pack.m4$
 po/Makefile.in.in
 po/missing
 po/notexist
