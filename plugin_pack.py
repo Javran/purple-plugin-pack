@@ -155,6 +155,16 @@ class PluginPack:
 	def incomplete_plugins(self):
 		return self.list_type('incomplete')
 
+	def unique_dirs(self):
+		dirs = {}
+		for name in self.plugins.keys():
+			dirs[self.plugins[name].directory] = 1
+
+		dirs = dirs.keys()
+		dirs.sort()
+
+		return dirs
+
 	def help(self, args):
 		try:
 			cmd = self.commands[args[0]]
@@ -167,14 +177,16 @@ class PluginPack:
 
 	def dist_dirs(self, args):
 		"""Outputs a list of all plugin directories to included in the distribution"""
-		dirs = {}
-		for name in self.plugins.keys():
-			dirs[self.plugins[name].directory] = 1
-
-		dirs = dirs.keys()
-		dirs.sort()
-		print string.join(dirs, ' ')
+		print string.join(self.unique_dirs(), ' ')
 	commands['dist_dirs'] = dist_dirs
+
+	def config_file(self, args):
+		"""Outputs the contents for the file to be m4_include()'d from configure"""
+		print "AC_CONFIG_FILES(["
+		for dir in self.unique_dirs():
+			print "\t%s/Makefile" % (dir)
+		print "])"
+	commands['config_file'] = config_file
 
 	def dependency_graph(self, args):
 		"""Outputs a graphviz script of dependencies"""

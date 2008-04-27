@@ -132,18 +132,8 @@ check "python" -V;		PYTHON=${BIN};
 ###############################################################################
 CONFIG_FILE="plugin_pack.m4"
 
-if [ -f ${CONFIG_FILE} ]
-then
-	rm -f ${CONFIG_FILE}
-fi
-
 echo -n "creating ${CONFIG_FILE} ..."
-printf "AC_CONFIG_FILES([\n" >> ${CONFIG_FILE}
-for DIR in `${PYTHON} plugin_pack.py dist_dirs`
-do
-	printf "\t%s\n" ${DIR}/Makefile >> ${CONFIG_FILE}
-done
-printf "])\n" >> ${CONFIG_FILE}
+${PYTHON} plugin_pack.py config_file > ${CONFIG_FILE} 2>/dev/null
 echo " done."
 
 ###############################################################################
