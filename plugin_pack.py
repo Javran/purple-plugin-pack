@@ -19,6 +19,8 @@
 
 """Usage: plugin_pack.py [OPTION...] command
 
+Flags:
+
   -a  Load abusive plugins
   -d  Load default plugins
   -f  Load finch plugins
@@ -27,9 +29,6 @@
   -P  Load pidgin plugins
 
 Commands:
-
-  dependency-graph  Outputs a graphviz script of the plugin's dependencies
-  info <plugin>     Display information about plugin.
 """
 
 import ConfigParser
@@ -191,6 +190,7 @@ class PluginPack:
 		return dirs
 
 	def help(self, args):
+		"""Displays information about other commands"""
 		try:
 			cmd = self.commands[args[0]]
 			print cmd.__doc__
@@ -201,7 +201,7 @@ class PluginPack:
 	commands['help'] = help
 
 	def dist_dirs(self, args):
-		"""Outputs a list of all plugin directories to included in the distribution"""
+		"""Displays a list of all plugin directories to included in the distribution"""
 		print string.join(self.unique_dirs(), ' ')
 	commands['dist_dirs'] = dist_dirs
 
@@ -214,7 +214,7 @@ class PluginPack:
 	commands['config_file'] = config_file
 
 	def dependency_graph(self, args):
-		"""Outputs a graphviz script of dependencies"""
+		"""Outputs a graphviz script showing plugin dependencies"""
 		def node_label(plugin):
 			node = plugin.provides.replace('-', '_')
 			label = plugin.name
@@ -273,7 +273,7 @@ class PluginPack:
 	commands['dependency_graph'] = dependency_graph
 
 	def info(self, args):
-		"""Outputs all information about the given plugins"""
+		"""Displays all information about the given plugins"""
 		for p in args:
 			try:
 				print self.plugins[p].__str__().strip()
@@ -284,6 +284,7 @@ class PluginPack:
 	commands['info'] = info
 
 	def stats(self, args):
+		"""Displays stats about the plugin pack"""
 		counts = {}
 		
 		counts['total'] = len(self.plugins)
@@ -312,6 +313,19 @@ class PluginPack:
 		print "  pidgin: %s" % (value(counts['pidgin']))
 	commands['stats'] = stats
 
+def show_usage(pp, exitcode):
+	print __doc__
+
+	cmds = pp.commands.keys()
+	cmds.sort()
+	
+	for cmd in cmds:
+		print "  %-20s %s" % (cmd, pp.commands[cmd].__doc__)
+
+	print ""
+
+	sys.exit(exitcode)
+
 def main():
 	# create our main instance
 	pp = PluginPack()
@@ -325,8 +339,7 @@ def main():
 		opts, args = getopt.getopt(sys.argv[1:], shortopts)
 	except getopt.error, msg:
 		print msg
-		print __doc__
-		sys.exit(1)
+		show_usage(pp, 1)
 
 	for o, a in opts:
 		if o == '-a':
@@ -347,8 +360,7 @@ def main():
 	pp.load_plugins(types, depends)
 
 	if(len(args) == 0):
-		print __doc__
-		sys.exit(1)
+		show_usage(pp, 1)
 
 	cmd = args[0]
 	args = args[1:]
