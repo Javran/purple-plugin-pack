@@ -334,24 +334,12 @@ AC_PATH_PROG([PYTHON], [python], [no])
 PP_DIST_DIRS="`$srcdir/plugin_pack.py dist_dirs`"
 AC_SUBST(PP_DIST_DIRS)
 
-PP_DIST_MAKE=""
-for dir in $PP_DIST_DIRS
-do
-	PP_DIST_MAKE="$PP_DIST_MAKE $dir/Makefile"
-done
-
 dnl #######################################################################
 dnl # Finish up
 dnl #######################################################################
-dnl # This is a hack to have a dynamically generated list of files for
-dnl # AC_OUTPUT.  AC_OUTPUT still needs to be called, but as long as this
-dnl # is tweaked before hand everything is fine.
-dnl #
-dnl # So to make this work, we call AC_OUTPUT with our static config files
-dnl # after we've updated ac_config_files to have our dynamic list, we do
-dnl # our normal AC_OUTPUT and all is well.
-dnl #######################################################################
-ac_config_files="$ac_config_files ${PP_DIST_MAKE}"
+
+dnl #include the list of plugins that was created by autogen
+m4_include([plugin_pack.m4])
 
 AC_OUTPUT([Makefile
 		   common/Makefile

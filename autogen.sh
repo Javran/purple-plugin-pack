@@ -53,9 +53,11 @@ ARGS_FILE="autogen.args"
 ###############################################################################
 check () {
 	CMD=$1
+	shift
+	ARGS=$@
 
 	echo -n "checking for ${CMD}... "
-	BIN=`which ${CMD} 2>/dev/null`
+	BIN=`which ${CMD} $@ 2>/dev/null`
 
 	if [ x"${BIN}" = x"" ] ; then
 		echo "not found."
@@ -123,6 +125,26 @@ check "aclocal";		ACLOCAL=${BIN};
 check "autoheader";		AUTOHEADER=${BIN};
 check "automake";		AUTOMAKE=${BIN};
 check "autoconf";		AUTOCONF=${BIN};
+check "python" -V;		PYTHON=${BIN};
+
+###############################################################################
+# Build pluginpack.m4
+###############################################################################
+CONFIG_FILE="plugin_pack.m4"
+
+if [ -f ${CONFIG_FILE} ]
+then
+	rm -f ${CONFIG_FILE}
+fi
+
+echo -n "creating ${CONFIG_FILE} ..."
+printf "AC_CONFIG_FILES([\n" >> ${CONFIG_FILE}
+for DIR in `${PYTHON} plugin_pack.py dist_dirs`
+do
+	printf "\t%s\n" ${DIR}/Makefile >> ${CONFIG_FILE}
+done
+printf "])\n" >> ${CONFIG_FILE}
+echo " done."
 
 ###############################################################################
 # Run all of our helpers

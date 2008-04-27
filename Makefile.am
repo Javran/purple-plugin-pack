@@ -14,6 +14,7 @@ EXTRA_DIST = \
 	intltool-merge.in \
 	intltool-update.in \
 	menuconfig \
+	plugin_pack.m4 \
 	plugin_pack.py \
 	plugin_pack.spec \
 	po/AUTHORS \
