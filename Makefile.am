@@ -51,3 +51,6 @@ signatures: dist
 
 info:
 	@echo $(PP_DIST_DIRS)
+
+stats:
+	@$(PYTHON) plugin_pack.py stats

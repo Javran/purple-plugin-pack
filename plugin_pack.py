@@ -139,6 +139,22 @@ class PluginPack:
 
 		return list
 
+	def list_dep(self, dep):
+		list = []
+
+		for name in self.plugins.keys():
+			plugin = self.plugins[name]
+
+			try:
+				plugin.depends.index(dep)
+				list.append(plugin)
+			except ValueError:
+				pass
+
+		list.sort()
+
+		return list
+
 	def print_names(self, list):
 		names = []
 		for plugin in list:
@@ -154,6 +170,15 @@ class PluginPack:
 
 	def incomplete_plugins(self):
 		return self.list_type('incomplete')
+
+	def purple_plugins(self):
+		return self.list_dep('purple')
+
+	def finch_plugins(self):
+		return self.list_dep('finch')
+
+	def pidgin_plugins(self):
+		return self.list_dep('pidgin')
 
 	def unique_dirs(self):
 		dirs = {}
@@ -257,6 +282,35 @@ class PluginPack:
 
 			print
 	commands['info'] = info
+
+	def stats(self, args):
+		counts = {}
+		
+		counts['total'] = len(self.plugins)
+		counts['default'] = len(self.default_plugins())
+		counts['incomplete'] = len(self.incomplete_plugins())
+		counts['abusive'] = len(self.abusive_plugins())
+		counts['purple'] = len(self.purple_plugins())
+		counts['finch'] = len(self.finch_plugins())
+		counts['pidgin'] = len(self.pidgin_plugins())
+
+		def value(val):
+			return "%3d (%0.2f%%)" % (val, (float(val) / float(counts['total'])) * 100.0)
+
+		print "Purple Plugin Pack Stats"
+		print ""
+		print "%d plugins in total" % (counts['total'])
+		print
+		print "Status:"
+		print "  complete:   %s" % (value(counts['default']))
+		print "  incomplete: %s" % (value(counts['incomplete']))
+		print "  abusive:    %s" % (value(counts['abusive']))
+		print ""
+		print "Type:"
+		print "  purple: %s" % (value(counts['purple']))
+		print "  finch:  %s" % (value(counts['finch']))
+		print "  pidgin: %s" % (value(counts['pidgin']))
+	commands['stats'] = stats
 
 def main():
 	# create our main instance
