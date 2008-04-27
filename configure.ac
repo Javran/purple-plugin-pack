@@ -331,7 +331,7 @@ dnl # to check for python, and pass everything on to plugin_pack.py
 dnl #######################################################################
 AC_PATH_PROG([PYTHON], [python], [no])
 
-PP_DIST_DIRS="`$srcdir/plugin_pack.py dist_dirs`"
+PP_DIST_DIRS="`$PYTHON $srcdir/plugin_pack.py dist_dirs`"
 AC_SUBST(PP_DIST_DIRS)
 
 dnl #######################################################################
