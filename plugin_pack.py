@@ -207,10 +207,15 @@ class PluginPack:
 
 	def config_file(self, args):
 		"""Outputs the contents for the file to be m4_include()'d from configure"""
-		print "AC_CONFIG_FILES(["
-		for dir in self.unique_dirs():
-			print "\t%s/Makefile" % (dir)
-		print "])"
+		uniqdirs = self.unique_dirs()
+
+		print 'PP_DIST_DIRS="%s"' % (string.join(uniqdirs, ' '))
+		print 'AC_SUBST(PP_DIST_DIRS)'
+		print
+		print 'AC_CONFIG_FILES(['
+		for dir in uniqdirs:
+			print '\t%s/Makefile' % (dir)
+		print '])'
 	commands['config_file'] = config_file
 
 	def dependency_graph(self, args):

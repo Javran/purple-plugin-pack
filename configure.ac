@@ -326,21 +326,18 @@ AC_CONFIG_COMMANDS_POST([
 ])
 
 dnl #######################################################################
-dnl # We've looked for all our dependencies and everything, now we need
-dnl # to check for python, and pass everything on to plugin_pack.py
+dnl # plugin_pack.py has already done our heavy lifting from the boot
+dnl # strap.  So we'll include our config file it created and call it to
+dnl # determine our build directories
 dnl #######################################################################
 AC_PATH_PROG([PYTHON], [python], [no])
 
-PP_DIST_DIRS="`$PYTHON $srcdir/plugin_pack.py dist_dirs`"
-AC_SUBST(PP_DIST_DIRS)
+dnl # include the config file we created during bootstrapping
+m4_include([plugin_pack.m4])
 
 dnl #######################################################################
 dnl # Finish up
 dnl #######################################################################
-
-dnl #include the list of plugins that was created by autogen
-m4_include([plugin_pack.m4])
-
 AC_OUTPUT([Makefile
 		   common/Makefile
 		   doc/Makefile
