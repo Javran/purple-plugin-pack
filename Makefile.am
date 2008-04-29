@@ -27,7 +27,7 @@ if INSTALL_I18N
 PO_DIR=po
 endif
 
-DIST_SUBDIRS = common doc po $(PP_PURPLE) $(PP_PIDGIN) $(PP_FINCH)
+DIST_SUBDIRS = common doc po $(PP_DIST_DIRS)
 
 SUBDIRS = common doc $(PO_DIR) $(PP_PURPLE_BUILD) $(PP_PIDGIN_BUILD) $(PP_FINCH_BUILD)
 
