@@ -1,7 +1,17 @@
+ICONS = \
+	next.png \
+	pause.png \
+	play.png \
+	previous.png \
+	stop.png \
+	xmms.png
+
 EXTRA_DIST = \
+	$(ICONS) \
 	plugins.cfg
 
-SUBDIRS = pixmaps
+xmmsremoteconfpixdir = $(PIDGIN_PIXMAPSDIR)/plugin_pack/xmmsremote
+xmmsremoteconfpix_DATA = $(ICONS)
 
 xmmsremotedir = $(PIDGIN_LIBDIR)
 
