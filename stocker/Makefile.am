@@ -1,8 +1,10 @@
-EXTRA_DIST = \
-	.incomplete \
-	.pidgin-plugin \
+INCLUDES = \
 	gtkticker.h \
 	stocker_prefs.h
+
+EXTRA_DIST = \
+	plugins.cfg \
+	$(INCLUDES)
 
 stockerdir = $(PIDGIN_LIBDIR)
 

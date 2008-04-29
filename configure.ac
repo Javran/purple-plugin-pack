@@ -11,10 +11,10 @@ AC_DEFINE_UNQUOTED(PP_VERSION, "AC_PACKAGE_VERSION", [Plugin Pack Version])
 AC_PATH_PROG(sedpath, sed)
 AC_DISABLE_STATIC
 
-dnl This disables check of libtool for these compilers
-CXX=no
-F77=no
-GCJ=no
+dnl #######################################################################
+dnl # Initialize some variables that get passed to plugin_pack.py
+dnl #######################################################################
+DEPENDENCIES=""
 
 dnl #######################################################################
 dnl # Setup libtool
@@ -77,6 +77,7 @@ PKG_CHECK_MODULES(PURPLE, purple,
 
 HAVE_PURPLE="yes"
 AM_CONDITIONAL(HAVE_PURPLE, true)
+DEPENDENCIES="$DEPENDENCIES purple"
 
 if test x"$prefix" = x"NONE" ; then
 	PURPLE_LIBDIR=`pkg-config --variable=libdir purple`
@@ -118,6 +119,7 @@ PKG_CHECK_MODULES(PIDGIN, pidgin,
 	AC_DEFINE(HAVE_PIDGIN, 1, [Define if we've found pidgin.])
 	HAVE_PIDGIN="yes"
 	AM_CONDITIONAL(HAVE_PIDGIN, true)
+	DEPENDENCIES="$DEPENDENCIES pidgin"
 ], [
 	AC_MSG_RESULT([no])
 	HAVE_PIDGIN="no"
@@ -157,6 +159,7 @@ PKG_CHECK_MODULES(FINCH, finch,
 	AC_DEFINE(HAVE_FINCH, 1, [Define if we've found finch.])
 	HAVE_FINCH="yes"
 	AM_CONDITIONAL(HAVE_FINCH, true)
+	DEPENDENCIES="$DEPENDENCIES finch"
 ], [
 	AC_MSG_RESULT([no])
 	HAVE_FINCH="no"
@@ -210,10 +213,8 @@ AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
 
 dnl #######################################################################
-dnl # Plugin dependency checking
+dnl # Check for talkfilters
 dnl #######################################################################
-
-# talkfilters
 AC_CHECK_HEADER(talkfilters.h, HAVE_TALKFILTERS=yes, AC_MSG_WARN([
 *** GNU Talk Filters is required to build the talkfilters plugin;
 *** please make sure you have the GNU Talk Filters development headers installed.
@@ -226,11 +227,13 @@ if test x"$HAVE_TALKFILTERS" = x"yes"; then
 	dnl work out that the library exists
 	AC_CHECK_LIB(talkfilters, gtf_filter_count, TALKFILTERS_LIBS="-ltalkfilters")
 	AC_SUBST(TALKFILTERS_LIBS)
+
+	DEPENDENCIES="$DEPENDENCIES talkfilters"
 fi
 
-# switchspell
-
-# check for gtkspell
+dnl #######################################################################
+dnl # Check for switchspell
+dnl #######################################################################
 gtkspell=yes
 PKG_CHECK_MODULES(GTKSPELL, gtkspell-2.0 >= 2.0.2, [], [gtkspell=no])
 AC_SUBST(GTKSPELL_CFLAGS)
@@ -263,7 +266,13 @@ AC_SUBST(ASPELL_LIBS)
 
 AM_CONDITIONAL(BUILD_SWITCH_SPELL, test x"$BUILD_SWITCH_SPELL" = x"yes")
 
-# xmmsremote
+if test x"$BUILD_SWITCH_SPELL" = x"yes" ; then
+	DEPENDENCIES="$DEPENDENCIES gtkspell aspell"
+fi
+
+dnl #######################################################################
+dnl # Check for xmms
+dnl #######################################################################
 XMMS_LIBS=""
 XMMS_CFLAGS=""
 HAVE_XMMS="no"
@@ -287,6 +296,8 @@ if test x"$XMMS_CONFIG" != x"no" ; then
 
 	if test x"$HAVE_XMMS" = x"yes" ; then
 		AC_MSG_RESULT([yes])
+
+		DEPENDENCIES="$DEPENDENCIES xmms"
 	else
 		AC_MSG_RESULT([no])
 	fi
@@ -295,6 +306,9 @@ AM_CONDITIONAL(USE_XMMS, test x"$HAVE_XMMS" = x"yes")
 AC_SUBST(XMMS_LIBS)
 AC_SUBST(XMMS_CFLAGS)
 
+dnl #######################################################################
+dnl # Check for some basic headers
+dnl #######################################################################
 AC_CHECK_HEADERS(regex.h)
 
 dnl #######################################################################
@@ -303,11 +317,6 @@ dnl #######################################################################
 AC_ARG_ENABLE(nls, AC_HELP_STRING([--enable-nls], [enable installation of translation files]), enable_i18n="$enableval", enable_i18n=yes)
 
 AM_CONDITIONAL(INSTALL_I18N, test "x$enable_i18n" = "xyes")
-
-dnl #######################################################################
-dnl # Run our plugin checking
-dnl #######################################################################
-AM_BUILD_PLUGIN_LIST()
 
 dnl #######################################################################
 dnl # Version stuff
@@ -324,69 +333,24 @@ AC_CONFIG_COMMANDS_POST([
 ])
 
 dnl #######################################################################
+dnl # plugin_pack.py has already done our heavy lifting from the boot
+dnl # strap.  So we'll include our config file it created and call it to
+dnl # determine our build directories
+dnl #######################################################################
+AC_PATH_PROG([PYTHON], [python], [no])
+
+dnl # include the config file we created during bootstrapping
+m4_include([plugin_pack.m4])
+
+dnl #######################################################################
 dnl # Finish up
 dnl #######################################################################
-AC_OUTPUT([
-	Makefile
-	common/Makefile
-	doc/Makefile
-	m4/Makefile
-	po/Makefile.in
-	VERSION
-	plugin_pack.spec
-	album/Makefile
-	autoprofile/Makefile
-	autoreply/Makefile
-	awaynotify/Makefile
-	bash/Makefile
-	bit/Makefile
-	blistops/Makefile
-	buddytime/Makefile
-	chronic/Makefile
-	colorize/Makefile
-	convbadger/Makefile
-	dewysiwygification/Makefile
-	dice/Makefile
-	difftopic/Makefile
-	eight_ball/Makefile
-	enhancedhist/Makefile
-	findip/Makefile
-	flip/Makefile
-	google/Makefile
-	gRIM/Makefile
-	groupmsg/Makefile
-	hideconv/Makefile
-	highlight/Makefile
-	ignorance/Makefile
-	ignore/Makefile
-	infopane/Makefile
-	irc-more/Makefile
-	irchelper/Makefile
-	irssi/Makefile
-	lastseen/Makefile
-	listhandler/Makefile
-	manualsize/Makefile
-	msglen/Makefile
-	mystatusbox/Makefile
-	napster/Makefile
-	nicksaid/Makefile
-	oldlogger/Makefile
-	plonkers/Makefile
-	schedule/Makefile
-	sepandtab/Makefile
-	showoffline/Makefile
-	simfix/Makefile
-	slashexec/Makefile
-	snpp/Makefile
-	splitter/Makefile
-	sslinfo/Makefile
-	stocker/Makefile
-	switchspell/Makefile
-	talkfilters/Makefile
-	timelog/Makefile
-	xchat-chats/Makefile
-	xmmsremote/Makefile
-	xmmsremote/pixmaps/Makefile
+AC_OUTPUT([Makefile
+		   common/Makefile
+		   doc/Makefile
+		   po/Makefile.in
+		   VERSION
+		   plugin_pack.spec
 ])
 
 dnl #######################################################################

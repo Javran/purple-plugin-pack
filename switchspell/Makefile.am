@@ -1,4 +1,6 @@
-EXTRA_DIST = .build .pidgin-plugin Makefile.mingw
+EXTRA_DIST = \
+	Makefile.mingw \
+	plugins.cfg
 
 if BUILD_SWITCH_SPELL
 switchspelldir = $(PIDGIN_LIBDIR)

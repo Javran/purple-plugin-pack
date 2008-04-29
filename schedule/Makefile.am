@@ -1,4 +1,9 @@
-EXTRA_DIST = .build .pidgin-plugin schedule.h
+INCLUDES = \
+	schedule.h
+
+EXTRA_DIST = \
+	plugins.cfg \
+	$(INCLUDES)
 
 pidgin_scheduledir = $(PIDGIN_LIBDIR)
 

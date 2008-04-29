@@ -1,4 +1,5 @@
-EXTRA_DIST = .build .pidgin-plugin
+EXTRA_DIST = \
+	plugins.cfg
 
 SUBDIRS = pixmaps
 

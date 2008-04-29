@@ -1,7 +1,6 @@
 EXTRA_DIST = \
-	.build \
-	.pidgin-plugin \
-	Makefile.mingw
+	Makefile.mingw \
+	plugins.cfg
 
 enhancedhistdir = $(PIDGIN_LIBDIR)
 

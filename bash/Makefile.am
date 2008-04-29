@@ -1,7 +1,6 @@
 EXTRA_DIST = \
-	.purple-plugin \
-	.build \
-	Makefile.mingw
+	Makefile.mingw \
+	plugins.cfg
 
 bashdir = $(PURPLE_LIBDIR)
 

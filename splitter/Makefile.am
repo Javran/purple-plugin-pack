@@ -1,4 +1,6 @@
-EXTRA_DIST = .purple-plugin .incomplete Makefile.mingw
+EXTRA_DIST = \
+	Makefile.mingw \
+	plugins.cfg
 
 splitterdir = $(PURPLE_LIBDIR)
 
