@@ -150,6 +150,7 @@ class PluginPack:
 
 	def print_names(self, list):
 		names = []
+
 		for plugin in list:
 			names.append(plugin.name)
 
@@ -198,6 +199,95 @@ class PluginPack:
 		"""Displays a list of all plugin directories to included in the distribution"""
 		print string.join(self.unique_dirs(), ' ')
 	commands['dist_dirs'] = dist_dirs
+
+	def build_dirs(self, args):
+		if len(args) != 2:
+			print 'build_dirs expects 2 arguments:'
+			print '\ta comma separated list of dependencies'
+			print '\ta comma separated list of plugins to build'
+			sys.exit(1)
+
+		# store the external depedencies
+		externals = args[0].split(',')
+
+		deps = {}
+
+		# run through the provided dependencies, setting their dependencies to
+		# nothing since we know we already have them
+		for d in externals:
+			deps[d] = []
+
+		# now run through the plugins adding their deps to the dictionary
+		for name in self.plugins.keys():
+			plugin = self.plugins[name]
+
+			deps[plugin.provides] = plugin.depends
+
+		# run through the requested plugins and store their plugin instance in check
+		check = []
+		for provides in args[1].split(','):
+			try:
+				if provides == 'all':
+					defaults = []
+					for p in self.default_plugins():
+						defaults.append(p.provides)
+
+					check += defaults
+
+					continue
+
+				plugin = self.plugins[provides]
+				check.append(plugin.provides)
+			except KeyError:
+				continue
+
+		# convert our list of plugins to check into a set to remove dupes
+		#check = set(check)
+
+		# create our list of plugins to build
+		build = []
+
+		# now define a function to check our deps
+		def has_deps(provides):
+			# don't add anything to build more than once
+			if provides in build:
+				return True
+
+			try:
+				dep_list = deps[provides]
+			except KeyError:
+				return False
+
+			# now check the dependencies
+			for dep in dep_list:
+				if not has_deps(dep):
+					return False
+
+			# make sure the provides isn't an external
+			if not provides in externals:
+				build.append(provides)
+
+			# everything checks out!
+			return True
+
+		# check all the plugins we were told to for their dependencies
+		for c in check:
+			has_deps(c)
+
+		output = {
+			'all': [],
+			'finch': [],
+			'purple': [],
+			'pidgin': [],
+		}
+
+		for provides in build:
+			plugin = self.plugins[provides]
+
+			output['all'].append(plugin.directory)
+
+		print "%s" % (string.join(set(output['all']), ','))
+	commands['build_dirs'] = build_dirs
 
 	def config_file(self, args):
 		"""Outputs the contents for the file to be m4_include()'d from configure"""
