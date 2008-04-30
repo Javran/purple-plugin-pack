@@ -112,11 +112,8 @@ class PluginPack:
 
 				# this is kind of hacky, but if we have types, we check to see
 				# if the type is in list of types to load.
-				if types:
-					try:
-						types.index(p.type)
-					except ValueError:
-						continue
+				if types and not p.type in types:
+					continue
 				
 				# now we check if the give plugins depends match the search
 				# depends
@@ -144,11 +141,8 @@ class PluginPack:
 		for name in self.plugins.keys():
 			plugin = self.plugins[name]
 
-			try:
-				plugin.depends.index(dep)
+			if dep in plugin.depends:
 				list.append(plugin)
-			except ValueError:
-				pass
 
 		list.sort()
 
