@@ -274,19 +274,17 @@ class PluginPack:
 		for c in check:
 			has_deps(c)
 
-		output = {
-			'all': [],
-			'finch': [],
-			'purple': [],
-			'pidgin': [],
-		}
+		# now create a list of all directories to build
+		output = []
 
 		for provides in build:
 			plugin = self.plugins[provides]
 
-			output['all'].append(plugin.directory)
+			output.append(plugin.directory)
 
-		print "%s" % (string.join(set(output['all']), ','))
+		output.sort()
+
+		print "%s" % (string.join(output, ','))
 	commands['build_dirs'] = build_dirs
 
 	def config_file(self, args):
