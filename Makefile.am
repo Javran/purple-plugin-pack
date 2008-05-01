@@ -29,7 +29,7 @@ endif
 
 DIST_SUBDIRS = common doc po $(PP_DIST_DIRS)
 
-SUBDIRS = common doc $(PO_DIR) $(PP_PURPLE_BUILD) $(PP_PIDGIN_BUILD) $(PP_FINCH_BUILD)
+SUBDIRS = common doc $(PO_DIR) $(PP_BUILD_DIRS)
 
 DISTCLEANFILES=\
 	pp_config.h \

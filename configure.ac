@@ -77,7 +77,7 @@ PKG_CHECK_MODULES(PURPLE, purple,
 
 HAVE_PURPLE="yes"
 AM_CONDITIONAL(HAVE_PURPLE, true)
-DEPENDENCIES="$DEPENDENCIES purple"
+DEPENDENCIES="$DEPENDENCIES,purple"
 
 if test x"$prefix" = x"NONE" ; then
 	PURPLE_LIBDIR=`pkg-config --variable=libdir purple`
@@ -119,7 +119,7 @@ PKG_CHECK_MODULES(PIDGIN, pidgin,
 	AC_DEFINE(HAVE_PIDGIN, 1, [Define if we've found pidgin.])
 	HAVE_PIDGIN="yes"
 	AM_CONDITIONAL(HAVE_PIDGIN, true)
-	DEPENDENCIES="$DEPENDENCIES pidgin"
+	DEPENDENCIES="$DEPENDENCIES,pidgin"
 ], [
 	AC_MSG_RESULT([no])
 	HAVE_PIDGIN="no"
@@ -159,7 +159,7 @@ PKG_CHECK_MODULES(FINCH, finch,
 	AC_DEFINE(HAVE_FINCH, 1, [Define if we've found finch.])
 	HAVE_FINCH="yes"
 	AM_CONDITIONAL(HAVE_FINCH, true)
-	DEPENDENCIES="$DEPENDENCIES finch"
+	DEPENDENCIES="$DEPENDENCIES,finch"
 ], [
 	AC_MSG_RESULT([no])
 	HAVE_FINCH="no"
@@ -228,7 +228,7 @@ if test x"$HAVE_TALKFILTERS" = x"yes"; then
 	AC_CHECK_LIB(talkfilters, gtf_filter_count, TALKFILTERS_LIBS="-ltalkfilters")
 	AC_SUBST(TALKFILTERS_LIBS)
 
-	DEPENDENCIES="$DEPENDENCIES talkfilters"
+	DEPENDENCIES="$DEPENDENCIES,talkfilters"
 fi
 
 dnl #######################################################################
@@ -267,7 +267,7 @@ AC_SUBST(ASPELL_LIBS)
 AM_CONDITIONAL(BUILD_SWITCH_SPELL, test x"$BUILD_SWITCH_SPELL" = x"yes")
 
 if test x"$BUILD_SWITCH_SPELL" = x"yes" ; then
-	DEPENDENCIES="$DEPENDENCIES gtkspell aspell"
+	DEPENDENCIES="$DEPENDENCIES,gtkspell,aspell"
 fi
 
 dnl #######################################################################
@@ -297,7 +297,7 @@ if test x"$XMMS_CONFIG" != x"no" ; then
 	if test x"$HAVE_XMMS" = x"yes" ; then
 		AC_MSG_RESULT([yes])
 
-		DEPENDENCIES="$DEPENDENCIES xmms"
+		DEPENDENCIES="$DEPENDENCIES,xmms"
 	else
 		AC_MSG_RESULT([no])
 	fi
@@ -370,7 +370,7 @@ if test x"$HAVE_PURPLE" = x"yes" ; then
 		echo Purple plugins to be built.......: none
 	else
 		echo Purple plugins to be built.......:
-		echo $PP_PURPLE_BUILD | xargs -n 4 echo "	"
+		echo $PP_PURPLE_BUILD
 	fi
 fi
 echo;
@@ -383,7 +383,7 @@ if test x"$HAVE_PIDGIN" = x"yes" ; then
 		echo Pidgin plugins to be built.......: none
 	else
 		echo Pidgin plugins to be built.......:
-		echo $PP_PIDGIN_BUILD | xargs -n 4 echo "	"
+		echo $PP_PIDGIN_BUILD
 	fi
 fi
 echo;
@@ -396,7 +396,7 @@ if test x"$HAVE_FINCH" = x"yes" ; then
 		echo Finch plugins to be built........: none - THIS IS NORMAL
 	else
 		echo Finch plugins to be built........:
-		echo $PP_FINCH_BUILD | xargs -n 4 echo "	"
+		echo $PP_FINCH_BUILD
 	fi
 fi
 echo;

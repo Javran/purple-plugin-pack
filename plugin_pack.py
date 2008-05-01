@@ -201,10 +201,11 @@ class PluginPack:
 	commands['dist_dirs'] = dist_dirs
 
 	def build_dirs(self, args):
+		"""Displays a list of the plugins that can be built"""
 		if len(args) != 2:
-			print 'build_dirs expects 2 arguments:'
-			print '\ta comma separated list of dependencies'
-			print '\ta comma separated list of plugins to build'
+			print >> sys.stderr, 'build_dirs expects 2 arguments:'
+			print >> sys.stderr, '\ta comma separated list of dependencies'
+			print >> sys.stderr, '\ta comma separated list of plugins to build'
 			sys.exit(1)
 
 		# store the external depedencies
@@ -291,6 +292,12 @@ class PluginPack:
 		"""Outputs the contents for the file to be m4_include()'d from configure"""
 		uniqdirs = self.unique_dirs()
 
+		# add our --with-plugins option
+		print 'AC_ARG_WITH(plugins,'
+		print '            AC_HELP_STRING([--with-plugins], [what plugins to build]),'
+		print '            ,WITH_PLUGINS=all)'
+
+		# determine and add our output files
 		print 'PP_DIST_DIRS="%s"' % (string.join(uniqdirs, ' '))
 		print 'AC_SUBST(PP_DIST_DIRS)'
 		print
@@ -298,6 +305,17 @@ class PluginPack:
 		for dir in uniqdirs:
 			print '\t%s/Makefile' % (dir)
 		print '])'
+		print
+
+		# setup a second call to determine the plugins to be built
+		print 'PP_BUILD=`$PYTHON $srcdir/plugin_pack.py build_dirs $DEPENDENCIES $WITH_PLUGINS`'
+		print
+		print 'PP_BUILD_DIRS=`echo $PP_BUILD | sed \'s/,/\ /g\'`'
+		print 'AC_SUBST(PP_BUILD_DIRS)'
+		print
+		print 'PP_PURPLE_BUILD=`$PYTHON $srcdir/plugin_pack.py -p show_names $PP_BUILD`'
+		print 'PP_PIDGIN_BUILD=`$PYTHON $srcdir/plugin_pack.py -P show_names $PP_BUILD`'
+		print 'PP_FINCH_BUILD=`$PYTHON $srcdir/plugin_pack.py -f show_names $PP_BUILD`'
 	commands['config_file'] = config_file
 
 	def dependency_graph(self, args):
@@ -358,6 +376,20 @@ class PluginPack:
 
 		print '}'
 	commands['dependency_graph'] = dependency_graph
+
+	def show_names(self, args):
+		"""Displays the names of the given comma separated list of provides"""
+
+		names = []
+
+		provides = args[0].split(',')
+		for provide in provides:
+			if provide in self.plugins:
+				names.append(self.plugins[provide].name)
+
+		print string.join(names, ', ')
+
+	commands['show_names'] = show_names
 
 	def info(self, args):
 		"""Displays all information about the given plugins"""
