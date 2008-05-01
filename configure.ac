@@ -366,12 +366,8 @@ echo Build purple plugins.............: $HAVE_PURPLE
 if test x"$HAVE_PURPLE" = x"yes" ; then
 	echo Installing purple plugins to.....: `eval eval echo $PURPLE_LIBDIR`
 	echo Installing purple plugin data to.: `eval eval echo $PURPLE_DATADIR`
-	if test x"$PP_PURPLE_BUILD" = x"" ; then
-		echo Purple plugins to be built.......: none
-	else
-		echo Purple plugins to be built.......:
-		echo $PP_PURPLE_BUILD
-	fi
+	echo Purple plugins to be built.......:
+	eval $PP_PURPLE_BUILD
 fi
 echo;
 
@@ -379,12 +375,8 @@ echo Build pidgin plugins.............: $HAVE_PIDGIN
 if test x"$HAVE_PIDGIN" = x"yes" ; then
 	echo Installing pidgin plugins to.....: `eval eval echo $PIDGIN_LIBDIR`
 	echo Installing pidgin plugin data to.: `eval eval echo $PIDGIN_DATADIR`
-	if test x"$PP_PIDGIN_BUILD" = x"" ; then
-		echo Pidgin plugins to be built.......: none
-	else
-		echo Pidgin plugins to be built.......:
-		echo $PP_PIDGIN_BUILD
-	fi
+	echo Pidgin plugins to be built.......:
+	eval $PP_PIDGIN_BUILD
 fi
 echo;
 
@@ -392,12 +384,9 @@ echo Build finch plugins..............: $HAVE_FINCH
 if test x"$HAVE_FINCH" = x"yes" ; then
 	echo Installing finch plugins to......: `eval eval echo $FINCH_LIBDIR`
 	echo Installing finch plugin data to..: `eval eval echo $FINCH_DATADIR`
-	if test x"$PP_FINCH_BUILD" = x"" ; then
-		echo Finch plugins to be built........: none - THIS IS NORMAL
-	else
-		echo Finch plugins to be built........:
-		echo $PP_FINCH_BUILD
-	fi
+	echo Finch plugins to be built........: none - THIS IS NORMAL
+	# uncomment this when we have finch plugins
+	# eval $PP_FINCH_BUILD
 fi
 echo;
 

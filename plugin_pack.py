@@ -203,9 +203,9 @@ class PluginPack:
 	def build_dirs(self, args):
 		"""Displays a list of the plugins that can be built"""
 		if len(args) != 2:
-			print >> sys.stderr, 'build_dirs expects 2 arguments:'
-			print >> sys.stderr, '\ta comma separated list of dependencies'
-			print >> sys.stderr, '\ta comma separated list of plugins to build'
+			printerr('build_dirs expects 2 arguments:')
+			printerr('\ta comma separated list of dependencies')
+			printerr('\ta comma separated list of plugins to build')
 			sys.exit(1)
 
 		# store the external depedencies
@@ -313,9 +313,9 @@ class PluginPack:
 		print 'PP_BUILD_DIRS=`echo $PP_BUILD | sed \'s/,/\ /g\'`'
 		print 'AC_SUBST(PP_BUILD_DIRS)'
 		print
-		print 'PP_PURPLE_BUILD=`$PYTHON $srcdir/plugin_pack.py -p show_names $PP_BUILD`'
-		print 'PP_PIDGIN_BUILD=`$PYTHON $srcdir/plugin_pack.py -P show_names $PP_BUILD`'
-		print 'PP_FINCH_BUILD=`$PYTHON $srcdir/plugin_pack.py -f show_names $PP_BUILD`'
+		print 'PP_PURPLE_BUILD="$PYTHON $srcdir/plugin_pack.py -p show_names $PP_BUILD"'
+		print 'PP_PIDGIN_BUILD="$PYTHON $srcdir/plugin_pack.py -P show_names $PP_BUILD"'
+		print 'PP_FINCH_BUILD="$PYTHON $srcdir/plugin_pack.py -f show_names $PP_BUILD"'
 	commands['config_file'] = config_file
 
 	def dependency_graph(self, args):
@@ -380,15 +380,26 @@ class PluginPack:
 	def show_names(self, args):
 		"""Displays the names of the given comma separated list of provides"""
 
-		names = []
-
 		provides = args[0].split(',')
+		if len(provides) == 0:
+			print "none"
+
+		line = " "
+
 		for provide in provides:
-			if provide in self.plugins:
-				names.append(self.plugins[provide].name)
+			if not provide in self.plugins:
+				continue
 
-		print string.join(names, ', ')
+			name = self.plugins[provide].name
 
+			if len(line) + len(name) + 2 > 75:
+				print line.rstrip(',')
+				line = ' '
+			
+			line += ' %s,' % name 
+
+		if len(line) > 1:
+			print line.rstrip(',')
 	commands['show_names'] = show_names
 
 	def info(self, args):
@@ -488,7 +499,6 @@ def main():
 		pp.commands[cmd](pp, args)
 	except KeyError:
 		printerr('\'%s\' command not found' % (cmd))
-
 
 if __name__ == '__main__':
 	main()
