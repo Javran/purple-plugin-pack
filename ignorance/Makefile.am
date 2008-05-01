@@ -1,8 +1,5 @@
-EXTRA_DIST = \
-	.pidgin-plugin \
-	.incomplete \
+INCLUDES = \
 	callbacks.h \
-	ignorance.conf \
 	ignorance.h \
 	ignorance_denizen.h \
 	ignorance_internal.h \
@@ -12,6 +9,11 @@ EXTRA_DIST = \
 	interface.h \
 	regex.h \
 	support.h
+
+EXTRA_DIST = \
+	plugins.cfg \
+	ignorance.conf \
+	$(INCLUDES)
 
 ignorancedir = $(PIDGIN_LIBDIR)/pidgin
 

@@ -1,4 +1,6 @@
-EXTRA_DIST = .purple-plugin .abusive Makefile.mingw
+EXTRA_DIST = \
+	Makefile.mingw \
+	plugins.cfg
 
 findipdir = $(PURPLE_LIBDIR)
 

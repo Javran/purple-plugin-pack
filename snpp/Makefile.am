@@ -1,7 +1,6 @@
 EXTRA_DIST = \
-	.build \
-	.purple-plugin \
-	Makefile.mingw
+	Makefile.mingw \
+	plugins.cfg
 
 libsnppdir = $(PURPLE_LIBDIR)
 

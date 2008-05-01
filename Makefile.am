@@ -13,7 +13,8 @@ EXTRA_DIST = \
 	README \
 	VERSION \
 	VERSION.in \
-	pp_config.h.mingw \
+	plugin_pack.m4 \
+	plugin_pack.py \
 	plugin_pack.spec \
 	menuconfig \
 	win_pp.mak \
@@ -26,9 +27,9 @@ if INSTALL_I18N
 PO_DIR=po
 endif
 
-DIST_SUBDIRS = common doc m4 po $(PP_PURPLE) $(PP_PIDGIN) $(PP_FINCH)
+DIST_SUBDIRS = common doc po $(PP_DIST_DIRS)
 
-SUBDIRS = common doc m4 $(PO_DIR) $(PP_PURPLE_BUILD) $(PP_PIDGIN_BUILD) $(PP_FINCH_BUILD)
+SUBDIRS = common doc $(PO_DIR) $(PP_BUILD_DIRS)
 
 DISTCLEANFILES=\
 	pp_config.h \
@@ -52,25 +53,7 @@ signatures: dist
 	echo $(DIST_ARCHIVES) | xargs -n 1 gpg -a -b
 
 info:
-	@echo "---------------------------------------"
-	@echo "Plugin Pack Info"
-	@echo "---------------------------------------"
-	@echo "Purple Plugins:"
-	@echo "	Available..: $(PP_PURPLE)"
-	@echo "	Abusive....: $(PP_PURPLE_ABUSIVE)"
-	@echo "	Incomplete.: $(PP_PURPLE_INCOMPLETE)"
-	@echo "	Building...: $(PP_PURPLE_BUILD)"
-	@echo "---------------------------------------"
-	@echo "Pidgin Plugins:"
-	@echo "	Available..: $(PP_PIDGIN)"
-	@echo "	Abusive....: $(PP_PIDGIN_ABUSIVE)"
-	@echo "	Incomplete.: $(PP_PIDGIN_INCOMPLETE)"
-	@echo "	Building...: $(PP_PIDGIN_BUILD)"
-	@echo "---------------------------------------"
-	@echo "Finch Plugins:"
-	@echo "	Available..: $(PP_FINCH)"
-	@echo "	Abusive....: $(PP_FINCH_ABUSIVE)"
-	@echo "	Incomplete.: $(PP_FINCH_INCOMPLETE)"
-	@echo "	Building...: $(PP_FINCH_BUILD)"
-	@echo "---------------------------------------"
+	@echo $(PP_DIST_DIRS)
 
+stats:
+	@$(PYTHON) plugin_pack.py stats

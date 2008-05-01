@@ -1,12 +1,14 @@
-EXTRA_DIST=\
-	.pidgin-plugin \
-	.build \
-	Makefile.mingw \
+HEADER_FILES = \
 	datechange.h \
 	lastlog.h \
 	layout.h \
 	textfmt.h \
 	window.h
+
+EXTRA_DIST=\
+	Makefile.mingw \
+	plugins.cfg \
+	$(HEADER_FILES)
 
 irssidir = $(PIDGIN_LIBDIR)
 

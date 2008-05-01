@@ -1,4 +1,6 @@
-EXTRA_DIST = .pidgin-plugin .build Makefile.mingw
+EXTRA_DIST = \
+	Makefile.mingw \
+	plugins.cfg
 
 lastseendir = $(PIDGIN_LIBDIR)
 

@@ -1,9 +1,11 @@
-EXTRA_DIST = \
-	.build \
-	.pidgin-plugin \
-	Makefile.mingw \
+HEADER_FILES = \
 	album.h \
 	album-ui.h
+
+EXTRA_DIST = \
+	Makefile.mingw \
+	plugins.cfg \
+	$(HEADER_FILES)
 
 albumdir = $(PIDGIN_LIBDIR)
 

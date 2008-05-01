@@ -1,4 +1,5 @@
-EXTRA_DIST = .pidgin-plugin .build
+EXTRA_DIST = \
+	plugins.cfg
 
 xchat_chatsdir = $(PIDGIN_LIBDIR)
 
