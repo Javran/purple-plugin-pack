@@ -1,4 +1,4 @@
-INCLUDES = \
+HEADER_FILES = \
 	aim_blt_files.h \
 	alias_xml_files.h \
 	gen_xml_files.h \
@@ -10,7 +10,7 @@ INCLUDES = \
 EXTRA_DIST=\
 	Makefile.mingw \
 	plugins.cfg \
-	$(INCLUDES)
+	$(HEADER_FILES)
 
 listhandlerdir = $(PURPLE_LIBDIR)
 

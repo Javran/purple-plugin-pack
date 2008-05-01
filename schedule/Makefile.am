@@ -1,9 +1,9 @@
-INCLUDES = \
+HEADER_FILES = \
 	schedule.h
 
 EXTRA_DIST = \
 	plugins.cfg \
-	$(INCLUDES)
+	$(HEADER_FILES)
 
 pidgin_scheduledir = $(PIDGIN_LIBDIR)
 

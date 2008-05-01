@@ -1,4 +1,4 @@
-INCLUDES = \
+HEADER_FILES = \
 	datechange.h \
 	lastlog.h \
 	layout.h \
@@ -8,7 +8,7 @@ INCLUDES = \
 EXTRA_DIST=\
 	Makefile.mingw \
 	plugins.cfg \
-	$(INCLUDES)
+	$(HEADER_FILES)
 
 irssidir = $(PIDGIN_LIBDIR)
 

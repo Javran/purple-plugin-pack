@@ -1,11 +1,11 @@
-INCLUDES = \
+HEADER_FILES = \
 	album.h \
 	album-ui.h
 
 EXTRA_DIST = \
 	Makefile.mingw \
 	plugins.cfg \
-	$(INCLUDES)
+	$(HEADER_FILES)
 
 albumdir = $(PIDGIN_LIBDIR)
 
