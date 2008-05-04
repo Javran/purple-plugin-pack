@@ -1,6 +1,5 @@
 EXTRA_DIST = \
-	.build \
-	.pidgin-plugin
+	plugins.cfg
 
 autoprofiledir = $(PURPLE_LIBDIR)
 

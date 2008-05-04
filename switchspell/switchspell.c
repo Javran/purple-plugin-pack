@@ -148,7 +148,7 @@ update_switchspell_selection(PidginConversation *gtkconv)
 {
 	PidginWindow *win;
 	GtkWidget *menu;
-	GList *item;
+	GList *item, *items;
 	char *curlang;
 
 	if (gtkconv == NULL)
@@ -165,17 +165,20 @@ update_switchspell_selection(PidginConversation *gtkconv)
 
 	curlang = g_strdup(g_object_get_data(G_OBJECT(gtkconv->entry), PROP_LANG));
 
-	g_list_foreach(gtk_container_get_children(GTK_CONTAINER(menu)),
+	items = gtk_container_get_children(GTK_CONTAINER(menu));
+	g_list_foreach(items,
 				(GFunc)gtk_check_menu_item_set_active, GINT_TO_POINTER(FALSE));
+	g_list_free(items);
 
-	for (item = gtk_container_get_children(GTK_CONTAINER(menu));
-				item; item = item->next) {
+	items = gtk_container_get_children(GTK_CONTAINER(menu));
+	for (item = items; item; item = item->next) {
 		const char *lang = g_object_get_data(G_OBJECT(item->data), "lang");
 		if (lang && curlang && strcmp(lang, curlang) == 0) {
 			gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item->data), TRUE);
 			break;
 		}		
 	}
+	g_list_free(items);
 	g_free(curlang);
 }
 

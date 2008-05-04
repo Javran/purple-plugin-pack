@@ -1,4 +1,5 @@
-EXTRA_DIST = .purple-plugin .incomplete
+EXTRA_DIST = \
+	plugins.cfg
 
 chronicdir=$(PURPLE_LIBDIR)
 

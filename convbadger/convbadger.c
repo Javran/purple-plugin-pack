@@ -105,7 +105,7 @@ conv_badger_update(PidginWindow *win, PurpleConversation *conv) {
  * Callbacks
  *****************************************************************************/
 static void
-convbadger_conv_created_cb(PurpleConversation *conv, gpointer data) {
+conv_badger_conv_created_cb(PurpleConversation *conv, gpointer data) {
 	PidginConversation *pconv = PIDGIN_CONVERSATION(conv);
 	PidginWindow *win = pidgin_conv_get_window(pconv);
 
@@ -113,11 +113,11 @@ convbadger_conv_created_cb(PurpleConversation *conv, gpointer data) {
 }
 
 static void
-convbadger_conv_destroyed_cb(PurpleConversation *conv, gpointer data) {
+conv_badger_conv_destroyed_cb(PurpleConversation *conv, gpointer data) {
 }
 
 static void
-convbadger_conv_switched_cb(PurpleConversation *conv, gpointer data) {
+conv_badger_conv_switched_cb(PurpleConversation *conv, gpointer data) {
 	PidginConversation *pconv = PIDGIN_CONVERSATION(conv);
 	PidginWindow *win = pidgin_conv_get_window(pconv);
 
@@ -135,13 +135,13 @@ plugin_load(PurplePlugin *plugin) {
 								 NULL, NULL);
 
 	purple_signal_connect(conv_handle, "conversation-created", plugin,
-						  PURPLE_CALLBACK(convbadger_conv_created_cb), NULL);
+						  PURPLE_CALLBACK(conv_badger_conv_created_cb), NULL);
 	purple_signal_connect(conv_handle, "deleting-conversation", plugin,
-						  PURPLE_CALLBACK(convbadger_conv_destroyed_cb), NULL);
+						  PURPLE_CALLBACK(conv_badger_conv_destroyed_cb), NULL);
 
 	purple_signal_connect(pidgin_conversations_get_handle(),
 						  "conversation-switched", plugin,
-						  PURPLE_CALLBACK(convbadger_conv_switched_cb), NULL);
+						  PURPLE_CALLBACK(conv_badger_conv_switched_cb), NULL);
 
 	return TRUE;
 }

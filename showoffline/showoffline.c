@@ -82,6 +82,13 @@ static gboolean
 plugin_load(PurplePlugin *plugin)
 {
 
+	if (purple_version_check(2,3,0) == NULL) {
+		purple_notify_info(plugin, _("Plugin deprecated"),
+					_("Show Offline plugin deprecated"),
+					_("This plugin has been deprecated as of Pidgin 2.3.0 which\n"
+					  "includes the same functionality."));
+		return FALSE;
+	}
 	purple_signal_connect(purple_blist_get_handle(), "blist-node-extended-menu",
 						plugin, PURPLE_CALLBACK(showoffline_extended_menu_cb), NULL);
 

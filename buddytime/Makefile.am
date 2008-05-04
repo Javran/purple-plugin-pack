@@ -1,4 +1,5 @@
-EXTRA_DIST = .incomplete .purple-plugin .pidgin-plugin
+EXTRA_DIST = \
+	plugins.cfg
 
 noinst_PROGRAMS = recursetest
 

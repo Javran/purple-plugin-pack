@@ -51,13 +51,18 @@ show_them(gpointer data)
 {
 	/* So you think you can kick me? I'll show you! */
 	PurpleConversation *conv = data;
-	char *command = g_strdup_printf("join %s", purple_conversation_get_name(conv));
-	char *markup = g_markup_escape_text(command, -1);
-	char *error = NULL;
-	purple_cmd_do_command(conv, command, markup, &error);  /* Do anything with the return value? */
-	g_free(command);
-	g_free(markup);
-	g_free(error);
+	char *conv_name = NULL, *command = NULL, *markup = NULL, *error = NULL;
+
+	if(conv_name) {
+		command = g_strdup_printf("join %s", conv_name);
+		markup = g_markup_escape_text(command, -1);
+		error = NULL;
+		purple_cmd_do_command(conv, command, markup, &error);  /* Do anything with the return value? */
+		g_free(command);
+		g_free(markup);
+		g_free(error);
+	}
+
 	return FALSE;
 }
 

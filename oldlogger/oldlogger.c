@@ -114,7 +114,7 @@ static void old_logger_update_index(PurpleLog *log)
 	struct stat st;
 	char *index_path;
 	char *index_data;
-	GError *error;
+	GError *error = NULL;
 	int index_fd;
 	char *index_tmp;
 	FILE *index;
@@ -146,7 +146,6 @@ static void old_logger_update_index(PurpleLog *log)
 	if ((index_fd = g_mkstemp(index_tmp)) == -1) {
 		purple_debug_error("log", "Failed to open index temp file: %s\n",
 		                 strerror(errno));
-		g_error_free(error);
 		g_free(index_path);
 		g_free(index_data);
 		g_free(index_tmp);
@@ -177,8 +176,11 @@ static void old_logger_update_index(PurpleLog *log)
 		purple_debug_warning("log", "Failed to rename index temp file \"%s\" to \"%s\": %s\n",
 						   index_tmp, index_path, strerror(errno));
 		g_unlink(index_tmp);
-		g_free(index_tmp);
 	}
+
+	g_free(index_tmp);
+	g_free(index_path);
+	g_free(index_data);
 }
 
 static void old_logger_finalize(PurpleLog *log)

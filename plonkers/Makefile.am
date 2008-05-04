@@ -1,4 +1,5 @@
-EXTRA_DIST = .pidgin-plugin .build
+EXTRA_DIST = \
+	plugins.cfg
 
 plonkersdir = $(PIDGIN_LIBDIR)
 

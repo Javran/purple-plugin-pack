@@ -53,9 +53,11 @@ ARGS_FILE="autogen.args"
 ###############################################################################
 check () {
 	CMD=$1
+	shift
+	ARGS=$@
 
 	echo -n "checking for ${CMD}... "
-	BIN=`which ${CMD}`
+	BIN=`which ${CMD} $@ 2>/dev/null`
 
 	if [ x"${BIN}" = x"" ] ; then
 		echo "not found."
@@ -70,17 +72,23 @@ run_or_die () { # beotch
 	CMD=$1
 	shift
 
+	OUTPUT=`mktemp autogen-XXXX`
+
 	echo -n "running ${CMD} ${@}... "
-	OUTPUT=`${CMD} ${@} 2>&1`
+	${CMD} ${@} >${OUTPUT} 2>&1
+
 	if [ $? != 0 ] ; then
 		echo "failed."
-		echo ${OUTPUT}
+		cat ${OUTPUT}
+		rm -f ${OUTPUT}
 		exit 1
 	else
 		echo "done."
-		if [ x"${OUTPUT}" != x"" ] ; then
-			echo ${OUTPUT}
+		if [ `stat --printf="%s" ${OUTPUT}` -ge 0 ] ; then
+			cat ${OUTPUT}
 		fi
+		
+		rm -f ${OUTPUT}
 	fi
 }
 
@@ -102,7 +110,7 @@ echo -n "checking for ${ARGS_FILE}: "
 if [ -f ${ARGS_FILE} ] ; then
 	echo "found."
 	echo -n "sourcing ${ARGS_FILE}: "
-	. autogen.args
+	. ${ARGS_FILE}
 	echo "done."
 else
 	echo "not found."
@@ -117,13 +125,23 @@ check "aclocal";		ACLOCAL=${BIN};
 check "autoheader";		AUTOHEADER=${BIN};
 check "automake";		AUTOMAKE=${BIN};
 check "autoconf";		AUTOCONF=${BIN};
+check "python" -V;		PYTHON=${BIN};
+
+###############################################################################
+# Build pluginpack.m4
+###############################################################################
+CONFIG_FILE="plugin_pack.m4"
+
+echo -n "creating ${CONFIG_FILE} ..."
+${PYTHON} plugin_pack.py config_file > ${CONFIG_FILE} 2>/dev/null
+echo " done."
 
 ###############################################################################
 # Run all of our helpers
 ###############################################################################
 run_or_die ${LIBTOOLIZE} -c -f --automake ${LIBTOOLIZE_FLAGS}
 run_or_die ${INTLTOOLIZE} -c -f --automake ${INTLTOOLIZE_FLAGS}
-run_or_die ${ACLOCAL} -I m4 ${ACLOCAL_FLAGS}
+run_or_die ${ACLOCAL} ${ACLOCAL_FLAGS}
 run_or_die ${AUTOHEADER} ${AUTOHEADER_FLAGS}
 run_or_die ${AUTOMAKE} -a -c -f --gnu ${AUTOMAKE_FLAGS}
 run_or_die ${AUTOCONF} -f ${AUTOCONF_FLAGS}

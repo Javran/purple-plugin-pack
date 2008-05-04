@@ -216,6 +216,7 @@ stocker_prefs_init(void) {
 	purple_prefs_add_none(PREF_ROOT);
 	purple_prefs_add_string_list(PREF_SYMBOLS, def_syms);
 	purple_prefs_add_int(PREF_INTERVAL, 30);
+	g_list_free(def_syms);
 }
 
 GtkWidget *

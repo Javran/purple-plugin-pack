@@ -1,4 +1,6 @@
-EXTRA_DIST = .pidgin-plugin Makefile.mingw .build
+EXTRA_DIST = \
+	Makefile.mingw \
+	plugins.cfg
 
 difftopicdir = $(PIDGIN_LIBDIR)
 

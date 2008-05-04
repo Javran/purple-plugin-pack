@@ -11,10 +11,10 @@ AC_DEFINE_UNQUOTED(PP_VERSION, "AC_PACKAGE_VERSION", [Plugin Pack Version])
 AC_PATH_PROG(sedpath, sed)
 AC_DISABLE_STATIC
 
-dnl This disables check of libtool for these compilers
-CXX=no
-F77=no
-GCJ=no
+dnl #######################################################################
+dnl # Initialize some variables that get passed to plugin_pack.py
+dnl #######################################################################
+DEPENDENCIES=""
 
 dnl #######################################################################
 dnl # Setup libtool
@@ -77,6 +77,7 @@ PKG_CHECK_MODULES(PURPLE, purple,
 
 HAVE_PURPLE="yes"
 AM_CONDITIONAL(HAVE_PURPLE, true)
+DEPENDENCIES="$DEPENDENCIES,purple"
 
 if test x"$prefix" = x"NONE" ; then
 	PURPLE_LIBDIR=`pkg-config --variable=libdir purple`
@@ -118,6 +119,7 @@ PKG_CHECK_MODULES(PIDGIN, pidgin,
 	AC_DEFINE(HAVE_PIDGIN, 1, [Define if we've found pidgin.])
 	HAVE_PIDGIN="yes"
 	AM_CONDITIONAL(HAVE_PIDGIN, true)
+	DEPENDENCIES="$DEPENDENCIES,pidgin"
 ], [
 	AC_MSG_RESULT([no])
 	HAVE_PIDGIN="no"
@@ -157,6 +159,7 @@ PKG_CHECK_MODULES(FINCH, finch,
 	AC_DEFINE(HAVE_FINCH, 1, [Define if we've found finch.])
 	HAVE_FINCH="yes"
 	AM_CONDITIONAL(HAVE_FINCH, true)
+	DEPENDENCIES="$DEPENDENCIES,finch"
 ], [
 	AC_MSG_RESULT([no])
 	HAVE_FINCH="no"
@@ -217,10 +220,8 @@ AC_SUBST(GNT_CFLAGS)
 AC_SUBST(GNT_CFLAGS)
 
 dnl #######################################################################
-dnl # Plugin dependency checking
+dnl # Check for talkfilters
 dnl #######################################################################
-
-# talkfilters
 AC_CHECK_HEADER(talkfilters.h, HAVE_TALKFILTERS=yes, AC_MSG_WARN([
 *** GNU Talk Filters is required to build the talkfilters plugin;
 *** please make sure you have the GNU Talk Filters development headers installed.
@@ -233,9 +234,12 @@ if test x"$HAVE_TALKFILTERS" = x"yes"; then
 	dnl work out that the library exists
 	AC_CHECK_LIB(talkfilters, gtf_filter_count, TALKFILTERS_LIBS="-ltalkfilters")
 	AC_SUBST(TALKFILTERS_LIBS)
+	DEPENDENCIES="$DEPENDENCIES,talkfilters"
 fi
 
-# switchspell
+dnl #######################################################################
+dnl # Check for switchspell
+dnl #######################################################################
 gtkspell=yes
 PKG_CHECK_MODULES(GTKSPELL, gtkspell-2.0 >= 2.0.2, [], [gtkspell=no])
 AC_SUBST(GTKSPELL_CFLAGS)
@@ -250,9 +254,31 @@ if test x"$gtkspell" = x"yes" ; then
 		BUILD_SWITCH_SPELL=no
 	fi
 fi
+
+# check for aspell
+ASPELL_CFLAGS=""
+ASPELL_LIBS=""
+AC_CHECK_HEADER([aspell.h], HAVE_ASPELL_H=yes, AC_MSG_WARN([
+*** libaspell is required to build the switchspell plugin.])
+HAVE_ASPELL_H=no
+)
+
+if test x"$HAVE_ASPELL_H" = x"yes" ; then
+	AC_CHECK_LIB([aspell], [new_aspell_config], ASPELL_LIBS="-laspell", BUILD_SWITCH_SPELL=no)
+fi
+
+AC_SUBST(ASPELL_CFLAGS)
+AC_SUBST(ASPELL_LIBS)
+
 AM_CONDITIONAL(BUILD_SWITCH_SPELL, test x"$BUILD_SWITCH_SPELL" = x"yes")
 
-# xmmsremote
+if test x"$BUILD_SWITCH_SPELL" = x"yes" ; then
+	DEPENDENCIES="$DEPENDENCIES,gtkspell,aspell"
+fi
+
+dnl #######################################################################
+dnl # Check for xmms
+dnl #######################################################################
 XMMS_LIBS=""
 XMMS_CFLAGS=""
 HAVE_XMMS="no"
@@ -276,6 +302,8 @@ if test x"$XMMS_CONFIG" != x"no" ; then
 
 	if test x"$HAVE_XMMS" = x"yes" ; then
 		AC_MSG_RESULT([yes])
+
+		DEPENDENCIES="$DEPENDENCIES,xmms"
 	else
 		AC_MSG_RESULT([no])
 	fi
@@ -284,12 +312,17 @@ AM_CONDITIONAL(USE_XMMS, test x"$HAVE_XMMS" = x"yes")
 AC_SUBST(XMMS_LIBS)
 AC_SUBST(XMMS_CFLAGS)
 
+dnl #######################################################################
+dnl # Check for some basic headers
+dnl #######################################################################
 AC_CHECK_HEADERS(regex.h)
 
 dnl #######################################################################
-dnl # Run our plugin checking
+dnl # Disable installation of translation files
 dnl #######################################################################
-AM_BUILD_PLUGIN_LIST()
+AC_ARG_ENABLE(nls, AC_HELP_STRING([--enable-nls], [enable installation of translation files]), enable_i18n="$enableval", enable_i18n=yes)
+
+AM_CONDITIONAL(INSTALL_I18N, test "x$enable_i18n" = "xyes")
 
 dnl #######################################################################
 dnl # Version stuff
@@ -306,65 +339,24 @@ AC_CONFIG_COMMANDS_POST([
 ])
 
 dnl #######################################################################
+dnl # plugin_pack.py has already done our heavy lifting from the boot
+dnl # strap.  So we'll include our config file it created and call it to
+dnl # determine our build directories
+dnl #######################################################################
+AC_PATH_PROG([PYTHON], [python], [no])
+
+dnl # include the config file we created during bootstrapping
+m4_include([plugin_pack.m4])
+
+dnl #######################################################################
 dnl # Finish up
 dnl #######################################################################
-AC_OUTPUT([
-	Makefile
-	common/Makefile
-	doc/Makefile
-	m4/Makefile
-	po/Makefile.in
-	VERSION
-	plugin_pack.spec
-	album/Makefile
-	autoprofile/Makefile
-	autoreply/Makefile
-	awaynotify/Makefile
-	bash/Makefile
-	bit/Makefile
-	blistops/Makefile
-	buddytime/Makefile
-	chronic/Makefile
-	convbadger/Makefile
-	dewysiwygification/Makefile
-	dice/Makefile
-	difftopic/Makefile
-	eight_ball/Makefile
-	enhancedhist/Makefile
-	findip/Makefile
-	flip/Makefile
-	groupmsg/Makefile
-	gRIM/Makefile
-	hideconv/Makefile
-	highlight/Makefile
-	ignorance/Makefile
-	ignore/Makefile
-	infopane/Makefile
-	irc-more/Makefile
-	irchelper/Makefile
-	irssi/Makefile
-	lastseen/Makefile
-	listhandler/Makefile
-	mystatusbox/Makefile
-	napster/Makefile
-	nicksaid/Makefile
-	oldlogger/Makefile
-	plonkers/Makefile
-	schedule/Makefile
-	sepandtab/Makefile
-	showoffline/Makefile
-	simfix/Makefile
-	slashexec/Makefile
-	snpp/Makefile
-	smartear/Makefile
-	sslinfo/Makefile
-	stocker/Makefile
-	switchspell/Makefile
-	talkfilters/Makefile
-	timelog/Makefile
-	xchat-chats/Makefile
-	xmmsremote/Makefile
-	xmmsremote/pixmaps/Makefile
+AC_OUTPUT([Makefile
+		   common/Makefile
+		   doc/Makefile
+		   po/Makefile.in
+		   VERSION
+		   plugin_pack.spec
 ])
 
 dnl #######################################################################
@@ -380,12 +372,8 @@ echo Build purple plugins.............: $HAVE_PURPLE
 if test x"$HAVE_PURPLE" = x"yes" ; then
 	echo Installing purple plugins to.....: `eval eval echo $PURPLE_LIBDIR`
 	echo Installing purple plugin data to.: `eval eval echo $PURPLE_DATADIR`
-	if test x"$PP_PURPLE_BUILD" = x"" ; then
-		echo Purple plugins to be built.......: none
-	else
-		echo Purple plugins to be built.......:
-		echo $PP_PURPLE_BUILD | xargs -n 4 echo "	"
-	fi
+	echo Purple plugins to be built.......:
+	eval $PP_PURPLE_BUILD
 fi
 echo;
 
@@ -393,12 +381,8 @@ echo Build pidgin plugins.............: $HAVE_PIDGIN
 if test x"$HAVE_PIDGIN" = x"yes" ; then
 	echo Installing pidgin plugins to.....: `eval eval echo $PIDGIN_LIBDIR`
 	echo Installing pidgin plugin data to.: `eval eval echo $PIDGIN_DATADIR`
-	if test x"$PP_PIDGIN_BUILD" = x"" ; then
-		echo Pidgin plugins to be built.......: none
-	else
-		echo Pidgin plugins to be built.......:
-		echo $PP_PIDGIN_BUILD | xargs -n 4 echo "	"
-	fi
+	echo Pidgin plugins to be built.......:
+	eval $PP_PIDGIN_BUILD
 fi
 echo;
 
@@ -406,12 +390,9 @@ echo Build finch plugins..............: $HAVE_FINCH
 if test x"$HAVE_FINCH" = x"yes" ; then
 	echo Installing finch plugins to......: `eval eval echo $FINCH_LIBDIR`
 	echo Installing finch plugin data to..: `eval eval echo $FINCH_DATADIR`
-	if test x"$PP_FINCH_BUILD" = x"" ; then
-		echo Finch plugins to be built........: none - THIS IS NORMAL
-	else
-		echo Finch plugins to be built........:
-		echo $PP_FINCH_BUILD | xargs -n 4 echo "	"
-	fi
+	echo Finch plugins to be built........: none - THIS IS NORMAL
+	# uncomment this when we have finch plugins
+	# eval $PP_FINCH_BUILD
 fi
 echo;
 

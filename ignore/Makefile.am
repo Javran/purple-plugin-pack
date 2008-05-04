@@ -1,4 +1,6 @@
-EXTRA_DIST = .build .purple-plugin Makefile.mingw
+EXTRA_DIST = \
+	Makefile.mingw \
+	plugins.cfg
 
 ignoredir = $(PURPLE_LIBDIR)
 

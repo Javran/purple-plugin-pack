@@ -1,10 +1,12 @@
-EXTRA_DIST=\
-	.build \
-	.purple-plugin \
-	Makefile.mingw \
+PIXMAPS = \
 	16/napster.png \
 	22/napster.png \
 	48/napster.png
+	
+EXTRA_DIST=\
+	Makefile.mingw \
+	plugins.cfg \
+	$(PIXMAPS)
 
 napsterdir = $(PURPLE_LIBDIR)
 
