@@ -1,10 +1,6 @@
-EXTRA_DIST= \
-	.build \
-	.pidgin-plugin \
-	.purple-plugin \
-	.finch-plugin \
-	Makefile.mingw
-
+EXTRA_DIST = \
+	Makefile.mingw \
+	plugins.cfg
 
 if HAVE_PURPLE
 smarteardir = $(PURPLE_LIBDIR)
