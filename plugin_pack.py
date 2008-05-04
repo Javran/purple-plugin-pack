@@ -426,7 +426,7 @@ class PluginPack:
 		counts['pidgin'] = len(self.pidgin_plugins())
 
 		def value(val):
-			return "%3d (%0.2f%%)" % (val, (float(val) / float(counts['total'])) * 100.0)
+			return "%3d (%6.2f%%)" % (val, (float(val) / float(counts['total'])) * 100.0)
 
 		print "Purple Plugin Pack Stats"
 		print ""
