@@ -6,6 +6,7 @@
 aclocal.m4
 buddytime/gtktimezonetest
 buddytime/recursetest
+^compile$
 config.(cache|guess|log|status|sub)
 configure
 depcomp
