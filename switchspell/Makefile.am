@@ -5,8 +5,7 @@ EXTRA_DIST = \
 if BUILD_SWITCH_SPELL
 switchspelldir = $(PIDGIN_LIBDIR)
 
-switchspell_la_LDFLAGS = -module -avoid-version \
-	$(GTKSPELL_LIBS)
+switchspell_la_LDFLAGS = -module -avoid-version
 
 if HAVE_PIDGIN
 
@@ -18,6 +17,7 @@ switchspell_la_SOURCES = \
 switchspell_la_LIBADD = \
 	$(ASPELL_LIBS) \
 	$(GTK_LIBS) \
+	$(GTKSPELL_LIBS) \
 	$(PIDGIN_LIBS)
 
 endif # PIDGIN
