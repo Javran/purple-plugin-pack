@@ -234,6 +234,7 @@ if test x"$HAVE_TALKFILTERS" = x"yes"; then
 	dnl work out that the library exists
 	AC_CHECK_LIB(talkfilters, gtf_filter_count, TALKFILTERS_LIBS="-ltalkfilters")
 	AC_SUBST(TALKFILTERS_LIBS)
+
 	DEPENDENCIES="$DEPENDENCIES,talkfilters"
 fi
 
