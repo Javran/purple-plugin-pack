@@ -380,6 +380,10 @@ class PluginPack:
 	def show_names(self, args):
 		"""Displays the names of the given comma separated list of provides"""
 
+		if len(args) == 0 or len(args[0]) == 0:
+			printerr('show_names expects a comma separated list of provides')
+			sys.exit(1)
+
 		provides = args[0].split(',')
 		if len(provides) == 0:
 			print "none"
