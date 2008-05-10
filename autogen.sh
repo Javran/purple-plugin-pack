@@ -72,7 +72,7 @@ run_or_die () { # beotch
 	CMD=$1
 	shift
 
-	OUTPUT=`mktemp autogen-XXXX`
+	OUTPUT=`mktemp autogen-XXXXXX`
 
 	echo -n "running ${CMD} ${@}... "
 	${CMD} ${@} >${OUTPUT} 2>&1
