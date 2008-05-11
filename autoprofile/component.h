@@ -24,6 +24,10 @@
 #ifndef _AP_COMPONENT_H_
 #define _AP_COMPONENT_H_
 
+#ifdef HAVE_CONFIG_H
+# include "../pp_config.h"
+#endif
+
 #include "widget.h"
 
 #include "sizes.h"
