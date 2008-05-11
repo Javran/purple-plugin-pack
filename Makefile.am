@@ -13,6 +13,7 @@ EXTRA_DIST = \
 	README \
 	VERSION \
 	VERSION.in \
+	plugin_list.sh \
 	plugin_pack.m4 \
 	plugin_pack.py \
 	plugin_pack.spec \
