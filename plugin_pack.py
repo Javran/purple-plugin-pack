@@ -287,6 +287,56 @@ class PluginPack:
 
 		print "%s" % (string.join(output, ','))
 	commands['build_dirs'] = build_dirs
+	
+	def list_plugins(self, args):
+		data = {}
+
+		# create an array for the widths, we initialize it to the lengths of
+		# the title strings.  We ignore summary, since that one shouldn't
+		# matter.
+		widths = [4, 8, 0]
+
+		for p in self.plugins.keys():
+			plugin = self.plugins[p]
+
+			if plugin.type == 'abusive':
+				type = 'a'
+			elif plugin.type == 'incomplete':
+				type = 'i'
+			else:
+				type = 'd'
+
+			if 'finch' in plugin.depends:
+				ui = 'f'
+			elif 'pidgin' in plugin.depends:
+				ui = 'p'
+			elif 'purple' in plugin.depends:
+				ui = 'r'
+			else:
+				ui = 'u'
+
+			widths[0] = max(widths[0], len(plugin.name))
+			widths[1] = max(widths[1], len(plugin.provides))
+			widths[2] = max(widths[2], len(plugin.summary))
+
+			data[plugin.provides] = [type, ui, plugin.name, plugin.provides, plugin.summary]
+
+		print 'Type=Default/Incomplete/Abusive'
+		print '| UI=Finch/Pidgin/puRple/Unknown'
+		print '|/ Name%s Provides%s Summary' % (' ' * (widths[0] - 4), ' ' * (widths[1] - 8))
+		print '++-%s-%s-%s' % ('=' * (widths[0]), '=' * (widths[1]), '=' * (widths[2]))
+
+		# create the format var
+		fmt = '%%s%%s %%-%ds %%-%ds %%s' % (widths[0], widths[1]) #, widths[2])
+
+		# now loop through the list again, with everything formatted
+		list = data.keys()
+		list.sort()
+
+		for p in list:
+			d = data[p]
+			print fmt % (d[0], d[1], d[2], d[3], d[4])
+	commands['list'] = list_plugins
 
 	def config_file(self, args):
 		"""Outputs the contents for the file to be m4_include()'d from configure"""
