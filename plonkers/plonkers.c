@@ -189,7 +189,7 @@ plonk_cmd_cb(PurpleConversation *c, const gchar *cmd, gchar **args, gchar **erro
 	for (l = account->deny; l != NULL; l = l->next) {
 		for (plonks = members; plonks; plonks = plonks->next) {
 			if (!purple_utf8_strcasecmp((char *)l->data, plonks->data)) {
-				purple_debug_info("plonkers", "Ignoring room member %s in room %s\n" ,plonks->data, room);
+				purple_debug_info("plonkers", "Ignoring room member %s in room %s\n" ,(gchar *)plonks->data, room);
 /*				purple_conv_chat_ignore(PURPLE_CONV_CHAT(c),plonks->data);
  *				ops->chat_update_user((c), plonks->data); */
 			}
