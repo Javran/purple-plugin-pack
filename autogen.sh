@@ -95,7 +95,7 @@ run_or_die () { # beotch
 ###############################################################################
 # We really start here, yes, very sneaky!
 ###############################################################################
-FIGLET=`which figlet`
+FIGLET=`which figlet 2> /dev/null`
 if [ x"${FIGLET}" != x"" ] ; then
 	${FIGLET} -f small ${PACKAGE}
 	echo "build system is being generated"
@@ -125,7 +125,7 @@ check "aclocal";		ACLOCAL=${BIN};
 check "autoheader";		AUTOHEADER=${BIN};
 check "automake";		AUTOMAKE=${BIN};
 check "autoconf";		AUTOCONF=${BIN};
-check "python" -V;		PYTHON=${BIN};
+check "python";			PYTHON=${BIN};
 
 ###############################################################################
 # Build pluginpack.m4
@@ -133,7 +133,7 @@ check "python" -V;		PYTHON=${BIN};
 CONFIG_FILE="plugin_pack.m4"
 
 echo -n "creating ${CONFIG_FILE} ..."
-${PYTHON} plugin_pack.py config_file > ${CONFIG_FILE} 2>/dev/null
+${PYTHON} plugin_pack.py config_file > ${CONFIG_FILE}
 echo " done."
 
 ###############################################################################
@@ -143,8 +143,8 @@ run_or_die ${LIBTOOLIZE} -c -f --automake ${LIBTOOLIZE_FLAGS}
 run_or_die ${INTLTOOLIZE} -c -f --automake ${INTLTOOLIZE_FLAGS}
 run_or_die ${ACLOCAL} ${ACLOCAL_FLAGS}
 run_or_die ${AUTOHEADER} ${AUTOHEADER_FLAGS}
-run_or_die ${AUTOMAKE} -a -c -f --gnu ${AUTOMAKE_FLAGS}
-run_or_die ${AUTOCONF} -f ${AUTOCONF_FLAGS}
+run_or_die ${AUTOMAKE} -a -c --gnu ${AUTOMAKE_FLAGS}
+run_or_die ${AUTOCONF} ${AUTOCONF_FLAGS}
 
 ###############################################################################
 # Run configure
