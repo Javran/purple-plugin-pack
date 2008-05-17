@@ -268,6 +268,18 @@ if test x"$HAVE_ASPELL_H" = x"yes" ; then
 	AC_CHECK_LIB([aspell], [new_aspell_config], ASPELL_LIBS="-laspell", BUILD_SWITCH_SPELL=no)
 fi
 
+AC_ARG_ENABLE(enchant, [AC_HELP_STRING([--enable-enchant], [compile with gtkspell using enchant])],
+    enable_enchant="$enableval", enable_enchant="no")
+if test "x$enable_enchant" = "xyes"; then
+	PKG_CHECK_MODULES(ENCHANT, enchant, [
+		BUILD_SWITCH_SPELL=yes
+		ASPELL_CFLAGS=""
+		ASPELL_LIBS=""], [gtkspell=no])
+	ENCHANT_CFLAGS="-DUSE_ENCHANT $ENCHANT_CFLAGS"
+	AC_SUBST(ENCHANT_CFLAGS)
+	AC_SUBST(ENCHANT_LIBS)
+fi
+
 AC_SUBST(ASPELL_CFLAGS)
 AC_SUBST(ASPELL_LIBS)
 

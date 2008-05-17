@@ -35,7 +35,11 @@
 #include <gtkconv.h>
 #include <gtkplugin.h>
 
+#ifdef USE_ENCHANT
+#include <enchant.h>
+#else
 #include <aspell.h>
+#endif
 #include <gtkspell/gtkspell.h>
 #include <string.h>
 
@@ -81,8 +85,12 @@ menu_conv_use_dict_cb(GObject *m, gpointer data)
 
 	gtkconv = PIDGIN_CONVERSATION(conv);
 	spell = gtkspell_get_from_text_view(GTK_TEXT_VIEW(gtkconv->entry));
-	if (spell != NULL)
-		gtkspell_set_language(spell, lang, &error);  /* XXX: error can possibly leak here */
+	if (spell != NULL) {
+		if (!gtkspell_set_language(spell, lang, &error)) {
+			purple_debug_error("switchspell", "failed to set language %s: %s\n", lang, error->message);
+			g_error_free(error);
+		}
+	}
 	g_object_set_data(G_OBJECT(gtkconv->entry), PROP_LANG, lang);
 
 	node = blist_node_for_conv(gtkconv->active_conv);
@@ -97,10 +105,14 @@ regenerate_switchspell_menu(PidginConversation *gtkconv)
 	GtkWidget *menu;
 	GtkWidget *mitem;
 	GSList *group = NULL;
+#ifdef USE_ENCHANT
+	EnchantBroker * eb;
+#else
 	AspellConfig * config;
 	AspellDictInfoList * dlist;
 	AspellDictInfoEnumeration * dels;
 	const AspellDictInfo * entry;
+#endif
 
 	if (gtkconv == NULL)
 		return;
@@ -122,6 +134,13 @@ regenerate_switchspell_menu(PidginConversation *gtkconv)
 	menu = gtk_menu_new();
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(mitem), menu);
 
+#ifdef USE_ENCHANT
+	void enchant_dict_desc_cb(const char * const lang_tag, const char * const provider_name,
+			const char * const provider_desc, const char * const provider_file,
+			void *user_data)
+	{
+		GtkWidget *menuitem = gtk_radio_menu_item_new_with_label(group, lang_tag);
+#else
 	config = new_aspell_config();
 	dlist = get_aspell_dict_info_list(config);
 	delete_aspell_config(config);
@@ -130,16 +149,27 @@ regenerate_switchspell_menu(PidginConversation *gtkconv)
 	aspell_dict_info_list_empty(dlist);
 	while ((entry = aspell_dict_info_enumeration_next(dels)) != 0) {
 		GtkWidget *menuitem = gtk_radio_menu_item_new_with_label(group, entry->name);
+#endif
 		group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(menuitem));
 		g_object_set_data(G_OBJECT(menuitem), "user_data", win);
+#ifdef USE_ENCHANT
+		g_object_set_data_full(G_OBJECT(menuitem), "lang", g_strdup(lang_tag), g_free);
+#else
 		g_object_set_data(G_OBJECT(menuitem), "lang", (gchar *)entry->name);
+#endif
 		g_signal_connect(G_OBJECT(menuitem), "activate",
 					G_CALLBACK(menu_conv_use_dict_cb), NULL);
 		gtk_widget_show(menuitem);
 		gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
 	}
 
+#ifdef USE_ENCHANT
+	eb = enchant_broker_init();
+	enchant_broker_list_dicts(eb, enchant_dict_desc_cb, NULL);
+	enchant_broker_free(eb);
+#else
 	delete_aspell_dict_info_enumeration(dels);
+#endif
 	gtk_widget_show_all(menu);
 }
 
