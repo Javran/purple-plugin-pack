@@ -437,7 +437,7 @@ drag_data_get_cb(GtkWidget *widget, GdkDragContext *ctx,
     s = g_string_new ("");
     g_string_printf (s, "[%s]", w->alias);
     gtk_selection_data_set (data, gdk_atom_intern ("STRING", FALSE),
-      8, s->str, strlen(s->str)+1);
+      8, (guchar *)s->str, strlen(s->str)+1);
 
     g_string_free (s, TRUE);
     gtk_tree_path_free (source_row);
