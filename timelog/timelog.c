@@ -93,7 +93,7 @@ cb_select_time(gpointer data, PurpleRequestFields *fields)
 		log_sets = purple_log_get_log_sets();
 		g_hash_table_foreach(log_sets, foreach_log_set, query);
 
-		tl_debug("found %u logs for %s between %u and %u\n", 
+		tl_debug("found %u logs for %s between %lu and %lu\n", 
 				g_list_length(query->logs),
 				query->account->username,
 				query->start, query->end);
