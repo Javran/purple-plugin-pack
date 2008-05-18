@@ -53,11 +53,9 @@ ARGS_FILE="autogen.args"
 ###############################################################################
 check () {
 	CMD=$1
-	shift
-	ARGS=$@
 
 	echo -n "checking for ${CMD}... "
-	BIN=`which ${CMD} $@ 2>/dev/null`
+	BIN=`which ${CMD} 2>/dev/null`
 
 	if [ x"${BIN}" = x"" ] ; then
 		echo "not found."
