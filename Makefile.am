@@ -48,8 +48,6 @@ pp_config.h: pre_config.h
 	rm -f po/.tmp-Makefile
 	$(sedpath) 's/\#define PACKAGE/\#define PP_PACKAGE/g' pre_config.h > $@
 
-ACLOCAL_AMFLAGS = -I m4
-
 signatures: dist
 	echo $(DIST_ARCHIVES) | xargs -n 1 gpg -a -b
 
