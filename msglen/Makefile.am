@@ -1,4 +1,6 @@
-EXTRA_DIST = .pidgin-plugin .incomplete Makefile.mingw
+EXTRA_DIST = \
+	plugins.cfg \
+	Makefile.mingw
 
 msglendir = $(PIDGIN_LIBDIR)
 
