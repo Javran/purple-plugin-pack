@@ -38,6 +38,8 @@ import os.path
 import string
 import sys
 
+webpage = 'http://plugins.guifications.org/'
+
 def printerr(msg):
 	print >> sys.stderr, msg
 
@@ -426,6 +428,23 @@ class PluginPack:
 
 		print '}'
 	commands['dependency_graph'] = dependency_graph
+
+	def debian_description(self, args):
+		print ' Description: %d useful plugins for Pidgin, Finch, and Purple' %len(self.plugins)
+		print ' The Plugin Pack is a collection of many simple-yet-useful plugins for Pidgin,'
+		print ' Finch, and Purple.  You will find a summary of each plugin below.  For more'
+		print ' about an individual plugin, please see %s' % webpage
+		
+		list = self.plugins.keys()
+		list.sort()
+		for key in list:
+			plugin = self.plugins[key]
+			print ' .'
+			print ' %s: %s' % (plugin.name, plugin.summary)
+
+		print ' .'
+		print ' Homepage: %s' % webpage
+	commands['debian_description'] = debian_description
 
 	def show_names(self, args):
 		"""Displays the names of the given comma separated list of provides"""
