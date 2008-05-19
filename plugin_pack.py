@@ -430,10 +430,12 @@ class PluginPack:
 	commands['dependency_graph'] = dependency_graph
 
 	def debian_description(self, args):
-		print ' Description: %d useful plugins for Pidgin, Finch, and Purple' %len(self.plugins)
+		print 'Description: %d useful plugins for Pidgin, Finch, and Purple' % len(self.plugins)
 		print ' The Plugin Pack is a collection of many simple-yet-useful plugins for Pidgin,'
 		print ' Finch, and Purple.  You will find a summary of each plugin below.  For more'
 		print ' about an individual plugin, please see %s' % webpage
+		print ' .'
+		print ' Note: not all %d of these plugins are currently usabled' % len(self.plugins)
 		
 		list = self.plugins.keys()
 		list.sort()
