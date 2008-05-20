@@ -435,7 +435,7 @@ class PluginPack:
 		print ' Finch, and Purple.  You will find a summary of each plugin below.  For more'
 		print ' about an individual plugin, please see %s' % webpage
 		print ' .'
-		print ' Note: not all %d of these plugins are currently usabled' % len(self.plugins)
+		print ' Note: not all %d of these plugins are currently usable' % len(self.plugins)
 		
 		list = self.plugins.keys()
 		list.sort()
