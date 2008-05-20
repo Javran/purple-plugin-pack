@@ -318,7 +318,7 @@ init_plugin(PurplePlugin *plugin) {
 #endif /* ENABLE_NLS */
 
 	info.name = _("Google");
-	info.summary = _("Returns the url for a Google I'm feeling lucky search");
+	info.summary = _("Returns the url for a Google \"I'm feeling lucky\" search");
 	info.description = info.summary;
 }
 
