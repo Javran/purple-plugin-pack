@@ -1,5 +1,6 @@
 HEADER_FILES = \
 	datechange.h \
+	irssi.h \
 	lastlog.h \
 	layout.h \
 	textfmt.h \

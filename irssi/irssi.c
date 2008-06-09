@@ -23,22 +23,11 @@
 /* If you can't figure out what this line is for, DON'T TOUCH IT. */
 #include "../common/pp_internal.h"
 
-/* define these so the plugin info struct way at the bottom is cleaner */
-#define PLUGIN_ID			"gtk-plugin_pack-irssi"
-#define PLUGIN_STATIC_NAME	"irssi"
-#define PLUGIN_AUTHOR		"\n" \
-							"\tGary Kramlich <grim@reaperworld.com>\n" \
-							"\tJohn Bailey <rekkanoryo@rekkanoryo.org>\n" \
-							"\tSadrul Habib Chowdhury <sadrul@users.sourceforge.net>"
-
+/* Pidgin headers */
 #include <gtkplugin.h>
 
-/* irssi headers */
-#include "datechange.h"
-#include "lastlog.h"
-#include "layout.h"
-#include "textfmt.h"
-#include "window.h"
+/* Local plugin headers */
+#include "irssi.h"
 
 static gboolean
 irssi_load(PurplePlugin *plugin) {
@@ -61,6 +50,38 @@ irssi_unload(PurplePlugin *plugin) {
 
 	return TRUE;
 }
+
+static PurplePluginPrefFrame *
+irssi_pref_frame(PurplePlugin *plugin) {
+	PurplePluginPrefFrame *frame;
+	PurplePluginPref *pref;
+
+	frame = purple_plugin_pref_frame_new();
+
+	pref = purple_plugin_pref_new_with_label(_("Enable Features:"));
+	purple_plugin_pref_frame_add(frame, pref);
+
+	pref = purple_plugin_pref_new_with_name_and_label(TEXTFMT_PREF, _("Text Formatting"));
+	purple_plugin_pref_frame_add(frame, pref);
+
+	pref = purple_plugin_pref_new_with_name_and_label(DATECHANGE_PREF, _("Date Change Notification"));
+	purple_plugin_pref_frame_add(frame, pref);
+
+	pref = purple_plugin_pref_new_with_name_and_label(SENDNEWYEAR_PREF, _("Happy New Year Message"));
+	purple_plugin_pref_frame_add(frame, pref);
+
+	return frame;
+}
+
+static PurplePluginUiInfo irssi_prefs_info = {
+	irssi_pref_frame,
+	0,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
 
 static PurplePluginInfo irssi_info = { /* this tells Purple about the plugin */
 	PURPLE_PLUGIN_MAGIC,			/* Magic				*/
@@ -86,7 +107,7 @@ static PurplePluginInfo irssi_info = { /* this tells Purple about the plugin */
 
 	NULL,							/* ui_info				*/
 	NULL,							/* extra_info			*/
-	NULL,							/* prefs_info			*/
+	&irssi_prefs_info,				/* prefs_info			*/
 	NULL,							/* actions				*/
 	NULL,							/* reserved 1			*/
 	NULL,							/* reserved 2			*/
@@ -113,6 +134,12 @@ irssi_init(PurplePlugin *plugin) {
 			"irssi to be used in Purple.  It lets you know in all open "
 			"conversations when the day has changed, adds the lastlog command, "
 			"adds the window command, etc.  The day changed message is not logged.");
+
+	purple_prefs_add_none(PREFS_ROOT_PARENT);
+	purple_prefs_add_none(PREFS_ROOT);
+	purple_prefs_add_bool(TEXTFMT_PREF, TRUE);
+	purple_prefs_add_bool(DATECHANGE_PREF, TRUE);
+	purple_prefs_add_bool(SENDNEWYEAR_PREF, TRUE);
 }
 
 PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, irssi_init, irssi_info)

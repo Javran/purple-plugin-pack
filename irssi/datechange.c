@@ -27,7 +27,7 @@
 #include <plugin.h>
 #include <cmds.h>
 
-#include "datechange.h"
+#include "irssi.h"
 
 /******************************************************************************
  * Globals
@@ -85,8 +85,8 @@ irssi_datechange_timeout_cb(gpointer data) {
 		purple_conversation_write(conv, NULL, message,
 				PURPLE_MESSAGE_NO_LOG | PURPLE_MESSAGE_SYSTEM | PURPLE_MESSAGE_ACTIVE_ONLY,
 				t);
-		if ((irssi_datechange_get_day(&t) == 1) &&
-				(irssi_datechange_get_month(&t) == 0))
+		if ((irssi_datechange_get_day(&t) == 1) && (irssi_datechange_get_month(&t) == 0) &&
+				purple_prefs_get_bool(SENDNEWYEAR_PREF))
 		{
 			const gchar *new_year = _("Happy New Year");
 			if(conv->type == PURPLE_CONV_TYPE_IM)
@@ -110,20 +110,22 @@ void
 irssi_datechange_init(PurplePlugin *plugin) {
 	time_t t;
 
-	if(irssi_datechange_timeout_id != 0)
-		purple_timeout_remove(irssi_datechange_timeout_id);
+	if(purple_prefs_get_bool(DATECHANGE_PREF)) {
+		if(irssi_datechange_timeout_id != 0)
+			purple_timeout_remove(irssi_datechange_timeout_id);
 	
-	t = time(NULL);
-	lastday = irssi_datechange_get_day(&t);
+		t = time(NULL);
+		lastday = irssi_datechange_get_day(&t);
 
-	/* set this to get called every 30 seconds.
-	 *
-	 * Yes we only care about a day change, but i'd rather get it in the first
-	 * 30 seconds of the change rather than nearly a min later.
-	 */
-	irssi_datechange_timeout_id = g_timeout_add(30000,
-												irssi_datechange_timeout_cb,
-												NULL);
+		/* set this to get called every 30 seconds.
+		 *
+		 * Yes we only care about a day change, but i'd rather get it in the first
+		 * 30 seconds of the change rather than nearly a min later.
+		 */
+		irssi_datechange_timeout_id = g_timeout_add(30000,
+													irssi_datechange_timeout_cb,
+													NULL);
+	}
 }
 
 void
