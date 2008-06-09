@@ -8,7 +8,10 @@ Version 2.4.0mtn:
 	* Fixed aspell dependency in switchspell (fixes gentoo bug #196693)
 	* Added nodashi's manualsize plugin
 	* Made switchspell work with gtkspell that uses enchant using
-	--enable-enchant option to ./configure
+	  --enable-enchant option to ./configure
+	* Added preferences to the irssi plugin that allow changing its behavior
+	* Fixed the preference strings in slashexec so mnemonics are no longer
+	  incorrectly interpreted from the strings.
 
 Version 2.3.0: 03/17/08
 	* Fixed a typo in irc-more's source that allowed a potential double-free
