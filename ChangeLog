@@ -11,6 +11,7 @@ Version 2.4.0mtn:
 	* Added preferences to the irssi plugin that allow changing its behavior
 	* Fixed the preference strings in slashexec so mnemonics are no longer
 	  incorrectly interpreted from the strings.
+	* Added Message Length plugin
 
 Version 2.3.0: 03/17/08
 	* Fixed a typo in irc-more's source that allowed a potential double-free
