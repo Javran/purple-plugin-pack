@@ -6,7 +6,6 @@ Version 2.4.0mtn:
 	* Fixed dewysiwygification's debug messages not properly ending lines.
 	* Added google plugin for "I'm Feeling Lucky" searches.
 	* Fixed aspell dependency in switchspell (fixes gentoo bug #196693)
-	* Added nodashi's manualsize plugin
 	* Made switchspell work with gtkspell that uses enchant using
 	  --enable-enchant option to ./configure
 	* Added preferences to the irssi plugin that allow changing its behavior
