@@ -194,7 +194,7 @@ class PluginPack:
 		except KeyError:
 			print 'command \'%s\' was not found' % args[0]
 		except IndexError:
-			print self.help.__doc__
+			print '%s' % (self.help.__doc__)
 			print
 			print 'help usage:'
 			print '  help <command>'
