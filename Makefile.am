@@ -13,10 +13,11 @@ EXTRA_DIST = \
 	README \
 	VERSION \
 	VERSION.in \
-	plugin_list.sh \
+	plugin_pack.list \
 	plugin_pack.m4 \
 	plugin_pack.py \
 	plugin_pack.spec \
+	plugin_pack.stats \
 	menuconfig \
 	win_pp.mak \
 	po/AUTHORS \
@@ -38,7 +39,7 @@ DISTCLEANFILES=\
 	intltool-update \
 	intltool-merge
 
-BUILT_SOURCES = pp_config.h
+BUILT_SOURCES = pp_config.h plugin_pack.list plugin_pack.stats
 
 $(OBJECTS): $(BUILT_SOURCES)
 
@@ -51,8 +52,8 @@ pp_config.h: pre_config.h
 signatures: dist
 	echo $(DIST_ARCHIVES) | xargs -n 1 gpg -a -b
 
-info:
-	@echo $(PP_DIST_DIRS)
+plugin_pack.stats:
+	@$(PYTHON) plugin_pack.py stats > $@
 
-stats:
-	@$(PYTHON) plugin_pack.py stats
+plugin_pack.list:
+	@$(PYTHON) plugin_pack.py list > $@
