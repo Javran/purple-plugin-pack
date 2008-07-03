@@ -194,7 +194,17 @@ class PluginPack:
 		except KeyError:
 			print 'command \'%s\' was not found' % args[0]
 		except IndexError:
-			pass
+			print self.help.__doc__
+			print
+			print 'help usage:'
+			print '  help <command>'
+			print
+			print 'Available commands:'
+
+			cmds = self.commands.keys()
+			cmds.remove('help')
+			cmds.sort()
+			print '  %s' % (string.join(cmds, ' '))
 	commands['help'] = help
 
 	def dist_dirs(self, args):
@@ -291,6 +301,8 @@ class PluginPack:
 	commands['build_dirs'] = build_dirs
 	
 	def list_plugins(self, args):
+		"""Displays a list similiar to 'dpkg -l' about the plugin pack"""
+
 		data = {}
 
 		# create an array for the widths, we initialize it to the lengths of
@@ -430,6 +442,7 @@ class PluginPack:
 	commands['dependency_graph'] = dependency_graph
 
 	def debian_description(self, args):
+		"""Outputs the description for the Debian packages"""
 		print 'Description: %d useful plugins for Pidgin, Finch, and Purple' % len(self.plugins)
 		print ' The Plugin Pack is a collection of many simple-yet-useful plugins for Pidgin,'
 		print ' Finch, and Purple.  You will find a summary of each plugin below.  For more'
@@ -444,6 +457,7 @@ class PluginPack:
 			print ' .'
 			print ' %s: %s' % (plugin.name, plugin.summary)
 
+		print ' .'
 		print ' .'
 		print ' Homepage: %s' % webpage
 	commands['debian_description'] = debian_description
