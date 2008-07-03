@@ -52,8 +52,8 @@ pp_config.h: pre_config.h
 signatures: dist
 	echo $(DIST_ARCHIVES) | xargs -n 1 gpg -a -b
 
-plugin_pack.stats:
+plugin_pack.stats: plugin_pack.py $(SUBDIRS)
 	@$(PYTHON) plugin_pack.py stats > $@
 
-plugin_pack.list:
+plugin_pack.list: plugin_pack.py $(SUBDIRS)
 	@$(PYTHON) plugin_pack.py list > $@
