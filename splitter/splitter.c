@@ -21,24 +21,22 @@
  * 02111-1307, USA.
  */
 
-#define GETTEXT_PACKAGE "gtk20"
-#include <glib/gi18n-lib.h>
+#include "../common/pp_internal.h"
 
-#include <gtk/gtk.h>
+#include <pango/pango.h>
+
+#ifndef _WIN32
+# include <pango/pangocairo.h>
+#endif
 
 #include <string.h>
 #include <errno.h>
-
-#ifndef PURPLE_PLUGINS
-#define PURPLE_PLUGINS
-#endif
 
 #include <debug.h>
 #include <notify.h>
 #include <version.h>
 #include <util.h>
 
-#define WEBSITE   "http://ikebo.hypermart.net/"
 #define PLUGIN_ID "core-ike-splitter"
 
 /* grr */
@@ -64,21 +62,21 @@ typedef struct
 	PurpleConversationType type;
 	union {
 		char *receiver; /* IM username */
-		int  id;        /* chat ID */
+		gint id;        /* chat ID */
 	};
 } message_to_conv;
 
 typedef struct {
-	int start, end;
+	gint start;
+	gint end;
 } message_slice;
 
 /* plugin preference variables */
 static gint current_split_size;
 
-
 /* initialize preferences dialog */
-static PurplePluginPrefFrame *get_plugin_pref_frame(PurplePlugin *plugin)
-{
+static PurplePluginPrefFrame *
+get_plugin_pref_frame(PurplePlugin *plugin) {
 	PurplePluginPrefFrame *frame;
 	PurplePluginPref      *ppref;
 
@@ -113,13 +111,15 @@ static PurplePluginPrefFrame *get_plugin_pref_frame(PurplePlugin *plugin)
  *
  * taken from conversation.c with signal emission removed.
  */
-static void splitter_common_send(PurpleConversation *conv, const char *message, PurpleMessageFlags msgflags)
+static void
+splitter_common_send(PurpleConversation *conv, const char *message,
+                     PurpleMessageFlags msgflags)
 {
 	PurpleConversationType type;
 	PurpleAccount *account;
 	PurpleConnection *gc;
 	char *displayed = NULL, *sent = NULL;
-	int err = 0;
+	gint err = 0;
 
 	if (strlen(message) == 0)
 		return;
@@ -206,8 +206,8 @@ static void splitter_common_send(PurpleConversation *conv, const char *message, 
 }
 
 /* a timer based callback function that sends the next message in the queue */
-static gboolean send_message_timer_cb( message_to_conv *msg_to_conv )
-{
+static gboolean
+send_message_timer_cb( message_to_conv *msg_to_conv ) {
 	PurpleAccount *account;
 	PurpleConversation *conv;
 	gchar *msg;
@@ -258,9 +258,31 @@ static gboolean send_message_timer_cb( message_to_conv *msg_to_conv )
 	}
 }
 
+/* Create/get a pango context
+ *
+ * On windows we use the win32 context creator, on everything else we
+ * use the cairo one.
+ */
+PangoContext *
+splitter_create_pango_context(void) {
+#ifdef _WIN32
+	return pango_win32_get_context();
+#else
+	PangoContext *context = NULL;
+	PangoFontMap *fontmap = pango_cairo_font_map_get_default();
+
+	context =
+		pango_cairo_font_map_create_context(PANGO_CAIRO_FONT_MAP(fontmap));
+
+	g_object_unref(G_OBJECT(fontmap));
+
+	return context;
+#endif
+}
+
 /* finds the first line-breakable character backwards starting from a[last]  */
-static int find_last_break(PangoLogAttr *a, int last)
-{
+static gint
+find_last_break(PangoLogAttr *a, int last) {
 	for(; last > 0; last-- )
 		if( a[last].is_line_break == 1)
 			break;
@@ -271,12 +293,12 @@ static int find_last_break(PangoLogAttr *a, int last)
 /* uses Pango to find all possible line break locations in a message and returns
    a PangoLogAttr array which maps to each byte of the message of length
    one larger than the message.  This must be g_free()'d */
-static PangoLogAttr* find_all_breaks(const char *message)
-{
+static PangoLogAttr *
+find_all_breaks(const char *message) {
 	PangoContext *context;
 	PangoLogAttr *a;
 	GList *list;
-	int len, n_attr;
+	gint len, n_attr;
 
 	g_return_val_if_fail(message != NULL, NULL);
 
@@ -285,7 +307,8 @@ static PangoLogAttr* find_all_breaks(const char *message)
 	a = g_new0(PangoLogAttr, n_attr);
 
 	/* init Pango */
-	context = gdk_pango_context_get();
+	context = splitter_create_pango_context();
+
 	g_return_val_if_fail(context != NULL, NULL);
 
 	list = pango_itemize(context, message, 0, len, NULL, NULL);
@@ -298,9 +321,9 @@ static PangoLogAttr* find_all_breaks(const char *message)
 
 /* return a queue of message slices from a plain text message based on current_split_size using
    Pango to determine possible line break locations */
-static GQueue* get_message_slices(const char *message)
-{
-	int current_break_start, last_break_start, break_pos, len;
+static GQueue *
+get_message_slices(const char *message) {
+	gint current_break_start, last_break_start, break_pos, len;
 	message_slice *slice;
 	PangoLogAttr *a;
 	GQueue *q;
@@ -348,12 +371,12 @@ static GQueue* get_message_slices(const char *message)
 /* takes a message, splits it up based on whitespace (ignoring HTML formatting),
    requests HTMLized slices of the splits, and returns a queue of them.  The
    messages and the queue must be freed */
-static GQueue* create_message_queue(const char *message)
-{
+static GQueue *
+create_message_queue(const char *message) {
 	GQueue *slices, *messages;
 	message_slice *slice;
 	char *stripped_message, *msg;
-	int stripped_len;
+	gint stripped_len;
 
 	stripped_message = purple_markup_strip_html(message);
 	stripped_len = strlen(stripped_message);
@@ -381,8 +404,8 @@ static GQueue* create_message_queue(const char *message)
 }
 
 /* create message queue and prepare timer callbacks */
-static void split_and_send(message_to_conv *msg_to_conv, const char **message)
-{
+static void
+split_and_send(message_to_conv *msg_to_conv, const char **message) {
 	gint message_delay_ms;
 
 	g_return_if_fail( msg_to_conv != NULL );
@@ -413,8 +436,8 @@ static void split_and_send(message_to_conv *msg_to_conv, const char **message)
 }
 
 /* initialize a chat message to potentially be split */
-static void sending_chat_msg_cb(PurpleAccount *account, const char **message, int id)
-{
+static void
+sending_chat_msg_cb(PurpleAccount *account, const char **message, int id) {
 	message_to_conv *msg_to_conv;
 
 	purple_debug(PURPLE_DEBUG_MISC, "purple-splitter", "splitter plugin invoked\n");
@@ -435,8 +458,9 @@ static void sending_chat_msg_cb(PurpleAccount *account, const char **message, in
 }
 
 /* initialize an IM message to potentially be split */
-static void sending_im_msg_cb(PurpleAccount *account, const char *receiver,
-						    const char **message)
+static void
+sending_im_msg_cb(PurpleAccount *account, const char *receiver,
+                  const char **message)
 {
 	message_to_conv *msg_to_conv;
 
@@ -459,8 +483,8 @@ static void sending_im_msg_cb(PurpleAccount *account, const char *receiver,
 }
 
 /* register "sending" message signal callback */
-static gboolean plugin_load(PurplePlugin *plugin)
-{
+static gboolean
+plugin_load(PurplePlugin *plugin) {
 	purple_signal_connect(purple_conversations_get_handle(),
 			    "sending-im-msg",
 			    plugin,
@@ -476,8 +500,8 @@ static gboolean plugin_load(PurplePlugin *plugin)
 }
 
 
-static gboolean plugin_unload(PurplePlugin *plugin)
-{
+static gboolean
+plugin_unload(PurplePlugin *plugin) {
 	return TRUE;
 }
 
@@ -485,36 +509,32 @@ static PurplePluginUiInfo prefs_info = {
 	get_plugin_pref_frame, 0, NULL, NULL, NULL, NULL, NULL
 };
 
-static PurplePluginInfo info =
-{
+static PurplePluginInfo info = {
 	PURPLE_PLUGIN_MAGIC,
 	PURPLE_MAJOR_VERSION,
 	PURPLE_MINOR_VERSION,
-	PURPLE_PLUGIN_STANDARD,                             /**< type           */
-	NULL,                                             /**< ui_requirement */
-	0,                                                /**< flags          */
-	NULL,                                             /**< dependencies   */
-	PURPLE_PRIORITY_DEFAULT,                            /**< priority       */
+	PURPLE_PLUGIN_STANDARD,
+	NULL,
+	0,
+	NULL,
+	PURPLE_PRIORITY_DEFAULT,
 
-	PLUGIN_ID,                                        /**< id             */
-	N_("Message Splitter"),                           /**< name           */
-	VERSION,                                          /**< version        */
-							  /**  summary        */
-	N_("Splits a large outgoing message into smaller "
-	   "messages of a specified size."),
-							  /**  description    */
-	N_("Splits a large outgoing message into smaller "
-	   "messages of a specified size."),
-	"Ike Gingerich <ike_@users.sourceforge.net>",     /**< author         */
-	WEBSITE,                                          /**< homepage       */
+	PLUGIN_ID,
+	NULL,
+	PP_VERSION,
 
-	plugin_load,                                      /**< load           */
-	plugin_unload,                                    /**< unload         */
-	NULL,                                             /**< destroy        */
+	NULL,
+	NULL,
+	"Ike Gingerich <ike_@users.sourceforge.net>",
+	PP_WEBSITE,
 
-	NULL,                                             /**< ui_info        */
-	NULL,                                             /**< extra_info     */
-	&prefs_info,                                      /**< prefs_info     */
+	plugin_load,
+	plugin_unload,
+	NULL,
+
+	NULL,
+	NULL,
+	&prefs_info,
 	NULL,
 	NULL,
 	NULL,
@@ -523,8 +543,18 @@ static PurplePluginInfo info =
 };
 
 /* store initial preference values */
-static void init_plugin(PurplePlugin *plugin)
-{
+static void
+init_plugin(PurplePlugin *plugin) {
+#ifdef ENABLE_NLS
+	bindtextdomain(GETTEXT_PACKAGE, PP_LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+#endif /* ENABLE_NLS */
+
+	info.name = _("Message Splitter");
+	info.summary = _("Splits a large outgoing message into smaller messages of "
+	                 "a specified size.");
+	info.description = info.summary;
+
 	purple_prefs_add_none("/plugins/core/splitter");
 	purple_prefs_add_int ("/plugins/core/splitter/split_size", DEFAULT_SPLIT_SIZE);
 	purple_prefs_add_int ("/plugins/core/splitter/delay_ms",   DEFAULT_DELAY_MS);

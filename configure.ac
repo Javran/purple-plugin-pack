@@ -192,7 +192,7 @@ AC_SUBST(FINCH_DATADIR)
 AC_SUBST(FINCH_PIXMAPSDIR)
 
 dnl #######################################################################
-dnl # check for gtk and other dependencies
+dnl # check for gtk
 dnl #######################################################################
 HAVE_GLIB="no"
 PKG_CHECK_MODULES(GLIB, [glib-2.0], HAVE_GLIB="yes", HAVE_GLIB="no")
@@ -212,12 +212,43 @@ PKG_CHECK_MODULES(GTK, [gtk+-2.0], HAVE_GTK="yes", HAVE_GTK="no")
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
 
+dnl #######################################################################
+dnl # check for gnt
+dnl #######################################################################
 HAVE_GNT="no"
 GNT_CFLAGS=""
 GNT_LIBS=""
 PKG_CHECK_MODULES(GNT, [gnt], HAVE_GNT="yes", HAVE_GNT="no")
 AC_SUBST(GNT_CFLAGS)
 AC_SUBST(GNT_CFLAGS)
+
+dnl #######################################################################
+dnl # check for pango
+dnl #######################################################################
+HAVE_PANGO="no"
+PANGO_CFLAGS=""
+PANGO_LIBS=""
+PKG_CHECK_MODULES(PANGO, [pango], HAVE_PANGO="yes", HAVE_PANGO="no")
+AC_SUBST(PANGO_CFLAGS)
+AC_SUBST(PANGO_CFLAGS)
+
+if test x"$HAVE_PANGO" = x"yes" ; then
+	DEPENDENCIES="$DEPENDENCIES,pango"
+fi
+
+dnl #######################################################################
+dnl # check for cairo
+dnl #######################################################################
+HAVE_CAIRO="no"
+CAIRO_CFLAGS=""
+CAIRO_LIBS=""
+PKG_CHECK_MODULES(CAIRO, [cairo], HAVE_CAIRO="yes", HAVE_CAIRO="no")
+AC_SUBST(CAIRO_CFLAGS)
+AC_SUBST(CAIRO_CFLAGS)
+
+if test x"$HAVE_CAIRO" = x"yes" ; then
+	DEPENDENCIES="$DEPENDENCIES,cairo"
+fi
 
 dnl #######################################################################
 dnl # Check for talkfilters
