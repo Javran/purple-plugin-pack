@@ -430,11 +430,11 @@ get_plugin_pref_frame(PurplePlugin *plugin)
 	purple_plugin_pref_frame_add(frame, pref);
 
 	pref = purple_plugin_pref_new_with_name_and_label(PREF_SLASH,
-					_("/exec Command (/exec some_command)"));
+					_("/exec Command (/exec someCommand)"));
 	purple_plugin_pref_frame_add(frame, pref);
 
 	pref = purple_plugin_pref_new_with_name_and_label(PREF_BANG,
-					_("Exclamation point (!some_command)"));
+					_("Exclamation point (!someCommand)"));
 	purple_plugin_pref_frame_add(frame, pref);
 
 	return frame;
