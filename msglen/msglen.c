@@ -37,6 +37,7 @@ typedef struct {
 	PurpleConversation *conv;
 	PidginWindow *win;
 	GtkWidget *label;
+	gulong sig_id;
 } MsgLenData;
 
 /******************************************************************************
@@ -50,7 +51,6 @@ static GHashTable *data = NULL;
 static void
 msg_len_data_free(MsgLenData *mld) {
 	mld->win = NULL;
-	mld->conv = NULL;
 
 	if(mld->label && GTK_IS_LABEL(mld->label))
 		gtk_widget_destroy(mld->label);
@@ -80,6 +80,36 @@ msg_len_key_released_cb(GtkWidget *w,  GdkEventKey *e, gpointer d) {
 }
 
 static void
+msg_len_add_signal(PidginConversation *pconv, MsgLenData *mld) {
+	g_signal_connect(G_OBJECT(pconv->entry),
+					 "key-release-event",
+					 G_CALLBACK(msg_len_key_released_cb), mld);
+}
+
+static MsgLenData *
+msg_len_find_data(PidginWindow *win) {
+	MsgLenData *mld = NULL;
+
+	mld = g_hash_table_lookup(data, win);
+
+	if(mld == NULL) {
+		mld = g_new0(MsgLenData, 1);
+
+		mld->win = win;
+
+		mld->label = gtk_label_new("");
+		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), mld->label,
+								NULL);
+		gtk_widget_show(mld->label);
+
+		g_signal_connect_swapped(G_OBJECT(mld->label), "destroy",
+								 G_CALLBACK(g_nullify_pointer), &mld->label);
+	}
+
+	return mld;
+}
+
+static void
 msg_len_update(PidginWindow *win, PurpleConversation *conv) {
 	PidginConversation *gtkconv = NULL;
 	MsgLenData *mld = NULL;
@@ -91,25 +121,9 @@ msg_len_update(PidginWindow *win, PurpleConversation *conv) {
 
 	gtkconv = PIDGIN_CONVERSATION(conv);
 
-	mld = g_hash_table_lookup(data, conv);
+	mld = msg_len_find_data(win);
 
-	if(mld == NULL) {
-		mld = g_new0(MsgLenData, 1);
-
-		mld->win = win;
-		mld->conv = conv;
-
-		mld->label = gtk_label_new("");
-		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), mld->label,
-								NULL);
-		gtk_widget_show(mld->label);
-
-		g_signal_connect_swapped(G_OBJECT(mld->label), "destroy",
-								 G_CALLBACK(g_nullify_pointer), &mld->label);
-
-		g_signal_connect(G_OBJECT(gtkconv->entry), "key-release-event",
-						 G_CALLBACK(msg_len_key_released_cb), mld);
-	}
+	mld->conv = conv;
 
 	count = gtk_text_buffer_get_char_count(gtkconv->entry_buffer);
 
@@ -117,7 +131,7 @@ msg_len_update(PidginWindow *win, PurpleConversation *conv) {
 	gtk_label_set_text(GTK_LABEL(mld->label), text);
 	g_free(text);
 
-	g_hash_table_insert(data, conv, mld);
+	g_hash_table_insert(data, win, mld);
 }
 
 /******************************************************************************
@@ -127,6 +141,11 @@ static void
 msg_len_conv_created_cb(PurpleConversation *conv, gpointer d) {
 	PidginConversation *pconv = PIDGIN_CONVERSATION(conv);
 	PidginWindow *win = pidgin_conv_get_window(pconv);
+	MsgLenData *mld = NULL;
+
+	mld = msg_len_find_data(win);
+
+	msg_len_add_signal(pconv, mld);
 
 	msg_len_update(win, conv);
 }
@@ -166,9 +185,12 @@ plugin_load(PurplePlugin *plugin) {
 
 	for(convs = purple_get_conversations(); convs; convs = convs->next) {
 		PurpleConversation *conv = (PurpleConversation *)convs->data;
-		PidginConversation *gtkconv = PIDGIN_CONVERSATION(conv);
+		PidginConversation *pconv = PIDGIN_CONVERSATION(conv);
+		MsgLenData *mld = msg_len_find_data(pconv->win);
 
-		msg_len_update(gtkconv->win, conv);
+		msg_len_add_signal(pconv, mld);
+
+		msg_len_update(pconv->win, conv);
 	}
 
 	return TRUE;
