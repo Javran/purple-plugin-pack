@@ -34,12 +34,13 @@
 /* Pidgin headers */
 #include <gtkplugin.h>
 
-static void
-listlog_chat_joined_cb(PurpleConversation *conv)
+static gboolean
+listlog_timeout_cb(gpointer data)
 {
 	GList *users = NULL;
 	GString *message = NULL;
 	PurpleConvChat *chat = NULL;
+	PurpleConversation *conv = data;
 
 	purple_debug_misc(PLUGIN_ID, "Conversation pointer: %p\n", conv);
 
@@ -61,6 +62,14 @@ listlog_chat_joined_cb(PurpleConversation *conv)
 
 	purple_conversation_write(conv, NULL, message->str,
 			PURPLE_MESSAGE_SYSTEM | PURPLE_MESSAGE_NOTIFY, time(NULL));
+
+	return FALSE;
+}
+
+static void
+listlog_chat_joined_cb(PurpleConversation *conv)
+{
+	purple_timeout_add(0, listlog_timeout_cb, conv);
 }
 
 static gboolean
