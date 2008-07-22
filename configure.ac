@@ -299,8 +299,8 @@ if test x"$HAVE_ASPELL_H" = x"yes" ; then
 	AC_CHECK_LIB([aspell], [new_aspell_config], ASPELL_LIBS="-laspell", BUILD_SWITCH_SPELL=no)
 fi
 
-AC_ARG_ENABLE(enchant, [AC_HELP_STRING([--enable-enchant], [compile with gtkspell using enchant])],
-    enable_enchant="$enableval", enable_enchant="no")
+AC_ARG_ENABLE(enchant, [AC_HELP_STRING([--disable-enchant], [compile with gtkspell using aspell])],
+    enable_enchant="$enableval", enable_enchant="yes")
 if test "x$enable_enchant" = "xyes"; then
 	PKG_CHECK_MODULES(ENCHANT, enchant, [
 		BUILD_SWITCH_SPELL=yes
@@ -410,6 +410,9 @@ echo;
 echo $PACKAGE $VERSION Configuration complete
 echo;
 echo Debugging enabled................: $enable_debug
+if test x"$BUILD_SWITCH_SPELL" = x"yes" ; then
+	echo Use enchant for switchspell......: $enable_enchant
+fi
 echo;
 
 echo Build purple plugins.............: $HAVE_PURPLE

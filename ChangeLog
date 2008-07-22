@@ -6,8 +6,9 @@ Version 2.4.0mtn:
 	* Fixed dewysiwygification's debug messages not properly ending lines.
 	* Added Google plugin for "I'm Feeling Lucky" searches.
 	* Fixed aspell dependency in switchspell (fixes gentoo bug #196693)
-	* Made switchspell work with gtkspell that uses enchant using
-	  --enable-enchant option to ./configure
+	* Made switchspell work with gtkspell that uses enchant; this behavior is
+	  now the default.  To use gtkspell using aspell, use the
+	  --disable-enchant argument to ./configure.
 	* Added preferences to the irssi plugin that allow changing its behavior
 	* Fixed the preference strings in slashexec so mnemonics are no longer
 	  incorrectly interpreted from the strings.
