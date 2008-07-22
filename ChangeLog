@@ -4,14 +4,15 @@ Version 2.4.0mtn:
 	* Added Ike Gingerich's colorize plugin
 	* Added Ike Gingerich's splitter plugin
 	* Fixed dewysiwygification's debug messages not properly ending lines.
-	* Added google plugin for "I'm Feeling Lucky" searches.
+	* Added Google plugin for "I'm Feeling Lucky" searches.
 	* Fixed aspell dependency in switchspell (fixes gentoo bug #196693)
 	* Made switchspell work with gtkspell that uses enchant using
 	  --enable-enchant option to ./configure
 	* Added preferences to the irssi plugin that allow changing its behavior
 	* Fixed the preference strings in slashexec so mnemonics are no longer
 	  incorrectly interpreted from the strings.
-	* Added Message Length plugin
+	* Added Message Length plugin (short name: msglen).
+	* Added Chat User List Logging plugin (short name: listlog).
 
 Version 2.3.0: 03/17/08
 	* Fixed a typo in irc-more's source that allowed a potential double-free
