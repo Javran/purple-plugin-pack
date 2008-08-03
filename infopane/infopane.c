@@ -47,7 +47,7 @@ static gboolean ensure_tabs_are_showing(PurpleConversation *conv)
 {
 	PidginConversation *gtkconv = PIDGIN_CONVERSATION(conv);
 	PidginWindow *win = gtkconv->win;
-	if (win->gtkconvs && win->gtkconvs->next)
+	if (win && win->gtkconvs && win->gtkconvs->next)
 		return FALSE;
 	if (purple_prefs_get_bool(PREF_SINGLE)) {
 		gtk_notebook_set_show_tabs(GTK_NOTEBOOK(win->notebook), TRUE);
