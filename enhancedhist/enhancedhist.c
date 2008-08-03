@@ -127,8 +127,21 @@ static void historize(PurpleConversation *c)
 	 * particular log type disabled, the logs file doesnt not get specified */
 	convtype = purple_conversation_get_type(c);
 	if (convtype == PURPLE_CONV_TYPE_IM && PREF_IM_VAL) {
-		logs = purple_log_get_logs(PURPLE_LOG_IM,
-				purple_conversation_get_name(c), purple_conversation_get_account(c));
+		for(cur = buddies; cur; cur = cur->next) {
+			PurpleBlistNode *node = cur->data;
+
+			if(node && (node->prev || node->next)) {
+				PurpleBlistNode *node2;
+
+				for(node2 = node->parent->child; node2; node2 = node2->next) {
+					logs = g_list_concat(purple_log_get_logs(PURPLE_LOG_IM,
+								purple_buddy_get_name((PurpleBuddy *)node2),
+								purple_buddy_get_account((PurpleBuddy *)node2)), logs);
+				}
+
+				break;
+			}
+		}
 	} else if (convtype == PURPLE_CONV_TYPE_CHAT && PREF_CHAT_VAL) {
 		logs = purple_log_get_logs(PURPLE_LOG_CHAT,
 			purple_conversation_get_name(c), purple_conversation_get_account(c));
@@ -212,8 +225,7 @@ static void historize(PurpleConversation *c)
 		gtk_imhtml_set_protocol_name(GTK_IMHTML(gtkconv->imhtml),
 			purple_account_get_protocol_name(((PurpleLog*)logs->data)->account));
 		
-		if (gtk_text_buffer_get_char_count(gtk_text_view_get_buffer(
-				GTK_TEXT_VIEW(gtkconv->imhtml))))
+		if (gtk_text_buffer_get_char_count(gtk_text_view_get_buffer(GTK_TEXT_VIEW(gtkconv->imhtml))))
 		{
 			gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), "<BR>", options);
 		}
