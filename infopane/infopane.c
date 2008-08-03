@@ -100,18 +100,11 @@ end_position:
 	return;
 }
 
-#if 0
-static void setup_callback(PurpleConversation *conv, gboolean (*callback)(gpointer data))
-{
-	if (callback(conv))
-		g_timeout_add(1000, callback, conv);
-}
-
 static void conversation_deleted(PurpleConversation *conv)
 {
 	PidginConversation *gtkconv = PIDGIN_CONVERSATION(conv);
 	PidginWindow *win = gtkconv->win;
-	if (win->gtkconvs->next) {
+	if (win->gtkconvs->next && !win->gtkconvs->next->next) {  /* There are only two tabs in the window */
 		PidginConversation *p = win->gtkconvs->data;
 		int id;
 		if (p == gtkconv)
@@ -120,13 +113,6 @@ static void conversation_deleted(PurpleConversation *conv)
 		g_signal_connect_swapped(G_OBJECT(win->window), "destroy",
 				G_CALLBACK(g_source_remove), GINT_TO_POINTER(id));
 	}
-}
-#endif
-
-static void
-call_ensure_tabs_are_showing(PurpleConversation *conv)
-{
-	g_timeout_add(0, (GSourceFunc)ensure_tabs_are_showing, conv);
 }
 
 static void
@@ -159,14 +145,12 @@ plugin_load(PurplePlugin *plugin)
 		return FALSE;
 	}
 
-#if 0
 	purple_signal_connect(purple_conversations_get_handle(),
 			"deleting-conversation",
 			plugin, PURPLE_CALLBACK(conversation_deleted), NULL);
-#endif
 	purple_signal_connect(pidgin_conversations_get_handle(),
 			"conversation-switched",
-			plugin, PURPLE_CALLBACK(call_ensure_tabs_are_showing), NULL);
+			plugin, PURPLE_CALLBACK(ensure_tabs_are_showing), NULL);
 
 	purple_prefs_connect_callback(plugin, PREF_POSITION, (PurplePrefCallback)pref_changed, NULL);
 	purple_prefs_connect_callback(plugin, PREF_DRAG, (PurplePrefCallback)pref_changed, NULL);
