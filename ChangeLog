@@ -14,6 +14,7 @@ Version 2.4.0mtn:
 	  incorrectly interpreted from the strings.
 	* Added Message Length plugin (short name: msglen).
 	* Added Chat User List Logging plugin (short name: listlog).
+	* The Enhanced History plugin is now contact-aware.
 
 Version 2.3.0: 03/17/08
 	* Fixed a typo in irc-more's source that allowed a potential double-free
