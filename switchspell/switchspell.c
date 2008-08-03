@@ -188,6 +188,10 @@ update_switchspell_selection(PidginConversation *gtkconv)
 	if (win == NULL)
 		return;
 
+	/* Leave the menu alone if the tab is not the active conversation */
+	if (pidgin_conv_window_get_active_gtkconv(win) != gtkconv)
+		return;
+
 	menu = g_object_get_data(G_OBJECT(win->window), PROP_LANG);
 	if (menu == NULL)
 		return;
@@ -206,7 +210,7 @@ update_switchspell_selection(PidginConversation *gtkconv)
 		if (lang && curlang && strcmp(lang, curlang) == 0) {
 			gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item->data), TRUE);
 			break;
-		}		
+		}
 	}
 	g_list_free(items);
 	g_free(curlang);
@@ -223,7 +227,7 @@ conversation_switched_cb(PurpleConversation *conv)
 	regenerate_switchspell_menu(gtkconv);
 	update_switchspell_selection(gtkconv);
 }
-		
+
 static gboolean
 make_sure_gtkconv(PurpleConversation *conv)
 {
