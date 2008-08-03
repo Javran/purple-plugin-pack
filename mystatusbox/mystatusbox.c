@@ -235,12 +235,12 @@ pidgin_status_selectors_show(PurpleStatusBoxVisibility action)
 
 	purple_prefs_set_int(PREF_SHOW, action);
 
-	if (!gtkblist || !gtkblist_statusboxbox)
+	if (!gtkblist || !gtkblist_statusboxbox || !gtkblist->window ||
+			!PIDGIN_IS_STATUS_BOX(gtkblist->statusbox))
 		return;
 
-	/* XXX: CHANGE THIS WHEN PIDGIN FINISHES ITS PREFS MIGRATION!!!! */
 	height = purple_prefs_get_int("/pidgin/blist/height");
-	
+
 	if (!purple_prefs_get_bool(PREF_GLOBAL))
 	{
 		gtk_widget_size_request(gtkblist->statusbox, &req);
