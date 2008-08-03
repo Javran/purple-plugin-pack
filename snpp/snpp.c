@@ -111,10 +111,12 @@ static void snpp_send(gint fd, const char *buf)
 static void snpp_reset(PurpleConnection *gc, struct snpp_data *sd)
 {
 	purple_debug_info("snpp", "snpp_reset\n");
-	if (gc->inpa)
+
+	if (gc && gc->inpa)
 		purple_input_remove(gc->inpa);
 
-	close(sd->fd);
+	if (sd && sd->fd)
+		close(sd->fd);
 
 	if (sd->current_page != NULL)
 		snpp_page_destroy(sd->current_page);
