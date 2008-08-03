@@ -143,6 +143,11 @@ static void historize(PurpleConversation *c)
 
 				break;
 			}
+
+			if(!logs)
+				logs = purple_log_get_logs(PURPLE_LOG_IM, name, account);
+			else
+				logs = g_list_sort(logs, purple_log_compare);
 		}
 	} else if (convtype == PURPLE_CONV_TYPE_CHAT && PREF_CHAT_VAL) {
 		logs = purple_log_get_logs(PURPLE_LOG_CHAT,
