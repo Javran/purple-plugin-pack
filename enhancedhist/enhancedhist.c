@@ -127,6 +127,8 @@ static void historize(PurpleConversation *c)
 	 * particular log type disabled, the logs file doesnt not get specified */
 	convtype = purple_conversation_get_type(c);
 	if (convtype == PURPLE_CONV_TYPE_IM && PREF_IM_VAL) {
+		GList *cur;
+
 		for(cur = buddies; cur; cur = cur->next) {
 			PurpleBlistNode *node = cur->data;
 
