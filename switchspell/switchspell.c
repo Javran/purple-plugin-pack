@@ -155,7 +155,7 @@ regenerate_switchspell_menu(PidginConversation *gtkconv)
 #ifdef USE_ENCHANT
 		g_object_set_data_full(G_OBJECT(menuitem), "lang", g_strdup(lang_tag), g_free);
 #else
-		g_object_set_data(G_OBJECT(menuitem), "lang", (gchar *)entry->name);
+		g_object_set_data_full(G_OBJECT(menuitem), "lang", g_strdup((gchar *)entry->name), g_free);
 #endif
 		g_signal_connect(G_OBJECT(menuitem), "activate",
 					G_CALLBACK(menu_conv_use_dict_cb), NULL);
