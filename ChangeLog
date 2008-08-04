@@ -1,4 +1,4 @@
-Version 2.4.0mtn:
+Version 2.4.0: 08/03/08
 	* Merged the Autoprofile plugin into our build system.
 	* Fixed convbadger's failure to update on conversation switch.
 	* Added Ike Gingerich's colorize plugin
