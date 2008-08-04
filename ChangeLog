@@ -1,4 +1,7 @@
 Version 2.4.0: 08/03/08
+	* Rewrote the build system to make our lifes easier, as well as support
+	  the requirements of some plugins.  This has added a dependency on
+	  python.
 	* Merged the Autoprofile plugin into our build system.
 	* Fixed convbadger's failure to update on conversation switch.
 	* Added Ike Gingerich's colorize plugin
