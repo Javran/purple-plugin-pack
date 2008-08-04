@@ -37,7 +37,9 @@ DISTCLEANFILES=\
 	pp_config.h \
 	intltool-extract \
 	intltool-update \
-	intltool-merge
+	intltool-merge \
+	plugin_pack.list \
+	plugin_pack.stats
 
 BUILT_SOURCES = pp_config.h plugin_pack.list plugin_pack.stats
 
