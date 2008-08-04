@@ -2,7 +2,7 @@
 
 set -e
 
-if [ -f ../plugin_pack.py ] ; then
+if [ ! -f ../plugin_pack.py ] ; then
 	echo "*** Please make sure your debian directory is under the top_srcdir of a" >&2
 	echo "*** plugin pack release directory!" >&2
 
@@ -29,7 +29,7 @@ Enhances: pidgin, xmms
 EOF
 
 # output the details for pidgin-plugin-pack
-python ../plugin_pack.py debian_description
+python ../plugin_pack.py debian_description >> ${OUTPUT}
 
 # output the transient packages
 cat << EOF >> ${OUTPUT}
