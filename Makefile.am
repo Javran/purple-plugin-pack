@@ -18,6 +18,7 @@ EXTRA_DIST = \
 	plugin_pack.py \
 	plugin_pack.spec \
 	plugin_pack.stats \
+	pp_config.h.mingw \
 	menuconfig \
 	win_pp.mak \
 	po/AUTHORS \
