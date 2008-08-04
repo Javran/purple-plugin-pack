@@ -19,7 +19,6 @@ EXTRA_DIST = \
 	plugin_pack.spec \
 	plugin_pack.stats \
 	pp_config.h.mingw \
-	menuconfig \
 	win_pp.mak \
 	po/AUTHORS \
 	po/ChangeLog \
