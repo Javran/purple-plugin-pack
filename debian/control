@@ -3,97 +3,133 @@ Section: net
 Priority: optional
 Maintainer: Benjamin Seidenberg <benjamin@debian.org>
 Build-Depends: debhelper (>= 5), pidgin-dev, pkg-config, libgtk2.0-dev, libglib2.0-dev, libxml-parser-perl
-Standards-Version: 3.7.3
+Standards-Version: 3.8.0
 
 Package: pidgin-plugin-pack
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Enhances: pidgin, xmms
-Description: 30 useful plugins for pidgin
- Plugin pack is a collection of many simple-yet-useful plugins for pidgin. A 
- brief description of each is below. For more information about an individual
- plugin, please see http://plugins.guifications.org/trac/wiki/PluginPack
+Description: 56 useful plugins for Pidgin, Finch, and Purple
+ The Plugin Pack is a collection of many simple-yet-useful plugins for Pidgin,
+ Finch, and Purple.  You will find a summary of each plugin below.  For more
+ about an individual plugin, please see http://plugins.guifications.org/
  .
- /exec: execute commands and optionaly send their output in an IM/chat window
+ Note: not all 56 of these plugins are currently usable
  .
- Album: archives all buddy icons for all buddies in the user's buddy list
+ Album: Archives buddy icons
  .
- Auto Reply: auto-replies on any protocol, also can be specific to each buddy
+ AutoProfile: User profile and status message content generator
  .
- Bash.org: provides links to random or select quotes on bash.org and qdb.us 
+ Autoreply: Autoreply for all the protocols
  .
- Buddy List Options: options to hide buddy list on creation and hide menu in it
+ Away State Notification: Shows when someone goes away/back in a conversation
  .
- Conversation Badge: shows the protocol icon in the conversation menu tray
+ bash.org: Generates links for quotes at bash.org
  .
- DeWYSIWYGification: allows user to type in HTML without it being rendered
+ Buddy Icon Tools: Tools to manipulate buddy icons *DANGEROUS*
  .
- Dice: simulates the rolling of dice
+ Buddy List Options: Gives extended options to the buddy list
  .
- DiffTopic: shows changes when the topic is changed in a chatroom
+ Buddy Time: Quickly see the local time of a buddy
  .
- InfoPane: use different views for the "details" information  in conversations
+ Chronic: Sound playing triggers
  .
- Magic 8 Ball: shows random expressions from a Magic 8 Ball toy
- .              
- Flip: flips a coin and shows the result in the current conversation
+ Colorize: Colorizes outgoing message text.
  .
- gRIM: annoy your buddies with a timed series of messages
+ Conversation Badger: Badges conversations with the protocol icon.
  .
- Highlight: adds support for highlighting user specified words.
+ DeWYSIWYGification: Lets you type in HTML without it being escaped
  .
- Ignore: ignore either all or just chat communication from a specific person
+ Dice: Rolls dice in a chat or im
  .
- IRC More - adds a couple options to the IRC protocol:
-        - Customized default quit/part messages.
-        - A CTCP version reply. 
+ DiffTopic: Show the old topic when the topic in a chat room changes
+ .
+ Magic 8 Ball: Provides Magic 8-ball like functionality
+ .
+ Enhanced History: An enhanced version of the history plugin
+ .
+ Find IP: Find the IP of a person in the buddylist
+ .
+ Coin Flip: Flips a coin and outputs the result
+ .
+ gRIM: A completely stupid and pointless plugin
+ .
+ GNT Smart Ear: The GNT (Finch) component of the Smart Ear plugins
+ .
+ Google: Writes the results of an "I'm feeling lucky" search to a conversation
+ .
+ Group IM: Send an IM to a group of buddies
+ .
+ Buddy Time (Pidgin UI): Pidgin user interface for the Buddy Time plugin
+ .
+ Gtk Smart Ear: The GTK+ (Pidgin) component of the SmartEar plugin suite
+ .
+ Hide Conversation: Hide conversations without closing them
+ .
+ Highlight: Support for highlighting words
+ .
+ Ignorance: Allows management of users with various levels of activity
+ .
+ Ignore: Flexible plugin to selectively ignore people
+ .
+ Infopane Options: Adds some options for the information pane in conversations
  .
  IRC Helper: Handles the rough edges of the IRC protocol
  .
- Irssi Features: implements many features of irssi 
-        - day change notifications
-        - /window, /layout, /lastlog commands
-        - auto-text formatting
+ IRC More: Adds additional IRC features
  .
- Last Seen: tooltip with time a buddy has been offline and their last message
+ Irssi Features: Implements features of the IRC client irssi in Pidgin
  .
- List Handler: import and export buddy lists in various formats
+ Last Seen: Record when a buddy was last seen
  .
- My Status Box: per-account status selectors with other features
+ List Handler: Provides numerous user-requested list-handling capabilities
  .
- Nick Said: to jump to where your name or other words were said in a chat 
+ Chat User List Logging: Logs the list of users in a chat when you join
  .
- Offline Message: saves messages sent to an offline user until they log in
+ Message Length: Shows the length of your current message in the menu tray
  .
- Old Logger: stores buddy logs in flat files (legacy format)
+ Mystatusbox: Hide/Show the per-account statusboxes
  .
- Plonkers: announce your ignore list to a chat room and other privacy features
+ Napster: NAPSTER Protocol Plugin
  .
- Purple Schedule: Schedule reminders at specific times
+ Nicksaid: Record when someone said your nick in a chat
  .
- Separate and Tab: adds two new window positioning methods 
+ Old Logger: Re-implements the legacy, deficient, logging
  .
- Show Offline: allows you to show certain offline buddies in the buddylist
+ Plonkers: Tell plonkers what you really think
  .
- Sim Fix: fixes messages received from buddies using broken SIM clients
+ Schedule: Schedule reminders at specified times
  .
- Simple Network Paging Protocol (SNPP):
- 	allows sending to pager servers (like sendpage or qpage) via SNPP
+ Separate And Tab: Adds two placement functions for separating and tabbing
  .
- SSL Info: adds a menu item to display info about the SSL plugin in use
+ Show Offline: Show specific buddies while offline
  .
- Switch Spell: allows changing the spell-check language for each conversation
+ SIM-fix: Fix messages from broken SIM clients
  .
- Talk Filters: adds support for GNU Talk Filters in Gaim conversations. 
-        Note: Talk Filters must be installed for this plugin to work.
+ /exec: /exec a la UNIX IRC CLI
  .
- Timelog: view Pidgin logs that fall within specific time ranges.
+ Smart Ear: The Core component of the Smart Ear plugins
  .
- Xchat-chats: makes Gaim use the chat-widget (GtkXText) used by XChat for chats
+ SNPP: SNPP Plugin
  .
- XMMS Remote: adds a button to IM and/or chat windows to control xmms.
+ Message Splitter: Splits sent messages into smaller ones of a specified size
  .
-  Homepage: http://plugins.guifications.org/
+ SSL Info: Displays info about your currently loaded SSL plugin
+ .
+ Stocker: A stock ticker
+ .
+ Switch Spell: Switch Spell Checker Language
+ .
+ GNU Talk Filters: Translates text in sent messages into humorous dialects
+ .
+ TimeLog: allows the viewing of Pidgin logs within a specific time range
+ .
+ XChat Chats: XChat-like chats with Pidgin
+ .
+ XMMS Remote Control: Control XMMS from Pidgin conversations
+ .
+ .
+ Homepage: http://plugins.guifications.org/
 
 Package: gaim-irchelper
 Architecture: all
@@ -102,5 +138,6 @@ Description: IRC extensions for Pidgin (dummy transitional package)
  This plugin enhances the usability of the IRC protocol in Pidgin.
  .
  This dummy package depends upon pidgin-plugin-pack, which provides
- the IRC helper starting with the Debian release codename Lenny. It 
+ the IRC helper starting with the Debian release codename Lenny. It
  can safely be removed after the upgrade to Lenny is complete.
+
