@@ -96,6 +96,25 @@ se_replace_ending_char(gchar *string, gchar replace)
 	return;
 }
 
+static gchar *
+se_strdelimit(gchar *string, gchar newdelim)
+{ /* This function borrowed and tweaked from glib to suit my purposes */
+
+	/* these are the decimal representations of the ascii control characters that
+	 * we need to remove to prevent bad behavior, such as XMPP disconnects */
+	gchar delimiters[] = { 1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 14, 15, 16, 17,
+						18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 };
+	gchar *c;
+
+	g_return_val_if_fail(string !=NULL, NULL);
+
+	for(c = string; *c; c = g_utf8_next_char(c))
+		if(strchr(delimiters, *c))
+			*c = newdelim;
+
+	return string;
+}
+
 static gboolean
 se_do_action(PurpleConversation *conv, gchar *args, gboolean send)
 {
@@ -243,6 +262,18 @@ se_do_action(PurpleConversation *conv, gchar *args, gboolean send)
 
 		if(send) {
 			purple_debug_info("slashexec", "Command stdout: %s\n", cmd_stdout);
+
+			if(!g_utf8_validate(cmd_stdout, -1, NULL)) {
+				purple_debug_error("slashexec", "Output failed UTF-8 verification!\n");
+
+				return FALSE;
+			} else {
+				cmd_stdout = se_strdelimit(cmd_stdout, ' ');
+
+				g_strstrip(cmd_stdout);
+
+				purple_debug_info("slashexec", "Sanitized command stdout: %s\n", cmd_stdout);
+			}
 
 			switch(purple_conversation_get_type(conv)) {
 				case PURPLE_CONV_TYPE_IM:
