@@ -590,4 +590,11 @@ def main():
 		printerr('\'%s\' command not found' % (cmd))
 
 if __name__ == '__main__':
+	# this is a work around when we're called for a directory that isn't the
+	# directory that this file is in.  This happens during distcheck, as well
+	# as a few other cases that most people won't use ;)
+	if os.path.dirname(__file__) != '':
+		os.chdir(os.path.dirname(__file__))
+
 	main()
+
