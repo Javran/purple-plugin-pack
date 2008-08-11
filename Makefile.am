@@ -20,7 +20,6 @@ EXTRA_DIST = \
 	plugin_pack.stats \
 	pp_config.h.mingw \
 	win_pp.mak \
-	po/AUTHORS \
 	po/ChangeLog \
 	po/Makefile.in.in \
 	po/Makefile.mingw
