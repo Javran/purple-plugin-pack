@@ -1143,7 +1143,7 @@ static void album_select_dialog(PurplePluginAction *action)
 	purple_request_field_set_required(field, TRUE);
 	purple_request_field_group_add_field(group, field);
 
-	purple_request_fields(purple_get_blist(), _("View Buddy Icons"),
+	purple_request_fields(purple_get_blist(), _("View Buddy Icons..."),
 	                    NULL,
 	                    _("Please enter the screen name or alias of the person whose icon album you want to view."),
 	                    fields,
