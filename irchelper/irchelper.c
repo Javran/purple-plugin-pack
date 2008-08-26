@@ -85,6 +85,7 @@
 #define MESSAGE_NICKSERV_CLOAKED " set your hostname to"
 #define MESSAGE_NICKSERV_ID_FAILURE "Password Incorrect"
 #define MESSAGE_NICKSERV_IDENTIFIED "Password accepted - you are now recognized"
+#define MESSAGE_SPOOFING_YOUR_IP "*** Spoofing your IP. congrats."
 #define MESSAGE_QUAKENET_Q_CRUFT \
 	"Remember: NO-ONE from QuakeNet will ever ask for your password.  " \
 	"NEVER send your password to ANYONE except Q@CServe.quakenet.org."
@@ -891,6 +892,12 @@ static gboolean receiving_im_msg_cb(PurpleAccount *account, gchar **sender, gcha
 		return TRUE;
 	}
 
+	/* Suppress "IP spoofing" notice on worldforge.org:
+	 *   http://plugins.guifications.org/trac/ticket/524 */
+	if (g_str_has_prefix(msg, MESSAGE_PURPLE_NOTICE_PREFIX MESSAGE_SPOOFING_YOUR_IP))
+	{
+		return TRUE;
+	}
 
 	/* SLIGHTLY COMPLICATED SUPPRESSION RULES */
 
