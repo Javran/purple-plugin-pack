@@ -1,4 +1,6 @@
 Version 2.4.1:
+	* Fixed some crashes in autprofile related to old preference paths
+	  (amishmm)
 	* Added Vietnamese translation - thanks Nguyen Huu Phuoc  
 
 Version 2.4.0: 08/03/08
