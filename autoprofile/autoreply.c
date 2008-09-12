@@ -274,7 +274,7 @@ static void received_im_msg_cb (PurpleAccount *account, char *sender,
 static void auto_pref_cb (
   const char *name, PurplePrefType type, gconstpointer val, gpointer data) 
 {
-  if (!strcmp (purple_prefs_get_string ("/core/away/auto_reply"), "never"))
+  if (!strcmp (purple_prefs_get_string ("/purple/away/auto_reply"), "never"))
     return;
 
   purple_notify_error (NULL, NULL,
@@ -283,7 +283,7 @@ static void auto_pref_cb (
        "use.  To modify this behavior, use the AutoProfile configuration "
        "menu."));
 
-  purple_prefs_set_string ("/core/away/auto_reply", "never");
+  purple_prefs_set_string ("/purple/away/auto_reply", "never");
 }
 
 /*--------------------------------------------------------------------------*
@@ -291,7 +291,7 @@ static void auto_pref_cb (
  *--------------------------------------------------------------------------*/
 void ap_autoreply_start ()
 {
-  purple_prefs_set_string ("/core/away/auto_reply", "never");
+  purple_prefs_set_string ("/purple/away/auto_reply", "never");
 
   purple_signal_connect (purple_conversations_get_handle (), "sent-im-msg",
     ap_get_plugin_handle (), PURPLE_CALLBACK(sent_im_msg_cb), NULL);
@@ -299,7 +299,7 @@ void ap_autoreply_start ()
     ap_get_plugin_handle (), PURPLE_CALLBACK(received_im_msg_cb), NULL);
 
   pref_cb = purple_prefs_connect_callback (ap_get_plugin_handle (),
-    "/core/away/auto_reply", auto_pref_cb, NULL);
+    "/purple/away/auto_reply", auto_pref_cb, NULL);
 }
 
 void ap_autoreply_finish ()
@@ -311,7 +311,7 @@ void ap_autoreply_finish ()
   purple_prefs_disconnect_callback (pref_cb);
   pref_cb = 0;
 
-  purple_prefs_set_string ("/core/away/auto_reply", purple_prefs_get_string (
+  purple_prefs_set_string ("/purple/away/auto_reply", purple_prefs_get_string (
     "/plugins/gtk/autoprofile/autorespond/auto_reply"));
 
   while (last_auto_responses) {

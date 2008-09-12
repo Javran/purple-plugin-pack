@@ -39,7 +39,7 @@ static gboolean is_idle ()
 
   ui_ops = purple_idle_get_ui_ops ();
 
-  idle_reporting = purple_prefs_get_string ("/core/away/idle_reporting");
+  idle_reporting = purple_prefs_get_string ("/purple/away/idle_reporting");
   if (!strcmp (idle_reporting, "system") &&
       (ui_ops != NULL) && (ui_ops->get_time_idle != NULL)) {
     time_idle = time (NULL) - last_active_time;
@@ -50,7 +50,7 @@ static gboolean is_idle ()
   }
 
   return (time_idle > 
-           (60 * purple_prefs_get_int("/core/away/mins_before_away")));
+           (60 * purple_prefs_get_int("/purple/away/mins_before_away")));
 }
 
 static gboolean ap_check_idleness (gpointer data) 
@@ -98,7 +98,7 @@ static gboolean writing_im_msg_cb (PurpleAccount *account, const char *who,
 static void auto_pref_cb (
   const char *name, PurplePrefType type, gconstpointer val, gpointer data) 
 {
-  if (!purple_prefs_get_bool ("/core/away/away_when_idle")) return;
+  if (!purple_prefs_get_bool ("/purple/away/away_when_idle")) return;
 
   purple_notify_error (NULL, NULL,
     N_("This preference is disabled"), 
@@ -106,7 +106,7 @@ static void auto_pref_cb (
        "use.  To modify this behavior, use the AutoProfile configuration "
        "menu."));
 
-  purple_prefs_set_bool ("/core/away/away_when_idle", FALSE);
+  purple_prefs_set_bool ("/purple/away/away_when_idle", FALSE);
 }
 
 /*--------------------------------------------------------------------------*
@@ -114,7 +114,7 @@ static void auto_pref_cb (
  *--------------------------------------------------------------------------*/
 void ap_autoaway_start ()
 {
-  purple_prefs_set_bool ("/core/away/away_when_idle", FALSE);
+  purple_prefs_set_bool ("/purple/away/away_when_idle", FALSE);
 
   check_timeout = purple_timeout_add (AP_IDLE_CHECK_INTERVAL * 1000,
     ap_check_idleness, NULL);
@@ -123,7 +123,7 @@ void ap_autoaway_start ()
     ap_get_plugin_handle (), PURPLE_CALLBACK(writing_im_msg_cb), NULL);
 
   pref_cb = purple_prefs_connect_callback (ap_get_plugin_handle (),
-    "/core/away/away_when_idle", auto_pref_cb, NULL);
+    "/purple/away/away_when_idle", auto_pref_cb, NULL);
 
   ap_autoaway_touch ();
 }
@@ -138,7 +138,7 @@ void ap_autoaway_finish ()
   if (check_timeout > 0) purple_timeout_remove (check_timeout);
   check_timeout = 0;
 
-  purple_prefs_set_bool ("/core/away/away_when_idle",
+  purple_prefs_set_bool ("/purple/away/away_when_idle",
           purple_prefs_get_bool ("/plugins/gtk/autoprofile/away_when_idle"));
 }
 

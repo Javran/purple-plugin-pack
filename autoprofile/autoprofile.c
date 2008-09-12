@@ -77,7 +77,7 @@ static gboolean plugin_load (PurplePlugin *plugin)
   ap_delete_legacy_prefs ();
 
   /* The core autoprofile tracking system */
-  purple_prefs_connect_callback (plugin_handle, "/core/savedstatus/current",
+  purple_prefs_connect_callback (plugin_handle, "/purple/savedstatus/current",
     ap_status_changed, NULL);
   purple_signal_connect (purple_connections_get_handle (),
                        "signed-on", plugin_handle,
@@ -825,11 +825,11 @@ static void ap_init_preferences () {
   purple_prefs_add_bool   ("/plugins/gtk/autoprofile/queue_messages_when_away",
     FALSE);
   purple_prefs_add_bool   ("/plugins/gtk/autoprofile/away_when_idle",
-    purple_prefs_get_bool ("/core/away/away_when_idle"));
+    purple_prefs_get_bool ("/purple/away/away_when_idle"));
 
   /* Auto-response settings */
   purple_prefs_add_string ("/plugins/gtk/autoprofile/autorespond/auto_reply",
-    purple_prefs_get_string ("/core/away/auto_reply"));
+    purple_prefs_get_string ("/purple/away/auto_reply"));
   purple_prefs_add_string ("/plugins/gtk/autoprofile/autorespond/text",
     _("Say the magic word if you want me to talk more!"));
   purple_prefs_add_string ("/plugins/gtk/autoprofile/autorespond/trigger", 

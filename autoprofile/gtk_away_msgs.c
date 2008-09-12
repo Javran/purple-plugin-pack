@@ -66,7 +66,7 @@ static void sound_cb (
   gboolean value;
 
   button = (GtkWidget *) data;
-  value = purple_prefs_get_bool ("/core/sound/while_away");
+  value = purple_prefs_get_bool ("/purple/sound/while_away");
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(button), value);
 }
@@ -314,10 +314,10 @@ static void create_dialog () {
 
   button = pidgin_prefs_checkbox (
     _("Play sounds while away"),
-    "/core/sound/while_away",
+    "/purple/sound/while_away",
     config_vbox);
   sound_pref_cb = purple_prefs_connect_callback (ap_get_plugin_handle (), 
-    "/core/sound/while_away", sound_cb, button);
+    "/purple/sound/while_away", sound_cb, button);
 
   gtk_box_pack_start (GTK_BOX(hbox), gtk_vseparator_new (), FALSE, FALSE, 0);
 
