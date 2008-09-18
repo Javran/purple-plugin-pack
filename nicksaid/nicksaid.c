@@ -306,8 +306,8 @@ generate_popup(GtkWidget *w, GdkEventButton *event, PidginWindow *win)
 	}
 
 	gtk_widget_show_all(menu);
-	gtk_menu_popup(GTK_MENU(menu), NULL, NULL, NULL, NULL, 0,
-					GDK_CURRENT_TIME);
+	gtk_menu_popup(GTK_MENU(menu), NULL, NULL, NULL, NULL, event->button,
+					event->time);
 
 	return TRUE;
 }
@@ -390,6 +390,9 @@ get_tray_icon_for_window(PidginWindow *win)
 	if (w == NULL)
 	{
 		w = gtk_event_box_new();
+#if GTK_CHECK_VERSION(2,4,0)
+		gtk_event_box_set_visible_window(GTK_EVENT_BOX(w), TRUE);
+#endif
 		gtk_container_add(GTK_CONTAINER(w), 
 					gtk_image_new_from_stock(PIDGIN_STOCK_TOOLBAR_MESSAGE_NEW, GTK_ICON_SIZE_MENU));
 		pidgin_menu_tray_append(PIDGIN_MENU_TRAY(win->menu.tray), w, "Nicksaid");
@@ -402,7 +405,7 @@ get_tray_icon_for_window(PidginWindow *win)
 }
 
 static void
-update_menu_tray(PurpleConversation *conv, gpointer null)
+update_menu_tray(PurpleConversation *conv)
 {
 	PidginConversation *gtkconv;
 	PidginWindow *win;
@@ -420,9 +423,9 @@ update_menu_tray(PurpleConversation *conv, gpointer null)
 	icon = get_tray_icon_for_window(win);
 
 	if (purple_conversation_get_type(conv) != PURPLE_CONV_TYPE_CHAT)
-		gtk_widget_hide(icon);
+		gtk_widget_hide_all(icon);
 	else
-		gtk_widget_show(icon);
+		gtk_widget_show_all(icon);
 }
 
 static void
@@ -542,6 +545,8 @@ plugin_load(PurplePlugin *plugin)
 
 	purple_prefs_connect_callback(plugin, PREF_HLWORDS,
 					(PurplePrefCallback)construct_list, NULL);
+
+	purple_conversation_foreach(update_menu_tray);
 
 	return TRUE;
 }
