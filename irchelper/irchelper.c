@@ -56,6 +56,7 @@
 #define AUTO_RESPONSE_INTERVAL 600
 
 #define DOMAIN_SUFFIX_FREENODE ".freenode.net"
+#define DOMAIN_SUFFIX_FUNCOM ".funcom.com"
 #define DOMAIN_SUFFIX_GAMESURGE ".gamesurge.net"
 #define DOMAIN_SUFFIX_THUNDERCITY ".thundercity.org"
 #define DOMAIN_SUFFIX_DALNET ".dal.net"
@@ -105,6 +106,7 @@
 
 #define NICK_CHANSERV "ChanServ"
 #define NICK_FREENODE_CONNECT "freenode-connect"
+#define NICK_FUNCOM_Q_SERVICE NICK_QUAKENET_Q "@cserve.funcom.com"
 #define NICK_GAMESURGE_AUTHSERV "AuthServ"
 #define NICK_GAMESURGE_AUTHSERV_SERVICE NICK_GAMESURGE_AUTHSERV "@Services.GameSurge.net"
 #define NICK_GAMESURGE_GLOBAL "Global"
@@ -140,6 +142,7 @@ typedef enum {
 	IRC_NETWORK_TYPE_UNDERNET  = 0x0200,
 	IRC_NETWORK_TYPE_THUNDERCITY = 0x0400,
 	IRC_NETWORK_TYPE_DALNET    = 0x0800,
+	IRC_NETWORK_TYPE_FUNCOM    = 0x1000,
 } IRCHelperStateFlags;
 
 struct proto_stuff
@@ -234,6 +237,8 @@ static IRCHelperStateFlags get_connection_type(PurpleConnection *connection)
 		type = IRC_NETWORK_TYPE_DALNET;
 	else if (g_str_has_suffix(username, DOMAIN_SUFFIX_QUAKENET))
 		type = IRC_NETWORK_TYPE_QUAKENET;
+	else if (g_str_has_suffix(username, DOMAIN_SUFFIX_FUNCOM))
+		type = IRC_NETWORK_TYPE_FUNCOM;
 	else if (g_str_has_suffix(username, DOMAIN_SUFFIX_JEUX))
 		type = IRC_NETWORK_TYPE_JEUX;
 	else if (g_str_has_suffix(username, DOMAIN_SUFFIX_UNDERNET))
@@ -301,6 +306,8 @@ static void authserv_identify(const char *command, PurpleConnection *connection,
 			authserv = NICK_DALNET_AUTHSERV_SERVICE;
 		else if (state & IRC_NETWORK_TYPE_QUAKENET)
 			authserv = NICK_QUAKENET_Q_SERVICE;
+		else if (state & IRC_NETWORK_TYPE_FUNCOM)
+			authserv = NICK_FUNCOM_Q_SERVICE;
 		else if (state & IRC_NETWORK_TYPE_UNDERNET)
 			authserv = NICK_UNDERNET_X;
 
@@ -552,6 +559,13 @@ static void signed_on_cb(PurpleConnection *connection)
 		                purple_connection_get_display_name(connection));
 
 		authserv_identify("login ", connection, state);
+	}
+	else if (state & IRC_NETWORK_TYPE_FUNCOM)
+	{
+		purple_debug_info(PLUGIN_STATIC_NAME, "Connected with Funcom: %s\n",
+		                purple_connection_get_display_name(connection));
+
+		authserv_identify("AUTH", connection, state);
 	}
 	else
 	{
@@ -1127,7 +1141,8 @@ static gboolean receiving_im_msg_cb(PurpleAccount *account, gchar **sender, gcha
 	}
 
 	/* Suppress useless Q notifications if we're identifying automatically. */
-	if (state & IRC_NETWORK_TYPE_QUAKENET &&
+	if ((state & IRC_NETWORK_TYPE_QUAKENET ||
+	     state & IRC_NETWORK_TYPE_FUNCOM) &&
 	    state & IRC_WILL_ID &&
 	    g_str_equal(nick, NICK_QUAKENET_Q))
 	{
