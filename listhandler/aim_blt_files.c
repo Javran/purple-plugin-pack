@@ -172,7 +172,7 @@ lh_aim_list_parse_and_add(gchar **strings, guint length, guint begin, guint end)
 				/* since the geniuses that designed the blt format decided
 				 * that "M y S cr ee nn a m e" is acceptable in their blt files,
 				 * I have to work around their incompetence */
-				lh_aim_string_normalize(current_buddy);
+				lh_aim_str_normalize(current_buddy);
 
 				purple_debug_info("listhandler: import", "current buddy is %s\n",
 						current_buddy);
