@@ -48,23 +48,9 @@ lh_aim_filter(PurpleAccount *account)
 static gchar * /* remove '{' and leading and trailing spaces from string */
 lh_aim_str_normalize(gchar *s)
 {
-	/* replace all instances of the { character with a space */
-	gchar *ret = g_strdelimit(s, "{", ' ');
-
-	/* strip leading and trailing whitespace */
-	g_strstrip(ret);
-	
-	return ret;
-}
-
-static void
-lh_aim_sn_normalize(gchar *s)
-{
-	gchar *ret = g_strdelimit(s, "\"", ' ');
-
-	ret = lh_aim_str_normalize(ret);
-
-	return;
+	/* replace all instances of the { and " characters with spaces, then
+	 * strip whitespace */
+	return g_strstrip(g_strdelimit(g_strdelimit(s, "\"", ' '), "{", ' '));
 }
 
 static gchar * /* extract alias from string by stripping AliasString and "s */
@@ -167,7 +153,7 @@ lh_aim_list_parse_and_add(gchar **strings, guint length, guint begin, guint end)
 		purple_debug_info("listhandler: import", "Current group begins %d, ends %d\n",
 				current_group_begin, current_group_end);
 
-		/* now strip { and whitespace from the group and keep an extra
+		/* now strip {, ", and whitespace from the group and keep an extra
 		 * pointer to it around for easy access */
 		current_group = lh_aim_str_normalize(strings[current_group_begin]);
 
@@ -186,7 +172,7 @@ lh_aim_list_parse_and_add(gchar **strings, guint length, guint begin, guint end)
 				/* since the geniuses that designed the blt format decided
 				 * that "M y S cr ee nn a m e" is acceptable in their blt files,
 				 * I have to work around their incompetence */
-				lh_aim_sn_normalize(current_buddy);
+				lh_aim_string_normalize(current_buddy);
 
 				purple_debug_info("listhandler: import", "current buddy is %s\n",
 						current_buddy);
