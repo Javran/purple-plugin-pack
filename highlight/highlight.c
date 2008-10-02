@@ -164,6 +164,7 @@ msg_callback(PurpleAccount *account, char **who, char **message, PurpleConversat
 	char **splits;
 	int len;
 	int wl, sl;
+	const char *me;
 
 	if (*flags & PURPLE_MESSAGE_NICK) {
 		return FALSE;     /* this message is already highlighted */
@@ -172,7 +173,8 @@ msg_callback(PurpleAccount *account, char **who, char **message, PurpleConversat
 	if (!words)
 		return FALSE;
 
-	if (g_utf8_collate(*who, purple_connection_get_display_name(purple_account_get_connection(account))) == 0)
+	me = purple_connection_get_display_name(purple_account_get_connection(account));
+	if (me != NULL && g_utf8_collate(*who, me) == 0)
 		return FALSE;
 
 	splits = g_strsplit_set(*message, DELIMS, -1);
