@@ -54,18 +54,24 @@ lh_aim_str_normalize(gchar *s)
 }
 
 static gchar * /* extract alias from string by stripping AliasString and "s */
-lh_aim_get_alias(gchar * s)
+lh_aim_get_alias(gchar * s, gboolean v2)
 {
-	gint i;
+	gint i, limit;
 
-	/* go through and kill off the word AliasString.  use a hard coded 17
-	 * because we know the first 17 chars are not part of the alias */
-	for(i = 0; i < 17; i++)
+	/* Magic numbers: 18 = length of the string up to = for v2 files,
+	 * 17 = length of the string up to "AliasString" for v1 files */
+	if(v2) /* if a v2 file, we need to convert FriendlyName= to spaces */
+		limit = 18;
+	else /* else, v1 file, we need to convert AliasString to spaces */
+		limit = 17;
+
+	/* go through and kill off the chars that aren't part of the alias */
+	for(i = 0; i < limit; i++)
 		if(s[i] != ' ' && s[i] != '\0')
 			s[i] = ' ';
 	
 	/* now strip the stupid, useless whitespace from the string */
-	return lh_aim_str_normalize(g_strdelimit(s, "\"", ' '));
+	return g_strstrip(s);
 }
 
 static gchar ** /* read and split the file into manageable strings */
@@ -182,10 +188,14 @@ lh_aim_list_parse_and_add(gchar **strings, guint length, guint begin, guint end)
 					!strncmp(strings[i + 2], "     AliasString ", 17))
 				{
 					/* grab the alias */
-					current_alias = lh_aim_get_alias(strings[i + 2]);
+					current_alias = lh_aim_get_alias(strings[i + 2], FALSE);
 					i += 2; /* advance counter to prevent reparsing the alias */
-				}
-				else /* no alias is set */
+				} else if(!strncmp(strings[i + 1], "    FriendlyName=", 17)) {
+					/* Version 2 .blt format uses FriendlyName= to denote an alias */
+					/* grab the alias */
+					current_alias = lh_aim_get_alias(strings[i + 1], TRUE);
+					i++; /* advance the counter to prevent reparsing the alias */
+				} else /* no alias is set */
 					current_alias = NULL;
 
 				tmpbuddy = purple_buddy_new(target_account, current_buddy,
