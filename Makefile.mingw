@@ -6,7 +6,7 @@
 
 VERSION := $(shell cat ./VERSION)
 
-ALL_PLUGINS_LIST := $(shell python plugin_pack.py build_dirs purple,pidgin all)
+ALL_PLUGINS_LIST := $(shell python plugin_pack.py build_dirs purple,pidgin,gtkspell,aspell all)
 
 comma:= ,
 empty:=
