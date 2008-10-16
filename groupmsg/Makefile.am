@@ -6,7 +6,7 @@ groupmsgdir = $(PURPLE_LIBDIR)
 
 groupmsg_la_LDFLAGS = -module -avoid-version
 
-if HAVE_PIDGIN
+if HAVE_PURPLE
 
 groupmsg_LTLIBRARIES = groupmsg.la
 
