@@ -1,12 +1,16 @@
-<todo version="0.1.19">
+<?xml version="1.0"?>
+<todo version="0.1.20">
     <note priority="veryhigh" time="1189374060" done="1189374109">
         get cia working on a different project name...
         <comment>
             this is working but we have some munged stuffs...
         </comment>
     </note>
-    <note priority="high" time="1189373878">
+    <note priority="high" time="1189373878" done="1224391092">
         Investigate using the pre-processor to template stuff
+        <comment>
+            i'm pretty sure this was killed with the new buildsystem...
+        </comment>
     </note>
     <note priority="low" time="1189373907">
         make it possible to compile a plugin outside of the plugin-pack
