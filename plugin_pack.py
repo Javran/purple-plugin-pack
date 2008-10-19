@@ -23,8 +23,9 @@ Flags:
 
   -a  Load abusive plugins
   -d  Load default plugins
-  -f  Load finch plugins
   -i  Load incomplate plugins
+
+  -f  Load finch plugins
   -p  Load purple plugins
   -P  Load pidgin plugins
 
