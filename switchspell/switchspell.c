@@ -98,20 +98,48 @@ menu_conv_use_dict_cb(GObject *m, gpointer data)
 		purple_blist_node_set_string(node, "switchspell", lang);
 }
 
+#ifdef USE_ENCHANT
+struct nufan
+{
+	GtkWidget *menu;
+	PidginWindow *win;
+};
+
+static void
+enchant_dict_desc_cb(const char * const lang_tag, const char * const provider_name,
+                     const char * const provider_desc, const char * const provider_file,
+                     void *user_data)
+{
+	GtkWidget *menu = ((struct nufan *)user_data)->menu;
+	PidginWindow *win = ((struct nufan *)user_data)->win;
+
+	GSList *group = NULL;
+	GtkWidget *menuitem = gtk_radio_menu_item_new_with_label(group, lang_tag);
+	group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(menuitem));
+	g_object_set_data(G_OBJECT(menuitem), "user_data", win);
+	g_object_set_data_full(G_OBJECT(menuitem), "lang", g_strdup(lang_tag), g_free);
+	g_signal_connect(G_OBJECT(menuitem), "activate",
+					G_CALLBACK(menu_conv_use_dict_cb), NULL);
+	gtk_widget_show(menuitem);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
+}
+#endif
+
 static void
 regenerate_switchspell_menu(PidginConversation *gtkconv)
 {
 	PidginWindow *win;
 	GtkWidget *menu;
 	GtkWidget *mitem;
-	GSList *group = NULL;
 #ifdef USE_ENCHANT
-	EnchantBroker * eb;
+	struct nufan user_data;
+	EnchantBroker *eb;
 #else
-	AspellConfig * config;
-	AspellDictInfoList * dlist;
-	AspellDictInfoEnumeration * dels;
-	const AspellDictInfo * entry;
+	GSList *group = NULL;
+	AspellConfig *config;
+	AspellDictInfoList *dlist;
+	AspellDictInfoEnumeration *dels;
+	const AspellDictInfo *entry;
 #endif
 
 	if (gtkconv == NULL)
@@ -135,11 +163,11 @@ regenerate_switchspell_menu(PidginConversation *gtkconv)
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(mitem), menu);
 
 #ifdef USE_ENCHANT
-	void enchant_dict_desc_cb(const char * const lang_tag, const char * const provider_name,
-			const char * const provider_desc, const char * const provider_file,
-			void *user_data)
-	{
-		GtkWidget *menuitem = gtk_radio_menu_item_new_with_label(group, lang_tag);
+	user_data.menu = menu;
+	user_data.win = win;
+	eb = enchant_broker_init();
+	enchant_broker_list_dicts(eb, enchant_dict_desc_cb, &user_data);
+	enchant_broker_free(eb);
 #else
 	config = new_aspell_config();
 	dlist = get_aspell_dict_info_list(config);
@@ -149,25 +177,14 @@ regenerate_switchspell_menu(PidginConversation *gtkconv)
 	aspell_dict_info_list_empty(dlist);
 	while ((entry = aspell_dict_info_enumeration_next(dels)) != 0) {
 		GtkWidget *menuitem = gtk_radio_menu_item_new_with_label(group, entry->name);
-#endif
 		group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(menuitem));
 		g_object_set_data(G_OBJECT(menuitem), "user_data", win);
-#ifdef USE_ENCHANT
-		g_object_set_data_full(G_OBJECT(menuitem), "lang", g_strdup(lang_tag), g_free);
-#else
 		g_object_set_data_full(G_OBJECT(menuitem), "lang", g_strdup((gchar *)entry->name), g_free);
-#endif
 		g_signal_connect(G_OBJECT(menuitem), "activate",
 					G_CALLBACK(menu_conv_use_dict_cb), NULL);
 		gtk_widget_show(menuitem);
 		gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
 	}
-
-#ifdef USE_ENCHANT
-	eb = enchant_broker_init();
-	enchant_broker_list_dicts(eb, enchant_dict_desc_cb, NULL);
-	enchant_broker_free(eb);
-#else
 	delete_aspell_dict_info_enumeration(dels);
 #endif
 	gtk_widget_show_all(menu);
