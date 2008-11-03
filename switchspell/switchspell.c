@@ -101,6 +101,7 @@ menu_conv_use_dict_cb(GObject *m, gpointer data)
 #ifdef USE_ENCHANT
 struct nufan
 {
+	GSList *group;
 	GtkWidget *menu;
 	PidginWindow *win;
 };
@@ -110,12 +111,15 @@ enchant_dict_desc_cb(const char * const lang_tag, const char * const provider_na
                      const char * const provider_desc, const char * const provider_file,
                      void *user_data)
 {
+	GSList *group = ((struct nufan *)user_data)->group;
 	GtkWidget *menu = ((struct nufan *)user_data)->menu;
 	PidginWindow *win = ((struct nufan *)user_data)->win;
 
-	GSList *group = NULL;
 	GtkWidget *menuitem = gtk_radio_menu_item_new_with_label(group, lang_tag);
-	group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(menuitem));
+	if (group == NULL) {
+		group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(menuitem));
+		((struct nufan *)user_data)->group = group;
+	}
 	g_object_set_data(G_OBJECT(menuitem), "user_data", win);
 	g_object_set_data_full(G_OBJECT(menuitem), "lang", g_strdup(lang_tag), g_free);
 	g_signal_connect(G_OBJECT(menuitem), "activate",
@@ -163,6 +167,7 @@ regenerate_switchspell_menu(PidginConversation *gtkconv)
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(mitem), menu);
 
 #ifdef USE_ENCHANT
+	user_data.group = NULL;
 	user_data.menu = menu;
 	user_data.win = win;
 	eb = enchant_broker_init();
