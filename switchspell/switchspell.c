@@ -114,7 +114,7 @@ enchant_dict_desc_cb(const char * const lang_tag, const char * const provider_na
 	GtkWidget *menu = ((struct nufan *)user_data)->menu;
 	PidginWindow *win = ((struct nufan *)user_data)->win;
 
-	GtkWidget *menuitem = gtk_radio_menu_item_new_with_label(group, lang_tag);
+	GtkWidget *menuitem = gtk_radio_menu_item_new_with_label(NULL, lang_tag);
 	((struct nufan *)user_data)->group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(menuitem));
 	g_object_set_data(G_OBJECT(menuitem), "user_data", win);
 	g_object_set_data_full(G_OBJECT(menuitem), "lang", g_strdup(lang_tag), g_free);
