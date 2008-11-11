@@ -392,7 +392,7 @@ static PurplePluginInfo info = {
     "A plugin that adds an edit to to buddies allowing you to change various details you can't normally change. "
         "It also provides a mechanism for subsequent plugins to add themselves to that dialog. ",
     "Martijn van Oosterhout <kleptog@svana.org>",
-    "http://svana.org/kleptog/purple/",
+    "http://buddytools.sf.net",
 
     plugin_load,
     NULL,

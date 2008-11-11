@@ -440,7 +440,7 @@ static PurplePluginInfo info = {
         "basis so it can display the localtime of your contact when a conversation "
         "starts. Convenient if you deal with contacts from many parts of the " "world.",
     "Martijn van Oosterhout <kleptog@svana.org>",
-    "http://svana.org/kleptog/purple/",
+    "http://buddytools.sf.net",
 
     plugin_load,
     NULL,

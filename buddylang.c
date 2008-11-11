@@ -319,7 +319,7 @@ static PurplePluginInfo info = {
     "Configure spell-check language per buddy",
     "This plugin allows you to configure the language of the spelling control on the conversation screen on a per-contact basis.",
     "Martijn van Oosterhout <kleptog@svana.org>",
-    "http://svana.org/kleptog/purple/",
+    "http://buddytools.sf.net",
 
     plugin_load,
     NULL,

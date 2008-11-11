@@ -202,7 +202,7 @@ static PurplePluginInfo info = {
     "Store notes about your buddy",
     "This plugin allows you to set a notes field for each buddy and will display it at various points",
     "Martijn van Oosterhout <kleptog@svana.org>",
-    "http://svana.org/kleptog/purple/",
+    "http://buddytools.sf.net",
 
     plugin_load,
     NULL,
