@@ -105,10 +105,8 @@ buddyedit_editcomplete_cb(PurpleBlistNode * data, PurpleRequestFields * fields)
 
             /* In Purple2 each prot_chat_entry has a field "required". We use
              * this to determine if a field is important enough to recreate
-             * the chat if it changes. Non-required fields we jsut change
-             * in-situ. In Purple1.5 this field doesn't exist so we always
-             * recreate */
-#if PURPLE_MAJOR_VERSION >= 2
+             * the chat if it changes. Non-required fields we just change
+             * in-situ. */
             if(newaccount != chat->account)
                 new_chat = TRUE;
             else
@@ -133,9 +131,6 @@ buddyedit_editcomplete_cb(PurpleBlistNode * data, PurpleRequestFields * fields)
                         new_chat = TRUE;
                 }
             }
-#else
-            new_chat = TRUE;
-#endif
 
             if(new_chat)
             {
@@ -171,10 +166,8 @@ buddyedit_editcomplete_cb(PurpleBlistNode * data, PurpleRequestFields * fields)
                 for (tmp = g_list_first(list); tmp; tmp = g_list_next(tmp))
                 {
                     struct proto_chat_entry *pce = tmp->data;
-#if PURPLE_MAJOR_VERSION >= 2
                     if(pce->required)
                         continue;
-#endif
                     if(pce->is_int)
                     {
                         /* Do nothing, yet */
@@ -301,18 +294,16 @@ buddy_edit_cb(PurpleBlistNode * node, gpointer data)
             {
                 struct proto_chat_entry *pce = tmp->data;
                 const char *value;
-#if PURPLE_MAJOR_VERSION >= 2
+
                 purple_debug(PURPLE_DEBUG_INFO, PLUGIN,
                            "identifier=%s, label=%s, is_int=%d, required=%d\n", pce->identifier,
                            pce->label, pce->is_int, pce->required);
-#endif
+
                 if(pce->is_int)
                     continue;   /* Not yet */
                 value = g_hash_table_lookup(chat->components, pce->identifier);
                 field = purple_request_field_string_new(pce->identifier, pce->label, value, FALSE);
-#if PURPLE_MAJOR_VERSION >= 2
                 purple_request_field_set_required(field, pce->required);
-#endif
                 purple_request_field_group_add_field(group, field);
             }
             field = purple_request_field_string_new("alias", "Alias", chat->alias, FALSE);
@@ -338,11 +329,7 @@ buddy_edit_cb(PurpleBlistNode * node, gpointer data)
 static void
 buddy_menu_cb(PurpleBlistNode * node, GList ** menu, void *data)
 {
-#if PURPLE_MAJOR_VERSION < 2
-    PurpleBlistNodeAction *action;
-#else
     PurpleMenuAction *action;
-#endif
 
     switch (node->type)
     {
@@ -358,11 +345,7 @@ buddy_menu_cb(PurpleBlistNode * node, GList ** menu, void *data)
             return;
     }
 
-#if PURPLE_MAJOR_VERSION < 2
-    action = purple_blist_node_action_new("Edit...", buddy_edit_cb, NULL);
-#else
     action = purple_menu_action_new("Edit...", PURPLE_CALLBACK(buddy_edit_cb), NULL, NULL);
-#endif
     *menu = g_list_append(*menu, action);
 }
 

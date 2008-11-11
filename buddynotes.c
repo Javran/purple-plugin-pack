@@ -71,13 +71,8 @@ buddynotes_createconv_cb(PurpleConversation * conv, void *data)
     const char *notes;
     char *str;
 
-#if PURPLE_MAJOR_VERSION < 2
-    if(purple_conversation_get_type(conv) != PURPLE_CONV_IM)
-        return;
-#else
     if(purple_conversation_get_type(conv) != PURPLE_CONV_TYPE_IM)
         return;
-#endif
 
     name = purple_conversation_get_name(conv);
     buddy = purple_find_buddy(purple_conversation_get_account(conv), name);
