@@ -1,7 +1,7 @@
 /*************************************************************************
  * Buddy Edit Module
  *
- * A Gaim plugin that adds an edit to to buddies allowing you to change
+ * A Purple plugin that adds an edit to to buddies allowing you to change
  * various details you can't normally change. It also provides a mechanism
  * for subsequent plugins to add themselves to that dialog.
  *
@@ -24,13 +24,11 @@
  * 02111-1307, USA.
  *************************************************************************/
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 #define PLUGIN "core-kleptog-buddyedit"
 
 #include <glib.h>
 #include <string.h>
-
-#include "gaim-compat.h"
 
 #include "notify.h"
 #include "plugin.h"
@@ -40,77 +38,75 @@
 #include "debug.h"              /* Debug output functions */
 #include "request.h"            /* Requests stuff */
 
-static GaimPlugin *plugin_self;
+static PurplePlugin *plugin_self;
 
 static void
-buddyedit_editcomplete_cb(GaimBlistNode * data, GaimRequestFields * fields)
+buddyedit_editcomplete_cb(PurpleBlistNode * data, PurpleRequestFields * fields)
 {
     gboolean blist_destroy = FALSE;
 
-    GaimBlistNode *olddata = data;      /* Keep pointer in case we need to destroy it */
+    PurpleBlistNode *olddata = data;      /* Keep pointer in case we need to destroy it */
 
     /* Account detail stuff */
     switch (data->type)
     {
-        case GAIM_BLIST_BUDDY_NODE:
+        case PURPLE_BLIST_BUDDY_NODE:
         {
-            GaimBuddy *buddy = (GaimBuddy *) data;
-            GaimAccount *account = gaim_request_fields_get_account(fields, "account");
-            const char *name = gaim_request_fields_get_string(fields, "name");
-            const char *alias = gaim_request_fields_get_string(fields, "alias");
+            PurpleBuddy *buddy = (PurpleBuddy *) data;
+            PurpleAccount *account = purple_request_fields_get_account(fields, "account");
+            const char *name = purple_request_fields_get_string(fields, "name");
+            const char *alias = purple_request_fields_get_string(fields, "alias");
 
             /* If any details changes, create the buddy */
             if((account != buddy->account) || strcmp(name, buddy->name))
             {
                 GHashTable *tmp;
-                GaimBuddy *newbuddy = gaim_buddy_new(account, name, alias);
-                gaim_blist_add_buddy(newbuddy, NULL, NULL, data);       /* Copy it to correct location */
+                PurpleBuddy *newbuddy = purple_buddy_new(account, name, alias);
+                purple_blist_add_buddy(newbuddy, NULL, NULL, data);       /* Copy it to correct location */
 
                 /* Now this is ugly, but we want to copy the settings and avoid issues with memory management */
-                tmp = ((GaimBlistNode *) buddy)->settings;
-                ((GaimBlistNode *) buddy)->settings = ((GaimBlistNode *) newbuddy)->settings;
-                ((GaimBlistNode *) newbuddy)->settings = tmp;
+                tmp = ((PurpleBlistNode *) buddy)->settings;
+                ((PurpleBlistNode *) buddy)->settings = ((PurpleBlistNode *) newbuddy)->settings;
+                ((PurpleBlistNode *) newbuddy)->settings = tmp;
 
                 blist_destroy = TRUE;
-                data = (GaimBlistNode *) newbuddy;
+                data = (PurpleBlistNode *) newbuddy;
             }
             else
-                gaim_blist_alias_buddy(buddy, alias);
+                purple_blist_alias_buddy(buddy, alias);
             break;
         }
-        case GAIM_BLIST_CONTACT_NODE:
+        case PURPLE_BLIST_CONTACT_NODE:
         {
-            GaimContact *contact = (GaimContact *) data;
-            const char *alias = gaim_request_fields_get_string(fields, "alias");
-            gaim_contact_set_alias(contact, alias);
+            PurpleContact *contact = (PurpleContact *) data;
+            const char *alias = purple_request_fields_get_string(fields, "alias");
+            purple_contact_set_alias(contact, alias);
             break;
         }
-        case GAIM_BLIST_GROUP_NODE:
+        case PURPLE_BLIST_GROUP_NODE:
         {
-            GaimGroup *group = (GaimGroup *) data;
-            const char *alias = gaim_request_fields_get_string(fields, "alias");
-            gaim_blist_rename_group(group, alias);
+            PurpleGroup *group = (PurpleGroup *) data;
+            const char *alias = purple_request_fields_get_string(fields, "alias");
+            purple_blist_rename_group(group, alias);
             break;
         }
-        case GAIM_BLIST_CHAT_NODE:
+        case PURPLE_BLIST_CHAT_NODE:
         {
-            GaimChat *chat = (GaimChat *) data;
+            PurpleChat *chat = (PurpleChat *) data;
             gboolean new_chat = FALSE;
 
-            GaimConnection *gc;
+            PurpleConnection *gc;
             GList *list = NULL, *tmp;
-            gc = gaim_account_get_connection(chat->account);
-            if(GAIM_PLUGIN_PROTOCOL_INFO(gc->prpl)->chat_info != NULL)
-                list = GAIM_PLUGIN_PROTOCOL_INFO(gc->prpl)->chat_info(gc);
+            gc = purple_account_get_connection(chat->account);
+            if(PURPLE_PLUGIN_PROTOCOL_INFO(gc->prpl)->chat_info != NULL)
+                list = PURPLE_PLUGIN_PROTOCOL_INFO(gc->prpl)->chat_info(gc);
 
-            GaimAccount *newaccount = gaim_request_fields_get_account(fields, "account");
+            PurpleAccount *newaccount = purple_request_fields_get_account(fields, "account");
 
-            /* In Gaim2 each prot_chat_entry has a field "required". We use
+            /* In Purple2 each prot_chat_entry has a field "required". We use
              * this to determine if a field is important enough to recreate
-             * the chat if it changes. Non-required fields we jsut change
-             * in-situ. In Gaim1.5 this field doesn't exist so we always
-             * recreate */
-#if GAIM_MAJOR_VERSION >= 2
+             * the chat if it changes. Non-required fields we just change
+             * in-situ. */
             if(newaccount != chat->account)
                 new_chat = TRUE;
             else
@@ -125,7 +121,7 @@ buddyedit_editcomplete_cb(GaimBlistNode * data, GaimRequestFields * fields)
                     if(pce->is_int)
                         continue;       /* Not yet */
                     oldvalue = g_hash_table_lookup(chat->components, pce->identifier);
-                    newvalue = gaim_request_fields_get_string(fields, pce->identifier);
+                    newvalue = purple_request_fields_get_string(fields, pce->identifier);
 
                     if(oldvalue == NULL)
                         oldvalue = "";
@@ -135,9 +131,6 @@ buddyedit_editcomplete_cb(GaimBlistNode * data, GaimRequestFields * fields)
                         new_chat = TRUE;
                 }
             }
-#else
-            new_chat = TRUE;
-#endif
 
             if(new_chat)
             {
@@ -157,14 +150,14 @@ buddyedit_editcomplete_cb(GaimBlistNode * data, GaimRequestFields * fields)
                     }
                     else
                     {
-                        newvalue = gaim_request_fields_get_string(fields, pce->identifier);
+                        newvalue = purple_request_fields_get_string(fields, pce->identifier);
                         g_hash_table_replace(components, g_strdup(pce->identifier),
                                              g_strdup(newvalue));
                     }
                 }
-                GaimChat *newchat = gaim_chat_new(newaccount, NULL, components);
-                gaim_blist_add_chat(newchat, NULL, data);       /* Copy it to correct location */
-                data = (GaimBlistNode *) newchat;
+                PurpleChat *newchat = purple_chat_new(newaccount, NULL, components);
+                purple_blist_add_chat(newchat, NULL, data);       /* Copy it to correct location */
+                data = (PurpleBlistNode *) newchat;
                 blist_destroy = TRUE;
             }
             else                /* Just updating values in old chat */
@@ -173,54 +166,52 @@ buddyedit_editcomplete_cb(GaimBlistNode * data, GaimRequestFields * fields)
                 for (tmp = g_list_first(list); tmp; tmp = g_list_next(tmp))
                 {
                     struct proto_chat_entry *pce = tmp->data;
-#if GAIM_MAJOR_VERSION >= 2
                     if(pce->required)
                         continue;
-#endif
                     if(pce->is_int)
                     {
                         /* Do nothing, yet */
                     }
                     else
                     {
-                        newvalue = gaim_request_fields_get_string(fields, pce->identifier);
+                        newvalue = purple_request_fields_get_string(fields, pce->identifier);
                         g_hash_table_replace(chat->components, g_strdup(pce->identifier),
                                              g_strdup(newvalue));
                     }
                 }
             }
 
-            const char *alias = gaim_request_fields_get_string(fields, "alias");
-            gaim_blist_alias_chat(chat, alias);
+            const char *alias = purple_request_fields_get_string(fields, "alias");
+            purple_blist_alias_chat(chat, alias);
             break;
         }
-        case GAIM_BLIST_OTHER_NODE:
+        case PURPLE_BLIST_OTHER_NODE:
             break;
     }
 
-    gaim_signal_emit(gaim_blist_get_handle(), PLUGIN "-submit-fields", fields, data);
+    purple_signal_emit(purple_blist_get_handle(), PLUGIN "-submit-fields", fields, data);
 
     if(blist_destroy)
     {
-        if(olddata->type == GAIM_BLIST_BUDDY_NODE)
-            gaim_blist_remove_buddy((GaimBuddy *) olddata);
-        else if(olddata->type == GAIM_BLIST_CHAT_NODE)
-            gaim_blist_remove_chat((GaimChat *) olddata);
+        if(olddata->type == PURPLE_BLIST_BUDDY_NODE)
+            purple_blist_remove_buddy((PurpleBuddy *) olddata);
+        else if(olddata->type == PURPLE_BLIST_CHAT_NODE)
+            purple_blist_remove_chat((PurpleChat *) olddata);
     }
 
     /* Save any changes */
-    gaim_blist_schedule_save();
+    purple_blist_schedule_save();
 }
 
-static GaimAccount *buddyedit_account_filter_func_data;
+static PurpleAccount *buddyedit_account_filter_func_data;
 
 static gboolean
-buddyedit_account_filter_func(GaimAccount * account)
+buddyedit_account_filter_func(PurpleAccount * account)
 {
-    GaimPluginProtocolInfo *gppi1 =
-        GAIM_PLUGIN_PROTOCOL_INFO(gaim_account_get_connection(account)->prpl);
-    GaimPluginProtocolInfo *gppi2 =
-        GAIM_PLUGIN_PROTOCOL_INFO(gaim_account_get_connection(buddyedit_account_filter_func_data)->
+    PurplePluginProtocolInfo *gppi1 =
+        PURPLE_PLUGIN_PROTOCOL_INFO(purple_account_get_connection(account)->prpl);
+    PurplePluginProtocolInfo *gppi2 =
+        PURPLE_PLUGIN_PROTOCOL_INFO(purple_account_get_connection(buddyedit_account_filter_func_data)->
                                   prpl);
 
     return gppi1 == gppi2;
@@ -228,97 +219,95 @@ buddyedit_account_filter_func(GaimAccount * account)
 
 /* Node is either a contact or a buddy */
 static void
-buddy_edit_cb(GaimBlistNode * node, gpointer data)
+buddy_edit_cb(PurpleBlistNode * node, gpointer data)
 {
-    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddy_edit_cb(%p)\n", node);
-    GaimRequestFields *fields;
-    GaimRequestField *field;
-    GaimRequestFieldGroup *group;
+    purple_debug(PURPLE_DEBUG_INFO, PLUGIN, "buddy_edit_cb(%p)\n", node);
+    PurpleRequestFields *fields;
+    PurpleRequestField *field;
+    PurpleRequestFieldGroup *group;
     char *request_title = NULL;
 
-    fields = gaim_request_fields_new();
+    fields = purple_request_fields_new();
 
     switch (node->type)
     {
-        case GAIM_BLIST_BUDDY_NODE:
+        case PURPLE_BLIST_BUDDY_NODE:
         {
-            GaimBuddy *buddy = (GaimBuddy *) node;
-            group = gaim_request_field_group_new("Buddy Details");
-            gaim_request_fields_add_group(fields, group);
+            PurpleBuddy *buddy = (PurpleBuddy *) node;
+            group = purple_request_field_group_new("Buddy Details");
+            purple_request_fields_add_group(fields, group);
 
-            field = gaim_request_field_account_new("account", "Account", buddy->account);
-            gaim_request_field_account_set_show_all(field, TRUE);
-            gaim_request_field_group_add_field(group, field);
+            field = purple_request_field_account_new("account", "Account", buddy->account);
+            purple_request_field_account_set_show_all(field, TRUE);
+            purple_request_field_group_add_field(group, field);
 
-            field = gaim_request_field_string_new("name", "Name", buddy->name, FALSE);
-            gaim_request_field_group_add_field(group, field);
+            field = purple_request_field_string_new("name", "Name", buddy->name, FALSE);
+            purple_request_field_group_add_field(group, field);
 
-            field = gaim_request_field_string_new("alias", "Alias", buddy->alias, FALSE);
-            gaim_request_field_group_add_field(group, field);
+            field = purple_request_field_string_new("alias", "Alias", buddy->alias, FALSE);
+            purple_request_field_group_add_field(group, field);
 
             request_title = "Edit Buddy";
             break;
         }
-        case GAIM_BLIST_CONTACT_NODE:
+        case PURPLE_BLIST_CONTACT_NODE:
         {
-            GaimContact *contact = (GaimContact *) node;
-            group = gaim_request_field_group_new("Contact Details");
-            gaim_request_fields_add_group(fields, group);
+            PurpleContact *contact = (PurpleContact *) node;
+            group = purple_request_field_group_new("Contact Details");
+            purple_request_fields_add_group(fields, group);
 
-            field = gaim_request_field_string_new("alias", "Alias", contact->alias, FALSE);
-            gaim_request_field_group_add_field(group, field);
+            field = purple_request_field_string_new("alias", "Alias", contact->alias, FALSE);
+            purple_request_field_group_add_field(group, field);
 
             request_title = "Edit Contact";
             break;
         }
-        case GAIM_BLIST_GROUP_NODE:
+        case PURPLE_BLIST_GROUP_NODE:
         {
-            GaimGroup *grp = (GaimGroup *) node;
-            group = gaim_request_field_group_new("Group Details");
-            gaim_request_fields_add_group(fields, group);
+            PurpleGroup *grp = (PurpleGroup *) node;
+            group = purple_request_field_group_new("Group Details");
+            purple_request_fields_add_group(fields, group);
 
-            field = gaim_request_field_string_new("alias", "Name", grp->name, FALSE);
-            gaim_request_field_group_add_field(group, field);
+            field = purple_request_field_string_new("alias", "Name", grp->name, FALSE);
+            purple_request_field_group_add_field(group, field);
 
             request_title = "Edit Group";
             break;
         }
-        case GAIM_BLIST_CHAT_NODE:
+        case PURPLE_BLIST_CHAT_NODE:
         {
-            GaimChat *chat = (GaimChat *) node;
-            group = gaim_request_field_group_new("Chat Details");
-            gaim_request_fields_add_group(fields, group);
-
-            field = gaim_request_field_account_new("account", "Account", chat->account);
-            gaim_request_field_account_set_filter(field, buddyedit_account_filter_func);
-            buddyedit_account_filter_func_data = chat->account;
-            gaim_request_field_group_add_field(group, field);
-            GaimConnection *gc;
+            PurpleChat *chat = (PurpleChat *) node;
+            PurpleConnection *gc;
             GList *list = NULL, *tmp;
-            gc = gaim_account_get_connection(chat->account);
-            if(GAIM_PLUGIN_PROTOCOL_INFO(gc->prpl)->chat_info != NULL)
-                list = GAIM_PLUGIN_PROTOCOL_INFO(gc->prpl)->chat_info(gc);
+            group = purple_request_field_group_new("Chat Details");
+            purple_request_fields_add_group(fields, group);
+
+            field = purple_request_field_account_new("account", "Account", chat->account);
+            purple_request_field_account_set_filter(field, buddyedit_account_filter_func);
+            buddyedit_account_filter_func_data = chat->account;
+            purple_request_field_group_add_field(group, field);
+            gc = purple_account_get_connection(chat->account);
+            if(PURPLE_PLUGIN_PROTOCOL_INFO(gc->prpl)->chat_info != NULL)
+                list = PURPLE_PLUGIN_PROTOCOL_INFO(gc->prpl)->chat_info(gc);
 
             for (tmp = g_list_first(list); tmp; tmp = g_list_next(tmp))
             {
                 struct proto_chat_entry *pce = tmp->data;
                 const char *value;
-#if GAIM_MAJOR_VERSION >= 2
-                gaim_debug(GAIM_DEBUG_INFO, PLUGIN,
+
+                purple_debug(PURPLE_DEBUG_INFO, PLUGIN,
                            "identifier=%s, label=%s, is_int=%d, required=%d\n", pce->identifier,
                            pce->label, pce->is_int, pce->required);
-#endif
+
                 if(pce->is_int)
                     continue;   /* Not yet */
                 value = g_hash_table_lookup(chat->components, pce->identifier);
-                field = gaim_request_field_string_new(pce->identifier, pce->label, value, FALSE);
-#if GAIM_MAJOR_VERSION >= 2
-                gaim_request_field_set_required(field, pce->required);
-#endif
-                gaim_request_field_group_add_field(group, field);
+                field = purple_request_field_string_new(pce->identifier, pce->label, value, FALSE);
+                purple_request_field_set_required(field, pce->required);
+                purple_request_field_group_add_field(group, field);
             }
-            field = gaim_request_field_string_new("alias", "Alias", chat->alias, FALSE);
-            gaim_request_field_group_add_field(group, field);
+            field = purple_request_field_string_new("alias", "Alias", chat->alias, FALSE);
+            purple_request_field_group_add_field(group, field);
 
             request_title = "Edit Chat";
             break;
@@ -328,78 +317,72 @@ buddy_edit_cb(GaimBlistNode * node, gpointer data)
             break;
     }
 
-    gaim_signal_emit(gaim_blist_get_handle(), PLUGIN "-create-fields", fields, node);
+    purple_signal_emit(purple_blist_get_handle(), PLUGIN "-create-fields", fields, node);
 
-    gaim_request_fields(plugin_self,
-                        request_title, NULL, NULL,
-                        fields, "OK", G_CALLBACK(buddyedit_editcomplete_cb), "Cancel", NULL, node);
+    purple_request_fields(plugin_self, request_title, NULL, NULL, fields,
+                          "OK", G_CALLBACK(buddyedit_editcomplete_cb),
+                          "Cancel", NULL,
+                          NULL, NULL, NULL, /* XXX: These should be set. */
+                          node);
 }
 
 static void
-buddy_menu_cb(GaimBlistNode * node, GList ** menu, void *data)
+buddy_menu_cb(PurpleBlistNode * node, GList ** menu, void *data)
 {
-#if GAIM_MAJOR_VERSION < 2
-    GaimBlistNodeAction *action;
-#else
-    GaimMenuAction *action;
-#endif
+    PurpleMenuAction *action;
 
     switch (node->type)
     {
             /* These are the types we handle */
-        case GAIM_BLIST_BUDDY_NODE:
-        case GAIM_BLIST_CONTACT_NODE:
-        case GAIM_BLIST_GROUP_NODE:
-        case GAIM_BLIST_CHAT_NODE:
+        case PURPLE_BLIST_BUDDY_NODE:
+        case PURPLE_BLIST_CONTACT_NODE:
+        case PURPLE_BLIST_GROUP_NODE:
+        case PURPLE_BLIST_CHAT_NODE:
             break;
 
-        case GAIM_BLIST_OTHER_NODE:
+        case PURPLE_BLIST_OTHER_NODE:
         default:
             return;
     }
 
-#if GAIM_MAJOR_VERSION < 2
-    action = gaim_blist_node_action_new("Edit...", buddy_edit_cb, NULL);
-#else
-    action = gaim_menu_action_new("Edit...", GAIM_CALLBACK(buddy_edit_cb), NULL, NULL);
-#endif
+    action = purple_menu_action_new("Edit...", PURPLE_CALLBACK(buddy_edit_cb), NULL, NULL);
     *menu = g_list_append(*menu, action);
 }
 
 static gboolean
-plugin_load(GaimPlugin * plugin)
+plugin_load(PurplePlugin * plugin)
 {
 
     plugin_self = plugin;
 
-    void *blist_handle = gaim_blist_get_handle();
+    void *blist_handle = purple_blist_get_handle();
 
-    gaim_signal_register(blist_handle, PLUGIN "-create-fields", /* Called when about to create dialog */
-                         gaim_marshal_VOID__POINTER_POINTER, NULL, 2,   /* (FieldList*,BlistNode*) */
-                         gaim_value_new(GAIM_TYPE_SUBTYPE, GAIM_TYPE_POINTER),  /* FieldList */
-                         gaim_value_new(GAIM_TYPE_SUBTYPE, GAIM_SUBTYPE_BLIST));
+    purple_signal_register(blist_handle, PLUGIN "-create-fields", /* Called when about to create dialog */
+                         purple_marshal_VOID__POINTER_POINTER, NULL, 2,   /* (FieldList*,BlistNode*) */
+                         purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_TYPE_POINTER),  /* FieldList */
+                         purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_BLIST));
 
-    gaim_signal_register(blist_handle, PLUGIN "-submit-fields", /* Called when dialog submitted */
-                         gaim_marshal_VOID__POINTER_POINTER, NULL, 2,   /* (FieldList*,BlistNode*) */
-                         gaim_value_new(GAIM_TYPE_SUBTYPE, GAIM_TYPE_POINTER),  /* FieldList */
-                         gaim_value_new(GAIM_TYPE_SUBTYPE, GAIM_SUBTYPE_BLIST));
+    purple_signal_register(blist_handle, PLUGIN "-submit-fields", /* Called when dialog submitted */
+                         purple_marshal_VOID__POINTER_POINTER, NULL, 2,   /* (FieldList*,BlistNode*) */
+                         purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_TYPE_POINTER),  /* FieldList */
+                         purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_BLIST));
 
-    gaim_signal_connect(blist_handle, "blist-node-extended-menu", plugin,
-                        GAIM_CALLBACK(buddy_menu_cb), NULL);
+    purple_signal_connect(blist_handle, "blist-node-extended-menu", plugin,
+                        PURPLE_CALLBACK(buddy_menu_cb), NULL);
 
     return TRUE;
 }
 
 
-static GaimPluginInfo info = {
-    GAIM_PLUGIN_MAGIC,
-    GAIM_MAJOR_VERSION,
-    GAIM_MINOR_VERSION,
-    GAIM_PLUGIN_STANDARD,
+static PurplePluginInfo info = {
+    PURPLE_PLUGIN_MAGIC,
+    PURPLE_MAJOR_VERSION,
+    PURPLE_MINOR_VERSION,
+    PURPLE_PLUGIN_STANDARD,
     NULL,
     0,
     NULL,
-    GAIM_PRIORITY_DEFAULT,
+    PURPLE_PRIORITY_DEFAULT,
 
     PLUGIN,
     "Buddy Edit Module",
@@ -409,7 +392,7 @@ static GaimPluginInfo info = {
     "A plugin that adds an edit to to buddies allowing you to change various details you can't normally change. "
         "It also provides a mechanism for subsequent plugins to add themselves to that dialog. ",
     "Martijn van Oosterhout <kleptog@svana.org>",
-    "http://svana.org/kleptog/gaim/",
+    "http://svana.org/kleptog/purple/",
 
     plugin_load,
     NULL,
@@ -422,7 +405,7 @@ static GaimPluginInfo info = {
 };
 
 static void
-init_plugin(GaimPlugin * plugin)
+init_plugin(PurplePlugin * plugin)
 {
 }
 
