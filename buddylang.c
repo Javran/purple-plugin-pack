@@ -1,7 +1,7 @@
 /*************************************************************************
  * Buddy Language Module
  *
- * A Gaim plugin that allows you to configure the language of the spelling
+ * A Purple plugin that allows you to configure the language of the spelling
  * control on the conversation screen on a per-contact basis.
  *
  * by Martijn van Oosterhout <kleptog@svana.org> (C) April 2006
@@ -22,15 +22,13 @@
  * 02111-1307, USA.
  *************************************************************************/
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 #define PLUGIN "core-kleptog-buddylang"
 #define SETTING_NAME "language"
 #define CONTROL_NAME PLUGIN "-" SETTING_NAME
 
 #include <glib.h>
 #include <string.h>
-
-#include "gaim-compat.h"
 
 #include "notify.h"
 #include "plugin.h"
@@ -46,7 +44,7 @@
 #include "aspell.h"
 #include "gtkspell/gtkspell.h"
 
-static GaimPlugin *plugin_self;
+static PurplePlugin *plugin_self;
 
 #define LANGUAGE_FLAG ((void*)1)
 #define DISABLED_FLAG ((void*)2)
@@ -60,27 +58,27 @@ static GaimPlugin *plugin_self;
  * that's what it is
  */
 static const char *
-buddy_get_language(GaimBlistNode * node, gboolean resolve)
+buddy_get_language(PurpleBlistNode * node, gboolean resolve)
 {
-    GaimBlistNode *datanode = NULL;
+    PurpleBlistNode *datanode = NULL;
     const char *language;
 
     switch (node->type)
     {
-        case GAIM_BLIST_BUDDY_NODE:
-            datanode = (GaimBlistNode *) gaim_buddy_get_contact((GaimBuddy *) node);
+        case PURPLE_BLIST_BUDDY_NODE:
+            datanode = (PurpleBlistNode *) purple_buddy_get_contact((PurpleBuddy *) node);
             break;
-        case GAIM_BLIST_CONTACT_NODE:
+        case PURPLE_BLIST_CONTACT_NODE:
             datanode = node;
             break;
-        case GAIM_BLIST_GROUP_NODE:
+        case PURPLE_BLIST_GROUP_NODE:
             datanode = node;
             break;
         default:
             return NULL;
     }
 
-    language = gaim_blist_node_get_string(datanode, SETTING_NAME);
+    language = purple_blist_node_get_string(datanode, SETTING_NAME);
 
     if(!resolve)
         return language;
@@ -91,11 +89,11 @@ buddy_get_language(GaimBlistNode * node, gboolean resolve)
     if(language)
         return language;
 
-    if(datanode->type == GAIM_BLIST_CONTACT_NODE)
+    if(datanode->type == PURPLE_BLIST_CONTACT_NODE)
     {
-        /* There is no gaim_blist_contact_get_group(), though there probably should be */
+        /* There is no purple_blist_contact_get_group(), though there probably should be */
         datanode = datanode->parent;
-        language = gaim_blist_node_get_string(datanode, SETTING_NAME);
+        language = purple_blist_node_get_string(datanode, SETTING_NAME);
     }
 
     if(language && strcmp(language, "none") == 0)
@@ -105,34 +103,34 @@ buddy_get_language(GaimBlistNode * node, gboolean resolve)
 }
 
 static void
-buddylang_createconv_cb(GaimConversation * conv, void *data)
+buddylang_createconv_cb(PurpleConversation * conv, void *data)
 {
     const char *name;
-    GaimBuddy *buddy;
+    PurpleBuddy *buddy;
     const char *language;
 #ifdef PIDGIN_CONVERSATION
     PidginConversation *gtkconv;
 #else
-    GaimGtkConversation *gtkconv;
+    PurpleGtkConversation *gtkconv;
 #endif
     GtkSpell *gtkspell;
     char *str;
     GError *error = NULL;
 
-#if GAIM_MAJOR_VERSION < 2
-    if(gaim_conversation_get_type(conv) != GAIM_CONV_IM)
+#if PURPLE_MAJOR_VERSION < 2
+    if(purple_conversation_get_type(conv) != PURPLE_CONV_IM)
         return;
 #else
-    if(gaim_conversation_get_type(conv) != GAIM_CONV_TYPE_IM)
+    if(purple_conversation_get_type(conv) != PURPLE_CONV_TYPE_IM)
         return;
 #endif
 
-    name = gaim_conversation_get_name(conv);
-    buddy = gaim_find_buddy(gaim_conversation_get_account(conv), name);
+    name = purple_conversation_get_name(conv);
+    buddy = purple_find_buddy(purple_conversation_get_account(conv), name);
     if(!buddy)
         return;
 
-    language = buddy_get_language((GaimBlistNode *) buddy, TRUE);
+    language = buddy_get_language((PurpleBlistNode *) buddy, TRUE);
 
     if(!language)
         return;
@@ -140,7 +138,7 @@ buddylang_createconv_cb(GaimConversation * conv, void *data)
 #ifdef PIDGIN_CONVERSATION
     gtkconv = PIDGIN_CONVERSATION(conv);
 #else
-    gtkconv = GAIM_GTK_CONVERSATION(conv);
+    gtkconv = PURPLE_GTK_CONVERSATION(conv);
 #endif
     gtkspell = gtkspell_get_from_text_view(GTK_TEXT_VIEW(gtkconv->entry));
 
@@ -151,63 +149,63 @@ buddylang_createconv_cb(GaimConversation * conv, void *data)
         gtkspell_detach(gtkspell);
     else if(!gtkspell_set_language(gtkspell, language, &error) && error)
     {
-        gaim_debug_warning(PLUGIN, "Failed to configure GtkSpell for language %s: %s\n",
+        purple_debug_warning(PLUGIN, "Failed to configure GtkSpell for language %s: %s\n",
                            language, error->message);
         g_error_free(error);
     }
     str = g_strdup_printf("Spellcheck language: %s", language);
-    gaim_conversation_write(conv, PLUGIN, str, GAIM_MESSAGE_SYSTEM, time(NULL));
+    purple_conversation_write(conv, PLUGIN, str, PURPLE_MESSAGE_SYSTEM, time(NULL));
     g_free(str);
 }
 
 static void
-buddylang_submitfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
+buddylang_submitfields_cb(PurpleRequestFields * fields, PurpleBlistNode * data)
 {
-    GaimBlistNode *node;
-    GaimRequestField *list;
+    PurpleBlistNode *node;
+    PurpleRequestField *list;
     const GList *sellist;
     void *seldata = NULL;
 
-    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddylang_submitfields_cb(%p,%p)\n", fields, data);
+    purple_debug(PURPLE_DEBUG_INFO, PLUGIN, "buddylang_submitfields_cb(%p,%p)\n", fields, data);
 
     switch (data->type)
     {
-        case GAIM_BLIST_BUDDY_NODE:
-            node = (GaimBlistNode *) gaim_buddy_get_contact((GaimBuddy *) data);
+        case PURPLE_BLIST_BUDDY_NODE:
+            node = (PurpleBlistNode *) purple_buddy_get_contact((PurpleBuddy *) data);
             break;
-        case GAIM_BLIST_CONTACT_NODE:
-        case GAIM_BLIST_GROUP_NODE:
+        case PURPLE_BLIST_CONTACT_NODE:
+        case PURPLE_BLIST_GROUP_NODE:
             /* code handles either case */
             node = data;
             break;
-        case GAIM_BLIST_CHAT_NODE:
-        case GAIM_BLIST_OTHER_NODE:
+        case PURPLE_BLIST_CHAT_NODE:
+        case PURPLE_BLIST_OTHER_NODE:
         default:
             /* Not applicable */
             return;
     }
 
-    list = gaim_request_fields_get_field(fields, CONTROL_NAME);
-    sellist = gaim_request_field_list_get_selected(list);
+    list = purple_request_fields_get_field(fields, CONTROL_NAME);
+    sellist = purple_request_field_list_get_selected(list);
     if(sellist)
-        seldata = gaim_request_field_list_get_data(list, sellist->data);
+        seldata = purple_request_field_list_get_data(list, sellist->data);
 
     /* Otherwise, it's fixed value and this means deletion */
     if(seldata == LANGUAGE_FLAG)
-        gaim_blist_node_set_string(node, SETTING_NAME, sellist->data);
+        purple_blist_node_set_string(node, SETTING_NAME, sellist->data);
     else if(seldata == DISABLED_FLAG)
-        gaim_blist_node_set_string(node, SETTING_NAME, "none");
+        purple_blist_node_set_string(node, SETTING_NAME, "none");
     else
-        gaim_blist_node_remove_setting(node, SETTING_NAME);
+        purple_blist_node_remove_setting(node, SETTING_NAME);
 }
 
 /* Node is either a contact or a buddy */
 static void
-buddylang_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
+buddylang_createfields_cb(PurpleRequestFields * fields, PurpleBlistNode * data)
 {
-    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddylang_createfields_cb(%p,%p)\n", fields, data);
-    GaimRequestField *field;
-    GaimRequestFieldGroup *group;
+    purple_debug(PURPLE_DEBUG_INFO, PLUGIN, "buddylang_createfields_cb(%p,%p)\n", fields, data);
+    PurpleRequestField *field;
+    PurpleRequestFieldGroup *group;
     const char *language;
     gboolean is_default;
 
@@ -217,50 +215,50 @@ buddylang_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
 
     switch (data->type)
     {
-        case GAIM_BLIST_BUDDY_NODE:
-        case GAIM_BLIST_CONTACT_NODE:
+        case PURPLE_BLIST_BUDDY_NODE:
+        case PURPLE_BLIST_CONTACT_NODE:
             is_default = FALSE;
             break;
-        case GAIM_BLIST_GROUP_NODE:
+        case PURPLE_BLIST_GROUP_NODE:
             is_default = TRUE;
             break;
-        case GAIM_BLIST_CHAT_NODE:
-        case GAIM_BLIST_OTHER_NODE:
+        case PURPLE_BLIST_CHAT_NODE:
+        case PURPLE_BLIST_OTHER_NODE:
         default:
             /* Not applicable */
             return;
     }
 
-    group = gaim_request_field_group_new(NULL);
-    gaim_request_fields_add_group(fields, group);
+    group = purple_request_field_group_new(NULL);
+    purple_request_fields_add_group(fields, group);
 
     field =
-        gaim_request_field_list_new(CONTROL_NAME,
+        purple_request_field_list_new(CONTROL_NAME,
                                     is_default ? "Default spellcheck language for group" :
                                     "Spellcheck language");
-    gaim_request_field_list_set_multi_select(field, FALSE);
-    gaim_request_field_list_add(field, "<Default>", "");
-    gaim_request_field_list_add(field, "<Disabled>", DISABLED_FLAG);
+    purple_request_field_list_set_multi_select(field, FALSE);
+    purple_request_field_list_add(field, "<Default>", "");
+    purple_request_field_list_add(field, "<Disabled>", DISABLED_FLAG);
 
     /* I'd love to be able to access the gtkspell one, but it's hidden, so we create our own */
     aspellconfig = new_aspell_config();
     if(!aspellconfig)
     {
-        gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "new_aspell_config() returned NULL\n");
+        purple_debug(PURPLE_DEBUG_INFO, PLUGIN, "new_aspell_config() returned NULL\n");
         return;
     }
     dictinfolist = get_aspell_dict_info_list(aspellconfig);
     if(!dictinfolist)
     {
-        gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "get_aspell_dict_info_list() returned NULL\n");
+        purple_debug(PURPLE_DEBUG_INFO, PLUGIN, "get_aspell_dict_info_list() returned NULL\n");
         return;
     }
-    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "dictinfo size = %d\n",
+    purple_debug(PURPLE_DEBUG_INFO, PLUGIN, "dictinfo size = %d\n",
                aspell_dict_info_list_size(dictinfolist));
     dictinfoenumeration = aspell_dict_info_list_elements(dictinfolist);
     if(!dictinfoenumeration)
     {
-        gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "aspell_dict_info_list_elements() returned NULL\n");
+        purple_debug(PURPLE_DEBUG_INFO, PLUGIN, "aspell_dict_info_list_elements() returned NULL\n");
         return;
     }
 
@@ -272,9 +270,9 @@ buddylang_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
         const struct AspellDictInfo *dictinfo =
             aspell_dict_info_enumeration_next(dictinfoenumeration);
 
-        if(gaim_request_field_list_get_data(field, dictinfo->code) != NULL)
+        if(purple_request_field_list_get_data(field, dictinfo->code) != NULL)
             continue;
-        gaim_request_field_list_add(field, dictinfo->code, LANGUAGE_FLAG);
+        purple_request_field_list_add(field, dictinfo->code, LANGUAGE_FLAG);
     }
     delete_aspell_dict_info_enumeration(dictinfoenumeration);
     delete_aspell_config(aspellconfig);
@@ -283,41 +281,41 @@ buddylang_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
     if(language)
     {
         if(strcmp(language, "none") == 0)
-            gaim_request_field_list_add_selected(field, "<Disabled>");
+            purple_request_field_list_add_selected(field, "<Disabled>");
         else
-            gaim_request_field_list_add_selected(field, language);
+            purple_request_field_list_add_selected(field, language);
     }
     else
-        gaim_request_field_list_add_selected(field, "<Default>");
+        purple_request_field_list_add_selected(field, "<Default>");
 
-    gaim_request_field_group_add_field(group, field);
+    purple_request_field_group_add_field(group, field);
 }
 
 static gboolean
-plugin_load(GaimPlugin * plugin)
+plugin_load(PurplePlugin * plugin)
 {
 
     plugin_self = plugin;
 
-    gaim_signal_connect(gaim_blist_get_handle(), "core-kleptog-buddyedit-create-fields", plugin,
-                        GAIM_CALLBACK(buddylang_createfields_cb), NULL);
-    gaim_signal_connect(gaim_blist_get_handle(), "core-kleptog-buddyedit-submit-fields", plugin,
-                        GAIM_CALLBACK(buddylang_submitfields_cb), NULL);
-    gaim_signal_connect(gaim_conversations_get_handle(), "conversation-created", plugin,
-                        GAIM_CALLBACK(buddylang_createconv_cb), NULL);
+    purple_signal_connect(purple_blist_get_handle(), "core-kleptog-buddyedit-create-fields", plugin,
+                        PURPLE_CALLBACK(buddylang_createfields_cb), NULL);
+    purple_signal_connect(purple_blist_get_handle(), "core-kleptog-buddyedit-submit-fields", plugin,
+                        PURPLE_CALLBACK(buddylang_submitfields_cb), NULL);
+    purple_signal_connect(purple_conversations_get_handle(), "conversation-created", plugin,
+                        PURPLE_CALLBACK(buddylang_createconv_cb), NULL);
 
     return TRUE;
 }
 
-static GaimPluginInfo info = {
-    GAIM_PLUGIN_MAGIC,
-    GAIM_MAJOR_VERSION,
-    GAIM_MINOR_VERSION,
-    GAIM_PLUGIN_STANDARD,
+static PurplePluginInfo info = {
+    PURPLE_PLUGIN_MAGIC,
+    PURPLE_MAJOR_VERSION,
+    PURPLE_MINOR_VERSION,
+    PURPLE_PLUGIN_STANDARD,
     NULL,
     0,
     NULL,
-    GAIM_PRIORITY_DEFAULT,
+    PURPLE_PRIORITY_DEFAULT,
 
     PLUGIN,
     "Buddy Language Module",
@@ -326,7 +324,7 @@ static GaimPluginInfo info = {
     "Configure spell-check language per buddy",
     "This plugin allows you to configure the language of the spelling control on the conversation screen on a per-contact basis.",
     "Martijn van Oosterhout <kleptog@svana.org>",
-    "http://svana.org/kleptog/gaim/",
+    "http://svana.org/kleptog/purple/",
 
     plugin_load,
     NULL,
@@ -339,9 +337,9 @@ static GaimPluginInfo info = {
 };
 
 static void
-init_plugin(GaimPlugin * plugin)
+init_plugin(PurplePlugin * plugin)
 {
     info.dependencies = g_list_append(info.dependencies, "core-kleptog-buddyedit");
 }
 
-GAIM_INIT_PLUGIN(buddylang, init_plugin, info);
+PURPLE_INIT_PLUGIN(buddylang, init_plugin, info);

@@ -1,7 +1,7 @@
 /*************************************************************************
  * Buddy Notes Module
  *
- * A Gaim plugin the allows you to add notes to contacts which will be
+ * A Purple plugin the allows you to add notes to contacts which will be
  * displayed in the conversation screen as well as the hover tooltip.
  *
  * by Martijn van Oosterhout <kleptog@svana.org> (C) April 2006
@@ -22,14 +22,12 @@
  * 02111-1307, USA.
  *************************************************************************/
 
-#define GAIM_PLUGINS
+#define PURPLE_PLUGINS
 #define PLUGIN "core-kleptog-buddynotes"
 #define SETTING_NAME "notes"
 #define CONTROL_NAME PLUGIN "-" SETTING_NAME
 
 #include <glib.h>
-
-#include "gaim-compat.h"
 
 #include "notify.h"
 #include "plugin.h"
@@ -44,67 +42,67 @@
 
 #define TIMEZONE_FLAG  ((void*)1)
 
-static GaimPlugin *plugin_self;
+static PurplePlugin *plugin_self;
 
 static const char *
-buddy_get_notes(GaimBlistNode * node)
+buddy_get_notes(PurpleBlistNode * node)
 {
-    GaimContact *contact = NULL;
+    PurpleContact *contact = NULL;
     switch (node->type)
     {
-        case GAIM_BLIST_BUDDY_NODE:
-            contact = gaim_buddy_get_contact((GaimBuddy *) node);
+        case PURPLE_BLIST_BUDDY_NODE:
+            contact = purple_buddy_get_contact((PurpleBuddy *) node);
             break;
-        case GAIM_BLIST_CONTACT_NODE:
-            contact = (GaimContact *) node;
+        case PURPLE_BLIST_CONTACT_NODE:
+            contact = (PurpleContact *) node;
             break;
         default:
             return NULL;
     }
 
-    return gaim_blist_node_get_string((GaimBlistNode *) contact, SETTING_NAME);
+    return purple_blist_node_get_string((PurpleBlistNode *) contact, SETTING_NAME);
 }
 
 static void
-buddynotes_createconv_cb(GaimConversation * conv, void *data)
+buddynotes_createconv_cb(PurpleConversation * conv, void *data)
 {
     const char *name;
-    GaimBuddy *buddy;
+    PurpleBuddy *buddy;
     const char *notes;
     char *str;
 
-#if GAIM_MAJOR_VERSION < 2
-    if(gaim_conversation_get_type(conv) != GAIM_CONV_IM)
+#if PURPLE_MAJOR_VERSION < 2
+    if(purple_conversation_get_type(conv) != PURPLE_CONV_IM)
         return;
 #else
-    if(gaim_conversation_get_type(conv) != GAIM_CONV_TYPE_IM)
+    if(purple_conversation_get_type(conv) != PURPLE_CONV_TYPE_IM)
         return;
 #endif
 
-    name = gaim_conversation_get_name(conv);
-    buddy = gaim_find_buddy(gaim_conversation_get_account(conv), name);
+    name = purple_conversation_get_name(conv);
+    buddy = purple_find_buddy(purple_conversation_get_account(conv), name);
     if(!buddy)
         return;
 
-    notes = buddy_get_notes((GaimBlistNode *) buddy);
+    notes = buddy_get_notes((PurpleBlistNode *) buddy);
 
     if(!notes)
         return;
 
     str = g_strdup_printf("Notes: %s", notes);
 
-    gaim_conversation_write(conv, PLUGIN, str, GAIM_MESSAGE_SYSTEM, time(NULL));
+    purple_conversation_write(conv, PLUGIN, str, PURPLE_MESSAGE_SYSTEM, time(NULL));
 
     g_free(str);
 }
 
 static void
-buddy_tooltip_cb(GaimBlistNode * node, char **text, void *data)
+buddy_tooltip_cb(PurpleBlistNode * node, char **text, void *data)
 {
     char *newtext;
     const char *notes;
 
-    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "type %d\n", node->type);
+    purple_debug(PURPLE_DEBUG_INFO, PLUGIN, "type %d\n", node->type);
     notes = buddy_get_notes(node);
     if(!notes)
         return;
@@ -116,91 +114,91 @@ buddy_tooltip_cb(GaimBlistNode * node, char **text, void *data)
 }
 
 static void
-buddynotes_submitfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
+buddynotes_submitfields_cb(PurpleRequestFields * fields, PurpleBlistNode * data)
 {
-    GaimContact *contact;
+    PurpleContact *contact;
     const char *notes;
 
     /* buddynotes stuff */
-    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddynotes_submitfields_cb(%p,%p)\n", fields, data);
+    purple_debug(PURPLE_DEBUG_INFO, PLUGIN, "buddynotes_submitfields_cb(%p,%p)\n", fields, data);
     switch (data->type)
     {
-        case GAIM_BLIST_BUDDY_NODE:
-            contact = gaim_buddy_get_contact((GaimBuddy *) data);
+        case PURPLE_BLIST_BUDDY_NODE:
+            contact = purple_buddy_get_contact((PurpleBuddy *) data);
             break;
-        case GAIM_BLIST_CONTACT_NODE:
-            contact = (GaimContact *) data;
+        case PURPLE_BLIST_CONTACT_NODE:
+            contact = (PurpleContact *) data;
             break;
         default:
             /* Not applicable */
             return;
     }
 
-    notes = gaim_request_fields_get_string(fields, CONTROL_NAME);
+    notes = purple_request_fields_get_string(fields, CONTROL_NAME);
 
     /* Otherwise, it's fixed value and this means deletion */
     if(notes && notes[0])
-        gaim_blist_node_set_string((GaimBlistNode *) contact, SETTING_NAME, notes);
+        purple_blist_node_set_string((PurpleBlistNode *) contact, SETTING_NAME, notes);
     else
-        gaim_blist_node_remove_setting((GaimBlistNode *) contact, SETTING_NAME);
+        purple_blist_node_remove_setting((PurpleBlistNode *) contact, SETTING_NAME);
 }
 
 /* Node is either a contact or a buddy */
 static void
-buddynotes_createfields_cb(GaimRequestFields * fields, GaimBlistNode * data)
+buddynotes_createfields_cb(PurpleRequestFields * fields, PurpleBlistNode * data)
 {
-    gaim_debug(GAIM_DEBUG_INFO, PLUGIN, "buddynotes_createfields_cb(%p,%p)\n", fields, data);
-    GaimRequestField *field;
-    GaimRequestFieldGroup *group;
+    purple_debug(PURPLE_DEBUG_INFO, PLUGIN, "buddynotes_createfields_cb(%p,%p)\n", fields, data);
+    PurpleRequestField *field;
+    PurpleRequestFieldGroup *group;
     const char *notes;
 
     switch (data->type)
     {
-        case GAIM_BLIST_BUDDY_NODE:
-        case GAIM_BLIST_CONTACT_NODE:
+        case PURPLE_BLIST_BUDDY_NODE:
+        case PURPLE_BLIST_CONTACT_NODE:
             /* Continue, code works for either */
             break;
         default:
             /* Not applicable */
             return;
     }
-    group = gaim_request_field_group_new(NULL);
-    gaim_request_fields_add_group(fields, group);
+    group = purple_request_field_group_new(NULL);
+    purple_request_fields_add_group(fields, group);
 
     notes = buddy_get_notes(data);
 
-    field = gaim_request_field_string_new(CONTROL_NAME, "Notes", notes, FALSE);
+    field = purple_request_field_string_new(CONTROL_NAME, "Notes", notes, FALSE);
 
-    gaim_request_field_group_add_field(group, field);
+    purple_request_field_group_add_field(group, field);
 }
 
 static gboolean
-plugin_load(GaimPlugin * plugin)
+plugin_load(PurplePlugin * plugin)
 {
 
     plugin_self = plugin;
 
-    gaim_signal_connect(gaim_blist_get_handle(), "core-kleptog-buddyedit-create-fields", plugin,
-                        GAIM_CALLBACK(buddynotes_createfields_cb), NULL);
-    gaim_signal_connect(gaim_blist_get_handle(), "core-kleptog-buddyedit-submit-fields", plugin,
-                        GAIM_CALLBACK(buddynotes_submitfields_cb), NULL);
-    gaim_signal_connect(gaim_gtk_blist_get_handle(), "drawing-tooltip", plugin,
-                        GAIM_CALLBACK(buddy_tooltip_cb), NULL);
-    gaim_signal_connect(gaim_conversations_get_handle(), "conversation-created", plugin,
-                        GAIM_CALLBACK(buddynotes_createconv_cb), NULL);
+    purple_signal_connect(purple_blist_get_handle(), "core-kleptog-buddyedit-create-fields", plugin,
+                          PURPLE_CALLBACK(buddynotes_createfields_cb), NULL);
+    purple_signal_connect(purple_blist_get_handle(), "core-kleptog-buddyedit-submit-fields", plugin,
+                          PURPLE_CALLBACK(buddynotes_submitfields_cb), NULL);
+    purple_signal_connect(pidgin_blist_get_handle(), "drawing-tooltip", plugin,
+                          PURPLE_CALLBACK(buddy_tooltip_cb), NULL);
+    purple_signal_connect(purple_conversations_get_handle(), "conversation-created", plugin,
+                          PURPLE_CALLBACK(buddynotes_createconv_cb), NULL);
 
     return TRUE;
 }
 
-static GaimPluginInfo info = {
-    GAIM_PLUGIN_MAGIC,
-    GAIM_MAJOR_VERSION,
-    GAIM_MINOR_VERSION,
-    GAIM_PLUGIN_STANDARD,
+static PurplePluginInfo info = {
+    PURPLE_PLUGIN_MAGIC,
+    PURPLE_MAJOR_VERSION,
+    PURPLE_MINOR_VERSION,
+    PURPLE_PLUGIN_STANDARD,
     NULL,
     0,
     NULL,
-    GAIM_PRIORITY_DEFAULT,
+    PURPLE_PRIORITY_DEFAULT,
 
     PLUGIN,
     "Buddy Notes Module",
@@ -209,7 +207,7 @@ static GaimPluginInfo info = {
     "Store notes about your buddy",
     "This plugin allows you to set a notes field for each buddy and will display it at various points",
     "Martijn van Oosterhout <kleptog@svana.org>",
-    "http://svana.org/kleptog/gaim/",
+    "http://svana.org/kleptog/purple/",
 
     plugin_load,
     NULL,
@@ -222,9 +220,9 @@ static GaimPluginInfo info = {
 };
 
 static void
-init_plugin(GaimPlugin * plugin)
+init_plugin(PurplePlugin * plugin)
 {
     info.dependencies = g_list_append(info.dependencies, "core-kleptog-buddyedit");
 }
 
-GAIM_INIT_PLUGIN(buddynotes, init_plugin, info);
+PURPLE_INIT_PLUGIN(buddynotes, init_plugin, info);
