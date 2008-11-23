@@ -212,7 +212,7 @@ im_feeling_lucky_cb(gpointer data, gint source, const gchar *e) {
 		"\r\n",
 		gfud->path,
 		gfud->host,
-		purple_major_version, purple_minor_version, purple_micro_version,
+		PURPLE_MAJOR_VERSION, PURPLE_MINOR_VERSION, PURPLE_MICRO_VERSION,
 		gfud->host);
 
 	gfud->inpa = purple_input_add(gfud->fd, PURPLE_INPUT_WRITE,

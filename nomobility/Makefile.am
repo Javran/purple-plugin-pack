@@ -2,18 +2,18 @@ EXTRA_DIST = \
 	Makefile.mingw \
 	plugins.cfg
 
-groupmsgdir = $(PURPLE_LIBDIR)
+nomobilitydir = $(PURPLE_LIBDIR)
 
-groupmsg_la_LDFLAGS = -module -avoid-version
+nomobility_la_LDFLAGS = -module -avoid-version
 
 if HAVE_PURPLE
 
-groupmsg_LTLIBRARIES = groupmsg.la
+nomobility_LTLIBRARIES = nomobility.la
 
-groupmsg_la_SOURCES = \
-	groupmsg.c
+nomobility_la_SOURCES = \
+	nomobility.c
 
-groupmsg_la_LIBADD = \
+nomobility_la_LIBADD = \
 	$(GLIB_LIBS) \
 	$(PURPLE_LIBS)
 

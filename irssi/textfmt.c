@@ -54,6 +54,10 @@ enum {
 #ifdef HAVE_REGEX_H
 
 #define FORMAT(account, message) { \
+	if(!(message)) \
+		return FALSE; \
+	if(!(*(message))) \
+		return FALSE; \
 	if(!(account)) \
 		return FALSE; \
 	\

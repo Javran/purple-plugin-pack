@@ -384,4 +384,4 @@ init_plugin(PurplePlugin *plugin)
 
 }
 
-PURPLE_INIT_PLUGIN(flip, init_plugin, info)
+PURPLE_INIT_PLUGIN(dice, init_plugin, info)

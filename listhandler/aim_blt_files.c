@@ -48,38 +48,30 @@ lh_aim_filter(PurpleAccount *account)
 static gchar * /* remove '{' and leading and trailing spaces from string */
 lh_aim_str_normalize(gchar *s)
 {
-	/* replace all instances of the { character with a space */
-	gchar *ret = g_strdelimit(s, "{", ' ');
-
-	/* strip leading and trailing whitespace */
-	g_strstrip(ret);
-	
-	return ret;
-}
-
-static void
-lh_aim_sn_normalize(gchar *s)
-{
-	gchar *ret = g_strdelimit(s, "\"", ' ');
-
-	ret = lh_aim_str_normalize(ret);
-
-	return;
+	/* replace all instances of the { and " characters with spaces, then
+	 * strip whitespace */
+	return g_strstrip(g_strdelimit(g_strdelimit(s, "\"", ' '), "{", ' '));
 }
 
 static gchar * /* extract alias from string by stripping AliasString and "s */
-lh_aim_get_alias(gchar * s)
+lh_aim_get_alias(gchar * s, gboolean v2)
 {
-	gint i;
+	gint i, limit;
 
-	/* go through and kill off the word AliasString.  use a hard coded 17
-	 * because we know the first 17 chars are not part of the alias */
-	for(i = 0; i < 17; i++)
+	/* Magic numbers: 18 = length of the string up to = for v2 files,
+	 * 17 = length of the string up to "AliasString" for v1 files */
+	if(v2) /* if a v2 file, we need to convert FriendlyName= to spaces */
+		limit = 18;
+	else /* else, v1 file, we need to convert AliasString to spaces */
+		limit = 17;
+
+	/* go through and kill off the chars that aren't part of the alias */
+	for(i = 0; i < limit; i++)
 		if(s[i] != ' ' && s[i] != '\0')
 			s[i] = ' ';
 	
 	/* now strip the stupid, useless whitespace from the string */
-	return lh_aim_str_normalize(g_strdelimit(s, "\"", ' '));
+	return g_strstrip(s);
 }
 
 static gchar ** /* read and split the file into manageable strings */
@@ -167,7 +159,7 @@ lh_aim_list_parse_and_add(gchar **strings, guint length, guint begin, guint end)
 		purple_debug_info("listhandler: import", "Current group begins %d, ends %d\n",
 				current_group_begin, current_group_end);
 
-		/* now strip { and whitespace from the group and keep an extra
+		/* now strip {, ", and whitespace from the group and keep an extra
 		 * pointer to it around for easy access */
 		current_group = lh_aim_str_normalize(strings[current_group_begin]);
 
@@ -186,7 +178,7 @@ lh_aim_list_parse_and_add(gchar **strings, guint length, guint begin, guint end)
 				/* since the geniuses that designed the blt format decided
 				 * that "M y S cr ee nn a m e" is acceptable in their blt files,
 				 * I have to work around their incompetence */
-				lh_aim_sn_normalize(current_buddy);
+				lh_aim_str_normalize(current_buddy);
 
 				purple_debug_info("listhandler: import", "current buddy is %s\n",
 						current_buddy);
@@ -196,10 +188,14 @@ lh_aim_list_parse_and_add(gchar **strings, guint length, guint begin, guint end)
 					!strncmp(strings[i + 2], "     AliasString ", 17))
 				{
 					/* grab the alias */
-					current_alias = lh_aim_get_alias(strings[i + 2]);
+					current_alias = lh_aim_get_alias(strings[i + 2], FALSE);
 					i += 2; /* advance counter to prevent reparsing the alias */
-				}
-				else /* no alias is set */
+				} else if(!strncmp(strings[i + 1], "    FriendlyName=", 17)) {
+					/* Version 2 .blt format uses FriendlyName= to denote an alias */
+					/* grab the alias */
+					current_alias = lh_aim_get_alias(strings[i + 1], TRUE);
+					i++; /* advance the counter to prevent reparsing the alias */
+				} else /* no alias is set */
 					current_alias = NULL;
 
 				tmpbuddy = purple_buddy_new(target_account, current_buddy,
