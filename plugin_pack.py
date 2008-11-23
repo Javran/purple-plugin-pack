@@ -360,7 +360,10 @@ class PluginPack:
 		# add our --with-plugins option
 		print 'AC_ARG_WITH(plugins,'
 		print '            AC_HELP_STRING([--with-plugins], [what plugins to build]),'
-		print '            ,WITH_PLUGINS=all)'
+		print '            ,with_plugins=all)'
+		print 'if test -z $with_plugins ; then'
+		print '\twith_plugins=all'
+		print 'fi'
 
 		# determine and add our output files
 		print 'PP_DIST_DIRS="%s"' % (string.join(uniqdirs, ' '))
@@ -373,7 +376,7 @@ class PluginPack:
 		print
 
 		# setup a second call to determine the plugins to be built
-		print 'PP_BUILD=`$PYTHON $srcdir/plugin_pack.py build_dirs $DEPENDENCIES $WITH_PLUGINS`'
+		print 'PP_BUILD=`$PYTHON $srcdir/plugin_pack.py build_dirs $DEPENDENCIES $with_plugins`'
 		print
 		print 'PP_BUILD_DIRS=`echo $PP_BUILD | sed \'s/,/\ /g\'`'
 		print 'AC_SUBST(PP_BUILD_DIRS)'
