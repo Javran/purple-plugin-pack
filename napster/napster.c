@@ -698,7 +698,7 @@ static PurplePluginProtocolInfo prpl_info = {
 	NULL,					/* unregister_user */
 	NULL,					/* send_attention */
 	NULL,					/* get_attention_types */
-	NULL					/* reserved 4 */
+	sizeof(PurplePluginProtocolInfo),	/* struct_size */
 };
 
 static PurplePluginInfo info = {
