@@ -4,6 +4,7 @@
 .+\.spec
 .*\.dll
 aclocal.m4
+autogen.args
 buddytime/gtktimezonetest
 buddytime/recursetest
 ^compile$
@@ -16,7 +17,7 @@ libtool
 local.mak
 ltmain.sh
 missing
-^plugin_pack\.(list|stats)$
+^plugin_pack\.(list|m4|stats)$
 po/Makefile.in.in
 po/missing
 po/notexist
