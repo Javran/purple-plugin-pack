@@ -199,7 +199,7 @@ static void auto_debug_helper (
 
   s = g_string_new ("");
   g_string_printf (s, "%s: %s\n", category, message); 
-  purple_debug (level, "autoprofile", s->str);
+  purple_debug (level, "autoprofile", "%s", s->str);
   g_string_free (s, TRUE);
 }
 
