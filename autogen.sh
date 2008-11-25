@@ -93,7 +93,7 @@ run_or_die () { # beotch
 	else
 		echo "done."
 		cat ${OUTPUT}
-		
+
 		rm -f ${OUTPUT}
 	fi
 }
