@@ -48,13 +48,21 @@
 PACKAGE="Purple Plugin Pack"
 ARGS_FILE="autogen.args"
 
+libtoolize="libtoolize"
+case $(uname -s) in
+	Darwin*)
+		libtoolize="glibtoolize"
+		;;
+	*)
+esac
+
 ###############################################################################
 # Some helper functions
 ###############################################################################
 check () {
 	CMD=$1
 
-	echo -n "checking for ${CMD}... "
+	printf "%s" "checking for ${CMD}... "
 	BIN=`which ${CMD} 2>/dev/null`
 
 	if [ x"${BIN}" = x"" ] ; then
@@ -72,7 +80,7 @@ run_or_die () { # beotch
 
 	OUTPUT=`mktemp autogen-XXXXXX`
 
-	echo -n "running ${CMD} ${@}... "
+	printf "%s" "running ${CMD} ${@}... "
 	${CMD} ${@} >${OUTPUT} 2>&1
 
 	if [ $? != 0 ] ; then
@@ -104,10 +112,10 @@ fi
 ###############################################################################
 # Look for our args file
 ###############################################################################
-echo -n "checking for ${ARGS_FILE}: "
+printf "%s" "checking for ${ARGS_FILE}: "
 if [ -f ${ARGS_FILE} ] ; then
 	echo "found."
-	echo -n "sourcing ${ARGS_FILE}: "
+	printf "%s" "sourcing ${ARGS_FILE}: "
 	. ${ARGS_FILE}
 	echo "done."
 else
@@ -117,7 +125,7 @@ fi
 ###############################################################################
 # Check for our required helpers
 ###############################################################################
-check "libtoolize";		LIBTOOLIZE=${BIN};
+check "$libtoolize";		LIBTOOLIZE=${BIN};
 check "intltoolize";	INTLTOOLIZE=${BIN};
 check "aclocal";		ACLOCAL=${BIN};
 check "autoheader";		AUTOHEADER=${BIN};
@@ -130,7 +138,7 @@ check "python";			PYTHON=${BIN};
 ###############################################################################
 CONFIG_FILE="plugin_pack.m4"
 
-echo -n "creating ${CONFIG_FILE} ..."
+printf "%s" "creating ${CONFIG_FILE} ..."
 ${PYTHON} plugin_pack.py config_file > ${CONFIG_FILE}
 echo " done."
 
