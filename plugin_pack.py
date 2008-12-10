@@ -274,8 +274,17 @@ class PluginPack:
 
 			# now check the dependencies
 			for dep in dep_list:
-				if not has_deps(dep):
-					return False
+				if '|' in dep:
+					count = 0
+					for d in dep.split('|'):
+						if has_deps(d):
+							count += 1
+
+					if count == 0:
+						return False
+				else:
+					if not has_deps(dep):
+						return False
 
 			# make sure the provides isn't an external
 			if not provides in externals:
