@@ -425,9 +425,6 @@ echo;
 echo $PACKAGE $VERSION Configuration complete
 echo;
 echo Debugging enabled................: $enable_debug
-if test x"$BUILD_SWITCH_SPELL" = x"yes" ; then
-	echo Use enchant for switchspell......: $enable_enchant
-fi
 echo;
 
 echo Build purple plugins.............: $HAVE_PURPLE
