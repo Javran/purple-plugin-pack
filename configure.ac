@@ -277,48 +277,63 @@ PKG_CHECK_MODULES(GTKSPELL, gtkspell-2.0 >= 2.0.2, [], [gtkspell=no])
 AC_SUBST(GTKSPELL_CFLAGS)
 AC_SUBST(GTKSPELL_LIBS)
 
+DEPENDENCIES="$DEPENDENCIES,gtkspell"
+
 BUILD_SWITCH_SPELL=no
+
+ASPELL_CFLAGS=""
+APSELL_LIBS=""
+
+ENCHANT_CFLAGS=""
+ENCHANT_LIBS=""
+
 if test x"$gtkspell" = x"yes" ; then
-	AC_CHECK_HEADER([aspell.h], HAVE_ASPELL_H=yes, HAVE_ASPELL_H=no)
-	if test x"$HAVE_ASPELL_H" = x"yes" ; then
-		AC_CHECK_LIB([aspell], [new_aspell_config],BUILD_SWITCH_SPELL=yes,BUILD_SWITCH_SPELL=no)
+	AC_MSG_CHECKING([which backend gtkspell is compiled with])
+
+	$PKG_CONFIG --static --libs gtkspell-2.0 | grep -q enchant
+	if test $? -eq 0 ; then
+		AC_MSG_RESULT([enchant])
+
+		PKG_CHECK_MODULES(ENCHANT, [enchant],,[gtkspell=no])
+		ENCHANT_CFLAGS="-DUSE_ENCHANT $ENCHANT_CFLAGS"
+
+		AC_DEFINE(HAVE_ENCHANT, 1, [define if we've found enchant])
+
+		DEPENDENCIES="$DEPENDENCIES,enchant"
 	else
-		BUILD_SWITCH_SPELL=no
+		AC_MSG_RESULT([aspell])
+
+		AC_CHECK_HEADER([aspell.h], HAVE_ASPELL_H=yes, HAVE_ASPELL_H=no)
+		if test x"$HAVE_ASPELL_H" = x"yes" ; then
+			AC_CHECK_LIB([aspell], [new_aspell_config],
+						 [ASPELL_LIBS="-laspell"
+						  BUILD_SWITCH_SPELL=yes],
+						 [BUILD_SWITCH_SPELL=no])
+
+			DEPENDENCIES="$DEPENDENCIES,aspell"
+		else
+			BUILD_SWITCH_SPELL=no
+		fi
 	fi
 fi
 
-# check for aspell
-ASPELL_CFLAGS=""
-ASPELL_LIBS=""
-AC_CHECK_HEADER([aspell.h], HAVE_ASPELL_H=yes, AC_MSG_WARN([
-*** libaspell is required to build the switchspell plugin.])
-HAVE_ASPELL_H=no
-)
+if test x"$BUILD_SWITCH_SPELL" = x"no" ; then
+	ASPELL_CFLAGS=""
+	ASPELL_LIBS=""
 
-if test x"$HAVE_ASPELL_H" = x"yes" ; then
-	AC_CHECK_LIB([aspell], [new_aspell_config], ASPELL_LIBS="-laspell", BUILD_SWITCH_SPELL=no)
-fi
+	ENCHANT_CFLAGS=""
+	ENCHANT_LIBS=""
 
-AC_ARG_ENABLE(enchant, [AC_HELP_STRING([--disable-enchant], [compile with gtkspell using aspell])],
-    enable_enchant="$enableval", enable_enchant="yes")
-if test "x$enable_enchant" = "xyes"; then
-	PKG_CHECK_MODULES(ENCHANT, enchant, [
-		BUILD_SWITCH_SPELL=yes
-		ASPELL_CFLAGS=""
-		ASPELL_LIBS=""], [gtkspell=no])
-	ENCHANT_CFLAGS="-DUSE_ENCHANT $ENCHANT_CFLAGS"
-	AC_SUBST(ENCHANT_CFLAGS)
-	AC_SUBST(ENCHANT_LIBS)
+	AM_CONDITIONAL(BUILD_SWITCH_SPELL, true)
+else
+	AM_CONDITIONAL(BUILD_SWITCH_SPELL, false)
 fi
 
 AC_SUBST(ASPELL_CFLAGS)
 AC_SUBST(ASPELL_LIBS)
 
-AM_CONDITIONAL(BUILD_SWITCH_SPELL, test x"$BUILD_SWITCH_SPELL" = x"yes")
-
-if test x"$BUILD_SWITCH_SPELL" = x"yes" ; then
-	DEPENDENCIES="$DEPENDENCIES,gtkspell,aspell"
-fi
+AC_SUBST(ENCHANT_CFLAGS)
+AC_SUBST(ENCHANT_LIBS)
 
 dnl #######################################################################
 dnl # Check for xmms
