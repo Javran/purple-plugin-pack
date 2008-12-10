@@ -7,6 +7,8 @@ Version 2.5.0: ??/??/??
 	* findip and groupmsg are now default plugins.
 	* Added nomobility plugin
 	* Fixed --with-plugins (yet again...)
+	* Added support for 'or' dependencies to clean up the switchspell fiasco.
+	  Please let us know if you continue to fail to build switchspell.
 
 Version 2.4.0: 08/03/08
 	* Rewrote the build system to make our lifes easier, as well as support
