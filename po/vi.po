@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugin_pack 1.0beta3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-22 00:43-0400\n"
+"POT-Creation-Date: 2008-12-21 00:21-0500\n"
 "PO-Revision-Date: 2008-08-06 13:55+0700\n"
 "Last-Translator: \n"
 "Language-Team: es_ES <antiswen@yahoo.es>\n"
@@ -15,19 +15,21 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../album/album.c:268
+#: ../album/album.c:269
 msgid "Album"
 msgstr "Tập ảnh"
 
-#: ../album/album.c:269
+#: ../album/album.c:270
 msgid "Archives buddy icons."
 msgstr "Lưu giữ các biểu tượng bạn chat"
 
-#: ../album/album.c:270
+#: ../album/album.c:271
 msgid "Enable this plugin to automatically archive all buddy icons."
-msgstr "Cho phép chức năng bổ sung này tự động lưu giữ lại tất cả các biểu tượng bạn chat"
+msgstr ""
+"Cho phép chức năng bổ sung này tự động lưu giữ lại tất cả các biểu tượng bạn "
+"chat"
 
-#: ../album/album-ui.c:293
+#: ../album/album-ui.c:300
 msgid ""
 "<span size='larger' weight='bold'>Unrecognized file type</span>\n"
 "\n"
@@ -37,7 +39,7 @@ msgstr ""
 "\n"
 "Mặc định là PNG."
 
-#: ../album/album-ui.c:309
+#: ../album/album-ui.c:316
 #, c-format
 msgid ""
 "<span size='larger' weight='bold'>Error saving image</span>\n"
@@ -48,12 +50,12 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../album/album-ui.c:345
+#: ../album/album-ui.c:352
 msgid "Save Image"
 msgstr "Lưu hình"
 
 #. Label
-#: ../album/album-ui.c:605
+#: ../album/album-ui.c:612
 #, c-format
 msgid ""
 "%x\n"
@@ -63,124 +65,1182 @@ msgstr ""
 "%X"
 
 #. Label
-#: ../album/album-ui.c:714
+#: ../album/album-ui.c:721
 msgid "No icons were found."
 msgstr "Không tìm thấy biểu tượng nào."
 
-#: ../album/album-ui.c:955
+#: ../album/album-ui.c:964
 #, c-format
 msgid "Buddy Icons used by %s"
 msgstr "Các biểu tượng chat được %s sử dụng"
 
-#: ../album/album-ui.c:1012
+#: ../album/album-ui.c:1021
 #, c-format
 msgid "Small (%1$ux%1$u)"
 msgstr "Nhỏ (%1$ux%1$u)"
 
-#: ../album/album-ui.c:1016
+#: ../album/album-ui.c:1025
 #, c-format
 msgid "Medium (%1$ux%1$u)"
 msgstr "Vừa (%1$ux%1$u)"
 
-#: ../album/album-ui.c:1020
+#: ../album/album-ui.c:1029
 #, c-format
 msgid "Large (%1$ux%1$u)"
 msgstr "Lớn (%1$ux%1$u)"
 
-#: ../album/album-ui.c:1124
+#: ../album/album-ui.c:1133
 msgid "_Name"
 msgstr "_Tên"
 
-#: ../album/album-ui.c:1129
+#: ../album/album-ui.c:1138
 msgid "_Account"
 msgstr "Tài _khoản"
 
-#: ../album/album-ui.c:1137
-#: ../album/album-ui.c:1151
-msgid "View Buddy Icons"
+#: ../album/album-ui.c:1146
+#, fuzzy
+msgid "View Buddy Icons..."
 msgstr "Xem biểu tượng bạn chat"
 
-#: ../album/album-ui.c:1139
-msgid "Please enter the screen name or alias of the person whose icon album you want to view."
+#: ../album/album-ui.c:1148
+msgid ""
+"Please enter the screen name or alias of the person whose icon album you "
+"want to view."
 msgstr "Vui lòng nhập vào tên của người mà bạn muốn xem tập biểu tượng "
 
-#: ../album/album-ui.c:1141
-#: ../buddytime/buddytime.c:162
+#: ../album/album-ui.c:1150 ../autoprofile/comp_logstats_gtk.c:133
 msgid "OK"
 msgstr "Đồng ý"
 
-#: ../album/album-ui.c:1142
-#: ../broadcast/broadcast.c:117
-#: ../buddytime/buddytime.c:163
-#: ../groupmsg/groupmsg.c:111
-#: ../timelog/timelog.c:130
+#: ../album/album-ui.c:1151 ../autoprofile/comp_logstats_gtk.c:134
+#: ../autoprofile/comp_quotation.c:217 ../autoprofile/gtk_widget.c:322
+#: ../groupmsg/groupmsg.c:112 ../timelog/timelog.c:130
 msgid "Cancel"
 msgstr "Huỷ bỏ"
 
-#: ../album/album-ui.c:1208
+#: ../album/album-ui.c:1160
+msgid "View Buddy Icons"
+msgstr "Xem biểu tượng bạn chat"
+
+#: ../album/album-ui.c:1217
 msgid "_View Buddy Icons"
 msgstr "_Xem biểu tượng chat"
 
+#: ../autoprofile/autoaway.c:104 ../autoprofile/autoreply.c:281
+msgid "This preference is disabled"
+msgstr ""
+
+#: ../autoprofile/autoaway.c:105 ../autoprofile/autoreply.c:282
+msgid ""
+"This preference currently has no effect because AutoProfile is in use.  To "
+"modify this behavior, use the AutoProfile configuration menu."
+msgstr ""
+
+#. type
+#. ui_requirement
+#. flags
+#. dependencies
+#. priority
+#: ../autoprofile/autoprofile.c:142
+msgid "gtk-kluge-autoprofile"
+msgstr ""
+
+#. id
+#: ../autoprofile/autoprofile.c:143
+#, fuzzy
+msgid "AutoProfile"
+msgstr "Tự động trả lời"
+
+#. name
+#. version
+#: ../autoprofile/autoprofile.c:145
+msgid "User profile and status message content generator"
+msgstr ""
+
+#. summary
+#. description
+#: ../autoprofile/autoprofile.c:147
+msgid ""
+"Allows user to place dynamic text into profiles\n"
+"and status messages, with the text automatically\n"
+"updated whenever content changes"
+msgstr ""
+
+#. author
+#: ../autoprofile/autoprofile.c:151
+msgid ""
+"Casey Ho <casey at hkn-berkeley-edu>\n"
+"\t\t\taim:caseyho"
+msgstr ""
+
+#: ../autoprofile/autoprofile.c:153
+msgid "http://autoprofile.sourceforge.net/"
+msgstr ""
+
+#: ../autoprofile/autoprofile.c:834
+msgid "Say the magic word if you want me to talk more!"
+msgstr ""
+
+#: ../autoprofile/autoprofile.c:836
+msgid "please"
+msgstr ""
+
+#: ../autoprofile/autoprofile.c:844
+msgid ""
+"Get AutoProfile for Purple at <a href=\"http://autoprofile.sourceforge.net/"
+"\">autoprofile.sourceforge.net</a><br><br>[Timestamp]"
+msgstr ""
+
+#: ../autoprofile/comp_countdownup.c:278
+#, fuzzy
+msgid "Start/end time"
+msgstr "Thời điểm bắt đầu"
+
+#: ../autoprofile/comp_countdownup.c:284
+#, fuzzy
+msgid "Year: "
+msgstr "Năm"
+
+#: ../autoprofile/comp_countdownup.c:297
+#, fuzzy
+msgid "Month: "
+msgstr "Tháng"
+
+#: ../autoprofile/comp_countdownup.c:310
+#, fuzzy
+msgid "Day: "
+msgstr "Ngày"
+
+#: ../autoprofile/comp_countdownup.c:323
+msgid "Hour: "
+msgstr ""
+
+#: ../autoprofile/comp_countdownup.c:336
+msgid "Minutes: "
+msgstr ""
+
+#: ../autoprofile/comp_countdownup.c:349
+#, fuzzy
+msgid "Seconds: "
+msgstr "Gửi"
+
+#: ../autoprofile/comp_countdownup.c:368
+msgid "Which way"
+msgstr ""
+
+#: ../autoprofile/comp_countdownup.c:372
+msgid "Count down to stop date"
+msgstr ""
+
+#: ../autoprofile/comp_countdownup.c:375
+msgid "Count time since start date"
+msgstr ""
+
+#: ../autoprofile/comp_countdownup.c:382
+#, fuzzy
+msgid "Days"
+msgstr "Ngày"
+
+#: ../autoprofile/comp_countdownup.c:384
+msgid "Hours"
+msgstr ""
+
+#: ../autoprofile/comp_countdownup.c:386
+msgid "Minutes"
+msgstr ""
+
+#: ../autoprofile/comp_countdownup.c:388
+#, fuzzy
+msgid "Seconds"
+msgstr "Gửi"
+
+#: ../autoprofile/comp_countdownup.c:392
+msgid "Largest units displayed"
+msgstr ""
+
+#: ../autoprofile/comp_countdownup.c:394
+msgid "Smallest units displayed"
+msgstr ""
+
+#: ../autoprofile/comp_countdownup.c:428
+msgid "Countdown timer"
+msgstr ""
+
+#: ../autoprofile/comp_countdownup.c:429
+msgid "Given a date, shows amount of time until it (or since it)"
+msgstr ""
+
+#: ../autoprofile/comp_executable.c:50
+msgid "[ERROR: command failed to execute]"
+msgstr ""
+
+#: ../autoprofile/comp_executable.c:125
+msgid "Specify the command line you wish to execute"
+msgstr ""
+
+#: ../autoprofile/comp_executable.c:146
+msgid "Max characters to read from output: "
+msgstr ""
+
+#: ../autoprofile/comp_executable.c:159
+msgid "Command Line"
+msgstr ""
+
+#: ../autoprofile/comp_executable.c:160
+msgid "Reproduces standard output of running a program on the command line"
+msgstr ""
+
+#: ../autoprofile/comp_http.c:39
+msgid "[AutoProfile error: Invalid URL or no internet connection]"
+msgstr ""
+
+#: ../autoprofile/comp_http.c:53
+msgid "[AutoProfile error: No URL specified]"
+msgstr ""
+
+#: ../autoprofile/comp_http.c:151
+msgid "Select URL with source content"
+msgstr ""
+
+#. Update Now!
+#: ../autoprofile/comp_http.c:167
+msgid "Fetch page now!"
+msgstr ""
+
+#: ../autoprofile/comp_http.c:176 ../autoprofile/preferences.c:656
+#, fuzzy
+msgid "Delay"
+msgstr "Ngày"
+
+#: ../autoprofile/comp_http.c:186
+msgid "minutes between page fetches"
+msgstr ""
+
+#: ../autoprofile/comp_http.c:194
+msgid "Webpage"
+msgstr ""
+
+#: ../autoprofile/comp_http.c:195
+msgid "Data fetched from an internet URL using HTTP"
+msgstr ""
+
+#: ../autoprofile/comp_logstats.c:1021
+msgid "logs"
+msgstr ""
+
+#: ../autoprofile/comp_logstats.c:1022
+#, fuzzy
+msgid "log"
+msgstr "Thông tin gần đây trong sổ theo dõi"
+
+#: ../autoprofile/comp_logstats.c:1023
+msgid "stat"
+msgstr ""
+
+#: ../autoprofile/comp_logstats.c:1024
+msgid "stats"
+msgstr ""
+
+#: ../autoprofile/comp_logstats.c:1025
+msgid "logstats"
+msgstr ""
+
+#: ../autoprofile/comp_logstats.c:1026
+msgid "log statistics"
+msgstr ""
+
+#: ../autoprofile/comp_logstats.c:1032
+msgid "Purple log statistics"
+msgstr ""
+
+#: ../autoprofile/comp_logstats.c:1033
+msgid "Display various statistics about your message and system logs"
+msgstr ""
+
+#: ../autoprofile/comp_logstats_gtk.c:123
+#: ../autoprofile/comp_logstats_gtk.c:329
+msgid "Alias"
+msgstr ""
+
+#: ../autoprofile/comp_logstats_gtk.c:129
+msgid "Add Alias"
+msgstr ""
+
+#: ../autoprofile/comp_logstats_gtk.c:131
+msgid "Type in the alias that you use"
+msgstr ""
+
+#: ../autoprofile/comp_logstats_gtk.c:180
+msgid "Aliases"
+msgstr ""
+
+#: ../autoprofile/comp_logstats_gtk.c:180
+msgid "What this list is for"
+msgstr ""
+
+#: ../autoprofile/comp_logstats_gtk.c:181
+msgid ""
+"Logs in Purple are stored verbatim with what you see on the screen.  The "
+"names of the people in the conversation (both yourself and your buddy) are "
+"shown with their given aliases as opposed to actual screen names.  If you "
+"have given yourself an alias in a conversation, list it using this dialog.  "
+"If you do not, messages written by you will be incorrectly identified as "
+"received instead of sent.<br><br>Correct capitalization and whitespace are "
+"not required for detection to work.<br><br>You must disable/re-enable log "
+"stats to refresh the database after an alias change."
+msgstr ""
+
+#: ../autoprofile/comp_logstats_gtk.c:233
+msgid ""
+"%R\tTotal messages received\n"
+"%r\tTotal words received\n"
+"%S\tTotal messages sent\n"
+"%s\tTotal words sent\n"
+"%T\tTotal messages sent/received\n"
+"%t\tTotal words sent/received\n"
+"%D\tNumber of days since first logged conversation\n"
+"%d\tNumber of days with logged conversations\n"
+"%N\tNumber of logged conversations\n"
+"%n\tAverage number of conversations per day with logs\n"
+"%i\tMost conversations in a single day\n"
+"%I\tDate with most conversations\n"
+"%j\tMost messages sent in a single day\n"
+"%J\tDate with most messages sent\n"
+"%k\tMost messages received in a single day\n"
+"%K\tDate with most messages received\n"
+"%l\tMost total messages sent/received in a single day\n"
+"%L\tDate with most total messages sent/received\n"
+"%f\tDate of first logged conversation\n"
+"%u\tAverage words per message received\n"
+"%v\tAverage words per message sent\n"
+"%w\tAverage words per message sent/received\n"
+"%U\tAverage messages received per conversation\n"
+"%V\tAverage messages sent per conversation\n"
+"%W\tAverage messages sent/received per conversation\n"
+"%x\tAverage words received per day with logs\n"
+"%y\tAverage words sent per day with logs\n"
+"%z\tAverage words sent/received per day with logs\n"
+"%X\tAverage messages received per day with logs\n"
+"%Y\tAverage messages sent per day with logs\n"
+"%Z\tAverage messages sent/received per day with logs\n"
+"%p\tPercentage of days with logs\n"
+"%a\tNumber of messages received today\n"
+"%b\tNumber of messages sent today\n"
+"%c\tNumber of conversations started today\n"
+"%e\tNumber of messages sent/received today\n"
+"%A\tNumber of messages received in last week\n"
+"%B\tNumber of messages sent in last week\n"
+"%C\tNumber of conversations started in last week\n"
+"%E\tNumber of messages sent/received in last week\n"
+"%%\t%"
+msgstr ""
+
+#: ../autoprofile/comp_logstats_gtk.c:298
+msgid "Add alias"
+msgstr ""
+
+#: ../autoprofile/comp_logstats_gtk.c:302
+#, fuzzy
+msgid "Delete alias"
+msgstr "_Xoá"
+
+#: ../autoprofile/comp_logstats_gtk.c:306
+msgid "?"
+msgstr ""
+
+#: ../autoprofile/comp_quotation.c:112
+msgid "Fortune files"
+msgstr ""
+
+#: ../autoprofile/comp_quotation.c:113
+msgid "A quick definition of a fortune file"
+msgstr ""
+
+#: ../autoprofile/comp_quotation.c:114
+msgid ""
+"A fortune file is a simple text file with a number of quotes. The following "
+"is an example:<br><br><b>\"Glory is fleeing, but obscurity is forver.\"<br>- "
+"Napoleon Bonaparte (1769-1821)<br>%<br>Blagggghhhh!<br>%<br>Yet another "
+"quote<br>%<br></b><br>Quotes can have any sort of text within them.  They "
+"end when there is a newline followed by a percent sign \"%\" on the next "
+"line.<br><br>Fortune files with pre-selected quotes can be found on "
+"theinternet."
+msgstr ""
+
+#: ../autoprofile/comp_quotation.c:136
+msgid "Select fortune file to import quotes from"
+msgstr ""
+
+#: ../autoprofile/comp_quotation.c:147
+msgid "Interpret bracketed text (such as \"<br>\") as HTML tags"
+msgstr ""
+
+#: ../autoprofile/comp_quotation.c:204 ../autoprofile/comp_quotation.c:240
+#, fuzzy
+msgid "Unable to edit quote"
+msgstr "Không xác định vị trí được"
+
+#: ../autoprofile/comp_quotation.c:205 ../autoprofile/comp_quotation.c:241
+#: ../autoprofile/comp_quotation.c:304
+msgid "No quote is currently selected"
+msgstr ""
+
+#: ../autoprofile/comp_quotation.c:213
+#, fuzzy
+msgid "Edit quote"
+msgstr "Editar Notas"
+
+#: ../autoprofile/comp_quotation.c:216
+#, fuzzy
+msgid "Save"
+msgstr "_Lưu"
+
+#: ../autoprofile/comp_quotation.c:303
+#, fuzzy
+msgid "Unable to delete quote"
+msgstr "Không xác định vị trí được"
+
+#: ../autoprofile/comp_quotation.c:323
+msgid "Delete all quotes?"
+msgstr ""
+
+#: ../autoprofile/comp_quotation.c:334
+msgid "Delete all quotes"
+msgstr ""
+
+#: ../autoprofile/comp_quotation.c:343
+msgid "Import quotes from from fortune file"
+msgstr ""
+
+#: ../autoprofile/comp_quotation.c:349
+msgid "What is a fortune file?"
+msgstr ""
+
+#: ../autoprofile/comp_quotation.c:430
+msgid "Size"
+msgstr ""
+
+#: ../autoprofile/comp_quotation.c:439 ../autoprofile/comp_quotation.c:592
+#, fuzzy
+msgid "Quotes"
+msgstr "Notas"
+
+#: ../autoprofile/comp_quotation.c:467
+msgid "New quote"
+msgstr ""
+
+#: ../autoprofile/comp_quotation.c:472
+msgid "Edit"
+msgstr ""
+
+#: ../autoprofile/comp_quotation.c:477 ../autoprofile/gtk_widget.c:396
+#, fuzzy
+msgid "Delete"
+msgstr "_Xoá"
+
+#: ../autoprofile/comp_quotation.c:482
+msgid "More..."
+msgstr ""
+
+#: ../autoprofile/comp_quotation.c:494
+msgid "Change quote every "
+msgstr ""
+
+#: ../autoprofile/comp_quotation.c:504
+msgid "hours (0: always show a new quote)"
+msgstr ""
+
+#: ../autoprofile/comp_quotation.c:507
+msgid "Change quote now"
+msgstr ""
+
+#: ../autoprofile/comp_quotation.c:535
+msgid "[ERROR: no quotes available]"
+msgstr ""
+
+#: ../autoprofile/comp_quotation.c:593
+msgid "Displays a quotation from a provided selection"
+msgstr ""
+
+#: ../autoprofile/comp_rss.c:52
+msgid "[ERROR: Invalid entry number]"
+msgstr ""
+
+#: ../autoprofile/comp_rss.c:57
+msgid "[ERROR: No data, invalid URL/account?]"
+msgstr ""
+
+#: ../autoprofile/comp_rss.c:65
+msgid "[ERROR: Insufficient number of entries]"
+msgstr ""
+
+#: ../autoprofile/comp_rss.c:356
+msgid ""
+"The following options can be specified with a numerical modifier\n"
+"(i.e. \"%e\" can also be written \"%1e\" or \"%2e\").  The optional\n"
+"number specifies which entry to get the data for. \"1\" refers to the\n"
+"most recent entry, \"2\" refers to the second-most recent entry, and so\n"
+"forth.  \"1\" is used if no number is specified.\n"
+"\n"
+"%e\tStarting text of the entry.\n"
+"%l\tLink to the specific entry.\n"
+"%t\tTitle of entry (Xanga incompatible)\n"
+"\n"
+"Time of entry:\n"
+"%H\thour of entry(24-hour clock)\n"
+"%I\thour (12-hour clock)\n"
+"%p\tAM or PM\n"
+"%M\tminute\n"
+"%S\tsecond\n"
+"%a\tabbreviated weekday name\n"
+"%A\tfull weekday name\n"
+"%b\tabbreviated month name\n"
+"%B\tfull month name\n"
+"%m\tmonth (numerical)\n"
+"%d\tday of the month\n"
+"%j\tday of the year\n"
+"%W\tweek number of the year\n"
+"%w\tweekday (numerical)\n"
+"%y\tyear without century\n"
+"%Y\tyear with century\n"
+"%z\ttime zone name, if any\n"
+"%%\t%"
+msgstr ""
+
+#. Dropdown
+#: ../autoprofile/comp_rss.c:402
+msgid "Xanga"
+msgstr ""
+
+#: ../autoprofile/comp_rss.c:404
+msgid "LiveJournal"
+msgstr ""
+
+#: ../autoprofile/comp_rss.c:406
+msgid "RSS 2.0"
+msgstr ""
+
+#. Username/URL fields
+#: ../autoprofile/comp_rss.c:417
+#, fuzzy
+msgid "Username:"
+msgstr "Tên người dùng"
+
+#: ../autoprofile/comp_rss.c:419
+msgid "URL of feed:"
+msgstr ""
+
+#: ../autoprofile/comp_rss.c:446
+msgid "Minutes between checks for updates:"
+msgstr ""
+
+#: ../autoprofile/comp_rss.c:467
+msgid "RSS / Blogs"
+msgstr ""
+
+#: ../autoprofile/comp_rss.c:468
+msgid "Information taken from an RSS feed (Xanga and LiveJournal capable)"
+msgstr ""
+
+#: ../autoprofile/comp_textfile.c:45
+msgid "[ERROR: File does not exist]"
+msgstr ""
+
+#: ../autoprofile/comp_textfile.c:49
+msgid "[ERROR: Unable to open file]"
+msgstr ""
+
+#: ../autoprofile/comp_textfile.c:123
+#, fuzzy
+msgid "iTunes"
+msgstr "Thứ Ba"
+
+#: ../autoprofile/comp_textfile.c:123
+msgid "Current song in iTunes"
+msgstr ""
+
+#: ../autoprofile/comp_textfile.c:124
+msgid ""
+"Get TuneCam from <a href=\"http://www.soft-o-mat.com/productions.shtml"
+"\">http://www.soft-o-mat.com/productions.shtml</a> and start it.<br>Create a "
+"html file that contains the following text:<br><br>&lt;tc&gt;artist&lt;/"
+"tc&gt; - &lt;tc&gt;title&lt;/tc&gt;<br><br>and press the \"T\" button.  "
+"Import the html file as a template for the \"File Track\" and whatever else "
+"you see fit.  Then select the \"G\" button and choose the location of the "
+"output file which will be used in this component"
+msgstr ""
+
+#: ../autoprofile/comp_textfile.c:135
+msgid "XMMS"
+msgstr ""
+
+#: ../autoprofile/comp_textfile.c:135
+msgid "Current song in XMMS"
+msgstr ""
+
+#: ../autoprofile/comp_textfile.c:136
+#, c-format
+msgid ""
+"Included in the misc folder of AutoProfile is a script called "
+"\"xmms_currenttrack\".  Install this script in your $PATH and give it "
+"executable permissions, and specify the program using a pipe."
+"<br><br>Alternatively, in XMMS, go to Options->Preferences->Effects/General "
+"Plugins.<br>Configure the \"Song Change\" plugin.  In the song change "
+"command box, put<br><br>echo \"%s\" > /path/to/output/file<br><br>and be "
+"sure to enable the plugin.  Select the file location in AutoProfile and you "
+"should be done"
+msgstr ""
+
+#: ../autoprofile/comp_textfile.c:146
+msgid "Windows Media Player"
+msgstr ""
+
+#: ../autoprofile/comp_textfile.c:147
+msgid "Current song in Windows Media Player"
+msgstr ""
+
+#: ../autoprofile/comp_textfile.c:148
+msgid ""
+"Download NowPlaying, a plugin for WMP from <a href=\"http://www.wmplugins."
+"com/ItemDetail.aspx?ItemID=357\">http://www.wmplugins.com/ItemDetail.aspx?"
+"ItemID=357</a> and follow the included installation instructions.<br>Set the "
+"output filename to the file you choose in this component"
+msgstr ""
+
+#: ../autoprofile/comp_textfile.c:155
+msgid "iTunes/Winamp/Foobar/Apollo/QCD"
+msgstr ""
+
+#: ../autoprofile/comp_textfile.c:156
+msgid "Current song in iTunes/Winamp/Foobar/Apollo/QCD"
+msgstr ""
+
+#: ../autoprofile/comp_textfile.c:157
+msgid ""
+"Get the version of AMIP associated with your player from <a href=\"http://"
+"amip.tools-for.net/\">http://amip.tools-for.net/</a> and install/enable it."
+"<br>Check the box \"Write song info to file\", play with the settings, and "
+"set the file in this component to be the file in the AMIP options."
+msgstr ""
+
+#: ../autoprofile/comp_textfile.c:174
+msgid "Select text file with source content"
+msgstr ""
+
+#: ../autoprofile/comp_textfile.c:195
+msgid "Max characters to read from file:"
+msgstr ""
+
+#. Windows
+#: ../autoprofile/comp_textfile.c:202
+msgid "Windows users: Play the current song in:"
+msgstr ""
+
+#. *nix
+#: ../autoprofile/comp_textfile.c:222
+msgid "*nix users: Play the current song in:"
+msgstr ""
+
+#. OS X
+#: ../autoprofile/comp_textfile.c:235
+msgid "OS X users: Play the current song in:"
+msgstr ""
+
+#: ../autoprofile/comp_textfile.c:257
+msgid "Text File / Songs"
+msgstr ""
+
+#: ../autoprofile/comp_textfile.c:258
+msgid ""
+"Copies text from file that external programs (e.g. XMMS, Winamp, iTunes) can "
+"modify on a regular basis"
+msgstr ""
+
+#: ../autoprofile/comp_timestamp.c:102
+msgid ""
+"Insert the following characters where time is to be displayed:\n"
+"\n"
+"%H\thour (24-hour clock)\n"
+"%I\thour (12-hour clock)\n"
+"%p\tAM or PM\n"
+"%M\tminute\n"
+"%S\tsecond\n"
+"%a\tabbreviated weekday name\n"
+"%A\tfull weekday name\n"
+"%b\tabbreviated month name\n"
+"%B\tfull month name\n"
+"%m\tmonth (numerical)\n"
+"%d\tday of the month\n"
+"%j\tday of the year\n"
+"%W\tweek number of the year\n"
+"%w\tweekday (numerical)\n"
+"%y\tyear without century\n"
+"%Y\tyear with century\n"
+"%z\ttime zone name, if any\n"
+"%%\t%"
+msgstr ""
+
+#: ../autoprofile/comp_timestamp.c:132
+#, fuzzy
+msgid "Timestamp"
+msgstr "Thời gian"
+
+#: ../autoprofile/comp_timestamp.c:133
+msgid "Displays custom text showing when message was created"
+msgstr ""
+
+#: ../autoprofile/comp_uptime.c:38
+#, fuzzy
+msgid "uptime"
+msgstr "Thời gian"
+
+#: ../autoprofile/comp_uptime.c:82
+msgid "[ERROR: failed to execute uptime command]"
+msgstr ""
+
+#: ../autoprofile/comp_uptime.c:89
+#, fuzzy
+msgid "Uptime"
+msgstr "Thời gian"
+
+#: ../autoprofile/comp_uptime.c:90
+msgid "Show how long your computer has been running"
+msgstr ""
+
+#: ../autoprofile/gtk_actions.c:49
+msgid "Edit Profile Accounts"
+msgstr ""
+
+#: ../autoprofile/gtk_actions.c:58
+msgid ""
+"<b>No accounts currently enabled:</b> You have not yet specified\n"
+" what accounts AutoProfile should set the profile for.  Until you\n"
+" check one of the boxes below, AutoProfile will effectively do\n"
+" nothing."
+msgstr ""
+
+#: ../autoprofile/gtk_actions.c:161 ../autoprofile/gtk_widget.c:137
+msgid "<b>Preview</b>"
+msgstr ""
+
+#: ../autoprofile/gtk_actions.c:165 ../autoprofile/gtk_widget.c:140
+msgid "Refresh"
+msgstr ""
+
+#: ../autoprofile/gtk_actions.c:192
+msgid ""
+"<b>Edit</b> (Drag widgets into profile / Use shift+enter to insert a new "
+"line)"
+msgstr ""
+
+#: ../autoprofile/gtk_actions.c:209
+#, fuzzy
+msgid "Revert"
+msgstr "Không dùng chức năng này"
+
+#: ../autoprofile/gtk_actions.c:211
+msgid "Save profile"
+msgstr ""
+
+#: ../autoprofile/gtk_actions.c:269 ../autoprofile/gtk_actions.c:326
+#, fuzzy
+msgid "Edit Content"
+msgstr "Editar Notas"
+
+#: ../autoprofile/gtk_actions.c:284
+msgid "Widgets"
+msgstr ""
+
+#: ../autoprofile/gtk_actions.c:286
+msgid "Info/profile"
+msgstr ""
+
+#: ../autoprofile/gtk_actions.c:328
+msgid "Preferences"
+msgstr ""
+
+#: ../autoprofile/gtk_actions.c:330
+#, fuzzy
+msgid "Show summary"
+msgstr "tóm tắt"
+
+#: ../autoprofile/gtk_away_msgs.c:132
+msgid "no updates made to profile"
+msgstr ""
+
+#: ../autoprofile/gtk_away_msgs.c:135
+msgid "no updates made to status"
+msgstr ""
+
+#: ../autoprofile/gtk_away_msgs.c:151
+msgid "waiting for new profile content"
+msgstr ""
+
+#: ../autoprofile/gtk_away_msgs.c:154
+msgid "waiting for new status content"
+msgstr ""
+
+#: ../autoprofile/gtk_away_msgs.c:188
+#, c-format
+msgid "next profile update in %d seconds"
+msgstr ""
+
+#: ../autoprofile/gtk_away_msgs.c:191
+#, c-format
+msgid "next status update in %d seconds"
+msgstr ""
+
+#: ../autoprofile/gtk_away_msgs.c:238
+msgid "AutoProfile Summary"
+msgstr ""
+
+#: ../autoprofile/gtk_away_msgs.c:260 ../schedule/pidgin-schedule.c:222
+msgid "Time"
+msgstr "Thời gian"
+
+#: ../autoprofile/gtk_away_msgs.c:265
+msgid "Type"
+msgstr ""
+
+#: ../autoprofile/gtk_away_msgs.c:273
+#, fuzzy
+msgid "Text"
+msgstr "Tiếp theo"
+
+#: ../autoprofile/gtk_away_msgs.c:311
+msgid "Queue new messages while away"
+msgstr ""
+
+#: ../autoprofile/gtk_away_msgs.c:316
+#, fuzzy
+msgid "Play sounds while away"
+msgstr "Chơi nhạc"
+
+#: ../autoprofile/gtk_away_msgs.c:329
+#, fuzzy
+msgid "Hide summary now"
+msgstr "tóm tắt"
+
+#: ../autoprofile/gtk_away_msgs.c:368
+msgid "<b>User profile</b>"
+msgstr ""
+
+#: ../autoprofile/gtk_away_msgs.c:371
+msgid "<b>Away message</b>"
+msgstr ""
+
+#: ../autoprofile/gtk_away_msgs.c:374
+msgid "<b>Available message</b>"
+msgstr ""
+
+#: ../autoprofile/gtk_away_msgs.c:377
+#, fuzzy
+msgid "<b>Status message</b>"
+msgstr "Thông điệp trạng thái"
+
+#: ../autoprofile/gtk_away_msgs.c:380
+#, fuzzy
+msgid "<b>Other</b>"
+msgstr "<b>Tác giả:</b> %s<br>"
+
+#: ../autoprofile/gtk_widget.c:171
+msgid "<b>Configuration</b>"
+msgstr ""
+
+#: ../autoprofile/gtk_widget.c:177
+msgid "No options available for this component"
+msgstr ""
+
+#: ../autoprofile/gtk_widget.c:211
+msgid "<b><u>Basic info</u></b><br>"
+msgstr ""
+
+#: ../autoprofile/gtk_widget.c:214
+msgid ""
+"A <b>widget</b> is a little piece/snippet of automatically generated text.  "
+"There are all sorts of widgets; each type has different content (i.e. a "
+"random quote, text from a blog, the song currently playing, etc).<br><br>"
+msgstr ""
+
+#: ../autoprofile/gtk_widget.c:220
+msgid ""
+"To use a widget, simply drag it from the list on the left and drop it into a "
+"profile or status message.  <i>It's that easy!</i><br><br>"
+msgstr ""
+
+#: ../autoprofile/gtk_widget.c:225
+msgid ""
+"<b>To edit your profile:</b> Use the \"Info/profile\" tab in this window.<br>"
+msgstr ""
+
+#: ../autoprofile/gtk_widget.c:230
+msgid ""
+"<b>To edit your available/away/status message:</b> Use the regular Purple "
+"interface built into the bottom of the buddy list.<br><br>"
+msgstr ""
+
+#: ../autoprofile/gtk_widget.c:235
+msgid "<b><u>Advanced Tips</u></b><br>"
+msgstr ""
+
+#: ../autoprofile/gtk_widget.c:238
+msgid ""
+"You can insert a widget into a profile or status by typing its name.  To do "
+"this, just type \"[widget-name]\" wherever you want to place a widget (names "
+"of widgets are listed on the left).  <br><br><b>You type:</b> The song I am "
+"playing now is [iTunesInfo].<br><b>AutoProfile result:</b> The song I am "
+"playing now is The Beatles - Yellow Submarine.<br><br>"
+msgstr ""
+
+#: ../autoprofile/gtk_widget.c:268 ../autoprofile/gtk_widget.c:285
+#, fuzzy
+msgid "Unable to change name"
+msgstr "Không thể kết nối."
+
+#: ../autoprofile/gtk_widget.c:269
+msgid "The specified widget no longer exists."
+msgstr ""
+
+#: ../autoprofile/gtk_widget.c:286
+msgid "The widget name you have specified is already in use."
+msgstr ""
+
+#: ../autoprofile/gtk_widget.c:318
+msgid "Rename Widget"
+msgstr ""
+
+#: ../autoprofile/gtk_widget.c:319
+msgid "Enter a new name for this widget."
+msgstr ""
+
+#: ../autoprofile/gtk_widget.c:321 ../autoprofile/gtk_widget.c:390
+#, fuzzy
+msgid "Rename"
+msgstr "Tên người dùng"
+
+#: ../autoprofile/gtk_widget.c:385
+#, fuzzy
+msgid "New Widget"
+msgstr "Cambio de Línea"
+
+#: ../autoprofile/gtk_widget.c:494
+msgid "Widget"
+msgstr ""
+
+#: ../autoprofile/gtk_widget.c:638
+#, fuzzy
+msgid "Select a widget type"
+msgstr "Chọn ngày giờ"
+
+#: ../autoprofile/gtk_widget.c:644
+#, fuzzy
+msgid "Create widget"
+msgstr "Tạo luật mới"
+
+#: ../autoprofile/gtk_widget.c:672
+msgid "Widget type"
+msgstr ""
+
+#: ../autoprofile/preferences.c:47
+#, c-format
+msgid "<span weight=\"bold\" size=\"larger\">AutoProfile %s</span>"
+msgstr ""
+
+#: ../autoprofile/preferences.c:70
+msgid ""
+"Use the <b>Autoprofile</b> portion of the <b>Tools</b> menu in the <b>buddy "
+"list</b> to configure the actual content that will go in your status "
+"messages and profiles and set options.<br><br>"
+msgstr ""
+
+#: ../autoprofile/preferences.c:77
+msgid "<u>DOCUMENTATION / HELP</u><br>"
+msgstr ""
+
+#: ../autoprofile/preferences.c:79
+msgid ""
+"Complete documentation can be found at:<br> <a href=\"http://hkn.eecs."
+"berkeley.edu/~casey/autoprofile/documentation.php\">hkn.eecs.berkeley.edu/"
+"~casey/autoprofile/documentation.php</a><br>"
+msgstr ""
+
+#: ../autoprofile/preferences.c:85
+msgid "<br><u>ABOUT</u><br>"
+msgstr ""
+
+#: ../autoprofile/preferences.c:88
+msgid "Developers"
+msgstr ""
+
+#: ../autoprofile/preferences.c:95
+msgid "Contributors/Patchers"
+msgstr ""
+
+#: ../autoprofile/preferences.c:103
+msgid "Website"
+msgstr ""
+
+#: ../autoprofile/preferences.c:296
+msgid "Screen Name"
+msgstr ""
+
+#: ../autoprofile/preferences.c:319
+msgid "AutoProfile sets user info"
+msgstr ""
+
+#: ../autoprofile/preferences.c:327
+msgid "Protocol"
+msgstr ""
+
+#: ../autoprofile/preferences.c:490
+msgid "Accounts that do not support user-specified profiles are not shown"
+msgstr ""
+
+#. ---------- Update frequency ----------
+#: ../autoprofile/preferences.c:530
+msgid "Update frequency"
+msgstr ""
+
+#: ../autoprofile/preferences.c:535
+msgid "Minimum number of seconds between updates"
+msgstr ""
+
+#: ../autoprofile/preferences.c:541
+msgid ""
+"WARNING: Using values below 60 seconds may increase the frequency\n"
+"of rate limiting errors"
+msgstr ""
+
+#. ----------- Auto-away stuff ------------
+#: ../autoprofile/preferences.c:548
+msgid "Auto-away"
+msgstr ""
+
+#: ../autoprofile/preferences.c:550
+msgid "Change status when idle"
+msgstr ""
+
+#: ../autoprofile/preferences.c:555
+msgid "Minutes before changing status:"
+msgstr ""
+
+#: ../autoprofile/preferences.c:563
+msgid "Change status to:"
+msgstr ""
+
+#: ../autoprofile/preferences.c:629 ../autoprofile/preferences.c:724
+msgid "General"
+msgstr ""
+
+#: ../autoprofile/preferences.c:631
+#, fuzzy
+msgid "Auto-reply:"
+msgstr "Tự động trả lời"
+
+#: ../autoprofile/preferences.c:633 ../autoreply/autoreply.c:407
+msgid "Never"
+msgstr "Không dùng chức năng này"
+
+#: ../autoprofile/preferences.c:634
+msgid "When away"
+msgstr ""
+
+#: ../autoprofile/preferences.c:635
+msgid "When both away and idle"
+msgstr ""
+
+#. ---------- Auto-responses ----------
+#: ../autoprofile/preferences.c:642
+msgid "Dynamic auto-responses"
+msgstr ""
+
+#: ../autoprofile/preferences.c:648
+msgid "Allow users to request more auto-responses"
+msgstr ""
+
+#: ../autoprofile/preferences.c:660
+#, fuzzy
+msgid "seconds between auto-responses"
+msgstr "Khoảng thời gian giữa hai lần gửi thông điệp tự trả lời liên tiếp"
+
+#. Auto-response message string
+#: ../autoprofile/preferences.c:668
+msgid "Message sent with first autoresponse:"
+msgstr ""
+
+#: ../autoprofile/preferences.c:679
+#, fuzzy
+msgid "Request trigger message:"
+msgstr "Thực thi thông điệp lỗi: %s"
+
+#: ../autoprofile/preferences.c:726
+msgid "User info/profiles"
+msgstr ""
+
+#: ../autoprofile/preferences.c:728
+#, fuzzy
+msgid "Auto-reply"
+msgstr "Tự động trả lời"
+
 #. XXX: There should be a way to reset to the default/account-default autoreply
-#: ../autoreply/autoreply.c:226
+#: ../autoreply/autoreply.c:231
 #, c-format
 msgid "Set autoreply message for %s"
 msgstr "Cài đặt thông điệp tự động trả lời cho  %s"
 
-#: ../autoreply/autoreply.c:228
+#: ../autoreply/autoreply.c:233
 msgid "Set Autoreply Message"
 msgstr "Cài đặt thông điệp tự động trả lời"
 
-#: ../autoreply/autoreply.c:229
-msgid "The following message will be sent to the buddy when the buddy sends you a message and autoreply is enabled."
-msgstr "Khi người bạn này gửi cho bạn một thông điệp và chế độ tự động trả lời được phép hoạt động thì thông điệp sau đây sẽ gửi đến anh (chị) ta"
+#: ../autoreply/autoreply.c:234
+msgid ""
+"The following message will be sent to the buddy when the buddy sends you a "
+"message and autoreply is enabled."
+msgstr ""
+"Khi người bạn này gửi cho bạn một thông điệp và chế độ tự động trả lời được "
+"phép hoạt động thì thông điệp sau đây sẽ gửi đến anh (chị) ta"
 
-#: ../autoreply/autoreply.c:233
+#: ../autoreply/autoreply.c:238
 msgid "_Save"
 msgstr "_Lưu"
 
-#: ../autoreply/autoreply.c:234
-#: ../listhandler/aim_blt_files.c:301
-#: ../listhandler/aim_blt_files.c:465
-#: ../listhandler/alias_xml_files.c:210
-#: ../listhandler/alias_xml_files.c:269
-#: ../listhandler/gen_xml_files.c:163
-#: ../listhandler/gen_xml_files.c:355
-#: ../listhandler/migrate.c:145
-#: ../listhandler/migrate.c:184
-#: ../listhandler/purple_blist_xml.c:229
+#: ../autoreply/autoreply.c:239 ../listhandler/aim_blt_files.c:297
+#: ../listhandler/aim_blt_files.c:461 ../listhandler/alias_xml_files.c:210
+#: ../listhandler/alias_xml_files.c:269 ../listhandler/gen_xml_files.c:163
+#: ../listhandler/gen_xml_files.c:355 ../listhandler/migrate.c:145
+#: ../listhandler/migrate.c:184 ../listhandler/purple_blist_xml.c:229
 msgid "_Cancel"
 msgstr "_Huỷ bỏ"
 
-#: ../autoreply/autoreply.c:250
+#: ../autoreply/autoreply.c:255
 msgid "Set _Autoreply Message"
 msgstr "Cài thông điệp tự độ_ng trả lời"
 
-#: ../autoreply/autoreply.c:263
+#: ../autoreply/autoreply.c:268
 msgid "Autoreply message"
 msgstr "Thông điệp tự động trả lời"
 
-#: ../autoreply/autoreply.c:265
+#: ../autoreply/autoreply.c:270
 msgid "Turn off autoreply"
 msgstr "Tắt chức năng tự động trả lời"
 
-#: ../autoreply/autoreply.c:370
+#: ../autoreply/autoreply.c:375
 msgid "Send autoreply messages when"
 msgstr "Gửi các thông điệp tự động trả lời khi"
 
-#: ../autoreply/autoreply.c:374
+#: ../autoreply/autoreply.c:379
 msgid "When my account is _away"
 msgstr "Khi tôi đi _xa"
 
-#: ../autoreply/autoreply.c:378
+#: ../autoreply/autoreply.c:383
 msgid "When my account is _idle"
 msgstr "Khi tôi đang _ngưng nghỉ"
 
-#: ../autoreply/autoreply.c:382
+#: ../autoreply/autoreply.c:387
 msgid "_Default reply"
 msgstr "_Trả lời mặc định"
 
-#: ../autoreply/autoreply.c:389
+#: ../autoreply/autoreply.c:394
 msgid ""
 "Autoreply Prefix\n"
 "(only when necessary)"
@@ -188,101 +1248,133 @@ msgstr ""
 "Tiếp đầu ngữ tự động trả lời \n"
 "(chỉ khi nào cần thiết)"
 
-#: ../autoreply/autoreply.c:392
+#: ../autoreply/autoreply.c:398
+msgid "Do not autoreply when invisible."
+msgstr ""
+
+#: ../autoreply/autoreply.c:401
 msgid "Status message"
 msgstr "Thông điệp trạng thái"
 
-#: ../autoreply/autoreply.c:396
+#: ../autoreply/autoreply.c:405
 msgid "Autoreply with status message"
 msgstr "Tự động trả lời với thông điệp trạng thái ?"
 
-#: ../autoreply/autoreply.c:398
-msgid "Never"
-msgstr "Không dùng chức năng này"
-
-#: ../autoreply/autoreply.c:400
+#: ../autoreply/autoreply.c:409
 msgid "Always when there is a status message"
 msgstr "Trả lời khi có thông điệp trạng thái"
 
-#: ../autoreply/autoreply.c:402
+#: ../autoreply/autoreply.c:411
 msgid "Only when there's no autoreply message"
 msgstr "Chỉ khi không cung cấp thông điệp tự động trả lời"
 
-#: ../autoreply/autoreply.c:407
+#: ../autoreply/autoreply.c:416
 msgid "Delay between autoreplies"
 msgstr "Khoảng thời gian giữa hai lần gửi thông điệp tự trả lời liên tiếp"
 
-#: ../autoreply/autoreply.c:411
+#: ../autoreply/autoreply.c:420
 msgid "_Minimum delay (mins)"
 msgstr "_Khoảng thời gian tối thiểu (phút)"
 
-#: ../autoreply/autoreply.c:415
+#: ../autoreply/autoreply.c:424
 msgid "Times to send autoreplies"
 msgstr "Số lần gửi thông điệp trả lời tự động"
 
-#: ../autoreply/autoreply.c:419
+#: ../autoreply/autoreply.c:428
 msgid "Ma_ximum count"
 msgstr "_Số lần tối đa"
 
-#: ../autoreply/autoreply.c:477
+#: ../autoreply/autoreply.c:486
 msgid "Autoreply"
 msgstr "Tự động trả lời"
 
-#: ../autoreply/autoreply.c:478
+#: ../autoreply/autoreply.c:487
 msgid "Autoreply for all the protocols"
 msgstr "Tự động trả lời cho tất cả giao thức"
 
-#: ../autoreply/autoreply.c:479
-msgid "This plugin lets you set autoreply message for any protocol. You can set the global autoreply message from the plugin options dialog. To set some specific autoreply message for a particular buddy, right click on the buddy in the buddy-list window. To set autoreply messages for some accounts, go to the `Advanced' tab of the account edit dialog."
-msgstr "Phần bổ sung này cho phép bạn cung cấp một thông điệp tự động trả lời cho một giao thức bất kỳ. Bạn có thể thiết lập thông điệp tự trả lời toàn cục từ hộp thoại tuỳ chọn cho phần bổ sung này. Để thiết lập thông điệp tự trả lời cho một người cụ thể nào đó, nhấn chuột phải trên tên của người này trong cửa sổ danh sách bạn chat. Để thiết lập các thông điệp tự trả lời cho một số tài khoản vào trong trang \"Nâng cao\" của hộp thoại thay đổi tài khoản."
+#: ../autoreply/autoreply.c:488
+msgid ""
+"This plugin lets you set autoreply message for any protocol. You can set the "
+"global autoreply message from the plugin options dialog. To set some "
+"specific autoreply message for a particular buddy, right click on the buddy "
+"in the buddy-list window. To set autoreply messages for some accounts, go to "
+"the `Advanced' tab of the account edit dialog."
+msgstr ""
+"Phần bổ sung này cho phép bạn cung cấp một thông điệp tự động trả lời cho "
+"một giao thức bất kỳ. Bạn có thể thiết lập thông điệp tự trả lời toàn cục từ "
+"hộp thoại tuỳ chọn cho phần bổ sung này. Để thiết lập thông điệp tự trả lời "
+"cho một người cụ thể nào đó, nhấn chuột phải trên tên của người này trong "
+"cửa sổ danh sách bạn chat. Để thiết lập các thông điệp tự trả lời cho một số "
+"tài khoản vào trong trang \"Nâng cao\" của hộp thoại thay đổi tài khoản."
 
-#: ../autoreply/autoreply.c:489
-msgid "I am currently not available. Please leave your message, and I will get back to you as soon as possible."
-msgstr "Hiện tại tôi không có mặt tại bàn làm việc của mình. Xin vui lòng để lại lời nhắn và tôi sẽ liên lạc lại với bạn sớm nhất khi nào có thể."
+#: ../autoreply/autoreply.c:498
+msgid ""
+"I am currently not available. Please leave your message, and I will get back "
+"to you as soon as possible."
+msgstr ""
+"Hiện tại tôi không có mặt tại bàn làm việc của mình. Xin vui lòng để lại lời "
+"nhắn và tôi sẽ liên lạc lại với bạn sớm nhất khi nào có thể."
 
-#: ../autoreply/autoreply.c:494
+#: ../autoreply/autoreply.c:503
 msgid "This is an autoreply: "
 msgstr "Đây là thông điệp tự động trả lời:"
 
-#: ../awaynotify/awaynotify.c:183
+#: ../awaynotify/awaynotify.c:184
 #, c-format
 msgid "%s is away: %s"
 msgstr "%s đi xa: %s"
 
-#: ../awaynotify/awaynotify.c:213
+#: ../awaynotify/awaynotify.c:214
 #, c-format
 msgid "%s is no longer away."
 msgstr "%s không còn đi xa."
 
-#: ../awaynotify/awaynotify.c:260
+#: ../awaynotify/awaynotify.c:261
 msgid "Away State Notification"
 msgstr "Thông báo trạng thái đi xa"
 
-#: ../awaynotify/awaynotify.c:262
-msgid "Notifies in a conversation window when a buddy goes or returns from away"
-msgstr "Thông báo trong cửa sổ trao đổi khi người bạn chat đi xa hoặc khi quay trở lại"
+#: ../awaynotify/awaynotify.c:263
+msgid ""
+"Notifies in a conversation window when a buddy goes or returns from away"
+msgstr ""
+"Thông báo trong cửa sổ trao đổi khi người bạn chat đi xa hoặc khi quay trở "
+"lại"
 
-#: ../bash/bash.c:96
-msgid "bash [n]: sends a link to a bash.org quote.  Specify a number for n and it will send a link to the quote with the specified number."
-msgstr "bash [n]:Gửi một liên kết đến một lời trích dẫn tại bash.org. Chỉ ra số cho n và nó sẽ gửi một liên kết đến một lời trích dẫn có số là con số mà bạn chỉ ra."
+#: ../bash/bash.c:97
+msgid ""
+"bash [n]: sends a link to a bash.org quote.  Specify a number for n and it "
+"will send a link to the quote with the specified number."
+msgstr ""
+"bash [n]:Gửi một liên kết đến một lời trích dẫn tại bash.org. Chỉ ra số cho "
+"n và nó sẽ gửi một liên kết đến một lời trích dẫn có số là con số mà bạn chỉ "
+"ra."
 
-#: ../bash/bash.c:100
-msgid "qdb [n]: sends a link to a qdb.us quote.  Specify a number for n and it will send a link to the quite with the specified number."
-msgstr "qdb [n]:Gửi một liên kết đến một lời trích dẫn tại qdb.us. Chỉ ra số cho n và nó sẽ gửi một liên kết đến một lời trích dẫn có số là con số mà bạn chỉ ra."
+#: ../bash/bash.c:101
+msgid ""
+"qdb [n]: sends a link to a qdb.us quote.  Specify a number for n and it will "
+"send a link to the quite with the specified number."
+msgstr ""
+"qdb [n]:Gửi một liên kết đến một lời trích dẫn tại qdb.us. Chỉ ra số cho n "
+"và nó sẽ gửi một liên kết đến một lời trích dẫn có số là con số mà bạn chỉ "
+"ra."
 
-#: ../bash/bash.c:160
+#: ../bash/bash.c:161
 msgid "bash.org"
 msgstr "bash.org"
 
-#: ../bash/bash.c:162
+#: ../bash/bash.c:163
 msgid "Generates links for quotes at bash.org"
 msgstr "Phát sinh ra các liên kết cho những lời trích dẫn tại bash.org"
 
-#: ../bash/bash.c:164
-msgid "Generates links for quotes at bash.org or allows the user to specify a quote.  Provides the /bash command."
-msgstr "Phát sinh các liên kết cho những lời trích dẫn tại bash.org hoặc cho phép người dùng chỉ ra một lời trích dẫn. Cung cấp câu lệnh /bash"
+#: ../bash/bash.c:165
+msgid ""
+"Generates links for quotes at bash.org or allows the user to specify a "
+"quote.  Provides the /bash command."
+msgstr ""
+"Phát sinh các liên kết cho những lời trích dẫn tại bash.org hoặc cho phép "
+"người dùng chỉ ra một lời trích dẫn. Cung cấp câu lệnh /bash"
 
-#: ../bit/bit.c:115
+#: ../bit/bit.c:116
 #, c-format
 msgid "Unable to locate the buddy icon cache directory %s"
 msgstr "Không thể xác định thư mục %s lưu tạm các biểu tượng chat"
@@ -292,347 +1384,352 @@ msgstr "Không thể xác định thư mục %s lưu tạm các biểu tượng 
 #. without going through every file, and the blist...
 #. ... a huge hash type table *may help*, but I'd consider it highly inefficient
 #. then again, some of the stuff in here ain't exactly a TGV either
-#: ../bit/bit.c:117
-#: ../bit/bit.c:126
-#: ../bit/bit.c:171
+#: ../bit/bit.c:118 ../bit/bit.c:127 ../bit/bit.c:172
 msgid "Destroy Unused Icons"
 msgstr "Xoá các biểu tượng không dùng"
 
-#: ../bit/bit.c:117
+#: ../bit/bit.c:118
 msgid "Unable to locate"
 msgstr "Không xác định vị trí được"
 
-#: ../bit/bit.c:124
+#: ../bit/bit.c:125
 #, c-format
 msgid "Unable to read the buddy icon cache directory %s"
 msgstr "Không đọc được thư mục %s chứa tạm biểu tượng chat của người dùng"
 
-#: ../bit/bit.c:126
+#: ../bit/bit.c:127
 msgid "Unable to read"
 msgstr "Không đọc được"
 
-#: ../bit/bit.c:175
+#: ../bit/bit.c:176
 msgid "Flush Buddy Icons"
 msgstr "Đẩy các biểu tượng chat ra thiết bị lưu trữ"
 
-#: ../bit/bit.c:179
+#: ../bit/bit.c:180
 msgid "Refresh Buddy Icons"
 msgstr "Tải lại biểu tượng chat"
 
-#: ../bit/bit.c:229
+#: ../bit/bit.c:230
 msgid "Buddy Icon Tools"
 msgstr "Các công cụ quản lý biểu tượng chat"
 
-#: ../bit/bit.c:230
+#: ../bit/bit.c:231
 msgid "Tools to manipulate buddy icons. *DANGEROUS*"
 msgstr "Các công cụ dùng để thao tác trên các biểu tượng chat.*QUÁ NGUY HIỂM*"
 
-#: ../bit/bit.c:231
-msgid "Whilst working on Purple 2.0.0, I found a need to destroy all my buddies' buddy icons.  There's nothing to do these functions in Purple, so here they are. Completely, thoroughly untested."
-msgstr "Khi đang làm việc trên Purple 2.0.0, tôi nhận ra một nhu cầu xoá tất cả những biểu tượng chat của các bạn chat của tôi. Không có lý do gì mà những chức năng này không có ở Purple vì vậy nó đã ra đời và có mặt ở đây. Hoàn toàn chưa được kiểm thử"
+#: ../bit/bit.c:232
+msgid ""
+"Whilst working on Purple 2.0.0, I found a need to destroy all my buddies' "
+"buddy icons.  There's nothing to do these functions in Purple, so here they "
+"are. Completely, thoroughly untested."
+msgstr ""
+"Khi đang làm việc trên Purple 2.0.0, tôi nhận ra một nhu cầu xoá tất cả "
+"những biểu tượng chat của các bạn chat của tôi. Không có lý do gì mà những "
+"chức năng này không có ở Purple vì vậy nó đã ra đời và có mặt ở đây. Hoàn "
+"toàn chưa được kiểm thử"
 
-#: ../blistops/blistops.c:228
+#: ../blistops/blistops.c:230
 msgid "Hide the buddy list when it is created"
 msgstr "Dấu danh sách bạn chat khi nó được tạo ra"
 
-#: ../blistops/blistops.c:232
+#: ../blistops/blistops.c:234
 msgid "Hide the menu in the buddy list window"
 msgstr "Dấu trình đơn trong cửa sổ danh sách bạn chat"
 
-#: ../blistops/blistops.c:236
+#: ../blistops/blistops.c:238
 msgid "Stretch the buddyname if the buddy has no buddyicon."
 msgstr "Kéo dãn tên của bạn chat nếu như bạn chat không có biểu tượng chat."
 
-#: ../blistops/blistops.c:240
+#: ../blistops/blistops.c:242
 msgid "Show email addresses for all the buddies."
 msgstr "Hiện địa chỉ thư điện tử cho tất cả các bạn chat."
 
-#: ../blistops/blistops.c:297
+#: ../blistops/blistops.c:299
 msgid "Buddy List Options"
 msgstr "Tuỳ chọn danh sách bạn chat"
 
-#: ../blistops/blistops.c:298
-#: ../blistops/blistops.c:299
+#: ../blistops/blistops.c:300 ../blistops/blistops.c:301
 msgid "Gives extended options to the buddy list"
 msgstr "Cung cấp các tuỳ chọn mở rộng cho danh sách bạn chat."
 
-#. arbitrary number that I like
-#: ../broadcast/broadcast.c:93
-msgid "Your message will be sent to and possibly annoy EVERYONE on your buddy list!"
-msgstr "Thông điệp của bạn sẽ được gửi đến MỌI NGƯỜI trong danh sách bạn chat của bạn và có lẽ sẽ gây bực mình cho họ"
+#: ../buddytime/buddytime.c:216
+#, c-format
+msgid "Remote Local Time: %s (%.4g hour behind)"
+msgid_plural "Remote Local Time: %s (%.4g hours behind)"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../broadcast/broadcast.c:115
-msgid "Broadcast Spim"
-msgstr "Gửi Spim đến tất cả"
+#: ../buddytime/buddytime.c:223
+#, c-format
+msgid "Remote Local Time: %s (%.4g hour ahead)"
+msgid_plural "Remote Local Time: %s (%.4g hours ahead)"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../broadcast/broadcast.c:116
-msgid "Enter the message to send"
-msgstr "Nhập vào một thông điệp để gửi"
+#: ../buddytime/buddytime.c:404
+msgid "Failed to load the Buddy Timezone UI."
+msgstr ""
 
-#: ../broadcast/broadcast.c:117
-#: ../groupmsg/groupmsg.c:110
-msgid "Send"
-msgstr "Gửi"
-
-#: ../broadcast/broadcast.c:130
-msgid "Broadcast a Message"
-msgstr "Gửi thông điệp cho tất cả"
-
-#: ../broadcast/broadcast.c:180
-msgid "Broadcaster"
-msgstr "Chương trình gửi thông điệp cho tất cả"
-
-#: ../broadcast/broadcast.c:181
-msgid "Send an IM to everyone on your buddy list."
-msgstr "Gửi một tin nhắn đến mọi người trong danh sách bạn chat của bạn"
-
-#: ../broadcast/broadcast.c:182
-msgid "Adds the ability to send an IM to every Purple Contact on your Buddy List"
-msgstr "Thêm khả năng có thể gửi một tin nhắn đến mọi liên lạc Purple trong danh sách chat của bạn.."
-
-#: ../buddytime/buddytime.c:124
-msgid "_Timezone"
-msgstr "_Múi giờ"
-
-#: ../buddytime/buddytime.c:127
-msgid "Clear setting"
-msgstr "Xoá cấu hình"
-
-#: ../buddytime/buddytime.c:129
-msgid "GMT-12"
-msgstr "GMT-12"
-
-#: ../buddytime/buddytime.c:130
-msgid "GMT-11"
-msgstr "GMT-11"
-
-#: ../buddytime/buddytime.c:131
-msgid "GMT-10"
-msgstr "GMT-10"
-
-#: ../buddytime/buddytime.c:132
-msgid "GMT-9"
-msgstr "GMT-9"
-
-#: ../buddytime/buddytime.c:133
-msgid "GMT-8"
-msgstr "GMT-8"
-
-#: ../buddytime/buddytime.c:134
-msgid "GMT-7"
-msgstr "GMT-7"
-
-#: ../buddytime/buddytime.c:135
-msgid "GMT-6"
-msgstr "GMT-6"
-
-#: ../buddytime/buddytime.c:136
-msgid "GMT-5"
-msgstr "GMT-5"
-
-#: ../buddytime/buddytime.c:137
-msgid "GMT-4"
-msgstr "GMT-4"
-
-#: ../buddytime/buddytime.c:138
-msgid "GMT-3"
-msgstr "GMT-3"
-
-#: ../buddytime/buddytime.c:139
-msgid "GMT-2"
-msgstr "GMT-2"
-
-#: ../buddytime/buddytime.c:140
-msgid "GMT-1"
-msgstr "GMT-1"
-
-#: ../buddytime/buddytime.c:141
-msgid "GMT"
-msgstr "GMT"
-
-#: ../buddytime/buddytime.c:142
-msgid "GMT+1"
-msgstr "GMT+1"
-
-#: ../buddytime/buddytime.c:143
-msgid "GMT+2"
-msgstr "GMT+2"
-
-#: ../buddytime/buddytime.c:144
-msgid "GMT+3"
-msgstr "GMT+3"
-
-#: ../buddytime/buddytime.c:145
-msgid "GMT+4"
-msgstr "GMT+4"
-
-#: ../buddytime/buddytime.c:146
-msgid "GMT+5"
-msgstr "GMT+5"
-
-#: ../buddytime/buddytime.c:147
-msgid "GMT+6"
-msgstr "GMT+6"
-
-#: ../buddytime/buddytime.c:148
-msgid "GMT+7"
-msgstr "GMT+7"
-
-#: ../buddytime/buddytime.c:149
-msgid "GMT+8"
-msgstr "GMT+8"
-
-#: ../buddytime/buddytime.c:150
-msgid "GMT+9"
-msgstr "GMT+9"
-
-#: ../buddytime/buddytime.c:151
-msgid "GMT+10"
-msgstr "GMT+10"
-
-#: ../buddytime/buddytime.c:152
-msgid "GMT+11"
-msgstr "GMT+11"
-
-#: ../buddytime/buddytime.c:153
-msgid "GMT+12"
-msgstr "GMT+12"
-
-#: ../buddytime/buddytime.c:160
-msgid "Select timezone"
-msgstr "Chọn múi giờ"
-
-#: ../buddytime/buddytime.c:185
-msgid "Timezone"
-msgstr "Múi giờ"
-
-#: ../buddytime/buddytime.c:255
+#: ../buddytime/buddytime.c:485
 msgid "Buddy Time"
 msgstr "Thời gian bạn chat"
 
-#: ../buddytime/buddytime.c:256
-#: ../common/core_template.c:80
-#: ../common/gtk_template.c:84
-msgid "summary"
-msgstr "tóm tắt"
+#: ../buddytime/buddytime.c:486 ../buddytime/buddytime.c:487
+msgid "Quickly see the local time of a buddy"
+msgstr ""
 
-#: ../buddytime/buddytime.c:257
-#: ../common/core_template.c:81
-#: ../common/gtk_template.c:85
-msgid "description"
-msgstr "mô tả"
+#: ../buddytime/gtkbuddytime.c:76
+#, c-format
+msgid ""
+"%s\n"
+"<b>Local Time:</b> %s (%.4g hour behind)"
+msgid_plural ""
+"%s\n"
+"<b>Local Time:</b> %s (%.4g hours behind)"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../chronic/chronic.c:102
+#: ../buddytime/gtkbuddytime.c:83
+#, c-format
+msgid ""
+"%s\n"
+"<b>Local Time:</b> %s (%.4g hour ahead)"
+msgid_plural ""
+"%s\n"
+"<b>Local Time:</b> %s (%.4g hours ahead)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../buddytime/gtkbuddytime.c:145
+#, fuzzy
+msgid "Buddy Time (Pidgin UI)"
+msgstr "Thời gian bạn chat"
+
+#: ../buddytime/gtkbuddytime.c:146 ../buddytime/gtkbuddytime.c:147
+msgid "Pidgin user interface for the Buddy Time plugin."
+msgstr ""
+
+#: ../chronic/chronic.c:103
 msgid "Chronic"
 msgstr "Thường xuyên"
 
-#: ../chronic/chronic.c:103
+#: ../chronic/chronic.c:104
 msgid "Sound playing triggers"
 msgstr "Khởi động phát âm thanh"
 
-#: ../chronic/chronic.c:104
-msgid "Allows buddies to remotely trigger sound playing in your instance of Purple with {S &lt;sound&gt;. Inspired by #guifications channel resident EvilDennisR and ancient versions of AOL.  THIS PLUGIN IS NOT YET FUNCTIONAL!  IT IS USELESS!"
-msgstr "Cho phép những người bạn chat từ xa bật chơi đoạn âm thanh trong Purple với {S &lt;sound&gt;. Lấy ý tưởng từ kên thường trực #guifications  EvilDennisR và các phiên bản cũ của AOL. PHÂN BỔ SUNG NÀY CHƯA HOẠT ĐỘNG! NÓ VÔ DỤNG!"
+#: ../chronic/chronic.c:105
+msgid ""
+"Allows buddies to remotely trigger sound playing in your instance of Purple "
+"with {S &lt;sound&gt;. Inspired by #guifications channel resident "
+"EvilDennisR and ancient versions of AOL.  THIS PLUGIN IS NOT YET "
+"FUNCTIONAL!  IT IS USELESS!"
+msgstr ""
+"Cho phép những người bạn chat từ xa bật chơi đoạn âm thanh trong Purple với "
+"{S &lt;sound&gt;. Lấy ý tưởng từ kên thường trực #guifications  EvilDennisR "
+"và các phiên bản cũ của AOL. PHÂN BỔ SUNG NÀY CHƯA HOẠT ĐỘNG! NÓ VÔ DỤNG!"
 
-#: ../common/core_template.c:79
-#: ../common/gtk_template.c:83
+#: ../colorize/colorize.c:281
+msgid "Colorize"
+msgstr ""
+
+#: ../colorize/colorize.c:282
+msgid "Colorizes outgoing message text."
+msgstr ""
+
+#: ../colorize/colorize.c:283
+msgid ""
+"Colorizes outgoing message text to a gradient of specified starting and "
+"ending RGB values."
+msgstr ""
+
+#: ../common/gtk_template.c:84 ../common/purple_template.c:79
 msgid "unnamed"
 msgstr "không tên"
 
-#: ../convbadger/convbadger.c:192
+#: ../common/gtk_template.c:85 ../common/purple_template.c:80
+msgid "summary"
+msgstr "tóm tắt"
+
+#: ../common/gtk_template.c:86 ../common/purple_template.c:81
+msgid "description"
+msgstr "mô tả"
+
+#: ../convbadger/convbadger.c:201
 msgid "Conversation Badger"
 msgstr "Gắn huy hiệu trao đổi"
 
-#: ../convbadger/convbadger.c:193
-#: ../convbadger/convbadger.c:194
+#: ../convbadger/convbadger.c:202 ../convbadger/convbadger.c:203
 msgid "Badges conversations with the protocol icon."
 msgstr "Đánh dấu hiệu các trao đổi bằng biểu tượng của giao thức"
 
-#: ../dewysiwygification/dewysiwygification.c:99
+#: ../dewysiwygification/dewysiwygification.c:100
 msgid "DeWYSIWYGification Plugin"
 msgstr "Phần bổ sung DeWYSIWYGificatio"
 
-#: ../dewysiwygification/dewysiwygification.c:101
-msgid "Lets you type in HTML without it being escaped to entities."
-msgstr "Cho phép bạn gõ mã HTML không cần phải né tránh từ khoá cho các đối tượng"
-
 #: ../dewysiwygification/dewysiwygification.c:102
-msgid "Lets you type in HTML without it being escaped to entities. This will not work well for some protocols. Use \"&lt;\" for a literal \"<\"."
-msgstr "Cho phép bạn gõ mã HTML không cần phải né tránh từ khoá cho các đối tượng. Phần bổ sung này không hoạt động tốt cho một số giao thức. Sử dụng \"&lt;\" cho ký tự \"<\"."
+msgid "Lets you type in HTML without it being escaped to entities."
+msgstr ""
+"Cho phép bạn gõ mã HTML không cần phải né tránh từ khoá cho các đối tượng"
 
-#: ../dice/dice.c:81
-msgid "dice [dice] [sides]:  rolls dice number of sides sided dice"
-msgstr "dice [n] [c]: gieo n súc sắc, mỗi súc sắc có c mặt"
+#: ../dewysiwygification/dewysiwygification.c:103
+msgid ""
+"Lets you type in HTML without it being escaped to entities. This will not "
+"work well for some protocols. Use \"&lt;\" for a literal \"<\"."
+msgstr ""
+"Cho phép bạn gõ mã HTML không cần phải né tránh từ khoá cho các đối tượng. "
+"Phần bổ sung này không hoạt động tốt cho một số giao thức. Sử dụng \"&lt;\" "
+"cho ký tự \"<\"."
 
-#: ../dice/dice.c:139
+#: ../dice/dice.c:310
+msgid ""
+"dice [dice] [sides]:  rolls dice number of sides sided dice OR\n"
+"dice [XdY+-Z]:  rolls X number of Y sided dice, giving a Z bonus/penalty to "
+"each.  e.g. 1d20+2"
+msgstr ""
+
+#: ../dice/dice.c:379
 msgid "Dice"
 msgstr "Súc sắc"
 
-#: ../dice/dice.c:140
+#: ../dice/dice.c:380
 msgid "Rolls dice in a chat or im"
 msgstr "Gieo súc sắc trong cửa sổ chat hoặc nhắn tin"
 
-#: ../dice/dice.c:141
-msgid "Adds a command (/dice) to roll an arbitrary number of dice with an arbitrary number of sides"
-msgstr "Thêm câu lệnh (/dice) để gieo một số bất kỳ con súc sắc, mỗi con súc sắc có số mặt bất kỳ."
+#: ../dice/dice.c:381
+#, fuzzy
+msgid ""
+"Adds a command (/dice) to roll an arbitrary number of dice with an arbitrary "
+"number of sides. Now supports dice notation!  /help dice for details"
+msgstr ""
+"Thêm câu lệnh (/dice) để gieo một số bất kỳ con súc sắc, mỗi con súc sắc có "
+"số mặt bất kỳ."
 
-#: ../difftopic/difftopic.c:137
+#: ../difftopic/difftopic.c:138
 #, c-format
 msgid "<BR>Topic changed from: <BR>%s<BR>To:<BR>%s"
 msgstr "<BR>Chủ đề được thay đổi từ:<BR>%s<BR> đến:<BR>%s"
 
-#: ../difftopic/difftopic.c:218
+#: ../difftopic/difftopic.c:219
 msgid "DiffTopic"
 msgstr "Thay đổi chủ đề"
 
-#: ../difftopic/difftopic.c:219
-#: ../difftopic/difftopic.c:220
+#: ../difftopic/difftopic.c:220 ../difftopic/difftopic.c:221
 msgid "Show the old topic when the topic in a chat room changes."
 msgstr "Trình bày các chủ đề cũ khi chủ đề trong phòng họp thay đổi"
 
-#: ../eight_ball/eight_ball.c:135
+#: ../eight_ball/eight_ball.c:331
 msgid "8ball:  sends a random 8ball message"
 msgstr "8ball: gửi ngẫu nhiên một thông điệp 8ball "
 
-#: ../eight_ball/eight_ball.c:136
+#: ../eight_ball/eight_ball.c:332
 msgid "sgball:  sends a random Stargate Ball message"
 msgstr "sgball: gửi ngẫu nhiên một thông điệp Stargate Ball "
 
-#: ../eight_ball/eight_ball.c:137
+#: ../eight_ball/eight_ball.c:333
 msgid "fullcrap:  sends random fooling blabber"
 msgstr "fullcrap: gửi một thông điệp bí mật vớ vẩn"
 
-#: ../eight_ball/eight_ball.c:210
+#: ../eight_ball/eight_ball.c:334
+msgid "bollocks:  sends random middle-manager bollocks"
+msgstr ""
+
+#: ../eight_ball/eight_ball.c:415
 msgid "Magic 8 Ball"
 msgstr "Tám quả bóng thần kỳ"
 
-#: ../eight_ball/eight_ball.c:211
+#: ../eight_ball/eight_ball.c:416
 msgid "Provides Magic 8-ball like functionality"
-msgstr "Cung cấp trò chơi giống các chức năng của trò chơi tám quả bóng thần kỳ"
+msgstr ""
+"Cung cấp trò chơi giống các chức năng của trò chơi tám quả bóng thần kỳ"
 
-#: ../eight_ball/eight_ball.c:212
-msgid "Provides Magic 8-ball like functionality with the /8ball command, as well as similar functionality for common Stargate words or phrases with the /sg-ball command."
-msgstr "Cung cấp trò chơi giống về mặt chức năng như trò chơi tám quả bóng thần kỳ cùng với câu lệnh /8ball cũng như các chức năng cho các từ, cụm từ thông dụng của Stargate với câu lệnh /sg-ball"
+#: ../eight_ball/eight_ball.c:417
+msgid ""
+"Provides Magic 8-ball like functionality with the /8ball command, as well as "
+"similar functionality for common Stargate words or phrases with the /sg-ball "
+"command."
+msgstr ""
+"Cung cấp trò chơi giống về mặt chức năng như trò chơi tám quả bóng thần kỳ "
+"cùng với câu lệnh /8ball cũng như các chức năng cho các từ, cụm từ thông "
+"dụng của Stargate với câu lệnh /sg-ball"
 
-#: ../findip/findip.c:60
+#. Print a header at the beginning of the log
+#: ../enhancedhist/enhancedhist.c:242
+#, fuzzy, c-format
+msgid "<b>Conversation with %s on %s:</b><br>"
+msgstr "Trao đổi với %s vào ngày %s"
+
+#. heading for the more general options
+#: ../enhancedhist/enhancedhist.c:292
+#, fuzzy
+msgid "Display Options"
+msgstr "Tuỳ chọn cửa sổ thông tin"
+
+#. the integer pref for the number of logs to display
+#: ../enhancedhist/enhancedhist.c:295
+msgid "Number of previous conversations to display:"
+msgstr ""
+
+#. the boolean preferences
+#: ../enhancedhist/enhancedhist.c:299
+msgid "Show dates with text"
+msgstr ""
+
+#: ../enhancedhist/enhancedhist.c:300
+msgid "Show logs for IMs"
+msgstr ""
+
+#: ../enhancedhist/enhancedhist.c:301
+msgid "Show logs for chats"
+msgstr ""
+
+#. heading for the age limit options
+#: ../enhancedhist/enhancedhist.c:304
+msgid "Age Limit for Logs (0 to disable):"
+msgstr ""
+
+#: ../enhancedhist/enhancedhist.c:407
+#, fuzzy
+msgid "Enhanced History"
+msgstr "Xoá sổ theo dõi"
+
+#: ../enhancedhist/enhancedhist.c:408
+msgid "An enhanced version of the history plugin."
+msgstr ""
+
+#: ../enhancedhist/enhancedhist.c:409
+msgid ""
+"An enhanced versoin of the history plugin. Grants ability to select the "
+"number of previous conversations to show instead of just one."
+msgstr ""
+
+#: ../findip/findip.c:55
 msgid "Looked up IP: 127.0.0.1\n"
 msgstr "IP đã tìm thấy: 127.0.0.1\n"
 
-#: ../findip/findip.c:64
+#: ../findip/findip.c:59
 msgid "Yo! What's your IP?"
 msgstr "Hê!Địa chỉ IP của bạn là gì?"
 
-#: ../findip/findip.c:83
+#: ../findip/findip.c:78
 msgid "Looking up the IP ...\n"
 msgstr "Đang tìm IP ...\n"
 
-#: ../findip/findip.c:96
+#: ../findip/findip.c:91 ../findip/findip.c:170
 msgid "Find IP"
 msgstr "Tìm IP"
 
-#: ../findip/findip.c:124
+#: ../findip/findip.c:119
 msgid "Notify the user that you are trying to get the IP"
 msgstr "Thông báo người dùng rằng bạn đang cố gắng lấy IP"
+
+#: ../findip/findip.c:171
+#, fuzzy
+msgid "Find the IP of a person in the buddylist."
+msgstr "Dấu trình đơn trong cửa sổ danh sách bạn chat"
+
+#: ../findip/findip.c:172
+msgid "Find the IP of a person in the buddylist. This doesn't really work."
+msgstr ""
 
 #: ../flip/flip.c:60
 msgid "Outputs the results of flipping a coin"
@@ -647,12 +1744,28 @@ msgid "Flips a coin and outputs the result"
 msgstr "Búng một đồng xu và trình bày kết quả"
 
 #: ../flip/flip.c:115
-msgid "Adds a command (/flip) to flip a coin and outputs the result in the active conversation"
-msgstr "Thêm một câu lệnh (/flip) để búng đồng xu và trình bày kết quả trong cửa sổ đang trao đổi."
+msgid ""
+"Adds a command (/flip) to flip a coin and outputs the result in the active "
+"conversation"
+msgstr ""
+"Thêm một câu lệnh (/flip) để búng đồng xu và trình bày kết quả trong cửa sổ "
+"đang trao đổi."
+
+#: ../google/google.c:267
+msgid "Returns the url for a Google I'm feeling lucky search"
+msgstr ""
+
+#: ../google/google.c:320
+msgid "Google"
+msgstr ""
+
+#: ../google/google.c:321
+msgid "Returns the url for a Google \"I'm feeling lucky\" search"
+msgstr ""
 
 #. should be completely mad and see if user has only one buddy (not a chat)
 #. *  on the blist and pluralise if appropriate
-#: ../gRIM/gRIM.c:272
+#: ../gRIM/gRIM.c:277
 msgid ""
 "gRIM: rim your pals\n"
 "/rim &lt;duration-in-secs&gt; &lt;filename&gt;"
@@ -660,24 +1773,28 @@ msgstr ""
 "gRIM:bao vây những người bạn của bạn\n"
 "/rim &lt;duration-in-secs&gt; &lt;filename&gt;"
 
-#: ../gRIM/gRIM.c:338
+#: ../gRIM/gRIM.c:344
 msgid "gRIM"
 msgstr "gRIM"
 
-#: ../gRIM/gRIM.c:339
+#: ../gRIM/gRIM.c:345
 msgid "A completely stupid and pointless plugin"
 msgstr "Một phần bổ sung ngu xuẩn và vô nghĩa"
 
-#: ../gRIM/gRIM.c:340
-msgid "Adds commands to annoy buddies with. Inspired by a dumb IRC convo and Red Dwarf."
-msgstr "Thêm các câu lệnh để làm phiền các bạn chat. Lấy ý tưởng từ cuộc trao đổi IRC câm và Red Dwarf"
+#: ../gRIM/gRIM.c:346
+msgid ""
+"Adds commands to annoy buddies with. Inspired by a dumb IRC convo and Red "
+"Dwarf."
+msgstr ""
+"Thêm các câu lệnh để làm phiền các bạn chat. Lấy ý tưởng từ cuộc trao đổi "
+"IRC câm và Red Dwarf"
 
-#: ../groupmsg/groupmsg.c:95
+#: ../groupmsg/groupmsg.c:96
 #, c-format
 msgid "There are no buddies online in group %s"
 msgstr "No hay ningún contacto del grupo %s conectado"
 
-#: ../groupmsg/groupmsg.c:103
+#: ../groupmsg/groupmsg.c:104
 #, c-format
 msgid ""
 "Your message will be sent to these buddies:\n"
@@ -686,53 +1803,57 @@ msgstr ""
 "Thông điệp của bạn sẽ được gửi đến những người sau đây:\n"
 "%s"
 
-#: ../groupmsg/groupmsg.c:106
+#: ../groupmsg/groupmsg.c:107
 msgid "Spam"
 msgstr "Tin nhắn rác"
 
-#: ../groupmsg/groupmsg.c:107
+#: ../groupmsg/groupmsg.c:108
 msgid "Please enter the message to send"
 msgstr "Vui lòng nhập vào thông điệp để gửi"
 
-#: ../groupmsg/groupmsg.c:182
+#: ../groupmsg/groupmsg.c:111
+msgid "Send"
+msgstr "Gửi"
+
+#: ../groupmsg/groupmsg.c:183
 msgid "Group IM"
 msgstr "Nhắn tin nhóm"
 
-#: ../groupmsg/groupmsg.c:183
+#: ../groupmsg/groupmsg.c:184
 msgid "Send an IM to a group of buddies."
 msgstr "Gửi tin nhắn đến một nhóm người"
 
-#: ../groupmsg/groupmsg.c:184
+#: ../groupmsg/groupmsg.c:185
 msgid "Adds the option to send an IM to every online buddy in a group."
-msgstr "Thêm tuỳ chọn để gửi tin nhắn đến tất cả những người bạn đang trực tuyến trong nhóm"
+msgstr ""
+"Thêm tuỳ chọn để gửi tin nhắn đến tất cả những người bạn đang trực tuyến "
+"trong nhóm"
 
-#: ../hideconv/hideconv.c:109
-#: ../hideconv/hideconv.c:136
+#: ../hideconv/hideconv.c:110 ../hideconv/hideconv.c:137
 msgid "/Options"
 msgstr "/Options"
 
-#: ../hideconv/hideconv.c:117
+#: ../hideconv/hideconv.c:118
 msgid "_Hide Conversation"
 msgstr "Ẩ_n trao đổi"
 
-#: ../hideconv/hideconv.c:123
+#: ../hideconv/hideconv.c:124
 msgid "Show Hidden Conversations"
 msgstr "Hiện các trao đổi đang ẩn"
 
-#: ../hideconv/hideconv.c:236
+#: ../hideconv/hideconv.c:237
 msgid "Show All Hidden Conversations"
 msgstr "Hiện tất cả các trao đổi đang ẩn"
 
-#: ../hideconv/hideconv.c:239
+#: ../hideconv/hideconv.c:240
 msgid "Hide All Conversations"
 msgstr "Ẩn tất cả các trao đổi"
 
-#: ../hideconv/hideconv.c:285
+#: ../hideconv/hideconv.c:286
 msgid "Hide Conversation"
 msgstr "Ẩn trao đổi"
 
-#: ../hideconv/hideconv.c:286
-#: ../hideconv/hideconv.c:287
+#: ../hideconv/hideconv.c:287 ../hideconv/hideconv.c:288
 msgid "Hide conversations without closing them."
 msgstr "Ẩn các trao đổi mà không đóng chúng."
 
@@ -740,19 +1861,25 @@ msgstr "Ẩn các trao đổi mà không đóng chúng."
 msgid "Highlight History"
 msgstr "Sổ theo dõi đánh dấu"
 
-#: ../highlight/highlight.c:246
+#: ../highlight/highlight.c:248
 msgid ""
-"/highlight history: shows the list of highlighted sentences from the history.\n"
+"/highlight history: shows the list of highlighted sentences from the "
+"history.\n"
 "/highlight clear:   clears the history.\n"
-"/highlight +&lt;word&gt;:  adds &lt;word&gt; to the highlight word list for this conversation only.\n"
-"/highlight -&lt;word&gt;:  removes &lt;word&gt; from the highlight word list for this conversation only.\n"
+"/highlight +&lt;word&gt;:  adds &lt;word&gt; to the highlight word list for "
+"this conversation only.\n"
+"/highlight -&lt;word&gt;:  removes &lt;word&gt; from the highlight word list "
+"for this conversation only.\n"
 msgstr ""
-"/highlight history:trình bày danh sách các câu được đánh dấu từ trong sổ theo dõi.\n"
+"/highlight history:trình bày danh sách các câu được đánh dấu từ trong sổ "
+"theo dõi.\n"
 "/highlight clear:xoá sổ theo dõi.\n"
-"/highlight +&lt;word&gt;:  thêm &lt;word&gt; vào danh sách các từ được đánh dấu chỉ trong cuộc đàm thoại này.\n"
-"/highlight -&lt;word&gt;:  xoá &lt;word&gt; khỏi danh sách các từ được dánh dấu chỉ trong cuộc đàm thoại này.\n"
+"/highlight +&lt;word&gt;:  thêm &lt;word&gt; vào danh sách các từ được đánh "
+"dấu chỉ trong cuộc đàm thoại này.\n"
+"/highlight -&lt;word&gt;:  xoá &lt;word&gt; khỏi danh sách các từ được dánh "
+"dấu chỉ trong cuộc đàm thoại này.\n"
 
-#: ../highlight/highlight.c:274
+#: ../highlight/highlight.c:276
 msgid ""
 "Words to highlight on\n"
 "(separate words by space)"
@@ -760,13 +1887,11 @@ msgstr ""
 "Các từ được đánh dấu \n"
 "(phân cách các từ bằng khoảng trắng)"
 
-#: ../highlight/highlight.c:331
-#: ../nicksaid/nicksaid.c:565
+#: ../highlight/highlight.c:333 ../nicksaid/nicksaid.c:574
 msgid "Highlight"
 msgstr "Đánh dấu từ"
 
-#: ../highlight/highlight.c:332
-#: ../highlight/highlight.c:333
+#: ../highlight/highlight.c:334 ../highlight/highlight.c:335
 msgid "Support for highlighting words."
 msgstr "Hỗ trợ việc đánh dấu các từ."
 
@@ -794,10 +1919,13 @@ msgstr "Không thể gán người dùng %s cho %s-có thể người dùng này
 msgid "Ignorance"
 msgstr "Lờ đi"
 
-#: ../ignorance/ignorance.c:1204
-#: ../ignorance/ignorance.c:1206
-msgid "Allows you to manage lists of users with various levels of allowable activity."
-msgstr "Cho phép bạn quản lý danh sách người dùng với nhiều mức độ của các hành động được phép thực hiện"
+#: ../ignorance/ignorance.c:1204 ../ignorance/ignorance.c:1206
+msgid ""
+"Allows you to manage lists of users with various levels of allowable "
+"activity."
+msgstr ""
+"Cho phép bạn quản lý danh sách người dùng với nhiều mức độ của các hành động "
+"được phép thực hiện"
 
 #: ../ignorance/interface.c:78
 msgid "Create new rule"
@@ -835,22 +1963,20 @@ msgstr "Cho phép"
 msgid "Regular Expression"
 msgstr "Biểu thức chính quy"
 
-#: ../ignorance/interface.c:148
+#. repeat
+#: ../ignorance/interface.c:148 ../xmmsremote/xmmsremote.c:412
 msgid "Repeat"
 msgstr "Lặp lại"
 
-#: ../ignorance/interface.c:168
-#: ../ignorance/interface.c:257
+#: ../ignorance/interface.c:168 ../ignorance/interface.c:257
 msgid "Filter"
 msgstr "Bộ lọc"
 
-#: ../ignorance/interface.c:172
-#: ../ignore/ignore.c:302
+#: ../ignorance/interface.c:172 ../ignore/ignore.c:303
 msgid "Ignore"
 msgstr "Lờ đi"
 
-#: ../ignorance/interface.c:176
-#: ../schedule/pidgin-schedule.c:255
+#: ../ignorance/interface.c:176 ../schedule/pidgin-schedule.c:256
 msgid "Send Message"
 msgstr "Gửi thông điệp"
 
@@ -890,157 +2016,178 @@ msgstr "Vào/Ra"
 msgid "Invitations"
 msgstr "Các lời mời"
 
-#: ../ignorance/support.c:105
-#: ../ignorance/support.c:129
+#: ../ignorance/support.c:105 ../ignorance/support.c:129
 #, c-format
 msgid "Couldn't find pixmap file: %s"
 msgstr "Không thể tìm tập tin pixmap:%s"
 
-#: ../ignore/ignore.c:130
+#: ../ignore/ignore.c:131
 msgid "Ignore Rules"
 msgstr "Lờ đi các luật"
 
-#: ../ignore/ignore.c:130
+#: ../ignore/ignore.c:131
 msgid "The following are the current ignore rules"
 msgstr "Sau đây là các luật hiện tại để lờ đi "
 
-#: ../ignore/ignore.c:131
+#: ../ignore/ignore.c:132
 msgid "(Dear God! You are not ignoring any one!)"
 msgstr "(Lạy trời! Bạn không lờ đi bất cứ người nào!)"
 
-#: ../ignore/ignore.c:233
-msgid "ignore [-c] [+&lt;ignore&gt; -&lt;unignore&gt;]<br>Examples:<br>   'ignore +StupidBot -NotABot' \t - (in a chat) Starts ignoring StupidBot, and removes NotABot from ignore list.<br>   'ignore -c +AnotherBot' \t - (in a chat) Starts ignoring AnotherBot, but only in chats.<br>   'ignore +' \t - (in an IM) Starts ignoring this person.<br>   'ignore -' \t - (in an IM) Starts unignoring this person.<br>   'ignore' \t - Lists the current ignore rules."
-msgstr "ignore [-c] [+&lt;ignore&gt; -&lt;unignore&gt;]<br>Ví dụ:<br>   'ignore +StupidBot -NotABot' \t - (trong khi chat) Bắt đầu lờ StupidBot và xoá NotABot khỏi danh sách những người bị lờ.<br>   'ignore -c +AnotherBot' \t - (trong khi chat) bắt đầu lờ  AnotherBot nhưng chỉ trong khi chat mà thôi.<br>   'ignore +' \t - (trong tin nhắn)  Bắt đầu lờ người này.<br>   'ignore -' \t - (trong tin nhắn) bắt đầu bỏ việc lờ người này.<br>   'ignore' \t -Liệt kê các quy luật lờ hiện tại."
-
-#: ../ignore/ignore.c:304
-msgid "Flexible plugin to selectively ignore people. Please do not use if you have amnesia."
-msgstr "Một phần bổ sung linh hoạt để chọn lờ đi người nào đó. Vui lòng không dùng nếu bạn có chứng hay quên"
-
-#: ../ignore/ignore.c:306
+#: ../ignore/ignore.c:234
 msgid ""
-"Flexible plugin to selectively ignore people. See '/help ignore' for more help.\n"
+"ignore [-c] [+&lt;ignore&gt; -&lt;unignore&gt;]<br>Examples:<br>   'ignore "
+"+StupidBot -NotABot' \t - (in a chat) Starts ignoring StupidBot, and removes "
+"NotABot from ignore list.<br>   'ignore -c +AnotherBot' \t - (in a chat) "
+"Starts ignoring AnotherBot, but only in chats.<br>   'ignore +' \t - (in an "
+"IM) Starts ignoring this person.<br>   'ignore -' \t - (in an IM) Starts "
+"unignoring this person.<br>   'ignore' \t - Lists the current ignore rules."
+msgstr ""
+"ignore [-c] [+&lt;ignore&gt; -&lt;unignore&gt;]<br>Ví dụ:<br>   'ignore "
+"+StupidBot -NotABot' \t - (trong khi chat) Bắt đầu lờ StupidBot và xoá "
+"NotABot khỏi danh sách những người bị lờ.<br>   'ignore -c +AnotherBot' \t - "
+"(trong khi chat) bắt đầu lờ  AnotherBot nhưng chỉ trong khi chat mà thôi."
+"<br>   'ignore +' \t - (trong tin nhắn)  Bắt đầu lờ người này.<br>   'ignore "
+"-' \t - (trong tin nhắn) bắt đầu bỏ việc lờ người này.<br>   'ignore' \t -"
+"Liệt kê các quy luật lờ hiện tại."
+
+#: ../ignore/ignore.c:305
+msgid ""
+"Flexible plugin to selectively ignore people. Please do not use if you have "
+"amnesia."
+msgstr ""
+"Một phần bổ sung linh hoạt để chọn lờ đi người nào đó. Vui lòng không dùng "
+"nếu bạn có chứng hay quên"
+
+#: ../ignore/ignore.c:307
+msgid ""
+"Flexible plugin to selectively ignore people. See '/help ignore' for more "
+"help.\n"
 "Please do not use if you have amnesia."
 msgstr ""
-"Một phần bổ sung linh hoạt để chọn lờ đi người nào đó. Xem '/help ignore' để có thông tin giúp đỡ chi tiết.\n"
+"Một phần bổ sung linh hoạt để chọn lờ đi người nào đó. Xem '/help ignore' để "
+"có thông tin giúp đỡ chi tiết.\n"
 "Vui lòng không dùng nếu bạn có chứng hay quên."
 
-#: ../infopane/infopane.c:148
-#: ../infopane/infopane.c:262
+#: ../infopane/infopane.c:141 ../infopane/infopane.c:253
 msgid "Libpurple and Pidgin are too old!\n"
 msgstr "Libpurple và Pidgin quá cũ!\n"
 
-#: ../infopane/infopane.c:149
+#: ../infopane/infopane.c:142
 msgid "Incompatible Plugin"
 msgstr "Phần bổ sung không tương thích"
 
-#: ../infopane/infopane.c:150
+#: ../infopane/infopane.c:143
 msgid "You need to update Pidgin!"
 msgstr "Bạn cần phải nâng cấp Pidgin!"
 
-#: ../infopane/infopane.c:151
-msgid "This plugin is incompatible with the running version of Pidgin and Libpurple because it is too old.  Please upgrade to the newest version of Pidgin."
-msgstr "Phần bổ sung này không tương thích với phiên bản đang chạy của Pidgin và Libpurple, nó quá cũ. Vui lòng nâng cấp phiên bản mới nhất của Pidgin."
+#: ../infopane/infopane.c:144
+msgid ""
+"This plugin is incompatible with the running version of Pidgin and Libpurple "
+"because it is too old.  Please upgrade to the newest version of Pidgin."
+msgstr ""
+"Phần bổ sung này không tương thích với phiên bản đang chạy của Pidgin và "
+"Libpurple, nó quá cũ. Vui lòng nâng cấp phiên bản mới nhất của Pidgin."
 
 #. XXX: Is there a better way than this? There really should be.
-#: ../infopane/infopane.c:183
+#: ../infopane/infopane.c:174
 msgid "Position of the infopane ('top', 'bottom' or 'none')"
 msgstr "Vị trí của cửa sổ thông tin('top','bottom' hay 'none')"
 
-#: ../infopane/infopane.c:187
+#: ../infopane/infopane.c:178
 msgid "Show icon in the tabs"
 msgstr "Trình bày biểu tượng trên các trang tab"
 
-#: ../infopane/infopane.c:191
+#: ../infopane/infopane.c:182
 msgid "Always show the tab"
 msgstr "Luôn luôn trình bày trang tab"
 
-#: ../infopane/infopane.c:251
+#: ../infopane/infopane.c:242
 msgid "Infopane Options"
 msgstr "Tuỳ chọn cửa sổ thông tin"
 
-#: ../infopane/infopane.c:252
-#: ../infopane/infopane.c:253
+#: ../infopane/infopane.c:243 ../infopane/infopane.c:244
 msgid "Allow customizing the details information in conversation windows."
 msgstr "Cho phép thay đổi thông tin chi tiết trong cửa sổ trao đổi."
 
-#: ../infopane/infopane.c:264
+#: ../infopane/infopane.c:255
 msgid "Incompatible Plugin! - Check plugin details!"
-msgstr "Phần bổ sung không tương thích!-Kiểm tra lại tài liệu của phần bổ sung!"
+msgstr ""
+"Phần bổ sung không tương thích!-Kiểm tra lại tài liệu của phần bổ sung!"
 
-#: ../infopane/infopane.c:265
-#: ../infopane/infopane.c:266
+#: ../infopane/infopane.c:256 ../infopane/infopane.c:257
 msgid "This plugin is NOT compatible with this version of Pidgin!"
 msgstr "Phần bổ sung  không tương thích với phiên bản này của Pidgin!"
 
-#: ../irchelper/irchelper.c:937
+#: ../irchelper/irchelper.c:964
 msgid "You have been added to the access list."
 msgstr "Bạn đã được thêm vào danh sách có quyền truy xuất"
 
-#: ../irchelper/irchelper.c:939
+#: ../irchelper/irchelper.c:966
 #, c-format
 msgid "You have been added to the access list with an access level of %s."
-msgstr "Bạn đã được thêm vào danh sách những người có quỳen truy xuất với cấp độ truy xuất là %s."
+msgstr ""
+"Bạn đã được thêm vào danh sách những người có quỳen truy xuất với cấp độ "
+"truy xuất là %s."
 
-#: ../irchelper/irchelper.c:973
+#: ../irchelper/irchelper.c:1000
 msgid "You have been removed from the access list."
 msgstr "Bạn đã bị xoá khỏi danh sách những người có quyền truy xuất."
 
-#: ../irchelper/irchelper.c:1082
+#: ../irchelper/irchelper.c:1109
 msgid "NickServ Authentication Error"
 msgstr "Lỗi uqa trình xác thực NickServ"
 
-#: ../irchelper/irchelper.c:1083
+#: ../irchelper/irchelper.c:1110
 msgid "Error authenticating with NickServ"
 msgstr "Lỗi xác thực với NickServ"
 
-#: ../irchelper/irchelper.c:1084
-#: ../irchelper/irchelper.c:1110
-#: ../irchelper/irchelper.c:1136
+#: ../irchelper/irchelper.c:1111 ../irchelper/irchelper.c:1137
+#: ../irchelper/irchelper.c:1164
 msgid "Check your password."
 msgstr "Kiểm tra mật khẩu của bạn."
 
-#: ../irchelper/irchelper.c:1108
+#: ../irchelper/irchelper.c:1135
 msgid "GameSurge Authentication Error"
 msgstr "Lỗi xác thực GameSurge"
 
-#: ../irchelper/irchelper.c:1109
+#: ../irchelper/irchelper.c:1136
 msgid "Error authenticating with AuthServ"
 msgstr "Lỗi xác thực với AuthServ"
 
-#: ../irchelper/irchelper.c:1134
+#: ../irchelper/irchelper.c:1162
 msgid "QuakeNet Authentication Error"
 msgstr "Lỗi xác thực QuakeNet"
 
-#: ../irchelper/irchelper.c:1135
+#: ../irchelper/irchelper.c:1163
 msgid "Error authenticating with Q"
 msgstr "Lỗi xác thực với Q"
 
 #. Register protocol preferences.
-#: ../irchelper/irchelper.c:1174
+#: ../irchelper/irchelper.c:1202
 msgid "Auth name"
 msgstr "Tên xác thực"
 
-#: ../irchelper/irchelper.c:1177
+#: ../irchelper/irchelper.c:1205
 msgid "Nick password"
 msgstr "Mật khẩu bí danh"
 
-#: ../irchelper/irchelper.c:1181
+#: ../irchelper/irchelper.c:1209
 msgid "Disconnect ghosts (Duplicate nicknames)"
 msgstr "Ngắt kết nối những tên ma (trùng bí danh)"
 
-#: ../irchelper/irchelper.c:1185
+#: ../irchelper/irchelper.c:1213
 msgid "Operator password"
 msgstr "Mật khẩu người điều hành"
 
-#: ../irchelper/irchelper.c:1261
+#: ../irchelper/irchelper.c:1289
 msgid "IRC Helper"
 msgstr "Trợ giúp IRC"
 
-#: ../irchelper/irchelper.c:1262
+#: ../irchelper/irchelper.c:1290
 msgid "Handles the rough edges of the IRC protocol."
 msgstr "Giải quyết các vấn đề hóc búa của giao thức IRC."
 
-#: ../irchelper/irchelper.c:1263
+#: ../irchelper/irchelper.c:1291
 msgid ""
 "- Transparent authentication with a variety of services.\n"
 "- Suppression of various useless messages"
@@ -1049,110 +2196,151 @@ msgstr ""
 "-Loại bỏ bớt các thông điệp vô dụng"
 
 #. specify our help string and register our command
-#: ../irc-more/irc-more.c:219
+#: ../irc-more/irc-more.c:227
 msgid "notice target message:  Send a notice to the specified target."
 msgstr "Thông điệp lưu ý có mục tiêu: Gửi một thông báo đến nơi được chỉ ra."
 
 #. Alphabetize the option label strings
-#: ../irc-more/irc-more.c:239
+#: ../irc-more/irc-more.c:249
 msgid "CTCP Version reply"
 msgstr "Trả lời phiên bản CTCP"
 
-#: ../irc-more/irc-more.c:242
+#: ../irc-more/irc-more.c:252
 msgid "Default Quit Message"
 msgstr "Thông điệp thoát mặc định"
 
-#: ../irc-more/irc-more.c:245
+#: ../irc-more/irc-more.c:255
 msgid "Default Part Message"
 msgstr "Thông điệp tham gia mặc định"
 
-#: ../irc-more/irc-more.c:248
+#: ../irc-more/irc-more.c:258
 msgid "Set User Modes On Connect"
 msgstr "Thiết lập các kiểu người dùng khi kết nối"
 
-#: ../irc-more/irc-more.c:251
+#: ../irc-more/irc-more.c:261
 msgid "Unset User Modes On Connect"
 msgstr "Bỏ thiết lập kiểu người dùng khi kết nối"
 
-#: ../irc-more/irc-more.c:273
+#: ../irc-more/irc-more.c:283
 msgid "Seconds to wait before rejoining"
 msgstr "Số giây phải đợi trước khi tham gia lại"
 
-#: ../irc-more/irc-more.c:334
+#: ../irc-more/irc-more.c:344
 msgid "IRC More"
 msgstr "IRC Mở rộng"
 
-#: ../irc-more/irc-more.c:335
+#: ../irc-more/irc-more.c:345
 msgid "Adds additional IRC features."
 msgstr "Các đặc điểm mở rộng của IRC."
 
-#: ../irc-more/irc-more.c:336
-msgid "Adds additional IRC features, including a customizable quit message, a customizable CTCP VERSION reply, and the /notice command for notices."
-msgstr "Thêm các đặc điểm mở rộng IRC bao gồm thông điệp khi thoát có thể thay đổi được, thông điệp trả lời phiên bản CTCP có thể thay đổi được và câu lệnh /notice để gửi thông báo."
+#: ../irc-more/irc-more.c:346
+msgid ""
+"Adds additional IRC features, including a customizable quit message, a "
+"customizable CTCP VERSION reply, and the /notice command for notices."
+msgstr ""
+"Thêm các đặc điểm mở rộng IRC bao gồm thông điệp khi thoát có thể thay đổi "
+"được, thông điệp trả lời phiên bản CTCP có thể thay đổi được và câu lệnh /"
+"notice để gửi thông báo."
 
-#: ../irssi/datechange.c:79
+#: ../irssi/datechange.c:80
 #, c-format
 msgid "Day changed to %s"
 msgstr "Comienza un nuevo día: %s"
 
-#: ../irssi/datechange.c:90
+#: ../irssi/datechange.c:91
 msgid "Happy New Year"
 msgstr "Chúc Mừng Năm Mới"
 
+#: ../irssi/irssi.c:61
+#, fuzzy
+msgid "Enable Features:"
+msgstr "Không đọc được"
+
+#: ../irssi/irssi.c:64
+msgid "Text Formatting"
+msgstr ""
+
+#: ../irssi/irssi.c:67
+#, fuzzy
+msgid "Date Change Notification"
+msgstr "Thông báo trạng thái đi xa"
+
+#: ../irssi/irssi.c:70
+#, fuzzy
+msgid "Happy New Year Message"
+msgstr "Chúc Mừng Năm Mới"
+
 #. set these here to allow for translations of the strings
-#: ../irssi/irssi.c:107
+#: ../irssi/irssi.c:130
 msgid "Irssi Features"
 msgstr "Tính năng Irssi"
 
-#: ../irssi/irssi.c:108
+#: ../irssi/irssi.c:131
 msgid "Implements features of the irssi IRC client for use in Pidgin."
 msgstr "Hiện thực các chức năng của trình khách irssi IRC trong Pidgin"
 
-#: ../irssi/irssi.c:110
-msgid "Implements some features of the IRC client irssi to be used in Purple.  It lets you know in all open conversations when the day has changed, adds the lastlog command, adds the window command, etc.  The day changed message is not logged."
-msgstr "Hiện thực một số tính năng của trình khách irssi IRC trong Pidgin. Nó cho phép bạn biết tất cả những cuộc trao đổi mở khi ngày thay đổi thêm câu lệnh lastlog, thêm cửa sổ lệnh, rtc. Ngày thay đổi thông điệp không ghi lại vào sổ theo dõi."
+#: ../irssi/irssi.c:133
+msgid ""
+"Implements some features of the IRC client irssi to be used in Purple.  It "
+"lets you know in all open conversations when the day has changed, adds the "
+"lastlog command, adds the window command, etc.  The day changed message is "
+"not logged."
+msgstr ""
+"Hiện thực một số tính năng của trình khách irssi IRC trong Pidgin. Nó cho "
+"phép bạn biết tất cả những cuộc trao đổi mở khi ngày thay đổi thêm câu lệnh "
+"lastlog, thêm cửa sổ lệnh, rtc. Ngày thay đổi thông điệp không ghi lại vào "
+"sổ theo dõi."
 
 #. XXX: This should probably be moved into outputting directly in the
 #. * conversation window.
 #.
-#: ../irssi/lastlog.c:73
+#: ../irssi/lastlog.c:75
 msgid "Lastlog"
 msgstr "Thông tin gần đây trong sổ theo dõi"
 
-#: ../irssi/lastlog.c:73
+#: ../irssi/lastlog.c:75
 msgid "Lastlog output"
 msgstr "Ghi ra những thông tin gần đây trong sổ theo dõi"
 
 #. XXX: Translators: DO NOT TRANSLATE "lastlog" or the HTML tags below
-#: ../irssi/lastlog.c:100
-msgid "<pre>lastlog &lt;string&gt;: Shows, from the current conversation's history, all messages containing the word or words specified in string.  It will be an exact match, including whitespace and special characters."
-msgstr "<pre>lastlog &lt;chuỗi&gt;: Trình bày từ sổ theo dõi của trao đổi hiện tại tất cả các thông điệp có chứa từ hợac các từ được chỉ ra trong chuỗi.  Tìm kiếm theo tiêu chuẩn trùng khớp tuyệt đối kể cả khoảng trắng và các ký tự đặc biệt."
+#: ../irssi/lastlog.c:102
+msgid ""
+"<pre>lastlog &lt;string&gt;: Shows, from the current conversation's history, "
+"all messages containing the word or words specified in string.  It will be "
+"an exact match, including whitespace and special characters."
+msgstr ""
+"<pre>lastlog &lt;chuỗi&gt;: Trình bày từ sổ theo dõi của trao đổi hiện tại "
+"tất cả các thông điệp có chứa từ hợac các từ được chỉ ra trong chuỗi.  Tìm "
+"kiếm theo tiêu chuẩn trùng khớp tuyệt đối kể cả khoảng trắng và các ký tự "
+"đặc biệt."
 
 #.
 #. * XXX: Translators: DO NOT TRANSLATE the first "layout" or the "\nsave"
 #. * or "reset" at the beginning of the last line below, or the HTML tags.
 #.
-#: ../irssi/layout.c:327
+#: ../irssi/layout.c:329
 msgid ""
-"<pre>layout &lt;save|reset&gt;: Remember the layout of the current conversations to reopen them when Purple is restarted.\n"
+"<pre>layout &lt;save|reset&gt;: Remember the layout of the current "
+"conversations to reopen them when Purple is restarted.\n"
 "save - saves the current layout\n"
 "reset - clears the current saved layout\n"
 "</pre>"
 msgstr ""
-"<pre>layout &lt;save|reset&gt;:Nhớ lại việc bố trí các trao đổi hiện tại để mở lại khi Purple khởi động lại.\n"
+"<pre>layout &lt;save|reset&gt;:Nhớ lại việc bố trí các trao đổi hiện tại để "
+"mở lại khi Purple khởi động lại.\n"
 "save - lưu lại bố trí hiện tại\n"
 "reset - xoá các bố trí đã lưu hiện tại\n"
 "</pre>"
 
-#: ../irssi/window.c:71
+#: ../irssi/window.c:73
 msgid "Invalid window specified."
 msgstr "Cửa sổ chỉ ra không hợp lệ."
 
-#: ../irssi/window.c:113
+#: ../irssi/window.c:115
 msgid "Invalid argument!"
 msgstr "Tham số không hợp lệ!"
 
-#: ../irssi/window.c:118
+#: ../irssi/window.c:120
 msgid "Unknown Error!"
 msgstr "Lỗi không xác định!"
 
@@ -1163,9 +2351,10 @@ msgstr "Lỗi không xác định!"
 #. * NOT going to be translatable.  Also, please don't translate the HTML
 #. * tags.
 #.
-#: ../irssi/window.c:146
+#: ../irssi/window.c:148
 msgid ""
-"<pre>window &lt;option&gt;: Operations for windows (tabs).  Valid options are:\n"
+"<pre>window &lt;option&gt;: Operations for windows (tabs).  Valid options "
+"are:\n"
 "close - closes the current conversation\n"
 "next - move to the next conversation\n"
 "previous - move to the previous conversation\n"
@@ -1174,7 +2363,8 @@ msgid ""
 "&lt;number&gt; - go to tab <number>\n"
 "</pre>"
 msgstr ""
-"<pre>window &lt;tuỳ_chọn&gt;: Điều khiển các cửa sổ (Các trang tab).  Bao gồm các tác vụ sau:\n"
+"<pre>window &lt;tuỳ_chọn&gt;: Điều khiển các cửa sổ (Các trang tab).  Bao "
+"gồm các tác vụ sau:\n"
 "close - đóng trao đổi hiện tại\n"
 "next - chuyển sang trao đổi tiếp theo\n"
 "previous -chuyển về trao đổi trước\n"
@@ -1184,15 +2374,19 @@ msgstr ""
 "</pre>"
 
 #. same thing as above, except for the /win command
-#: ../irssi/window.c:162
-msgid "<pre>win: THis command is synonymous with /window.  Try /help window for further details.</pre>"
-msgstr "<pre>win: Câu lệnh này đồng bộ với /windows. Gõ lệnh /help window để biết thêm chi tiết.</pre>"
+#: ../irssi/window.c:164
+msgid ""
+"<pre>win: THis command is synonymous with /window.  Try /help window for "
+"further details.</pre>"
+msgstr ""
+"<pre>win: Câu lệnh này đồng bộ với /windows. Gõ lệnh /help window để biết "
+"thêm chi tiết.</pre>"
 
 #. Last seen
 #. Last said
 #. Signed on
 #. Signed off
-#: ../lastseen/lastseen.c:159
+#: ../lastseen/lastseen.c:160
 msgid ""
 "\n"
 "<b>Last Seen</b>: "
@@ -1200,7 +2394,7 @@ msgstr ""
 "\n"
 "<b>Gặp nhau gần đây nhất:</b>"
 
-#: ../lastseen/lastseen.c:160
+#: ../lastseen/lastseen.c:161
 msgid ""
 "\n"
 "<b>Last Said</b>: "
@@ -1208,7 +2402,7 @@ msgstr ""
 "\n"
 "<b>Câu nói gần đây nhất:</b>"
 
-#: ../lastseen/lastseen.c:161
+#: ../lastseen/lastseen.c:162
 msgid ""
 "\n"
 "<b>Signed On</b>: "
@@ -1216,7 +2410,7 @@ msgstr ""
 "\n"
 "<b>Đăng nhập:</b>"
 
-#: ../lastseen/lastseen.c:162
+#: ../lastseen/lastseen.c:163
 msgid ""
 "\n"
 "<b>Signed Off</b>: "
@@ -1224,72 +2418,67 @@ msgstr ""
 "\n"
 "<b>Thoát:</b>"
 
-#: ../lastseen/lastseen.c:240
+#: ../lastseen/lastseen.c:241
 msgid "Last Seen"
 msgstr "Lần gặp nhau gần nhất"
 
-#: ../lastseen/lastseen.c:241
+#: ../lastseen/lastseen.c:242
 msgid "Record when a buddy was last seen."
 msgstr "Ghi lại thời điểm gần đây nhất bạn nhìn thấy người bạn chat này."
 
-#: ../lastseen/lastseen.c:242
-msgid "Logs the time of a last received message, what they said, when they logged in, and when they logged out, for buddies on your buddy list."
-msgstr "Ghi lại thời điểm nhận thông điệp sau cùng tính đến thời điểm hiện tại, họ trao đổi gì, khi nào họ đăng nhập và khi nào họ đăng xuất cho tất cả những người bạn t rong danh sách bạn chat của bạn."
+#: ../lastseen/lastseen.c:243
+msgid ""
+"Logs the time of a last received message, what they said, when they logged "
+"in, and when they logged out, for buddies on your buddy list."
+msgstr ""
+"Ghi lại thời điểm nhận thông điệp sau cùng tính đến thời điểm hiện tại, họ "
+"trao đổi gì, khi nào họ đăng nhập và khi nào họ đăng xuất cho tất cả những "
+"người bạn t rong danh sách bạn chat của bạn."
 
 #. create a field
-#: ../listhandler/aim_blt_files.c:287
-#: ../listhandler/aim_blt_files.c:453
-#: ../listhandler/alias_xml_files.c:203
-#: ../listhandler/alias_xml_files.c:260
-#: ../listhandler/gen_xml_files.c:148
-#: ../listhandler/gen_xml_files.c:341
-#: ../listhandler/migrate.c:129
-#: ../listhandler/migrate.c:169
-#: ../listhandler/purple_blist_xml.c:221
-#: ../schedule/pidgin-schedule.c:283
+#: ../listhandler/aim_blt_files.c:283 ../listhandler/aim_blt_files.c:449
+#: ../listhandler/alias_xml_files.c:203 ../listhandler/alias_xml_files.c:260
+#: ../listhandler/gen_xml_files.c:148 ../listhandler/gen_xml_files.c:341
+#: ../listhandler/migrate.c:129 ../listhandler/migrate.c:169
+#: ../listhandler/purple_blist_xml.c:221 ../schedule/pidgin-schedule.c:284
 msgid "Account"
 msgstr "Cuenta"
 
 #. and finally we can create the request
-#: ../listhandler/aim_blt_files.c:297
+#: ../listhandler/aim_blt_files.c:293
 msgid "List Handler: Importing"
 msgstr "Quản lý dánh sách: Nhập"
 
-#: ../listhandler/aim_blt_files.c:298
-#: ../listhandler/alias_xml_files.c:266
+#: ../listhandler/aim_blt_files.c:294 ../listhandler/alias_xml_files.c:266
 #: ../listhandler/gen_xml_files.c:160
 msgid "Choose the account to import to:"
 msgstr "Elija la cuenta a la que importar:"
 
-#: ../listhandler/aim_blt_files.c:299
-#: ../listhandler/alias_xml_files.c:267
-#: ../listhandler/gen_xml_files.c:161
-#: ../listhandler/purple_blist_xml.c:228
+#: ../listhandler/aim_blt_files.c:295 ../listhandler/alias_xml_files.c:267
+#: ../listhandler/gen_xml_files.c:161 ../listhandler/purple_blist_xml.c:228
 msgid "_Import"
 msgstr "_Importar"
 
-#: ../listhandler/aim_blt_files.c:424
+#: ../listhandler/aim_blt_files.c:420
 msgid "Save AIM .blt File"
 msgstr "Guardar Archivo AIM .blt"
 
 #. and finally we can create the request
-#: ../listhandler/aim_blt_files.c:463
+#: ../listhandler/aim_blt_files.c:459
 msgid "List Handler: Exporting"
 msgstr "Quản lý danh sách: Xuất"
 
-#: ../listhandler/aim_blt_files.c:464
-#: ../listhandler/alias_xml_files.c:209
+#: ../listhandler/aim_blt_files.c:460 ../listhandler/alias_xml_files.c:209
 #: ../listhandler/gen_xml_files.c:354
 msgid "Choose the account to export from:"
 msgstr "Chọn một tài khoản để xuất ra:"
 
-#: ../listhandler/aim_blt_files.c:465
-#: ../listhandler/alias_xml_files.c:210
+#: ../listhandler/aim_blt_files.c:461 ../listhandler/alias_xml_files.c:210
 #: ../listhandler/gen_xml_files.c:355
 msgid "_Export"
 msgstr "_Xuất ra"
 
-#: ../listhandler/aim_blt_files.c:478
+#: ../listhandler/aim_blt_files.c:474
 msgid "Choose An AIM .blt File To Import"
 msgstr "Chọn một tập tin AIM .blt để nhập vào"
 
@@ -1298,20 +2487,17 @@ msgid "Save Generic .alist File"
 msgstr "Lưu tập tin .alist chung."
 
 #. and finally we can create the request
-#: ../listhandler/alias_xml_files.c:208
-#: ../listhandler/gen_xml_files.c:353
+#: ../listhandler/alias_xml_files.c:208 ../listhandler/gen_xml_files.c:353
 msgid "Listhandler - Exporting"
 msgstr "Quản lý danh sách - Xuất"
 
 #. and finally we can create the request
-#: ../listhandler/alias_xml_files.c:265
-#: ../listhandler/gen_xml_files.c:159
+#: ../listhandler/alias_xml_files.c:265 ../listhandler/gen_xml_files.c:159
 #: ../listhandler/purple_blist_xml.c:226
 msgid "Listhandler - Importing"
 msgstr "Quản lý danh sách-Nhập vào"
 
-#: ../listhandler/alias_xml_files.c:296
-#: ../listhandler/gen_xml_files.c:366
+#: ../listhandler/alias_xml_files.c:296 ../listhandler/gen_xml_files.c:366
 msgid "Choose A Generic Buddy List File To Import"
 msgstr "Chọn tập tin danh sách bạn chat tổng quát để nhập vào"
 
@@ -1357,15 +2543,23 @@ msgstr "Trình quản lý danh sách"
 
 #: ../listhandler/listhandler.c:116
 msgid "Provides numerous user-requested list-handling capabilities."
-msgstr "Cung cấp các khả năng xử lý số lượng lớn danh sách các yêu cầu của người dùng."
+msgstr ""
+"Cung cấp các khả năng xử lý số lượng lớn danh sách các yêu cầu của người "
+"dùng."
 
 #: ../listhandler/listhandler.c:119
-msgid "Provides numerous user-requested list-handling capabilities, such as importing and exporting of AIM .blt files and generic protocol-agnostic XML .blist files, as well as direct copying of buddies from one account to another."
-msgstr "Cung cấp rất nhiều khả năng để giải quyết danh sách các yêu cầu chẳng hạn như nhập và xuất các tập tin AIM .blt, XML chung không biết giao thức cũng như là trực tiếp như sao các bạn chat từ tài khoản này sang tài khoản khác."
+msgid ""
+"Provides numerous user-requested list-handling capabilities, such as "
+"importing and exporting of AIM .blt files and generic protocol-agnostic XML ."
+"blist files, as well as direct copying of buddies from one account to "
+"another."
+msgstr ""
+"Cung cấp rất nhiều khả năng để giải quyết danh sách các yêu cầu chẳng hạn "
+"như nhập và xuất các tập tin AIM .blt, XML chung không biết giao thức cũng "
+"như là trực tiếp như sao các bạn chat từ tài khoản này sang tài khoản khác."
 
 #. and finally we can create the request
-#: ../listhandler/migrate.c:142
-#: ../listhandler/migrate.c:181
+#: ../listhandler/migrate.c:142 ../listhandler/migrate.c:181
 msgid "Listhandler - Copying"
 msgstr "Quản lý danh sách-Sao chép"
 
@@ -1373,8 +2567,7 @@ msgstr "Quản lý danh sách-Sao chép"
 msgid "Choose the account to add buddies to:"
 msgstr "Chọn tài khoản để thêm bạn chat vào:"
 
-#: ../listhandler/migrate.c:144
-#: ../schedule/pidgin-schedule.c:575
+#: ../listhandler/migrate.c:144 ../schedule/pidgin-schedule.c:576
 msgid "_Add"
 msgstr "_Thêm"
 
@@ -1394,105 +2587,131 @@ msgstr "Chọn một tài khoản là chủ danh sách bạn chat mà bạn cầ
 msgid "Choose a Libpurple blist.xml File To Import"
 msgstr "Chọn tập tin Libpurple blist.xml để nhập vào"
 
-#: ../mystatusbox/mystatusbox.c:376
+#: ../listlog/listlog.c:131
+msgid "Chat User List Logging"
+msgstr ""
+
+#: ../listlog/listlog.c:132 ../listlog/listlog.c:133
+msgid "Logs the list of users present when you join a chat."
+msgstr ""
+
+#: ../msglen/msglen.c:251
+#, fuzzy
+msgid "Message Length"
+msgstr "Thông điệp"
+
+#: ../msglen/msglen.c:252
+msgid "Shows the length of your current message in the menu tray"
+msgstr ""
+
+#: ../mystatusbox/mystatusbox.c:377
 msgid "All"
 msgstr "Tất cả"
 
-#: ../mystatusbox/mystatusbox.c:379
-#: ../nicksaid/nicksaid.c:252
+#: ../mystatusbox/mystatusbox.c:380 ../nicksaid/nicksaid.c:256
 msgid "None"
 msgstr "Không"
 
-#: ../mystatusbox/mystatusbox.c:382
+#: ../mystatusbox/mystatusbox.c:383
 msgid "Out of sync ones"
 msgstr "Không đồng bộ "
 
-#: ../mystatusbox/mystatusbox.c:387
+#: ../mystatusbox/mystatusbox.c:388
 msgid "Toggle icon selectors"
 msgstr "Đổi trạng thái của hộp chọn biểu tượng chat"
 
-#: ../mystatusbox/mystatusbox.c:390
+#: ../mystatusbox/mystatusbox.c:391
 msgid "Toggle global selector"
 msgstr "Đổi trạng thái của hộp chọn chung"
 
-#: ../mystatusbox/mystatusbox.c:498
+#: ../mystatusbox/mystatusbox.c:499
 msgid "Hide global status selector"
 msgstr "Ẩn hộp chọn trạng thái chung"
 
-#: ../mystatusbox/mystatusbox.c:501
+#: ../mystatusbox/mystatusbox.c:502
 msgid "Hide icon-selectors"
 msgstr "Ẩn hộp chọn biểu tượng chat"
 
-#: ../mystatusbox/mystatusbox.c:558
+#: ../mystatusbox/mystatusbox.c:559
 msgid "Mystatusbox (Show Statusboxes)"
 msgstr "Hộp trạng thái của tôi"
 
-#: ../mystatusbox/mystatusbox.c:559
+#: ../mystatusbox/mystatusbox.c:560
 msgid "Hide/Show the per-account statusboxes"
 msgstr "Ân/Hiện hộp trạng thái cho từng tài khoản"
 
-#: ../mystatusbox/mystatusbox.c:560
-msgid "You can show all the per-account statusboxes, hide all of them, or just show the ones that are in a different status from the global status.  For ease of use, you can bind keyboard shortcuts for the menu items."
-msgstr "Bạn có thể hiện tất cả các hộp trạng thái cho từng tài khoản, ẩn đi tất cả chúng hoặc chỉ hiện những hộp trạng thái nào mà khác với trạng thái toàn cục. Để dễ dàng sử dụng, bạn có thể gán phím nóng cho các mục của trình đơn."
+#: ../mystatusbox/mystatusbox.c:561
+msgid ""
+"You can show all the per-account statusboxes, hide all of them, or just show "
+"the ones that are in a different status from the global status.  For ease of "
+"use, you can bind keyboard shortcuts for the menu items."
+msgstr ""
+"Bạn có thể hiện tất cả các hộp trạng thái cho từng tài khoản, ẩn đi tất cả "
+"chúng hoặc chỉ hiện những hộp trạng thái nào mà khác với trạng thái toàn "
+"cục. Để dễ dàng sử dụng, bạn có thể gán phím nóng cho các mục của trình đơn."
 
-#: ../napster/napster.c:281
+#: ../napster/napster.c:286
 msgid "Unable to read header from server"
 msgstr "Không thể đọc phần nhận dạng ban đầu từ máy chủ"
 
-#: ../napster/napster.c:295
+#: ../napster/napster.c:300
 #, c-format
 msgid "Unable to read message from server: %s.  Command is %hd, length is %hd."
-msgstr "Không thể đọc thông điệp từ máy chủ:%s. Câu lệnh là %hd, độ dài là %hd."
+msgstr ""
+"Không thể đọc thông điệp từ máy chủ:%s. Câu lệnh là %hd, độ dài là %hd."
 
-#: ../napster/napster.c:311
+#: ../napster/napster.c:316
 msgid "Unknown server error."
 msgstr "Lỗi không xác định trên máy chủ."
 
-#: ../napster/napster.c:360
+#: ../napster/napster.c:365
 #, c-format
 msgid "users: %s, files: %s, size: %sGB"
 msgstr "số người dùng:%s, số tập tin:%s, kích thước:%s GB"
 
 #. MSG_SERVER_HOTLIST_ERROR
-#: ../napster/napster.c:371
+#: ../napster/napster.c:376
 #, c-format
 msgid "Unable to add \"%s\" to your Napster hotlist"
 msgstr "Không thể thêm \"%s\"vào danh sách của Napster"
 
 #. MSG_SERVER_DISCONNECTING
 #. we have been kicked off =^(
-#: ../napster/napster.c:378
+#: ../napster/napster.c:383
 msgid "You were disconnected from the server."
 msgstr "Bạn đã đứt kết nối với máy chủ."
 
 #. MSG_CLIENT_WHOIS
-#: ../napster/napster.c:435
+#: ../napster/napster.c:440
 #, c-format
 msgid "%s requested your information"
 msgstr "%s yêu cầu thông tin của bạn"
 
+#: ../napster/napster.c:450
+msgid "Napster User Info:"
+msgstr ""
+
 #. MSG_SERVER_GHOST
 #. Looks like someone logged in as us! =-O
-#: ../napster/napster.c:471
+#: ../napster/napster.c:478
 msgid "You have signed on from another location."
 msgstr "Bạn đã đăng nhập ở một vị trí khác."
 
 #. MSG_CLIENT_PING
-#: ../napster/napster.c:475
+#: ../napster/napster.c:482
 #, c-format
 msgid "%s requested a PING"
 msgstr "Yê cầu ping %s"
 
-#: ../napster/napster.c:522
-#: ../napster/napster.c:558
+#: ../napster/napster.c:529 ../napster/napster.c:565
 msgid "Unable to connect."
 msgstr "Không thể kết nối."
 
-#: ../napster/napster.c:551
+#: ../napster/napster.c:558
 msgid "Connecting"
 msgstr "Đang kết nối"
 
-#: ../napster/napster.c:615
+#: ../napster/napster.c:614
 msgid "_Group:"
 msgstr "_Nhóm:"
 
@@ -1502,51 +2721,55 @@ msgstr "_Nhóm:"
 #. *< dependencies
 #. *< priority
 #. *< id
+#: ../napster/napster.c:715
+msgid "Napster"
+msgstr ""
+
 #. *< name
 #. *< version
 #. *  summary
 #. *  description
-#: ../napster/napster.c:717
-#: ../napster/napster.c:719
+#: ../napster/napster.c:718 ../napster/napster.c:720
 msgid "NAPSTER Protocol Plugin"
 msgstr "Phần bổ sung giao thức NAPSTER"
 
-#: ../napster/napster.c:741
-#: ../snpp/snpp.c:574
+#: ../napster/napster.c:747 ../snpp/snpp.c:586
 msgid "Server"
 msgstr "Máy chủ"
 
-#: ../napster/napster.c:746
-#: ../snpp/snpp.c:577
+#: ../napster/napster.c:750 ../snpp/snpp.c:589
 msgid "Port"
 msgstr "Cổng"
 
-#: ../nicksaid/nicksaid.c:228
-#: ../nicksaid/nicksaid.c:650
+#: ../nicksaid/nicksaid.c:232 ../nicksaid/nicksaid.c:659
 msgid "Nicksaid"
 msgstr "Bí danh được nhắc đến"
 
-#: ../nicksaid/nicksaid.c:228
+#: ../nicksaid/nicksaid.c:232
 msgid "List of highlighted messages:"
 msgstr "Danh sách các thông điệp được đánh dấu:"
 
-#: ../nicksaid/nicksaid.c:260
+#. next
+#: ../nicksaid/nicksaid.c:264 ../xmmsremote/xmmsremote.c:399
+#: ../xmmsremote/xmmsremote.c:494
 msgid "Next"
 msgstr "Tiếp theo"
 
-#: ../nicksaid/nicksaid.c:265
+#. previous
+#: ../nicksaid/nicksaid.c:269 ../xmmsremote/xmmsremote.c:404
+#: ../xmmsremote/xmmsremote.c:514
 msgid "Previous"
 msgstr "Phía trước"
 
-#: ../nicksaid/nicksaid.c:290
+#: ../nicksaid/nicksaid.c:294
 msgid "Clear History"
 msgstr "Xoá sổ theo dõi"
 
-#: ../nicksaid/nicksaid.c:295
+#: ../nicksaid/nicksaid.c:299
 msgid "Show All"
 msgstr "Hiện tất cả"
 
-#: ../nicksaid/nicksaid.c:569
+#: ../nicksaid/nicksaid.c:578
 msgid ""
 "_Words to highlight on\n"
 "(separate the words with a blank space)"
@@ -1554,116 +2777,164 @@ msgstr ""
 "_Các từ được đánh dấu\n"
 "(phân tách các từ bằng khoảng trắng)"
 
-#: ../nicksaid/nicksaid.c:572
+#: ../nicksaid/nicksaid.c:581
 msgid "Number of displayed characters"
 msgstr "Số ký tự được trình bày"
 
-#: ../nicksaid/nicksaid.c:576
+#: ../nicksaid/nicksaid.c:585
 msgid ""
 "_Set the number of characters displayed\n"
 "in the nicksaid menu"
 msgstr "_Số các ký tự được trình bày trong trình đơn tên bí danh được nhắc đến"
 
-#: ../nicksaid/nicksaid.c:581
+#: ../nicksaid/nicksaid.c:590
 msgid "Display who said your name in the nicksaid menu"
 msgstr "Trình bày ai đã nhắc đến tên bạn trong trình đơn bí danh được nhắc đến"
 
-#: ../nicksaid/nicksaid.c:585
+#: ../nicksaid/nicksaid.c:594
 msgid "Display _timestamps in the nicksaid menu"
 msgstr "Trình bày _thời điểm trong trình đơn bí danh được nhắc đến"
 
-#: ../nicksaid/nicksaid.c:589
+#: ../nicksaid/nicksaid.c:598
 msgid "_Display _datestamps in the nicksaid menu"
 msgstr "Trình bày _ngày tháng năm trong trình đơn bí danh được nhắc đến"
 
-#: ../nicksaid/nicksaid.c:593
+#: ../nicksaid/nicksaid.c:602
 msgid "Allow displaying in a separate dialog"
 msgstr "Cho phép trình bày trong hộp thoại khác"
 
-#: ../nicksaid/nicksaid.c:651
-#: ../nicksaid/nicksaid.c:652
+#: ../nicksaid/nicksaid.c:660 ../nicksaid/nicksaid.c:661
 msgid "Record when someone said your nick in a chat."
 msgstr "Lưu lại khi ai đó trao đổi có đề cập đến bí danh của bạn."
 
-#: ../oldlogger/oldlogger.c:262
+#: ../nomobility/nomobility.c:52
+msgid "There are no messages in the queue."
+msgstr ""
+
+#: ../nomobility/nomobility.c:59
+#, c-format
+msgid "%d. %s"
+msgstr ""
+
+#: ../nomobility/nomobility.c:145
+#, c-format
+msgid "Cancelled message to %s, they are currently mobile."
+msgstr ""
+
+#: ../nomobility/nomobility.c:205
+msgid "Delete failed: no message number given!"
+msgstr ""
+
+#: ../nomobility/nomobility.c:213
+#, c-format
+msgid "Delete failed: no messaged numbered %d!"
+msgstr ""
+
+#. commands
+#: ../nomobility/nomobility.c:245
+#, c-format
+msgid ""
+"%s &lt;[clear][clear][delete][send]&gt;\n"
+"clear     Clears all queued messages\n"
+"delete #  Deletes the message numbered #\n"
+"list      Lists all queued messages\n"
+"sendall   Sends all queued messages\n"
+msgstr ""
+
+#: ../nomobility/nomobility.c:308
+msgid "No Mobility"
+msgstr ""
+
+#: ../nomobility/nomobility.c:309
+msgid "Stops you from messaging mobile users"
+msgstr ""
+
+#: ../oldlogger/oldlogger.c:272
 #, c-format
 msgid "IM Sessions with %s\n"
 msgstr "Sesiones de IM con %s\n"
 
-#: ../oldlogger/oldlogger.c:286
+#: ../oldlogger/oldlogger.c:296
 #, c-format
 msgid "(%s) %s <AUTO-REPLY>: %s\n"
 msgstr "(%s) %s <AUTO-REPLY>: %s\n"
 
-#: ../oldlogger/oldlogger.c:373
+#: ../oldlogger/oldlogger.c:389
 #, c-format
 msgid "IM Sessions with %s"
 msgstr "Sesiones de IM con %s"
 
-#: ../oldlogger/oldlogger.c:407
+#: ../oldlogger/oldlogger.c:423
 #, c-format
-msgid "<FONT COLOR=\"#16569E\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> %s<BR>\n"
-msgstr "<FONT COLOR=\"#16569E\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> %s<BR>\n"
+msgid ""
+"<FONT COLOR=\"#16569E\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> "
+"%s<BR>\n"
+msgstr ""
+"<FONT COLOR=\"#16569E\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> "
+"%s<BR>\n"
 
-#: ../oldlogger/oldlogger.c:409
+#: ../oldlogger/oldlogger.c:425
 #, c-format
-msgid "<FONT COLOR=\"#A82F2F\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> %s<BR>\n"
-msgstr "<FONT COLOR=\"#A82F2F\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> %s<BR>\n"
+msgid ""
+"<FONT COLOR=\"#A82F2F\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> "
+"%s<BR>\n"
+msgstr ""
+"<FONT COLOR=\"#A82F2F\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> "
+"%s<BR>\n"
 
-#: ../oldlogger/oldlogger.c:436
+#: ../oldlogger/oldlogger.c:452
 msgid "Old plain text"
 msgstr "Dạng văn bản cũ"
 
-#: ../oldlogger/oldlogger.c:441
+#: ../oldlogger/oldlogger.c:457
 msgid "Old HTML"
 msgstr "Định dạng HTML cũ"
 
-#: ../oldlogger/oldlogger.c:499
+#: ../oldlogger/oldlogger.c:515
 msgid "Old Logger"
 msgstr "Trình ghi nhật ký cũ"
 
-#: ../oldlogger/oldlogger.c:500
-#: ../oldlogger/oldlogger.c:501
+#: ../oldlogger/oldlogger.c:516 ../oldlogger/oldlogger.c:517
 msgid "Re-implements the legacy, deficient, logging"
 msgstr "Hiện thực lại việc ghi nhật ký không đầy đủ"
 
-#: ../plonkers/plonkers.c:227
+#: ../plonkers/plonkers.c:228
 msgid "Ignored Plonkers"
 msgstr "Lờ những kẻ tồi"
 
-#: ../plonkers/plonkers.c:229
+#: ../plonkers/plonkers.c:230
 msgid "Plonkers singular format:"
 msgstr "Định dạng đơn những kẻ tồi:"
 
-#: ../plonkers/plonkers.c:232
+#: ../plonkers/plonkers.c:233
 msgid "Plonkers plural format:"
 msgstr "Định dạng số nhiều những kẻ tồi:"
 
-#: ../plonkers/plonkers.c:236
+#: ../plonkers/plonkers.c:237
 msgid "Plonking"
 msgstr "Việc tồi"
 
-#: ../plonkers/plonkers.c:237
+#: ../plonkers/plonkers.c:238
 msgid "Plonked singular plural:"
 msgstr "Định dạng đơn:"
 
-#: ../plonkers/plonkers.c:240
+#: ../plonkers/plonkers.c:241
 msgid "Plonked plural format:"
 msgstr "Định dạng số nhiều:"
 
-#: ../plonkers/plonkers.c:246
+#: ../plonkers/plonkers.c:247
 msgid "Format information"
 msgstr "Định dạng thông tin"
 
-#: ../plonkers/plonkers.c:251
+#: ../plonkers/plonkers.c:252
 msgid "%P: List of plonkers"
 msgstr "%P: Danh sách những kẻ tồi"
 
-#: ../plonkers/plonkers.c:254
+#: ../plonkers/plonkers.c:255
 msgid "%N: Number of plonkers"
 msgstr "%N: Số lượng những kẻ tồi"
 
-#: ../plonkers/plonkers.c:272
+#: ../plonkers/plonkers.c:273
 msgid ""
 "<pre>plonkers;\n"
 "Tell people in a chat what you really think of them\n"
@@ -1673,193 +2944,194 @@ msgstr ""
 "Nói với người khác trong khi chat điều gì bạn đang thực sự nghĩ về họ\n"
 "</pre>"
 
-#: ../plonkers/plonkers.c:341
+#: ../plonkers/plonkers.c:342
 msgid "/me has identified %N plonker: %P."
 msgstr "/me đã xác định %N kẻ tồi:%P."
 
-#: ../plonkers/plonkers.c:343
+#: ../plonkers/plonkers.c:344
 msgid "/me has identified %N plonkers: %P."
 msgstr "/me đã xác định %N kẻ tồi:%P."
 
-#: ../plonkers/plonkers.c:346
-#: ../plonkers/plonkers.c:348
+#: ../plonkers/plonkers.c:347 ../plonkers/plonkers.c:349
 msgid "/me plonks: %P."
 msgstr "/me tồi:%P."
 
-#: ../plonkers/plonkers.c:350
+#: ../plonkers/plonkers.c:351
 msgid "Plonkers"
 msgstr "Kẻ tồi"
 
-#: ../plonkers/plonkers.c:351
+#: ../plonkers/plonkers.c:352
 msgid "Tell plonkers what you really think."
 msgstr "Bảo với những kẻ tồi về những gì bạn thật sự nghĩ"
 
-#: ../plonkers/plonkers.c:352
-msgid "Plonkers is a small plugin that lets you announce to a chat room your current list of ignores, as well as providing other pointless ignore and privacy tools for dealing with idiots.  The name is inspired by the British/Irish word for 'idiots.'"
-msgstr "\"Những kẻ tồi\" là phần bổ sung nhỏ cho phép bạn thông báo với phòng họp danh sách những người mà bạn lờ đi cũng như cung cấp những công cụ bảo vệ sự riêng tư và lờ đi những kẻ vô tích sự khác để đối mặt với những kẻ tồi. Tên của phần bổ sung (Plonkers) lấy cảm hứng từ một từ Tiếng Anh/Ái Nhĩ Lan để chỉ những kẻ tồi, những thằng ngốc"
+#: ../plonkers/plonkers.c:353
+msgid ""
+"Plonkers is a small plugin that lets you announce to a chat room your "
+"current list of ignores, as well as providing other pointless ignore and "
+"privacy tools for dealing with idiots.  The name is inspired by the British/"
+"Irish word for 'idiots.'"
+msgstr ""
+"\"Những kẻ tồi\" là phần bổ sung nhỏ cho phép bạn thông báo với phòng họp "
+"danh sách những người mà bạn lờ đi cũng như cung cấp những công cụ bảo vệ sự "
+"riêng tư và lờ đi những kẻ vô tích sự khác để đối mặt với những kẻ tồi. Tên "
+"của phần bổ sung (Plonkers) lấy cảm hứng từ một từ Tiếng Anh/Ái Nhĩ Lan để "
+"chỉ những kẻ tồi, những thằng ngốc"
 
-#: ../schedule/pidgin-schedule.c:88
+#: ../schedule/pidgin-schedule.c:89
 msgid "Schedule List"
 msgstr "Danh sách định thời"
 
-#: ../schedule/pidgin-schedule.c:146
+#: ../schedule/pidgin-schedule.c:147
 msgid "Every month"
 msgstr "Mỗi tháng"
 
-#: ../schedule/pidgin-schedule.c:147
+#: ../schedule/pidgin-schedule.c:148
 msgid "January"
 msgstr "Tháng Giêng"
 
-#: ../schedule/pidgin-schedule.c:148
+#: ../schedule/pidgin-schedule.c:149
 msgid "February"
 msgstr "Tháng Hai"
 
-#: ../schedule/pidgin-schedule.c:149
+#: ../schedule/pidgin-schedule.c:150
 msgid "March"
 msgstr "Tháng Ba"
 
-#: ../schedule/pidgin-schedule.c:150
+#: ../schedule/pidgin-schedule.c:151
 msgid "April"
 msgstr "Tháng Tư"
 
-#: ../schedule/pidgin-schedule.c:151
+#: ../schedule/pidgin-schedule.c:152
 msgid "May"
 msgstr "Tháng Năm"
 
-#: ../schedule/pidgin-schedule.c:152
+#: ../schedule/pidgin-schedule.c:153
 msgid "June"
 msgstr "Tháng Sáu"
 
-#: ../schedule/pidgin-schedule.c:153
+#: ../schedule/pidgin-schedule.c:154
 msgid "July"
 msgstr "Tháng Bảy"
 
-#: ../schedule/pidgin-schedule.c:154
+#: ../schedule/pidgin-schedule.c:155
 msgid "August"
 msgstr "Tháng Tám"
 
-#: ../schedule/pidgin-schedule.c:155
+#: ../schedule/pidgin-schedule.c:156
 msgid "September"
 msgstr "Tháng Chín"
 
-#: ../schedule/pidgin-schedule.c:156
+#: ../schedule/pidgin-schedule.c:157
 msgid "October"
 msgstr "Tháng Mười"
 
-#: ../schedule/pidgin-schedule.c:157
+#: ../schedule/pidgin-schedule.c:158
 msgid "November"
 msgstr "Tháng Mười Một"
 
-#: ../schedule/pidgin-schedule.c:158
+#: ../schedule/pidgin-schedule.c:159
 msgid "December"
 msgstr "Tháng Mười Hai"
 
-#: ../schedule/pidgin-schedule.c:161
-#: ../schedule/pidgin-schedule.c:217
+#: ../schedule/pidgin-schedule.c:162 ../schedule/pidgin-schedule.c:218
 msgid "Everyday"
 msgstr "Mỗi ngày"
 
-#: ../schedule/pidgin-schedule.c:162
+#: ../schedule/pidgin-schedule.c:163
 msgid "Sunday"
 msgstr "Chủ Nhật"
 
-#: ../schedule/pidgin-schedule.c:163
+#: ../schedule/pidgin-schedule.c:164
 msgid "Monday"
 msgstr "Thứ Hai"
 
-#: ../schedule/pidgin-schedule.c:164
+#: ../schedule/pidgin-schedule.c:165
 msgid "Tuesday"
 msgstr "Thứ Ba"
 
-#: ../schedule/pidgin-schedule.c:165
+#: ../schedule/pidgin-schedule.c:166
 msgid "Wednesday"
 msgstr "Thứ Tư"
 
-#: ../schedule/pidgin-schedule.c:166
+#: ../schedule/pidgin-schedule.c:167
 msgid "Thursday"
 msgstr "Thứ Năm"
 
-#: ../schedule/pidgin-schedule.c:167
+#: ../schedule/pidgin-schedule.c:168
 msgid "Friday"
 msgstr "Thứ Sáu"
 
-#: ../schedule/pidgin-schedule.c:168
+#: ../schedule/pidgin-schedule.c:169
 msgid "Saturday"
 msgstr "Thứ Bảy"
 
-#: ../schedule/pidgin-schedule.c:176
+#: ../schedule/pidgin-schedule.c:177
 msgid "Select Date and Time"
 msgstr "Chọn ngày giờ"
 
-#: ../schedule/pidgin-schedule.c:191
+#: ../schedule/pidgin-schedule.c:192
 msgid "Month"
 msgstr "Tháng"
 
-#: ../schedule/pidgin-schedule.c:198
+#: ../schedule/pidgin-schedule.c:199
 msgid "Year"
 msgstr "Năm"
 
-#: ../schedule/pidgin-schedule.c:201
+#: ../schedule/pidgin-schedule.c:202
 msgid "Every Year"
 msgstr "Mỗi năm"
 
-#: ../schedule/pidgin-schedule.c:205
+#: ../schedule/pidgin-schedule.c:206
 msgid "Day"
 msgstr "Ngày"
 
-#: ../schedule/pidgin-schedule.c:213
+#: ../schedule/pidgin-schedule.c:214
 msgid "Date"
 msgstr "Ngày tháng năm"
 
-#: ../schedule/pidgin-schedule.c:221
-msgid "Time"
-msgstr "Thời gian"
-
-#: ../schedule/pidgin-schedule.c:265
+#: ../schedule/pidgin-schedule.c:266
 msgid "_Send message to a friend"
 msgstr "_Gửi thông điệp cho một người bạn"
 
 #. XXX: set the formatting to default send-message format
-#: ../schedule/pidgin-schedule.c:278
+#: ../schedule/pidgin-schedule.c:279
 msgid "Buddy"
 msgstr "Bạn chat"
 
-#: ../schedule/pidgin-schedule.c:287
+#: ../schedule/pidgin-schedule.c:288
 msgid "Message"
 msgstr "Thông điệp"
 
-#: ../schedule/pidgin-schedule.c:298
+#: ../schedule/pidgin-schedule.c:299
 msgid "Popup Dialog"
 msgstr "Hộp thoại nổi"
 
-#: ../schedule/pidgin-schedule.c:303
+#: ../schedule/pidgin-schedule.c:304
 msgid "_Popup a reminder dialog with message"
 msgstr "_Bật hộp thoại nổi để ghi thông điệp nhắc nhở"
 
-#: ../schedule/pidgin-schedule.c:397
+#: ../schedule/pidgin-schedule.c:398
 msgid "Name"
 msgstr "Tên"
 
-#: ../schedule/pidgin-schedule.c:579
+#: ../schedule/pidgin-schedule.c:580
 msgid "_Delete"
 msgstr "_Xoá"
 
 #. XXX: submit the patch to Purple for making the mnemonics work
-#: ../schedule/pidgin-schedule.c:644
+#: ../schedule/pidgin-schedule.c:645
 msgid "New Schedule"
 msgstr "Định thời mới"
 
-#: ../schedule/pidgin-schedule.c:647
+#: ../schedule/pidgin-schedule.c:648
 msgid "List of Schedules"
 msgstr "Danh sách các định thời"
 
-#: ../schedule/pidgin-schedule.c:708
-#: ../schedule/schedule.c:256
+#: ../schedule/pidgin-schedule.c:709 ../schedule/schedule.c:256
 msgid "Schedule"
 msgstr "Định thời"
 
-#: ../schedule/pidgin-schedule.c:709
-#: ../schedule/pidgin-schedule.c:710
+#: ../schedule/pidgin-schedule.c:710 ../schedule/pidgin-schedule.c:711
 msgid "Schedule reminders at specified times."
 msgstr "Định thời để nhắc nhở tại các thời điểm xác định."
 
@@ -1867,27 +3139,27 @@ msgstr "Định thời để nhắc nhở tại các thời điểm xác định
 msgid "list of schedules"
 msgstr "danh sách các định thời"
 
-#: ../sepandtab/sepandtab.c:89
+#: ../sepandtab/sepandtab.c:90
 msgid "Separate IM, group Chats"
 msgstr "Tách biệt giữa tin nhắn và hội họp."
 
-#: ../sepandtab/sepandtab.c:91
+#: ../sepandtab/sepandtab.c:92
 msgid "Separate Chats, group IMs"
 msgstr "Tách biệt chat và tin nhắn nhóm"
 
-#: ../sepandtab/sepandtab.c:94
+#: ../sepandtab/sepandtab.c:95
 msgid "Group by Type, Separate by Protocol"
 msgstr "Nhóm theo Kiểu, phân biệt theo Giao thức"
 
-#: ../sepandtab/sepandtab.c:149
+#: ../sepandtab/sepandtab.c:150
 msgid "Separate And Tab"
 msgstr "Tách biệt và Tab"
 
-#: ../sepandtab/sepandtab.c:150
+#: ../sepandtab/sepandtab.c:151
 msgid "Adds two placement functions for separating and tabbing"
 msgstr "Thêm hai chức năng sắp xếp mới cho việc tách biệt và phân trang"
 
-#: ../sepandtab/sepandtab.c:151
+#: ../sepandtab/sepandtab.c:152
 msgid ""
 "Adds two new placement functions.\n"
 "\n"
@@ -1899,238 +3171,347 @@ msgstr ""
 "Một chức năng là tách biệt những tin nhắn và hội họp bởi các trang tab\n"
 "Chức năng thứ hai là tách biệt giữa chat và tin nhắn nhóm bởi các trang tab"
 
-#: ../showoffline/showoffline.c:71
+#: ../showoffline/showoffline.c:72
 msgid "Hide when offline"
 msgstr "Ẩn đi khi ngoại tuyến"
 
-#: ../showoffline/showoffline.c:74
+#: ../showoffline/showoffline.c:75
 msgid "Show when offline"
 msgstr "Hiện ra khi ngoại tuyến"
 
-#: ../showoffline/showoffline.c:131
+#: ../showoffline/showoffline.c:86
+msgid "Plugin deprecated"
+msgstr ""
+
+#: ../showoffline/showoffline.c:87
+msgid "Show Offline plugin deprecated"
+msgstr ""
+
+#: ../showoffline/showoffline.c:88
+msgid ""
+"This plugin has been deprecated as of Pidgin 2.3.0 which\n"
+"includes the same functionality."
+msgstr ""
+
+#: ../showoffline/showoffline.c:139
 msgid "Show Offline"
 msgstr "Hiện ra khi ngoại tuyến"
 
-#: ../showoffline/showoffline.c:132
+#: ../showoffline/showoffline.c:140
 msgid "Show specific buddies while offline."
 msgstr "Hiện những người bạn chat được chỉ ra khi họ ngoại tuyến"
 
-#: ../showoffline/showoffline.c:133
-msgid "Adds the option to show specific buddies in your buddy list when they are offline, even with \"Show Offline Buddies\" turned off."
-msgstr "Thêm tuỳ chọn để hiện những người bạn chat được chỉ ra trong danh sách bạn chat của bạn khi họ ngoại tuyến thậm chí chức năng \"Hiện bạn chat ngoại tuyến\" bị tắt đi."
+#: ../showoffline/showoffline.c:141
+msgid ""
+"Adds the option to show specific buddies in your buddy list when they are "
+"offline, even with \"Show Offline Buddies\" turned off."
+msgstr ""
+"Thêm tuỳ chọn để hiện những người bạn chat được chỉ ra trong danh sách bạn "
+"chat của bạn khi họ ngoại tuyến thậm chí chức năng \"Hiện bạn chat ngoại "
+"tuyến\" bị tắt đi."
 
-#: ../simfix/simfix.c:133
+#: ../simfix/simfix.c:134
 msgid "SIM-fix"
 msgstr "Sửa lỗi SIM"
 
-#: ../simfix/simfix.c:134
+#: ../simfix/simfix.c:135
 msgid "Fix messages from broken SIM clients."
 msgstr "Sửa lỗi các thông điệp khi các chương trình khách SIM bị chập chờn."
 
-#: ../simfix/simfix.c:135
-msgid "Fixes messages received from broken SIM clients by stripping HTML from them. The buddy must be on your list and set as a SIM user."
-msgstr "Sửa lỗi các thông điệp nhận được từ các trình khách SIM bị chập chờn bằng cách loại bỏ các mã HTML từ chúng. Người bạn chat phải nằm trong danh sách những người bạn chat của bạn và được thiết lập như người dùng SIM."
+#: ../simfix/simfix.c:136
+msgid ""
+"Fixes messages received from broken SIM clients by stripping HTML from them. "
+"The buddy must be on your list and set as a SIM user."
+msgstr ""
+"Sửa lỗi các thông điệp nhận được từ các trình khách SIM bị chập chờn bằng "
+"cách loại bỏ các mã HTML từ chúng. Người bạn chat phải nằm trong danh sách "
+"những người bạn chat của bạn và được thiết lập như người dùng SIM."
 
-#: ../slashexec/slashexec.c:154
+#: ../slashexec/slashexec.c:174
 #, c-format
 msgid "Unable to parse \"%s\""
 msgstr "Không thể phân tích ngữ pháp \"%s\""
 
-#: ../slashexec/slashexec.c:165
+#: ../slashexec/slashexec.c:185
 #, c-format
 msgid "Parse error message: %s"
 msgstr "Kiểm tra thông điệp bị lỗi: %s"
 
-#: ../slashexec/slashexec.c:195
+#: ../slashexec/slashexec.c:215
 #, c-format
 msgid "Unable to execute \"%s\""
 msgstr "Không thể thực thi \"%s\""
 
-#: ../slashexec/slashexec.c:206
+#: ../slashexec/slashexec.c:226
 #, c-format
 msgid "Execute error message: %s"
 msgstr "Thực thi thông điệp lỗi: %s"
 
-#: ../slashexec/slashexec.c:263
+#: ../slashexec/slashexec.c:295
 msgid "There was an error executing your command."
 msgstr "Lỗi xảy ra khi thực hiện câu lệnh."
 
 #. I really want to eventually make this cleaner, like by making it
 #. * change the actual message that gets printed to the conv window...
-#: ../slashexec/slashexec.c:330
+#: ../slashexec/slashexec.c:362
 #, c-format
 msgid "The following text was sent: %s"
 msgstr "Văn bản sau đây đã được gửi:%s"
 
-#: ../slashexec/slashexec.c:377
+#: ../slashexec/slashexec.c:409
 msgid ""
 "exec [-o] &lt;command&gt;, runs the command.\n"
-"If the -o flag is used then output is sent to thecurrent conversation; otherwise it is printed to the current text box."
+"If the -o flag is used then output is sent to thecurrent conversation; "
+"otherwise it is printed to the current text box."
 msgstr ""
 "exec [-o] &lt;câu_lệnh&gt;, chạy thực thi câu lệnh câu_lệnh.\n"
-"Nếu cờ -o được sử dụng thì kết quả sẽ gửi đến cuộc trò chuyện hiện tại ngược lại nó được ghi ra ở hộp văn bản hiện tại."
+"Nếu cờ -o được sử dụng thì kết quả sẽ gửi đến cuộc trò chuyện hiện tại ngược "
+"lại nó được ghi ra ở hộp văn bản hiện tại."
 
-#: ../slashexec/slashexec.c:428
+#: ../slashexec/slashexec.c:460
 msgid "Execute commands starting with: "
 msgstr "Thực hiện câu lệnh bắt đầu với:"
 
-#: ../slashexec/slashexec.c:432
-msgid "/exec Command (/exec some_command)"
+#: ../slashexec/slashexec.c:464
+#, fuzzy
+msgid "/exec Command (/exec someCommand)"
 msgstr "Câu lệnh /exec (/exec câu_lệnh)"
 
-#: ../slashexec/slashexec.c:436
-msgid "Exclamation point (!some_command)"
+#: ../slashexec/slashexec.c:468
+#, fuzzy
+msgid "Exclamation point (!someCommand)"
 msgstr "Dấu chấm cảm (!câu_lệnh)"
 
-#: ../slashexec/slashexec.c:494
+#: ../slashexec/slashexec.c:526
 msgid "/exec a la UNIX IRC CLI"
 msgstr "/exec tương thích với UNIX IRC CLI"
 
-#: ../slashexec/slashexec.c:495
-msgid "A plugin that adds the /exec command line interpreter like most UNIX/Linux IRC clients have.  Also included is the ability to execute commands with an exclamation point (!uptime, for instance).\n"
-msgstr "Phần bổ sung đã thêm trình thông dịch dòng lệnh /exec gần giống như các trình khách của UNIX/Linux. Cũng thêm vào khả năng thực thi các câu lệnh với dấu chấm cảm (ví dụ !uptime).\n"
+#: ../slashexec/slashexec.c:527
+msgid ""
+"A plugin that adds the /exec command line interpreter like most UNIX/Linux "
+"IRC clients have.  Also included is the ability to execute commands with an "
+"exclamation point (!uptime, for instance).\n"
+msgstr ""
+"Phần bổ sung đã thêm trình thông dịch dòng lệnh /exec gần giống như các "
+"trình khách của UNIX/Linux. Cũng thêm vào khả năng thực thi các câu lệnh với "
+"dấu chấm cảm (ví dụ !uptime).\n"
 
-#: ../snpp/snpp.c:350
+#: ../smartear/gtksmartear.c:51
+#, fuzzy
+msgid "SmartEar Options"
+msgstr "Các tuỳ chọn"
+
+#: ../smartear/gtksmartear.c:112
+msgid "SmartEar"
+msgstr ""
+
+#: ../smartear/gtksmartear.c:113
+msgid "The GTK+ (Pidgin) component of the SmartEar plugin suite"
+msgstr ""
+
+#: ../smartear/gtksmartear.c:114
+msgid ""
+"This plugin provides the Pidgin interface to the SmartEar plugin suite's "
+"functionality.  The suite allows you to specify sounds per-buddy, per-"
+"contact, or per-group for specific events."
+msgstr ""
+
+#: ../smartear/smartear.c:261
+msgid "Smart Ear - Hidden Core Plugin"
+msgstr ""
+
+#: ../smartear/smartear.c:262 ../smartear/smartear.c:263
+msgid "The Core component of the Smart Ear plugins"
+msgstr ""
+
+#: ../snpp/snpp.c:353
 msgid "Couldn't connect to SNPP server"
 msgstr "Không thể kết nối máy chủ SNPP "
 
-#: ../snpp/snpp.c:582
-#: ../snpp/snpp.c:583
+#: ../snpp/snpp.c:594
+msgid "SNPP"
+msgstr ""
+
+#: ../snpp/snpp.c:595
 msgid "SNPP Plugin"
 msgstr "Phần bổ sung SNPP"
 
-#: ../snpp/snpp.c:585
-msgid "Allows libpurple to send messages over the Simple Network Paging Protocol (SNPP)."
+#: ../snpp/snpp.c:597
+msgid ""
+"Allows libpurple to send messages over the Simple Network Paging Protocol "
+"(SNPP)."
 msgstr "Cho phép libpurple gửi thông điệp thông qua SNPP."
 
-#: ../sslinfo/sslinfo.c:66
+#: ../splitter/splitter.c:181
+msgid "Unable to send message: The message is too large."
+msgstr ""
+
+#: ../splitter/splitter.c:184 ../splitter/splitter.c:197
+#, fuzzy, c-format
+msgid "Unable to send message to %s."
+msgstr "Nhập vào một thông điệp để gửi"
+
+#: ../splitter/splitter.c:185
+#, fuzzy
+msgid "The message is too large."
+msgstr "_Gửi thông điệp cho một người bạn"
+
+#: ../splitter/splitter.c:194
+#, fuzzy
+msgid "Unable to send message."
+msgstr "Không thể phân tích ngữ pháp \"%s\""
+
+#: ../splitter/splitter.c:553
+#, fuzzy
+msgid "Message Splitter"
+msgstr "Thông điệp"
+
+#: ../splitter/splitter.c:554
+msgid ""
+"Splits a large outgoing message into smaller messages of a specified size."
+msgstr ""
+
+#: ../sslinfo/sslinfo.c:67
 #, c-format
 msgid "<b>Name:</b> %s<br>"
 msgstr "<b>Tên:</b> %s<br>"
 
-#: ../sslinfo/sslinfo.c:73
+#: ../sslinfo/sslinfo.c:74
 #, c-format
 msgid "<b>Version:</b> %s<br>"
 msgstr "<b>Phiên bản:</b> %s<br>"
 
-#: ../sslinfo/sslinfo.c:80
+#: ../sslinfo/sslinfo.c:81
 #, c-format
 msgid "<b>Author:</b> %s<br>"
 msgstr "<b>Tác giả:</b> %s<br>"
 
-#: ../sslinfo/sslinfo.c:85
-#: ../sslinfo/sslinfo.c:141
+#: ../sslinfo/sslinfo.c:86 ../sslinfo/sslinfo.c:142
 msgid "SSL Info"
 msgstr "Thông tin SSL"
 
-#: ../sslinfo/sslinfo.c:96
+#: ../sslinfo/sslinfo.c:97
 msgid "Get SSL info"
 msgstr "Lấy thông tin SSL"
 
-#: ../sslinfo/sslinfo.c:142
+#: ../sslinfo/sslinfo.c:143
 msgid "Displays info about your currently loaded SSL plugin"
 msgstr "Trình bày thông tin về phần bổ sung SSL đang được nạp của bạn"
 
-#: ../sslinfo/sslinfo.c:143
+#: ../sslinfo/sslinfo.c:144
 msgid "Displays info about your currently loaded SSL plugin."
 msgstr "Trình bày thông tin về phần bổ sung SSL đang được nạp của bạn"
 
-#: ../stocker/stocker.c:152
+#: ../stocker/stocker.c:403
 msgid "Stocker"
 msgstr "Trình quảng cáo"
 
-#: ../stocker/stocker.c:153
+#: ../stocker/stocker.c:404
 msgid "A stock ticker"
 msgstr "Khung quảng cáo"
 
-#: ../stocker/stocker.c:155
-msgid "Adds a stock ticker similar to the one in the Windows AIM client to the bottom of the buddy list."
-msgstr "Thêm khung quảng cáo giống như trong trình khách Windows AIM ở cuối danh sách bạn chat"
+#: ../stocker/stocker.c:406
+msgid ""
+"Adds a stock ticker similar to the one in the Windows AIM client to the "
+"bottom of the buddy list."
+msgstr ""
+"Thêm khung quảng cáo giống như trong trình khách Windows AIM ở cuối danh "
+"sách bạn chat"
 
 #. *********************************
 #. * symbols frame
 #. ********************************
-#: ../stocker/stocker_prefs.c:242
+#: ../stocker/stocker_prefs.c:240
 msgid "Symbols"
 msgstr "Các ký hiệu"
 
-#: ../stocker/stocker_prefs.c:254
+#: ../stocker/stocker_prefs.c:252
 msgid "Symbol:"
 msgstr "Ký hiệu:"
 
 #. *********************************
 #. * options frame
 #. ********************************
-#: ../stocker/stocker_prefs.c:316
+#: ../stocker/stocker_prefs.c:314
 msgid "Options"
 msgstr "Các tuỳ chọn"
 
-#: ../switchspell/switchspell.c:113
+#: ../switchspell/switchspell.c:154
 msgid "Spe_ll Check"
 msgstr "_Kiểm tra chính tả"
 
-#: ../switchspell/switchspell.c:300
+#: ../switchspell/switchspell.c:357
 msgid "Switch Spell"
 msgstr "Chuyển chính tả"
 
-#: ../switchspell/switchspell.c:301
-#: ../switchspell/switchspell.c:302
+#: ../switchspell/switchspell.c:358 ../switchspell/switchspell.c:359
 msgid "Switch Spell Checker Language"
 msgstr "Chuyển ngôn ngữ bộ kiểm tra lỗi chính tả"
 
-#: ../talkfilters/talkfilters.c:171
+#: ../talkfilters/talkfilters.c:172
 msgid "_Talkfilters"
 msgstr "_Các bộ lọc trò chuyện"
 
-#: ../talkfilters/talkfilters.c:184
-#: ../talkfilters/talkfilters.c:339
+#: ../talkfilters/talkfilters.c:185 ../talkfilters/talkfilters.c:345
 msgid "(None)"
 msgstr "(Không)"
 
-#: ../talkfilters/talkfilters.c:333
+#: ../talkfilters/talkfilters.c:339
 msgid "Talk Filters"
 msgstr "Các bộ lọc trò chuyện"
 
-#: ../talkfilters/talkfilters.c:336
+#: ../talkfilters/talkfilters.c:342
 msgid "Active filter:"
 msgstr "Bộ lọc đang hoạt động:"
 
-#: ../talkfilters/talkfilters.c:397
+#: ../talkfilters/talkfilters.c:403
 msgid "GNU Talk Filters"
 msgstr "Các bộ lọc trò chuyện của GNU"
 
-#: ../talkfilters/talkfilters.c:399
+#: ../talkfilters/talkfilters.c:405
 msgid "Translates text in outgoing messages into humorous dialects."
 msgstr "Dịch văn bản trong các thông điệp gửi đi sang một dạng hóm hỉnh hơn."
 
-#: ../talkfilters/talkfilters.c:401
-msgid "The GNU Talk Filters are filter programs that convert ordinary English text into text that mimics a stereotyped or otherwise humorous dialect. These filters have been in the public domain for many years, and have been made available as a single integrated package. The filters include austro, b1ff, brooklyn, chef, cockney, drawl, dubya, fudd, funetak, jethro, jive, kraut, pansy, pirate, postmodern, redneck, valspeak, and warez."
-msgstr "Các bộ lọc trò chuyện của GNU là chương trình lọc, nó chuyển những văn bản Tiếng Anh bình thường sang dạng bắt chước một phong cách nào đó hay dạng khác hóm hỉnh hơn. Những bộ lọc này ở những nơi công cộng rất nhiều năm và được đóng gói vào thành một gói riêng. Các bộ locj bao gồm austro, b1ff, brooklyn,chef, cockney, drawl, dubya, fudd, funetak, jethro, jive, kraut, pansy, pirate, postmodern,redneck, valspeak avf warez."
+#: ../talkfilters/talkfilters.c:407
+msgid ""
+"The GNU Talk Filters are filter programs that convert ordinary English text "
+"into text that mimics a stereotyped or otherwise humorous dialect. These "
+"filters have been in the public domain for many years, and have been made "
+"available as a single integrated package. The filters include austro, b1ff, "
+"brooklyn, chef, cockney, drawl, dubya, fudd, funetak, jethro, jive, kraut, "
+"pansy, pirate, postmodern, redneck, valspeak, and warez."
+msgstr ""
+"Các bộ lọc trò chuyện của GNU là chương trình lọc, nó chuyển những văn bản "
+"Tiếng Anh bình thường sang dạng bắt chước một phong cách nào đó hay dạng "
+"khác hóm hỉnh hơn. Những bộ lọc này ở những nơi công cộng rất nhiều năm và "
+"được đóng gói vào thành một gói riêng. Các bộ locj bao gồm austro, b1ff, "
+"brooklyn,chef, cockney, drawl, dubya, fudd, funetak, jethro, jive, kraut, "
+"pansy, pirate, postmodern,redneck, valspeak avf warez."
 
-#: ../timelog/log-widget.c:224
+#: ../timelog/log-widget.c:226
 #, c-format
 msgid "Conversation in %s on %s"
 msgstr "Trao đổi trong %s vào ngày %s"
 
-#: ../timelog/log-widget.c:226
+#: ../timelog/log-widget.c:228
 #, c-format
 msgid "Conversation with %s on %s"
 msgstr "Trao đổi với %s vào ngày %s"
 
 #. No logs were found.
-#: ../timelog/log-widget.c:288
+#: ../timelog/log-widget.c:290
 msgid "No logs were found"
 msgstr "Không tìnm thấy thông tin trong sổ theo dõi"
 
-#: ../timelog/range-widget.c:226
+#: ../timelog/range-widget.c:231
 msgid "Start Time"
 msgstr "Thời điểm bắt đầu"
 
-#: ../timelog/range-widget.c:230
+#: ../timelog/range-widget.c:235
 msgid "End Time"
 msgstr "Thời điểm kết thúc"
 
-#: ../timelog/range-widget.c:330
+#: ../timelog/range-widget.c:335
 msgid "Select Time Range"
 msgstr "Chọn khoảng thời gian"
 
@@ -2156,57 +3537,357 @@ msgstr "Chọn Tài khoản/Thời gian"
 #. *< version
 #. *  summary
 #. *  desc
-#: ../timelog/timelog.c:171
-#: ../timelog/timelog.c:173
+#: ../timelog/timelog.c:171 ../timelog/timelog.c:173
 msgid "Allows the viewing of Pidgin logs within a specific time range"
 msgstr "Cho phép xem sổ theo dõi Pidgin trong khoảng thời gian chỉ ra"
 
-#: ../timelog/timelog.h:28
+#: ../timelog/timelog.h:27
 msgid "TimeLog"
 msgstr "Theo dõi thời gian"
 
-#: ../xchat-chats/xchat-chats.c:451
+#: ../xchat-chats/xchat-chats.c:490
 msgid "XChat Chats"
 msgstr "Chat XChat"
 
-#: ../xchat-chats/xchat-chats.c:452
+#: ../xchat-chats/xchat-chats.c:491
 msgid "XChat-like chats with Pidgin"
 msgstr "Chat giống XChat cùng Pidgin"
 
-#: ../xchat-chats/xchat-chats.c:453
+#: ../xchat-chats/xchat-chats.c:492
 msgid "You can chat in Pidgin using XChat's indented view."
 msgstr "Bạn có thể chat Pidgin sử dụng giao diện XChat."
 
+#: ../xmmsremote/xmmsremote.c:368
+msgid "Please start XMMS"
+msgstr ""
+
+#. play
+#: ../xmmsremote/xmmsremote.c:376 ../xmmsremote/xmmsremote.c:509
+msgid "Play"
+msgstr ""
+
+#. pause
+#: ../xmmsremote/xmmsremote.c:383 ../xmmsremote/xmmsremote.c:504
+msgid "Pause"
+msgstr ""
+
+#. stop
+#: ../xmmsremote/xmmsremote.c:392 ../xmmsremote/xmmsremote.c:499
+msgid "Stop"
+msgstr ""
+
+#. shuffle
+#: ../xmmsremote/xmmsremote.c:416
+#, fuzzy
+msgid "Shuffle"
+msgstr "Định thời"
+
+#. playlist
+#: ../xmmsremote/xmmsremote.c:424
+msgid "Playlist"
+msgstr ""
+
+#. title
+#: ../xmmsremote/xmmsremote.c:434
+msgid "Display title"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:484 ../xmmsremote/xmmsremote.c:994
+msgid "XMMS Remote Control Options"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:527
+msgid "XMMS Volume Control"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:623 ../xmmsremote/xmmsremote.c:1145
+msgid "XMMS Remote Control"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:753
+msgid "XMMS is not running"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:785
+#, fuzzy
+msgid "unknown argument"
+msgstr "Tham số không hợp lệ!"
+
+#: ../xmmsremote/xmmsremote.c:819
+#, fuzzy
+msgid "Info"
+msgstr "Thông tin SSL"
+
+#: ../xmmsremote/xmmsremote.c:821
+msgid "Info Format:"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:831
+msgid "%T: Song title"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:834
+#, fuzzy, c-format
+msgid "%C: Number of channels"
+msgstr "%N: Số lượng những kẻ tồi"
+
+#: ../xmmsremote/xmmsremote.c:841
+msgid "%P: Current song playlist number"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:844
+msgid "%L: Total songs in the playlist"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:851
+msgid "%t: Total time"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:854
+#, c-format
+msgid "%e: Elapsed time"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:861
+msgid "%r: Remaining time"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:864
+msgid "%V: Current volume"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:871
+#, c-format
+msgid "%f: Frequency in Hz"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:874
+#, c-format
+msgid "%F: Frequency in kHz"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:881
+msgid "%b: Bitrate in bps"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:884
+msgid "%B: Bitrate in kBps"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:887
+msgid "Appearance"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:889
+msgid "Show playlist in the control menu"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:895
+msgid "Show controls in buddy list"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:901
+#, fuzzy
+msgid "Show controls in conversation windows"
+msgstr "Hiện tất cả các trao đổi đang ẩn"
+
+#: ../xmmsremote/xmmsremote.c:907
+msgid "Show extended controls (Conversation windows only)"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:913
+msgid "Show volume control (Conversation windows only)"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:919
+msgid "Advanced"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:921
+msgid "XMMS instance to control"
+msgstr ""
+
+#. XXX: Translators: leave "xmms" and the argument names untranslated
+#: ../xmmsremote/xmmsremote.c:1017
+msgid ""
+"<pre>xmms &lt;[play][pause][stop][next][prev][repeat][shuffle][show][hide]"
+"[info]&gt;\n"
+"play     Starts playback\n"
+"pause    Pauses playback\n"
+"stop     Stops playback\n"
+"next     Goes to the next song in the playlist\n"
+"prev     Goes to the previous song in the playlist\n"
+"repeat   Toggles repeat\n"
+"shuffle  Toggles shuffling\n"
+"show     Show the XMMS window\n"
+"hide     Hide the XMMS window\n"
+"info     Displays currently playing song in the conversation\n"
+"</pre>"
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:1146
+#, fuzzy
+msgid "Control XMMS from Pidgin conversations"
+msgstr "Hiện các trao đổi đang ẩn"
+
+#: ../xmmsremote/xmmsremote.c:1147
+msgid ""
+"A small plugin that adds a menu or buttons to the menu bars of Pidgin "
+"conversation windows so that you can control XMMS from within Pidgin."
+msgstr ""
+
+#: ../xmmsremote/xmmsremote.c:1155
+msgid "/me is listening to %T"
+msgstr ""
+
+#~ msgid ""
+#~ "Your message will be sent to and possibly annoy EVERYONE on your buddy "
+#~ "list!"
+#~ msgstr ""
+#~ "Thông điệp của bạn sẽ được gửi đến MỌI NGƯỜI trong danh sách bạn chat của "
+#~ "bạn và có lẽ sẽ gây bực mình cho họ"
+
+#~ msgid "Broadcast Spim"
+#~ msgstr "Gửi Spim đến tất cả"
+
+#~ msgid "Broadcast a Message"
+#~ msgstr "Gửi thông điệp cho tất cả"
+
+#~ msgid "Broadcaster"
+#~ msgstr "Chương trình gửi thông điệp cho tất cả"
+
+#~ msgid "Send an IM to everyone on your buddy list."
+#~ msgstr "Gửi một tin nhắn đến mọi người trong danh sách bạn chat của bạn"
+
+#~ msgid ""
+#~ "Adds the ability to send an IM to every Purple Contact on your Buddy List"
+#~ msgstr ""
+#~ "Thêm khả năng có thể gửi một tin nhắn đến mọi liên lạc Purple trong danh "
+#~ "sách chat của bạn.."
+
+#~ msgid "_Timezone"
+#~ msgstr "_Múi giờ"
+
+#~ msgid "Clear setting"
+#~ msgstr "Xoá cấu hình"
+
+#~ msgid "GMT-12"
+#~ msgstr "GMT-12"
+
+#~ msgid "GMT-11"
+#~ msgstr "GMT-11"
+
+#~ msgid "GMT-10"
+#~ msgstr "GMT-10"
+
+#~ msgid "GMT-9"
+#~ msgstr "GMT-9"
+
+#~ msgid "GMT-8"
+#~ msgstr "GMT-8"
+
+#~ msgid "GMT-7"
+#~ msgstr "GMT-7"
+
+#~ msgid "GMT-6"
+#~ msgstr "GMT-6"
+
+#~ msgid "GMT-5"
+#~ msgstr "GMT-5"
+
+#~ msgid "GMT-4"
+#~ msgstr "GMT-4"
+
+#~ msgid "GMT-3"
+#~ msgstr "GMT-3"
+
+#~ msgid "GMT-2"
+#~ msgstr "GMT-2"
+
+#~ msgid "GMT-1"
+#~ msgstr "GMT-1"
+
+#~ msgid "GMT"
+#~ msgstr "GMT"
+
+#~ msgid "GMT+1"
+#~ msgstr "GMT+1"
+
+#~ msgid "GMT+2"
+#~ msgstr "GMT+2"
+
+#~ msgid "GMT+3"
+#~ msgstr "GMT+3"
+
+#~ msgid "GMT+4"
+#~ msgstr "GMT+4"
+
+#~ msgid "GMT+5"
+#~ msgstr "GMT+5"
+
+#~ msgid "GMT+6"
+#~ msgstr "GMT+6"
+
+#~ msgid "GMT+7"
+#~ msgstr "GMT+7"
+
+#~ msgid "GMT+8"
+#~ msgstr "GMT+8"
+
+#~ msgid "GMT+9"
+#~ msgstr "GMT+9"
+
+#~ msgid "GMT+10"
+#~ msgstr "GMT+10"
+
+#~ msgid "GMT+11"
+#~ msgstr "GMT+11"
+
+#~ msgid "GMT+12"
+#~ msgstr "GMT+12"
+
+#~ msgid "Select timezone"
+#~ msgstr "Chọn múi giờ"
+
+#~ msgid "Timezone"
+#~ msgstr "Múi giờ"
+
+#~ msgid "dice [dice] [sides]:  rolls dice number of sides sided dice"
+#~ msgstr "dice [n] [c]: gieo n súc sắc, mỗi súc sắc có c mặt"
+
 #~ msgid "Buddy List Importer"
 #~ msgstr "Importador de Listas de Contactos"
+
 #~ msgid "Buddy List Exporter"
 #~ msgstr "Exportador de Listas de Contactos"
-#~ msgid "Notes"
-#~ msgstr "Notas"
+
 #~ msgid "Enter your notes below..."
 #~ msgstr "Introduzca sus notas..."
-#~ msgid "Edit Notes..."
-#~ msgstr "Editar Notas"
+
 #~ msgid "Buddy Notes"
 #~ msgstr "Notas sobre Contactos"
+
 #~ msgid "Store notes on particular buddies."
 #~ msgstr "Guarda notas sobre los contactos."
+
 #~ msgid "Adds the option to store notes for buddies on your buddy list."
 #~ msgstr "Permite almacenar notas sobre los contactos de la lista."
-#~ msgid "New Line"
-#~ msgstr "Cambio de Línea"
+
 #~ msgid "Prepends a newline to displayed messages."
 #~ msgstr "Añade una línea al principio de los mensajes."
+
 #~ msgid ""
 #~ "Prepends a newline to messages so that the text of the message appears "
 #~ "below the screen name in the conversation window."
 #~ msgstr ""
 #~ "Añade una línea vacía al principio de los mensajes, de forma que el texto "
 #~ "aparezca debajo del nombre en la ventana de conversación."
+
 #~ msgid "Buzz!!."
 #~ msgstr "¡Piii!"
+
 #~ msgid "Please don't press this button again"
 #~ msgstr "Por favor, no vuelva a pulsar este botón"
+
 #~ msgid "Buzz!!"
 #~ msgstr "¡Piii!"
-

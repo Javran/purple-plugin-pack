@@ -69,6 +69,7 @@ msglen/msglen.c
 mystatusbox/mystatusbox.c
 napster/napster.c
 nicksaid/nicksaid.c
+nomobility/nomobility.c
 oldlogger/oldlogger.c
 plonkers/plonkers.c
 schedule/pidgin-schedule.c

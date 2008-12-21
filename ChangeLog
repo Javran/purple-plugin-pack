@@ -5,10 +5,13 @@ Version 2.5.0: ??/??/??
 	  newer Windows AIM versions when importing.
 	* Added Vietnamese translation - thanks Nguyen Huu Phuoc 
 	* findip and groupmsg are now default plugins.
-	* Added nomobility plugin
+	* Added nomobility plugin (does not yet work, doesn't build by default)
 	* Fixed --with-plugins (yet again...)
-	* Added support for 'or' dependencies to clean up the switchspell fiasco.
-	  Please let us know if you continue to fail to build switchspell.
+	* Support dependency scenarios where dependency A OR dependency B is the
+	  correct solution.  This fixes dependencies for switchspell, which can
+	  use GTKSpell with either the Enchant backend or the aspell backend.
+	  Let us know if you still have trouble building switchspell but have
+	  the correct development packages installed.
 
 Version 2.4.0: 08/03/08
 	* Rewrote the build system to make our lifes easier, as well as support
