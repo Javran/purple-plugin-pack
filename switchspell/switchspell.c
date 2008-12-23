@@ -35,7 +35,7 @@
 #include <gtkconv.h>
 #include <gtkplugin.h>
 
-#ifdef USE_ENCHANT
+#ifdef HAVE_ENCHANT
 #include <enchant.h>
 #else
 #include <aspell.h>
@@ -98,7 +98,7 @@ menu_conv_use_dict_cb(GObject *m, gpointer data)
 		purple_blist_node_set_string(node, "switchspell", lang);
 }
 
-#ifdef USE_ENCHANT
+#ifdef HAVE_ENCHANT
 struct nufan
 {
 	GSList *group;
@@ -131,7 +131,7 @@ regenerate_switchspell_menu(PidginConversation *gtkconv)
 	PidginWindow *win;
 	GtkWidget *menu;
 	GtkWidget *mitem;
-#ifdef USE_ENCHANT
+#ifdef HAVE_ENCHANT
 	struct nufan user_data;
 	EnchantBroker *eb;
 #else
@@ -162,7 +162,7 @@ regenerate_switchspell_menu(PidginConversation *gtkconv)
 	menu = gtk_menu_new();
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(mitem), menu);
 
-#ifdef USE_ENCHANT
+#ifdef HAVE_ENCHANT
 	user_data.group = NULL;
 	user_data.menu = menu;
 	user_data.win = win;

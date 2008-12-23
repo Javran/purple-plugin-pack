@@ -294,8 +294,10 @@ if test x"$gtkspell" = x"yes" ; then
 	if test $? -eq 0 ; then
 		AC_MSG_RESULT([enchant])
 
-		PKG_CHECK_MODULES(ENCHANT, [enchant],,[gtkspell=no])
-		ENCHANT_CFLAGS="-DUSE_ENCHANT $ENCHANT_CFLAGS"
+		PKG_CHECK_MODULES(ENCHANT,
+						  [enchant],
+						  [BUILD_SWITCH_SPELL=yes],
+						  [BUILD_SWITCH_SPELL=no])
 
 		AC_DEFINE(HAVE_ENCHANT, 1, [define if we've found enchant])
 
@@ -324,9 +326,9 @@ if test x"$BUILD_SWITCH_SPELL" = x"no" ; then
 	ENCHANT_CFLAGS=""
 	ENCHANT_LIBS=""
 
-	AM_CONDITIONAL(BUILD_SWITCH_SPELL, true)
-else
 	AM_CONDITIONAL(BUILD_SWITCH_SPELL, false)
+else
+	AM_CONDITIONAL(BUILD_SWITCH_SPELL, true)
 fi
 
 AC_SUBST(ASPELL_CFLAGS)
