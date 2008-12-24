@@ -19,6 +19,10 @@ DEPENDENCIES=""
 dnl #######################################################################
 dnl # Setup libtool
 dnl #######################################################################
+m4_defun([_LT_AC_LANG_CXX_CONFIG], [:])
+m4_defun([_LT_AC_LANG_F77_CONFIG], [:])
+m4_defun([_LT_AC_LANG_GCJ_CONFIG], [:])
+m4_defun([_LT_AC_LANG_RC_CONFIG], [:])
 AM_PROG_LIBTOOL
 LIBTOOL="$LIBTOOL --silent"
 
