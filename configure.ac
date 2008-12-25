@@ -43,6 +43,17 @@ AH_BOTTOM([
 ])
 
 dnl #######################################################################
+dnl # Good ol' gettext
+dnl #######################################################################
+AC_PROG_INTLTOOL
+
+GETTEXT_PACKAGE=plugin_pack
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, ["$GETTEXT_PACKAGE"], [Define the gettext package to be used.])
+ALL_LINGUAS="en_AU es_ES fr vi"
+AM_GLIB_GNU_GETTEXT
+
+dnl #######################################################################
 dnl # Look for the C compiler
 dnl #######################################################################
 CFLAGS_save="$CFLAGS"
@@ -377,19 +388,6 @@ dnl #######################################################################
 AC_ARG_ENABLE(nls, AC_HELP_STRING([--enable-nls], [enable installation of translation files]), enable_i18n="$enableval", enable_i18n=yes)
 
 AM_CONDITIONAL(INSTALL_I18N, test "x$enable_i18n" = "xyes")
-
-if "x$enable_i18n" = "xyes" ; then
-	dnl #######################################################################
-	dnl # Good ol' gettext
-	dnl #######################################################################
-	AC_PROG_INTLTOOL
-
-	GETTEXT_PACKAGE=plugin_pack
-	AC_SUBST(GETTEXT_PACKAGE)
-	AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, ["$GETTEXT_PACKAGE"], [Define the gettext package to be used.])
-	ALL_LINGUAS="en_AU es_ES fr vi"
-	AM_GLIB_GNU_GETTEXT
-fi
 
 dnl #######################################################################
 dnl # Version stuff
