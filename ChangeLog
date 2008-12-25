@@ -1,5 +1,7 @@
 Version 2.5.1: ??/??/??
 	* Really fixed switch spell now...
+	* Fixed configure script such that intltool and friends aren't necessary
+	  when configuring with --disable-nls.
 
 Version 2.5.0: 12/20/08
 	* Fixed some crashes in autprofile related to old preference paths
