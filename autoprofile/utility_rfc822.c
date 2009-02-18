@@ -159,8 +159,10 @@ time_t rfc_parse_date_time (const char *data) {
 
   result = mktime(&parsed_datetime);
 
+#ifndef __BSD_VISIBLE
   if (rfc_parse_was_gmt ())
     result -= timezone;
+#endif
 
   return result;
 }
