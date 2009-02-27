@@ -1,7 +1,7 @@
 /*
  * XMPP Priority - Add Account Options to adjust the default priority values
  *                 for XMPP accounts.
- * Copyright (C) 2004-2009 Paul Aurich <paul@aurich.com>
+ * Copyright (C) 2009 Paul Aurich <paul@aurich.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
