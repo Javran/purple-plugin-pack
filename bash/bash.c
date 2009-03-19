@@ -36,8 +36,8 @@
 #include <debug.h>
 #include <plugin.h>
 
-#define BASH_QUOTES 636661
-#define QDB_QUOTES 58841
+#define BASH_QUOTES 881844
+#define QDB_QUOTES 294961
 
 static PurpleCmdId bash, qdb;
 
