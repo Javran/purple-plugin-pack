@@ -313,6 +313,8 @@ static void authserv_identify(const char *command, PurpleConnection *connection,
 
 		serv_send_im(connection, authserv, authentication, 0);
 
+		g_free(authentication);
+
 		/* Register a timeout... If we don't get the expected response from AuthServ,
 		 * we need to stop suppressing messages from it at some point or the user
 		 * could be very confused.
@@ -363,6 +365,7 @@ static void jeux_identify(PurpleConnection *connection, IRCHelperStateFlags stat
 			g_free(error);
 		}
 		g_free(conv);
+		g_free(authentication);
 
 		/* Register a timeout... If we don't get the expected response from AuthServ,
 		 * we need to stop suppressing messages from it at some point or the user
