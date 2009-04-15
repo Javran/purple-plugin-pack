@@ -294,7 +294,7 @@ static void authserv_identify(const char *command, PurpleConnection *connection,
 		const gchar *authserv = NICK_AUTHSERV;
 		gchar *authentication = g_strconcat(command, " ", username, " ", password, NULL);
 
-		purple_debug_misc(PLUGIN_STATIC_NAME, "Sending authentication: %s\n", authentication);
+		purple_debug_misc(PLUGIN_STATIC_NAME, "Sending authentication: %s %s <PASSWORD>\n", command, username);
 
 		g_hash_table_insert(states,
 		                    connection->proto_data,
@@ -353,7 +353,7 @@ static void jeux_identify(PurpleConnection *connection, IRCHelperStateFlags stat
 		PurpleConversation *conv = get_conversation(account);
 		gchar *error;
 
-		purple_debug_misc(PLUGIN_STATIC_NAME, "Sending authentication: %s\n", authentication);
+		purple_debug_misc(PLUGIN_STATIC_NAME, "Sending authentication: quote %s login %s <PASSWORD>\n", NICK_JEUX_Z, username);
 
 		g_hash_table_insert(states,
 		                    connection->proto_data,
@@ -417,8 +417,13 @@ static void nickserv_do_identify(char *authentication, gpointer proto_data, Purp
 {
 	PurpleConversation *conv = get_conversation(purple_connection_get_account(gc));
 	gchar *error;
+	gchar *tmp;
 
-	purple_debug_misc(PLUGIN_STATIC_NAME, "Sending authentication: %s\n", authentication);
+	purple_debug_misc(PLUGIN_STATIC_NAME, "Sending authentication: %s <PASSWORD>\n", authentication);
+
+	tmp = g_strconcat(authentication, " ", nickpassword, NULL);
+	g_free(authentication);
+	authentication = tmp;
 
 	if (purple_cmd_do_command(conv, authentication, authentication, &error) != PURPLE_CMD_STATUS_OK)
 	{
@@ -438,13 +443,13 @@ static void nickserv_do_identify(char *authentication, gpointer proto_data, Purp
 
 static void nickserv_identify(gpointer proto_data, PurpleConnection *gc, const char *nickpassword)
 {
-	char *authentication = g_strdup_printf("quote %s IDENTIFY %s", NICK_NICKSERV, nickpassword);
+	char *authentication = g_strdup_printf("quote %s IDENTIFY", NICK_NICKSERV);
 	nickserv_do_identify(authentication, proto_data, gc, nickpassword);
 }
 
 static void nickserv_msg_identify(const char *command, gpointer proto_data, PurpleConnection *gc, const char *nickpassword)
 {
-	char *authentication = g_strdup_printf("quote PRIVMSG %s : %s %s", NICK_NICKSERV, command, nickpassword);
+	char *authentication = g_strdup_printf("quote PRIVMSG %s : %s", NICK_NICKSERV, command);
 	nickserv_do_identify(authentication, proto_data, gc, nickpassword);
 }
 
@@ -597,7 +602,7 @@ static void signed_on_cb(PurpleConnection *connection)
 				command = g_strdup_printf("quote %s GHOST %s %s", NICK_NICKSERV, userparts[0], nickpassword);
 				conv = get_conversation(account);
 
-				purple_debug_misc(PLUGIN_STATIC_NAME, "Sending command: %s\n", command);
+				purple_debug_misc(PLUGIN_STATIC_NAME, "Sending command: quote %s GHOST %s <PASSWORD>\n", NICK_NICKSERV, userparts[0]);
 
 				if (purple_cmd_do_command(conv, command, command, &error) != PURPLE_CMD_STATUS_OK)
 				{
