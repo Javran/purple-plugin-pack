@@ -114,7 +114,7 @@ enchant_dict_desc_cb(const char * const lang_tag, const char * const provider_na
 	GtkWidget *menu = ((struct nufan *)user_data)->menu;
 	PidginWindow *win = ((struct nufan *)user_data)->win;
 
-	GtkWidget *menuitem = gtk_radio_menu_item_new_with_label(NULL, lang_tag);
+	GtkWidget *menuitem = gtk_radio_menu_item_new_with_label(((struct nufan *)user_data)->group, lang_tag);
 	((struct nufan *)user_data)->group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(menuitem));
 	g_object_set_data(G_OBJECT(menuitem), "user_data", win);
 	g_object_set_data_full(G_OBJECT(menuitem), "lang", g_strdup(lang_tag), g_free);
@@ -216,11 +216,6 @@ update_switchspell_selection(PidginConversation *gtkconv)
 	menu = gtk_menu_item_get_submenu(GTK_MENU_ITEM(menu));
 
 	curlang = g_strdup(g_object_get_data(G_OBJECT(gtkconv->entry), PROP_LANG));
-
-	items = gtk_container_get_children(GTK_CONTAINER(menu));
-	g_list_foreach(items,
-				(GFunc)gtk_check_menu_item_set_active, GINT_TO_POINTER(FALSE));
-	g_list_free(items);
 
 	items = gtk_container_get_children(GTK_CONTAINER(menu));
 	for (item = items; item; item = item->next) {
