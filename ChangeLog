@@ -1,5 +1,7 @@
 Version 2.6.0: ??/??/??
-	* Fix some issues with switchspell (#543, #520, #554).
+	* Fix grouping of radio buttons in switchspell menu for enchant-enabled
+	  GtkSpell.  This has the side effect of eliminating slow tab switching
+	  and multiple language switches during menu drawing.  (Basil Gor)
 
 Version 2.5.1: 12/25/08
 	* Really fixed switch spell now...
