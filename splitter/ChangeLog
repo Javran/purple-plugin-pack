@@ -1,0 +1,71 @@
+splitter v0.95
+Ike Gingerich <ike_@users.sourceforge.net>
+
+2007-05-04 21:21:15 [v0.95 for 2.0.0]
+
+	* trimmed a good amount of unnecessary code and made with the 
+	  gaim -> pidgin conversion.
+
+2006-04-15 15:55:10 [v0.95]
+
+	* now using Pango to split the message appropriately in different languages
+
+2006-04-13 20:33:07 [v0.93]
+
+	* fixed a bug where border characters were sometimes eaten as whitespace
+	* no longer processes empty slices
+
+2006-04-13 16:47:22 [v0.92]
+
+	* replaced html slicing algorithm with a modified version of Gaim's
+	* corrected a non-static function to be static
+	* internal refactoring
+
+2006-04-11 09:52:29 [v0.91]
+
+	* fixed a bug with escaped HTML characters counting for more than one
+	  character (thanks xx3nvyxx)
+
+2006-04-11 01:25:06 [v0.9]
+
+	* added continuing of HTML formatting between splits
+	* removed "split around whole words" option and made default behavior
+
+2005-10-04 23:39:59 [v0.8]
+
+	* fixed a tiny but lethal and frustrating crash related to word wrapping
+	  (big thanks to itchysoft_ant and mgilb81)
+	* added additional NULL pointer checking
+
+2005-09-23 18:37:24 [v0.7]
+
+	* chat support added
+
+2005-09-23 09:37:24 [v0.6]
+
+	* you can now specify delay between message sends
+
+2005-09-12 04:40:16 [v0.5]
+
+	* splits on whitespace where possible
+	* preferences option added to mediate splitting on whitespace
+
+2005-07-27 00:19:21 [v0.4]
+
+	* sends messages in the same manner as gaim:
+		- emits "sent-im-msg" signal
+		- takes into consideration HTML preferences
+	* much more robust error checking
+
+2005-07-22 07:44:06 [v0.3]
+
+	* big memory allocation bug fixed that could cause a crash in certain situations
+
+2005-07-21 20:29:44 [v0.2]
+
+	* alias is displayed in conversation window instead of username
+	  (thanks rageboy04)
+
+2005-07-21 03:50:14 [v0.1]
+
+	* initial release of plugin

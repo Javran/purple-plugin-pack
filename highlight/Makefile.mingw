@@ -1,0 +1,12 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for highlight plugin.
+#
+
+PP_TOP :=		..
+
+PP = highlight
+
+include $(PP_TOP)/win_pp.mak
+

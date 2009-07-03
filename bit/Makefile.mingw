@@ -1,0 +1,12 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for bit plugin.
+#
+
+PP_TOP :=		..
+
+PP = bit
+
+include $(PP_TOP)/win_pp.mak
+

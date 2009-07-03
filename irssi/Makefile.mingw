@@ -1,0 +1,20 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for irssi plugin.
+#
+
+PP_TOP :=		..
+
+PP = irssi
+
+PP_SRC := \
+	datechange.c \
+	layout.c \
+	lastlog.c \
+	textfmt.c \
+	window.c \
+	irssi.c
+
+include $(PP_TOP)/win_pp.mak
+

@@ -1,0 +1,12 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for sepandtab plugin.
+#
+
+PP_TOP :=		..
+
+PP = sepandtab
+
+include $(PP_TOP)/win_pp.mak
+

@@ -1,0 +1,37 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for autoprofile plugin.
+#
+
+PP_TOP :=		..
+
+PP = autoprofile
+
+PP_SRC := \
+	autoaway.c \
+	autoprofile.c \
+	autoreply.c \
+	comp_countdownup.c \
+	comp_executable.c \
+	comp_http.c \
+	comp_logstats.c \
+	comp_logstats_gtk.c \
+	component.c \
+	comp_quotation.c \
+	comp_rss.c \
+	comp_rss_parser.c \
+	comp_rss_xanga.c \
+	comp_textfile.c \
+	comp_timestamp.c \
+	comp_uptime.c \
+	gtk_actions.c \
+	gtk_away_msgs.c \
+	gtk_widget.c \
+	preferences.c \
+	utility.c \
+	utility_rfc822.c \
+	widget.c \
+
+include $(PP_TOP)/win_pp.mak
+

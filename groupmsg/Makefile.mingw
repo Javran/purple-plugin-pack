@@ -1,0 +1,11 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for groupmsg plugin.
+#
+
+PP_TOP :=		..
+
+PP = groupmsg
+
+include $(PP_TOP)/win_pp.mak

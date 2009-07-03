@@ -1,0 +1,12 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for eight_ball plugin.
+#
+
+PP_TOP :=		..
+
+PP = eight_ball
+
+include $(PP_TOP)/win_pp.mak
+
