@@ -194,7 +194,6 @@ written_msg(PurpleAccount *account, const char *who, const char *message,
 					prefix = NULL;  /* The prpl knows about auto-response. So ignore the prefix string. */
 				}
 				send = g_strdup_printf("%s%s", prefix ? prefix : "", reply);
-				serv_send_im(gc, who, send, flag);
 				purple_conv_im_send_with_flags(PURPLE_CONV_IM(conv), send, flag);
 				g_free(send);
 			}
