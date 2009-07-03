@@ -195,7 +195,7 @@ written_msg(PurpleAccount *account, const char *who, const char *message,
 				}
 				send = g_strdup_printf("%s%s", prefix ? prefix : "", reply);
 				serv_send_im(gc, who, send, flag);
-				purple_conv_im_send_with_flags(PURPLE_CONV_IM(conv), NULL, send, flag);
+				purple_conv_im_send_with_flags(PURPLE_CONV_IM(conv), send, flag);
 				g_free(send);
 			}
 		}
