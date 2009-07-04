@@ -1,7 +1,7 @@
 /*
  * XMPP Priority - Add Account Options to adjust the default priority values
  *                 for XMPP accounts.
- * Copyright (C) 2009 Paul Aurich <paul@aurich.com>
+ * Copyright (C) 2009 Paul Aurich <paul@darkrain42.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -23,7 +23,7 @@
 
 #define PLUGIN_STATIC_NAME  "xmppprio"
 #define PLUGIN_ID           "core-darkrain42-" PLUGIN_STATIC_NAME
-#define PLUGIN_AUTHOR       "Paul Aurich <paul@aurich.com>"
+#define PLUGIN_AUTHOR       "Paul Aurich <paul@darkrain42.org>"
 
 /* Purple headers */
 #include <account.h>
