@@ -386,6 +386,9 @@ static void
 se_sending_chat_msg_cb(PurpleAccount *account, char **message, int id)
 {
 	PurpleConversation *conv;
+	if (message == NULL || *message == NULL)  /* It's possible if some other callback to
+	                                           to the signal resets the message */
+		return;
 	conv = purple_find_chat(account->gc, id);
 	se_sending_msg_helper(conv, message);
 }
