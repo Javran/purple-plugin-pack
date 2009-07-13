@@ -47,6 +47,6 @@ extern GStaticMutex rss_mutex;
 
 void parse_rss (struct widget *);
 void parse_xanga_rss (struct widget *, gchar *);
-GMarkupParser rss_parser;
+extern GMarkupParser rss_parser;
 
 
