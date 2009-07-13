@@ -102,7 +102,7 @@ GList *actions (PurplePlugin *, gpointer);
 void ap_actions_finish ();
 
 /* Preferences */
-PidginPluginUiInfo ui_info;
+extern PidginPluginUiInfo ui_info;
 void ap_preferences_display ();
 void ap_gtk_prefs_add_summary_option (GtkWidget *);
 GtkWidget *get_account_page ();
