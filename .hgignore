@@ -1,4 +1,18 @@
-.*/?Makefile(\.in)?$
+syntax: glob
+Makefile
+Makefile.in
+*.gmo
+*.la
+*.lo
+*.loT
+*.o
+*.Plo
+*.so
+
+syntax: regexp
+.+/\.deps
+.+/\.libs
+autom4te\.cache
 .*/?.+\.loT
 (pre|pp)_config.h(\.in)?$
 .+\.spec
