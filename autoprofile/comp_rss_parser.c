@@ -258,7 +258,8 @@ GMarkupParser rss_parser =
 };
 
 /* Callback for HTTP data fetcher */
-static void url_callback (gpointer data, const char *text, size_t size)
+static void url_callback (PurpleUtilFetchUrlData *url_data, gpointer data,
+		const char *text, size_t size, const gchar *error_message)
 {
   GMarkupParseContext *context;
   gchar *filtered_text;
