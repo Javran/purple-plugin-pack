@@ -66,6 +66,7 @@ static GList *get_components ()
   /* Add each listed component */
 
   /*
+  XXX BEFORE YOU UNCOMMENT THIS, FIX THE IDENTIFIERS in logstats */
   ret = g_list_append (ret, &logstats);
   */
 
