@@ -101,7 +101,7 @@
 /*#define PP_VERSION "1.0mtn"*/
 
 /* Plugin Pack Website */
-#define PP_WEBSITE "http://purple.guifications.org/trac"
+#define PP_WEBSITE "http://plugins.guifications.org/trac"
 
 #define PP_LOCALEDIR LOCALEDIR
 

@@ -29,7 +29,7 @@ LIBTOOL="$LIBTOOL --silent"
 dnl #######################################################################
 dnl # I'm lazy and figured config.h is the best place for this ;)
 dnl #######################################################################
-AC_DEFINE_UNQUOTED(PP_WEBSITE, "http://purple.guifications.org/trac", [Plugin Pack Website]) 
+AC_DEFINE_UNQUOTED(PP_WEBSITE, "http://plugins.guifications.org/trac", [Plugin Pack Website]) 
 
 dnl #######################################################################
 dnl # Our header
