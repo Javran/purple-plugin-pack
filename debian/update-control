@@ -31,20 +31,5 @@ EOF
 # output the details for pidgin-plugin-pack
 python ../plugin_pack.py debian_description >> ${OUTPUT}
 
-# output the transient packages
-cat << EOF >> ${OUTPUT}
-
-Package: gaim-irchelper
-Architecture: all
-Depends: pidgin-plugin-pack
-Description: IRC extensions for Pidgin (dummy transitional package)
- This plugin enhances the usability of the IRC protocol in Pidgin.
- .
- This dummy package depends upon pidgin-plugin-pack, which provides
- the IRC helper starting with the Debian release codename Lenny. It
- can safely be removed after the upgrade to Lenny is complete.
-
-EOF
-
 # now move the new control file in place
 mv ${OUTPUT} control

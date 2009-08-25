@@ -9,12 +9,12 @@ Package: pidgin-plugin-pack
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Enhances: pidgin, xmms
-Description: 56 useful plugins for Pidgin, Finch, and Purple
+Description: 57 useful plugins for Pidgin, Finch, and Purple
  The Plugin Pack is a collection of many simple-yet-useful plugins for Pidgin,
  Finch, and Purple.  You will find a summary of each plugin below.  For more
  about an individual plugin, please see http://plugins.guifications.org/
  .
- Note: not all 56 of these plugins are currently usable
+ Note: not all 57 of these plugins are currently usable
  .
  Album: Archives buddy icons
  .
@@ -94,6 +94,8 @@ Description: 56 useful plugins for Pidgin, Finch, and Purple
  .
  Nicksaid: Record when someone said your nick in a chat
  .
+ No Mobility: Stops you from messaging mobile users
+ .
  Old Logger: Re-implements the legacy, deficient, logging
  .
  Plonkers: Tell plonkers what you really think
@@ -130,14 +132,3 @@ Description: 56 useful plugins for Pidgin, Finch, and Purple
  .
  .
  Homepage: http://plugins.guifications.org/
-
-Package: gaim-irchelper
-Architecture: all
-Depends: pidgin-plugin-pack
-Description: IRC extensions for Pidgin (dummy transitional package)
- This plugin enhances the usability of the IRC protocol in Pidgin.
- .
- This dummy package depends upon pidgin-plugin-pack, which provides
- the IRC helper starting with the Debian release codename Lenny. It
- can safely be removed after the upgrade to Lenny is complete.
-
