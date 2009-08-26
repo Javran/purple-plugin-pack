@@ -19,7 +19,7 @@ Source: purple-plugin-pack
 Section: net
 Priority: optional
 Maintainer: Benjamin Seidenberg <benjamin@debian.org>
-Build-Depends: debhelper (>= 5), pidgin-dev, pkg-config, libgtk2.0-dev, libglib2.0-dev, libxml-parser-perl
+Build-Depends: debhelper (>= 5), pidgin-dev, pkg-config, libgtk2.0-dev, libglib2.0-dev, libxml-parser-perl, libenchant-dev, libgtkspell-dev
 Standards-Version: 3.8.0
 
 Package: pidgin-plugin-pack

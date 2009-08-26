@@ -1,3 +1,40 @@
+purple-plugin-pack (2.5.1-1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * New Upstream Release (Closes: #475915)
+    + Adds new plugins
+      - enhancedhist (Enhanced History)
+      - colorize (colors messages in a calculated gradient)
+      - splitter (splits messages at configurable length)
+      - google (sends result of a Google "I'm Feeling Lucky" search as a link)
+      - listlog (dumps list of users in a chat to message window for logging)
+      - autoprofile (tools to change profile and status messages)
+      - napster (NAPSTER IM protocol plugin)
+    + Fix crashes in plugins (Closes: #504344)
+      - xchat-chats (would crash Pidgin 2.4.0 and newer)
+      - irc-more (potential double-free caused by typo)
+    + Fix bugs
+      - Missing header include in timelog plugin that prevented proper plugin
+        loading in some configurations.
+      - Various memory leaks in plugins
+      - Commands are properly unregistered when unloading gRIM and eight_ball
+      - Mnemonics are no longer mistakenly interpreted from strings in the
+        preferences window for slashexec
+      - dewysiwygification's debug log messages now properly end lines
+      - slahsexec strips ASCII control characters, fixing disconnects on XMPP
+    + Adds features
+      - listhandler handles "FriendlyName" attributes in AIM-produced .blt files
+      - irssi plugin has preferences to control some elements of behavior
+      - eight_ball has /bollocks command, inspired by /dev/bollocks kernel
+        module
+      - dice now supports dice notation
+        (http://en.wikipedia.org/wiki/Dice_notation) but is imperfect.
+      - dice now calls /me command with its output
+      - With Pidgin 2.4.0 and newer, irc-more adds /notice to send IRC notices
+  * Updated package description (Closes: #511637, #479559)
+
+ -- John Bailey <rekkanoryo@rekkanoryo.org>  Wed, 26 Aug 2009 01:16:37 -0400
+
 purple-plugin-pack (2.2.0-1) unstable; urgency=low
 
   * New Upstream Release
