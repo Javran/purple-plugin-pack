@@ -8,7 +8,7 @@ Standards-Version: 3.8.0
 Package: pidgin-plugin-pack
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Enhances: pidgin, xmms
+Enhances: pidgin
 Description: 57 useful plugins for Pidgin, Finch, and Purple
  The Plugin Pack is a collection of many simple-yet-useful plugins for Pidgin,
  Finch, and Purple.  You will find a summary of each plugin below.  For more
