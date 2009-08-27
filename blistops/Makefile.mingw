@@ -1,0 +1,12 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for blistops plugin.
+#
+
+PP_TOP :=		..
+
+PP = blistops
+
+include $(PP_TOP)/win_pp.mak
+

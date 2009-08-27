@@ -1,0 +1,14 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for album plugin.
+#
+
+PP_TOP :=		..
+
+PP = album
+
+PP_SRC := album.c album-ui.c
+
+include $(PP_TOP)/win_pp.mak
+

@@ -1,0 +1,115 @@
+#
+# pidgin_major_ver and pidgin_minor_ver should be defined to match the minimum
+# Pidgin API version _required_ to build Plugin Pack
+# Due to the way Pidgin checks plugin versions, we need to also ensure that
+# the correct minimum version of Pidgin is Require:'d based on what version of
+# the Pidgin headers we actually build with.
+#
+
+%define pidgin_major_ver 2
+%define pidgin_minor_ver 0
+%define pidgin_next_major_ver %(echo $((%{pidgin_major_ver}+1)))
+%define pidgin_build_minor_ver %(pkg-config --modversion pidgin | awk -F. '{ print $2 }')
+
+Summary:    Plugin Pack for libpurple and derived IM clients
+Name:       @PACKAGE@
+Version:    @VERSION@
+
+Release:    0%{?pidgindist:.%{pidgindist}}
+License:    GPL
+Group:      Applications/Internet
+
+URL:        http://plugins.guifications.org/
+Source0:    %{name}-%{version}.tar.bz2
+BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
+BuildRequires: pkgconfig, libtool, gettext
+%{!?_without_xmms:BuildRequires: xmms-devel}
+BuildRequires: pidgin-devel >= %{pidgin_major_ver}.%{pidgin_minor_ver}, pidgin-devel < %{pidgin_next_major_ver}
+%if "%{_vendor}" == "MandrakeSoft" || "%{_vendor}" == "Mandrakesoft"
+BuildRequires: libgtk+2.0_0-devel
+%else
+BuildRequires: gtk2-devel
+%endif
+Requires:      libpurple >= %{pidgin_major_ver}.%{pidgin_build_minor_ver}, libpurple < %{pidgin_next_major_ver}
+
+%package -n pidgin-plugin_pack
+Summary:    Plugin Pack for Pidgin
+Group:      Applications/Internet
+Requires:   pidgin >= %{pidgin_major_ver}.%{pidgin_build_minor_ver}, pidgin < %{pidgin_next_major_ver}
+Requires:	purple-plugin_pack = %{version}
+
+%description
+All the other plugins for all libpurple derived clients
+
+%description -n pidgin-plugin_pack
+All the other plugins for Pidgin
+
+%prep
+%setup -q
+
+%build
+%configure
+make %{?_smp_mflags}
+
+%install
+rm -rf $RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT
+
+rm -f $RPM_BUILD_ROOT%{_libdir}/purple-2/*.la $RPM_BUILD_ROOT%{_libdir}/purple-2/*.a
+rm -f $RPM_BUILD_ROOT%{_libdir}/pidgin/*.la $RPM_BUILD_ROOT%{_libdir}/pidgin/*.a
+%find_lang plugin_pack
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files -f plugin_pack.lang
+%defattr(-,root,root,-)
+%doc AUTHORS ChangeLog COPYING README
+%{_libdir}/purple-2/*.so
+
+%files -n pidgin-plugin_pack -f plugin_pack.lang
+%defattr(-,root,root,-)
+%doc AUTHORS ChangeLog COPYING README
+%{_libdir}/pidgin/*.so
+%{_datadir}/pixmaps/pidgin/plugin_pack
+
+
+%changelog
+* Sat Mar 01 2008 Stu Tomlinson <stu@nosnilmot.com>
+- make the pidgin plugin pack depend on the purple plugin pack
+
+* Sat Oct 27 2007 Stu Tomlinson <stu@nosnilmot.com>
+- Add --without xmms option to build without xmms plugin
+
+* Mon Apr 30 2007 Stu Tomlinson <stu@nosnilmot.com>
+- Update for the rename of Gaim to Pidgin
+- New URL for our new website
+- Use tar.bz2 for source
+- Split into pidgin- and purple- RPMs
+
+* Tue Dec 5 2006 John Bailey <rekkanoryo@rekkanoryo.org>
+- Update the URL to match our new website
+
+* Thu Oct 19 2006 Stu Tomlinson <stu@nosnilmot.com>
+- Removed locale from %%files, that's what %%find_lang is for
+- Fixed finding translations
+- Fixed %%s in %%changelog
+- Package xmms pixmaps
+- Add xmms-devel buildrequires
+
+* Sun Nov 11 2005 Peter Lawler <bleeter from users.sf.net>
+- Added locale to %%files
+- Enabled %%find_lang
+
+* Thu Nov 03 2005 Stu Tomlinson <stu@nosnilmot.com>
+- Fix it again
+
+* Wed Nov 02 2005 Peter Lawler <bleeter@users.sf.net>
+- Fixed up the Mandrivel .so rename
+
+* Tue Nov 01 2005 Stu Tomlinson <stu@nosnilmot.com>
+- Fix it
+
+* Tue Nov 01 2005 Peter Lawler <bleeter@users.sf.net>
+- Initial Spec File for Plugin Pack

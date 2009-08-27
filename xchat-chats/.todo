@@ -1,0 +1,4 @@
+TODO
+	- Remember the width of the nick-list on the right
+	- Colorize the nicks and highlight messages etc.
+	- Get rid of the font-stuff from the GtkXText widget and use the gtk-theme instead.

@@ -1,0 +1,12 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for simfix plugin.
+#
+
+PP_TOP :=		..
+
+PP = simfix
+
+include $(PP_TOP)/win_pp.mak
+

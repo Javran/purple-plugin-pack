@@ -1,0 +1,31 @@
+This ChangeLog documents changes prior to when this plugin was merged into the
+Plugin Pack.  See the ChangeLog file a directory up for post-merge changes.
+
+version 1.4
+	* Eliminate strictly identical duplicates from the viewer.  This is
+	  useful when a contact has multiple accounts and uses Gaim's global
+	  buddy icon selector to set the same icon across accounts.  However,
+	  some duplicates still appear when the file formats are different
+	  (for example, if one account has a .png icon and another is .jpg).
+
+version 1.3
+	* Update to build properly with 2.0.0beta4 on win32
+
+version 1.2
+	* Update the album window from an idle loop, so Gaim doesn't hang
+	  when you have lots of icons for a buddy
+	* Update release for Gaim 2.0.0
+	  Things will still build on Gaim 1.x.y, but the Windows DLL shipped
+	  with this version only works on Gaim 2.0.0.  Likewise, the RPM .spec
+	  file is designed for Gaim 2.  If you need to build an RPM for Gaim 1,
+	  use the .spec file from the Gaim Album 1.1 release.
+
+version 1.1
+	* Fixed a fatal bug in caching of icons that exist when the plugin
+	  first loads.  This feature should actually work now. :)
+	* Fixed a fatal bug in the Windows build.  The archive will actually
+	  include a .dll now. Oops!
+
+version 1.0
+	* Initial Release
+

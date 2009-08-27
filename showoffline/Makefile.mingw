@@ -1,0 +1,12 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for showoffline plugin.
+#
+
+PP_TOP :=		..
+
+PP = showoffline
+
+include $(PP_TOP)/win_pp.mak
+
