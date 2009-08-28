@@ -38,57 +38,63 @@ static gint lastday = 0;
 /******************************************************************************
  * Helpers
  *****************************************************************************/
-static gint
-irssi_datechange_get_day(time_t *t) {
+static gboolean
+irssi_datechange_get_day_and_month(time_t *t, gint *day, gint *month) {
+	time_t rt;
 	struct tm *temp;
 
-	temp = localtime(t);
+	rt = time(NULL);
+	temp = localtime(&rt);
 
 	if(!temp)
-		return 0;
+		return FALSE;
 
-	return temp->tm_mday;
-}
+	if(t)
+		*t = rt;
 
-static gint
-irssi_datechange_get_month(time_t *t) {
-	struct tm *temp;
+	if(day)
+		*day = temp->tm_mday;
 
-	temp = localtime(t);
+	if(month)
+		*month = temp->tm_mon;
 
-	if(!temp)
-		return 0;
-
-	return temp->tm_mon;
+	return TRUE;
 }
 
 static gboolean
 irssi_datechange_timeout_cb(gpointer data) {
 	time_t t;
-	GList *l;
-	gint newday;
+	GList *l = NULL;
+	gint day = 0, month = 0;
 	gchar buff[80];
-	gchar *message;
+	gchar *message = NULL, *new_year = NULL;
 
-	t = time(NULL);
-	newday = irssi_datechange_get_day(&t);
-
-	if(newday == lastday)
+	if(!irssi_datechange_get_day_and_month(&t, &day, &month))
 		return TRUE;
+
+	if(day == lastday)
+		return TRUE;
+
+	lastday = day;
+
+	l = purple_get_conversations();
+	if(!l)
+		return TRUE;
+
+	if(day == 1 && month == 0 && purple_prefs_get_bool(SENDNEWYEAR_PREF))
+		new_year = g_strdup(_("Happy New Year!"));
 
 	strftime(buff, sizeof(buff), "%d %b %Y", localtime(&t));
 	message = g_strdup_printf(_("Day changed to %s"), buff);
 
-	for(l = purple_get_conversations(); l; l = l->next) {
+	for(; l; l = l->next) {
 		PurpleConversation *conv = (PurpleConversation *)l->data;
 
 		purple_conversation_write(conv, NULL, message,
 				PURPLE_MESSAGE_NO_LOG | PURPLE_MESSAGE_SYSTEM | PURPLE_MESSAGE_ACTIVE_ONLY,
 				t);
-		if ((irssi_datechange_get_day(&t) == 1) && (irssi_datechange_get_month(&t) == 0) &&
-				purple_prefs_get_bool(SENDNEWYEAR_PREF))
-		{
-			const gchar *new_year = _("Happy New Year");
+
+		if(new_year) {
 			if(conv->type == PURPLE_CONV_TYPE_IM)
 				purple_conv_im_send(PURPLE_CONV_IM(conv), new_year);
 			else if(conv->type == PURPLE_CONV_TYPE_CHAT)
@@ -97,8 +103,7 @@ irssi_datechange_timeout_cb(gpointer data) {
 	}
 
 	g_free(message);
-
-	lastday = newday;
+	g_free(new_year);
 
 	return TRUE;
 }
@@ -108,14 +113,12 @@ irssi_datechange_timeout_cb(gpointer data) {
  *****************************************************************************/
 void
 irssi_datechange_init(PurplePlugin *plugin) {
-	time_t t;
-
 	if(purple_prefs_get_bool(DATECHANGE_PREF)) {
 		if(irssi_datechange_timeout_id != 0)
 			purple_timeout_remove(irssi_datechange_timeout_id);
 	
-		t = time(NULL);
-		lastday = irssi_datechange_get_day(&t);
+		if(!irssi_datechange_get_day_and_month(NULL, &lastday, NULL))
+			lastday = 0;
 
 		/* set this to get called every 30 seconds.
 		 *
