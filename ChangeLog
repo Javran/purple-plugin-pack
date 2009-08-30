@@ -1,4 +1,4 @@
-Version 2.6.0: ??/??/??
+Version 2.6.0: 08/30/09
 	* Fix grouping of radio buttons in switchspell menu for enchant-enabled
 	  GtkSpell.  This has the side effect of eliminating slow tab switching
 	  and multiple language switches during menu drawing.  (Basil Gor)
@@ -6,6 +6,11 @@ Version 2.6.0: ??/??/??
 	  chat room message.
 	* Added XMPP Priority plugin.  This allows users to configure the
 	  priority attribute for XMPP statuses on a per-account basis.
+	* Added the "abusive" stress plugin.  This is a protocol plugin intended
+	  for use in stressing libpurple and any plugins using libpurple's
+	  facilities.  This plugin is still experimental and will almost certainly
+	  cause some problems, so use with caution and do NOT use with your usual
+	  .purple directory!
 
 Version 2.5.1: 12/25/08
 	* Really fixed switch spell now...
