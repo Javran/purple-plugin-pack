@@ -109,8 +109,10 @@ static gboolean
 stress_event_cb(gpointer data) {
 	StressBuddy *sb = (StressBuddy *)data;
 	PurpleAccount *account = purple_buddy_get_account(sb->buddy);
+	PurpleStatus *status = NULL;
 	gint event = rand() % nevents;
 	const gchar *name = purple_buddy_get_name(sb->buddy);
+	gchar *msg = NULL;
 
 	/* increment our event counter */
 	sb->nevents++;
@@ -119,7 +121,7 @@ stress_event_cb(gpointer data) {
 
 	purple_debug_info("stress", "firing event %d of %d for %s\n",
 					  sb->nevents, sb->maxevents, name);
-
+	
 	stress_close_convs(account, name);
 
 	switch(event) {
@@ -144,6 +146,11 @@ stress_event_cb(gpointer data) {
 			break;
 	}
 
+	msg = g_strdup_printf("event %d of %d", sb->nevents, sb->maxevents);
+	status = purple_presence_get_active_status(sb->buddy->presence);
+	purple_status_set_attr_string(status, "message", msg);
+	g_free(msg);
+
 	if(sb->maxevents > 0 && sb->nevents >= sb->maxevents) {
 		return FALSE;
 	}
@@ -157,6 +164,18 @@ stress_event_cb(gpointer data) {
 static const gchar *
 stress_list_icon(PurpleAccount *account, PurpleBuddy *b) {
 	return NULL;
+}
+
+static gchar *
+stress_status_text(PurpleBuddy *buddy) {
+	StressBuddy *sb = STRESS_BUDDY(buddy);
+	PurplePresence *presence = purple_buddy_get_presence(buddy);
+	PurpleStatus *status = purple_presence_get_active_status(presence);
+	const gchar *msg = NULL;
+
+	msg = purple_status_get_attr_string(status, "message");
+
+	return (msg) ? g_strdup(msg) : NULL;
 }
 
 #define add_event(setting, e1, e2) G_STMT_START { \
@@ -258,16 +277,28 @@ stress_status_types(PurpleAccount *account) {
 
 	g_return_val_if_fail(account != NULL, NULL);
 
-	type = purple_status_type_new_full(PURPLE_STATUS_AVAILABLE,
-									   NULL, NULL, TRUE, TRUE, FALSE);
+	type =
+		purple_status_type_new_with_attrs(PURPLE_STATUS_AVAILABLE, NULL,
+										  NULL, TRUE, TRUE, FALSE,
+										  "message", _("Message"),
+										  purple_value_new(PURPLE_TYPE_STRING),
+										  NULL);
 	types = g_list_prepend(types, type);
 
-	type = purple_status_type_new_full(PURPLE_STATUS_OFFLINE,
-									   NULL, NULL, TRUE, TRUE, FALSE);
+	type =
+		purple_status_type_new_with_attrs(PURPLE_STATUS_OFFLINE, NULL,
+										  NULL, TRUE, TRUE, FALSE,
+										  "message", _("Message"),
+										  purple_value_new(PURPLE_TYPE_STRING),
+										  NULL);
 	types = g_list_prepend(types, type);
 
-	type = purple_status_type_new_full(PURPLE_STATUS_AWAY,
-									   NULL, NULL, TRUE, TRUE, FALSE);
+	type =
+		purple_status_type_new_with_attrs(PURPLE_STATUS_AWAY, NULL,
+										  NULL, TRUE, TRUE, FALSE,
+										  "message", _("Message"),
+										  purple_value_new(PURPLE_TYPE_STRING),
+										  NULL);
 	types = g_list_prepend(types, type);
 
 	return types;
@@ -280,7 +311,7 @@ static PurplePluginProtocolInfo prpl_info = {
 	NO_BUDDY_ICONS,
 	stress_list_icon,
 	NULL,
-	NULL,
+	stress_status_text,
 	NULL,
 	stress_status_types,
 	NULL,
