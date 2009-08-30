@@ -242,6 +242,9 @@ static void
 stress_buddy_free(PurpleBuddy *buddy) {
 	StressBuddy *sb = STRESS_BUDDY(buddy);
 
+	if(!sb)
+		return;
+
 	if(sb->timer_id > 0)
 		g_source_remove(sb->timer_id);
 
@@ -341,7 +344,6 @@ static PurplePluginProtocolInfo prpl_info = {
 	NULL,
 	NULL,
 };
-
 
 /******************************************************************************
  * Plugin Stuff
