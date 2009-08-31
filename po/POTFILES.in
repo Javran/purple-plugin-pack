@@ -85,6 +85,7 @@ splitter/splitter.c
 sslinfo/sslinfo.c
 stocker/stocker.c
 stocker/stocker_prefs.c
+stress/stress.c
 switchspell/switchspell.c
 talkfilters/talkfilters.c
 timelog/log-widget.c
@@ -94,3 +95,4 @@ timelog/timelog.h
 xchat-chats/xchat-chats.c
 xchat-chats/xchat-chats.c
 xmmsremote/xmmsremote.c
+xmppprio/xmppprio.c
