@@ -111,7 +111,7 @@ stress_event_cb(gpointer data) {
 	PurpleAccount *account = purple_buddy_get_account(sb->buddy);
 	PurpleStatus *status = NULL;
 	gint event = rand() % nevents;
-	const gchar *name = purple_buddy_get_name(sb->buddy);
+	const gchar *name = purple_buddy_get_name(sb->buddy), *sevent = NULL;
 	gchar *msg = NULL;
 
 	/* increment our event counter */
@@ -119,11 +119,21 @@ stress_event_cb(gpointer data) {
 
 	event = GPOINTER_TO_INT(g_list_nth_data(events, event));
 
-	purple_debug_info("stress", "firing event %d of %d for %s\n",
-					  sb->nevents, sb->maxevents, name);
-	
-	stress_close_convs(account, name);
+	switch(event) {
+		case STRESS_EVENT_SIGN_ON: sevent = "signon"; break;
+		case STRESS_EVENT_SIGN_OFF: sevent = "signoff"; break;
+		case STRESS_EVENT_IDLE: sevent = "idle"; break;
+		case STRESS_EVENT_UNIDLE: sevent = "unidle"; break;
+		case STRESS_EVENT_AWAY: sevent = "away"; break;
+		case STRESS_EVENT_BACK: sevent = "back"; break;
+		case STRESS_EVENT_TYPING: sevent = "typing"; break;
+		case STRESS_EVENT_STOPPED_TYPING: sevent = "stopped typing"; break;
+		case STRESS_EVENT_SEND_MESSAGE: sevent = "message"; break;
+	}
 
+	purple_debug_info("stress", "firing '%s' for '%s' (event %d of %d)\n",
+					  sevent, name, sb->nevents, sb->maxevents);
+	
 	switch(event) {
 		case STRESS_EVENT_SIGN_ON:
 		case STRESS_EVENT_BACK:
@@ -152,6 +162,13 @@ stress_event_cb(gpointer data) {
 	g_free(msg);
 
 	if(sb->maxevents > 0 && sb->nevents >= sb->maxevents) {
+		purple_prpl_got_user_status(account, name, "available",
+									"message", _("Done"),
+									NULL);
+		purple_prpl_got_user_idle(account, name, FALSE, 0);
+
+		stress_close_convs(account, name);
+
 		return FALSE;
 	}
 
@@ -168,7 +185,6 @@ stress_list_icon(PurpleAccount *account, PurpleBuddy *b) {
 
 static gchar *
 stress_status_text(PurpleBuddy *buddy) {
-	StressBuddy *sb = STRESS_BUDDY(buddy);
 	PurplePresence *presence = purple_buddy_get_presence(buddy);
 	PurpleStatus *status = purple_presence_get_active_status(presence);
 	const gchar *msg = NULL;
