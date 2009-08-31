@@ -8,6 +8,7 @@ Makefile.in
 *.o
 *.Plo
 *.so
+.*.swp
 
 syntax: regexp
 .+/\.deps
