@@ -1,4 +1,5 @@
 EXTRA_DIST = \
+	Makefile.mingw \
 	plugins.cfg
 
 stressdir = $(PURPLE_LIBDIR)
