@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugin_pack 1.0beta3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-21 00:21-0500\n"
+"POT-Creation-Date: 2009-08-30 20:09-0400\n"
 "PO-Revision-Date: 2008-08-06 13:55+0700\n"
 "Last-Translator: \n"
 "Language-Team: es_ES <antiswen@yahoo.es>\n"
@@ -1137,7 +1137,7 @@ msgstr ""
 msgid "Auto-reply:"
 msgstr "Tự động trả lời"
 
-#: ../autoprofile/preferences.c:633 ../autoreply/autoreply.c:407
+#: ../autoprofile/preferences.c:633 ../autoreply/autoreply.c:406
 msgid "Never"
 msgstr "Không dùng chức năng này"
 
@@ -1183,16 +1183,16 @@ msgid "Auto-reply"
 msgstr "Tự động trả lời"
 
 #. XXX: There should be a way to reset to the default/account-default autoreply
-#: ../autoreply/autoreply.c:231
+#: ../autoreply/autoreply.c:230
 #, c-format
 msgid "Set autoreply message for %s"
 msgstr "Cài đặt thông điệp tự động trả lời cho  %s"
 
-#: ../autoreply/autoreply.c:233
+#: ../autoreply/autoreply.c:232
 msgid "Set Autoreply Message"
 msgstr "Cài đặt thông điệp tự động trả lời"
 
-#: ../autoreply/autoreply.c:234
+#: ../autoreply/autoreply.c:233
 msgid ""
 "The following message will be sent to the buddy when the buddy sends you a "
 "message and autoreply is enabled."
@@ -1200,11 +1200,11 @@ msgstr ""
 "Khi người bạn này gửi cho bạn một thông điệp và chế độ tự động trả lời được "
 "phép hoạt động thì thông điệp sau đây sẽ gửi đến anh (chị) ta"
 
-#: ../autoreply/autoreply.c:238
+#: ../autoreply/autoreply.c:237
 msgid "_Save"
 msgstr "_Lưu"
 
-#: ../autoreply/autoreply.c:239 ../listhandler/aim_blt_files.c:297
+#: ../autoreply/autoreply.c:238 ../listhandler/aim_blt_files.c:297
 #: ../listhandler/aim_blt_files.c:461 ../listhandler/alias_xml_files.c:210
 #: ../listhandler/alias_xml_files.c:269 ../listhandler/gen_xml_files.c:163
 #: ../listhandler/gen_xml_files.c:355 ../listhandler/migrate.c:145
@@ -1212,35 +1212,35 @@ msgstr "_Lưu"
 msgid "_Cancel"
 msgstr "_Huỷ bỏ"
 
-#: ../autoreply/autoreply.c:255
+#: ../autoreply/autoreply.c:254
 msgid "Set _Autoreply Message"
 msgstr "Cài thông điệp tự độ_ng trả lời"
 
-#: ../autoreply/autoreply.c:268
+#: ../autoreply/autoreply.c:267
 msgid "Autoreply message"
 msgstr "Thông điệp tự động trả lời"
 
-#: ../autoreply/autoreply.c:270
+#: ../autoreply/autoreply.c:269
 msgid "Turn off autoreply"
 msgstr "Tắt chức năng tự động trả lời"
 
-#: ../autoreply/autoreply.c:375
+#: ../autoreply/autoreply.c:374
 msgid "Send autoreply messages when"
 msgstr "Gửi các thông điệp tự động trả lời khi"
 
-#: ../autoreply/autoreply.c:379
+#: ../autoreply/autoreply.c:378
 msgid "When my account is _away"
 msgstr "Khi tôi đi _xa"
 
-#: ../autoreply/autoreply.c:383
+#: ../autoreply/autoreply.c:382
 msgid "When my account is _idle"
 msgstr "Khi tôi đang _ngưng nghỉ"
 
-#: ../autoreply/autoreply.c:387
+#: ../autoreply/autoreply.c:386
 msgid "_Default reply"
 msgstr "_Trả lời mặc định"
 
-#: ../autoreply/autoreply.c:394
+#: ../autoreply/autoreply.c:393
 msgid ""
 "Autoreply Prefix\n"
 "(only when necessary)"
@@ -1248,51 +1248,51 @@ msgstr ""
 "Tiếp đầu ngữ tự động trả lời \n"
 "(chỉ khi nào cần thiết)"
 
-#: ../autoreply/autoreply.c:398
+#: ../autoreply/autoreply.c:397
 msgid "Do not autoreply when invisible."
 msgstr ""
 
-#: ../autoreply/autoreply.c:401
+#: ../autoreply/autoreply.c:400
 msgid "Status message"
 msgstr "Thông điệp trạng thái"
 
-#: ../autoreply/autoreply.c:405
+#: ../autoreply/autoreply.c:404
 msgid "Autoreply with status message"
 msgstr "Tự động trả lời với thông điệp trạng thái ?"
 
-#: ../autoreply/autoreply.c:409
+#: ../autoreply/autoreply.c:408
 msgid "Always when there is a status message"
 msgstr "Trả lời khi có thông điệp trạng thái"
 
-#: ../autoreply/autoreply.c:411
+#: ../autoreply/autoreply.c:410
 msgid "Only when there's no autoreply message"
 msgstr "Chỉ khi không cung cấp thông điệp tự động trả lời"
 
-#: ../autoreply/autoreply.c:416
+#: ../autoreply/autoreply.c:415
 msgid "Delay between autoreplies"
 msgstr "Khoảng thời gian giữa hai lần gửi thông điệp tự trả lời liên tiếp"
 
-#: ../autoreply/autoreply.c:420
+#: ../autoreply/autoreply.c:419
 msgid "_Minimum delay (mins)"
 msgstr "_Khoảng thời gian tối thiểu (phút)"
 
-#: ../autoreply/autoreply.c:424
+#: ../autoreply/autoreply.c:423
 msgid "Times to send autoreplies"
 msgstr "Số lần gửi thông điệp trả lời tự động"
 
-#: ../autoreply/autoreply.c:428
+#: ../autoreply/autoreply.c:427
 msgid "Ma_ximum count"
 msgstr "_Số lần tối đa"
 
-#: ../autoreply/autoreply.c:486
+#: ../autoreply/autoreply.c:485
 msgid "Autoreply"
 msgstr "Tự động trả lời"
 
-#: ../autoreply/autoreply.c:487
+#: ../autoreply/autoreply.c:486
 msgid "Autoreply for all the protocols"
 msgstr "Tự động trả lời cho tất cả giao thức"
 
-#: ../autoreply/autoreply.c:488
+#: ../autoreply/autoreply.c:487
 msgid ""
 "This plugin lets you set autoreply message for any protocol. You can set the "
 "global autoreply message from the plugin options dialog. To set some "
@@ -1307,7 +1307,7 @@ msgstr ""
 "cửa sổ danh sách bạn chat. Để thiết lập các thông điệp tự trả lời cho một số "
 "tài khoản vào trong trang \"Nâng cao\" của hộp thoại thay đổi tài khoản."
 
-#: ../autoreply/autoreply.c:498
+#: ../autoreply/autoreply.c:497
 msgid ""
 "I am currently not available. Please leave your message, and I will get back "
 "to you as soon as possible."
@@ -1315,7 +1315,7 @@ msgstr ""
 "Hiện tại tôi không có mặt tại bàn làm việc của mình. Xin vui lòng để lại lời "
 "nhắn và tôi sẽ liên lạc lại với bạn sớm nhất khi nào có thể."
 
-#: ../autoreply/autoreply.c:503
+#: ../autoreply/autoreply.c:502
 msgid "This is an autoreply: "
 msgstr "Đây là thông điệp tự động trả lời:"
 
@@ -2118,76 +2118,76 @@ msgstr ""
 msgid "This plugin is NOT compatible with this version of Pidgin!"
 msgstr "Phần bổ sung  không tương thích với phiên bản này của Pidgin!"
 
-#: ../irchelper/irchelper.c:964
+#: ../irchelper/irchelper.c:972
 msgid "You have been added to the access list."
 msgstr "Bạn đã được thêm vào danh sách có quyền truy xuất"
 
-#: ../irchelper/irchelper.c:966
+#: ../irchelper/irchelper.c:974
 #, c-format
 msgid "You have been added to the access list with an access level of %s."
 msgstr ""
 "Bạn đã được thêm vào danh sách những người có quỳen truy xuất với cấp độ "
 "truy xuất là %s."
 
-#: ../irchelper/irchelper.c:1000
+#: ../irchelper/irchelper.c:1008
 msgid "You have been removed from the access list."
 msgstr "Bạn đã bị xoá khỏi danh sách những người có quyền truy xuất."
 
-#: ../irchelper/irchelper.c:1109
+#: ../irchelper/irchelper.c:1117
 msgid "NickServ Authentication Error"
 msgstr "Lỗi uqa trình xác thực NickServ"
 
-#: ../irchelper/irchelper.c:1110
+#: ../irchelper/irchelper.c:1118
 msgid "Error authenticating with NickServ"
 msgstr "Lỗi xác thực với NickServ"
 
-#: ../irchelper/irchelper.c:1111 ../irchelper/irchelper.c:1137
-#: ../irchelper/irchelper.c:1164
+#: ../irchelper/irchelper.c:1119 ../irchelper/irchelper.c:1145
+#: ../irchelper/irchelper.c:1172
 msgid "Check your password."
 msgstr "Kiểm tra mật khẩu của bạn."
 
-#: ../irchelper/irchelper.c:1135
+#: ../irchelper/irchelper.c:1143
 msgid "GameSurge Authentication Error"
 msgstr "Lỗi xác thực GameSurge"
 
-#: ../irchelper/irchelper.c:1136
+#: ../irchelper/irchelper.c:1144
 msgid "Error authenticating with AuthServ"
 msgstr "Lỗi xác thực với AuthServ"
 
-#: ../irchelper/irchelper.c:1162
+#: ../irchelper/irchelper.c:1170
 msgid "QuakeNet Authentication Error"
 msgstr "Lỗi xác thực QuakeNet"
 
-#: ../irchelper/irchelper.c:1163
+#: ../irchelper/irchelper.c:1171
 msgid "Error authenticating with Q"
 msgstr "Lỗi xác thực với Q"
 
 #. Register protocol preferences.
-#: ../irchelper/irchelper.c:1202
+#: ../irchelper/irchelper.c:1210
 msgid "Auth name"
 msgstr "Tên xác thực"
 
-#: ../irchelper/irchelper.c:1205
+#: ../irchelper/irchelper.c:1213
 msgid "Nick password"
 msgstr "Mật khẩu bí danh"
 
-#: ../irchelper/irchelper.c:1209
+#: ../irchelper/irchelper.c:1217
 msgid "Disconnect ghosts (Duplicate nicknames)"
 msgstr "Ngắt kết nối những tên ma (trùng bí danh)"
 
-#: ../irchelper/irchelper.c:1213
+#: ../irchelper/irchelper.c:1221
 msgid "Operator password"
 msgstr "Mật khẩu người điều hành"
 
-#: ../irchelper/irchelper.c:1289
+#: ../irchelper/irchelper.c:1297
 msgid "IRC Helper"
 msgstr "Trợ giúp IRC"
 
-#: ../irchelper/irchelper.c:1290
+#: ../irchelper/irchelper.c:1298
 msgid "Handles the rough edges of the IRC protocol."
 msgstr "Giải quyết các vấn đề hóc búa của giao thức IRC."
 
-#: ../irchelper/irchelper.c:1291
+#: ../irchelper/irchelper.c:1299
 msgid ""
 "- Transparent authentication with a variety of services.\n"
 "- Suppression of various useless messages"
@@ -2242,14 +2242,15 @@ msgstr ""
 "được, thông điệp trả lời phiên bản CTCP có thể thay đổi được và câu lệnh /"
 "notice để gửi thông báo."
 
-#: ../irssi/datechange.c:80
+#: ../irssi/datechange.c:85
+#, fuzzy
+msgid "Happy New Year!"
+msgstr "Chúc Mừng Năm Mới"
+
+#: ../irssi/datechange.c:88
 #, c-format
 msgid "Day changed to %s"
 msgstr "Comienza un nuevo día: %s"
-
-#: ../irssi/datechange.c:91
-msgid "Happy New Year"
-msgstr "Chúc Mừng Năm Mới"
 
 #: ../irssi/irssi.c:61
 #, fuzzy
@@ -3258,7 +3259,7 @@ msgstr "Lỗi xảy ra khi thực hiện câu lệnh."
 msgid "The following text was sent: %s"
 msgstr "Văn bản sau đây đã được gửi:%s"
 
-#: ../slashexec/slashexec.c:409
+#: ../slashexec/slashexec.c:412
 msgid ""
 "exec [-o] &lt;command&gt;, runs the command.\n"
 "If the -o flag is used then output is sent to thecurrent conversation; "
@@ -3268,25 +3269,25 @@ msgstr ""
 "Nếu cờ -o được sử dụng thì kết quả sẽ gửi đến cuộc trò chuyện hiện tại ngược "
 "lại nó được ghi ra ở hộp văn bản hiện tại."
 
-#: ../slashexec/slashexec.c:460
+#: ../slashexec/slashexec.c:463
 msgid "Execute commands starting with: "
 msgstr "Thực hiện câu lệnh bắt đầu với:"
 
-#: ../slashexec/slashexec.c:464
+#: ../slashexec/slashexec.c:467
 #, fuzzy
 msgid "/exec Command (/exec someCommand)"
 msgstr "Câu lệnh /exec (/exec câu_lệnh)"
 
-#: ../slashexec/slashexec.c:468
+#: ../slashexec/slashexec.c:471
 #, fuzzy
 msgid "Exclamation point (!someCommand)"
 msgstr "Dấu chấm cảm (!câu_lệnh)"
 
-#: ../slashexec/slashexec.c:526
+#: ../slashexec/slashexec.c:529
 msgid "/exec a la UNIX IRC CLI"
 msgstr "/exec tương thích với UNIX IRC CLI"
 
-#: ../slashexec/slashexec.c:527
+#: ../slashexec/slashexec.c:530
 msgid ""
 "A plugin that adds the /exec command line interpreter like most UNIX/Linux "
 "IRC clients have.  Also included is the ability to execute commands with an "
@@ -3436,15 +3437,66 @@ msgstr "Ký hiệu:"
 msgid "Options"
 msgstr "Các tuỳ chọn"
 
+#: ../stress/stress.c:410
+msgid "Stress"
+msgstr ""
+
+#: ../stress/stress.c:411
+msgid "A PRPL to stress libpurple"
+msgstr ""
+
+#: ../stress/stress.c:414
+msgid "Buddies to stress with"
+msgstr ""
+
+#: ../stress/stress.c:415
+msgid "Event interval, in milliseconds"
+msgstr ""
+
+#: ../stress/stress.c:416
+msgid "Max events per buddy"
+msgstr ""
+
+#: ../stress/stress.c:417
+msgid "Trigger signoff/signoff"
+msgstr ""
+
+#: ../stress/stress.c:418
+msgid "Trigger idle/unidle"
+msgstr ""
+
+#: ../stress/stress.c:419
+msgid "Trigger away/back"
+msgstr ""
+
+#: ../stress/stress.c:420
+msgid "Trigger typing/stopped typing"
+msgstr ""
+
+#: ../stress/stress.c:421
+#, fuzzy
+msgid "Send messages"
+msgstr "Gửi thông điệp"
+
+#: ../stress/stress.c:422
+#, fuzzy
+msgid "Minimum message length"
+msgstr "Thông điệp"
+
+#: ../stress/stress.c:423
+#, fuzzy
+msgid "Maxium message length"
+msgstr "Thông điệp"
+
 #: ../switchspell/switchspell.c:154
 msgid "Spe_ll Check"
 msgstr "_Kiểm tra chính tả"
 
-#: ../switchspell/switchspell.c:357
+#: ../switchspell/switchspell.c:352
 msgid "Switch Spell"
 msgstr "Chuyển chính tả"
 
-#: ../switchspell/switchspell.c:358 ../switchspell/switchspell.c:359
+#: ../switchspell/switchspell.c:353 ../switchspell/switchspell.c:354
 msgid "Switch Spell Checker Language"
 msgstr "Chuyển ngôn ngữ bộ kiểm tra lỗi chính tả"
 
@@ -3738,6 +3790,29 @@ msgstr ""
 
 #: ../xmmsremote/xmmsremote.c:1155
 msgid "/me is listening to %T"
+msgstr ""
+
+#. Register protocol preferences
+#: ../xmppprio/xmppprio.c:121
+msgid "Available Priority"
+msgstr ""
+
+#: ../xmppprio/xmppprio.c:125
+msgid "Away Priority"
+msgstr ""
+
+#: ../xmppprio/xmppprio.c:228
+msgid "XMPP Priority"
+msgstr ""
+
+#: ../xmppprio/xmppprio.c:229
+msgid "Adjust the priorities of XMPP statuses"
+msgstr ""
+
+#: ../xmppprio/xmppprio.c:230
+msgid ""
+"Adds account options that allow users to specify the priorities used for "
+"available and away priorities for XMPP accounts."
 msgstr ""
 
 #~ msgid ""

@@ -1,4 +1,4 @@
-purple-plugin-pack (2.5.1-1) unstable; urgency=low
+purple-plugin-pack (2.6.0-1) unstable; urgency=low
 
   * Non-maintainer upload.
   * New Upstream Release (Closes: #475915)
@@ -10,6 +10,7 @@ purple-plugin-pack (2.5.1-1) unstable; urgency=low
       - listlog (dumps list of users in a chat to message window for logging)
       - autoprofile (tools to change profile and status messages)
       - napster (NAPSTER IM protocol plugin)
+      - xmppprio (allows changing priorities of XMPP statuses per account)
     + Fix crashes in plugins (Closes: #504344)
       - xchat-chats (would crash Pidgin 2.4.0 and newer)
       - irc-more (potential double-free caused by typo)
@@ -22,6 +23,11 @@ purple-plugin-pack (2.5.1-1) unstable; urgency=low
         preferences window for slashexec
       - dewysiwygification's debug log messages now properly end lines
       - slahsexec strips ASCII control characters, fixing disconnects on XMPP
+      - radio buttons in switchspell's menu are now grouped properly
+      - switchspell no longer causes slow tab switching in conversation
+        windows
+      - slashexec no longer crashes on a NULL dereference when processing chat
+        messages
     + Adds features
       - listhandler handles "FriendlyName" attributes in AIM-produced .blt files
       - irssi plugin has preferences to control some elements of behavior
@@ -33,7 +39,7 @@ purple-plugin-pack (2.5.1-1) unstable; urgency=low
       - With Pidgin 2.4.0 and newer, irc-more adds /notice to send IRC notices
   * Updated package description (Closes: #511637, #479559)
 
- -- John Bailey <rekkanoryo@rekkanoryo.org>  Wed, 26 Aug 2009 01:16:37 -0400
+ -- John Bailey <rekkanoryo@rekkanoryo.org>  Sun, 30 Aug 2009 23:42:32 -0400
 
 purple-plugin-pack (2.2.0-1) unstable; urgency=low
 

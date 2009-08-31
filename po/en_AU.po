@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugin_pack 0.1cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-21 00:20-0500\n"
+"POT-Creation-Date: 2009-08-30 20:09-0400\n"
 "PO-Revision-Date: 2005-11-21 10:36+1100\n"
 "Last-Translator: Peter Lawler <trans@six-by-nine.com.au>\n"
 "Language-Team: English/AU <trans@six-by-nine.com.au>\n"
@@ -1091,7 +1091,7 @@ msgstr ""
 msgid "Auto-reply:"
 msgstr ""
 
-#: ../autoprofile/preferences.c:633 ../autoreply/autoreply.c:407
+#: ../autoprofile/preferences.c:633 ../autoreply/autoreply.c:406
 msgid "Never"
 msgstr ""
 
@@ -1134,26 +1134,26 @@ msgid "Auto-reply"
 msgstr ""
 
 #. XXX: There should be a way to reset to the default/account-default autoreply
-#: ../autoreply/autoreply.c:231
+#: ../autoreply/autoreply.c:230
 #, c-format
 msgid "Set autoreply message for %s"
 msgstr ""
 
-#: ../autoreply/autoreply.c:233
+#: ../autoreply/autoreply.c:232
 msgid "Set Autoreply Message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:234
+#: ../autoreply/autoreply.c:233
 msgid ""
 "The following message will be sent to the buddy when the buddy sends you a "
 "message and autoreply is enabled."
 msgstr ""
 
-#: ../autoreply/autoreply.c:238
+#: ../autoreply/autoreply.c:237
 msgid "_Save"
 msgstr ""
 
-#: ../autoreply/autoreply.c:239 ../listhandler/aim_blt_files.c:297
+#: ../autoreply/autoreply.c:238 ../listhandler/aim_blt_files.c:297
 #: ../listhandler/aim_blt_files.c:461 ../listhandler/alias_xml_files.c:210
 #: ../listhandler/alias_xml_files.c:269 ../listhandler/gen_xml_files.c:163
 #: ../listhandler/gen_xml_files.c:355 ../listhandler/migrate.c:145
@@ -1161,85 +1161,85 @@ msgstr ""
 msgid "_Cancel"
 msgstr ""
 
-#: ../autoreply/autoreply.c:255
+#: ../autoreply/autoreply.c:254
 msgid "Set _Autoreply Message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:268
+#: ../autoreply/autoreply.c:267
 msgid "Autoreply message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:270
+#: ../autoreply/autoreply.c:269
 msgid "Turn off autoreply"
 msgstr ""
 
-#: ../autoreply/autoreply.c:375
+#: ../autoreply/autoreply.c:374
 msgid "Send autoreply messages when"
 msgstr ""
 
-#: ../autoreply/autoreply.c:379
+#: ../autoreply/autoreply.c:378
 msgid "When my account is _away"
 msgstr ""
 
-#: ../autoreply/autoreply.c:383
+#: ../autoreply/autoreply.c:382
 msgid "When my account is _idle"
 msgstr ""
 
-#: ../autoreply/autoreply.c:387
+#: ../autoreply/autoreply.c:386
 msgid "_Default reply"
 msgstr ""
 
-#: ../autoreply/autoreply.c:394
+#: ../autoreply/autoreply.c:393
 msgid ""
 "Autoreply Prefix\n"
 "(only when necessary)"
 msgstr ""
 
-#: ../autoreply/autoreply.c:398
+#: ../autoreply/autoreply.c:397
 msgid "Do not autoreply when invisible."
 msgstr ""
 
-#: ../autoreply/autoreply.c:401
+#: ../autoreply/autoreply.c:400
 msgid "Status message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:405
+#: ../autoreply/autoreply.c:404
 msgid "Autoreply with status message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:409
+#: ../autoreply/autoreply.c:408
 msgid "Always when there is a status message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:411
+#: ../autoreply/autoreply.c:410
 msgid "Only when there's no autoreply message"
 msgstr ""
 
-#: ../autoreply/autoreply.c:416
+#: ../autoreply/autoreply.c:415
 msgid "Delay between autoreplies"
 msgstr ""
 
-#: ../autoreply/autoreply.c:420
+#: ../autoreply/autoreply.c:419
 msgid "_Minimum delay (mins)"
 msgstr ""
 
-#: ../autoreply/autoreply.c:424
+#: ../autoreply/autoreply.c:423
 msgid "Times to send autoreplies"
 msgstr ""
 
-#: ../autoreply/autoreply.c:428
+#: ../autoreply/autoreply.c:427
 msgid "Ma_ximum count"
 msgstr ""
 
-#: ../autoreply/autoreply.c:486
+#: ../autoreply/autoreply.c:485
 msgid "Autoreply"
 msgstr ""
 
-#: ../autoreply/autoreply.c:487
+#: ../autoreply/autoreply.c:486
 msgid "Autoreply for all the protocols"
 msgstr ""
 
-#: ../autoreply/autoreply.c:488
+#: ../autoreply/autoreply.c:487
 msgid ""
 "This plugin lets you set autoreply message for any protocol. You can set the "
 "global autoreply message from the plugin options dialog. To set some "
@@ -1248,13 +1248,13 @@ msgid ""
 "the `Advanced' tab of the account edit dialog."
 msgstr ""
 
-#: ../autoreply/autoreply.c:498
+#: ../autoreply/autoreply.c:497
 msgid ""
 "I am currently not available. Please leave your message, and I will get back "
 "to you as soon as possible."
 msgstr ""
 
-#: ../autoreply/autoreply.c:503
+#: ../autoreply/autoreply.c:502
 msgid "This is an autoreply: "
 msgstr ""
 
@@ -1992,74 +1992,74 @@ msgstr ""
 msgid "This plugin is NOT compatible with this version of Pidgin!"
 msgstr ""
 
-#: ../irchelper/irchelper.c:964
+#: ../irchelper/irchelper.c:972
 msgid "You have been added to the access list."
 msgstr ""
 
-#: ../irchelper/irchelper.c:966
+#: ../irchelper/irchelper.c:974
 #, c-format
 msgid "You have been added to the access list with an access level of %s."
 msgstr ""
 
-#: ../irchelper/irchelper.c:1000
+#: ../irchelper/irchelper.c:1008
 msgid "You have been removed from the access list."
 msgstr ""
 
-#: ../irchelper/irchelper.c:1109
+#: ../irchelper/irchelper.c:1117
 msgid "NickServ Authentication Error"
 msgstr ""
 
-#: ../irchelper/irchelper.c:1110
+#: ../irchelper/irchelper.c:1118
 msgid "Error authenticating with NickServ"
 msgstr ""
 
-#: ../irchelper/irchelper.c:1111 ../irchelper/irchelper.c:1137
-#: ../irchelper/irchelper.c:1164
+#: ../irchelper/irchelper.c:1119 ../irchelper/irchelper.c:1145
+#: ../irchelper/irchelper.c:1172
 msgid "Check your password."
 msgstr ""
 
-#: ../irchelper/irchelper.c:1135
+#: ../irchelper/irchelper.c:1143
 msgid "GameSurge Authentication Error"
 msgstr ""
 
-#: ../irchelper/irchelper.c:1136
+#: ../irchelper/irchelper.c:1144
 msgid "Error authenticating with AuthServ"
 msgstr ""
 
-#: ../irchelper/irchelper.c:1162
+#: ../irchelper/irchelper.c:1170
 msgid "QuakeNet Authentication Error"
 msgstr ""
 
-#: ../irchelper/irchelper.c:1163
+#: ../irchelper/irchelper.c:1171
 msgid "Error authenticating with Q"
 msgstr ""
 
 #. Register protocol preferences.
-#: ../irchelper/irchelper.c:1202
+#: ../irchelper/irchelper.c:1210
 msgid "Auth name"
 msgstr ""
 
-#: ../irchelper/irchelper.c:1205
+#: ../irchelper/irchelper.c:1213
 msgid "Nick password"
 msgstr ""
 
-#: ../irchelper/irchelper.c:1209
+#: ../irchelper/irchelper.c:1217
 msgid "Disconnect ghosts (Duplicate nicknames)"
 msgstr ""
 
-#: ../irchelper/irchelper.c:1213
+#: ../irchelper/irchelper.c:1221
 msgid "Operator password"
 msgstr ""
 
-#: ../irchelper/irchelper.c:1289
+#: ../irchelper/irchelper.c:1297
 msgid "IRC Helper"
 msgstr ""
 
-#: ../irchelper/irchelper.c:1290
+#: ../irchelper/irchelper.c:1298
 msgid "Handles the rough edges of the IRC protocol."
 msgstr ""
 
-#: ../irchelper/irchelper.c:1291
+#: ../irchelper/irchelper.c:1299
 msgid ""
 "- Transparent authentication with a variety of services.\n"
 "- Suppression of various useless messages"
@@ -2109,13 +2109,13 @@ msgid ""
 "customizable CTCP VERSION reply, and the /notice command for notices."
 msgstr ""
 
-#: ../irssi/datechange.c:80
-#, c-format
-msgid "Day changed to %s"
+#: ../irssi/datechange.c:85
+msgid "Happy New Year!"
 msgstr ""
 
-#: ../irssi/datechange.c:91
-msgid "Happy New Year"
+#: ../irssi/datechange.c:88
+#, c-format
+msgid "Day changed to %s"
 msgstr ""
 
 #: ../irssi/irssi.c:61
@@ -3053,30 +3053,30 @@ msgstr ""
 msgid "The following text was sent: %s"
 msgstr ""
 
-#: ../slashexec/slashexec.c:409
+#: ../slashexec/slashexec.c:412
 msgid ""
 "exec [-o] &lt;command&gt;, runs the command.\n"
 "If the -o flag is used then output is sent to thecurrent conversation; "
 "otherwise it is printed to the current text box."
 msgstr ""
 
-#: ../slashexec/slashexec.c:460
+#: ../slashexec/slashexec.c:463
 msgid "Execute commands starting with: "
 msgstr ""
 
-#: ../slashexec/slashexec.c:464
+#: ../slashexec/slashexec.c:467
 msgid "/exec Command (/exec someCommand)"
 msgstr ""
 
-#: ../slashexec/slashexec.c:468
+#: ../slashexec/slashexec.c:471
 msgid "Exclamation point (!someCommand)"
 msgstr ""
 
-#: ../slashexec/slashexec.c:526
+#: ../slashexec/slashexec.c:529
 msgid "/exec a la UNIX IRC CLI"
 msgstr ""
 
-#: ../slashexec/slashexec.c:527
+#: ../slashexec/slashexec.c:530
 msgid ""
 "A plugin that adds the /exec command line interpreter like most UNIX/Linux "
 "IRC clients have.  Also included is the ability to execute commands with an "
@@ -3217,15 +3217,63 @@ msgstr ""
 msgid "Options"
 msgstr ""
 
+#: ../stress/stress.c:410
+msgid "Stress"
+msgstr ""
+
+#: ../stress/stress.c:411
+msgid "A PRPL to stress libpurple"
+msgstr ""
+
+#: ../stress/stress.c:414
+msgid "Buddies to stress with"
+msgstr ""
+
+#: ../stress/stress.c:415
+msgid "Event interval, in milliseconds"
+msgstr ""
+
+#: ../stress/stress.c:416
+msgid "Max events per buddy"
+msgstr ""
+
+#: ../stress/stress.c:417
+msgid "Trigger signoff/signoff"
+msgstr ""
+
+#: ../stress/stress.c:418
+msgid "Trigger idle/unidle"
+msgstr ""
+
+#: ../stress/stress.c:419
+msgid "Trigger away/back"
+msgstr ""
+
+#: ../stress/stress.c:420
+msgid "Trigger typing/stopped typing"
+msgstr ""
+
+#: ../stress/stress.c:421
+msgid "Send messages"
+msgstr ""
+
+#: ../stress/stress.c:422
+msgid "Minimum message length"
+msgstr ""
+
+#: ../stress/stress.c:423
+msgid "Maxium message length"
+msgstr ""
+
 #: ../switchspell/switchspell.c:154
 msgid "Spe_ll Check"
 msgstr ""
 
-#: ../switchspell/switchspell.c:357
+#: ../switchspell/switchspell.c:352
 msgid "Switch Spell"
 msgstr ""
 
-#: ../switchspell/switchspell.c:358 ../switchspell/switchspell.c:359
+#: ../switchspell/switchspell.c:353 ../switchspell/switchspell.c:354
 msgid "Switch Spell Checker Language"
 msgstr ""
 
@@ -3508,6 +3556,29 @@ msgstr ""
 
 #: ../xmmsremote/xmmsremote.c:1155
 msgid "/me is listening to %T"
+msgstr ""
+
+#. Register protocol preferences
+#: ../xmppprio/xmppprio.c:121
+msgid "Available Priority"
+msgstr ""
+
+#: ../xmppprio/xmppprio.c:125
+msgid "Away Priority"
+msgstr ""
+
+#: ../xmppprio/xmppprio.c:228
+msgid "XMPP Priority"
+msgstr ""
+
+#: ../xmppprio/xmppprio.c:229
+msgid "Adjust the priorities of XMPP statuses"
+msgstr ""
+
+#: ../xmppprio/xmppprio.c:230
+msgid ""
+"Adds account options that allow users to specify the priorities used for "
+"available and away priorities for XMPP accounts."
 msgstr ""
 
 #~ msgid "gRIM: rim your pals"
