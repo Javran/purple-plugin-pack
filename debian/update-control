@@ -18,9 +18,9 @@ cat << EOF >> ${OUTPUT}
 Source: purple-plugin-pack
 Section: net
 Priority: optional
-Maintainer: Benjamin Seidenberg <benjamin@debian.org>
+Maintainer: John Bailey <rekkanoryo@rekkanoryo.org>
 Build-Depends: debhelper (>= 5), pidgin-dev, pkg-config, libgtk2.0-dev, libglib2.0-dev, libxml-parser-perl, libenchant-dev, libgtkspell-dev, python
-Standards-Version: 3.8.0
+Standards-Version: 3.8.1
 
 Package: pidgin-plugin-pack
 Architecture: any
