@@ -26,6 +26,8 @@
 #include <ctype.h>
 #include <stdio.h>
 
+#include "autoprofile.h"
+
 static struct tm parsed_datetime;
 static int parsed_gmttime = 0;
 

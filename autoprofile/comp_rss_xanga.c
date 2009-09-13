@@ -27,6 +27,7 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "autoprofile.h"
 #include "comp_rss.h"
 #include <glib.h>
 
