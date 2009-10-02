@@ -257,7 +257,9 @@ static void historize(PurpleConversation *c)
 		/* Advance the list so that the next time through the loop we get the next log */
 		logs = logs->prev;
 	}
-	
+
+	gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), "<hr>", options);
+
 	gtk_imhtml_set_protocol_name(GTK_IMHTML(gtkconv->imhtml), protocol);
 	g_free(protocol);
 	
