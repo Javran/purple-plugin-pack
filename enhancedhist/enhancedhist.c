@@ -56,6 +56,7 @@
 #define PREF_ROOT_PPATH		"/plugins/gtk/plugin_pack"
 #define PREF_ROOT_PATH		"/plugins/gtk/plugin_pack/enhanced_history"
 #define PREF_NUMBER_PATH	"/plugins/gtk/plugin_pack/enhanced_history/number"
+#define PREF_BYTES_PATH		"/plugins/gtk/plugin_pack/enhanced_history/bytes"
 #define PREF_MINS_PATH		"/plugins/gtk/plugin_pack/enhanced_history/minutes"
 #define PREF_HOURS_PATH		"/plugins/gtk/plugin_pack/enhanced_history/hours"
 #define PREF_DAYS_PATH		"/plugins/gtk/plugin_pack/enhanced_history/days"
@@ -64,6 +65,7 @@
 #define PREF_CHAT_PATH		"/plugins/gtk/plugin_pack/enhanced_history/chat"
 
 #define PREF_NUMBER_VAL		purple_prefs_get_int(PREF_NUMBER_PATH)
+#define PREF_BYTES_VAL		purple_prefs_get_int(PREF_BYTES_PATH)
 #define PREF_MINS_VAL		purple_prefs_get_int(PREF_MINS_PATH)
 #define PREF_HOURS_VAL		purple_prefs_get_int(PREF_HOURS_PATH)
 #define PREF_DAYS_VAL		purple_prefs_get_int(PREF_DAYS_PATH)
@@ -84,14 +86,21 @@ static void historize(PurpleConversation *c)
 	PurpleAccount *account = NULL;
 	PurpleConversationType convtype;
 	PidginConversation *gtkconv = NULL;
+	GtkTextIter start;
 	GtkIMHtmlOptions options;
-	GList *logs = NULL;
+	GList *logs = NULL, *logs_head = NULL;
 	GSList *buddies = NULL;
+	struct tm *log_tm = NULL, *local_tm = NULL;
+	time_t t, log_time;
+	double limit_time = 0.0;
 	const char *name = NULL, *alias = NULL, *LOG_MODE = NULL;
 	char *header = NULL, *protocol = NULL, *history = NULL;
 	guint flags;
-	int size = 0;
-	int counter;
+	int conv_counter = 0;
+	int limit_offset = 0;
+	int byte_counter = 0;
+	int check_time = 0;
+	int log_size, overshoot;
 
 	account = purple_conversation_get_account(c);
 	name = purple_conversation_get_name(c);
@@ -155,111 +164,112 @@ static void historize(PurpleConversation *c)
 			purple_conversation_get_name(c), purple_conversation_get_account(c));
 	}
 
+	gtkconv = PIDGIN_CONVERSATION(c);
+
 	/* The logs are non-existant or the user has disabled this type for log displaying. */
 	if (!logs) {
 		return;
 	}
 
-	gtkconv = PIDGIN_CONVERSATION(c);
+	/* Keep a pointer to the head of the logs for freeing later */
+	logs_head = logs;
 
-	size = g_list_length(logs);
-	
-	/* Make sure the user selected number of chats does not exceed the number of logs. */
-	if(size > PREF_NUMBER_VAL) {
-		size=PREF_NUMBER_VAL;
-	}
+	/* If all time prefs are not 0, prepare to check times */
+	if (!(PREF_MINS_VAL == 0 && PREF_HOURS_VAL == 0 && PREF_DAYS_VAL == 0)) {
+		check_time = 1;
 
-	/* No idea wth this does, it was in the original history plugin */
-	if (flags & PURPLE_LOG_READ_NO_NEWLINE) {
-		options |= GTK_IMHTML_NO_NEWLINE;
-	}
-
-	/* Deal with time limitations */
-	counter = 0;
-	if(PREF_MINS_VAL == 0 && PREF_HOURS_VAL == 0 && PREF_DAYS_VAL == 0) {
-		/* No time limitations, advance the logs PREF_NUMBER_VAL-1 forward */
-		while(logs->next && counter < (PREF_NUMBER_VAL - 1)) {
-			logs = logs->next;
-			counter++;
-			purple_debug_info("ehnahcedhist", "Counter: %d\n", counter);
-		}
-	} else {
-		struct tm *log_tm = NULL, *local_tm = NULL;
-		time_t t, log_time;
-		double limit_time, diff_time;
-		
 		/* Grab current time and normalize it to UTC */
 		t = time(NULL);
 		local_tm = gmtime(&t);
 		t = mktime(local_tm);
-		
-		/* Pull the local time from the purple log, convert it to UTC time */
-		log_tm = gmtime(&((PurpleLog*)logs->data)->time);
-		log_time = mktime(log_tm);
-
-		purple_debug_info("enhancedhist", "Local Time as int: %d \n", (int)t);
-		purple_debug_info("enhancedhist", "Log Time as int: %d \n", (int)mktime(log_tm));
 
 		limit_time = (PREF_MINS_VAL * 60.0) + (PREF_HOURS_VAL * 60.0 * 60.0) +
 				(PREF_DAYS_VAL * 60.0 * 60.0 * 24.0);
-		diff_time = difftime(t, log_time);
-		purple_debug_info("enhancedhist", "Time difference between local and log: %.21f \n",
-				diff_time);
-		
-		/* The most recent log is already too old, so lets return */
-		if(diff_time > limit_time) {
-			return;
+	}
+
+	/* The protocol will need to be adjusted for each log for correct display,
+	   so save the current imhtml protocol_name to restore it later */
+	protocol = g_strdup(gtk_imhtml_get_protocol_name(GTK_IMHTML(gtkconv->imhtml)));
+
+	/* Calculate time for the first log */
+	log_tm = gmtime(&((PurpleLog*)logs->data)->time);
+	log_time = mktime(log_tm);
+
+	/* Continue to add older logs until they run out or the conditions are no
+	   longer met */
+	while (logs && conv_counter < PREF_NUMBER_VAL
+			&& byte_counter < PREF_BYTES_VAL
+			&& (!check_time || difftime(t, log_time) < limit_time)) {
+
+		/* Get the current log's contents as a char* */
+		history = purple_log_read((PurpleLog*)logs->data, &flags);
+		log_size = strlen(history);
+
+		/* Update the overall byte count and determine if this log exceeds the limit */
+		byte_counter += log_size;
+		overshoot = byte_counter - PREF_BYTES_VAL;
+		if (overshoot > 0) {
+			/* Start looking at the maximum log size for a newline to break at */
+			limit_offset = overshoot;
+			/* Find the next \n, or stop if the end of the log is reached */
+			while (history[limit_offset] && history[limit_offset] != '\n') {
+				limit_offset++;
+			}
+			/* If we're at or very close to the end of the log, forget this log */
+			if (!history[limit_offset] || (log_size - limit_offset < 3)) {
+				limit_offset = -1;
+			}
+			else {
+				/* Start at the first character after the newline */
+				limit_offset++;
+			}
 		}
-		/* Iterate to the end of the list, stop while messages are under limit, we just
-		 * want a count here */
-		while(logs->next && diff_time <= limit_time && counter < (PREF_NUMBER_VAL - 1)) {
-			logs = logs->next;
+
+		conv_counter++;
+
+		/* If this log won't fit at all, don't display it in the conversation */
+		if (limit_offset != -1) {
+			/* Set the correct protocol_name for this log */
+			gtk_imhtml_set_protocol_name(GTK_IMHTML(gtkconv->imhtml),
+					purple_account_get_protocol_name(((PurpleLog*)logs->data)->account));
+
+			/* Prepend the contents of the log starting at the calculated offset */
+			gtk_text_buffer_get_iter_at_offset(GTK_IMHTML(gtkconv->imhtml)->text_buffer,
+					&start, 0);
+			gtk_imhtml_insert_html_at_iter(GTK_IMHTML(gtkconv->imhtml),
+						history + limit_offset, options, &start);
+
+			/* Prepend the conversation header */
+			if (PREF_DATES_VAL) {
+				header = g_strdup_printf(_("<b>Conversation with %s on %s:</b><br>"), alias,
+					purple_date_format_full(localtime(&((PurpleLog *)logs->data)->time)));
+				gtk_text_buffer_get_iter_at_offset(GTK_IMHTML(gtkconv->imhtml)->text_buffer,
+						&start, 0);
+				gtk_imhtml_insert_html_at_iter(GTK_IMHTML(gtkconv->imhtml),
+						header, options, &start);
+				g_free(header);
+			}
+		}
+
+		g_free(history);
+
+		if (limit_offset > 0) {
+			/* This log had to be chopped to fit, so stop after this one */
+			break;
+		}
+
+		logs = logs->next;
+
+		/* Recalculate log time if we haven't run out of logs */
+		if (logs) {
 			log_tm = gmtime(&((PurpleLog*)logs->data)->time);
 			log_time = mktime(log_tm);
-			diff_time = difftime(t, log_time);
-			counter++;
 		}
-		if(diff_time > limit_time) {
-			logs = logs->prev;
-		}
-	}
-		
-	if(counter == 0) {
-		return;
-	}
-	/* Loop through the logs and print them to the window */
-	while(logs) {
-		protocol = g_strdup(gtk_imhtml_get_protocol_name(GTK_IMHTML(gtkconv->imhtml)));
-		gtk_imhtml_set_protocol_name(GTK_IMHTML(gtkconv->imhtml),
-			purple_account_get_protocol_name(((PurpleLog*)logs->data)->account));
-		
-		if (gtk_text_buffer_get_char_count(gtk_text_view_get_buffer(GTK_TEXT_VIEW(gtkconv->imhtml))))
-		{
-			gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), "<BR>", options);
-		}
-
-		/* Print a header at the beginning of the log */
-		header = g_strdup_printf(_("<b>Conversation with %s on %s:</b><br>"), alias,
-				purple_date_format_full(localtime(&((PurpleLog *)logs->data)->time)));
-		
-		if(PREF_DATES_VAL) {
-			gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), header, options);
-		}
-
-		g_free(header);
-
-		/* Copy the log string into the history array */
-		history = purple_log_read((PurpleLog*)logs->data, &flags);		
-		
-		gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), history, options);
-		g_free(history);
-		
-		/* Advance the list so that the next time through the loop we get the next log */
-		logs = logs->prev;
 	}
 
 	gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), "<hr>", options);
 
+	/* Restore the original protocol_name */
 	gtk_imhtml_set_protocol_name(GTK_IMHTML(gtkconv->imhtml), protocol);
 	g_free(protocol);
 	
@@ -267,8 +277,8 @@ static void historize(PurpleConversation *c)
 	g_idle_add(_scroll_imhtml_to_end, gtkconv->imhtml);
 	
 	/* Clear the allocated memory that the logs are using */
-	g_list_foreach(logs, (GFunc)purple_log_free, NULL);
-	g_list_free(logs);
+	g_list_foreach(logs_head, (GFunc)purple_log_free, NULL);
+	g_list_free(logs_head);
 	
 }
 
@@ -294,8 +304,12 @@ eh_prefs_get_frame(PurplePlugin *plugin)
 	frame = pidgin_make_frame(vbox, _("Display Options"));
 
 	/* the integer pref for the number of logs to display */
-	pidgin_prefs_labeled_spin_button(frame, _("Number of previous conversations to display:"),
+	pidgin_prefs_labeled_spin_button(frame, _("Maximum number of conversations:"),
 			PREF_NUMBER_PATH, 0, 255, NULL);
+
+	/* the integer pref for maximum number of bytes to read back */
+	pidgin_prefs_labeled_spin_button(frame, _("Maximum number of bytes:"),
+			PREF_BYTES_PATH, 0, 1024*1024, NULL);
 
 	/* the boolean preferences */
 	option = pidgin_prefs_checkbox(_("Show dates with text"), PREF_DATES_PATH, frame);
@@ -380,6 +394,7 @@ init_plugin(PurplePlugin *plugin)
 			chats = TRUE;
 
 		purple_prefs_add_int(PREF_NUMBER_PATH, purple_prefs_get_int("/plugins/core/enhanced_history/int"));
+		purple_prefs_add_int(PREF_BYTES_PATH, purple_prefs_get_int("/plugins/core/enhanced_history/bytes"));
 		purple_prefs_add_int(PREF_MINS_PATH, purple_prefs_get_int("/plugins/core/enhanced_history/mins"));
 		purple_prefs_add_int(PREF_HOURS_PATH, purple_prefs_get_int("/plugins/core/enhanced_history/hours"));
 		purple_prefs_add_int(PREF_DAYS_PATH, purple_prefs_get_int("/plugins/core/enhanced_history/days"));
@@ -388,6 +403,7 @@ init_plugin(PurplePlugin *plugin)
 		purple_prefs_add_bool(PREF_CHAT_PATH, chats);
 
 		purple_prefs_remove("/plugins/core/enhanced_history/int");
+		purple_prefs_remove("/plugins/core/enhanced_history/bytes");
 		purple_prefs_remove("/plugins/core/enhanced_history/mins");
 		purple_prefs_remove("/plugins/core/enhanced_history/hours");
 		purple_prefs_remove("/plugins/core/enhanced_history/days");
@@ -397,7 +413,8 @@ init_plugin(PurplePlugin *plugin)
 		purple_prefs_remove("/plugins/core/enhanced_history");
 	} else {
 		/* Create these prefs with sensible defaults */
-		purple_prefs_add_int(PREF_NUMBER_PATH, 1);
+		purple_prefs_add_int(PREF_NUMBER_PATH, 10);
+		purple_prefs_add_int(PREF_BYTES_PATH, 4096);
 		purple_prefs_add_int(PREF_MINS_PATH, 0);
 		purple_prefs_add_int(PREF_HOURS_PATH, 0);
 		purple_prefs_add_int(PREF_DAYS_PATH, 0);
