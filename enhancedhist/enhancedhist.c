@@ -95,7 +95,6 @@ static void historize(PurpleConversation *c)
 	double limit_time = 0.0;
 	const char *name = NULL, *alias = NULL, *LOG_MODE = NULL;
 	char *header = NULL, *protocol = NULL, *history = NULL;
-	guint flags;
 	int conv_counter = 0;
 	int limit_offset = 0;
 	int byte_counter = 0;
@@ -200,10 +199,16 @@ static void historize(PurpleConversation *c)
 	while (logs && conv_counter < PREF_NUMBER_VAL
 			&& byte_counter < PREF_BYTES_VAL
 			&& (!check_time || difftime(t, log_time) < limit_time)) {
+		guint flags;
 
 		/* Get the current log's contents as a char* */
 		history = purple_log_read((PurpleLog*)logs->data, &flags);
 		log_size = strlen(history);
+
+		if (flags & PURPLE_LOG_READ_NO_NEWLINE)
+			options |= GTK_IMHTML_NO_NEWLINE;
+		else
+			options &= ~GTK_IMHTML_NO_NEWLINE;
 
 		/* Update the overall byte count and determine if this log exceeds the limit */
 		byte_counter += log_size;
