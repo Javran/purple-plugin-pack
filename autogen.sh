@@ -47,8 +47,6 @@
 ###############################################################################
 PACKAGE="Purple Plugin Pack"
 ARGS_FILE="autogen.args"
-export CFLAGS
-export LDFLAGS
 
 libtoolize="libtoolize"
 case $(uname -s) in
