@@ -33,8 +33,8 @@
 #define CTCP_REPLY    purple_account_get_string(account, "ctcp-message", "Purple IRC")
 #define PART_MESSAGE  purple_account_get_string(account, "part-message", "Leaving.")
 #define QUIT_MESSAGE  purple_account_get_string(account, "quit-message", "Leaving.")
-#define SET_UMODES    purple_account_get_string(account, "umodes", "i")
-#define UNSET_UMODES  purple_account_get_string(account, "umodes", NULL)
+#define SET_UMODES    purple_account_get_string(account, "setumodes", "i")
+#define UNSET_UMODES  purple_account_get_string(account, "unsetumodes", NULL)
 
 #define PLUGIN_ID "core-plugin_pack-irc-more"
 
