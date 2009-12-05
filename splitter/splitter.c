@@ -25,6 +25,10 @@
 
 #include <pango/pango.h>
 
+#ifdef _WIN32
+# include <pango/pangowin32.h>
+#endif
+
 #ifndef _WIN32
 # include <pango/pangocairo.h>
 #endif
