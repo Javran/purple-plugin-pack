@@ -1,4 +1,6 @@
 Version 2.6.1: ??/??/??
+	* Add support for limiting the number of bytes of history displayed by
+	  the Enhanced History plugin.
 	* Fix the "Set User Modes On Connect" and "Unset User Modes On Connect"
 	  settings provided by irc-more on IRC accounts.
 	* Fix Message Splitter so that it builds on Windows.
