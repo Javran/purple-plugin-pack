@@ -1,4 +1,4 @@
-Version 2.6.1: ??/??/??
+Version 2.6.1: 12/07/09
 	* Add support for limiting the number of bytes of history displayed by
 	  the Enhanced History plugin.
 	* Add a preference to the Google plugin to allow users to specify a
