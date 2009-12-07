@@ -159,7 +159,8 @@ colorize_message(char **message) {
 	g_string_append_unichar(new_msg, ch);
 
 	/* format each character one by one:
-	*    (if it is not a space) AND
+	*    (if it is printable and not a space -- this excludes LTR, control, and
+	*     format characters) AND
 	*    (if it is not the same color as the last character)
 	*/
 	for ( ; c && *c; c = g_utf8_next_char(c)) {
