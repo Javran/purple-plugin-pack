@@ -1,6 +1,8 @@
 Version 2.6.1: ??/??/??
 	* Add support for limiting the number of bytes of history displayed by
 	  the Enhanced History plugin.
+	* Add a preference to the Google plugin to allow users to specify a
+	  Google domain to use.  For example, www.google.com or www.google.fr.
 	* Fix the "Set User Modes On Connect" and "Unset User Modes On Connect"
 	  settings provided by irc-more on IRC accounts.
 	* Fix Message Splitter so that it builds on Windows.

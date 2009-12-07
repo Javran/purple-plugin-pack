@@ -33,6 +33,8 @@ static PurpleCmdId google_cmd_id = 0;
 
 #define GOOGLE_URL_FORMAT	"http://%s/search?q=%s&btnI=I%%27m+Feeling+Lucky"
 
+#define GOOGLE_DOMAIN_PREF	"/core/plugins/core-plugin_pack-google/domain"
+
 /******************************************************************************
  * Structs
  *****************************************************************************/
@@ -230,8 +232,11 @@ im_feeling_lucky(PurpleConversation *conv, const gchar *cmd, gchar **args,
 	GoogleFetchUrlData *gfud = NULL;
 	PurplePlugin *plugin = (PurplePlugin *)data;
 	gchar *url = NULL;
+	const gchar *pref = NULL;
 
-	url = g_strdup_printf(GOOGLE_URL_FORMAT, "www.google.com",
+	pref = purple_prefs_get_string(GOOGLE_DOMAIN_PREF);
+	url = g_strdup_printf(GOOGLE_URL_FORMAT,
+						  pref ? pref : "www.google.com",
 						  purple_url_encode(args[0]));
 	gfud = google_fetch_url_data_new(url);
 	g_free(url);
@@ -253,6 +258,21 @@ im_feeling_lucky(PurpleConversation *conv, const gchar *cmd, gchar **args,
 	}
 
 	return PURPLE_CMD_RET_OK;
+}
+
+/******************************************************************************
+ * Prefs Stuff
+ *****************************************************************************/
+static PurplePluginPrefFrame *
+google_pref_frame(PurplePlugin *plugin) {
+	PurplePluginPrefFrame *frame = purple_plugin_pref_frame_new();
+	PurplePluginPref *pref =
+			purple_plugin_pref_new_with_name_and_label(GOOGLE_DOMAIN_PREF,
+						_("Google Domain (i.e. www.google.com)"));
+
+	purple_plugin_pref_frame_add(frame, pref);
+
+	return frame;
 }
 
 /******************************************************************************
@@ -278,6 +298,16 @@ plugin_unload(PurplePlugin *plugin) {
 	return TRUE;
 }
 
+static PurplePluginUiInfo google_prefs_info = {
+	google_pref_frame,
+	0,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
 static PurplePluginInfo info = {
 	PURPLE_PLUGIN_MAGIC,
 	PURPLE_MAJOR_VERSION,
@@ -302,7 +332,7 @@ static PurplePluginInfo info = {
 
 	NULL,
 	NULL,
-	NULL,
+	&google_prefs_info,
 	NULL,
 	NULL,
 	NULL,
@@ -320,6 +350,12 @@ init_plugin(PurplePlugin *plugin) {
 	info.name = _("Google");
 	info.summary = _("Returns the url for a Google \"I'm feeling lucky\" search");
 	info.description = info.summary;
+
+	purple_prefs_add_none("/core");
+	purple_prefs_add_none("/core/plugins");
+	purple_prefs_add_none("/core/plugins/core-plugin_pack-google");
+
+	purple_prefs_add_string(GOOGLE_DOMAIN_PREF, "www.google.com");
 }
 
 PURPLE_INIT_PLUGIN(google, init_plugin, info)
