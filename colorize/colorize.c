@@ -115,7 +115,9 @@ rgb_equals(guint8 a[3], gfloat b[3]) {
 
 static void
 colorize_message(char **message) {
-	guint    i, len;
+	glong    len;
+	gchar    *c;
+	gunichar ch;
 	gfloat   d_grad[3], grad[3];
 	guint8   initial_rgb[3], target_rgb[3], last_rgb[3];
 	GString  *new_msg;
@@ -123,9 +125,10 @@ colorize_message(char **message) {
 	g_return_if_fail(message   != NULL);
 	g_return_if_fail(*message  != NULL);
 	g_return_if_fail(**message != '\0');
+	g_return_if_fail(g_utf8_validate(*message, -1, NULL));
 
-	len     = strlen( *message );
-	new_msg = g_string_sized_new(len); /* A decent starting size */
+	len     = g_utf8_strlen( *message, -1);
+	new_msg = g_string_sized_new(strlen( *message )); /* A decent starting size */
 
 	/* get colors from preferences */
 	initial_rgb[0] = (guint8)purple_prefs_get_int(PREFS_I_RED);
@@ -147,18 +150,21 @@ colorize_message(char **message) {
 	d_grad[2] = (gfloat)(target_rgb[2] - initial_rgb[2]) / (gfloat)len;
 
 	/* open initial font tag and format first character */
-	g_string_append_printf(new_msg, "<font color=\"#%02x%02x%02x\">%c",
+	ch = g_utf8_get_char(*message);
+	c = g_utf8_next_char(*message);
+	g_string_append_printf(new_msg, "<font color=\"#%02x%02x%02x\">",
 	                         round_gfloat_to_guint8(grad[0]),
 	                         round_gfloat_to_guint8(grad[1]),
-	                         round_gfloat_to_guint8(grad[2]),
-	                                             *(*message));
+	                         round_gfloat_to_guint8(grad[2]));
+	g_string_append_unichar(new_msg, ch);
 
 	/* format each character one by one:
 	*    (if it is not a space) AND
 	*    (if it is not the same color as the last character)
 	*/
-	for(i=1; i<len; i++)
-	{
+	for ( ; c && *c; c = g_utf8_next_char(c)) {
+		gunichar ch = g_utf8_get_char(c);
+
 		/* store last color */
 		last_rgb[0] = round_gfloat_to_guint8(grad[0]);
 		last_rgb[1] = round_gfloat_to_guint8(grad[1]);
@@ -170,16 +176,14 @@ colorize_message(char **message) {
 		grad[2] += d_grad[2];
 
 		/* format next character appropriately */
-		if( g_ascii_isspace ( *(*message+i) ) ||
-		    rgb_equals(last_rgb, grad)          )
-			g_string_append_c(new_msg, *(*message+i));
-		else
-			g_string_append_printf(new_msg, "</font><font color=\"#%02x%02x%02x\">%c",
+		if ( g_unichar_isgraph( ch ) && !rgb_equals(last_rgb, grad) ) {
+			g_string_append_printf(new_msg, "</font><font color=\"#%02x%02x%02x\">",
 			                                   round_gfloat_to_guint8(grad[0]),
 			                                   round_gfloat_to_guint8(grad[1]),
-			                                   round_gfloat_to_guint8(grad[2]),
-			                                                     *(*message+i));
+			                                   round_gfloat_to_guint8(grad[2]));
+		}
 
+		g_string_append_unichar(new_msg, ch);
 	}
 
 	/* close final font tag */

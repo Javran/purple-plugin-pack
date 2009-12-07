@@ -9,6 +9,7 @@ Version 2.6.1: ??/??/??
 	* Fix Group Message so that its request dialog doesn't get too long.
 	* Make IRC Helper suppress an additional message related to hostmasks.
 	  (John Dennis)
+	* Fix the Colorize plugin to be UTF-8 compliant.
 
 Version 2.6.0: 08/30/09
 	* Fix grouping of radio buttons in switchspell menu for enchant-enabled
