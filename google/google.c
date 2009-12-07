@@ -26,6 +26,8 @@
 #include <conversation.h>
 #include <debug.h>
 #include <plugin.h>
+#include <pluginpref.h>
+#include <prefs.h>
 #include <proxy.h>
 #include <util.h>
 
