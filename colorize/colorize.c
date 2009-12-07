@@ -118,14 +118,14 @@ colorize_message(char **message) {
 	guint    i, len;
 	gfloat   d_grad[3], grad[3];
 	guint8   initial_rgb[3], target_rgb[3], last_rgb[3];
-	gchar    *formatted_char, *tmp, *new_msg;
+	GString  *new_msg;
 
 	g_return_if_fail(message   != NULL);
 	g_return_if_fail(*message  != NULL);
 	g_return_if_fail(**message != '\0');
 
-	new_msg = g_strdup("");
 	len     = strlen( *message );
+	new_msg = g_string_sized_new(len); /* A decent starting size */
 
 	/* get colors from preferences */
 	initial_rgb[0] = (guint8)purple_prefs_get_int(PREFS_I_RED);
@@ -147,18 +147,11 @@ colorize_message(char **message) {
 	d_grad[2] = (gfloat)(target_rgb[2] - initial_rgb[2]) / (gfloat)len;
 
 	/* open initial font tag and format first character */
-	formatted_char = g_strdup_printf("<font color=\"#%02x%02x%02x\">%c",
-	                                   round_gfloat_to_guint8(grad[0]),
-	                                   round_gfloat_to_guint8(grad[1]),
-	                                   round_gfloat_to_guint8(grad[2]),
-	                                                       *(*message));
-
-	/* create a new string with the newly formatted char and free the old one */
-	tmp = g_strconcat(new_msg, formatted_char, NULL);
-	g_free(formatted_char);
-	g_free(new_msg);
-
-	new_msg = tmp;
+	g_string_append_printf(new_msg, "<font color=\"#%02x%02x%02x\">%c",
+	                         round_gfloat_to_guint8(grad[0]),
+	                         round_gfloat_to_guint8(grad[1]),
+	                         round_gfloat_to_guint8(grad[2]),
+	                                             *(*message));
 
 	/* format each character one by one:
 	*    (if it is not a space) AND
@@ -179,29 +172,22 @@ colorize_message(char **message) {
 		/* format next character appropriately */
 		if( g_ascii_isspace ( *(*message+i) ) ||
 		    rgb_equals(last_rgb, grad)          )
-			formatted_char = g_strdup_printf("%c", *(*message+i));
+			g_string_append_c(new_msg, *(*message+i));
 		else
-			formatted_char = g_strdup_printf("</font><font color=\"#%02x%02x%02x\">%c",
+			g_string_append_printf(new_msg, "</font><font color=\"#%02x%02x%02x\">%c",
 			                                   round_gfloat_to_guint8(grad[0]),
 			                                   round_gfloat_to_guint8(grad[1]),
 			                                   round_gfloat_to_guint8(grad[2]),
 			                                                     *(*message+i));
 
-
-		/* create a new string with the newly formatted char and free the old one */
-		tmp = g_strconcat(new_msg, formatted_char, NULL);
-		g_free(formatted_char);
-		g_free(new_msg);
-
-		new_msg = tmp;
 	}
 
 	/* close final font tag */
-	new_msg = g_strconcat(new_msg, "</font>", NULL);
+	g_string_append(new_msg, "</font>");
 
 	/* return result */
 	g_free(*message);
-	*message = new_msg;
+	*message = g_string_free(new_msg, FALSE);
 }
 
 /* respond to a sending-im signal by replacing outgoing text
