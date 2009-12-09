@@ -38,9 +38,6 @@
 
 #define PLUGIN_ID "core-plugin_pack-irc-more"
 
-#define PREF_PREFIX "/plugins/core/" PLUGIN_ID
-#define PREF_DELAY PREF_PREFIX "/delay"
-
 #define MATCHES(string)   !strncmp(*msg, string, sizeof(string) - 1)
 
 static PurpleCmdId notice_cmd_id = 0;
@@ -51,7 +48,11 @@ show_them(gpointer data)
 {
 	/* So you think you can kick me? I'll show you! */
 	PurpleConversation *conv = data;
-	char *conv_name = NULL, *command = NULL, *markup = NULL, *error = NULL;
+	const char *conv_name = NULL;
+	char *command = NULL, *markup = NULL, *error = NULL;
+
+	if(conv)
+		conv_name = purple_conversation_get_name(conv);
 
 	if(conv_name) {
 		command = g_strdup_printf("join %s", conv_name);
@@ -75,25 +76,29 @@ irc_receiving_text(PurpleConnection *gc, const char **incoming, gpointer null)
 		return;
 
 	splits = g_strsplit(*incoming, " ", -1);
-	if (splits[1]) {
-		PurpleAccount *account = purple_connection_get_account(gc);
-		char *str = g_ascii_strdown(splits[1], -1);
 
-		if (strcmp(str, "kick") == 0 && splits[2] && splits[3]) {
-			char *name = splits[2];
-			GList *chats = purple_get_chats();
-			while (chats) {
-				PurpleConversation *conv = chats->data;
-				chats = chats->next;
-				if (purple_conversation_get_account(conv) == account
-						&& strcmp(purple_conversation_get_name(conv), name) == 0) {
-					g_timeout_add(1000 * MAX(10, purple_prefs_get_int(PREF_DELAY)), show_them, conv);
-					break;
-				}
+	/* if there's not at least 5 elements in the string array, this isn't a kick; ignore  */
+	if(g_strv_length(splits) < 5)
+		return;
+
+	PurpleAccount *account = purple_connection_get_account(gc);
+	char *str = g_ascii_strdown(splits[1], -1);
+
+	if (strcmp(str, "kick") == 0 && splits[2] && splits[3]) {
+		char *name = splits[2];
+		GList *chats = purple_get_chats();
+		while (chats) {
+			PurpleConversation *conv = chats->data;
+			chats = chats->next;
+			if (purple_conversation_get_account(conv) == account
+					&& strcmp(purple_conversation_get_name(conv), name) == 0) {
+				purple_timeout_add(100, show_them, conv);
+				break;
 			}
 		}
-		g_free(str);
 	}
+
+	g_free(str);
 	g_strfreev(splits);
 }
 
@@ -271,34 +276,6 @@ plugin_unload(PurplePlugin *plugin)
 	return TRUE;
 }
 
-static PurplePluginPrefFrame *
-get_plugin_pref_frame(PurplePlugin *plugin)
-{
-	PurplePluginPrefFrame *frame;
-	PurplePluginPref *pref;
-
-	frame = purple_plugin_pref_frame_new();
-
-	pref = purple_plugin_pref_new_with_name_and_label(PREF_DELAY,
-					_("Seconds to wait before rejoining"));
-	purple_plugin_pref_set_bounds(pref, 3, 3600);
-	purple_plugin_pref_frame_add(frame, pref);
-
-	return frame;
-}
-
-static PurplePluginUiInfo prefs_info = {
-	get_plugin_pref_frame,
-	0,
-	NULL,
-
-	/* padding */
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
-
 static PurplePluginInfo info =
 {
 	PURPLE_PLUGIN_MAGIC,
@@ -324,7 +301,7 @@ static PurplePluginInfo info =
 
 	NULL,
 	NULL,
-	&prefs_info,
+	NULL,
 	NULL,
 
 	NULL,
@@ -346,9 +323,6 @@ init_plugin(PurplePlugin *plugin)
 	info.description = _("Adds additional IRC features, including a "
 			"customizable quit message, a customizable CTCP VERSION reply, "
 			"and the /notice command for notices.");
-
-	purple_prefs_add_none(PREF_PREFIX);
-	purple_prefs_add_int(PREF_DELAY, 30);
 }
 
 PURPLE_INIT_PLUGIN(irc_more, init_plugin, info)
