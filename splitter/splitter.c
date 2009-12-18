@@ -489,16 +489,18 @@ sending_im_msg_cb(PurpleAccount *account, const char *receiver,
 /* register "sending" message signal callback */
 static gboolean
 plugin_load(PurplePlugin *plugin) {
-	purple_signal_connect(purple_conversations_get_handle(),
+	purple_signal_connect_priority(purple_conversations_get_handle(),
 			    "sending-im-msg",
 			    plugin,
 			    PURPLE_CALLBACK(sending_im_msg_cb),
-			    NULL);
-	purple_signal_connect(purple_conversations_get_handle(),
+			    NULL,
+				PURPLE_SIGNAL_PRIORITY_LOWEST);
+	purple_signal_connect_priority(purple_conversations_get_handle(),
 			    "sending-chat-msg",
 			    plugin,
 			    PURPLE_CALLBACK(sending_chat_msg_cb),
-			    NULL);
+			    NULL,
+				PURPLE_SIGNAL_PRIORITY_LOWEST);
 
 	return TRUE;
 }
