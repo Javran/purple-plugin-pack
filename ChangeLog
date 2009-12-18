@@ -2,6 +2,9 @@ Version 2.6.2: ??/??/??
 	* Fix IRC More plugin not properly rejoining channels.
 	* IRC More no longer has a preference for auto rejoin delay--default to
 	  100 milliseconds.
+	* Splitter plugin now connects to signals with
+	  PURPLE_SIGNAL_PRIORITY_LOWEST, which should prevent splitter from
+	  mangling OTR messages.
 
 Version 2.6.1: 12/07/09
 	* Add support for limiting the number of bytes of history displayed by
