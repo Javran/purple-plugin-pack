@@ -123,6 +123,7 @@ splitter_common_send(PurpleConversation *conv, const char *message,
 	PurpleAccount *account;
 	PurpleConnection *gc;
 	char *displayed = NULL, *sent = NULL;
+	gint err = 0;
 
 	if (strlen(message) == 0)
 		return;
@@ -149,12 +150,59 @@ splitter_common_send(PurpleConversation *conv, const char *message,
 	msgflags |= PURPLE_MESSAGE_SEND;
 
 	if (type == PURPLE_CONV_TYPE_IM) {
-		if (sent != NULL && sent[0] != '\0')
-			purple_conv_im_send_with_flags(PURPLE_CONV_IM(conv), sent, msgflags);
+		PurpleConvIm *im = PURPLE_CONV_IM(conv);
+
+		if (sent != NULL && sent[0] != '\0') {
+
+			err = serv_send_im(gc, purple_conversation_get_name(conv),
+			                   sent, msgflags);
+
+			if ((err > 0) && (displayed != NULL))
+				purple_conv_im_write(im, NULL, displayed, msgflags, time(NULL));
+
+			purple_signal_emit(purple_conversations_get_handle(), "sent-im-msg",
+							 account,
+							 purple_conversation_get_name(conv), sent);
+		}
 	}
 	else {
-		if (sent != NULL && sent[0] != '\0')
-			purple_conv_chat_send_with_flags(PURPLE_CONV_CHAT(conv), sent, msgflags);
+		if (sent != NULL && sent[0] != '\0') {
+			err = serv_chat_send(gc, purple_conv_chat_get_id(PURPLE_CONV_CHAT(conv)), sent, msgflags);
+
+			purple_signal_emit(purple_conversations_get_handle(), "sent-chat-msg",
+							 account, sent,
+							 purple_conv_chat_get_id(PURPLE_CONV_CHAT(conv)));
+		}
+	}
+
+	if (err < 0) {
+		const char *who;
+		const char *msg;
+
+		who = purple_conversation_get_name(conv);
+
+		if (err == -E2BIG) {
+			msg = _("Unable to send message: The message is too large.");
+
+			if (!purple_conv_present_error(who, account, msg)) {
+				char *msg2 = g_strdup_printf(_("Unable to send message to %s."), who);
+				purple_notify_error(gc, NULL, msg2, _("The message is too large."));
+				g_free(msg2);
+			}
+		}
+		else if (err == -ENOTCONN) {
+			purple_debug(PURPLE_DEBUG_ERROR, "conversation",
+					   "Not yet connected.\n");
+		}
+		else {
+			msg = _("Unable to send message.");
+
+			if (!purple_conv_present_error(who, account, msg)) {
+				char *msg2 = g_strdup_printf(_("Unable to send message to %s."), who);
+				purple_notify_error(gc, NULL, msg2, NULL);
+				g_free(msg2);
+			}
+		}
 	}
 
 	g_free(displayed);
