@@ -501,9 +501,9 @@ static PurplePluginInfo se_info = {
 	NULL,												/* summary			*/
 	NULL,												/* description		*/
 
-	"Gary Kramlich <grim@reaperworld.com>, "
-	"Peter Lawler <bleeter from users.sf.net>, "
-	"Daniel Atallah, Sadrul Habib Chowdhury <sadrul@users.sf.net>, "
+	"Gary Kramlich <grim@reaperworld.com>,\n"
+	"Peter Lawler <bleeter from users.sf.net>,\n"
+	"Daniel Atallah,\nSadrul Habib Chowdhury <sadrul@users.sf.net>,\n"
 	"John Bailey <rekkanoryo@rekkanoryo.org>",			/* authors			*/
 
 	PP_WEBSITE,											/* homepage			*/
