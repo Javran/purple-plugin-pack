@@ -4,7 +4,9 @@ Version 2.6.2: ??/??/??
 	  100 milliseconds.
 	* Splitter plugin now connects to signals with
 	  PURPLE_SIGNAL_PRIORITY_LOWEST, which should prevent splitter from
-	  mangling OTR messages.
+	  mangling OTR messages, but prevents OTR from sending messages in
+	  encrypted form.
+	* /exec's author list no longer makes the Pidgin plugins dialog wider.
 
 Version 2.6.1: 12/07/09
 	* Add support for limiting the number of bytes of history displayed by
