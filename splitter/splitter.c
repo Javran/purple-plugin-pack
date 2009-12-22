@@ -191,8 +191,7 @@ splitter_common_send(PurpleConversation *conv, const char *message,
 			}
 		}
 		else if (err == -ENOTCONN) {
-			purple_debug(PURPLE_DEBUG_ERROR, "conversation",
-					   "Not yet connected.\n");
+			purple_debug_error("conversation", "Not yet connected.\n");
 		}
 		else {
 			msg = _("Unable to send message.");
@@ -444,7 +443,7 @@ static void
 sending_chat_msg_cb(PurpleAccount *account, const char **message, int id) {
 	message_to_conv *msg_to_conv;
 
-	purple_debug(PURPLE_DEBUG_MISC, "purple-splitter", "splitter plugin invoked\n");
+	purple_debug_misc("purple-splitter", "splitter plugin invoked\n");
 
 	g_return_if_fail(account  != NULL);
 	g_return_if_fail(message  != NULL);
@@ -468,7 +467,7 @@ sending_im_msg_cb(PurpleAccount *account, const char *receiver,
 {
 	message_to_conv *msg_to_conv;
 
-	purple_debug(PURPLE_DEBUG_MISC, "purple-splitter", "splitter plugin invoked\n");
+	purple_debug_misc("purple-splitter", "splitter plugin invoked\n");
 
 	g_return_if_fail(account  != NULL);
 	g_return_if_fail(receiver != NULL);
