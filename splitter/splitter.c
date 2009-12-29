@@ -450,7 +450,6 @@ sending_chat_msg_cb(PurpleAccount *account, const char **message, int id) {
 	g_return_if_fail(*message != NULL);
 
 	msg_to_conv = g_new0(message_to_conv, 1);
-	g_return_if_fail( msg_to_conv != NULL );
 
 	msg_to_conv->sender_username     = g_strdup(account->username);
 	msg_to_conv->sender_protocol_id  = g_strdup(account->protocol_id);
@@ -475,7 +474,6 @@ sending_im_msg_cb(PurpleAccount *account, const char *receiver,
 	g_return_if_fail(*message != NULL);
 
 	msg_to_conv = g_new0(message_to_conv, 1);
-	g_return_if_fail( msg_to_conv != NULL );
 
 	msg_to_conv->sender_username     = g_strdup(account->username);
 	msg_to_conv->sender_protocol_id  = g_strdup(account->protocol_id);
