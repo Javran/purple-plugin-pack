@@ -125,7 +125,7 @@ splitter_common_send(PurpleConversation *conv, const char *message,
 	PurpleConversationType type;
 	PurpleAccount *account;
 	PurpleConnection *gc;
-	char *displayed = NULL, *sent = NULL;
+	char *sent = NULL;
 
 	if (strlen(message) == 0)
 		return;
@@ -138,13 +138,10 @@ splitter_common_send(PurpleConversation *conv, const char *message,
 
 	type = purple_conversation_get_type(conv);
 
-	/* Always linkfy the text for display */
-	displayed = purple_markup_linkify(message);
-
 	if ((conv->features & PURPLE_CONNECTION_HTML) &&
 		!(msgflags & PURPLE_MESSAGE_RAW))
 	{
-		sent = g_strdup(displayed);
+		sent = purple_markup_linkify(message);
 	}
 	else
 		sent = g_strdup(message);
@@ -164,7 +161,6 @@ splitter_common_send(PurpleConversation *conv, const char *message,
 
 	splitter_injected_message = FALSE;
 
-	g_free(displayed);
 	g_free(sent);
 }
 
