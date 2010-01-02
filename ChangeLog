@@ -11,6 +11,8 @@ Version 2.6.2: 01/01/10
 	  splitting of messages will no longer bypass any other plugins
 	  intercepting outgoing messages.
 	* /exec's author list no longer makes the Pidgin plugins dialog wider.
+	* Talkfilters is no longer a dependency of itself, allowing the plugin to
+	  build. (pva)
 
 Version 2.6.1: 12/07/09
 	* Add support for limiting the number of bytes of history displayed by

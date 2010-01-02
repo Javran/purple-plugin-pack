@@ -267,7 +267,7 @@ if test x"$HAVE_TALKFILTERS" = x"yes"; then
 	AC_CHECK_LIB(talkfilters, gtf_filter_count, TALKFILTERS_LIBS="-ltalkfilters")
 	AC_SUBST(TALKFILTERS_LIBS)
 
-	DEPENDENCIES="$DEPENDENCIES,talkfilters"
+	DEPENDENCIES="$DEPENDENCIES,talkfiltersbin"
 fi
 
 dnl #######################################################################
