@@ -107,7 +107,7 @@
 #define NICK_AUTHSERV "AuthServ"
 
 #define NICK_CHANSERV "ChanServ"
-#define NICK_FREENODE_CONNECT "freenode-connect"
+#define NICK_FREENODE_CONNECT "frigg"
 #define NICK_FUNCOM_Q_SERVICE NICK_QUAKENET_Q "@cserve.funcom.com"
 #define NICK_GAMESURGE_AUTHSERV "AuthServ"
 #define NICK_GAMESURGE_AUTHSERV_SERVICE NICK_GAMESURGE_AUTHSERV "@Services.GameSurge.net"
@@ -784,7 +784,8 @@ get_auto_response(PurpleConnection *gc, const char *name)
 	return ar;
 }
 
-static gboolean receiving_im_msg_cb(PurpleAccount *account, gchar **sender, gchar **buffer,
+static gboolean receiving_im_msg_cb(PurpleAccount *account, gchar **sender,
+                                    gchar **buffer,
                                     PurpleConversation *conv,
                                     gint *flags, gpointer data)
 {
@@ -835,7 +836,8 @@ static gboolean receiving_im_msg_cb(PurpleAccount *account, gchar **sender, gcha
 	/* SIMPLE SUPPRESSION RULES */
 
 	/* Suppress the FreeNode stats collection bot. */
-	if (g_str_equal(nick, NICK_FREENODE_CONNECT))
+	if (g_str_equal(nick, NICK_FREENODE_CONNECT) &&
+	    g_str_has_prefix(msg, "Received CTCP &apos;VERSION&apos;"))
 	{
 		return TRUE;
 	}
