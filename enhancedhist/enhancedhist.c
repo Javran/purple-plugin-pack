@@ -89,7 +89,6 @@ static void historize(PurpleConversation *c)
 	GtkTextIter start;
 	GtkIMHtmlOptions options;
 	GList *logs = NULL, *logs_head = NULL;
-	GSList *buddies = NULL;
 	struct tm *log_tm = NULL, *local_tm = NULL;
 	time_t t, log_time;
 	double limit_time = 0.0;
@@ -124,18 +123,19 @@ static void historize(PurpleConversation *c)
 		options = GTK_IMHTML_NO_COLOURS;
 	}
 	
-	/* Find buddies for this conversation. */
-	buddies = purple_find_buddies(account, name);
-
-	/* If we found at least one buddy, save the first buddy's alias. */
-	if (buddies != NULL)
-		alias = purple_buddy_get_contact_alias((PurpleBuddy *)buddies->data);
-
 	/* Determine whether this is an IM or a chat. In either case, if the user has that
 	 * particular log type disabled, the logs file doesnt not get specified */
 	convtype = purple_conversation_get_type(c);
 	if (convtype == PURPLE_CONV_TYPE_IM && PREF_IM_VAL) {
 		GSList *cur;
+		GSList *buddies = NULL;
+
+		/* Find buddies for this conversation. */
+		buddies = purple_find_buddies(account, name);
+
+		/* If we found at least one buddy, save the first buddy's alias. */
+		if (buddies != NULL)
+			alias = purple_buddy_get_contact_alias((PurpleBuddy *)buddies->data);
 
 		for(cur = buddies; cur; cur = cur->next) {
 			PurpleBlistNode *node = cur->data;
@@ -153,11 +153,12 @@ static void historize(PurpleConversation *c)
 			}
 		}
 
-			if(logs)
-				logs = g_list_sort(logs, purple_log_compare);
-			else
-				logs = purple_log_get_logs(PURPLE_LOG_IM, name, account);
+		g_slist_free(buddies);
 
+		if (logs)
+			logs = g_list_sort(logs, purple_log_compare);
+		else
+			logs = purple_log_get_logs(PURPLE_LOG_IM, name, account);
 	} else if (convtype == PURPLE_CONV_TYPE_CHAT && PREF_CHAT_VAL) {
 		logs = purple_log_get_logs(PURPLE_LOG_CHAT,
 			purple_conversation_get_name(c), purple_conversation_get_account(c));

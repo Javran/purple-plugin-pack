@@ -1,4 +1,4 @@
-AC_INIT([purple-plugin_pack], [2.6.1dev], [plugins-devel@lists.guifications.org])
+AC_INIT([purple-plugin_pack], [2.6.3dev], [plugins-devel@lists.guifications.org])
 AC_CANONICAL_SYSTEM
 AM_CONFIG_HEADER(pre_config.h)
 
@@ -19,11 +19,8 @@ DEPENDENCIES=""
 dnl #######################################################################
 dnl # Setup libtool
 dnl #######################################################################
-m4_defun([_LT_AC_LANG_CXX_CONFIG], [:])
-m4_defun([_LT_AC_LANG_F77_CONFIG], [:])
-m4_defun([_LT_AC_LANG_GCJ_CONFIG], [:])
-m4_defun([_LT_AC_LANG_RC_CONFIG], [:])
-AM_PROG_LIBTOOL
+LT_INIT
+LT_LANG([C])
 LIBTOOL="$LIBTOOL --silent"
 
 dnl #######################################################################
@@ -270,7 +267,7 @@ if test x"$HAVE_TALKFILTERS" = x"yes"; then
 	AC_CHECK_LIB(talkfilters, gtf_filter_count, TALKFILTERS_LIBS="-ltalkfilters")
 	AC_SUBST(TALKFILTERS_LIBS)
 
-	DEPENDENCIES="$DEPENDENCIES,talkfilters"
+	DEPENDENCIES="$DEPENDENCIES,talkfiltersbin"
 fi
 
 dnl #######################################################################

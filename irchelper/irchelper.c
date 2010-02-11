@@ -62,6 +62,7 @@
 #define DOMAIN_SUFFIX_INDIEZEN ".indiezen.org"
 #define DOMAIN_SUFFIX_JEUX ".jeux.fr"
 #define DOMAIN_SUFFIX_QUAKENET ".quakenet.org"
+#define DOMAIN_SUFFIX_SPIDERNET ".spidernet.org"
 #define DOMAIN_SUFFIX_THUNDERCITY ".thundercity.org"
 #define DOMAIN_SUFFIX_UNDERNET ".undernet.org"
 
@@ -89,6 +90,7 @@
 #define MESSAGE_NICKSERV_IDENTIFIED "Password accepted - you are now recognized"
 #define MESSAGE_NICKSERV_IDENTIFIED_INDIEZEN "Password accepted -- you are now recognized."
 #define MESSAGE_SPOOFING_YOUR_IP "*** Spoofing your IP. congrats."
+#define MESSAGE_SET_HOSTNAME "idoru set your hostname to"
 #define MESSAGE_QUAKENET_Q_CRUFT \
 	"Remember: NO-ONE from QuakeNet will ever ask for your password.  " \
 	"NEVER send your password to ANYONE except Q@CServe.quakenet.org."
@@ -146,6 +148,7 @@ typedef enum {
 	IRC_NETWORK_TYPE_DALNET    = 0x0800,
 	IRC_NETWORK_TYPE_FUNCOM    = 0x1000,
 	IRC_NETWORK_TYPE_INDIEZEN  = 0x2000,
+	IRC_NETWORK_TYPE_SPIDERNET = 0x4000
 } IRCHelperStateFlags;
 
 struct proto_stuff
@@ -248,6 +251,8 @@ static IRCHelperStateFlags get_connection_type(PurpleConnection *connection)
 		type = IRC_NETWORK_TYPE_UNDERNET;
 	else if (g_str_has_suffix(username, DOMAIN_SUFFIX_INDIEZEN))
 		type = IRC_NETWORK_TYPE_INDIEZEN;
+	else if (g_str_has_suffix(username, DOMAIN_SUFFIX_SPIDERNET))
+		type = IRC_NETWORK_TYPE_SPIDERNET;
 
 	g_free(username);
 	return type;
@@ -638,7 +643,7 @@ static void signed_on_cb(PurpleConnection *connection)
 
 			if (state & IRC_NETWORK_TYPE_THUNDERCITY)
 				nickserv_msg_identify("AUTH", connection->proto_data, connection, nickpassword);
-			else if (state & IRC_NETWORK_TYPE_INDIEZEN)
+			else if (state & (IRC_NETWORK_TYPE_INDIEZEN | IRC_NETWORK_TYPE_SPIDERNET))
 				nickserv_msg_identify("identify", connection->proto_data, connection, nickpassword);
 			else
 				nickserv_identify(connection->proto_data, connection, nickpassword);
@@ -926,6 +931,11 @@ static gboolean receiving_im_msg_cb(PurpleAccount *account, gchar **sender,
 	/* Suppress "IP spoofing" notice on worldforge.org:
 	 *   http://plugins.guifications.org/trac/ticket/524 */
 	if (g_str_has_prefix(msg, MESSAGE_PURPLE_NOTICE_PREFIX MESSAGE_SPOOFING_YOUR_IP))
+	{
+		return TRUE;
+	}
+
+	if (g_str_has_prefix(msg, MESSAGE_PURPLE_NOTICE_PREFIX MESSAGE_SET_HOSTNAME))
 	{
 		return TRUE;
 	}

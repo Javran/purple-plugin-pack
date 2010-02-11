@@ -66,6 +66,7 @@ groupmsg_sendto_group(PurpleBlistNode *node, gpointer data)
 	PurpleGroup *group;
 	GList *list = NULL;
 	gchar *tmp = NULL, *tmp2 = NULL;
+	guint llen = 0;
 
 	group = (PurpleGroup *)node;
 
@@ -100,9 +101,18 @@ groupmsg_sendto_group(PurpleBlistNode *node, gpointer data)
 		return;
 	}
 
-	tmp2 = tmp;
-	tmp = g_strdup_printf(_("Your message will be sent to these buddies:\n%s"), tmp2);
-	g_free(tmp2);
+	if((llen = g_list_length(list)) > 6) {
+		g_free(tmp);
+		/* there should probably be more detailed handling here for singular vs
+		 * plural here, but I'm too lazy to do it, and this is for messaging a
+		 * group, which should be multiple people anyway */
+		tmp = g_strdup_printf(_("Your message will be sent to and probably annoy "
+								"ALL %u PEOPLE in the group %s!"), llen, group->name);
+	} else {
+		tmp2 = tmp;
+		tmp = g_strdup_printf(_("Your message will be sent to these buddies:\n%s"), tmp2);
+		g_free(tmp2);
+	}
 
 	purple_request_input(group, _("Spam"),
 					   _("Please enter the message to send"),

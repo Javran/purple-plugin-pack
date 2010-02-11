@@ -43,6 +43,14 @@ typedef struct {
 	gint maxevents;
 } StressBuddy;
 
+typedef struct {
+	gboolean running;
+	GList *buddies;
+	gint nevents;
+	gint message_min;
+	gint mexxage_max;
+} StressData;
+
 /******************************************************************************
  * Enums
  *****************************************************************************/
@@ -405,6 +413,17 @@ plugin_unload(PurplePlugin *plugin) {
 	return TRUE;
 }
 
+static GList *
+stress_actions(PurplePlugin *plugin, gpointer context) {
+	GList *menu = NULL;
+	PurplePluginAction *act = NULL;
+
+	action = purple_plugin_action_new(_("Start"));
+	menu = g_list_append(menu, action);
+
+	return menu;
+}
+
 static PurplePluginInfo info = {
 	PURPLE_PLUGIN_MAGIC,
 	PURPLE_MAJOR_VERSION,
@@ -430,7 +449,7 @@ static PurplePluginInfo info = {
 	NULL,
 	&prpl_info,
 	NULL,
-	NULL,
+	stress_actions,
 	NULL,
 	NULL,
 	NULL,

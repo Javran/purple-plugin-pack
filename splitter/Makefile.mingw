@@ -10,3 +10,5 @@ PP = splitter
 
 include $(PP_TOP)/win_pp.mak
 
+PLUGIN_LIBS += -lpangowin32-1.0
+

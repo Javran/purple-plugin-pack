@@ -47,8 +47,14 @@
 ###############################################################################
 PACKAGE="Purple Plugin Pack"
 ARGS_FILE="autogen.args"
-export CFLAGS
-export LDFLAGS
+
+cleanup () {
+	rm -f autogen-??????
+	echo
+	exit 2
+}
+
+trap cleanup 2
 
 libtoolize="libtoolize"
 case $(uname -s) in

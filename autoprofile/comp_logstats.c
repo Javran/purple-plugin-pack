@@ -641,7 +641,7 @@ static int get_max (const char *field)
   } else if (!strcmp (field, "total")) {
     return max_date->sent_msgs + max_date->received_msgs;
   } else {
-    ap_debug ("logstats", "get-max: invalid paramater");
+    ap_debug ("logstats", "get-max: invalid parameter");
     return 0;
   }
 
