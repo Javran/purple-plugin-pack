@@ -2,6 +2,8 @@ Version 2.6.3: ??/??/??
 	* Add support for Spidernet to IRC Helper plugin.
 	* IRC Helper now supports suppressing messages from the Freenode bot
 	  frigg.
+	* IRC-More now builds when you pass --with-plugins=irc-more to configure.
+	  (Ivan Ponomarev)
 
 Version 2.6.2: 01/01/10
 	* Fix IRC More plugin not properly rejoining channels.
