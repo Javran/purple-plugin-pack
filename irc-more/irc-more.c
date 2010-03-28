@@ -25,15 +25,17 @@
 #include <accountopt.h>
 #include <cmds.h>
 #include <conversation.h>
+#include <debug.h>
 #include <plugin.h>
 #include <prpl.h>
 
 #include <string.h>
 
+#define AUTOJOIN      purple_account_get_string(account, "autojoin", NULL)
 #define CTCP_REPLY    purple_account_get_string(account, "ctcp-message", "Purple IRC")
 #define PART_MESSAGE  purple_account_get_string(account, "part-message", "Leaving.")
 #define QUIT_MESSAGE  purple_account_get_string(account, "quit-message", "Leaving.")
-#define SET_UMODES    purple_account_get_string(account, "setumodes", "i")
+#define SET_UMODES    purple_account_get_string(account, "setumodes", NULL)
 #define UNSET_UMODES  purple_account_get_string(account, "unsetumodes", NULL)
 
 #define PLUGIN_ID "core-plugin_pack-irc-more"
@@ -102,12 +104,38 @@ irc_receiving_text(PurpleConnection *gc, const char **incoming, gpointer null)
 	g_strfreev(splits);
 }
 
+static gboolean
+autojoin_cb(gpointer data)
+{
+	PurpleAccount *account = data;
+	gchar *cmd = g_strdup_printf("join %s", AUTOJOIN), *error = NULL,
+		  *esc = g_markup_escape_text(cmd, -1);
+	int result = 0;
+
+	/* this hack courtesy irchelper -- don't use purple_conversation_set_account
+	 * because it will fire a signal that other plugins can use.  Instead do
+	 * this hack. This will break when struct hiding is complete and ABI breaks. */
+	PurpleConversation *conv = g_new0(PurpleConversation, 1);
+	conv->account = account;
+
+	purple_debug_info("irc-more", "Executng command: %s\n", cmd);
+	result = purple_cmd_do_command(conv, cmd, esc, &error);
+	purple_debug_info("irc-more", "Executed command.  Result: %d.  Error: %s\n",
+			result, error ? error : "(null)");
+
+	g_free(cmd);
+	g_free(conv);
+	g_free(esc);
+
+	return FALSE;
+}
+
 static void
 signed_on_cb(PurpleConnection *gc)
 {
 	/* should this be done on a timeout? */
 	PurpleAccount *account = NULL;
-	const gchar *nick = NULL, *setmodes = NULL, *unsetmodes = NULL;
+	const gchar *nick = NULL, *setmodes = NULL, *unsetmodes = NULL, *autojoin = NULL;
 	gchar *msg = NULL, *msg2 = NULL;
 
 	account = purple_connection_get_account(gc);
@@ -119,16 +147,24 @@ signed_on_cb(PurpleConnection *gc)
 	nick = purple_connection_get_display_name(gc);
 	setmodes = SET_UMODES;
 	unsetmodes = UNSET_UMODES;
+	autojoin = AUTOJOIN;
 
-	msg = g_strdup_printf("MODE %s +%s\r\n", nick, setmodes);
-	irc_info->send_raw(gc, msg, strlen(msg));
-	g_free(msg);
+	if(setmodes && *setmodes) {
+		msg = g_strdup_printf("MODE %s +%s\r\n", nick, setmodes);
+		purple_debug_info("irc-more", "Sending command: %s\n", msg);
+		irc_info->send_raw(gc, msg, strlen(msg));
+		g_free(msg);
+	}
 
 	if(unsetmodes && *unsetmodes) {
 		msg2 = g_strdup_printf("MODE %s -%s\r\n", nick, unsetmodes);
+		purple_debug_info("irc-more", "Sending command: %s\n", msg);
 		irc_info->send_raw(gc, msg2, strlen(msg2));
 		g_free(msg2);
 	}
+
+	if(autojoin && *autojoin)
+		purple_timeout_add_seconds(6, autojoin_cb, account);
 
 	return;
 }
@@ -219,8 +255,10 @@ plugin_load(PurplePlugin *plugin)
 {
 	PurplePlugin *prpl = NULL;
 	PurpleAccountOption *option;
-	gchar *notice_help = NULL;
 	void *gc_handle = NULL;
+#if !PURPLE_VERSION_CHECK(2,4,0)
+	gchar *notice_help = NULL;
+#endif
 
 	prpl = purple_find_prpl("prpl-irc");
 
@@ -228,10 +266,10 @@ plugin_load(PurplePlugin *plugin)
 	if (!prpl)
 		return FALSE;
 
+#if !PURPLE_VERSION_CHECK(2,4,0)
 	/* specify our help string and register our command */
 	notice_help = _("notice target message:  Send a notice to the specified target.");
 
-#if !PURPLE_VERSION_CHECK(2,4,0)
 	notice_cmd_id = purple_cmd_register("notice", "ws", PURPLE_CMD_P_PLUGIN,
 			PURPLE_CMD_FLAG_IM | PURPLE_CMD_FLAG_CHAT | PURPLE_CMD_FLAG_PRPL_ONLY,
 			"prpl-irc", notice_cmd_cb, notice_help, NULL);
@@ -251,6 +289,9 @@ plugin_load(PurplePlugin *plugin)
 	irc_info = PURPLE_PLUGIN_PROTOCOL_INFO(prpl);
 
 	/* Alphabetize the option label strings */
+	option = purple_account_option_string_new(_("Auto-Join Channels"), "autojoin", "");
+	irc_info->protocol_options = g_list_append(irc_info->protocol_options, option);
+
 	option = purple_account_option_string_new(_("CTCP Version reply"), "ctcp-message", "Purple IRC");
 	irc_info->protocol_options = g_list_append(irc_info->protocol_options, option);
 
@@ -292,7 +333,8 @@ static PurplePluginInfo info =
 	PP_VERSION,
 	NULL,
 	NULL,
-	"Sadrul H Chowdhury <sadrul@users.sourceforge.net>",
+	"Sadrul H Chowdhury <sadrul@users.sourceforge.net>\n"
+		"John Bailey <rekkanoryo@rekkanoryo.org>",
 	PP_WEBSITE,
 
 	plugin_load,
@@ -320,9 +362,16 @@ init_plugin(PurplePlugin *plugin)
 
 	info.name = _("IRC More");
 	info.summary = _("Adds additional IRC features.");
+#if !PURPLE_VERSION_CHECK(2,4,0)
 	info.description = _("Adds additional IRC features, including a "
 			"customizable quit message, a customizable CTCP VERSION reply, "
-			"and the /notice command for notices.");
+			"a rudimentary channel autojoin list, and the /notice command for "
+			"notices.");
+#else
+	info.description = _("Adds additional IRC features, including a "
+			"customizable quit message, a customizable CTCP VERSION reply, "
+			"and a rudimentary channel autojoin list.");
+#endif
 }
 
 PURPLE_INIT_PLUGIN(irc_more, init_plugin, info)
