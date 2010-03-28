@@ -116,6 +116,7 @@ autojoin_cb(gpointer data)
 	 * because it will fire a signal that other plugins can use.  Instead do
 	 * this hack. This will break when struct hiding is complete and ABI breaks. */
 	PurpleConversation *conv = g_new0(PurpleConversation, 1);
+	conv->type = PURPLE_CONV_TYPE_IM;
 	conv->account = account;
 
 	purple_debug_info("irc-more", "Executng command: %s\n", cmd);
