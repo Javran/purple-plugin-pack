@@ -878,6 +878,12 @@ static gboolean receiving_im_msg_cb(PurpleAccount *account, gchar **sender,
 		return TRUE;
 	}
 
+	/* Suppress FreeNode welcome messages. */
+	if (g_str_has_prefix(msg, MESSAGE_PURPLE_NOTICE_PREFIX MESSAGE_FREENODE_INFO))
+	{
+		return TRUE;
+	}
+
 	/* Suppress useless MemoServ notification. */
 	if (g_str_equal(nick, NICK_MEMOSERV) &&
 	    g_str_equal(msg, MESSAGE_PURPLE_NOTICE_PREFIX MESSAGE_MEMOSERV_NO_NEW_MEMOS))
