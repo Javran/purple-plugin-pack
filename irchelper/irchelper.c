@@ -295,8 +295,7 @@ static gboolean auth_timeout(gpointer proto_data)
 	if (state & IRC_WILL_ID)
 	{
 		purple_debug_info(PLUGIN_STATIC_NAME, "Authentication failed: timeout expired\n");
-		g_hash_table_insert(states, proto_data,
-		                    GINT_TO_POINTER((state & ~IRC_WILL_ID) | IRC_DID_ID));
+		identify_finished(connection, IRC_ID_FAILED);
 	}
 
 	return FALSE;
