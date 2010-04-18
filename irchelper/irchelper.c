@@ -162,7 +162,7 @@ typedef enum {
 	IRC_NETWORK_TYPE_DALNET      = 0x0800,
 	IRC_NETWORK_TYPE_FUNCOM      = 0x1000,
 	IRC_NETWORK_TYPE_INDIEZEN    = 0x2000,
-	IRC_NETWORK_TYPE_SPIDERNET   = 0x4000
+	IRC_NETWORK_TYPE_SPIDERNET   = 0x4000,
 } IRCHelperStateFlags;
 
 struct proto_stuff
@@ -508,9 +508,9 @@ static gboolean ghosted_nickname_killed_cb(struct proto_stuff *stuff)
 		return FALSE;
 	}
 
-	userparts = g_strsplit(purple_account_get_username(stuff->account), "@", 2);
-
 	/* Switch back to the normal nickname. */
+	userparts = g_strsplit(purple_account_get_username(stuff->account), \
+	                       "@", 2);
 	conv = get_conversation(stuff->account);
 	command = g_strdup_printf("nick %s", userparts[0]);
 	if (purple_cmd_do_command(conv, command, command, &error) != PURPLE_CMD_STATUS_OK)
