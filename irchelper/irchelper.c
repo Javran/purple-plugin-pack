@@ -163,6 +163,7 @@ typedef enum {
 	IRC_NETWORK_TYPE_FUNCOM      = 0x1000,
 	IRC_NETWORK_TYPE_INDIEZEN    = 0x2000,
 	IRC_NETWORK_TYPE_SPIDERNET   = 0x4000,
+	IRC_NETWORK_TYPE_FREENODE    = 0x8000,
 } IRCHelperStateFlags;
 
 struct proto_stuff
@@ -267,6 +268,8 @@ static IRCHelperStateFlags get_connection_type(PurpleConnection *connection)
 		type = IRC_NETWORK_TYPE_INDIEZEN;
 	else if (g_str_has_suffix(username, DOMAIN_SUFFIX_SPIDERNET))
 		type = IRC_NETWORK_TYPE_SPIDERNET;
+	else if (g_str_has_suffix(username, DOMAIN_SUFFIX_FREENODE))
+		type = IRC_NETWORK_TYPE_FREENODE;
 
 	g_free(username);
 	return type;
@@ -673,6 +676,11 @@ static void signed_on_cb(PurpleConnection *connection)
 				nickserv_msg_identify("AUTH", connection->proto_data, connection, nickpassword);
 			else if (state & (IRC_NETWORK_TYPE_INDIEZEN | IRC_NETWORK_TYPE_SPIDERNET))
 				nickserv_msg_identify("identify", connection->proto_data, connection, nickpassword);
+			else if (state & IRC_NETWORK_TYPE_FREENODE)
+			{
+				char *authentication = g_strdup_printf("quote %s IDENTIFY %s", NICK_NICKSERV, userparts[0]);
+				nickserv_do_identify(authentication, connection->proto_data, connection, nickpassword);
+			}
 			else
 				nickserv_identify(connection->proto_data, connection, nickpassword);
 		}
