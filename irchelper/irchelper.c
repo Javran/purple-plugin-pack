@@ -95,6 +95,8 @@
 #define MESSAGE_NICKSERV_ID_FAILURE "Password Incorrect"
 #define MESSAGE_NICKSERV_IDENTIFIED \
 	"Password accepted - you are now recognized"
+#define MESSAGE_NICKSERV_IDENTIFIED_FREENODE \
+	"You are now identified for"
 #define MESSAGE_NICKSERV_IDENTIFIED_INDIEZEN \
 	"Password accepted -- you are now recognized."
 #define MESSAGE_SPOOFING_YOUR_IP "*** Spoofing your IP. congrats."
@@ -1126,6 +1128,7 @@ static gboolean receiving_im_msg_cb(PurpleAccount *account, gchar **sender,
 
 		/* Track that the identification is finished. */
 		if (g_str_equal(msg, MESSAGE_PURPLE_NOTICE_PREFIX MESSAGE_NICKSERV_IDENTIFIED) ||
+		    g_str_has_prefix(msg, MESSAGE_PURPLE_NOTICE_PREFIX MESSAGE_NICKSERV_IDENTIFIED_FREENODE) ||
 		    g_str_equal(msg, MESSAGE_PURPLE_NOTICE_PREFIX MESSAGE_NICKSERV_IDENTIFIED_INDIEZEN))
 			g_hash_table_insert(states, connection->proto_data,
 			                    GINT_TO_POINTER((state & ~IRC_KILLING_GHOST & ~IRC_WILL_ID)
