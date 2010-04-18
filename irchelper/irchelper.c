@@ -275,19 +275,58 @@ static IRCHelperStateFlags get_connection_type(PurpleConnection *connection)
 	return type;
 }
 
+#if PURPLE_VERSION_CHECK(2,7,0)
+static gboolean autojoin_cb(PurpleConnection *connection, gpointer data)
+{
+	IRCHelperStateFlags state;
+
+	g_return_val_if_fail(NULL != connection, FALSE);
+	state = GPOINTER_TO_INT(g_hash_table_lookup(states,
+	                                            connection->proto_data));
+
+	if (state & IRC_WILL_ID || state & IRC_KILLING_GHOST)
+	{
+		/* Block autojoining; we'll re-fire the signal once authed. */
+		purple_debug_misc(PLUGIN_STATIC_NAME,
+		                  "Blocking the autojoin signal.\n");
+		return TRUE;
+	}
+
+	return FALSE;
+}
+#endif
+
 static void identify_finished(PurpleConnection *connection,
                               IRCHelperStateFlags new_state)
 {
 	IRCHelperStateFlags state;
+#if PURPLE_VERSION_CHECK(2,7,0)
+	gboolean emit;
+#endif
 
 	g_return_if_fail(NULL != connection);
 	state = GPOINTER_TO_INT(g_hash_table_lookup(states,
 	                                            connection->proto_data));
 
+#if PURPLE_VERSION_CHECK(2,7,0)
+	emit = (state & IRC_WILL_ID || state & IRC_KILLING_GHOST);
+#endif
+
 	g_hash_table_insert(states, connection->proto_data,
 	                    GINT_TO_POINTER((state & ~IRC_KILLING_GHOST
 	                                           & ~IRC_WILL_ID)
 	                                    | new_state));
+#if PURPLE_VERSION_CHECK(2,7,0)
+	if (emit)
+	{
+		/* This is done after updating the state so autojoin_cb
+		 * won't re-block the signal. */
+		purple_debug_misc(PLUGIN_STATIC_NAME,
+		                  "Re-emitting the autojoin signal.\n");
+		purple_signal_emit(purple_connections_get_handle(),
+		                   "autojoin", connection);
+	}
+#endif
 }
 
 static gboolean auth_timeout(gpointer data)
@@ -1285,6 +1324,11 @@ static gboolean plugin_load(PurplePlugin *plugin)
 	purple_signal_connect(conn_handle, "signed-on",
 	                      plugin, PURPLE_CALLBACK(signed_on_cb),
 	                      NULL);
+#if PURPLE_VERSION_CHECK(2,7,0)
+	purple_signal_connect(conn_handle, "autojoin",
+	                      plugin, PURPLE_CALLBACK(autojoin_cb),
+	                      NULL);
+#endif
 	purple_signal_connect(conv_handle, "conversation-created",
 	                      plugin, PURPLE_CALLBACK(conversation_created_cb),
 	                      NULL);
