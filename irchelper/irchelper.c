@@ -93,8 +93,10 @@
 #define MESSAGE_MODE_NOTICE_SUFFIX " ) by "
 #define MESSAGE_NICKSERV_CLOAKED " set your hostname to"
 #define MESSAGE_NICKSERV_ID_FAILURE "Password Incorrect"
-#define MESSAGE_NICKSERV_IDENTIFIED "Password accepted - you are now recognized"
-#define MESSAGE_NICKSERV_IDENTIFIED_INDIEZEN "Password accepted -- you are now recognized."
+#define MESSAGE_NICKSERV_IDENTIFIED \
+	"Password accepted - you are now recognized"
+#define MESSAGE_NICKSERV_IDENTIFIED_INDIEZEN \
+	"Password accepted -- you are now recognized."
 #define MESSAGE_SPOOFING_YOUR_IP "*** Spoofing your IP. congrats."
 #define MESSAGE_SET_HOSTNAME "idoru set your hostname to"
 #define MESSAGE_QUAKENET_Q_CRUFT \
@@ -155,10 +157,10 @@ typedef enum {
 	IRC_NETWORK_TYPE_JEUX        = 0x0100,
 	IRC_NETWORK_TYPE_UNDERNET    = 0x0200,
 	IRC_NETWORK_TYPE_THUNDERCITY = 0x0400,
-	IRC_NETWORK_TYPE_DALNET    = 0x0800,
-	IRC_NETWORK_TYPE_FUNCOM    = 0x1000,
-	IRC_NETWORK_TYPE_INDIEZEN  = 0x2000,
-	IRC_NETWORK_TYPE_SPIDERNET = 0x4000
+	IRC_NETWORK_TYPE_DALNET      = 0x0800,
+	IRC_NETWORK_TYPE_FUNCOM      = 0x1000,
+	IRC_NETWORK_TYPE_INDIEZEN    = 0x2000,
+	IRC_NETWORK_TYPE_SPIDERNET   = 0x4000
 } IRCHelperStateFlags;
 
 struct proto_stuff
@@ -508,15 +510,12 @@ static gboolean ghosted_nickname_killed_cb(struct proto_stuff *stuff)
 
 	/* Switch back to the normal nickname. */
 	conv = get_conversation(stuff->account);
-
 	command = g_strdup_printf("nick %s", userparts[0]);
-
 	if (purple_cmd_do_command(conv, command, command, &error) != PURPLE_CMD_STATUS_OK)
 	{
 		/* TODO: PRINT ERROR MESSAGE */
 		g_free(error);
 	}
-
 	g_free(command);
 	g_free(conv);
 
@@ -1259,9 +1258,11 @@ static gboolean plugin_load(PurplePlugin *plugin)
 	conv_handle = purple_conversations_get_handle();
 
 	purple_signal_connect(conn_handle, "signed-on",
-	                    plugin, PURPLE_CALLBACK(signed_on_cb), NULL);
+	                      plugin, PURPLE_CALLBACK(signed_on_cb),
+	                      NULL);
 	purple_signal_connect(conv_handle, "conversation-created",
-	                    plugin, PURPLE_CALLBACK(conversation_created_cb), NULL);
+	                      plugin, PURPLE_CALLBACK(conversation_created_cb),
+	                      NULL);
 	purple_signal_connect(conv_handle, "receiving-im-msg",
 	                      plugin, PURPLE_CALLBACK(receiving_im_msg_cb),
 	                      NULL);
