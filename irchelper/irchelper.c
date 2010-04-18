@@ -287,8 +287,10 @@ static void identify_finished(PurpleConnection *connection,
 	                                    | new_state));
 }
 
-static gboolean auth_timeout(gpointer proto_data)
+static gboolean auth_timeout(gpointer data)
 {
+	PurpleConnection *connection = data;
+	gpointer proto_data = connection->proto_data;
 	IRCHelperStateFlags state;
 
 	state = GPOINTER_TO_INT(g_hash_table_lookup(states, proto_data));
