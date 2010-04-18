@@ -43,7 +43,7 @@
 #define PLUGIN_STATIC_NAME "irchelper"
 #define PLUGIN_ID "core-rlaager-" PLUGIN_STATIC_NAME
 
-#define PLUGIN_AUTHOR      "Richard Laager <rlaager@guifications.org>"
+#define PLUGIN_AUTHOR "Richard Laager <rlaager@guifications.org>"
 
 
 /*****************************************************************************
@@ -66,19 +66,25 @@
 #define DOMAIN_SUFFIX_THUNDERCITY ".thundercity.org"
 #define DOMAIN_SUFFIX_UNDERNET ".undernet.org"
 
-#define MESSAGE_CHANSERV_ACCESS_LIST_ADD "You have been added to the access list for "
+#define MESSAGE_CHANSERV_ACCESS_LIST_ADD \
+	"You have been added to the access list for "
 /* Omit the first character of the portion after the channel name. */
 #define MESSAGE_CHANSERV_ACCESS_LIST_ADD_WITH_LEVEL "with level ["
-#define MESSAGE_CHANSERV_ACCESS_LIST_DEL "You have been deleted from the access list for ["
-#define MESSAGE_CHANSERV_NO_OP_ACCESS "You do not have channel operator access to"
-#define MESSAGE_FRENCH_ADVERTISEMENT_START "<B>Avertissement</B> : Le pseudo <B>"
+#define MESSAGE_CHANSERV_ACCESS_LIST_DEL \
+	"You have been deleted from the access list for ["
+#define MESSAGE_CHANSERV_NO_OP_ACCESS \
+	"You do not have channel operator access to"
+#define MESSAGE_FREENODE_INFO "[freenode-info] "
+#define MESSAGE_FRENCH_ADVERTISEMENT_START \
+	"<B>Avertissement</B> : Le pseudo <B>"
 #define MESSAGE_FRENCH_ADVERTISEMENT_END "&lt;votre pass&gt;"
 #define MESSAGE_FRENCH_LOGIN "Login <B>r?ussi</B>"
 #define MESSAGE_FRENCH_MAXIMUM_CONNECTION_COUNT "Maximum de connexion"
 #define MESSAGE_FRENCH_MOTD "Message du Jour :"
 #define MESSAGE_PURPLE_NOTICE_PREFIX "(notice) "
 #define MESSAGE_GAMESURGE_AUTHSERV_IDENTIFIED "I recognize you."
-#define MESSAGE_GAMESURGE_AUTHSERV_ID_FAILURE "Incorrect password; please try again."
+#define MESSAGE_GAMESURGE_AUTHSERV_ID_FAILURE \
+	"Incorrect password; please try again."
 #define MESSAGE_GHOST_KILLED " has been killed"
 #define MESSAGE_INVITED " invited "
 #define MESSAGE_LOGIN_CONNECTION_COUNT "Highest connection count"
@@ -95,15 +101,18 @@
 	"Remember: NO-ONE from QuakeNet will ever ask for your password.  " \
 	"NEVER send your password to ANYONE except Q@CServe.quakenet.org."
 #define MESSAGE_QUAKENET_Q_ID_FAILURE \
-	"Lastly, When you do recover your password, please choose a NEW PASSWORD, not your old one! " \
+	"Lastly, When you do recover your password, please choose a " \
+	"NEW PASSWORD, not your old one! " \
 	"See the above URL for details."
 #define MESSAGE_QUAKENET_Q_IDENTIFIED "AUTH&apos;d successfully."
 #define MESSAGE_UNREAL_IRCD_HOSTNAME_FOUND "*** Found your hostname"
 #define MESSAGE_UNREAL_IRCD_HOSTNAME_LOOKUP "*** Looking up your hostname..."
 #define MESSAGE_UNREAL_IRCD_IDENT_LOOKUP "*** Checking ident..."
-#define MESSAGE_UNREAL_IRCD_IDENT_NO_RESPONSE "*** No ident response; username prefixed with ~"
+#define MESSAGE_UNREAL_IRCD_IDENT_NO_RESPONSE \
+	"*** No ident response; username prefixed with ~"
 #define MESSAGE_UNREAL_IRCD_PONG_CRUFT \
-	"*** If you are having problems connecting due to ping timeouts, please type /quote pong"
+	"*** If you are having problems connecting due to ping timeouts, " \
+	"please type /quote pong"
 
 /* Generic AuthServ, not currently used for any networks. */
 #define NICK_AUTHSERV "AuthServ"
@@ -112,7 +121,8 @@
 #define NICK_FREENODE_CONNECT "frigg"
 #define NICK_FUNCOM_Q_SERVICE NICK_QUAKENET_Q "@cserve.funcom.com"
 #define NICK_GAMESURGE_AUTHSERV "AuthServ"
-#define NICK_GAMESURGE_AUTHSERV_SERVICE NICK_GAMESURGE_AUTHSERV "@Services.GameSurge.net"
+#define NICK_GAMESURGE_AUTHSERV_SERVICE \
+	NICK_GAMESURGE_AUTHSERV "@Services.GameSurge.net"
 #define NICK_GAMESURGE_GLOBAL "Global"
 #define NICK_JEUX_Z "Z"
 #define NICK_JEUX_WELCOME "[Welcome]"
@@ -132,18 +142,18 @@
 
 
 typedef enum {
-	IRC_NONE                   = 0x0000,
-	IRC_KILLING_GHOST          = 0x0001,
-	IRC_WILL_ID                = 0x0002,
-	IRC_DID_ID                 = 0x0004,
-	IRC_ID_FAILED              = 0x0008,
+	IRC_NONE                     = 0x0000,
+	IRC_KILLING_GHOST            = 0x0001,
+	IRC_WILL_ID                  = 0x0002,
+	IRC_DID_ID                   = 0x0004,
+	IRC_ID_FAILED                = 0x0008,
 
-	IRC_NETWORK_TYPE_UNKNOWN   = 0x0010,
-	IRC_NETWORK_TYPE_GAMESURGE = 0x0020,
-	IRC_NETWORK_TYPE_NICKSERV  = 0x0040,
-	IRC_NETWORK_TYPE_QUAKENET  = 0x0080,
-	IRC_NETWORK_TYPE_JEUX      = 0x0100,
-	IRC_NETWORK_TYPE_UNDERNET  = 0x0200,
+	IRC_NETWORK_TYPE_UNKNOWN     = 0x0010,
+	IRC_NETWORK_TYPE_GAMESURGE   = 0x0020,
+	IRC_NETWORK_TYPE_NICKSERV    = 0x0040,
+	IRC_NETWORK_TYPE_QUAKENET    = 0x0080,
+	IRC_NETWORK_TYPE_JEUX        = 0x0100,
+	IRC_NETWORK_TYPE_UNDERNET    = 0x0200,
 	IRC_NETWORK_TYPE_THUNDERCITY = 0x0400,
 	IRC_NETWORK_TYPE_DALNET    = 0x0800,
 	IRC_NETWORK_TYPE_FUNCOM    = 0x1000,
@@ -165,7 +175,6 @@ GHashTable *states;
 
 static gboolean plugin_load(PurplePlugin *plugin);
 static gboolean plugin_unload(PurplePlugin *plugin);
-
 
 /*****************************************************************************
  * Plugin Info                                                               *
@@ -231,7 +240,8 @@ static IRCHelperStateFlags get_connection_type(PurpleConnection *connection)
 	account = purple_connection_get_account(connection);
 
 	protocol = purple_account_get_protocol_id(account);
-	g_return_val_if_fail(g_str_equal(protocol, IRC_PLUGIN_ID), IRC_NETWORK_TYPE_UNKNOWN);
+	g_return_val_if_fail(g_str_equal(protocol, IRC_PLUGIN_ID),
+	                     IRC_NETWORK_TYPE_UNKNOWN);
 
 	username = g_utf8_strdown(purple_account_get_username(account), -1);
 
@@ -330,7 +340,7 @@ static void authserv_identify(const char *command, PurpleConnection *connection,
 		 * could be very confused.
 		 */
 		purple_timeout_add(TIMEOUT_IDENTIFY, (GSourceFunc)auth_timeout,
-		                 (gpointer)connection->proto_data);
+		                   (gpointer)connection);
 	}
 
 	g_strfreev(userparts);
@@ -382,7 +392,7 @@ static void jeux_identify(PurpleConnection *connection, IRCHelperStateFlags stat
 		 * could be very confused.
 		 */
 		purple_timeout_add(TIMEOUT_IDENTIFY, (GSourceFunc)auth_timeout,
-		                 (gpointer)connection->proto_data);
+		                   (gpointer)connection);
 	}
 
 	g_strfreev(userparts);
@@ -448,7 +458,7 @@ static void nickserv_do_identify(char *authentication, gpointer proto_data, Purp
 	 * could be very confused.
 	 */
 	purple_timeout_add(TIMEOUT_IDENTIFY, (GSourceFunc)auth_timeout,
-	                 (gpointer)proto_data);
+	                   (gpointer)gc);
 }
 
 static void nickserv_identify(gpointer proto_data, PurpleConnection *gc, const char *nickpassword)
@@ -510,7 +520,8 @@ static gboolean ghosted_nickname_killed_cb(struct proto_stuff *stuff)
 	g_free(command);
 	g_free(conv);
 
-	nickserv_identify(stuff->proto_data, gc, purple_account_get_string(stuff->account,
+	nickserv_identify(stuff->proto_data, gc,
+	                  purple_account_get_string(stuff->account,
 	                  PLUGIN_ID "_nickpassword", ""));
 
 	g_strfreev(userparts);
@@ -546,42 +557,42 @@ static void signed_on_cb(PurpleConnection *connection)
 	if (state & IRC_NETWORK_TYPE_GAMESURGE)
 	{
 		purple_debug_info(PLUGIN_STATIC_NAME, "Connected with GameSurge: %s\n",
-		                purple_connection_get_display_name(connection));
+		                  purple_connection_get_display_name(connection));
 
 		authserv_identify("AUTH", connection, state);
 	}
 	if (state & IRC_NETWORK_TYPE_DALNET)
 	{
 		purple_debug_info(PLUGIN_STATIC_NAME, "Connected with DalNet: %s\n",
-						purple_connection_get_display_name(connection));
+		                  purple_connection_get_display_name(connection));
 
 		authserv_identify("IDENTIFY", connection, state);
 	}
 	else if (state & IRC_NETWORK_TYPE_JEUX)
 	{
 		purple_debug_info(PLUGIN_STATIC_NAME, "Connected with Jeux.fr: %s\n",
-		                purple_connection_get_display_name(connection));
+		                  purple_connection_get_display_name(connection));
 
 		jeux_identify(connection, state);
 	}
 	else if (state & IRC_NETWORK_TYPE_QUAKENET)
 	{
 		purple_debug_info(PLUGIN_STATIC_NAME, "Connected with QuakeNet: %s\n",
-		                purple_connection_get_display_name(connection));
+		                  purple_connection_get_display_name(connection));
 
 		authserv_identify("AUTH", connection, state);
 	}
 	else if (state & IRC_NETWORK_TYPE_UNDERNET)
 	{
 		purple_debug_info(PLUGIN_STATIC_NAME, "Connected with UnderNet: %s\n",
-		                purple_connection_get_display_name(connection));
+		                  purple_connection_get_display_name(connection));
 
 		authserv_identify("login ", connection, state);
 	}
 	else if (state & IRC_NETWORK_TYPE_FUNCOM)
 	{
 		purple_debug_info(PLUGIN_STATIC_NAME, "Connected with Funcom: %s\n",
-		                purple_connection_get_display_name(connection));
+		                  purple_connection_get_display_name(connection));
 
 		authserv_identify("AUTH", connection, state);
 	}
@@ -631,8 +642,8 @@ static void signed_on_cb(PurpleConnection *connection)
 				 * we'll wait for the ghost to be killed.
 				 */
 				purple_timeout_add(TIMEOUT_KILLING_GHOST,
-				                 (GSourceFunc)ghosted_nickname_killed_cb,
-				                 (gpointer)stuff);
+				                   (GSourceFunc)ghosted_nickname_killed_cb,
+				                   (gpointer)stuff);
 
 				g_strfreev(userparts);
 				return;
@@ -660,8 +671,8 @@ static void conversation_created_cb(PurpleConversation *conv)
 }
 
 static gboolean writing_chat_msg_cb(PurpleAccount *account, const char *who,
-                                  char **message, PurpleConversation *conv,
-                                  PurpleMessageFlags flags)
+                                    char **message, PurpleConversation *conv,
+                                    PurpleMessageFlags flags)
 {
 	const gchar *name;
 	const gchar *topic;
@@ -997,7 +1008,7 @@ static gboolean receiving_im_msg_cb(PurpleAccount *account, gchar **sender,
 		if (chat)
 		{
 			purple_conv_chat_write(PURPLE_CONV_CHAT(chat), nick,
-			                     msg2, PURPLE_MESSAGE_SYSTEM, time(NULL));
+			                       msg2, PURPLE_MESSAGE_SYSTEM, time(NULL));
 			g_free(channel);
 			g_free(msg2);
 			return TRUE;
@@ -1092,7 +1103,7 @@ static gboolean receiving_im_msg_cb(PurpleAccount *account, gchar **sender,
 			if (chat)
 			{
 				purple_conv_chat_write(PURPLE_CONV_CHAT(chat), nick,
-				                     msg3, PURPLE_MESSAGE_SYSTEM, time(NULL));
+				                       msg3, PURPLE_MESSAGE_SYSTEM, time(NULL));
 
 				g_free(msg2);
 				return TRUE;
@@ -1118,7 +1129,6 @@ static gboolean receiving_im_msg_cb(PurpleAccount *account, gchar **sender,
 		/* The ghost has been killed, continue the signon. */
 		if (state & IRC_KILLING_GHOST && strstr(msg, MESSAGE_GHOST_KILLED))
 		{
-
 			struct proto_stuff *stuff = g_new0(struct proto_stuff, 1);
 			stuff->proto_data = connection->proto_data;
 			stuff->account = account;
@@ -1134,9 +1144,9 @@ static gboolean receiving_im_msg_cb(PurpleAccount *account, gchar **sender,
 			                                    | IRC_ID_FAILED));
 
 			purple_notify_error(NULL,
-			                  _("NickServ Authentication Error"),
-			                  _("Error authenticating with NickServ"),
-			                  _("Check your password."));
+			                    _("NickServ Authentication Error"),
+			                    _("Error authenticating with NickServ"),
+			                    _("Check your password."));
 		}
 
 		return TRUE;
@@ -1160,9 +1170,9 @@ static gboolean receiving_im_msg_cb(PurpleAccount *account, gchar **sender,
 			                    GINT_TO_POINTER((state & ~IRC_WILL_ID) | IRC_ID_FAILED));
 
 			purple_notify_error(NULL,
-			                  _("GameSurge Authentication Error"),
-			                  _("Error authenticating with AuthServ"),
-			                  _("Check your password."));
+			                    _("GameSurge Authentication Error"),
+			                    _("Error authenticating with AuthServ"),
+			                    _("Check your password."));
 		}
 
 		return TRUE;
@@ -1187,9 +1197,9 @@ static gboolean receiving_im_msg_cb(PurpleAccount *account, gchar **sender,
 			                    GINT_TO_POINTER((state & ~IRC_WILL_ID) | IRC_ID_FAILED));
 
 			purple_notify_error(NULL,
-			                  _("QuakeNet Authentication Error"),
-			                  _("Error authenticating with Q"),
-			                  _("Check your password."));
+			                    _("QuakeNet Authentication Error"),
+			                    _("Error authenticating with Q"),
+			                    _("Check your password."));
 		}
 
 		return TRUE;
@@ -1253,10 +1263,11 @@ static gboolean plugin_load(PurplePlugin *plugin)
 	purple_signal_connect(conv_handle, "conversation-created",
 	                    plugin, PURPLE_CALLBACK(conversation_created_cb), NULL);
 	purple_signal_connect(conv_handle, "receiving-im-msg",
-	                    plugin, PURPLE_CALLBACK(receiving_im_msg_cb), NULL);
+	                      plugin, PURPLE_CALLBACK(receiving_im_msg_cb),
+	                      NULL);
 	purple_signal_connect(conv_handle, "writing-chat-msg",
-	                    plugin, PURPLE_CALLBACK(writing_chat_msg_cb), NULL);
-
+	                      plugin, PURPLE_CALLBACK(writing_chat_msg_cb),
+	                      NULL);
 	return TRUE;
 }
 
