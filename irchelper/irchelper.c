@@ -272,6 +272,21 @@ static IRCHelperStateFlags get_connection_type(PurpleConnection *connection)
 	return type;
 }
 
+static void identify_finished(PurpleConnection *connection,
+                              IRCHelperStateFlags new_state)
+{
+	IRCHelperStateFlags state;
+
+	g_return_if_fail(NULL != connection);
+	state = GPOINTER_TO_INT(g_hash_table_lookup(states,
+	                                            connection->proto_data));
+
+	g_hash_table_insert(states, connection->proto_data,
+	                    GINT_TO_POINTER((state & ~IRC_KILLING_GHOST
+	                                           & ~IRC_WILL_ID)
+	                                    | new_state));
+}
+
 static gboolean auth_timeout(gpointer proto_data)
 {
 	IRCHelperStateFlags state;
@@ -1130,9 +1145,7 @@ static gboolean receiving_im_msg_cb(PurpleAccount *account, gchar **sender,
 		if (g_str_equal(msg, MESSAGE_PURPLE_NOTICE_PREFIX MESSAGE_NICKSERV_IDENTIFIED) ||
 		    g_str_has_prefix(msg, MESSAGE_PURPLE_NOTICE_PREFIX MESSAGE_NICKSERV_IDENTIFIED_FREENODE) ||
 		    g_str_equal(msg, MESSAGE_PURPLE_NOTICE_PREFIX MESSAGE_NICKSERV_IDENTIFIED_INDIEZEN))
-			g_hash_table_insert(states, connection->proto_data,
-			                    GINT_TO_POINTER((state & ~IRC_KILLING_GHOST & ~IRC_WILL_ID)
-			                                    | IRC_DID_ID));
+			identify_finished(connection, IRC_DID_ID);
 
 		/* The ghost has been killed, continue the signon. */
 		if (state & IRC_KILLING_GHOST && strstr(msg, MESSAGE_GHOST_KILLED))
@@ -1147,9 +1160,7 @@ static gboolean receiving_im_msg_cb(PurpleAccount *account, gchar **sender,
 		/* The identification has failed. */
 		if (g_str_equal(msg, MESSAGE_PURPLE_NOTICE_PREFIX MESSAGE_NICKSERV_ID_FAILURE))
 		{
-			g_hash_table_insert(states, connection->proto_data,
-			                    GINT_TO_POINTER((state & ~IRC_KILLING_GHOST & ~IRC_WILL_ID)
-			                                    | IRC_ID_FAILED));
+			identify_finished(connection, IRC_ID_FAILED);
 
 			purple_notify_error(NULL,
 			                    _("NickServ Authentication Error"),
@@ -1168,14 +1179,12 @@ static gboolean receiving_im_msg_cb(PurpleAccount *account, gchar **sender,
 
 		/* Track that the identification is finished. */
 		if (g_str_equal(msg, MESSAGE_PURPLE_NOTICE_PREFIX MESSAGE_GAMESURGE_AUTHSERV_IDENTIFIED))
-			g_hash_table_insert(states, connection->proto_data,
-			                    GINT_TO_POINTER((state & ~IRC_WILL_ID) | IRC_DID_ID));
+			identify_finished(connection, IRC_DID_ID);
 
 		/* The identification has failed. */
 		if (g_str_equal(msg, MESSAGE_PURPLE_NOTICE_PREFIX MESSAGE_GAMESURGE_AUTHSERV_ID_FAILURE))
 		{
-			g_hash_table_insert(states, connection->proto_data,
-			                    GINT_TO_POINTER((state & ~IRC_WILL_ID) | IRC_ID_FAILED));
+			identify_finished(connection, IRC_ID_FAILED);
 
 			purple_notify_error(NULL,
 			                    _("GameSurge Authentication Error"),
@@ -1195,14 +1204,12 @@ static gboolean receiving_im_msg_cb(PurpleAccount *account, gchar **sender,
 
 		/* Track that the identification is finished. */
 		if (g_str_equal(msg, MESSAGE_PURPLE_NOTICE_PREFIX MESSAGE_QUAKENET_Q_IDENTIFIED))
-			g_hash_table_insert(states, connection->proto_data,
-			                    GINT_TO_POINTER((state & ~IRC_WILL_ID) | IRC_DID_ID));
+			identify_finished(connection, IRC_DID_ID);
 
 		/* The identification has failed. */
 		if (g_str_equal(msg, MESSAGE_PURPLE_NOTICE_PREFIX MESSAGE_QUAKENET_Q_ID_FAILURE))
 		{
-			g_hash_table_insert(states, connection->proto_data,
-			                    GINT_TO_POINTER((state & ~IRC_WILL_ID) | IRC_ID_FAILED));
+			identify_finished(connection, IRC_ID_FAILED);
 
 			purple_notify_error(NULL,
 			                    _("QuakeNet Authentication Error"),
