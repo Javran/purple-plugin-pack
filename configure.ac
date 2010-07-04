@@ -47,7 +47,7 @@ AC_PROG_INTLTOOL
 GETTEXT_PACKAGE=plugin_pack
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, ["$GETTEXT_PACKAGE"], [Define the gettext package to be used.])
-ALL_LINGUAS="en_AU es_ES fr vi"
+ALL_LINGUAS="de en_AU es_ES fr vi"
 AM_GLIB_GNU_GETTEXT
 
 dnl #######################################################################

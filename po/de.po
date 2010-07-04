@@ -1,0 +1,3600 @@
+# German translations for purple-plugin_pack package.
+# Copyright (C) 2010 THE purple-plugin_pack'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the purple-plugin_pack package.
+# Translation was done by people on #pidgin-de. To name some:
+# blubby, Dirtsa, No_se, Siggi0904, SpeedProg
+#
+# Comments may be sent to Christoph Miebach <christoph.miebach@web.de>
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: purple-plugin_pack 2.6.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-04-20 18:47+0200\n"
+"PO-Revision-Date: 2010-05-06 21:14+0100\n"
+"Last-Translator: Constantin Wenger <constantin.wenger@googlemail.com>\n"
+"Language-Team: German\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../album/album.c:269
+msgid "Album"
+msgstr "Album"
+
+#: ../album/album.c:270
+msgid "Archives buddy icons."
+msgstr "Archiviert Buddy-Icons."
+
+#: ../album/album.c:271
+msgid "Enable this plugin to automatically archive all buddy icons."
+msgstr "Aktivieren, um alle Buddy-Icons automatisch zu archivieren."
+
+#: ../album/album-ui.c:300
+msgid ""
+"<span size='larger' weight='bold'>Unrecognized file type</span>\n"
+"\n"
+"Defaulting to PNG."
+msgstr ""
+"<span size='larger' weight='bold'>Unbekannter Datei-Typ</span>\n"
+"\n"
+"Verwende Standard: PNG."
+
+#: ../album/album-ui.c:316
+#, c-format
+msgid ""
+"<span size='larger' weight='bold'>Error saving image</span>\n"
+"\n"
+"%s"
+msgstr ""
+"<span size='larger' weight='bold'>Fehler beim Speichern des Bildes</span>\n"
+"\n"
+"%s"
+
+#: ../album/album-ui.c:352
+msgid "Save Image"
+msgstr "Bild speichern"
+
+#. Label
+#: ../album/album-ui.c:612
+#, c-format
+msgid ""
+"%x\n"
+"%X"
+msgstr ""
+"%x\n"
+"%X"
+
+#. Label
+#: ../album/album-ui.c:721
+msgid "No icons were found."
+msgstr "Keine Icons gefunden."
+
+#: ../album/album-ui.c:964
+#, c-format
+msgid "Buddy Icons used by %s"
+msgstr "Buddy-Icons verwendet von %s"
+
+#: ../album/album-ui.c:1021
+#, c-format
+msgid "Small (%1$ux%1$u)"
+msgstr "Klein (%1$ux%1$u)"
+
+#: ../album/album-ui.c:1025
+#, c-format
+msgid "Medium (%1$ux%1$u)"
+msgstr "Mittel (%1$ux%1$u)"
+
+#: ../album/album-ui.c:1029
+#, c-format
+msgid "Large (%1$ux%1$u)"
+msgstr "Groß (%1$ux%1$u)"
+
+#: ../album/album-ui.c:1133
+msgid "_Name"
+msgstr "_Name"
+
+#: ../album/album-ui.c:1138
+msgid "_Account"
+msgstr "_Konto"
+
+#: ../album/album-ui.c:1146
+msgid "View Buddy Icons..."
+msgstr "Betrachte Buddy-Icons..."
+
+#: ../album/album-ui.c:1148
+msgid "Please enter the screen name or alias of the person whose icon album you want to view."
+msgstr "Bitte den Bildschirm-Namen oder Alias eingeben, dessen Icon-Album betrachtet werden soll."
+
+#: ../album/album-ui.c:1150 ../autoprofile/comp_logstats_gtk.c:133
+msgid "OK"
+msgstr "Ok"
+
+#: ../album/album-ui.c:1151 ../autoprofile/comp_logstats_gtk.c:134
+#: ../autoprofile/comp_quotation.c:217 ../autoprofile/gtk_widget.c:322
+#: ../groupmsg/groupmsg.c:122 ../timelog/timelog.c:130
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: ../album/album-ui.c:1160
+msgid "View Buddy Icons"
+msgstr "Betrachte Buddy-Icons"
+
+#: ../album/album-ui.c:1217
+msgid "_View Buddy Icons"
+msgstr "_Betrachte Buddy-Icons"
+
+#: ../autoprofile/autoaway.c:104 ../autoprofile/autoreply.c:281
+msgid "This preference is disabled"
+msgstr "Diese Einstellung ist deaktiviert"
+
+#: ../autoprofile/autoaway.c:105 ../autoprofile/autoreply.c:282
+msgid "This preference currently has no effect because AutoProfile is in use.  To modify this behavior, use the AutoProfile configuration menu."
+msgstr "Diese Einstellung hat momentan keine Auswirkungen, da Auto-Profil benutzt wird. Verwenden Sie das Auto-Profile-Konfigurationsmenü, um dieses Verhalten zu ändern."
+
+#. type
+#. ui_requirement
+#. flags
+#. dependencies
+#. priority
+#: ../autoprofile/autoprofile.c:142
+msgid "gtk-kluge-autoprofile"
+msgstr "GTK-Kluge-Auto-Profil"
+
+#. id
+#: ../autoprofile/autoprofile.c:143
+msgid "AutoProfile"
+msgstr "Auto-Profil"
+
+#. name
+#. version
+#: ../autoprofile/autoprofile.c:145
+msgid "User profile and status message content generator"
+msgstr "Nutzerprofil- und Statusnachrichten-Generator"
+
+#. summary
+#. description
+#: ../autoprofile/autoprofile.c:147
+msgid ""
+"Allows user to place dynamic text into profiles\n"
+"and status messages, with the text automatically\n"
+"updated whenever content changes"
+msgstr ""
+"Erlaubt es dem Nutzer, dynamisch erstellten Text in seinem\n"
+" Profil zu verwenden, und Statusnachrichten zu haben,\n"
+"die automatisch aktualisiert werden, wenn sich der Inhalt ändert"
+
+#. author
+#: ../autoprofile/autoprofile.c:151
+msgid ""
+"Casey Ho <casey at hkn-berkeley-edu>\n"
+"\t\t\taim:caseyho"
+msgstr ""
+"Casey Ho <casey at hkn-berkeley-edu>\n"
+"\t\t\taim:caseyho"
+
+#: ../autoprofile/autoprofile.c:153
+msgid "http://autoprofile.sourceforge.net/"
+msgstr "http://autoprofile.sourceforge.net/"
+
+#: ../autoprofile/autoprofile.c:834
+msgid "Say the magic word if you want me to talk more!"
+msgstr "Sag das Zauberwort, wenn du weiter mit mir reden möchtest (alles klein)!"
+
+#: ../autoprofile/autoprofile.c:836
+msgid "please"
+msgstr "bitte"
+
+#: ../autoprofile/autoprofile.c:844
+msgid "Get AutoProfile for Purple at <a href=\"http://autoprofile.sourceforge.net/\">autoprofile.sourceforge.net</a><br><br>[Timestamp]"
+msgstr "Auto-Profil für Purple gibt es auf <a href=\"http://autoprofile.sourceforge.net/\">autoprofile.sourceforge.net</a><br><br>[Timestamp]"
+
+#: ../autoprofile/comp_countdownup.c:278
+msgid "Start/end time"
+msgstr "Start-/Endzeit"
+
+#: ../autoprofile/comp_countdownup.c:284
+msgid "Year: "
+msgstr "Jahr: "
+
+#: ../autoprofile/comp_countdownup.c:297
+msgid "Month: "
+msgstr "Monat: "
+
+#: ../autoprofile/comp_countdownup.c:310
+msgid "Day: "
+msgstr "Tag: "
+
+#: ../autoprofile/comp_countdownup.c:323
+msgid "Hour: "
+msgstr "Stunde: "
+
+#: ../autoprofile/comp_countdownup.c:336
+msgid "Minutes: "
+msgstr "Minuten: "
+
+#: ../autoprofile/comp_countdownup.c:349
+msgid "Seconds: "
+msgstr "Sekunden: "
+
+#: ../autoprofile/comp_countdownup.c:368
+msgid "Which way"
+msgstr "Wie soll gezählt werden"
+
+#: ../autoprofile/comp_countdownup.c:372
+msgid "Count down to stop date"
+msgstr "Zum Zeitpunkt herunterzählen"
+
+#: ../autoprofile/comp_countdownup.c:375
+msgid "Count time since start date"
+msgstr "Von Zeitpunkt an hochzählen"
+
+#: ../autoprofile/comp_countdownup.c:382
+msgid "Days"
+msgstr "Tage"
+
+#: ../autoprofile/comp_countdownup.c:384
+msgid "Hours"
+msgstr "Stunden"
+
+#: ../autoprofile/comp_countdownup.c:386
+msgid "Minutes"
+msgstr "Minuten"
+
+#: ../autoprofile/comp_countdownup.c:388
+msgid "Seconds"
+msgstr "Sekunden"
+
+#: ../autoprofile/comp_countdownup.c:392
+msgid "Largest units displayed"
+msgstr "Größte angezeigte Einheit"
+
+#: ../autoprofile/comp_countdownup.c:394
+msgid "Smallest units displayed"
+msgstr "Kleinste angezeigte Einheit"
+
+#: ../autoprofile/comp_countdownup.c:428
+msgid "Countdown timer"
+msgstr "Countdown-Zähler"
+
+#: ../autoprofile/comp_countdownup.c:429
+msgid "Given a date, shows amount of time until it (or since it)"
+msgstr "Wurde ein Zeitpunkt gegeben, zeigt es den Zeitunterschied bis dorthin (oder seitdem) an"
+
+#: ../autoprofile/comp_executable.c:50
+msgid "[ERROR: command failed to execute]"
+msgstr "[FEHLER: Befehl konnte nicht ausgeführt werden]"
+
+#: ../autoprofile/comp_executable.c:125
+msgid "Specify the command line you wish to execute"
+msgstr "Befehl, der ausgeführt werden soll"
+
+#: ../autoprofile/comp_executable.c:146
+msgid "Max characters to read from output: "
+msgstr "Max. Anzahl an Zeichen, die von der Ausgabe gelesen werden:"
+
+#: ../autoprofile/comp_executable.c:159
+msgid "Command Line"
+msgstr "Kommando-Zeile"
+
+#: ../autoprofile/comp_executable.c:160
+msgid "Reproduces standard output of running a program on the command line"
+msgstr "Reproduziert die Standardausgabe eines in der Kommandozeile ausgeführten Programms."
+
+#: ../autoprofile/comp_http.c:39
+msgid "[AutoProfile error: Invalid URL or no internet connection]"
+msgstr "[Auto-Profil Fehler: ungültige URL oder es besteht keine Internetverbindung]"
+
+#: ../autoprofile/comp_http.c:53
+msgid "[AutoProfile error: No URL specified]"
+msgstr "[Auto-Profil Fehler: keine URL angegeben]"
+
+#: ../autoprofile/comp_http.c:151
+msgid "Select URL with source content"
+msgstr "URL, von der Daten geholt werden sollen"
+
+#. Update Now!
+#: ../autoprofile/comp_http.c:167
+msgid "Fetch page now!"
+msgstr "Jetzt die Seite abrufen!"
+
+#: ../autoprofile/comp_http.c:176 ../autoprofile/preferences.c:656
+msgid "Delay"
+msgstr "Wartezeit von"
+
+#: ../autoprofile/comp_http.c:186
+msgid "minutes between page fetches"
+msgstr "Minuten, die zwischen dem Abrufen der Seiten gewartet werden soll"
+
+#: ../autoprofile/comp_http.c:194
+msgid "Webpage"
+msgstr "Webseite"
+
+#: ../autoprofile/comp_http.c:195
+msgid "Data fetched from an internet URL using HTTP"
+msgstr "Inhalt einer über HTTP abgerufenen Internetseite"
+
+#: ../autoprofile/comp_logstats.c:1021
+msgid "logs"
+msgstr "Mitschnitte"
+
+#: ../autoprofile/comp_logstats.c:1022
+msgid "log"
+msgstr "Mitschnitt"
+
+#: ../autoprofile/comp_logstats.c:1023
+msgid "stat"
+msgstr "Statistik"
+
+#: ../autoprofile/comp_logstats.c:1024
+msgid "stats"
+msgstr "Statistik"
+
+#: ../autoprofile/comp_logstats.c:1025
+msgid "logstats"
+msgstr "Mitschnittstatistiken"
+
+#: ../autoprofile/comp_logstats.c:1026
+msgid "log statistics"
+msgstr "Mitschnitt-Statistiken"
+
+#: ../autoprofile/comp_logstats.c:1032
+msgid "Purple log statistics"
+msgstr "Purple-Mitschnitt-Statistiken"
+
+#: ../autoprofile/comp_logstats.c:1033
+msgid "Display various statistics about your message and system logs"
+msgstr "Zeigt verschiedene Statistiken über Nachrichten und System-Mitschnitte an"
+
+#: ../autoprofile/comp_logstats_gtk.c:123
+#: ../autoprofile/comp_logstats_gtk.c:329
+msgid "Alias"
+msgstr "Alias"
+
+#: ../autoprofile/comp_logstats_gtk.c:129
+msgid "Add Alias"
+msgstr "Alias hinzufügen"
+
+#: ../autoprofile/comp_logstats_gtk.c:131
+msgid "Type in the alias that you use"
+msgstr "Verwendeten Alias eingeben"
+
+#: ../autoprofile/comp_logstats_gtk.c:180
+msgid "Aliases"
+msgstr "Aliase"
+
+#: ../autoprofile/comp_logstats_gtk.c:180
+msgid "What this list is for"
+msgstr "Wofür diese Liste da ist"
+
+#: ../autoprofile/comp_logstats_gtk.c:181
+msgid "Logs in Purple are stored verbatim with what you see on the screen.  The names of the people in the conversation (both yourself and your buddy) are shown with their given aliases as opposed to actual screen names.  If you have given yourself an alias in a conversation, list it using this dialog.  If you do not, messages written by you will be incorrectly identified as received instead of sent.<br><br>Correct capitalization and whitespace are not required for detection to work.<br><br>You must disable/re-enable log stats to refresh the database after an alias change."
+msgstr "Mitschnitte in Purple werden wörtlich so gespeichert, wie sie angezeigt werden. Die Namen derer, die an der Unterhaltung teilgenommen haben (der eigene und die der Gesprächspartner), werden mit ihrem Alias angezeigt, nicht mit ihrem eigentlichen Benutzernamen. Jeder eigene, in einer Unterhaltung verwendete Alias sollte in diesem Dialog eingetragen werden. Sonst werden versendete Nachrichten fälschlicherweise als empfangen statt als gesendet erkannt.<br><br>Eine passende Großschreibung und Leerzeichen sind nicht nötig, damit die Erkennung funktioniert.<br><br>Die Mitschnitt-Statistik muss deaktiviert und wieder aktiviert werden, um die Datenbank zu aktualisieren, nachdem ein Alias verändert wurde."
+
+#: ../autoprofile/comp_logstats_gtk.c:233
+msgid ""
+"%R\tTotal messages received\n"
+"%r\tTotal words received\n"
+"%S\tTotal messages sent\n"
+"%s\tTotal words sent\n"
+"%T\tTotal messages sent/received\n"
+"%t\tTotal words sent/received\n"
+"%D\tNumber of days since first logged conversation\n"
+"%d\tNumber of days with logged conversations\n"
+"%N\tNumber of logged conversations\n"
+"%n\tAverage number of conversations per day with logs\n"
+"%i\tMost conversations in a single day\n"
+"%I\tDate with most conversations\n"
+"%j\tMost messages sent in a single day\n"
+"%J\tDate with most messages sent\n"
+"%k\tMost messages received in a single day\n"
+"%K\tDate with most messages received\n"
+"%l\tMost total messages sent/received in a single day\n"
+"%L\tDate with most total messages sent/received\n"
+"%f\tDate of first logged conversation\n"
+"%u\tAverage words per message received\n"
+"%v\tAverage words per message sent\n"
+"%w\tAverage words per message sent/received\n"
+"%U\tAverage messages received per conversation\n"
+"%V\tAverage messages sent per conversation\n"
+"%W\tAverage messages sent/received per conversation\n"
+"%x\tAverage words received per day with logs\n"
+"%y\tAverage words sent per day with logs\n"
+"%z\tAverage words sent/received per day with logs\n"
+"%X\tAverage messages received per day with logs\n"
+"%Y\tAverage messages sent per day with logs\n"
+"%Z\tAverage messages sent/received per day with logs\n"
+"%p\tPercentage of days with logs\n"
+"%a\tNumber of messages received today\n"
+"%b\tNumber of messages sent today\n"
+"%c\tNumber of conversations started today\n"
+"%e\tNumber of messages sent/received today\n"
+"%A\tNumber of messages received in last week\n"
+"%B\tNumber of messages sent in last week\n"
+"%C\tNumber of conversations started in last week\n"
+"%E\tNumber of messages sent/received in last week\n"
+"%%\t%"
+msgstr ""
+"%R\tEmpfangene Nachrichten insgesamt\n"
+"%r\tEmpfangene Wörter insgesamt\n"
+"%S\tGesendete Nachrichten insgesamt\n"
+"%s\tGesendete Wörter insgesamt\n"
+"%T\tGesendete/Empfangene Nachrichten insgesamt\n"
+"%t\tGesendete/Empfangene Wörter insgesamt\n"
+"%D\tTage seit der ersten aufgezeichneten Unterhaltung\n"
+"%d\tAnzahl der Tage, an denen Unterhaltungen mitgeschnitten wurden\n"
+"%N\tAnzahl der mitgeschnittenen Unterhaltungen\n"
+"%n\tDurchschnittlich mitgeschnittene Unterhaltungen pro Tag\n"
+"%i\tHöchstzahl an Unterhaltungen am selben Tag\n"
+"%I\tTag mit den meisten Unterhaltungen\n"
+"%j\tHöchstzahl an Nachrichten, die an einem Tag gesendet wurden\n"
+"%J\tTag, an dem die meisten Nachrichten gesendet wurden\n"
+"%k\tHöchstzahl an Nachrichten, die an einem Tag empfangen wurden\n"
+"%K\tTag, an dem die meisten Nachrichten empfangen wurden\n"
+"%l\tHöchstzahl an Nachrichten, die an einem Tag ausgetauscht wurden\n"
+"%L\tTag, an dem die meisten Nachrichten ausgetauscht wurden\n"
+"%f\tTag, an dem die erste Unterhaltung mitgeschnitten wurde\n"
+"%u\tDurchschnittlich empfangene Wörter pro Nachricht\n"
+"%v\tDurchschnittlich gesendete Wörter pro Nachricht\n"
+"%w\tDurchschnitt der Wörter pro Nachricht\n"
+"%U\tDurchschnittlich empfangene Nachrichten pro Unterhaltung\n"
+"%V\tDurchschnittlich gesendete Nachrichten pro Unterhaltung\n"
+"%W\tDurchschnitt der Nachrichten pro Unterhaltung\n"
+"%x\tDurchschnittlich pro Tag mitgeschnittene empfangene Wörter\n"
+"%y\tDurchschnittlich pro Tag mitgeschnittene gesendete Wörter\n"
+"%z\tDurchschnittlich pro Tag mitgeschnittene Wörter\n"
+"%X\tDurchschnittlich pro Tag mitgeschnittene empfangene Nachrichten\n"
+"%Y\tDurchschnittlich pro Tag mitgeschnittene gesendete Nachrichten\n"
+"%Z\tDurchschnittlich pro Tag mitgeschnittene Nachrichten\n"
+"%p\tProzentsatz der Tage mit Mitschnitten\n"
+"%a\tAnzahl der heute empfangenen Nachrichten\n"
+"%b\tAnzahl der heute gesendeten Nachrichten\n"
+"%c\tAnzahl der heute gestarteten Unterhaltungen\n"
+"%e\tAnzahl der Nachrichten heute\n"
+"%A\tAnzahl der in der letzten Woche empfangenen Nachrichten\n"
+"%B\tAnzahl der in der letzten Woche gesendeten Nachrichten\n"
+"%C\tAnzahl der in der letzten Woche gestarteten Unterhaltungen\n"
+"%E\tAnzahl der in der letzten Woche ausgetauschten Nachrichten\n"
+"%%\t%"
+
+#: ../autoprofile/comp_logstats_gtk.c:298
+msgid "Add alias"
+msgstr "Alias hinzufügen"
+
+#: ../autoprofile/comp_logstats_gtk.c:302
+msgid "Delete alias"
+msgstr "Alias löschen"
+
+#: ../autoprofile/comp_logstats_gtk.c:306
+msgid "?"
+msgstr "?"
+
+#: ../autoprofile/comp_quotation.c:112
+msgid "Fortune files"
+msgstr "Spruch-Datei"
+
+#: ../autoprofile/comp_quotation.c:113
+msgid "A quick definition of a fortune file"
+msgstr "Kurzbeschreibung einer Spruch-Datei"
+
+#: ../autoprofile/comp_quotation.c:114
+msgid "A fortune file is a simple text file with a number of quotes. The following is an example:<br><br><b>\"Glory is fleeing, but obscurity is forver.\"<br>- Napoleon Bonaparte (1769-1821)<br>%<br>Blagggghhhh!<br>%<br>Yet another quote<br>%<br></b><br>Quotes can have any sort of text within them.  They end when there is a newline followed by a percent sign \"%\" on the next line.<br><br>Fortune files with pre-selected quotes can be found on theinternet."
+msgstr "Eine Spruch-Datei ist eine einfache Textdatei mit Zitaten. Beispiel:<br><br><b>\"Ruhm ist flüchtig, aber die Vergessenheit ist für immer.\"<br>- Napoleon Bonaparte (1769-1821)<br>%<br>Blagggghhhh!<br>%<br>Noch ein Zitat:<br>%<br></b><br>Zitate können alle Arten von Text beinhalten. Sie enden, wenn ein Zeilenumbruch gefolgt von einem in der nächsten Zeile befindlichen Prozentzeichen \"%\" steht.<br><br>Spruch-Dateien mit vorgefertigten Zitaten kann man im Internet finden."
+
+#: ../autoprofile/comp_quotation.c:136
+msgid "Select fortune file to import quotes from"
+msgstr "Wählen Sie die Spruch-Datei, aus der Zitate importiert werden sollen"
+
+#: ../autoprofile/comp_quotation.c:147
+msgid "Interpret bracketed text (such as \"<br>\") as HTML tags"
+msgstr "Interpretiere Text innerhalb von Anführungzeichen (wie \"<br>\") als HTML-Tags"
+
+#: ../autoprofile/comp_quotation.c:204 ../autoprofile/comp_quotation.c:240
+msgid "Unable to edit quote"
+msgstr "Zitate können nicht bearbeitet werden"
+
+#: ../autoprofile/comp_quotation.c:205 ../autoprofile/comp_quotation.c:241
+#: ../autoprofile/comp_quotation.c:304
+msgid "No quote is currently selected"
+msgstr "Es ist gerade kein Zitat ausgewählt"
+
+#: ../autoprofile/comp_quotation.c:213
+msgid "Edit quote"
+msgstr "Zitat bearbeiten"
+
+#: ../autoprofile/comp_quotation.c:216
+msgid "Save"
+msgstr "Speichern"
+
+#: ../autoprofile/comp_quotation.c:303
+msgid "Unable to delete quote"
+msgstr "Zitat konnte nicht gelöscht werden"
+
+#: ../autoprofile/comp_quotation.c:323
+msgid "Delete all quotes?"
+msgstr "Alle Zitate löschen?"
+
+#: ../autoprofile/comp_quotation.c:334
+msgid "Delete all quotes"
+msgstr "Alle Zitate löschen"
+
+#: ../autoprofile/comp_quotation.c:343
+msgid "Import quotes from from fortune file"
+msgstr "Zitate aus einer Spruch-Datei importieren"
+
+#: ../autoprofile/comp_quotation.c:349
+msgid "What is a fortune file?"
+msgstr "Was ist eine Spruch-Datei?"
+
+#: ../autoprofile/comp_quotation.c:430
+msgid "Size"
+msgstr "Größe"
+
+#: ../autoprofile/comp_quotation.c:439 ../autoprofile/comp_quotation.c:592
+msgid "Quotes"
+msgstr "Zitate"
+
+#: ../autoprofile/comp_quotation.c:467
+msgid "New quote"
+msgstr "Neues Zitat"
+
+#: ../autoprofile/comp_quotation.c:472
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: ../autoprofile/comp_quotation.c:477 ../autoprofile/gtk_widget.c:396
+msgid "Delete"
+msgstr "Löschen"
+
+#: ../autoprofile/comp_quotation.c:482
+msgid "More..."
+msgstr "Mehr..."
+
+#: ../autoprofile/comp_quotation.c:494
+msgid "Change quote every "
+msgstr "Wechseln des Zitats alle"
+
+#: ../autoprofile/comp_quotation.c:504
+msgid "hours (0: always show a new quote)"
+msgstr "Stunden (0: zeige immer ein neues Zitat)"
+
+#: ../autoprofile/comp_quotation.c:507
+msgid "Change quote now"
+msgstr "Wechsle jetzt das Zitat"
+
+#: ../autoprofile/comp_quotation.c:535
+msgid "[ERROR: no quotes available]"
+msgstr "[FEHLER: keine Zitate verfügbar]"
+
+#: ../autoprofile/comp_quotation.c:593
+msgid "Displays a quotation from a provided selection"
+msgstr "Zeigt ein Zitat aus einer zur Verfügung gestellten Auswahl"
+
+#: ../autoprofile/comp_rss.c:52
+msgid "[ERROR: Invalid entry number]"
+msgstr "[FEHLER: Ungültige Anzahl an Einträgen]"
+
+#: ../autoprofile/comp_rss.c:57
+msgid "[ERROR: No data, invalid URL/account?]"
+msgstr "[FEHLER: Keine Daten. Falsche/s URL/Konto?]"
+
+#: ../autoprofile/comp_rss.c:65
+msgid "[ERROR: Insufficient number of entries]"
+msgstr "[FEHLER: Zu wenig Einträge]"
+
+#: ../autoprofile/comp_rss.c:356
+msgid ""
+"The following options can be specified with a numerical modifier\n"
+"(i.e. \"%e\" can also be written \"%1e\" or \"%2e\").  The optional\n"
+"number specifies which entry to get the data for. \"1\" refers to the\n"
+"most recent entry, \"2\" refers to the second-most recent entry, and so\n"
+"forth.  \"1\" is used if no number is specified.\n"
+"\n"
+"%e\tStarting text of the entry.\n"
+"%l\tLink to the specific entry.\n"
+"%t\tTitle of entry (Xanga incompatible)\n"
+"\n"
+"Time of entry:\n"
+"%H\thour of entry(24-hour clock)\n"
+"%I\thour (12-hour clock)\n"
+"%p\tAM or PM\n"
+"%M\tminute\n"
+"%S\tsecond\n"
+"%a\tabbreviated weekday name\n"
+"%A\tfull weekday name\n"
+"%b\tabbreviated month name\n"
+"%B\tfull month name\n"
+"%m\tmonth (numerical)\n"
+"%d\tday of the month\n"
+"%j\tday of the year\n"
+"%W\tweek number of the year\n"
+"%w\tweekday (numerical)\n"
+"%y\tyear without century\n"
+"%Y\tyear with century\n"
+"%z\ttime zone name, if any\n"
+"%%\t%"
+msgstr ""
+"Die folgenden Optionen können mit einem nummerischen Platzhalter versehen werden\n"
+"(z.B. \"%e\" kann mit \"%1e\" oder \"%2e\" geschrieben werden).  Die optional mögliche\n"
+"Nummer gibt an, für welchen Eintrag die Daten abgefragt werden sollen. \"1\" steht für\n"
+"den neuesten Eintrag, \"2\" steht für den vorletzten Eintrag und so weiter\n"
+" \"1\" wird gewählt, wenn keine Nummer angegeben wurde.\n"
+"\n"
+"%e\tAnfangstext des Eintrages.\n"
+"%l\tLink zu dem gewählten Eintrag.\n"
+"%t\tÜberschrift des Eintrages (Xanga inkompatibel)\n"
+"\n"
+"Zeit, zu der der Eintrag geschrieben wurde:\n"
+"%H\tStunde des Zeitpunktes (24-Stunden-Uhr)\n"
+"%I\tStunde (12-Stunden-Uhr)\n"
+"%p\tAM oder PM\n"
+"%M\tMinute\n"
+"%S\tSekunde\n"
+"%a\tabgekürzter Wochentagsname\n"
+"%A\tganzer Wochentagsname\n"
+"%b\tabgekürzter Monatsname\n"
+"%B\tganzer Monatsname\n"
+"%m\tMonat (als Zahl)\n"
+"%d\tTag innerhalb des Monats\n"
+"%j\tTag innerhalb des Jahres\n"
+"%W\tWoche innerhalb des Jahres\n"
+"%w\tTag der Woche (als Zahl)\n"
+"%y\tJahr ohne Jahrhundert\n"
+"%Y\tJahr mit Jahrhundert\n"
+"%z\tZeitzone, wenn vorhanden\n"
+"%%\t%"
+
+#. Dropdown
+#: ../autoprofile/comp_rss.c:402
+msgid "Xanga"
+msgstr "Xanga"
+
+#: ../autoprofile/comp_rss.c:404
+msgid "LiveJournal"
+msgstr "LiveJournal"
+
+#: ../autoprofile/comp_rss.c:406
+msgid "RSS 2.0"
+msgstr "RSS 2.0"
+
+#. Username/URL fields
+#: ../autoprofile/comp_rss.c:417
+msgid "Username:"
+msgstr "Benutzername:"
+
+#: ../autoprofile/comp_rss.c:419
+msgid "URL of feed:"
+msgstr "Feed-URL:"
+
+#: ../autoprofile/comp_rss.c:446
+msgid "Minutes between checks for updates:"
+msgstr "Minuten zwischen Überprüfungen auf Änderung"
+
+#: ../autoprofile/comp_rss.c:467
+msgid "RSS / Blogs"
+msgstr "RSS / Blog"
+
+#: ../autoprofile/comp_rss.c:468
+msgid "Information taken from an RSS feed (Xanga and LiveJournal capable)"
+msgstr "Informationen aus einem RSS-Feed (Xanga und LiveJournal kompatibel)"
+
+#: ../autoprofile/comp_textfile.c:45
+msgid "[ERROR: File does not exist]"
+msgstr "[ERROR: Datei existiert nicht]"
+
+#: ../autoprofile/comp_textfile.c:49
+msgid "[ERROR: Unable to open file]"
+msgstr "[ERROR: Kann Datei nicht öffnen]"
+
+#: ../autoprofile/comp_textfile.c:123
+msgid "iTunes"
+msgstr "iTunes"
+
+#: ../autoprofile/comp_textfile.c:123
+msgid "Current song in iTunes"
+msgstr "Aktuelles Lied in iTunes"
+
+#: ../autoprofile/comp_textfile.c:124
+msgid "Get TuneCam from <a href=\"http://www.soft-o-mat.com/productions.shtml\">http://www.soft-o-mat.com/productions.shtml</a> and start it.<br>Create a html file that contains the following text:<br><br>&lt;tc&gt;artist&lt;/tc&gt; - &lt;tc&gt;title&lt;/tc&gt;<br><br>and press the \"T\" button.  Import the html file as a template for the \"File Track\" and whatever else you see fit.  Then select the \"G\" button and choose the location of the output file which will be used in this component"
+msgstr "Installieren Sie TuneCam von <a href=\"http://www.soft-o-mat.com/productions.shtml\">http://www.soft-o-mat.com/productions.shtml</a>  und führen es aus.<br>Erstellen Sie eine HTML-Datei mit folgendem Inhalt:<br><br>&lt;tc&gt;artist&lt;/tc&gt; - &lt;tc&gt;title&lt;/tc&gt;<br><br>dann den \"T\" Button drücken. Importieren Sie die HTML-Datei als eine Vorlage für \"File Track\" und was immer Sie denken, das passt. Drücken Sie dann den \"G\" Button und wählen Sie den Speicherort der Ausgabedatei, die die Komponente benutzen soll."
+
+#: ../autoprofile/comp_textfile.c:135
+msgid "XMMS"
+msgstr "XMMS"
+
+#: ../autoprofile/comp_textfile.c:135
+msgid "Current song in XMMS"
+msgstr "Aktuelles Lied in XMMS"
+
+#: ../autoprofile/comp_textfile.c:136
+#, c-format
+msgid "Included in the misc folder of AutoProfile is a script called \"xmms_currenttrack\".  Install this script in your $PATH and give it executable permissions, and specify the program using a pipe.<br><br>Alternatively, in XMMS, go to Options->Preferences->Effects/General Plugins.<br>Configure the \"Song Change\" plugin.  In the song change command box, put<br><br>echo \"%s\" > /path/to/output/file<br><br>and be sure to enable the plugin.  Select the file location in AutoProfile and you should be done"
+msgstr "Beinhaltet im sonstige-Ordner von Auto-Profil ein Skript namens \"xmms_currenttrack\". Installieren Sie dieses Skript in $PATH, geben Sie dem Skript Berechtigungen zum Ausführen, und spezifizieren Sie das das Programm eine Pipe nutzt.<br><br>Alternativ gehen Sie im XMMS zum Menü Optionen->Eigenschaften->Effekte/Allgemeine Plugins.<br>Konfigurieren Sie das \"Song Change\" -Plugin. In dem Eingabefeld für die Änderung eines Liedes fügen Sie<br><br>echo \"%s\" > /path/to/output/file<br><br> ein und stellen Sie sicher, dass das Plugin aktiviert ist. Wählen Sie den Speicherort der Datei in Auto-Profil aus und es sollte konfiguriert sein."
+
+#: ../autoprofile/comp_textfile.c:146
+msgid "Windows Media Player"
+msgstr "Windows Media Player"
+
+#: ../autoprofile/comp_textfile.c:147
+msgid "Current song in Windows Media Player"
+msgstr "Aktuelles Lied im Windows Media Player"
+
+#: ../autoprofile/comp_textfile.c:148
+msgid "Download NowPlaying, a plugin for WMP from <a href=\"http://www.wmplugins.com/ItemDetail.aspx?ItemID=357\">http://www.wmplugins.com/ItemDetail.aspx?ItemID=357</a> and follow the included installation instructions.<br>Set the output filename to the file you choose in this component"
+msgstr "Laden Sie NowPlaying herunter, ein Plugin für den WMP von <a href=\"http://www.wmplugins.com/ItemDetail.aspx?ItemID=357\">http://www.wmplugins.com/ItemDetail.aspx?ItemID=357</a> und folgen Sie den enthaltenen Installationsanweisungen.<br>Setzen Sie die Ausgabedatei auf die Datei, die Sie in dieser Komponente gewählt haben."
+
+#: ../autoprofile/comp_textfile.c:155
+msgid "iTunes/Winamp/Foobar/Apollo/QCD"
+msgstr "iTunes/Winamp/Foobar/Apollo/QCD"
+
+#: ../autoprofile/comp_textfile.c:156
+msgid "Current song in iTunes/Winamp/Foobar/Apollo/QCD"
+msgstr "Aktuelles Lied in iTunes/Winamp/Foobar/Apollo/QCD"
+
+#: ../autoprofile/comp_textfile.c:157
+msgid "Get the version of AMIP associated with your player from <a href=\"http://amip.tools-for.net/\">http://amip.tools-for.net/</a> and install/enable it.<br>Check the box \"Write song info to file\", play with the settings, and set the file in this component to be the file in the AMIP options."
+msgstr "Besorgen Sie sich die Version von AMIP, die zu Ihrem Spieler gehört von <a href=\"http://amip.tools-for.net/\">http://amip.tools-for.net/</a> und installieren/aktivieren Sie sie.<br>Wählen Sie die Auswahl \"Schreibe Liedinformationen in eine Datei\", probieren Sie die Einstellungen aus, und setzen Sie die Datei in diesen Einstellungen auf die Datei in den AMIP Optionen."
+
+#: ../autoprofile/comp_textfile.c:174
+msgid "Select text file with source content"
+msgstr "Datei mit den Ausgangsdaten wählen"
+
+#: ../autoprofile/comp_textfile.c:195
+msgid "Max characters to read from file:"
+msgstr "Maximale Anzahl an Zeichen, die aus der Datei gelesen werden sollen:"
+
+#. Windows
+#: ../autoprofile/comp_textfile.c:202
+msgid "Windows users: Play the current song in:"
+msgstr "Windows Benutzer: Spiele das aktuelle Lied in:"
+
+#. *nix
+#: ../autoprofile/comp_textfile.c:222
+msgid "*nix users: Play the current song in:"
+msgstr "*nix Benutzer: Spiele das aktuelle Lied in:"
+
+#. OS X
+#: ../autoprofile/comp_textfile.c:235
+msgid "OS X users: Play the current song in:"
+msgstr "OS X Benutzer: Spiele das aktuelle Lied in:"
+
+#: ../autoprofile/comp_textfile.c:257
+msgid "Text File / Songs"
+msgstr "Textdatei / Lieder"
+
+#: ../autoprofile/comp_textfile.c:258
+msgid "Copies text from file that external programs (e.g. XMMS, Winamp, iTunes) can modify on a regular basis"
+msgstr "Kopiert Text von einer Datei, die ein unabhängiges Programm (z.B. XMMS, Winamp, iTunes) bearbeiten kann, mit Hilfe von regulären Ausdrücken"
+
+#: ../autoprofile/comp_timestamp.c:102
+msgid ""
+"Insert the following characters where time is to be displayed:\n"
+"\n"
+"%H\thour (24-hour clock)\n"
+"%I\thour (12-hour clock)\n"
+"%p\tAM or PM\n"
+"%M\tminute\n"
+"%S\tsecond\n"
+"%a\tabbreviated weekday name\n"
+"%A\tfull weekday name\n"
+"%b\tabbreviated month name\n"
+"%B\tfull month name\n"
+"%m\tmonth (numerical)\n"
+"%d\tday of the month\n"
+"%j\tday of the year\n"
+"%W\tweek number of the year\n"
+"%w\tweekday (numerical)\n"
+"%y\tyear without century\n"
+"%Y\tyear with century\n"
+"%z\ttime zone name, if any\n"
+"%%\t%"
+msgstr ""
+"Füge die folgenden Zeichen an der Stelle ein, wo die Zeit angezeigt werden soll:\n"
+"\n"
+"%H\tStunde (24-Stunden-Uhr)\n"
+"%I\tStunde (12-Stunden-Uhr)\n"
+"%p\tAM oder PM\n"
+"%M\tMinute\n"
+"%S\tSekunde\n"
+"%a\tabgekürzter Wochentagsname\n"
+"%A\tganzer Wochentagsname\n"
+"%b\tabgekürzter Monatsname\n"
+"%B\tganzer Monatsname\n"
+"%m\tMonat (als Zahl)\n"
+"%d\tTag innerhalb des Monats\n"
+"%j\tTag innerhalb des Jahres\n"
+"%W\tWoche innerhalb des Jahres\n"
+"%w\tTag der Woche (als Zahl)\n"
+"%y\tJahr ohne Jahrhundert\n"
+"%Y\tJahr mit Jahrhundert\n"
+"%z\tZeitzone, wenn vorhanden\n"
+"%%\t%"
+
+#: ../autoprofile/comp_timestamp.c:132
+msgid "Timestamp"
+msgstr "Zeitstempel"
+
+#: ../autoprofile/comp_timestamp.c:133
+msgid "Displays custom text showing when message was created"
+msgstr "Zeigt in einem benutzerdefinierten Format, wann die Nachricht erstellt wurde"
+
+#: ../autoprofile/comp_uptime.c:38
+msgid "uptime"
+msgstr "Uptime"
+
+#: ../autoprofile/comp_uptime.c:82
+msgid "[ERROR: failed to execute uptime command]"
+msgstr "[FEHLER: Das Uptime-Kommando konnte nicht ausgeführt werden]"
+
+#: ../autoprofile/comp_uptime.c:89
+msgid "Uptime"
+msgstr "Uptime"
+
+#: ../autoprofile/comp_uptime.c:90
+msgid "Show how long your computer has been running"
+msgstr "Zeigt an, wie lange Ihr PC bereits läuft"
+
+#: ../autoprofile/gtk_actions.c:49
+msgid "Edit Profile Accounts"
+msgstr "Profil-Konto bearbeiten"
+
+#: ../autoprofile/gtk_actions.c:58
+msgid ""
+"<b>No accounts currently enabled:</b> You have not yet specified\n"
+" what accounts AutoProfile should set the profile for.  Until you\n"
+" check one of the boxes below, AutoProfile will effectively do\n"
+" nothing."
+msgstr ""
+"<b>Zur Zeit ist kein Konto aktiviert:</b> Bisher ist nicht angegeben,\n"
+" für welche Konten Auto-Profil das Profil setzen soll.\n"
+" Bis nicht mindestens eine der Auswahlboxen gewählt ist, wird Auto-Profil keinen Effekt haben."
+
+#: ../autoprofile/gtk_actions.c:161 ../autoprofile/gtk_widget.c:137
+msgid "<b>Preview</b>"
+msgstr "<b>Vorschau</b>"
+
+#: ../autoprofile/gtk_actions.c:165 ../autoprofile/gtk_widget.c:140
+msgid "Refresh"
+msgstr "Aktualisieren"
+
+#: ../autoprofile/gtk_actions.c:192
+msgid "<b>Edit</b> (Drag widgets into profile / Use shift+enter to insert a new line)"
+msgstr "<b>Edit</b> (Widgets in das Profil ziehen / Shift+Enter benutzen, um eine neue Zeile einzufügen)"
+
+#: ../autoprofile/gtk_actions.c:209
+msgid "Revert"
+msgstr "Zurücksetzen"
+
+#: ../autoprofile/gtk_actions.c:211
+msgid "Save profile"
+msgstr "Profil speichern"
+
+#: ../autoprofile/gtk_actions.c:269 ../autoprofile/gtk_actions.c:326
+msgid "Edit Content"
+msgstr "Inhalt bearbeiten"
+
+#: ../autoprofile/gtk_actions.c:284
+msgid "Widgets"
+msgstr "Widgets"
+
+#: ../autoprofile/gtk_actions.c:286
+msgid "Info/profile"
+msgstr "Information/Profile"
+
+#: ../autoprofile/gtk_actions.c:328
+msgid "Preferences"
+msgstr "Einstellungen"
+
+#: ../autoprofile/gtk_actions.c:330
+msgid "Show summary"
+msgstr "Zusammenfassung anzeigen"
+
+#: ../autoprofile/gtk_away_msgs.c:132
+msgid "no updates made to profile"
+msgstr "Es wurden keine Änderungen am Profil vorgenommen"
+
+#: ../autoprofile/gtk_away_msgs.c:135
+msgid "no updates made to status"
+msgstr "Es wurden keine Änderungen am Status vorgenommen"
+
+#: ../autoprofile/gtk_away_msgs.c:151
+msgid "waiting for new profile content"
+msgstr "Wartet auf neuen Profilinhalt"
+
+#: ../autoprofile/gtk_away_msgs.c:154
+msgid "waiting for new status content"
+msgstr "Wartet auf neuen Statusinhalt"
+
+#: ../autoprofile/gtk_away_msgs.c:188
+#, c-format
+msgid "next profile update in %d seconds"
+msgstr "Nächstes Profilupdate in %d Sekunden"
+
+#: ../autoprofile/gtk_away_msgs.c:191
+#, c-format
+msgid "next status update in %d seconds"
+msgstr "Nächstes Statusupdate in %d Sekunden"
+
+#: ../autoprofile/gtk_away_msgs.c:238
+msgid "AutoProfile Summary"
+msgstr "Auto-Profil Zusammenfassung"
+
+#: ../autoprofile/gtk_away_msgs.c:260 ../schedule/pidgin-schedule.c:222
+msgid "Time"
+msgstr "Zeit"
+
+#: ../autoprofile/gtk_away_msgs.c:265
+msgid "Type"
+msgstr "Typ"
+
+#: ../autoprofile/gtk_away_msgs.c:273
+msgid "Text"
+msgstr "Text"
+
+#: ../autoprofile/gtk_away_msgs.c:311
+msgid "Queue new messages while away"
+msgstr "Während Abwesenheit neue Nachrichten aufzeichnen"
+
+#: ../autoprofile/gtk_away_msgs.c:316
+msgid "Play sounds while away"
+msgstr "Während Abwesenheit Sounds abspielen"
+
+#: ../autoprofile/gtk_away_msgs.c:329
+msgid "Hide summary now"
+msgstr "Jetzt die Zusammenfassung verstecken"
+
+#: ../autoprofile/gtk_away_msgs.c:368
+msgid "<b>User profile</b>"
+msgstr "<b>Nutzerprofil</b>"
+
+#: ../autoprofile/gtk_away_msgs.c:371
+msgid "<b>Away message</b>"
+msgstr "<b>Abwesend-Nachricht</b>"
+
+#: ../autoprofile/gtk_away_msgs.c:374
+msgid "<b>Available message</b>"
+msgstr "<b>Verfügbar-Nachricht</b>"
+
+#: ../autoprofile/gtk_away_msgs.c:377
+msgid "<b>Status message</b>"
+msgstr "<b>Status-Nachricht</b>"
+
+#: ../autoprofile/gtk_away_msgs.c:380
+msgid "<b>Other</b>"
+msgstr "<b>Anderer</b>"
+
+#: ../autoprofile/gtk_widget.c:171
+msgid "<b>Configuration</b>"
+msgstr "<b>Konfiguration</b>"
+
+#: ../autoprofile/gtk_widget.c:177
+msgid "No options available for this component"
+msgstr "Für diese Komponente sind keine Optionen verfügbar"
+
+#: ../autoprofile/gtk_widget.c:211
+msgid "<b><u>Basic info</u></b><br>"
+msgstr "<b><u>Kurzinformation</u></b><br>"
+
+#: ../autoprofile/gtk_widget.c:214
+msgid "A <b>widget</b> is a little piece/snippet of automatically generated text.  There are all sorts of widgets; each type has different content (i.e. a random quote, text from a blog, the song currently playing, etc).<br><br>"
+msgstr "Ein <b>Widget</b> ist ein kleines, automatisch generiertes, Stück Text.  Es gibt alle möglichen Arten von Widgets mit den verschiedensten Inhalten (z.B.: Ein beliebiges Zitat/Quote, Text aus einem Blog, grade gespieltes Lied, etc).<br><br>"
+
+#: ../autoprofile/gtk_widget.c:220
+msgid "To use a widget, simply drag it from the list on the left and drop it into a profile or status message.  <i>It's that easy!</i><br><br>"
+msgstr "Um ein Widget zu benutzen, wird es einfach aus der Liste auf der linken Seite in ein Profil oder eine Status-Nachricht gezogen (drag and drop).  <i>So einfach!</i><br><br>"
+
+#: ../autoprofile/gtk_widget.c:225
+msgid "<b>To edit your profile:</b> Use the \"Info/profile\" tab in this window.<br>"
+msgstr "<b>Veränderung des eigenen Profils:</b> Mit dem \"Informationen/Profile\"-Tab in diesem Fenster.<br>"
+
+#: ../autoprofile/gtk_widget.c:230
+msgid "<b>To edit your available/away/status message:</b> Use the regular Purple interface built into the bottom of the buddy list.<br><br>"
+msgstr "<b>Ändern der Verfügbar-/Abwesend-/Status-Nachrichten:</b> Über das normale Interface unterhalb der Buddy-Liste.<br><br>"
+
+#: ../autoprofile/gtk_widget.c:235
+msgid "<b><u>Advanced Tips</u></b><br>"
+msgstr "<b><u>Weiterführende Tipps</u></b><br>"
+
+#: ../autoprofile/gtk_widget.c:238
+msgid "You can insert a widget into a profile or status by typing its name.  To do this, just type \"[widget-name]\" wherever you want to place a widget (names of widgets are listed on the left).  <br><br><b>You type:</b> The song I am playing now is [iTunesInfo].<br><b>AutoProfile result:</b> The song I am playing now is The Beatles - Yellow Submarine.<br><br>"
+msgstr "Sie können ein Widget in ein Profil oder einen Status einfügen, indem Sie seinen Namen eingeben.  Um dies zu verwenden, geben Sie einfach  \"[widget-namen]\" an der Stelle ein, an der Sie ein Widget verwenden wollen. (Die Namen der Widgets werden links aufgeführt).  <br><br><b>Eigene Eingabe:</b> Das Lied, das gerade abgespielt wird, ist [iTunesInfo].<br><b>Auto-Profil-Ergebnis:</b> Das Lied das gerade abgespielt wird, ist The Beatles - Yellow Submarine.<br><br>"
+
+#: ../autoprofile/gtk_widget.c:268 ../autoprofile/gtk_widget.c:285
+msgid "Unable to change name"
+msgstr "Der Name konnte nicht geändert werden"
+
+#: ../autoprofile/gtk_widget.c:269
+msgid "The specified widget no longer exists."
+msgstr "Dieses Widget existiert nicht mehr."
+
+#: ../autoprofile/gtk_widget.c:286
+msgid "The widget name you have specified is already in use."
+msgstr "Dieser Name wird schon für ein Widget verwendet."
+
+#: ../autoprofile/gtk_widget.c:318
+msgid "Rename Widget"
+msgstr "Widget umbenennen"
+
+#: ../autoprofile/gtk_widget.c:319
+msgid "Enter a new name for this widget."
+msgstr "Einen neuen Namen für dieses Widget eingeben."
+
+#: ../autoprofile/gtk_widget.c:321 ../autoprofile/gtk_widget.c:390
+msgid "Rename"
+msgstr "Umbenennen"
+
+#: ../autoprofile/gtk_widget.c:385
+msgid "New Widget"
+msgstr "Neues Widget"
+
+#: ../autoprofile/gtk_widget.c:494
+msgid "Widget"
+msgstr "Widget"
+
+#: ../autoprofile/gtk_widget.c:638
+msgid "Select a widget type"
+msgstr "Widget-Typ auswählen"
+
+#: ../autoprofile/gtk_widget.c:644
+msgid "Create widget"
+msgstr "Widget erstellen"
+
+#: ../autoprofile/gtk_widget.c:672
+msgid "Widget type"
+msgstr "Widget-Typ"
+
+#: ../autoprofile/preferences.c:47
+#, c-format
+msgid "<span weight=\"bold\" size=\"larger\">AutoProfile %s</span>"
+msgstr "<span weight=\"bold\" size=\"larger\">Auto-Profil %s</span>"
+
+#: ../autoprofile/preferences.c:70
+msgid "Use the <b>Autoprofile</b> portion of the <b>Tools</b> menu in the <b>buddy list</b> to configure the actual content that will go in your status messages and profiles and set options.<br><br>"
+msgstr "Benutzen Sie das <b>Auto-Profile</b>-Untermenü des <b>Werkzeuge</b>-Menüs in der <b>Buddy-Liste</b>, um den aktuellen Inhalt einzustellen, der in Ihrer Status-Nachricht und Ihrem Profil verwendet wird oder um die Optionen einzustellen.<br><br>"
+
+#: ../autoprofile/preferences.c:77
+msgid "<u>DOCUMENTATION / HELP</u><br>"
+msgstr "<u>DOKUMENTATION / HILFE</u><br>"
+
+#: ../autoprofile/preferences.c:79
+msgid "Complete documentation can be found at:<br> <a href=\"http://hkn.eecs.berkeley.edu/~casey/autoprofile/documentation.php\">hkn.eecs.berkeley.edu/~casey/autoprofile/documentation.php</a><br>"
+msgstr "Die komplette Dokumentation befindet sich auf:<br> <a href=\"http://hkn.eecs.berkeley.edu/~casey/autoprofile/documentation.php\">hkn.eecs.berkeley.edu/~casey/autoprofile/documentation.php</a><br>"
+
+#: ../autoprofile/preferences.c:85
+msgid "<br><u>ABOUT</u><br>"
+msgstr "<br><u>Über</u><br>"
+
+#: ../autoprofile/preferences.c:88
+msgid "Developers"
+msgstr "Entwickler"
+
+#: ../autoprofile/preferences.c:95
+msgid "Contributors/Patchers"
+msgstr "Beitragende/Patchschreiber"
+
+#: ../autoprofile/preferences.c:103
+msgid "Website"
+msgstr "Webseite"
+
+#: ../autoprofile/preferences.c:296
+msgid "Screen Name"
+msgstr "Bildschirm-Name"
+
+#: ../autoprofile/preferences.c:319
+msgid "AutoProfile sets user info"
+msgstr "Auto-Profil legt die Benutzerinformationen fest"
+
+#: ../autoprofile/preferences.c:327
+msgid "Protocol"
+msgstr "Protokoll"
+
+#: ../autoprofile/preferences.c:490
+msgid "Accounts that do not support user-specified profiles are not shown"
+msgstr "Konten, die keine benutzerdefinierten Profile unterstützen, werden nicht angezeigt"
+
+#. ---------- Update frequency ----------
+#: ../autoprofile/preferences.c:530
+msgid "Update frequency"
+msgstr "Update Geschwindigkeit"
+
+#: ../autoprofile/preferences.c:535
+msgid "Minimum number of seconds between updates"
+msgstr "Minimale Anzahl an Sekunden zwischen Updates"
+
+#: ../autoprofile/preferences.c:541
+msgid ""
+"WARNING: Using values below 60 seconds may increase the frequency\n"
+"of rate limiting errors"
+msgstr ""
+"WARNUNG: Werte unter 60 Sekunden können zu einer höheren\n"
+"Häufigkeit von Anfrage-Beschränkungs-Fehlern führen!"
+
+#. ----------- Auto-away stuff ------------
+#: ../autoprofile/preferences.c:548
+msgid "Auto-away"
+msgstr "Automatische Abwesenheit"
+
+#: ../autoprofile/preferences.c:550
+msgid "Change status when idle"
+msgstr "Ändere den Status bei Untätigkeit"
+
+#: ../autoprofile/preferences.c:555
+msgid "Minutes before changing status:"
+msgstr "Anzahl an Minuten bis der Status geändert wird:"
+
+#: ../autoprofile/preferences.c:563
+msgid "Change status to:"
+msgstr "Status wechseln zu:"
+
+#: ../autoprofile/preferences.c:629 ../autoprofile/preferences.c:724
+msgid "General"
+msgstr "Allgemein"
+
+#: ../autoprofile/preferences.c:631
+msgid "Auto-reply:"
+msgstr "Automatische-Antwort"
+
+#: ../autoprofile/preferences.c:633 ../autoreply/autoreply.c:406
+msgid "Never"
+msgstr "Nie"
+
+#: ../autoprofile/preferences.c:634
+msgid "When away"
+msgstr "Wenn abwesend"
+
+#: ../autoprofile/preferences.c:635
+msgid "When both away and idle"
+msgstr "Wenn abwesend und untätig"
+
+#. ---------- Auto-responses ----------
+#: ../autoprofile/preferences.c:642
+msgid "Dynamic auto-responses"
+msgstr "Dynamische Automatische Antwort"
+
+#: ../autoprofile/preferences.c:648
+msgid "Allow users to request more auto-responses"
+msgstr "Benutzern erlauben, noch mehr automatische Antworten zu verlangen"
+
+#: ../autoprofile/preferences.c:660
+msgid "seconds between auto-responses"
+msgstr "Sekunden zwischen zwei automatischen Antworten"
+
+#. Auto-response message string
+#: ../autoprofile/preferences.c:668
+msgid "Message sent with first autoresponse:"
+msgstr "Nachricht, die mit der ersten automatischen Antwort gesendet wird:"
+
+#: ../autoprofile/preferences.c:679
+msgid "Request trigger message:"
+msgstr "Erwartetet Antwort:"
+
+#: ../autoprofile/preferences.c:726
+msgid "User info/profiles"
+msgstr "Benutzer Informationen/Profile"
+
+#: ../autoprofile/preferences.c:728
+msgid "Auto-reply"
+msgstr "Automatische Antwort"
+
+#. XXX: There should be a way to reset to the default/account-default
+#. autoreply
+#: ../autoreply/autoreply.c:230
+#, c-format
+msgid "Set autoreply message for %s"
+msgstr "Automatische Antwort für %s"
+
+#: ../autoreply/autoreply.c:232
+msgid "Set Autoreply Message"
+msgstr "Setze automatische Antwort"
+
+#: ../autoreply/autoreply.c:233
+msgid "The following message will be sent to the buddy when the buddy sends you a message and autoreply is enabled."
+msgstr "Falls Automatisches Antworten (Plugin) aktiviert ist, bekommt dieser Buddy die folgende Mitteilung, wenn er eine Nachricht sendet."
+
+#: ../autoreply/autoreply.c:237
+msgid "_Save"
+msgstr "_Speichern"
+
+#: ../autoreply/autoreply.c:238 ../listhandler/aim_blt_files.c:297
+#: ../listhandler/aim_blt_files.c:461 ../listhandler/alias_xml_files.c:210
+#: ../listhandler/alias_xml_files.c:269 ../listhandler/gen_xml_files.c:163
+#: ../listhandler/gen_xml_files.c:355 ../listhandler/migrate.c:145
+#: ../listhandler/migrate.c:184 ../listhandler/purple_blist_xml.c:229
+msgid "_Cancel"
+msgstr "_Abbrechen"
+
+#: ../autoreply/autoreply.c:254
+msgid "Set _Autoreply Message"
+msgstr "_Automatische Antwort setzen"
+
+#: ../autoreply/autoreply.c:267
+msgid "Autoreply message"
+msgstr "Automatische Antwort"
+
+#: ../autoreply/autoreply.c:269
+msgid "Turn off autoreply"
+msgstr "Automatisches Antworten deaktivieren"
+
+#: ../autoreply/autoreply.c:374
+msgid "Send autoreply messages when"
+msgstr "Automatische Antwort senden, wenn"
+
+#: ../autoreply/autoreply.c:378
+msgid "When my account is _away"
+msgstr "Wenn mein Konto _abwesend ist"
+
+#: ../autoreply/autoreply.c:382
+msgid "When my account is _idle"
+msgstr "Wenn mein Konto _untätig ist"
+
+#: ../autoreply/autoreply.c:386
+msgid "_Default reply"
+msgstr "_Standard-Antwort"
+
+#: ../autoreply/autoreply.c:393
+msgid ""
+"Autoreply Prefix\n"
+"(only when necessary)"
+msgstr ""
+"Einleitung der Autoantwort\n"
+"(nur wenn notwendig)"
+
+#: ../autoreply/autoreply.c:397
+msgid "Do not autoreply when invisible."
+msgstr "Keine automatischen Antworten falls unsichtbar."
+
+#: ../autoreply/autoreply.c:400
+msgid "Status message"
+msgstr "Status-Mitteilung"
+
+#: ../autoreply/autoreply.c:404
+msgid "Autoreply with status message"
+msgstr "Automatische Antworten mit Status-Mitteilung"
+
+#: ../autoreply/autoreply.c:408
+msgid "Always when there is a status message"
+msgstr "Immer, wenn es eine Status-Mitteilung gibt"
+
+#: ../autoreply/autoreply.c:410
+msgid "Only when there's no autoreply message"
+msgstr "Nur, wenn keine automatische Antwort ausgewählt ist"
+
+#: ../autoreply/autoreply.c:415
+msgid "Delay between autoreplies"
+msgstr "Pause zwischen automatischen Antworten"
+
+#: ../autoreply/autoreply.c:419
+msgid "_Minimum delay (mins)"
+msgstr "_Minimalabstand (Minuten)"
+
+#: ../autoreply/autoreply.c:423
+msgid "Times to send autoreplies"
+msgstr "Anzahl automatischer Antworten"
+
+#: ../autoreply/autoreply.c:427
+msgid "Ma_ximum count"
+msgstr "Ma_ximalanzahl"
+
+#: ../autoreply/autoreply.c:485
+msgid "Autoreply"
+msgstr "Automatisches Antworten"
+
+#: ../autoreply/autoreply.c:486
+msgid "Autoreply for all the protocols"
+msgstr "Automatisches Antworten für alle Protokolle"
+
+#: ../autoreply/autoreply.c:487
+msgid "This plugin lets you set autoreply message for any protocol. You can set the global autoreply message from the plugin options dialog. To set some specific autoreply message for a particular buddy, right click on the buddy in the buddy-list window. To set autoreply messages for some accounts, go to the `Advanced' tab of the account edit dialog."
+msgstr "Dieses Plugin ermöglicht automatische Antworten für alle Protokolle. Eine globale Antwort lässt sich über die Plugin-Konfiguration einstellen, Konto-spezifische unter `Konto bearbeiten' auf dem `Erweitert'-Tab. In der Buddy-Liste kann man per Rechtsklick spezielle, für einzelne Buddys verwendete, Nachrichten setzen."
+
+#: ../autoreply/autoreply.c:497
+msgid "I am currently not available. Please leave your message, and I will get back to you as soon as possible."
+msgstr "Ich bin momentan nicht verfügbar. Bitte hinterlassen Sie Ihre Nachricht und ich werde mich so bald wie möglich bei Ihnen melden."
+
+#: ../autoreply/autoreply.c:502
+msgid "This is an autoreply: "
+msgstr "Dies ist eine automatische Antwort:"
+
+#: ../awaynotify/awaynotify.c:184
+#, c-format
+msgid "%s is away: %s"
+msgstr "%s ist abwesend: %s"
+
+#: ../awaynotify/awaynotify.c:214
+#, c-format
+msgid "%s is no longer away."
+msgstr "%s ist nicht mehr abwesend."
+
+#: ../awaynotify/awaynotify.c:261
+msgid "Away State Notification"
+msgstr "Abwesend-Melder"
+
+#: ../awaynotify/awaynotify.c:263
+msgid "Notifies in a conversation window when a buddy goes or returns from away"
+msgstr "Benachrichtigt im Gesprächs-Fenster, wenn ein Buddy zu abwesend wechselt oder zurückkommt."
+
+#: ../bash/bash.c:97
+msgid "bash [n]: sends a link to a bash.org quote.  Specify a number for n and it will send a link to the quote with the specified number."
+msgstr "bash [n]: sendet einen Link von einem bash.org Zitat. Die Zahl n definiert den Link zu einem bash.org Zitat mit dieser Nummer."
+
+#: ../bash/bash.c:101
+msgid "qdb [n]: sends a link to a qdb.us quote.  Specify a number for n and it will send a link to the quite with the specified number."
+msgstr "qdb [n]: sendet einen Link von einem qdb.us Zitat. Die Zahl n definiert den Link zu einem qdb.us Zitat mit dieser Nummer."
+
+#: ../bash/bash.c:161
+msgid "bash.org"
+msgstr "bash.org"
+
+#: ../bash/bash.c:163
+msgid "Generates links for quotes at bash.org"
+msgstr "Generiert Links zu Zitaten auf bash.org"
+
+#: ../bash/bash.c:165
+msgid "Generates links for quotes at bash.org or allows the user to specify a quote.  Provides the /bash command."
+msgstr "Erstellt Links zu Zitaten auf bash.org oder erlaubt es dem Benutzer, ein Zitat anzugeben.  Stellt das /bash Kommando zur Verfügung."
+
+#: ../bit/bit.c:116
+#, c-format
+msgid "Unable to locate the buddy icon cache directory %s"
+msgstr "Der Ordner für den Buddy-Icon-Zwischenspeicher konnte nicht gefunden werden %s"
+
+#. buddy icon structs currently suck, I think
+#. it's impossible to tell from a filename which buddy it's associated with
+#. without going through every file, and the blist...
+#. ... a huge hash type table *may help*, but I'd consider it highly
+#. inefficient
+#. then again, some of the stuff in here ain't exactly a TGV either
+#: ../bit/bit.c:118 ../bit/bit.c:127 ../bit/bit.c:172
+msgid "Destroy Unused Icons"
+msgstr "Unbenutzte Icons entfernen"
+
+#: ../bit/bit.c:118
+msgid "Unable to locate"
+msgstr "Konnte nicht gefunden werden"
+
+#: ../bit/bit.c:125
+#, c-format
+msgid "Unable to read the buddy icon cache directory %s"
+msgstr "Aus dem Buddy-Icon-Zwischenspeicher konnte nicht gelesen werden %s"
+
+#: ../bit/bit.c:127
+msgid "Unable to read"
+msgstr "Konnte nicht gelesen werden"
+
+#: ../bit/bit.c:176
+msgid "Flush Buddy Icons"
+msgstr "Buddy-Icons zurückschreiben"
+
+#: ../bit/bit.c:180
+msgid "Refresh Buddy Icons"
+msgstr "Buddy-Icons aktualisieren"
+
+#: ../bit/bit.c:230
+msgid "Buddy Icon Tools"
+msgstr "Buddy-Icon-Werkzeuge"
+
+#: ../bit/bit.c:231
+msgid "Tools to manipulate buddy icons. *DANGEROUS*"
+msgstr "Werkzeuge zum Manipulieren der Buddy-Icons. *GEFÄHRLICH*"
+
+#: ../bit/bit.c:232
+msgid "Whilst working on Purple 2.0.0, I found a need to destroy all my buddies' buddy icons.  There's nothing to do these functions in Purple, so here they are. Completely, thoroughly untested."
+msgstr "Während ich an Purple 2.0.0 arbeitete, musste ich die Buddy-Icons all meiner Buddys zerstören. Es gibt keine Möglichkeiten für diese Funktionen in Purple, also sind sie hier. Durch und durch ungetestet."
+
+#: ../blistops/blistops.c:230
+msgid "Hide the buddy list when it is created"
+msgstr "Buddy-Liste beim Start verstecken"
+
+#: ../blistops/blistops.c:234
+msgid "Hide the menu in the buddy list window"
+msgstr "Das Menü der Buddy-Liste verstecken"
+
+#: ../blistops/blistops.c:238
+msgid "Stretch the buddyname if the buddy has no buddyicon."
+msgstr "Nutze zusätzlichen Platz für Buddy-Namen, wenn kein Buddy-Icon vorhanden ist."
+
+#: ../blistops/blistops.c:242
+msgid "Show email addresses for all the buddies."
+msgstr "Zeige die E-Mail-Adressen für alle Buddys."
+
+#: ../blistops/blistops.c:299
+msgid "Buddy List Options"
+msgstr "Buddy-Liste: Optionen"
+
+#: ../blistops/blistops.c:300 ../blistops/blistops.c:301
+msgid "Gives extended options to the buddy list"
+msgstr "Bietet erweiterte Optionen für die Buddy-Liste"
+
+#: ../buddytime/buddytime.c:216
+#, c-format
+msgid "Remote Local Time: %s (%.4g hour behind)"
+msgid_plural "Remote Local Time: %s (%.4g hours behind)"
+msgstr[0] "Entfernte Ortszeit: %s (%.4g Stunde hinterher)"
+msgstr[1] "Entfernte Ortszeit: %s (%.4g Stunden hinterher)"
+
+#: ../buddytime/buddytime.c:223
+#, c-format
+msgid "Remote Local Time: %s (%.4g hour ahead)"
+msgid_plural "Remote Local Time: %s (%.4g hours ahead)"
+msgstr[0] "Entfernte Ortszeit: %s (%.4g Stunde voraus)"
+msgstr[1] "Entfernte Ortszeit: %s (%.4g Stunden voraus)"
+
+#: ../buddytime/buddytime.c:404
+msgid "Failed to load the Buddy Timezone UI."
+msgstr "Die Zeitzone des Buddy konnte nicht geladen werden."
+
+#: ../buddytime/buddytime.c:485
+msgid "Buddy Time"
+msgstr "Kontakt-Zeit"
+
+#: ../buddytime/buddytime.c:486 ../buddytime/buddytime.c:487
+msgid "Quickly see the local time of a buddy"
+msgstr "Schnell die Ortszeit eines Buddys sehen"
+
+#: ../buddytime/gtkbuddytime.c:76
+#, c-format
+msgid ""
+"%s\n"
+"<b>Local Time:</b> %s (%.4g hour behind)"
+msgid_plural ""
+"%s\n"
+"<b>Local Time:</b> %s (%.4g hours behind)"
+msgstr[0] ""
+"%s\r\n"
+"<b>Ortszeit:</b> %s (%.4g Stunde zurück)"
+msgstr[1] ""
+"%s\r\n"
+"<b>Ortszeit:</b> %s (%.4g Stunden zurück)"
+
+#: ../buddytime/gtkbuddytime.c:83
+#, c-format
+msgid ""
+"%s\n"
+"<b>Local Time:</b> %s (%.4g hour ahead)"
+msgid_plural ""
+"%s\n"
+"<b>Local Time:</b> %s (%.4g hours ahead)"
+msgstr[0] ""
+"%s\r\n"
+"<b>Ortszeit:</b> %s (%.4g Stunde voraus)"
+msgstr[1] ""
+"%s\r\n"
+"<b>Ortszeit:</b> %s (%.4g Stunden voraus)"
+
+#: ../buddytime/gtkbuddytime.c:145
+msgid "Buddy Time (Pidgin UI)"
+msgstr "Buddy-Zeit (Pidgin UI)"
+
+#: ../buddytime/gtkbuddytime.c:146 ../buddytime/gtkbuddytime.c:147
+msgid "Pidgin user interface for the Buddy Time plugin."
+msgstr "Pidgin Benutzeroberfläche für das Buddy-Zeit Plugin"
+
+#: ../chronic/chronic.c:103
+msgid "Chronic"
+msgstr "Chronik"
+
+#: ../chronic/chronic.c:104
+msgid "Sound playing triggers"
+msgstr "Trigger zum Töne abspielen"
+
+#: ../chronic/chronic.c:105
+msgid "Allows buddies to remotely trigger sound playing in your instance of Purple with {S &lt;sound&gt;. Inspired by #guifications channel resident EvilDennisR and ancient versions of AOL.  THIS PLUGIN IS NOT YET FUNCTIONAL!  IT IS USELESS!"
+msgstr "Erlaubt Buddys das Abspielen von Tönen in deinem Purple über {S &lt;sound&gt;. Inspiriert vom Nutzer EvilDennisR des Channels #guifications und früheren AOL-Versionen.  DIESES PLUGIN FUNKTIONIERT NICHT! ES IST NUTZLOS!"
+
+#: ../colorize/colorize.c:272
+msgid "Colorize"
+msgstr "Einfärben"
+
+#: ../colorize/colorize.c:273
+msgid "Colorizes outgoing message text."
+msgstr "Färbt ausgehenden Nachrichtentext."
+
+#: ../colorize/colorize.c:274
+msgid "Colorizes outgoing message text to a gradient of specified starting and ending RGB values."
+msgstr "Färbt ausgehenden Nachrichtentext in einem Farbverlauf von der Startfarbe zur Endfarbe."
+
+#: ../common/gtk_template.c:84 ../common/purple_template.c:79
+msgid "unnamed"
+msgstr "unbenannt"
+
+#: ../common/gtk_template.c:85 ../common/purple_template.c:80
+msgid "summary"
+msgstr "Zusammenfassung"
+
+#: ../common/gtk_template.c:86 ../common/purple_template.c:81
+msgid "description"
+msgstr "Beschreibung"
+
+#: ../convbadger/convbadger.c:201
+msgid "Conversation Badger"
+msgstr "Unterhaltungsmarkierer"
+
+#: ../convbadger/convbadger.c:202 ../convbadger/convbadger.c:203
+msgid "Badges conversations with the protocol icon."
+msgstr "Markiert Unterhaltungen mit dem Protokoll-Icon."
+
+#: ../dewysiwygification/dewysiwygification.c:100
+msgid "DeWYSIWYGification Plugin"
+msgstr "DeWYSIWYGification-Plugin"
+
+#: ../dewysiwygification/dewysiwygification.c:102
+msgid "Lets you type in HTML without it being escaped to entities."
+msgstr "HTML eingeben, ohne dass es zu entitäten verändert wird."
+
+#: ../dewysiwygification/dewysiwygification.c:103
+msgid "Lets you type in HTML without it being escaped to entities. This will not work well for some protocols. Use \"&lt;\" for a literal \"<\"."
+msgstr "HTML eingeben, ohne dass es zu Entitäten verändert wird. Dies funktioniert mit manchen Protokollen nicht. Für ein \"<\" Zeichen benutze \"&lt;\"."
+
+#: ../dice/dice.c:310
+msgid ""
+"dice [dice] [sides]:  rolls dice number of sides sided dice OR\n"
+"dice [XdY+-Z]:  rolls X number of Y sided dice, giving a Z bonus/penalty to each.  e.g. 1d20+2"
+msgstr ""
+"dice [n] [s]:  Würfelt n Würfel mit s Seiten ODER\n"
+"dice [XdY+-Z]:  Würfelt X-mal einen Y-seitigen Würfel und addiert Z als Bonus/Strafe zum Ergebnis hinzu, z.B.: 1d20+2"
+
+#: ../dice/dice.c:379
+msgid "Dice"
+msgstr "Würfel"
+
+#: ../dice/dice.c:380
+msgid "Rolls dice in a chat or im"
+msgstr "Würfelt in Chat oder Sofortnachricht"
+
+#: ../dice/dice.c:381
+msgid "Adds a command (/dice) to roll an arbitrary number of dice with an arbitrary number of sides. Now supports dice notation!  /help dice for details"
+msgstr "Bietet einen /dice-Befehl, der willkürlich viele Würfelwürfe mit ebenfalls willkürlich vielen Seiten simuliert. Unterstützt jetzt die Dice-Notation. Details unter /help dice"
+
+#: ../difftopic/difftopic.c:138
+#, c-format
+msgid "<BR>Topic changed from: <BR>%s<BR>To:<BR>%s"
+msgstr "<BR>Das Thema hat sich von: <BR>%s<BR>zu:<BR>%s<BR>geändert"
+
+#: ../difftopic/difftopic.c:219
+msgid "DiffTopic"
+msgstr "Unterschiedliches Thema"
+
+#: ../difftopic/difftopic.c:220 ../difftopic/difftopic.c:221
+msgid "Show the old topic when the topic in a chat room changes."
+msgstr "Zeige das alte Thema an, wenn sich das Thema in einem Chat ändert."
+
+#: ../eight_ball/eight_ball.c:331
+msgid "8ball:  sends a random 8ball message"
+msgstr "8ball: sendet eine zufällige 8-Ball-Nachricht"
+
+#: ../eight_ball/eight_ball.c:332
+msgid "sgball:  sends a random Stargate Ball message"
+msgstr "sgball: sendet eine zufällige Stargate-Ball-Nachricht"
+
+#: ../eight_ball/eight_ball.c:333
+msgid "fullcrap:  sends random fooling blabber"
+msgstr "fullcrap: sendet zufälliges albernes Geplapper"
+
+#: ../eight_ball/eight_ball.c:334
+msgid "bollocks:  sends random middle-manager bollocks"
+msgstr "Schwachsinn: sendet zufälligen Schwachsinn aus dem mittleren Management"
+
+#: ../eight_ball/eight_ball.c:415
+msgid "Magic 8 Ball"
+msgstr "Magischer 8 Ball"
+
+#: ../eight_ball/eight_ball.c:416
+msgid "Provides Magic 8-ball like functionality"
+msgstr "Bietet die Magic-8-Ball Funktionalität"
+
+#: ../eight_ball/eight_ball.c:417
+msgid "Provides Magic 8-ball like functionality with the /8ball command, as well as similar functionality for common Stargate words or phrases with the /sg-ball command."
+msgstr "Bietet die Magic-8-Ball Funktionalität mit dem /8ball-Befehl, sowie einer ähnlichen Funktionalität für gängige Stargate-Wörter oder Ausdrücke mit dem /sgball-Befehl. Zufalls-Nachrichten können mit dem /fullcrap-Befehl eingefügt werden."
+
+#: ../enhancedhist/enhancedhist.c:250
+#, c-format
+msgid "<b>Conversation with %s on %s:</b><br>"
+msgstr "<b>Unterhaltung mit %s auf %s:</b><br>"
+
+#. heading for the more general options
+#: ../enhancedhist/enhancedhist.c:310
+msgid "Display Options"
+msgstr "Optionen anzeigen"
+
+#. the integer pref for the number of logs to display
+#: ../enhancedhist/enhancedhist.c:313
+msgid "Maximum number of conversations:"
+msgstr "Maximale Anzahl an Unterhaltungen"
+
+#. the integer pref for maximum number of bytes to read back
+#: ../enhancedhist/enhancedhist.c:317
+msgid "Maximum number of bytes:"
+msgstr "Maximale Anzahl an Bytes"
+
+#. the boolean preferences
+#: ../enhancedhist/enhancedhist.c:321
+msgid "Show dates with text"
+msgstr "Zeigt das zum Text gehörige Datum an"
+
+#: ../enhancedhist/enhancedhist.c:322
+msgid "Show logs for IMs"
+msgstr "Zeige Mitschnitte (Logs) für Sofortnachrichten"
+
+#: ../enhancedhist/enhancedhist.c:323
+msgid "Show logs for chats"
+msgstr "Zeige Mitschnitte (Logs) für Chats"
+
+#. heading for the age limit options
+#: ../enhancedhist/enhancedhist.c:326
+msgid "Age Limit for Logs (0 to disable):"
+msgstr "Altersbeschränkung für die Mitschnitte (0 zum deaktivieren): "
+
+#: ../enhancedhist/enhancedhist.c:432
+msgid "Enhanced History"
+msgstr "Erweiterter Verlauf"
+
+#: ../enhancedhist/enhancedhist.c:433
+msgid "An enhanced version of the history plugin."
+msgstr "Eine erweiterte Version des Verlaufsplugins"
+
+#: ../enhancedhist/enhancedhist.c:434
+msgid "An enhanced versoin of the history plugin. Grants ability to select the number of previous conversations to show instead of just one."
+msgstr "Eine erweiterte Version des Verlaufsplugins. Erlaubt es, die Anzahl der angezeigten vorherigen Unterhaltungen festzulegen, statt nur eine anzuzeigen."
+
+#: ../findip/findip.c:55
+msgid "Looked up IP: 127.0.0.1\n"
+msgstr "Aufgelöste IP: 127.0.0.1\n"
+
+#: ../findip/findip.c:59
+msgid "Yo! What's your IP?"
+msgstr "Hey! Wie lautet deine IP?"
+
+#: ../findip/findip.c:78
+msgid "Looking up the IP ...\n"
+msgstr "Auflösen der IP ...\n"
+
+#: ../findip/findip.c:91 ../findip/findip.c:170
+msgid "Find IP"
+msgstr "Finde IP"
+
+#: ../findip/findip.c:119
+msgid "Notify the user that you are trying to get the IP"
+msgstr "Benachrichtigt den Benutzer, dass Sie versuchst haben, die IP zu erhalten. "
+
+#: ../findip/findip.c:171
+msgid "Find the IP of a person in the buddylist."
+msgstr "Findet die IP einer Person in der Buddy-Liste."
+
+#: ../findip/findip.c:172
+msgid "Find the IP of a person in the buddylist. This doesn't really work."
+msgstr "Findet die IP einer Person in der Buddy-Liste. Funktioniert nicht wirklich."
+
+#: ../flip/flip.c:60
+msgid "Outputs the results of flipping a coin"
+msgstr "Gibt das Ergebnis eines Münzwurfes aus."
+
+#: ../flip/flip.c:113
+msgid "Coin Flip"
+msgstr "Münzwurf"
+
+#: ../flip/flip.c:114
+msgid "Flips a coin and outputs the result"
+msgstr "Wirft eine Münze und gibt das Ergebnis aus."
+
+#: ../flip/flip.c:115
+msgid "Adds a command (/flip) to flip a coin and outputs the result in the active conversation"
+msgstr "Bietet einen /flip-Befehl, der das Ergebnis eines Münzwurfes in der aktiven Unterhaltung ausgibt."
+
+#: ../google/google.c:273
+msgid "Google Domain (i.e. www.google.com)"
+msgstr "Google-Domain (z.B. www.google.com)"
+
+#: ../google/google.c:289
+msgid "Returns the url for a Google I'm feeling lucky search"
+msgstr "Gibt die URL für eine Google-\"auf gut Glück\"-Suche aus"
+
+#: ../google/google.c:352
+msgid "Google"
+msgstr "Google"
+
+#: ../google/google.c:353
+msgid "Returns the url for a Google \"I'm feeling lucky\" search"
+msgstr "Gibt die URL für eine Google-\"auf gut Glück\"-Suche aus"
+
+#. should be completely mad and see if user has only one buddy (not a chat)
+#. *  on the blist and pluralise if appropriate
+#: ../gRIM/gRIM.c:277
+msgid ""
+"gRIM: rim your pals\n"
+"/rim &lt;duration-in-secs&gt; &lt;filename&gt;"
+msgstr ""
+"gRIM: Belaste deine Freunde\n"
+"/rim &lt;Dauer-in-Sekunden&gt; &lt;filename&gt;"
+
+#: ../gRIM/gRIM.c:344
+msgid "gRIM"
+msgstr "gRIM"
+
+#: ../gRIM/gRIM.c:345
+msgid "A completely stupid and pointless plugin"
+msgstr "Ein vollkommen dummes und sinnloses Plugin"
+
+#: ../gRIM/gRIM.c:346
+msgid "Adds commands to annoy buddies with. Inspired by a dumb IRC convo and Red Dwarf."
+msgstr "Fügt Befehle hinzu, um damit Buddys zu nerven. Inspiriert von einer dämlichen IRC-Unterhaltung und Red Dwarf."
+
+#: ../groupmsg/groupmsg.c:97
+#, c-format
+msgid "There are no buddies online in group %s"
+msgstr "Es sind keine Buddys der Gruppe %s online."
+
+#. there should probably be more detailed handling here for singular vs
+#. * plural here, but I'm too lazy to do it, and this is for messaging a
+#. * group, which should be multiple people anyway
+#: ../groupmsg/groupmsg.c:109
+#, c-format
+msgid "Your message will be sent to and probably annoy ALL %u PEOPLE in the group %s!"
+msgstr "Diese Nachricht wird ALLEN %u Leuten der Gruppe %s zugestellt und alle Leute ärgern!"
+
+#: ../groupmsg/groupmsg.c:113
+#, c-format
+msgid ""
+"Your message will be sent to these buddies:\n"
+"%s"
+msgstr ""
+"Diese Nachricht wird an diese Buddys gesendet:\n"
+"%s"
+
+#: ../groupmsg/groupmsg.c:117
+msgid "Spam"
+msgstr "Spam"
+
+#: ../groupmsg/groupmsg.c:118
+msgid "Please enter the message to send"
+msgstr "Bitte Nachricht zum Senden eingeben"
+
+#: ../groupmsg/groupmsg.c:121
+msgid "Send"
+msgstr "Senden"
+
+#: ../groupmsg/groupmsg.c:193
+msgid "Group IM"
+msgstr "Gruppennachricht"
+
+#: ../groupmsg/groupmsg.c:194
+msgid "Send an IM to a group of buddies."
+msgstr "Sende eine Nachricht an eine Gruppe von Buddys."
+
+#: ../groupmsg/groupmsg.c:195
+msgid "Adds the option to send an IM to every online buddy in a group."
+msgstr "Bietet die Option, eine Nachricht an alle Online-Buddys einer Gruppe zu senden."
+
+#: ../hideconv/hideconv.c:110 ../hideconv/hideconv.c:137
+msgid "/Options"
+msgstr "/Optionen"
+
+#: ../hideconv/hideconv.c:118
+msgid "_Hide Conversation"
+msgstr "_Verstecke Unterhaltung"
+
+#: ../hideconv/hideconv.c:124
+msgid "Show Hidden Conversations"
+msgstr "Versteckte Unterhaltungen anzeigen"
+
+#: ../hideconv/hideconv.c:237
+msgid "Show All Hidden Conversations"
+msgstr "Alle versteckten Unterhaltungen anzeigen"
+
+#: ../hideconv/hideconv.c:240
+msgid "Hide All Conversations"
+msgstr "Alle Unterhaltungen verstecken"
+
+#: ../hideconv/hideconv.c:286
+msgid "Hide Conversation"
+msgstr "Unterhaltung verstecken"
+
+#: ../hideconv/hideconv.c:287 ../hideconv/hideconv.c:288
+msgid "Hide conversations without closing them."
+msgstr "Versteckt Unterhaltungen, ohne sie zu schließen"
+
+#: ../highlight/highlight.c:74
+msgid "Highlight History"
+msgstr "Verlauf hervorheben"
+
+#: ../highlight/highlight.c:248
+msgid ""
+"/highlight history: shows the list of highlighted sentences from the history.\n"
+"/highlight clear:   clears the history.\n"
+"/highlight +&lt;word&gt;:  adds &lt;word&gt; to the highlight word list for this conversation only.\n"
+"/highlight -&lt;word&gt;:  removes &lt;word&gt; from the highlight word list for this conversation only.\n"
+msgstr ""
+"/highlight history: Zeigt eine Liste der hervorgehoenen Texte aus dem Verlauf.\n"
+"/highlight clear:   Leert den Verlauf.\n"
+"/highlight +&lt;word&gt;:  Fügt &lt;word&gt; zur Liste der hervorgehoben Wörter für diese Unterhaltung hinzu.\n"
+"/highlight -&lt;word&gt;:  Entfernt removes &lt;word&gt; von Liste der hervorgehoben Wörter aus dieser Unterhaltung.\n"
+"\r\n"
+
+#: ../highlight/highlight.c:276
+msgid ""
+"Words to highlight on\n"
+"(separate words by space)"
+msgstr ""
+"Hervorzuhebende Wörter\n"
+"(Wörter durch Leerzeichen trennen) "
+
+#: ../highlight/highlight.c:333 ../nicksaid/nicksaid.c:574
+msgid "Highlight"
+msgstr "Hervorheben"
+
+#: ../highlight/highlight.c:334 ../highlight/highlight.c:335
+msgid "Support for highlighting words."
+msgstr "Unterstützung für das Hervorheben von Wörtern."
+
+#: ../ignorance/ignorance.c:391
+#, c-format
+msgid "Successfully removed %s from %s"
+msgstr "%s wurde erfolgreich aus %s entfernt"
+
+#: ../ignorance/ignorance.c:396
+#, c-format
+msgid "Unable to remove %s from %s\n"
+msgstr "%s konnte nicht aus %s entfernt werden\n"
+
+#: ../ignorance/ignorance.c:485
+#, c-format
+msgid "Assigned user %s to %s"
+msgstr "Es wurde der Kontakt %s %s zugewiesen"
+
+#: ../ignorance/ignorance.c:489
+#, c-format
+msgid "Unable to assign user %s to %s - may already be there"
+msgstr "%s konnte nicht %s zugewiesen werden - vielleicht ist er schon vorhanden"
+
+#: ../ignorance/ignorance.c:1202
+msgid "Ignorance"
+msgstr "Ignoranz"
+
+#: ../ignorance/ignorance.c:1204 ../ignorance/ignorance.c:1206
+msgid "Allows you to manage lists of users with various levels of allowable activity."
+msgstr "Ermöglicht Ihnen eine Liste von Benutzern mit unterschiedlichen Ebenen der zulässigen Tätigkeit zu verwalten."
+
+#: ../ignorance/interface.c:78
+msgid "Create new rule"
+msgstr "Neue Regel erstellen"
+
+#: ../ignorance/interface.c:85
+msgid "Create new group"
+msgstr "Neue Gruppe erstellen"
+
+#: ../ignorance/interface.c:92
+msgid "Save changes"
+msgstr "Änderungen speichern"
+
+#. XXX: The stock-icon for levelDel doesn't show, because the text is
+#. * set from callback.c. Can we do with just `Remove' for the text
+#. * and not updating as the selection in the tree changes?
+#. 
+#: ../ignorance/interface.c:103
+msgid "Remove rule"
+msgstr "Regel entfernen"
+
+#: ../ignorance/interface.c:117
+msgid "Name: "
+msgstr "Name: "
+
+#: ../ignorance/interface.c:125
+msgid "Filter: "
+msgstr "Filter: "
+
+#: ../ignorance/interface.c:137
+msgid "Enabled"
+msgstr "Aktiviert"
+
+#: ../ignorance/interface.c:143
+msgid "Regular Expression"
+msgstr "Regulärer Ausdruck"
+
+#. repeat
+#: ../ignorance/interface.c:148 ../xmmsremote/xmmsremote.c:412
+msgid "Repeat"
+msgstr "Wiederholen"
+
+#: ../ignorance/interface.c:168 ../ignorance/interface.c:257
+msgid "Filter"
+msgstr "Filter"
+
+#: ../ignorance/interface.c:172 ../ignore/ignore.c:303
+msgid "Ignore"
+msgstr "Ignorieren"
+
+#: ../ignorance/interface.c:176 ../schedule/pidgin-schedule.c:256
+msgid "Send Message"
+msgstr "Nachricht senden"
+
+#: ../ignorance/interface.c:185
+msgid "Play sound"
+msgstr "Sound abspielen"
+
+#: ../ignorance/interface.c:198
+msgid "Browse"
+msgstr "Durchsuchen"
+
+#: ../ignorance/interface.c:203
+msgid "Execute command"
+msgstr "Befehl ausführen"
+
+#: ../ignorance/interface.c:212
+msgid "Take action"
+msgstr "Etwas unternehmen"
+
+#: ../ignorance/interface.c:226
+msgid "IM Text"
+msgstr "IM-Text"
+
+#: ../ignorance/interface.c:232
+msgid "Chat Text"
+msgstr "Chat-Text"
+
+#: ../ignorance/interface.c:239
+msgid "User names"
+msgstr "Benutzernamen"
+
+#: ../ignorance/interface.c:245
+msgid "Enter/Leave"
+msgstr "Beitreten/Verlassen"
+
+#: ../ignorance/interface.c:251
+msgid "Invitations"
+msgstr "Einladungen"
+
+#: ../ignorance/support.c:105 ../ignorance/support.c:129
+#, c-format
+msgid "Couldn't find pixmap file: %s"
+msgstr "Konnte die pixmap Dateien nicht finden: %s"
+
+#: ../ignore/ignore.c:131
+msgid "Ignore Rules"
+msgstr "Ignoriere Regeln"
+
+#: ../ignore/ignore.c:131
+msgid "The following are the current ignore rules"
+msgstr "Die Regeln, nach denen ignoriert wird, werden unten aufgelistet"
+
+#: ../ignore/ignore.c:132
+msgid "(Dear God! You are not ignoring any one!)"
+msgstr "(Lieber Gott, du ignorierst niemanden!)"
+
+#: ../ignore/ignore.c:234
+msgid "ignore [-c] [+&lt;ignore&gt; -&lt;unignore&gt;]<br>Examples:<br>   'ignore +StupidBot -NotABot' \t - (in a chat) Starts ignoring StupidBot, and removes NotABot from ignore list.<br>   'ignore -c +AnotherBot' \t - (in a chat) Starts ignoring AnotherBot, but only in chats.<br>   'ignore +' \t - (in an IM) Starts ignoring this person.<br>   'ignore -' \t - (in an IM) Starts unignoring this person.<br>   'ignore' \t - Lists the current ignore rules."
+msgstr "ignore [-c] [+&lt;ignore&gt; -&lt;unignore&gt;]<br>Beispiele:<br> 'ignore +StupidBot -NotABot' \t - (in einem Chat) Beginnt StupidBot zu ignorieren, und entfernt NotABot aus der Ingnorier-Liste.<br> 'ignore -c +AnotherBot' \t - (in einem Chat) Beginnt AnotherBot nur in Chats zu ignorieren.<br> 'ignore +' \t - (in einem IM) Beginnt diese Person zu ignorieren.<br> 'ignore -' \t - (in einem IM) Hebt das Ignorieren für diese Person wieder auf.<br> 'ignore' \t - Listet die aktuellen Ignorier-Regeln auf."
+
+#: ../ignore/ignore.c:305
+msgid "Flexible plugin to selectively ignore people. Please do not use if you have amnesia."
+msgstr "Flexibles Plugin zum selektiven Ignorieren. Bei Erinnerungsverlust bitte nicht verwenden."
+
+#: ../ignore/ignore.c:307
+msgid ""
+"Flexible plugin to selectively ignore people. See '/help ignore' for more help.\n"
+"Please do not use if you have amnesia."
+msgstr ""
+"Plugin zum selektiven Ignorieren. '/help ignore' bietet weitere Hilfe.\n"
+"Bei Erinnerungsverlust bitte nicht verwenden."
+
+#: ../infopane/infopane.c:141 ../infopane/infopane.c:253
+msgid "Libpurple and Pidgin are too old!\n"
+msgstr "Libpurple und Pidgin sind zu alt!\n"
+
+#: ../infopane/infopane.c:142
+msgid "Incompatible Plugin"
+msgstr "Plugin inkompatibel"
+
+#: ../infopane/infopane.c:143
+msgid "You need to update Pidgin!"
+msgstr "Pidgin muss aktualisiert werden!"
+
+#: ../infopane/infopane.c:144
+msgid "This plugin is incompatible with the running version of Pidgin and Libpurple because it is too old.  Please upgrade to the newest version of Pidgin."
+msgstr "Dieses Plugin ist nicht kompatibel zur laufenden Version von Pidgin und Libpurple. Bitte auf die neueste Version von Pidgin aktualisieren."
+
+#. XXX: Is there a better way than this? There really should be.
+#: ../infopane/infopane.c:174
+msgid "Position of the infopane ('top', 'bottom' or 'none')"
+msgstr "Position des Infofensters ('oben', 'unten' oder 'nichts')"
+
+#: ../infopane/infopane.c:178
+msgid "Show icon in the tabs"
+msgstr "Icon in Tabs anzeigen"
+
+#: ../infopane/infopane.c:182
+msgid "Always show the tab"
+msgstr "Das Tab immer anzeigen"
+
+#: ../infopane/infopane.c:242
+msgid "Infopane Options"
+msgstr "Infofenster-Optionen"
+
+#: ../infopane/infopane.c:243 ../infopane/infopane.c:244
+msgid "Allow customizing the details information in conversation windows."
+msgstr "Erlaubt das Anpassen der Detail-Informationen im Unterhaltungsfenster."
+
+#: ../infopane/infopane.c:255
+msgid "Incompatible Plugin! - Check plugin details!"
+msgstr "Inkompatibles Plugin! Siehe Plugin-Details..."
+
+#: ../infopane/infopane.c:256 ../infopane/infopane.c:257
+msgid "This plugin is NOT compatible with this version of Pidgin!"
+msgstr "Dieses Plugin ist NICHT kompatibel mit dieser Version von Pidgin!"
+
+#: ../irchelper/irchelper.c:1072
+msgid "You have been added to the access list."
+msgstr "Sie wurden der Zugriffsliste hinzugefügt."
+
+#: ../irchelper/irchelper.c:1074
+#, c-format
+msgid "You have been added to the access list with an access level of %s."
+msgstr "Sie wurden der Zugriffsliste mit dem Zugriffsrecht %s hinzugefügt."
+
+#: ../irchelper/irchelper.c:1108
+msgid "You have been removed from the access list."
+msgstr "Sie wurden aus der Zugriffsliste entfernt."
+
+#: ../irchelper/irchelper.c:1214
+msgid "NickServ Authentication Error"
+msgstr "NickServ Authentifizierungsfehler"
+
+#: ../irchelper/irchelper.c:1215
+msgid "Error authenticating with NickServ"
+msgstr "Fehler beim Anmelden am NickServ"
+
+#: ../irchelper/irchelper.c:1216 ../irchelper/irchelper.c:1240
+#: ../irchelper/irchelper.c:1265
+msgid "Check your password."
+msgstr "Überprüfen Sie Ihr Passwort."
+
+#: ../irchelper/irchelper.c:1238
+msgid "GameSurge Authentication Error"
+msgstr "GameSurge Authentifizierungfehler"
+
+#: ../irchelper/irchelper.c:1239
+msgid "Error authenticating with AuthServ"
+msgstr "Fehler beim Anmelden am AuthServ"
+
+#: ../irchelper/irchelper.c:1263
+msgid "QuakeNet Authentication Error"
+msgstr "QuakeNet Anmeldefehler"
+
+#: ../irchelper/irchelper.c:1264
+msgid "Error authenticating with Q"
+msgstr "Fehler beim Anmelden mit Q"
+
+#. Register protocol preferences.
+#: ../irchelper/irchelper.c:1303
+msgid "Auth name"
+msgstr "Authentifizierungsname"
+
+#: ../irchelper/irchelper.c:1306
+msgid "Nick password"
+msgstr "Nick-Passwort"
+
+#: ../irchelper/irchelper.c:1310
+msgid "Disconnect ghosts (Duplicate nicknames)"
+msgstr "Trenne Geister (doppelte Nicknamen)"
+
+#: ../irchelper/irchelper.c:1314
+msgid "Operator password"
+msgstr "Operator-Passwort"
+
+#: ../irchelper/irchelper.c:1398
+msgid "IRC Helper"
+msgstr "IRC-Helfer"
+
+#: ../irchelper/irchelper.c:1399
+msgid "Handles the rough edges of the IRC protocol."
+msgstr "Behandelt die Ecken und Kanten des IRC-Protokoll."
+
+#: ../irchelper/irchelper.c:1400
+msgid ""
+"- Transparent authentication with a variety of services.\n"
+"- Suppression of various useless messages"
+msgstr ""
+"-Transparente Authentifizierung mit einer Vielzahl an Dienstleistungen.\n"
+"-Unterdrückung verschiedener nutzloser Einträge"
+
+#. specify our help string and register our command
+#: ../irc-more/irc-more.c:272
+msgid "notice target message:  Send a notice to the specified target."
+msgstr "Hinweis für Nachrichtenziel: Senden Sie eine Mitteilung an das angegebene Ziel."
+
+#. Alphabetize the option label strings
+#: ../irc-more/irc-more.c:293
+msgid "Auto-Join Channels"
+msgstr "Automatisch mit Kanälen verbinden"
+
+#: ../irc-more/irc-more.c:296
+msgid "CTCP Version reply"
+msgstr "CTCP-Version Antwort"
+
+#: ../irc-more/irc-more.c:299
+msgid "Default Quit Message"
+msgstr "Standard verlassen-Nachricht"
+
+#: ../irc-more/irc-more.c:302
+msgid "Default Part Message"
+msgstr "Standard Trennen-Nachricht"
+
+#: ../irc-more/irc-more.c:305
+msgid "Set User Modes On Connect"
+msgstr "Setze Benutzer-Modus beim Verbinden"
+
+#: ../irc-more/irc-more.c:308
+msgid "Unset User Modes On Connect"
+msgstr "Setze Benutzer-Modus beim Verbinden zurück"
+
+#: ../irc-more/irc-more.c:364
+msgid "IRC More"
+msgstr "IRC-Erweiterung"
+
+#: ../irc-more/irc-more.c:365
+msgid "Adds additional IRC features."
+msgstr "Fügt zusätzliche IRC-Funktionen hinzu."
+
+#: ../irc-more/irc-more.c:367
+msgid "Adds additional IRC features, including a customizable quit message, a customizable CTCP VERSION reply, a rudimentary channel autojoin list, and the /notice command for notices."
+msgstr "Fügt zusätzliche IRC-Funktionen hinzu, darunter eine anpassbare Verlassen-Nachricht, eine anpassbare CTCP-VERSION Antwort, eine rudimentäre Liste für das automatische Verbinden zu Kanälen und die /notice Befehle für Bekanntmachungen."
+
+#: ../irc-more/irc-more.c:372
+msgid "Adds additional IRC features, including a customizable quit message, a customizable CTCP VERSION reply, and a rudimentary channel autojoin list."
+msgstr "Fügt zusätzliche IRC-Funktionen hinzu, darunter eine anpassbare Verlassen-Nachricht, eine anpassbare CTCP-VERSION Antwort und eine rudimentäre Liste für das automatische Verbinden zu Kanälen."
+
+#: ../irssi/datechange.c:85
+msgid "Happy New Year!"
+msgstr "Frohes neues Jahr!"
+
+#: ../irssi/datechange.c:88
+#, c-format
+msgid "Day changed to %s"
+msgstr "Tag geändert auf %s"
+
+#: ../irssi/irssi.c:61
+msgid "Enable Features:"
+msgstr "Funktionen aktivieren:"
+
+#: ../irssi/irssi.c:64
+msgid "Text Formatting"
+msgstr "Text-Formatierung"
+
+#: ../irssi/irssi.c:67
+msgid "Date Change Notification"
+msgstr "Tageswechsel-Benachrichtigung"
+
+#: ../irssi/irssi.c:70
+msgid "Happy New Year Message"
+msgstr "Neujahrs-Nachricht"
+
+#. set these here to allow for translations of the strings
+#: ../irssi/irssi.c:130
+msgid "Irssi Features"
+msgstr "Irssi-Funktionen"
+
+#: ../irssi/irssi.c:131
+msgid "Implements features of the irssi IRC client for use in Pidgin."
+msgstr "Implementiert Funktionen des irssi-IRC-Client für die Benutzung mit Pidgin."
+
+#: ../irssi/irssi.c:133
+msgid "Implements some features of the IRC client irssi to be used in Purple.  It lets you know in all open conversations when the day has changed, adds the lastlog command, adds the window command, etc.  The day changed message is not logged."
+msgstr "Implementiert Funktionen des irssi-IRC-Client für die Benutzung mit Pidgin. Es teilt Ihnen in allen offenen Unterhaltungen mit, wenn ein Tageswechsel stattfand, fügt den lastlog-Befehl den window-Befehl hinzu. Die Tageswechsel-Nachricht wird nicht mitgeschnitten."
+
+#. XXX: This should probably be moved into outputting directly in the
+#. * conversation window.
+#. 
+#: ../irssi/lastlog.c:75
+msgid "Lastlog"
+msgstr "Lastlog"
+
+#: ../irssi/lastlog.c:75
+msgid "Lastlog output"
+msgstr "Lastlog-Ausgabe"
+
+#. XXX: Translators: DO NOT TRANSLATE "lastlog" or the HTML tags below
+#: ../irssi/lastlog.c:102
+msgid "<pre>lastlog &lt;string&gt;: Shows, from the current conversation's history, all messages containing the word or words specified in string.  It will be an exact match, including whitespace and special characters."
+msgstr "<pre>lastlog &lt;string&gt;: Zeigt aus den Mitschnitten der aktuellen Unterhaltung alle Nachrichten, die das Wort oder die Wörter, die als Zeichenkette angegeben wurden, enthalten.  Es werden nur exakte Übereinstimmungen berücksichtigt, auch Leerzeichen und Sonderzeichen werden beachtet."
+
+#. * XXX: Translators: DO NOT TRANSLATE the first "layout" or the "\nsave"
+#. * or "reset" at the beginning of the last line below, or the HTML tags.
+#. 
+#: ../irssi/layout.c:329
+msgid ""
+"<pre>layout &lt;save|reset&gt;: Remember the layout of the current conversations to reopen them when Purple is restarted.\n"
+"save - saves the current layout\n"
+"reset - clears the current saved layout\n"
+"</pre>"
+msgstr ""
+"<pre>layout &lt;save|reset&gt;: Das Layout der aktuellen Gespräche merken, damit sie nach einem Purple-Neustart wieder genauso angezeigt werden können.\n"
+"save - speichert das aktuelle Aussehen\n"
+"reset - löscht das aktuell gespeicherte Aussehen\n"
+"</pre>"
+
+#: ../irssi/window.c:73
+msgid "Invalid window specified."
+msgstr "Ungültiges Fenster angegeben."
+
+#: ../irssi/window.c:115
+msgid "Invalid argument!"
+msgstr "Ungültiges Argument!"
+
+#: ../irssi/window.c:120
+msgid "Unknown Error!"
+msgstr "Unbekannter Fehler!"
+
+#. * XXX: Translators: DO NOT TRANSLATE the first occurance of the word
+#. * "window" below, or "close", "next", "previous", "left", or "right"
+#. * at the *beginning* of the lines below!  The options to /window are
+#. * NOT going to be translatable.  Also, please don't translate the HTML
+#. * tags.
+#. 
+#: ../irssi/window.c:148
+msgid ""
+"<pre>window &lt;option&gt;: Operations for windows (tabs).  Valid options are:\n"
+"close - closes the current conversation\n"
+"next - move to the next conversation\n"
+"previous - move to the previous conversation\n"
+"left - move one conversation to the left\n"
+"right - move one conversation to the right\n"
+"&lt;number&gt; - go to tab <number>\n"
+"</pre>"
+msgstr ""
+"<pre>window &lt;option&gt;: Operationen für Fenster (Tabs). Erlaubte Optionen sind:\n"
+"close - schließt die aktuelle Unterhaltung\n"
+"next - wechselt zur nächsten Unterhaltung\n"
+"previous - wechselt zur vorherigen Unterhaltung\n"
+"left - verschiebt eine Unterhaltung nach links\n"
+"right - verschiebt eine Unterhaltung nach rechts\n"
+"&lt;number&gt; - wechsele zum Tab <number>\n"
+"</pre>"
+
+#. same thing as above, except for the /win command
+#: ../irssi/window.c:164
+msgid "<pre>win: THis command is synonymous with /window.  Try /help window for further details.</pre>"
+msgstr "<pre>win: Dieser Befehl ist gleich dem /window-Befehl. Versuchen Sie /help window für weitere Details.</pre>"
+
+#. Last seen
+#. Last said
+#. Signed on
+#. Signed off
+#: ../lastseen/lastseen.c:160
+msgid ""
+"\n"
+"<b>Last Seen</b>: "
+msgstr ""
+"\n"
+"<b>Zuletzt gesehen</b>: "
+
+#: ../lastseen/lastseen.c:161
+msgid ""
+"\n"
+"<b>Last Said</b>: "
+msgstr ""
+"\n"
+"<b>Zuletzt gesagt</b>:"
+
+#: ../lastseen/lastseen.c:162
+msgid ""
+"\n"
+"<b>Signed On</b>: "
+msgstr ""
+"\n"
+"<b>Angemeldet seit</b>: "
+
+#: ../lastseen/lastseen.c:163
+msgid ""
+"\n"
+"<b>Signed Off</b>: "
+msgstr ""
+"\n"
+"<b>Abgemeldet seit</b>: "
+
+#: ../lastseen/lastseen.c:241
+msgid "Last Seen"
+msgstr "Zuletzt gesehen"
+
+#: ../lastseen/lastseen.c:242
+msgid "Record when a buddy was last seen."
+msgstr "Speichert, wann ein Buddy zuletzt gesehen wurde."
+
+#: ../lastseen/lastseen.c:243
+msgid "Logs the time of a last received message, what they said, when they logged in, and when they logged out, for buddies on your buddy list."
+msgstr "Protokolliert die Zeiten Ihrer Freunde in der Kontaktliste für die zuletzt empfangene Nachricht, was sie sagten, wann sie sich angemeldet haben und wann sie sich abgemeldet haben."
+
+#. create a field
+#: ../listhandler/aim_blt_files.c:283 ../listhandler/aim_blt_files.c:449
+#: ../listhandler/alias_xml_files.c:203 ../listhandler/alias_xml_files.c:260
+#: ../listhandler/gen_xml_files.c:148 ../listhandler/gen_xml_files.c:341
+#: ../listhandler/migrate.c:129 ../listhandler/migrate.c:169
+#: ../listhandler/purple_blist_xml.c:221 ../schedule/pidgin-schedule.c:284
+msgid "Account"
+msgstr "Konto"
+
+#. and finally we can create the request
+#: ../listhandler/aim_blt_files.c:293
+msgid "List Handler: Importing"
+msgstr "Listen-Betreuer: Importiere"
+
+#: ../listhandler/aim_blt_files.c:294 ../listhandler/alias_xml_files.c:266
+#: ../listhandler/gen_xml_files.c:160
+msgid "Choose the account to import to:"
+msgstr "Konto auswählen, in das importiert werden soll:"
+
+#: ../listhandler/aim_blt_files.c:295 ../listhandler/alias_xml_files.c:267
+#: ../listhandler/gen_xml_files.c:161 ../listhandler/purple_blist_xml.c:228
+msgid "_Import"
+msgstr "_Importieren"
+
+#: ../listhandler/aim_blt_files.c:420
+msgid "Save AIM .blt File"
+msgstr "AIM .blt-Datei speichern"
+
+#. and finally we can create the request
+#: ../listhandler/aim_blt_files.c:459
+msgid "List Handler: Exporting"
+msgstr "Listen-Betreuer: Exportiere"
+
+#: ../listhandler/aim_blt_files.c:460 ../listhandler/alias_xml_files.c:209
+#: ../listhandler/gen_xml_files.c:354
+msgid "Choose the account to export from:"
+msgstr "Konto auswählen, aus dem exportiert werden soll:"
+
+#: ../listhandler/aim_blt_files.c:461 ../listhandler/alias_xml_files.c:210
+#: ../listhandler/gen_xml_files.c:355
+msgid "_Export"
+msgstr "_Exportieren"
+
+#: ../listhandler/aim_blt_files.c:474
+msgid "Choose An AIM .blt File To Import"
+msgstr "Eine AIM .blt-Datei zum Importieren auswählen"
+
+#: ../listhandler/alias_xml_files.c:182
+msgid "Save Generic .alist File"
+msgstr "Generische .alist-Datei speichern"
+
+#. and finally we can create the request
+#: ../listhandler/alias_xml_files.c:208 ../listhandler/gen_xml_files.c:353
+msgid "Listhandler - Exporting"
+msgstr "Listen-Betreuer - Exportiere"
+
+#. and finally we can create the request
+#: ../listhandler/alias_xml_files.c:265 ../listhandler/gen_xml_files.c:159
+#: ../listhandler/purple_blist_xml.c:226
+msgid "Listhandler - Importing"
+msgstr "Listen-Betreuer - Importiere"
+
+#: ../listhandler/alias_xml_files.c:296 ../listhandler/gen_xml_files.c:366
+msgid "Choose A Generic Buddy List File To Import"
+msgstr "Eine generische Buddy-Listen-Datei zum Importieren auswählen"
+
+#: ../listhandler/gen_xml_files.c:315
+msgid "Save Generic .blist File"
+msgstr "Generische .blist-Datei speichern"
+
+#: ../listhandler/listhandler.c:39
+msgid "Copy Buddies From One Account to Another"
+msgstr "Buddys von einem Konto zu einem anderen kopieren"
+
+#: ../listhandler/listhandler.c:43
+msgid "Import Alias List File"
+msgstr "Alias-Listen-Datei importieren"
+
+#: ../listhandler/listhandler.c:47
+msgid "Import AIM Buddy List File (.blt)"
+msgstr "AIM Buddy-Listen-Datei importieren (.blt)"
+
+#: ../listhandler/listhandler.c:51
+msgid "Import Generic Buddy List File (.xml)"
+msgstr "Generische Buddy-Listen-Datei importieren (.xml)"
+
+#: ../listhandler/listhandler.c:55
+msgid "Import A blist.xml From libpurple"
+msgstr "Eine blist.xml aus libpurple importieren"
+
+#: ../listhandler/listhandler.c:59
+msgid "Export AIM Buddy List File"
+msgstr "AIM-Buddy-Listen-Datei exportieren"
+
+#: ../listhandler/listhandler.c:63
+msgid "Export Alias List File"
+msgstr "Alias-Listen-Datei exportieren"
+
+#: ../listhandler/listhandler.c:67
+msgid "Export Generic Buddy List File"
+msgstr "Generische Buddy-Listen-Datei exportieren"
+
+#: ../listhandler/listhandler.c:114
+msgid "List Handler"
+msgstr "Listen-Betreuer"
+
+#: ../listhandler/listhandler.c:116
+msgid "Provides numerous user-requested list-handling capabilities."
+msgstr "Bietet zahlreiche von Benutzern gewünschte Möglichkeiten zur Handhabung von Listen."
+
+#: ../listhandler/listhandler.c:119
+msgid "Provides numerous user-requested list-handling capabilities, such as importing and exporting of AIM .blt files and generic protocol-agnostic XML .blist files, as well as direct copying of buddies from one account to another."
+msgstr "Bietet zahlreiche von Benutzern gewünschte Möglichkeiten zur Handhabung von Listen, wie den Im- und Export von AIM .blt-Dateien und allgemeinen protokollunabhängigen XML .blist-Dateien, sowie das direkte Kopieren von Buddys von einem Konto zum anderen."
+
+#. and finally we can create the request
+#: ../listhandler/migrate.c:142 ../listhandler/migrate.c:181
+msgid "Listhandler - Copying"
+msgstr "Listen-Betreuer - Kopiere"
+
+#: ../listhandler/migrate.c:143
+msgid "Choose the account to add buddies to:"
+msgstr "Konto auswählen, dem die Buddys hinzugefügt werden sollen:"
+
+#: ../listhandler/migrate.c:144 ../schedule/pidgin-schedule.c:576
+msgid "_Add"
+msgstr "_Hinzufügen"
+
+#: ../listhandler/migrate.c:182
+msgid "Choose the account to copy from:"
+msgstr "Konto auswählen, aus dem kopiert werden soll:"
+
+#: ../listhandler/migrate.c:183
+msgid "C_opy"
+msgstr "K_opieren"
+
+#: ../listhandler/purple_blist_xml.c:227
+msgid "Choose the account whose buddy list you wish to restore:"
+msgstr "Konto auswählen, dessen Buddy-Liste wiederhergestellt werden soll:"
+
+#: ../listhandler/purple_blist_xml.c:253
+msgid "Choose a Libpurple blist.xml File To Import"
+msgstr "Libpurple blist.xml-Datei zum Importieren auswählen"
+
+#: ../listlog/listlog.c:131
+msgid "Chat User List Logging"
+msgstr "Mitschneiden von Chat-Benutzer-Listen"
+
+#: ../listlog/listlog.c:132 ../listlog/listlog.c:133
+msgid "Logs the list of users present when you join a chat."
+msgstr "Schneidet die Liste der Benutzer mit, die anwesend sind, wenn Sie den Chat betreten."
+
+#: ../msglen/msglen.c:251
+msgid "Message Length"
+msgstr "Nachrichtenlänge"
+
+#: ../msglen/msglen.c:252
+msgid "Shows the length of your current message in the menu tray"
+msgstr "Zeigt die Länge Ihrer aktuellen Nachricht im Menü-Bereich"
+
+#: ../mystatusbox/mystatusbox.c:377
+msgid "All"
+msgstr "Alle"
+
+#: ../mystatusbox/mystatusbox.c:380 ../nicksaid/nicksaid.c:256
+msgid "None"
+msgstr "Keine"
+
+#: ../mystatusbox/mystatusbox.c:383
+msgid "Out of sync ones"
+msgstr "Anders als globaler Status"
+
+#: ../mystatusbox/mystatusbox.c:388
+msgid "Toggle icon selectors"
+msgstr "Icon-Selektor wechseln"
+
+#: ../mystatusbox/mystatusbox.c:391
+msgid "Toggle global selector"
+msgstr "Globalen Selektor wechseln"
+
+#: ../mystatusbox/mystatusbox.c:499
+msgid "Hide global status selector"
+msgstr "Globalen-Status-Selektor ausblenden"
+
+#: ../mystatusbox/mystatusbox.c:502
+msgid "Hide icon-selectors"
+msgstr "Icon-Selektor ausblenden"
+
+#: ../mystatusbox/mystatusbox.c:559
+msgid "Mystatusbox (Show Statusboxes)"
+msgstr "Mystatusbox (Zeigt Statusauswahl)"
+
+#: ../mystatusbox/mystatusbox.c:560
+msgid "Hide/Show the per-account statusboxes"
+msgstr "Aus- und einblenden der Statusauswahl für jedes Konto"
+
+#: ../mystatusbox/mystatusbox.c:561
+msgid "You can show all the per-account statusboxes, hide all of them, or just show the ones that are in a different status from the global status.  For ease of use, you can bind keyboard shortcuts for the menu items."
+msgstr "Sie können für jedes Konto die Statusauswahl anzeigen, alle ausblenden oder einfach nur die Status anzeigen, die anders als der globale Status sind. Für die Benutzerfreundlichkeit können Sie Tastenkombinationen für die Menüpunkte vergeben."
+
+#: ../napster/napster.c:286
+msgid "Unable to read header from server"
+msgstr "Das Lesen des Headers vom Server nicht möglich"
+
+#: ../napster/napster.c:300
+#, c-format
+msgid "Unable to read message from server: %s.  Command is %hd, length is %hd."
+msgstr "Das Lesen der Nachricht vom Server: %s nicht möglich. Das Kommando ist %hd mit einer einer Länge von %hd."
+
+#: ../napster/napster.c:316
+msgid "Unknown server error."
+msgstr "Unbekannter Server Fehler."
+
+#: ../napster/napster.c:365
+#, c-format
+msgid "users: %s, files: %s, size: %sGB"
+msgstr "Nutzer: %s, Dateien: %s, Größe: %sGB"
+
+#. MSG_SERVER_HOTLIST_ERROR
+#: ../napster/napster.c:376
+#, c-format
+msgid "Unable to add \"%s\" to your Napster hotlist"
+msgstr "Das Hinzufügen von \"%s\" zu Ihrer Napster Hotlist ist nicht möglich"
+
+#. MSG_SERVER_DISCONNECTING
+#. we have been kicked off =^(
+#: ../napster/napster.c:383
+msgid "You were disconnected from the server."
+msgstr "Sie wurden vom Server getrennt."
+
+#. MSG_CLIENT_WHOIS
+#: ../napster/napster.c:440
+#, c-format
+msgid "%s requested your information"
+msgstr "%s hat Ihre Informationen angefordert"
+
+#: ../napster/napster.c:450
+msgid "Napster User Info:"
+msgstr "Napster-Nutzer Info:"
+
+#. MSG_SERVER_GHOST
+#. Looks like someone logged in as us! =-O
+#: ../napster/napster.c:478
+msgid "You have signed on from another location."
+msgstr "Sie haben sich von einem anderen Ort angemeldet."
+
+#. MSG_CLIENT_PING
+#: ../napster/napster.c:482
+#, c-format
+msgid "%s requested a PING"
+msgstr "%s hat einen PING angefordert"
+
+#: ../napster/napster.c:529 ../napster/napster.c:565
+msgid "Unable to connect."
+msgstr "Verbindung nicht möglich."
+
+#: ../napster/napster.c:558
+msgid "Connecting"
+msgstr "Verbinde"
+
+#: ../napster/napster.c:614
+msgid "_Group:"
+msgstr "_Gruppe:"
+
+#. *< type
+#. *< ui_requirement
+#. *< flags
+#. *< dependencies
+#. *< priority
+#. *< id
+#: ../napster/napster.c:715
+msgid "Napster"
+msgstr "Napster"
+
+#. *< name
+#. *< version
+#. *  summary
+#. *  description
+#: ../napster/napster.c:718 ../napster/napster.c:720
+msgid "NAPSTER Protocol Plugin"
+msgstr "NAPSTER Protokoll-Plugin"
+
+#: ../napster/napster.c:747 ../snpp/snpp.c:586
+msgid "Server"
+msgstr "Server"
+
+#: ../napster/napster.c:750 ../snpp/snpp.c:589
+msgid "Port"
+msgstr "Port"
+
+#: ../nicksaid/nicksaid.c:232 ../nicksaid/nicksaid.c:659
+msgid "Nicksaid"
+msgstr "Nick hervorheben"
+
+#: ../nicksaid/nicksaid.c:232
+msgid "List of highlighted messages:"
+msgstr "Liste der hervorgehobenen Nachrichten:"
+
+#. next
+#: ../nicksaid/nicksaid.c:264 ../xmmsremote/xmmsremote.c:399
+#: ../xmmsremote/xmmsremote.c:494
+msgid "Next"
+msgstr "Vor"
+
+#. previous
+#: ../nicksaid/nicksaid.c:269 ../xmmsremote/xmmsremote.c:404
+#: ../xmmsremote/xmmsremote.c:514
+msgid "Previous"
+msgstr "Zurück"
+
+#: ../nicksaid/nicksaid.c:294
+msgid "Clear History"
+msgstr "Verlauf löschen"
+
+#: ../nicksaid/nicksaid.c:299
+msgid "Show All"
+msgstr "Alle anzeigen"
+
+#: ../nicksaid/nicksaid.c:578
+msgid ""
+"_Words to highlight on\n"
+"(separate the words with a blank space)"
+msgstr ""
+"_Wörter, die hervorgehoben werden\n"
+"(Wörter durch ein Leerzeichen trennen)"
+
+#: ../nicksaid/nicksaid.c:581
+msgid "Number of displayed characters"
+msgstr "Anzahl der dargestellten Zeichen"
+
+#: ../nicksaid/nicksaid.c:585
+msgid ""
+"_Set the number of characters displayed\n"
+"in the nicksaid menu"
+msgstr ""
+"Setze die Anzahl der dargestellten Zeichen\n"
+"im Nicksaid-Menü"
+
+#: ../nicksaid/nicksaid.c:590
+msgid "Display who said your name in the nicksaid menu"
+msgstr "Nick der Person im Nicksaid-Menü anzeigen, die Ihren Namen genannt hat"
+
+#: ../nicksaid/nicksaid.c:594
+msgid "Display _timestamps in the nicksaid menu"
+msgstr "Zei_tstempel im Nicksaid-Menü _anzeigen"
+
+#: ../nicksaid/nicksaid.c:598
+msgid "_Display _datestamps in the nicksaid menu"
+msgstr "_Datumstempel im Nicksaid-Menü _anzeigen"
+
+#: ../nicksaid/nicksaid.c:602
+msgid "Allow displaying in a separate dialog"
+msgstr "Darstellung in einem seperaten Dialog erlauben"
+
+#: ../nicksaid/nicksaid.c:660 ../nicksaid/nicksaid.c:661
+msgid "Record when someone said your nick in a chat."
+msgstr "Zeichnet auf, wenn jemand Ihren Nick in einen Chat schreibt."
+
+#: ../nomobility/nomobility.c:52
+msgid "There are no messages in the queue."
+msgstr "Es gibt keine Nachrichten in der Warteschlange."
+
+#: ../nomobility/nomobility.c:59
+#, c-format
+msgid "%d. %s"
+msgstr "%d. %s"
+
+#: ../nomobility/nomobility.c:145
+#, c-format
+msgid "Cancelled message to %s, they are currently mobile."
+msgstr "Nachricht an %s abgebrochen, sie sind aktuell mobil."
+
+#: ../nomobility/nomobility.c:205
+msgid "Delete failed: no message number given!"
+msgstr "Löschen fehlgeschlagen: Keine Nachrichten-Nummer vergeben!"
+
+#: ../nomobility/nomobility.c:213
+#, c-format
+msgid "Delete failed: no messaged numbered %d!"
+msgstr "Löschen fehlgeschlagen: keine Nachricht mit der Nummer %d!"
+
+#. commands
+#: ../nomobility/nomobility.c:245
+#, c-format
+msgid ""
+"%s &lt;[clear][clear][delete][send]&gt;\n"
+"clear     Clears all queued messages\n"
+"delete #  Deletes the message numbered #\n"
+"list      Lists all queued messages\n"
+"sendall   Sends all queued messages\n"
+msgstr ""
+"%s &lt;[clear][clear][delete][send]&gt;\n"
+"clear     Leert alle Nachrichten aus der Warteschlange\n"
+"delete #  Löscht die Nachricht mit der Nummer #\n"
+"list      Listet alle Nachrichten aus der Warteschlange auf\n"
+"sendall   Sendet alle Nachrichten aus der Warteschlange\n"
+
+#: ../nomobility/nomobility.c:308
+msgid "No Mobility"
+msgstr "Keine Mobilität"
+
+#: ../nomobility/nomobility.c:309
+msgid "Stops you from messaging mobile users"
+msgstr "Verhindert das Versenden von Nachrichten an mobile Nutzer"
+
+#: ../oldlogger/oldlogger.c:272
+#, c-format
+msgid "IM Sessions with %s\n"
+msgstr "IM-Sitzung mit %s\n"
+
+#: ../oldlogger/oldlogger.c:296
+#, c-format
+msgid "(%s) %s <AUTO-REPLY>: %s\n"
+msgstr "(%s) %s <Automatische Antwort>: %s\n"
+
+#: ../oldlogger/oldlogger.c:389
+#, c-format
+msgid "IM Sessions with %s"
+msgstr "IM-Sitzung mit %s"
+
+#: ../oldlogger/oldlogger.c:423
+#, c-format
+msgid "<FONT COLOR=\"#16569E\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> %s<BR>\n"
+msgstr "<FONT COLOR=\"#16569E\" sml=\"%s\">(%s) <B>%s &lt;Automatische Antwort&gt;:</B></FONT> %s<BR>\n"
+
+#: ../oldlogger/oldlogger.c:425
+#, c-format
+msgid "<FONT COLOR=\"#A82F2F\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> %s<BR>\n"
+msgstr "<FONT COLOR=\"#A82F2F\" sml=\"%s\">(%s) <B>%s &lt;Automatische Antwort&gt;:</B></FONT> %s<BR>\n"
+
+#: ../oldlogger/oldlogger.c:452
+msgid "Old plain text"
+msgstr "Ursprünglicher Klartext"
+
+#: ../oldlogger/oldlogger.c:457
+msgid "Old HTML"
+msgstr "Ursprüngliches HTML"
+
+#: ../oldlogger/oldlogger.c:515
+msgid "Old Logger"
+msgstr "Ursprünglicher Logger"
+
+#: ../oldlogger/oldlogger.c:516 ../oldlogger/oldlogger.c:517
+msgid "Re-implements the legacy, deficient, logging"
+msgstr "Reimplementiert das veraltete, mangelhafte/unzureichende Logging"
+
+#: ../plonkers/plonkers.c:228
+msgid "Ignored Plonkers"
+msgstr "Ignorierte Trottel"
+
+#: ../plonkers/plonkers.c:230
+msgid "Plonkers singular format:"
+msgstr "Ein einzelner Trottel:"
+
+#: ../plonkers/plonkers.c:233
+msgid "Plonkers plural format:"
+msgstr "Mehrere Trottel:"
+
+#: ../plonkers/plonkers.c:237
+msgid "Plonking"
+msgstr "Zum Trottel erklären"
+
+#: ../plonkers/plonkers.c:238
+msgid "Plonked singular plural:"
+msgstr "Ein einzelner Trottel:"
+
+#: ../plonkers/plonkers.c:241
+msgid "Plonked plural format:"
+msgstr "Mehrere Trottel:"
+
+#: ../plonkers/plonkers.c:247
+msgid "Format information"
+msgstr "Formatierungsinformationen"
+
+#: ../plonkers/plonkers.c:252
+msgid "%P: List of plonkers"
+msgstr "%P: Liste der Trottel"
+
+#: ../plonkers/plonkers.c:255
+msgid "%N: Number of plonkers"
+msgstr "%N: Anzahl der Trottel"
+
+#: ../plonkers/plonkers.c:273
+msgid ""
+"<pre>plonkers;\n"
+"Tell people in a chat what you really think of them\n"
+"</pre>"
+msgstr ""
+"<pre>plonkers;\n"
+"Sagen Sie den Trotteln in einem Chat, was Sie wirklich über sie denken\n"
+"</pre>"
+
+#: ../plonkers/plonkers.c:342
+msgid "/me has identified %N plonker: %P."
+msgstr "/me hat %N Trottel identifiziert: %P"
+
+#: ../plonkers/plonkers.c:344
+msgid "/me has identified %N plonkers: %P."
+msgstr "/me hat %N Trottel identifiziert: %P"
+
+#: ../plonkers/plonkers.c:347 ../plonkers/plonkers.c:349
+msgid "/me plonks: %P."
+msgstr "/me erklärt %P zum Trottel."
+
+#: ../plonkers/plonkers.c:351
+msgid "Plonkers"
+msgstr "Plonkers"
+
+#: ../plonkers/plonkers.c:352
+msgid "Tell plonkers what you really think."
+msgstr "Sagen Sie Trotteln, was Sie wirklich denken."
+
+#: ../plonkers/plonkers.c:353
+msgid "Plonkers is a small plugin that lets you announce to a chat room your current list of ignores, as well as providing other pointless ignore and privacy tools for dealing with idiots.  The name is inspired by the British/Irish word for 'idiots.'"
+msgstr "Plonkers ist ein kleines Plugin, das es Ihnen erlaubt, Ihre momentane Ignore-Liste in einem Chat zu verkünden, und zusätzlich andere sinnlose Ignorier- und Privatsphäre-Werkzeuge zum Umgang mit Trotteln bereitstellt. Der Name ist von dem britischen/irischen Wort für \"Trottel\" inspiriert."
+
+#: ../schedule/pidgin-schedule.c:89
+msgid "Schedule List"
+msgstr "Terminliste"
+
+#: ../schedule/pidgin-schedule.c:147
+msgid "Every month"
+msgstr "Jeden Monat"
+
+#: ../schedule/pidgin-schedule.c:148
+msgid "January"
+msgstr "Januar"
+
+#: ../schedule/pidgin-schedule.c:149
+msgid "February"
+msgstr "Februar"
+
+#: ../schedule/pidgin-schedule.c:150
+msgid "March"
+msgstr "März"
+
+#: ../schedule/pidgin-schedule.c:151
+msgid "April"
+msgstr "April"
+
+#: ../schedule/pidgin-schedule.c:152
+msgid "May"
+msgstr "Mai"
+
+#: ../schedule/pidgin-schedule.c:153
+msgid "June"
+msgstr "Juni"
+
+#: ../schedule/pidgin-schedule.c:154
+msgid "July"
+msgstr "Juli"
+
+#: ../schedule/pidgin-schedule.c:155
+msgid "August"
+msgstr "August"
+
+#: ../schedule/pidgin-schedule.c:156
+msgid "September"
+msgstr "September"
+
+#: ../schedule/pidgin-schedule.c:157
+msgid "October"
+msgstr "Oktober"
+
+#: ../schedule/pidgin-schedule.c:158
+msgid "November"
+msgstr "November"
+
+#: ../schedule/pidgin-schedule.c:159
+msgid "December"
+msgstr "Dezember"
+
+#: ../schedule/pidgin-schedule.c:162 ../schedule/pidgin-schedule.c:218
+msgid "Everyday"
+msgstr "Jeden Tag"
+
+#: ../schedule/pidgin-schedule.c:163
+msgid "Sunday"
+msgstr "Sonntag"
+
+#: ../schedule/pidgin-schedule.c:164
+msgid "Monday"
+msgstr "Montag"
+
+#: ../schedule/pidgin-schedule.c:165
+msgid "Tuesday"
+msgstr "Dienstag"
+
+#: ../schedule/pidgin-schedule.c:166
+msgid "Wednesday"
+msgstr "Mittwoch"
+
+#: ../schedule/pidgin-schedule.c:167
+msgid "Thursday"
+msgstr "Donnerstag"
+
+#: ../schedule/pidgin-schedule.c:168
+msgid "Friday"
+msgstr "Freitag"
+
+#: ../schedule/pidgin-schedule.c:169
+msgid "Saturday"
+msgstr "Samstag"
+
+#: ../schedule/pidgin-schedule.c:177
+msgid "Select Date and Time"
+msgstr "Datum und Zeit wählen"
+
+#: ../schedule/pidgin-schedule.c:192
+msgid "Month"
+msgstr "Monat"
+
+#: ../schedule/pidgin-schedule.c:199
+msgid "Year"
+msgstr "Jahr"
+
+#: ../schedule/pidgin-schedule.c:202
+msgid "Every Year"
+msgstr "Jedes Jahr"
+
+#: ../schedule/pidgin-schedule.c:206
+msgid "Day"
+msgstr "Tag"
+
+#: ../schedule/pidgin-schedule.c:214
+msgid "Date"
+msgstr "Datum"
+
+#: ../schedule/pidgin-schedule.c:266
+msgid "_Send message to a friend"
+msgstr "_Nachricht an einen Freund senden"
+
+#. XXX: set the formatting to default send-message format
+#: ../schedule/pidgin-schedule.c:279
+msgid "Buddy"
+msgstr "Buddy"
+
+#: ../schedule/pidgin-schedule.c:288 ../stress/stress.c:307
+#: ../stress/stress.c:315 ../stress/stress.c:323
+msgid "Message"
+msgstr "Nachricht"
+
+#: ../schedule/pidgin-schedule.c:299
+msgid "Popup Dialog"
+msgstr "Popup-Dialog"
+
+#: ../schedule/pidgin-schedule.c:304
+msgid "_Popup a reminder dialog with message"
+msgstr "Popup-Dialog für eine Erinnerungsnachricht"
+
+#: ../schedule/pidgin-schedule.c:398
+msgid "Name"
+msgstr "Name"
+
+#: ../schedule/pidgin-schedule.c:580
+msgid "_Delete"
+msgstr "_Löschen"
+
+#. XXX: submit the patch to Purple for making the mnemonics work
+#: ../schedule/pidgin-schedule.c:645
+msgid "New Schedule"
+msgstr "Neuer Termin"
+
+#: ../schedule/pidgin-schedule.c:648
+msgid "List of Schedules"
+msgstr "Liste der Termine"
+
+#: ../schedule/pidgin-schedule.c:709 ../schedule/schedule.c:256
+msgid "Schedule"
+msgstr "Termin"
+
+#: ../schedule/pidgin-schedule.c:710 ../schedule/pidgin-schedule.c:711
+msgid "Schedule reminders at specified times."
+msgstr "Terminerinnerungen zu bestimmten Zeiten."
+
+#: ../schedule/schedule.c:379
+msgid "list of schedules"
+msgstr "Liste der Termine"
+
+#: ../sepandtab/sepandtab.c:90
+msgid "Separate IM, group Chats"
+msgstr "Teile Sofortnachrichten (IMs) auf, gruppiere Chats"
+
+#: ../sepandtab/sepandtab.c:92
+msgid "Separate Chats, group IMs"
+msgstr "Teile Chats auf, gruppiere Sofortnachrichten (IMs)"
+
+#: ../sepandtab/sepandtab.c:95
+msgid "Group by Type, Separate by Protocol"
+msgstr "Gruppiere nach Typ, teile nach Protokoll auf"
+
+#: ../sepandtab/sepandtab.c:150
+msgid "Separate And Tab"
+msgstr "Aufteilen und gruppieren"
+
+#: ../sepandtab/sepandtab.c:151
+msgid "Adds two placement functions for separating and tabbing"
+msgstr "Fügt zwei Platzierungsfunktionen für das Aufteilen und Gruppieren hinzu."
+
+#: ../sepandtab/sepandtab.c:152
+msgid ""
+"Adds two new placement functions.\n"
+"\n"
+"One separates IMs and groups chats in tabs\n"
+"The other separates chats and groups IMs in tabs"
+msgstr ""
+"Fügt zwei neue Platzierungsfunktionen hinzu.\n"
+"\n"
+"Eine trennt IMs und Gruppen-Chats in Registerkarten,\n"
+"die andere trennt, Chats- und Gruppen-IMs in Tabs"
+
+#: ../showoffline/showoffline.c:72
+msgid "Hide when offline"
+msgstr "Verstecken, wenn offline"
+
+#: ../showoffline/showoffline.c:75
+msgid "Show when offline"
+msgstr "Anzeigen, wenn offline"
+
+#: ../showoffline/showoffline.c:86
+msgid "Plugin deprecated"
+msgstr "Plugin veraltet"
+
+#: ../showoffline/showoffline.c:87
+msgid "Show Offline plugin deprecated"
+msgstr "Zeige alle veralteteten Offline-Plugins"
+
+#: ../showoffline/showoffline.c:88
+msgid ""
+"This plugin has been deprecated as of Pidgin 2.3.0 which\n"
+"includes the same functionality."
+msgstr "Dieses Plugin ist seit Pidgin 2.3.0 veraltet, da Pidgin seitdem die gleiche Funktionalität beinhaltet."
+
+#: ../showoffline/showoffline.c:139
+msgid "Show Offline"
+msgstr "Offline-Buddys anzeigen"
+
+#: ../showoffline/showoffline.c:140
+msgid "Show specific buddies while offline."
+msgstr "Zeigt bestimmte Benutzer, während sie offline sind"
+
+#: ../showoffline/showoffline.c:141
+msgid "Adds the option to show specific buddies in your buddy list when they are offline, even with \"Show Offline Buddies\" turned off."
+msgstr "Fügt die Möglichkeit hinzu, bestimmte Benutzer in Ihrer Kontaktliste anzuzeigen, wenn diese offline sind, auch wenn \"Anzeigen: Offline-Buddys\" ausgestellt ist."
+
+#: ../simfix/simfix.c:134
+msgid "SIM-fix"
+msgstr "SIM-Fixer"
+
+#: ../simfix/simfix.c:135
+msgid "Fix messages from broken SIM clients."
+msgstr "Korrigiert Nachrichten von kaputten SIM-Clients"
+
+#: ../simfix/simfix.c:136
+msgid "Fixes messages received from broken SIM clients by stripping HTML from them. The buddy must be on your list and set as a SIM user."
+msgstr "Korrigiert Nachrichten, die von kaputten SIM-Clients empfangen werden, indem das HTML entfernt wird. Der Benutzer muss sich auf der Buddy-Liste befinden und dort als SIM-Benutzer eingestellt sein."
+
+#: ../slashexec/slashexec.c:174
+#, c-format
+msgid "Unable to parse \"%s\""
+msgstr "Kann  \"%s\" nicht analysieren"
+
+#: ../slashexec/slashexec.c:185
+#, c-format
+msgid "Parse error message: %s"
+msgstr "Fehlermeldung vom analysieren: %s"
+
+#: ../slashexec/slashexec.c:215
+#, c-format
+msgid "Unable to execute \"%s\""
+msgstr "\"%s\" konnte nicht ausgeführt werden"
+
+#: ../slashexec/slashexec.c:226
+#, c-format
+msgid "Execute error message: %s"
+msgstr "Ausführungs-Fehlerbenachrichtigung: %s"
+
+#: ../slashexec/slashexec.c:295
+msgid "There was an error executing your command."
+msgstr "Bei der Ausführung des Befehls trat ein Fehler auf."
+
+#. I really want to eventually make this cleaner, like by making it
+#. * change the actual message that gets printed to the conv window...
+#: ../slashexec/slashexec.c:362
+#, c-format
+msgid "The following text was sent: %s"
+msgstr "Der folgende Text wurde gesendet: %s"
+
+#: ../slashexec/slashexec.c:412
+msgid ""
+"exec [-o] &lt;command&gt;, runs the command.\n"
+"If the -o flag is used then output is sent to thecurrent conversation; otherwise it is printed to the current text box."
+msgstr ""
+"exec [-o] &lt;Befehl&gt;, führt den Befehl aus.\n"
+"Wenn die -o Steuerungsoption benutzt wird, dann wird die Ausgabe an die aktuelle Unterhaltung gesendet; andernfalls wird sie in das aktuelle Textfeld eingefügt."
+
+#: ../slashexec/slashexec.c:463
+msgid "Execute commands starting with: "
+msgstr "Schließe Befehle aus, die anfangen mit: "
+
+#: ../slashexec/slashexec.c:467
+msgid "/exec Command (/exec someCommand)"
+msgstr "/exec Befehl (/exec einBefehl)"
+
+#: ../slashexec/slashexec.c:471
+msgid "Exclamation point (!someCommand)"
+msgstr "Ausrufezeichen (!einBefehl)"
+
+#: ../slashexec/slashexec.c:529
+msgid "/exec a la UNIX IRC CLI"
+msgstr "/exec wie bei einer UNIX IRC CLI"
+
+#: ../slashexec/slashexec.c:530
+msgid "A plugin that adds the /exec command line interpreter like most UNIX/Linux IRC clients have.  Also included is the ability to execute commands with an exclamation point (!uptime, for instance).\n"
+msgstr "Ein Plugin, das den /exec Kommandozeileninterpreten, wie ihn die meisten UNIX/Linux-IRC-Clients haben, hinzufügt. Es beinhaltet zusätzlich die Möglichkeit, einen Befehl mit einem Ausrufezeichen (z.B. !uptime) auszuführen (Gilt nur für UNIX/Linux-Betriebssysteme).\n"
+
+#: ../smartear/gtksmartear.c:51
+msgid "SmartEar Options"
+msgstr "SmartEar-Einstellungen"
+
+#: ../smartear/gtksmartear.c:112
+msgid "SmartEar"
+msgstr "SmartEar"
+
+#: ../smartear/gtksmartear.c:113
+msgid "The GTK+ (Pidgin) component of the SmartEar plugin suite"
+msgstr "Die Pidgin GTK+ - Komponente des SmartEar-Plugin-Packs"
+
+#: ../smartear/gtksmartear.c:114
+msgid "This plugin provides the Pidgin interface to the SmartEar plugin suite's functionality.  The suite allows you to specify sounds per-buddy, per-contact, or per-group for specific events."
+msgstr "Diese Plugin stellt in Pidgin eine Oberfläche für die Funktionen des SmartEar-Plugin-Paketes zur Verfügung. Das Paket erlaubt es, Klänge pro Benutzer, pro Kontakt oder pro Gruppe für ein bestimmtes Ereignis einzustellen."
+
+#: ../smartear/smartear.c:261
+msgid "Smart Ear - Hidden Core Plugin"
+msgstr "Smart Ear - Verstecktes Kern-Plugin"
+
+#: ../smartear/smartear.c:262 ../smartear/smartear.c:263
+msgid "The Core component of the Smart Ear plugins"
+msgstr "Die Kern-Komponente des Smart Ear Plugins"
+
+#: ../snpp/snpp.c:353
+msgid "Couldn't connect to SNPP server"
+msgstr "Konnte nicht mit dem SNPP-Server verbinden"
+
+#: ../snpp/snpp.c:594
+msgid "SNPP"
+msgstr "SNPP"
+
+#: ../snpp/snpp.c:595
+msgid "SNPP Plugin"
+msgstr "SNPP-Plugin"
+
+#: ../snpp/snpp.c:597
+msgid "Allows libpurple to send messages over the Simple Network Paging Protocol (SNPP)."
+msgstr "Erlaubt es libpurple, Nachrichten über Simple Network Paging Protocol (SNPP) zu versenden."
+
+#: ../splitter/splitter.c:522
+msgid "Message Splitter"
+msgstr "Nachrichten-Teiler"
+
+#: ../splitter/splitter.c:523
+msgid "Splits a large outgoing message into smaller messages of a specified size."
+msgstr "Teilt große ausgehende Nachrichten in kleinere Nachrichten mit einer festgelegten Größe auf."
+
+#: ../sslinfo/sslinfo.c:67
+#, c-format
+msgid "<b>Name:</b> %s<br>"
+msgstr "<b>Name:</b> %s<br>"
+
+#: ../sslinfo/sslinfo.c:74
+#, c-format
+msgid "<b>Version:</b> %s<br>"
+msgstr "<b>Version:</b> %s<br>"
+
+#: ../sslinfo/sslinfo.c:81
+#, c-format
+msgid "<b>Author:</b> %s<br>"
+msgstr "<b>Autor:</b> %s<br>"
+
+#: ../sslinfo/sslinfo.c:86 ../sslinfo/sslinfo.c:142
+msgid "SSL Info"
+msgstr "SSL-Info"
+
+#: ../sslinfo/sslinfo.c:97
+msgid "Get SSL info"
+msgstr "Zeige SSL-informationen"
+
+#: ../sslinfo/sslinfo.c:143
+msgid "Displays info about your currently loaded SSL plugin"
+msgstr "Zeigt Infos über das aktuell geladene SSL-Plugin an"
+
+#: ../sslinfo/sslinfo.c:144
+msgid "Displays info about your currently loaded SSL plugin."
+msgstr "Zeigt Infos über das aktuell geladene SSL-Plugin an."
+
+#: ../stocker/stocker.c:403
+msgid "Stocker"
+msgstr "Börsenticker"
+
+#: ../stocker/stocker.c:404
+msgid "A stock ticker"
+msgstr "Ein Börsenticker"
+
+#: ../stocker/stocker.c:406
+msgid "Adds a stock ticker similar to the one in the Windows AIM client to the bottom of the buddy list."
+msgstr "Fügt einen Börsenticker ähnlich dem in den Windows-AIM-Client unten in der Buddy-Liste hinzu."
+
+#. *********************************
+#. * symbols frame
+#. ********************************
+#: ../stocker/stocker_prefs.c:240
+msgid "Symbols"
+msgstr "Symbole"
+
+#: ../stocker/stocker_prefs.c:252
+msgid "Symbol:"
+msgstr "Symbol:"
+
+#. *********************************
+#. * options frame
+#. ********************************
+#: ../stocker/stocker_prefs.c:314
+msgid "Options"
+msgstr "Optionen"
+
+#: ../stress/stress.c:174
+msgid "Done"
+msgstr "Fertig"
+
+#: ../stress/stress.c:421
+msgid "Start"
+msgstr "Start"
+
+#: ../stress/stress.c:476
+msgid "Stress"
+msgstr "Stress"
+
+#: ../stress/stress.c:477
+msgid "A PRPL to stress libpurple"
+msgstr "Ein PRPL um libpurple zu belasten"
+
+#: ../stress/stress.c:480
+msgid "Buddies to stress with"
+msgstr "Buddys belasten mit"
+
+#: ../stress/stress.c:481
+msgid "Event interval, in milliseconds"
+msgstr "Event-Intervall in Millisekunden"
+
+#: ../stress/stress.c:482
+msgid "Max events per buddy"
+msgstr "Maximale Anzahl an Ereignissen pro Buddy"
+
+#: ../stress/stress.c:483
+msgid "Trigger signoff/signoff"
+msgstr "Anmelden/abmelden triggern"
+
+#: ../stress/stress.c:484
+msgid "Trigger idle/unidle"
+msgstr "Untätig/nicht untätig triggern"
+
+#: ../stress/stress.c:485
+msgid "Trigger away/back"
+msgstr "Abwesend/zurück triggern"
+
+#: ../stress/stress.c:486
+msgid "Trigger typing/stopped typing"
+msgstr "Schreiben/schreiben beendet triggern"
+
+#: ../stress/stress.c:487
+msgid "Send messages"
+msgstr "Nachrichten senden"
+
+#: ../stress/stress.c:488
+msgid "Minimum message length"
+msgstr "Minimale Nachrichten-Länge"
+
+#: ../stress/stress.c:489
+msgid "Maxium message length"
+msgstr "Maximale Nachrichten-Länge"
+
+#: ../switchspell/switchspell.c:154
+msgid "Spe_ll Check"
+msgstr "_Rechtschreibprüfung"
+
+#: ../switchspell/switchspell.c:352
+msgid "Switch Spell"
+msgstr "Sprache umschalten"
+
+#: ../switchspell/switchspell.c:353 ../switchspell/switchspell.c:354
+msgid "Switch Spell Checker Language"
+msgstr "Sprache der Rechtschreibprüfung ändern"
+
+#: ../talkfilters/talkfilters.c:172
+msgid "_Talkfilters"
+msgstr "_Unterhaltungsfilter"
+
+#: ../talkfilters/talkfilters.c:185 ../talkfilters/talkfilters.c:345
+msgid "(None)"
+msgstr "(Keine)"
+
+#: ../talkfilters/talkfilters.c:339
+msgid "Talk Filters"
+msgstr "Unterhaltungsfilter"
+
+#: ../talkfilters/talkfilters.c:342
+msgid "Active filter:"
+msgstr "Aktive Filter:"
+
+#: ../talkfilters/talkfilters.c:403
+msgid "GNU Talk Filters"
+msgstr "GNU Unterhaltungsfilter"
+
+#: ../talkfilters/talkfilters.c:405
+msgid "Translates text in outgoing messages into humorous dialects."
+msgstr "Übersetzt Text in gesendeten Nachrichten in lustige Dialekte."
+
+#: ../talkfilters/talkfilters.c:407
+msgid "The GNU Talk Filters are filter programs that convert ordinary English text into text that mimics a stereotyped or otherwise humorous dialect. These filters have been in the public domain for many years, and have been made available as a single integrated package. The filters include austro, b1ff, brooklyn, chef, cockney, drawl, dubya, fudd, funetak, jethro, jive, kraut, pansy, pirate, postmodern, redneck, valspeak, and warez."
+msgstr "Die GNU Unterhaltungsfilter sind Filter-Programme, die gewöhnlichen Text in Text, der einen klischeehaften oder anderweitig lustigen Dialekt nachahmt, umwandeln. Diese Filter sind seit vielen Jahrenin der Public-Domain und wurden als ein integriertes Paket zur Verfügung gestellt. Die Filter sind austro, b1ff, brooklyn, chef, cockney, drawl, dubya, fudd, funetak, jethro, jive, kraut, pansy, pirate, postmodern, redneck, valspeak, and warez."
+
+#: ../timelog/log-widget.c:226
+#, c-format
+msgid "Conversation in %s on %s"
+msgstr "Unterhaltung in %s auf %s"
+
+#: ../timelog/log-widget.c:228
+#, c-format
+msgid "Conversation with %s on %s"
+msgstr "Unterhaltung mit %s auf %s"
+
+#. No logs were found.
+#: ../timelog/log-widget.c:290
+msgid "No logs were found"
+msgstr "Es wurden keine Mitschnitte gefunden"
+
+#: ../timelog/range-widget.c:231
+msgid "Start Time"
+msgstr "Startzeitpunkt"
+
+#: ../timelog/range-widget.c:235
+msgid "End Time"
+msgstr "Endzeitpunkt"
+
+#: ../timelog/range-widget.c:335
+msgid "Select Time Range"
+msgstr "Wähle die Zeitspanne"
+
+#: ../timelog/timelog.c:128
+msgid "Select account to view logs for:"
+msgstr "Das Konto wählen, dessen Mitschnitte angezeigt werden sollen:"
+
+#: ../timelog/timelog.c:129
+msgid "Select Account"
+msgstr "Konto wählen"
+
+#: ../timelog/timelog.c:139
+msgid "Select Account/Time"
+msgstr "Konto/Zeit wählen"
+
+#. *< type
+#. *< ui_req
+#. *< flags
+#. *< deps
+#. *< priority
+#. *< id
+#. *< name
+#. *< version
+#. *  summary
+#. *  desc
+#: ../timelog/timelog.c:171 ../timelog/timelog.c:173
+msgid "Allows the viewing of Pidgin logs within a specific time range"
+msgstr "Erlaubt es, Pidgin-Mitschnitte aus einem bestimmten Zeitraum anzuschauen"
+
+#: ../timelog/timelog.h:27
+msgid "TimeLog"
+msgstr "Zeitmitschnitt"
+
+#: ../xchat-chats/xchat-chats.c:490
+msgid "XChat Chats"
+msgstr "XChat-Unterhaltungen"
+
+#: ../xchat-chats/xchat-chats.c:491
+msgid "XChat-like chats with Pidgin"
+msgstr "XChat-ähnliche Unterhaltungen mit Pidgin"
+
+#: ../xchat-chats/xchat-chats.c:492
+msgid "You can chat in Pidgin using XChat's indented view."
+msgstr "Sie können sich in Pidgin mit der eingerückten Sicht aus XChat unterhalten."
+
+#: ../xmmsremote/xmmsremote.c:368
+msgid "Please start XMMS"
+msgstr "Bitte starte XMMS"
+
+#. play
+#: ../xmmsremote/xmmsremote.c:376 ../xmmsremote/xmmsremote.c:509
+msgid "Play"
+msgstr "Abspielen"
+
+#. pause
+#: ../xmmsremote/xmmsremote.c:383 ../xmmsremote/xmmsremote.c:504
+msgid "Pause"
+msgstr "Pause"
+
+#. stop
+#: ../xmmsremote/xmmsremote.c:392 ../xmmsremote/xmmsremote.c:499
+msgid "Stop"
+msgstr "Stop"
+
+#. shuffle
+#: ../xmmsremote/xmmsremote.c:416
+msgid "Shuffle"
+msgstr "Mischen"
+
+#. playlist
+#: ../xmmsremote/xmmsremote.c:424
+msgid "Playlist"
+msgstr "Abspielliste"
+
+#. title
+#: ../xmmsremote/xmmsremote.c:434
+msgid "Display title"
+msgstr "Name des Liedes anzeigen"
+
+#: ../xmmsremote/xmmsremote.c:484 ../xmmsremote/xmmsremote.c:994
+msgid "XMMS Remote Control Options"
+msgstr "Optionen der XMMS-Fernsteuerung"
+
+#: ../xmmsremote/xmmsremote.c:527
+msgid "XMMS Volume Control"
+msgstr "XMMS-Lautstärkeregelung"
+
+#: ../xmmsremote/xmmsremote.c:623 ../xmmsremote/xmmsremote.c:1145
+msgid "XMMS Remote Control"
+msgstr "XMMS-Fernsteuerung"
+
+#: ../xmmsremote/xmmsremote.c:753
+msgid "XMMS is not running"
+msgstr "XMMS wird nicht ausgeführt"
+
+#: ../xmmsremote/xmmsremote.c:785
+msgid "unknown argument"
+msgstr "unbekanntes Argument"
+
+#: ../xmmsremote/xmmsremote.c:819
+msgid "Info"
+msgstr "Information"
+
+#: ../xmmsremote/xmmsremote.c:821
+msgid "Info Format:"
+msgstr "Format der Information:"
+
+#: ../xmmsremote/xmmsremote.c:831
+msgid "%T: Song title"
+msgstr "%T: Name des Liedes"
+
+#: ../xmmsremote/xmmsremote.c:834
+#, c-format
+msgid "%C: Number of channels"
+msgstr "%C: Anzahl der Kanäle"
+
+#: ../xmmsremote/xmmsremote.c:841
+msgid "%P: Current song playlist number"
+msgstr "%P: Nummer des aktuellen Liedes in der Abspielliste"
+
+#: ../xmmsremote/xmmsremote.c:844
+msgid "%L: Total songs in the playlist"
+msgstr "%L: Anzahl der Lieder in der Abspielliste"
+
+#: ../xmmsremote/xmmsremote.c:851
+msgid "%t: Total time"
+msgstr "%t: Gesamtzeit"
+
+#: ../xmmsremote/xmmsremote.c:854
+#, c-format
+msgid "%e: Elapsed time"
+msgstr "%e: vergangene Zeit"
+
+#: ../xmmsremote/xmmsremote.c:861
+msgid "%r: Remaining time"
+msgstr "%r: verbleibende Zeit"
+
+#: ../xmmsremote/xmmsremote.c:864
+msgid "%V: Current volume"
+msgstr "%V: aktuelle Lautstärke"
+
+#: ../xmmsremote/xmmsremote.c:871
+#, c-format
+msgid "%f: Frequency in Hz"
+msgstr "%f: Frequenz in Hz"
+
+#: ../xmmsremote/xmmsremote.c:874
+#, c-format
+msgid "%F: Frequency in kHz"
+msgstr "%F: Frequenz in kHz"
+
+#: ../xmmsremote/xmmsremote.c:881
+msgid "%b: Bitrate in bps"
+msgstr "%b: Bitrate in bps"
+
+#: ../xmmsremote/xmmsremote.c:884
+msgid "%B: Bitrate in kBps"
+msgstr "%B: Bitrate in kBps"
+
+#: ../xmmsremote/xmmsremote.c:887
+msgid "Appearance"
+msgstr "Erscheinungsbild"
+
+#: ../xmmsremote/xmmsremote.c:889
+msgid "Show playlist in the control menu"
+msgstr "Zeige die Abspielliste im Steuerungsmenü an"
+
+#: ../xmmsremote/xmmsremote.c:895
+msgid "Show controls in buddy list"
+msgstr "Steuerungselemente in der Buddy-Liste anzeigen"
+
+#: ../xmmsremote/xmmsremote.c:901
+msgid "Show controls in conversation windows"
+msgstr "Steuerungselemente in Unterhaltungsfenstern anzeigen"
+
+#: ../xmmsremote/xmmsremote.c:907
+msgid "Show extended controls (Conversation windows only)"
+msgstr "Erweiterte Steuerungselemente anzeigen (nur Unterhaltungsfenster)"
+
+#: ../xmmsremote/xmmsremote.c:913
+msgid "Show volume control (Conversation windows only)"
+msgstr "Zeige den Lautstärkeregler (nur für Unterhaltungsfenster)"
+
+#: ../xmmsremote/xmmsremote.c:919
+msgid "Advanced"
+msgstr "Erweitert"
+
+#: ../xmmsremote/xmmsremote.c:921
+msgid "XMMS instance to control"
+msgstr "XMMS-Prozess, der gesteuert werden soll"
+
+#. XXX: Translators: leave "xmms" and the argument names untranslated
+#: ../xmmsremote/xmmsremote.c:1017
+msgid ""
+"<pre>xmms &lt;[play][pause][stop][next][prev][repeat][shuffle][show][hide][info]&gt;\n"
+"play     Starts playback\n"
+"pause    Pauses playback\n"
+"stop     Stops playback\n"
+"next     Goes to the next song in the playlist\n"
+"prev     Goes to the previous song in the playlist\n"
+"repeat   Toggles repeat\n"
+"shuffle  Toggles shuffling\n"
+"show     Show the XMMS window\n"
+"hide     Hide the XMMS window\n"
+"info     Displays currently playing song in the conversation\n"
+"</pre>"
+msgstr ""
+"<pre>xmms &lt;[play][pause][stop][next][prev][repeat][shuffle][show][hide][info]&gt;\n"
+"play     Startet das Abspielen\n"
+"pause    Pausiert das Abspielen\n"
+"stop     Stoppt das Abspielen\n"
+"next     Springt zum nächsten Lied in der Abspielliste\n"
+"prev     Springt zum vorherigen Lied in der Abspielliste\n"
+"repeat   Ändert die Wiederholungsart\n"
+"shuffle  Ändert die Zufallswiedergabe\n"
+"show     Zeigt das XMMS-Fenster\n"
+"hide     Versteckt das XMMS-Fenster\n"
+"info     Zeigt das aktuell laufende Lied in der Unterhaltung\n"
+"</pre>"
+
+#: ../xmmsremote/xmmsremote.c:1146
+msgid "Control XMMS from Pidgin conversations"
+msgstr "Steuere XMMS aus Pidgin-Unterhaltung heraus"
+
+#: ../xmmsremote/xmmsremote.c:1147
+msgid "A small plugin that adds a menu or buttons to the menu bars of Pidgin conversation windows so that you can control XMMS from within Pidgin."
+msgstr "Ein kleines Plugin, das ein Menü oder einen Button zur Menüleiste von Pidgin-Unterhaltungsfenstern hinzufügt, so dass sich XMMS aus Pidgin heraus steuern lässt."
+
+#: ../xmmsremote/xmmsremote.c:1155
+msgid "/me is listening to %T"
+msgstr "/me hört gerade %T"
+
+#. Register protocol preferences
+#: ../xmppprio/xmppprio.c:121
+msgid "Available Priority"
+msgstr "Verfügbarkeits-Priorität"
+
+#: ../xmppprio/xmppprio.c:125
+msgid "Away Priority"
+msgstr "Abwesenheits-Priorität"
+
+#: ../xmppprio/xmppprio.c:228
+msgid "XMPP Priority"
+msgstr "XMPP-Priorität"
+
+#: ../xmppprio/xmppprio.c:229
+msgid "Adjust the priorities of XMPP statuses"
+msgstr "Passt die XMPP-Status-Prioritäten an"
+
+#: ../xmppprio/xmppprio.c:230
+msgid "Adds account options that allow users to specify the priorities used for available and away priorities for XMPP accounts."
+msgstr "Fügt Konto-Optionen hinzu, die es dem Benutzer erlauben, die Prioritäten, die für verfügbar und abwesend für XMPP-Konten benutzt werden, zu setzen."
