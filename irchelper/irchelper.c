@@ -708,8 +708,6 @@ static void signed_on_cb(PurpleConnection *connection)
 				return;
 			}
 
-			g_strfreev(userparts);
-
 
 			if (state & IRC_NETWORK_TYPE_THUNDERCITY)
 				nickserv_msg_identify("AUTH", connection->proto_data, connection, nickpassword);
@@ -722,6 +720,8 @@ static void signed_on_cb(PurpleConnection *connection)
 			}
 			else
 				nickserv_identify(connection->proto_data, connection, nickpassword);
+
+			g_strfreev(userparts);
 		}
 	}
 
