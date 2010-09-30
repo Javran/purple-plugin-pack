@@ -14,13 +14,13 @@
 
 ;--------------------------------
 ;General
-  Name "Pidgin Guifications ${GUIFICATIONS_VERSION}"
+  Name "Pidgin Guifications ${PLUGINPACK_VERSION}"
 
   ;Do A CRC Check
   CRCCheck On
 
   ;Output File Name
-  OutFile "pidgin-guifications-${GUIFICATIONS_VERSION}.exe"
+  OutFile "purple-plugin-pack-${PLUGINPACK_VERSION}.exe"
 
   ;The Default Installation Directory
   InstallDir "$PROGRAMFILES\pidgin"
@@ -33,14 +33,14 @@
 ;Reserve files used in .onInit for faster start-up
 !insertmacro MUI_RESERVEFILE_LANGDLL
 
-  !define GUIFICATIONS_UNINST_EXE     "pidgin-guifications-uninst.exe"
-  !define GUIFICATIONS_DLL            "guifications.dll"
-  !define GUIFICATIONS_UNINSTALL_LNK  "Guifications Uninstall.lnk"
+  !define PLUGINPACK_UNINST_EXE     "purple-plugin-pack-uninst.exe"
+  !define PLUGINPACK_DLL            "plugin_pack.dll"
+  !define PLUGINPACK_UNINSTALL_LNK  "Guifications Uninstall.lnk"
 
 ;--------------------------------
 ; Registry keys:
-  !define GUIFICATIONS_REG_KEY        "SOFTWARE\pidgin-guifications"
-  !define GUIFICATIONS_UNINSTALL_KEY  "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\pidgin-guifications"
+  !define PLUGINPACK_REG_KEY        "SOFTWARE\purple-plugin-pack"
+  !define PLUGINPACK_UNINSTALL_KEY  "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\purple-plugin-pack"
 
 ;-------------------------------
 ; Pidgin Plugin installer helper stuff
@@ -53,11 +53,11 @@
   !define MUI_UNICON .\nsis\install.ico
   !define MUI_HEADERIMAGE
   !define MUI_HEADERIMAGE_BITMAP "nsis\header.bmp"
-  !define MUI_CUSTOMFUNCTION_GUIINIT gf_checkPidginVersion
+  !define MUI_CUSTOMFUNCTION_GUIINIT ppp_checkPidginVersion
   !define MUI_ABORTWARNING
 
   !define MUI_LANGDLL_REGISTRY_ROOT "HKCU"
-  !define MUI_LANGDLL_REGISTRY_KEY ${GUIFICATIONS_REG_KEY}
+  !define MUI_LANGDLL_REGISTRY_KEY ${PLUGINPACK_REG_KEY}
   !define MUI_LANGDLL_REGISTRY_VALUENAME "Installer Language"
 
 ;--------------------------------
@@ -108,15 +108,15 @@ Section -SecUninstallOldPlugin
   StrCmp $R0 "HKCU" rights_hkcu done
 
   rights_hkcu:
-    ReadRegStr $R1 HKCU "${GUIFICATIONS_REG_KEY}" ""
-    ReadRegStr $R2 HKCU "${GUIFICATIONS_REG_KEY}" "Version"
-    ReadRegStr $R3 HKCU "${GUIFICATIONS_UNINSTALL_KEY}" "UninstallString"
+    ReadRegStr $R1 HKCU "${PLUGINPACK_REG_KEY}" ""
+    ReadRegStr $R2 HKCU "${PLUGINPACK_REG_KEY}" "Version"
+    ReadRegStr $R3 HKCU "${PLUGINPACK_UNINSTALL_KEY}" "UninstallString"
     Goto try_uninstall
 
   rights_hklm:
-    ReadRegStr $R1 HKLM "${GUIFICATIONS_REG_KEY}" ""
-    ReadRegStr $R2 HKLM "${GUIFICATIONS_REG_KEY}" "Version"
-    ReadRegStr $R3 HKLM "${GUIFICATIONS_UNINSTALL_KEY}" "UninstallString"
+    ReadRegStr $R1 HKLM "${PLUGINPACK_REG_KEY}" ""
+    ReadRegStr $R2 HKLM "${PLUGINPACK_REG_KEY}" "Version"
+    ReadRegStr $R3 HKLM "${PLUGINPACK_UNINSTALL_KEY}" "UninstallString"
 
   ; If previous version exists .. remove
   try_uninstall:
@@ -127,39 +127,39 @@ Section -SecUninstallOldPlugin
           SetOverwrite on
           ; Need to copy uninstaller outside of the install dir
           ClearErrors
-          CopyFiles /SILENT $R3 "$TEMP\${GUIFICATIONS_UNINST_EXE}"
+          CopyFiles /SILENT $R3 "$TEMP\${PLUGINPACK_UNINST_EXE}"
           SetOverwrite off
           IfErrors uninstall_problem
             ; Ready to uninstall..
             ClearErrors
-            ExecWait '"$TEMP\${GUIFICATIONS_UNINST_EXE}" /S _?=$R1'
+            ExecWait '"$TEMP\${PLUGINPACK_UNINST_EXE}" /S _?=$R1'
             IfErrors exec_error
-              Delete "$TEMP\${GUIFICATIONS_UNINST_EXE}"
+              Delete "$TEMP\${PLUGINPACK_UNINST_EXE}"
               Goto done
 
             exec_error:
-              Delete "$TEMP\${GUIFICATIONS_UNINST_EXE}"
+              Delete "$TEMP\${PLUGINPACK_UNINST_EXE}"
               Goto uninstall_problem
 
         uninstall_problem:
           ; Just delete the plugin and uninstaller, and remove Registry key
-          MessageBox MB_YESNO $(GUIFICATIONS_PROMPT_WIPEOUT) IDYES do_wipeout IDNO cancel_install
+          MessageBox MB_YESNO $(PLUGINPACK_PROMPT_WIPEOUT) IDYES do_wipeout IDNO cancel_install
         cancel_install:
           Quit
 
         do_wipeout:
           StrCmp $R0 "HKLM" del_lm_reg del_cu_reg
           del_cu_reg:
-            DeleteRegKey HKCU ${GUIFICATIONS_REG_KEY}
+            DeleteRegKey HKCU ${PLUGINPACK_REG_KEY}
             Goto uninstall_prob_cont
           del_lm_reg:
-            DeleteRegKey HKLM ${GUIFICATIONS_REG_KEY}
+            DeleteRegKey HKLM ${PLUGINPACK_REG_KEY}
 
         uninstall_prob_cont:
           ; plugin DLL
-          Delete "$R1\plugins\${GUIFICATIONS_DLL}"
+          Delete "$R1\plugins\${PLUGINPACK_DLL}"
           ; pixmaps
-          RMDir /r "$R1\pixmaps\pidgin\guifications"
+          RMDir /r "$R1\pixmaps\pidgin\plugin_pack"
           Delete "$R3"
 
   done:
@@ -167,7 +167,7 @@ SectionEnd
 
 !macro INSTALL_GMO LANG
     SetOutPath "$INSTDIR\locale\${LANG}\LC_MESSAGES"
-    File /oname=guifications.mo po\${LANG}.gmo
+    File /oname=plugin_pack.mo po\${LANG}.gmo
 !macroend
 
 Section "Install"
@@ -179,23 +179,23 @@ Section "Install"
 
   instrights_hklm:
     ; Write the version registry keys:
-    WriteRegStr HKLM ${GUIFICATIONS_REG_KEY} "" "$INSTDIR"
-    WriteRegStr HKLM ${GUIFICATIONS_REG_KEY} "Version" "${GUIFICATIONS_VERSION}"
+    WriteRegStr HKLM ${PLUGINPACK_REG_KEY} "" "$INSTDIR"
+    WriteRegStr HKLM ${PLUGINPACK_REG_KEY} "Version" "${PLUGINPACK_VERSION}"
 
     ; Write the uninstall keys for Windows
-    WriteRegStr HKLM ${GUIFICATIONS_UNINSTALL_KEY} "DisplayName" "$(GUIFICATIONS_UNINSTALL_DESC)"
-    WriteRegStr HKLM ${GUIFICATIONS_UNINSTALL_KEY} "UninstallString" "$INSTDIR\${GUIFICATIONS_UNINST_EXE}"
+    WriteRegStr HKLM ${PLUGINPACK_UNINSTALL_KEY} "DisplayName" "$(PLUGINPACK_UNINSTALL_DESC)"
+    WriteRegStr HKLM ${PLUGINPACK_UNINSTALL_KEY} "UninstallString" "$INSTDIR\${PLUGINPACK_UNINST_EXE}"
     SetShellVarContext "all"
     Goto install_files
 
   instrights_hkcu:
     ; Write the version registry keys:
-    WriteRegStr HKCU ${GUIFICATIONS_REG_KEY} "" "$INSTDIR"
-    WriteRegStr HKCU ${GUIFICATIONS_REG_KEY} "Version" "${GUIFICATIONS_VERSION}"
+    WriteRegStr HKCU ${PLUGINPACK_REG_KEY} "" "$INSTDIR"
+    WriteRegStr HKCU ${PLUGINPACK_REG_KEY} "Version" "${PLUGINPACK_VERSION}"
 
     ; Write the uninstall keys for Windows
-    WriteRegStr HKCU ${GUIFICATIONS_UNINSTALL_KEY} "DisplayName" "$(GUIFICATIONS_UNINSTALL_DESC)"
-    WriteRegStr HKCU ${GUIFICATIONS_UNINSTALL_KEY} "UninstallString" "$INSTDIR\${GUIFICATIONS_UNINST_EXE}"
+    WriteRegStr HKCU ${PLUGINPACK_UNINSTALL_KEY} "DisplayName" "$(PLUGINPACK_UNINSTALL_DESC)"
+    WriteRegStr HKCU ${PLUGINPACK_UNINSTALL_KEY} "UninstallString" "$INSTDIR\${PLUGINPACK_UNINST_EXE}"
     Goto install_files
 
   instrights_none:
@@ -205,18 +205,18 @@ Section "Install"
     SetOutPath "$INSTDIR\plugins"
     SetCompress Auto
     SetOverwrite on
-    File "src\${GUIFICATIONS_DLL}"
+    File "src\${PLUGINPACK_DLL}"
 
-    SetOutPath "$INSTDIR\pixmaps\pidgin\guifications\conf"
+    SetOutPath "$INSTDIR\pixmaps\pidgin\plugin_pack\conf"
     File "pixmaps\*.png"
 
-    SetOutPath "$INSTDIR\pixmaps\pidgin\guifications\themes\default"
+    SetOutPath "$INSTDIR\pixmaps\pidgin\plugin_pack\themes\default"
     File "themes\default\theme.xml"
     File "themes\default\background.png"
-    SetOutPath "$INSTDIR\pixmaps\pidgin\guifications\themes\mini"
+    SetOutPath "$INSTDIR\pixmaps\pidgin\plugin_pack\themes\mini"
     File "themes\mini\theme.xml"
     File "themes\mini\background.png"
-    SetOutPath "$INSTDIR\pixmaps\pidgin\guifications\themes\Penguins"
+    SetOutPath "$INSTDIR\pixmaps\pidgin\plugin_pack\themes\Penguins"
     File "themes\Penguins\theme.xml"
     File "themes\Penguins\penguin.png"
 
@@ -248,8 +248,8 @@ Section "Install"
     !insertmacro INSTALL_GMO "zh_TW"
 
     StrCmp $R0 "NONE" done
-    CreateShortCut "$SMPROGRAMS\Pidgin\${GUIFICATIONS_UNINSTALL_LNK}" "$INSTDIR\${GUIFICATIONS_UNINST_EXE}"
-    WriteUninstaller "$INSTDIR\${GUIFICATIONS_UNINST_EXE}"
+    CreateShortCut "$SMPROGRAMS\Pidgin\${PLUGINPACK_UNINSTALL_LNK}" "$INSTDIR\${PLUGINPACK_UNINST_EXE}"
+    WriteUninstaller "$INSTDIR\${PLUGINPACK_UNINST_EXE}"
     SetOverWrite off
 
   done:
@@ -262,30 +262,30 @@ Section Uninstall
   StrCmp $R0 "HKCU" try_hkcu try_hklm
 
   try_hkcu:
-    ReadRegStr $R0 HKCU "${GUIFICATIONS_REG_KEY}" ""
+    ReadRegStr $R0 HKCU "${PLUGINPACK_REG_KEY}" ""
     StrCmp $R0 $INSTDIR 0 cant_uninstall
       ; HKCU install path matches our INSTDIR.. so uninstall
-      DeleteRegKey HKCU "${GUIFICATIONS_REG_KEY}"
-      DeleteRegKey HKCU "${GUIFICATIONS_UNINSTALL_KEY}"
+      DeleteRegKey HKCU "${PLUGINPACK_REG_KEY}"
+      DeleteRegKey HKCU "${PLUGINPACK_UNINSTALL_KEY}"
       Goto cont_uninstall
 
   try_hklm:
-    ReadRegStr $R0 HKLM "${GUIFICATIONS_REG_KEY}" ""
+    ReadRegStr $R0 HKLM "${PLUGINPACK_REG_KEY}" ""
     StrCmp $R0 $INSTDIR 0 try_hkcu
       ; HKLM install path matches our INSTDIR.. so uninstall
-      DeleteRegKey HKLM "${GUIFICATIONS_REG_KEY}"
-      DeleteRegKey HKLM "${GUIFICATIONS_UNINSTALL_KEY}"
+      DeleteRegKey HKLM "${PLUGINPACK_REG_KEY}"
+      DeleteRegKey HKLM "${PLUGINPACK_UNINSTALL_KEY}"
       ; Sets start menu and desktop scope to all users..
       SetShellVarContext "all"
 
   cont_uninstall:
     ; plugin
-    Delete "$INSTDIR\plugins\${GUIFICATIONS_DLL}"
+    Delete "$INSTDIR\plugins\${PLUGINPACK_DLL}"
     ; pixmaps
-    RMDir /r "$INSTDIR\pixmaps\pidgin\guifications"
+    RMDir /r "$INSTDIR\pixmaps\pidgin\plugin_pack"
 
     ; translations
-    ; loop through locale dirs and try to delete any guifications translations
+    ; loop through locale dirs and try to delete any plugin_pack translations
     ClearErrors
     FindFirst $R1 $R2 "$INSTDIR\locale\*"
     IfErrors doneFindingTranslations
@@ -294,8 +294,8 @@ Section Uninstall
       ;Ignore "." and ".."
       StrCmp $R2 "." readNextTranslationDir
       StrCmp $R2 ".." readNextTranslationDir
-      IfFileExists "$INSTDIR\locale\$R2\LC_MESSAGES\guifications.mo" +1 readNextTranslationDir
-      Delete "$INSTDIR\locale\$R2\LC_MESSAGES\guifications.mo"
+      IfFileExists "$INSTDIR\locale\$R2\LC_MESSAGES\plugin_pack.mo" +1 readNextTranslationDir
+      Delete "$INSTDIR\locale\$R2\LC_MESSAGES\plugin_pack.mo"
       RMDir  "$INSTDIR\locale\$R2\LC_MESSAGES"
       RMDir  "$INSTDIR\locale\$R2"
       ClearErrors
@@ -308,9 +308,9 @@ Section Uninstall
     RMDir  "$INSTDIR\locale"
 
     ; uninstaller
-    Delete "$INSTDIR\${GUIFICATIONS_UNINST_EXE}"
+    Delete "$INSTDIR\${PLUGINPACK_UNINST_EXE}"
     ; uninstaller shortcut
-    Delete "$SMPROGRAMS\Pidgin\${GUIFICATIONS_UNINSTALL_LNK}"
+    Delete "$SMPROGRAMS\Pidgin\${PLUGINPACK_UNINSTALL_LNK}"
 
     ; try to delete the Pidgin directories, in case it has already uninstalled
     RMDir "$INSTDIR\plugins"
@@ -320,11 +320,11 @@ Section Uninstall
     Goto done
 
   cant_uninstall:
-    MessageBox MB_OK $(un.GUIFICATIONS_UNINSTALL_ERROR_1) IDOK
+    MessageBox MB_OK $(un.PLUGINPACK_UNINSTALL_ERROR_1) IDOK
     Quit
 
   no_rights:
-    MessageBox MB_OK $(un.GUIFICATIONS_UNINSTALL_ERROR_2) IDOK
+    MessageBox MB_OK $(un.PLUGINPACK_UNINSTALL_ERROR_2) IDOK
     Quit
 
   done:
@@ -357,15 +357,15 @@ Function .onVerifyInstDir
     Abort
 FunctionEnd
 
-; Check that the currently installed pidgin version is compatible with the version of guifications we are installing
-Function gf_checkPidginVersion
+; Check that the currently installed pidgin version is compatible with the version of Purple Plugin Pack we are installing
+Function ppp_checkPidginVersion
   Push $R0
 
   Push ${PIDGIN_VERSION}
   Call CheckPidginVersion
   Pop $R0
 
-  StrCmp $R0 ${PIDGIN_VERSION_OK} gf_checkPidginVersion_OK
+  StrCmp $R0 ${PIDGIN_VERSION_OK} ppp_checkPidginVersion_OK
   StrCmp $R0 ${PIDGIN_VERSION_INCOMPATIBLE} +1 +6
     Call GetPidginVersion
     IfErrors +3
@@ -375,7 +375,7 @@ Function gf_checkPidginVersion
     MessageBox MB_OK|MB_ICONSTOP "$(NO_PIDGIN_VERSION)"
     Quit
 
-  gf_checkPidginVersion_OK:
+  ppp_checkPidginVersion_OK:
   Pop $R0
 FunctionEnd
 
