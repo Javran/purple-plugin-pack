@@ -1,5 +1,5 @@
 /*
- * Adds a command to return the first url for a google I'm feeling lucky search
+ * stress - stresses libpurple's event system
  * Copyright (C) 2008 Gary Kramlich <grim@reaperworld.com>
  *
  * This program is free software; you can redistribute it and/or
