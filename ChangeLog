@@ -1,4 +1,4 @@
-Version 2.6.4: ??/??/??
+Version 2.7.0: ??/??/??
 	* Added German translation (see AUTHORS for credits).
 	* Fix a use-after-free in IRC Helper.
 	* IRC Helper delays autojoins until after identifying with Purple 2.7.0 or
@@ -7,6 +7,9 @@ Version 2.6.4: ??/??/??
 	  services even when using an alternate or new nick.
 	* IRC Helper now properly supports and suppresses new Freenode welcome and
 	  identified messages.
+	* Added capsnot plugin (Eion Robb)
+	* Added icon-override plugin (Eion Robb)
+	* Added translate plugin (Eion Robb)
 
 Version 2.6.3: 03/28/10
 	* Add support for Spidernet to IRC Helper plugin.
