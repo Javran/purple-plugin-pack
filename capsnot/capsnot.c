@@ -60,15 +60,16 @@ led_set(gboolean state)
 	gboolean numlock;
 	gboolean capslock;
 	gboolean scrolllock;
+#ifdef WIN32
+	BYTE keyState[256];
+	GetKeyboardState((LPBYTE) &keyState);
+#endif
 	
 	numlock = purple_prefs_get_bool("/plugins/core/eionrobb-capsnot/numlock");
 	capslock = purple_prefs_get_bool("/plugins/core/eionrobb-capsnot/capslock");
 	scrolllock = purple_prefs_get_bool("/plugins/core/eionrobb-capsnot/scrolllock");
 	
 #ifdef WIN32
-	BYTE keyState[256];
-	GetKeyboardState((LPBYTE) &keyState);
-	
 	if (numlock)
 	{
 		if ((state && !(keyState[VK_NUMLOCK] & 1)) ||
@@ -150,13 +151,14 @@ capsnot_conversation_updated(PurpleConversation *conv,
 	gboolean has_unseen;
 	gint flashcount;
 	gint flashseconds;
+	const char *im = NULL, *chat = NULL;
 	
 	if( type != PURPLE_CONV_UPDATE_UNSEEN ) {
 		return;
 	}
 	
-	const char *im = purple_prefs_get_string("/plugins/core/eionrobb-capsnot/im");
-	const char *chat = purple_prefs_get_string("/plugins/core/eionrobb-capsnot/chat");
+	im = purple_prefs_get_string("/plugins/core/eionrobb-capsnot/im");
+	chat = purple_prefs_get_string("/plugins/core/eionrobb-capsnot/chat");
 	
 	if (im && purple_conversation_get_type(conv) == PURPLE_CONV_TYPE_IM)
 	{
@@ -337,6 +339,10 @@ static PurplePluginInfo info = {
     NULL,
     NULL,
     &prefs_info,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
     NULL
 };
 

@@ -150,7 +150,7 @@ static PurplePluginInfo info =
                                                           /* author         */
   N_("Casey Ho <casey at hkn-berkeley-edu>"
      "\n\t\t\taim:caseyho"),
-  N_("http://autoprofile.sourceforge.net/"),              /* homepage       */
+  PP_WEBSITE,                                             /* homepage       */
   plugin_load,                                            /* load           */
   plugin_unload,                                          /* unload         */
   NULL,                                                   /* destroy        */
@@ -158,7 +158,11 @@ static PurplePluginInfo info =
   &ui_info,                                               /* ui_info        */
   NULL,                                                   /* extra_info     */
   NULL,                                                   /* prefs_info     */
-  actions                                                 /* actions        */
+  actions,                                                /* actions        */
+  NULL,
+  NULL,
+  NULL,
+  NULL
 };
 
 /*--------------------------------------------------------------------------

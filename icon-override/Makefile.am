@@ -11,7 +11,7 @@ if HAVE_PIDGIN
 icon_override_LTLIBRARIES = icon_override.la
 
 icon_override_la_SOURCES = \
-	icon-override.c
+	icon_override.c
 
 icon_override_la_LIBADD = \
 	$(PIDGIN_LIBS) \

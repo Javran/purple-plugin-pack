@@ -229,7 +229,13 @@ plugin_unload(PurplePlugin *plugin) {
 }
 
 static PurplePluginUiInfo prefs_info = {
-	init_pref_frame
+	init_pref_frame,
+	0,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
 
 static PurplePluginInfo info =
@@ -258,6 +264,10 @@ static PurplePluginInfo info =
 	NULL,
 	NULL,
 	&prefs_info,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
 	NULL
 };
 

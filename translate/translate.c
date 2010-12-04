@@ -1,5 +1,5 @@
 /*
- * libpurple-translate
+ * libpurple-translate - Autotranslate messages
  * Copyright (C) 2010  Eion Robb
  *
  * This program is free software; you can redistribute it and/or
@@ -18,17 +18,22 @@
  *
  */
  
-#define PURPLE_PLUGINS
+#include "../common/pp_internal.h"
 
-#define VERSION "1.1"
-#define BING_APPID "0FFF5300CD157A2E748DFCCF6D67F8028E5B578D"
-
-#include <glib.h>
+#include <stdio.h>
 #include <string.h>
 
-#include "util.h"
-#include "plugin.h"
-#include "debug.h"
+#include <util.h>
+#include <plugin.h>
+#include <debug.h>
+
+#define DEST_LANG_SETTING "eionrobb-translate-lang"
+
+#define GOOGLE_TRANSLATE_URL "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&langpair=%s%%7C%s&q=%s"
+
+#define BING_APPID "0FFF5300CD157A2E748DFCCF6D67F8028E5B578D"
+#define BING_DETECT_URL "http://api.microsofttranslator.com/V2/Ajax.svc/Detect?appId=" BING_APPID "&text=%%22%s%%22"
+#define BING_TRANSLATE_URL "http://api.microsofttranslator.com/V2/Ajax.svc/Translate?appId=" BING_APPID "&text=%%22%s%%22&from=%s&to=%s"
 
 /** This is the list of languages we support, populated in plugin_init */
 static GList *supported_languages = NULL;
@@ -146,8 +151,7 @@ google_translate(const gchar *plain_phrase, const gchar *from_lang, const gchar 
 	if (!from_lang || g_str_equal(from_lang, "auto"))
 		from_lang = "";
 	
-	url = g_strdup_printf("http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&langpair=%s%%7C%s&q=%s",
-							from_lang, to_lang, encoded_phrase);
+	url = g_strdup_printf(GOOGLE_TRANSLATE_URL, from_lang, to_lang, encoded_phrase);
 	
 	store = g_new0(struct _TranslateStore, 1);
 	store->original_phrase = g_strdup(plain_phrase);
@@ -214,8 +218,7 @@ bing_translate_autodetect_cb(PurpleUtilFetchUrlData *url_data, gpointer user_dat
 		
 		// Same as bing_translate() but we've already made the _TranslateStore
 		encoded_phrase = g_strescape(purple_url_encode(store->original_phrase), NULL);
-		url = g_strdup_printf("http://api.microsofttranslator.com/V2/Ajax.svc/Translate?appId=" BING_APPID "&text=%%22%s%%22&from=%s&to=%s",
-						encoded_phrase, from_lang, to_lang);
+		url = g_strdup_printf(BING_TRANSLATE_URL, encoded_phrase, from_lang, to_lang);
 		purple_debug_info("translate", "Fetching %s\n", url);
 		
 		purple_util_fetch_url_request(url, TRUE, "libpurple", FALSE, NULL, FALSE, bing_translate_cb, store);
@@ -243,13 +246,11 @@ bing_translate(const gchar *plain_phrase, const gchar *from_lang, const gchar *t
 	
 	if (!from_lang || !(*from_lang) || g_str_equal(from_lang, "auto"))
 	{
-		url = g_strdup_printf("http://api.microsofttranslator.com/V2/Ajax.svc/Detect?appId=" BING_APPID "&text=%%22%s%%22",
-						encoded_phrase);
+		url = g_strdup_printf(BING_DETECT_URL, encoded_phrase);
 		store->detected_language = g_strdup(to_lang);
 		urlcallback = bing_translate_autodetect_cb;
 	} else {
-		url = g_strdup_printf("http://api.microsofttranslator.com/V2/Ajax.svc/Translate?appId=" BING_APPID "&text=%%22%s%%22&from=%s&to=%s",
-						encoded_phrase, from_lang, to_lang);
+		url = g_strdup_printf(BING_TRANSLATE_URL, encoded_phrase, from_lang, to_lang);
 		urlcallback = bing_translate_cb;
 	}
 	
@@ -281,8 +282,8 @@ translate_receiving_message_cb(const gchar *original_phrase, const gchar *transl
 	if (detected_language)
 	{
 		buddy = purple_find_buddy(convmsg->account, convmsg->sender);
-		stored_lang = purple_blist_node_get_string((PurpleBlistNode *)buddy, "eionrobb-translate-lang");
-		purple_blist_node_set_string((PurpleBlistNode *)buddy, "eionrobb-translate-lang", detected_language);
+		stored_lang = purple_blist_node_get_string((PurpleBlistNode *)buddy, DEST_LANG_SETTING);
+		purple_blist_node_set_string((PurpleBlistNode *)buddy, DEST_LANG_SETTING, detected_language);
 		
 		language_name = get_language_name(detected_language);
 		
@@ -319,7 +320,7 @@ translate_receiving_im_msg(PurpleAccount *account, char **sender,
 	service_to_use = purple_prefs_get_string("/plugins/core/eionrobb-libpurple-translate/service");
 	to_lang = purple_prefs_get_string("/plugins/core/eionrobb-libpurple-translate/locale");
 	if (buddy)
-		stored_lang = purple_blist_node_get_string((PurpleBlistNode *)buddy, "eionrobb-translate-lang");
+		stored_lang = purple_blist_node_get_string((PurpleBlistNode *)buddy, DEST_LANG_SETTING);
 	if (!stored_lang)
 		stored_lang = "auto";
 	if (!buddy || !service_to_use || g_str_equal(stored_lang, "none") || g_str_equal(stored_lang, to_lang))
@@ -371,8 +372,8 @@ translate_receiving_chat_msg_cb(const gchar *original_phrase, const gchar *trans
 	if (detected_language)
 	{
 		chat = purple_blist_find_chat(convmsg->account, convmsg->conv->name);
-		stored_lang = purple_blist_node_get_string((PurpleBlistNode *)chat, "eionrobb-translate-lang");
-		purple_blist_node_set_string((PurpleBlistNode *)chat, "eionrobb-translate-lang", detected_language);
+		stored_lang = purple_blist_node_get_string((PurpleBlistNode *)chat, DEST_LANG_SETTING);
+		purple_blist_node_set_string((PurpleBlistNode *)chat, DEST_LANG_SETTING, detected_language);
 		
 		language_name = get_language_name(detected_language);
 		
@@ -409,7 +410,7 @@ translate_receiving_chat_msg(PurpleAccount *account, char **sender,
 	service_to_use = purple_prefs_get_string("/plugins/core/eionrobb-libpurple-translate/service");
 	to_lang = purple_prefs_get_string("/plugins/core/eionrobb-libpurple-translate/locale");
 	if (chat)
-		stored_lang = purple_blist_node_get_string((PurpleBlistNode *)chat, "eionrobb-translate-lang");
+		stored_lang = purple_blist_node_get_string((PurpleBlistNode *)chat, DEST_LANG_SETTING);
 	if (!stored_lang)
 		stored_lang = "auto";
 	if (!chat || !service_to_use || g_str_equal(stored_lang, "none") || g_str_equal(stored_lang, to_lang))
@@ -491,7 +492,7 @@ translate_sending_im_msg(PurpleAccount *account, const char *receiver, char **me
 	service_to_use = purple_prefs_get_string("/plugins/core/eionrobb-libpurple-translate/service");
 	buddy = purple_find_buddy(account, receiver);
 	if (buddy)
-		to_lang = purple_blist_node_get_string((PurpleBlistNode *)buddy, "eionrobb-translate-lang");
+		to_lang = purple_blist_node_get_string((PurpleBlistNode *)buddy, DEST_LANG_SETTING);
 	
 	if (!buddy || !service_to_use || !to_lang || g_str_equal(from_lang, to_lang) || g_str_equal(to_lang, "auto"))
 	{
@@ -564,7 +565,7 @@ translate_sending_chat_msg(PurpleAccount *account, char **message, int chat_id)
 	if (conv)
 		chat = purple_blist_find_chat(account, conv->name);
 	if (chat)
-		to_lang = purple_blist_node_get_string((PurpleBlistNode *)chat, "eionrobb-translate-lang");
+		to_lang = purple_blist_node_get_string((PurpleBlistNode *)chat, DEST_LANG_SETTING);
 	
 	if (!chat || !service_to_use || !to_lang || g_str_equal(from_lang, to_lang) || g_str_equal(to_lang, "auto"))
 	{
@@ -603,9 +604,9 @@ translate_action_blist_cb(PurpleBlistNode *node, PurpleKeyValuePair *pair)
 	PurpleBuddy *buddy;
 
 	if (pair == NULL)
-		purple_blist_node_set_string(node, "eionrobb-translate-lang", NULL);
+		purple_blist_node_set_string(node, DEST_LANG_SETTING, NULL);
 	else
-		purple_blist_node_set_string(node, "eionrobb-translate-lang", pair->key);
+		purple_blist_node_set_string(node, DEST_LANG_SETTING, pair->key);
 	
 	switch(node->type)
 	{
@@ -650,11 +651,11 @@ translate_extended_menu(PurpleBlistNode *node, GList **menu, PurpleCallback call
 	if (!node)
 		return;
 	
-	stored_lang = purple_blist_node_get_string(node, "eionrobb-translate-lang");
+	stored_lang = purple_blist_node_get_string(node, DEST_LANG_SETTING);
 	if (!stored_lang)
 		stored_lang = "auto";
 
-	action = purple_menu_action_new("Auto", callback, NULL, NULL);
+	action = purple_menu_action_new(_("Auto"), callback, NULL, NULL);
 	menu_children = g_list_append(menu_children, action);
 	
 	// Spacer
@@ -668,7 +669,7 @@ translate_extended_menu(PurpleBlistNode *node, GList **menu, PurpleCallback call
 	}
 	
 	// Create the menu for the languages
-	action = purple_menu_action_new("Translate to...", NULL, NULL, menu_children);
+	action = purple_menu_action_new(_("Translate to..."), NULL, NULL, menu_children);
 	*menu = g_list_append(*menu, action);
 }
 
@@ -717,13 +718,13 @@ translate_conversation_created(PurpleConversation *conv)
 	
 	if (node != NULL)
 	{
-		language_key = purple_blist_node_get_string(node, "eionrobb-translate-lang");
+		language_key = purple_blist_node_get_string(node, DEST_LANG_SETTING);
 		
 		if (language_key != NULL)
 		{
 			language_name = get_language_name(language_key);
 		
-			message = g_strdup_printf("Now translating to %s", language_name);
+			message = g_strdup_printf(_("Now translating to %s"), language_name);
 			purple_conversation_write(conv, NULL, message, PURPLE_MESSAGE_SYSTEM | PURPLE_MESSAGE_NO_LOG, time(NULL));
 			g_free(message);
 		}
@@ -756,7 +757,7 @@ plugin_config_frame(PurplePlugin *plugin)
 	
 	ppref = purple_plugin_pref_new_with_name_and_label(
 		"/plugins/core/eionrobb-libpurple-translate/locale",
-		"My language:");
+		_("My language:"));
 	purple_plugin_pref_set_type(ppref, PURPLE_PLUGIN_PREF_CHOICE);
 	
 	for(l = supported_languages; l; l = l->next)
@@ -770,11 +771,11 @@ plugin_config_frame(PurplePlugin *plugin)
 	
 	ppref = purple_plugin_pref_new_with_name_and_label(
 		"/plugins/core/eionrobb-libpurple-translate/service",
-		"Use service:");
+		_("Use service:"));
 	purple_plugin_pref_set_type(ppref, PURPLE_PLUGIN_PREF_CHOICE);
 	
-	purple_plugin_pref_add_choice(ppref, "Google Translate", "google");
-	purple_plugin_pref_add_choice(ppref, "Microsoft Translator", "bing");
+	purple_plugin_pref_add_choice(ppref, _("Google Translate"), "google");
+	purple_plugin_pref_add_choice(ppref, _("Microsoft Translator"), "bing");
 	
 	purple_plugin_pref_frame_add(frame, ppref);
 	
@@ -784,8 +785,7 @@ plugin_config_frame(PurplePlugin *plugin)
 static void
 init_plugin(PurplePlugin *plugin)
 {
-	const gchar * const * languages;
-	languages = g_get_language_names();
+	const gchar * const * languages = g_get_language_names();
 	const gchar *language;
 	guint i = 0;
 	PurpleKeyValuePair *pair;
@@ -806,65 +806,65 @@ init_plugin(PurplePlugin *plugin)
 	pair->value = g_strdup(label); \
 	supported_languages = g_list_append(supported_languages, pair);
 	
-	add_language("Afrikaans", "af");
-	add_language("Albanian", "sq");
-	add_language("Arabic", "ar");
-	add_language("Armenian", "hy");
-	add_language("Azerbaijani", "az");
-	add_language("Basque", "eu");
-	add_language("Belarusian", "be");
-	add_language("Bulgarian", "bg");
-	add_language("Catalan", "ca");
-	add_language("Chinese (Simplified)", "zh-CN");
-	add_language("Chinese (Traditional)", "zh-TW");
-	add_language("Croatian", "hr");
-	add_language("Czech", "cs");
-	add_language("Danish", "da");
-	add_language("Dutch", "nl");
-	add_language("English", "en");
-	add_language("Estonian", "et");
-	add_language("Filipino", "tl");
-	add_language("Finnish", "fi");
-	add_language("French", "fr");
-	add_language("Galician", "gl");
-	add_language("Georgian", "ka");
-	add_language("German", "de");
-	add_language("Greek", "el");
-	add_language("Haitian Creole", "ht");
-	add_language("Hebrew", "iw");
-	add_language("Hindi", "hi");
-	add_language("Hungarian", "hu");
-	add_language("Icelandic", "is");
-	add_language("Indonesian", "id");
-	add_language("Irish", "ga");
-	add_language("Italian", "it");
-	add_language("Japanese", "ja");
-	add_language("Korean", "ko");
-	add_language("Latin", "la");
-	add_language("Latvian", "lv");
-	add_language("Lithuanian", "lt");
-	add_language("Macedonian", "mk");
-	add_language("Malay", "ms");
-	add_language("Maltese", "mt");
-	add_language("Norwegian", "no");
-	add_language("Persian", "fa");
-	add_language("Polish", "pl");
-	add_language("Portuguese", "pt");
-	add_language("Romanian", "ro");
-	add_language("Russian", "ru");
-	add_language("Serbian", "sr");
-	add_language("Slovak", "sk");
-	add_language("Slovenian", "sl");
-	add_language("Spanish", "es");
-	add_language("Swahili", "sw");
-	add_language("Swedish", "sv");
-	add_language("Thai", "th");
-	add_language("Turkish", "tr");
-	add_language("Ukrainian", "uk");
-	add_language("Urdu", "ur");
-	add_language("Vietnamese", "vi");
-	add_language("Welsh", "cy");
-	add_language("Yiddish", "yi");
+	add_language(_("Afrikaans"), "af");
+	add_language(_("Albanian"), "sq");
+	add_language(_("Arabic"), "ar");
+	add_language(_("Armenian"), "hy");
+	add_language(_("Azerbaijani"), "az");
+	add_language(_("Basque"), "eu");
+	add_language(_("Belarusian"), "be");
+	add_language(_("Bulgarian"), "bg");
+	add_language(_("Catalan"), "ca");
+	add_language(_("Chinese (Simplified)"), "zh-CN");
+	add_language(_("Chinese (Traditional)"), "zh-TW");
+	add_language(_("Croatian"), "hr");
+	add_language(_("Czech"), "cs");
+	add_language(_("Danish"), "da");
+	add_language(_("Dutch"), "nl");
+	add_language(_("English"), "en");
+	add_language(_("Estonian"), "et");
+	add_language(_("Filipino"), "tl");
+	add_language(_("Finnish"), "fi");
+	add_language(_("French"), "fr");
+	add_language(_("Galician"), "gl");
+	add_language(_("Georgian"), "ka");
+	add_language(_("German"), "de");
+	add_language(_("Greek"), "el");
+	add_language(_("Haitian Creole"), "ht");
+	add_language(_("Hebrew"), "iw");
+	add_language(_("Hindi"), "hi");
+	add_language(_("Hungarian"), "hu");
+	add_language(_("Icelandic"), "is");
+	add_language(_("Indonesian"), "id");
+	add_language(_("Irish"), "ga");
+	add_language(_("Italian"), "it");
+	add_language(_("Japanese"), "ja");
+	add_language(_("Korean"), "ko");
+	add_language(_("Latin"), "la");
+	add_language(_("Latvian"), "lv");
+	add_language(_("Lithuanian"), "lt");
+	add_language(_("Macedonian"), "mk");
+	add_language(_("Malay"), "ms");
+	add_language(_("Maltese"), "mt");
+	add_language(_("Norwegian"), "no");
+	add_language(_("Persian"), "fa");
+	add_language(_("Polish"), "pl");
+	add_language(_("Portuguese"), "pt");
+	add_language(_("Romanian"), "ro");
+	add_language(_("Russian"), "ru");
+	add_language(_("Serbian"), "sr");
+	add_language(_("Slovak"), "sk");
+	add_language(_("Slovenian"), "sl");
+	add_language(_("Spanish"), "es");
+	add_language(_("Swahili"), "sw");
+	add_language(_("Swedish"), "sv");
+	add_language(_("Thai"), "th");
+	add_language(_("Turkish"), "tr");
+	add_language(_("Ukrainian"), "uk");
+	add_language(_("Urdu"), "ur");
+	add_language(_("Vietnamese"), "vi");
+	add_language(_("Welsh"), "cy");
+	add_language(_("Yiddish"), "yi");
 }
 
 static gboolean
@@ -942,13 +942,13 @@ static PurplePluginInfo info = {
     PURPLE_PRIORITY_DEFAULT,
 
     "eionrobb-libpurple-translate",
-    "Auto Translate",
-    VERSION,
+    N_("Auto Translate"),
+    PP_VERSION,
 
-    "Translate incoming/outgoing messages",
+    N_("Translate incoming/outgoing messages"),
     "",
     "Eion Robb <eionrobb@gmail.com>",
-    "http://purple-translate.googlecode.com/", /* URL */
+    PP_WEBSITE, /* URL */
 
     plugin_load,   /* load */
     plugin_unload, /* unload */
@@ -957,7 +957,13 @@ static PurplePluginInfo info = {
     NULL,
     NULL,
     &prefs_info,
-    NULL
+    NULL,
+
+	/* reserved */
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
 
 PURPLE_INIT_PLUGIN(translate, init_plugin, info);

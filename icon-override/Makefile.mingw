@@ -6,7 +6,7 @@
 
 PP_TOP :=		..
 
-PP = icon-override
+PP = icon_override
 
 include $(PP_TOP)/win_pp.mak
 
