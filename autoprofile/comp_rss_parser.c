@@ -263,7 +263,7 @@ static void url_callback (PurpleUtilFetchUrlData *url_data, gpointer data,
 		const char *text, size_t size, const gchar *error_message)
 {
   GMarkupParseContext *context;
-  gchar *filtered_text;
+  gchar *filtered_text = NULL, *convert = NULL, *next = NULL;
   GError *err = NULL;
   GList *entries; 
   struct widget *w = (struct widget *) data; 
@@ -290,8 +290,8 @@ static void url_callback (PurpleUtilFetchUrlData *url_data, gpointer data,
   // Sanity checking
   filtered_text = purple_utf8_salvage (text);
 
-  gchar *convert = purple_utf8_try_convert ("<");
-  gchar *next = g_utf8_strchr (filtered_text, 10, g_utf8_get_char (convert));
+  *convert = purple_utf8_try_convert ("<");
+  *next = g_utf8_strchr (filtered_text, 10, g_utf8_get_char (convert));
   free (convert);
 
   if (next == NULL) {
