@@ -48,10 +48,10 @@ static PurplePluginInfo info = {
 	PURPLE_PRIORITY_DEFAULT,		/* priority				*/
 
 	PLUGIN_ID,						/* plugin id			*/
-	N_("unnamed"),					/* name					*/
+	NULL,							/* name					*/
 	PP_VERSION,						/* version				*/
-	N_("summary"),					/* summary				*/
-	N_("description"),				/* description			*/
+	NULL,							/* summary				*/
+	NULL,							/* description			*/
 	PLUGIN_AUTHOR,					/* author				*/
 	PP_WEBSITE,						/* website				*/
 
@@ -75,6 +75,10 @@ init_plugin(PurplePlugin *plugin) {
 	bindtextdomain(GETTEXT_PACKAGE, PP_LOCALEDIR);
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif /* ENABLE_NLS */
+
+	info.name = _("unnamed");
+	info.summary = _("summary");
+	info.description = _("description");
 }
 
 PURPLE_INIT_PLUGIN(PLUGIN_STATIC_NAME, init_plugin, info)
