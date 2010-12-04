@@ -18,8 +18,6 @@
  *
  */
 
-#define PURPLE_PLUGINS
-
 #include "../common/pp_internal.h"
 
 #include <notify.h>
