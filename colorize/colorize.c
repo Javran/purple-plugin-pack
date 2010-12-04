@@ -234,6 +234,7 @@ static PurplePluginUiInfo prefs_info = {
 	NULL,
 	NULL,
 	NULL,
+	NULL,
 	NULL
 };
 

@@ -339,6 +339,10 @@ static PurplePluginInfo info = {
     NULL,
     NULL,
     &prefs_info,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
     NULL
 };
 
