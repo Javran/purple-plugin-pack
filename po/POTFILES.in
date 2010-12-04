@@ -24,6 +24,7 @@ bit/bit.c
 blistops/blistops.c
 buddytime/buddytime.c
 buddytime/gtkbuddytime.c
+capsnot/capsnot.c
 chronic/chronic.c
 colorize/colorize.c
 common/gtk_template.c
@@ -42,6 +43,7 @@ gRIM/gRIM.c
 groupmsg/groupmsg.c
 hideconv/hideconv.c
 highlight/highlight.c
+icon-override/icon_override.c
 ignorance/ignorance.c
 ignorance/interface.c
 ignorance/support.c
@@ -92,6 +94,7 @@ timelog/log-widget.c
 timelog/range-widget.c
 timelog/timelog.c
 timelog/timelog.h
+translate/translate.c
 xchat-chats/xchat-chats.c
 xchat-chats/xchat-chats.c
 xmmsremote/xmmsremote.c
