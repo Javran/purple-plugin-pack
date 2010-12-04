@@ -20,19 +20,14 @@
 
 #define PURPLE_PLUGINS
 
-#define VERSION "0.9"
+#include "../common/pp_internal.h"
 
-#include <glib.h>
-#include <string.h>
-#include <stdio.h>
-
-#include "notify.h"
-#include "plugin.h"
-#include "version.h"
-#include "debug.h"
-#include "cmds.h"
-#include "pluginpref.h"
-#include "prefs.h"
+#include <notify.h>
+#include <plugin.h>
+#include <debug.h>
+#include <cmds.h>
+#include <pluginpref.h>
+#include <prefs.h>
 
 #ifndef _PIDGIN_CONVERSATION_H_
 typedef enum
@@ -207,56 +202,56 @@ plugin_config_frame(PurplePlugin *plugin)
 	
 	frame = purple_plugin_pref_frame_new();
 	
-	ppref = purple_plugin_pref_new_with_label("Inform about unread...");
+	ppref = purple_plugin_pref_new_with_label(_("Inform about unread..."));
 	purple_plugin_pref_frame_add(frame, ppref);
 	
 	ppref = purple_plugin_pref_new_with_name_and_label(
 							"/plugins/core/eionrobb-capsnot/im",
-							"Instant Messages:");
+							_("Instant Messages:"));
 	purple_plugin_pref_set_type(ppref, PURPLE_PLUGIN_PREF_CHOICE);
-	purple_plugin_pref_add_choice(ppref, "Never", "never");
-	purple_plugin_pref_add_choice(ppref, "In hidden conversations", "hidden");
-	purple_plugin_pref_add_choice(ppref, "Always", "always");
+	purple_plugin_pref_add_choice(ppref, _("Never"), "never");
+	purple_plugin_pref_add_choice(ppref, _("In hidden conversations"), "hidden");
+	purple_plugin_pref_add_choice(ppref, _("Always"), "always");
 	purple_plugin_pref_frame_add(frame, ppref);
 	
 	ppref = purple_plugin_pref_new_with_name_and_label(
 							"/plugins/core/eionrobb-capsnot/chat",
-							"Chat Messages:");
+							_("Chat Messages:"));
 	purple_plugin_pref_set_type(ppref, PURPLE_PLUGIN_PREF_CHOICE);
-	purple_plugin_pref_add_choice(ppref, "Never", "never");
-	purple_plugin_pref_add_choice(ppref, "When my nick is said", "nick");
-	purple_plugin_pref_add_choice(ppref, "Always", "always");
+	purple_plugin_pref_add_choice(ppref, _("Never"), "never");
+	purple_plugin_pref_add_choice(ppref, _("When my nick is said"), "nick");
+	purple_plugin_pref_add_choice(ppref, _("Always"), "always");
 	purple_plugin_pref_frame_add(frame, ppref);
 	
 	
-	ppref = purple_plugin_pref_new_with_label("Keyboard LEDs:");
+	ppref = purple_plugin_pref_new_with_label(_("Keyboard LEDs:"));
 	purple_plugin_pref_frame_add(frame, ppref);
 	
 	ppref = purple_plugin_pref_new_with_name_and_label(
 							"/plugins/core/eionrobb-capsnot/numlock",
-							"Num Lock");
+							_("Num Lock"));
 	purple_plugin_pref_frame_add(frame, ppref);
 	ppref = purple_plugin_pref_new_with_name_and_label(
 							"/plugins/core/eionrobb-capsnot/capslock",
-							"Caps Lock");
+							_("Caps Lock"));
 	purple_plugin_pref_frame_add(frame, ppref);
 	ppref = purple_plugin_pref_new_with_name_and_label(
 							"/plugins/core/eionrobb-capsnot/scrolllock",
-							"Scroll Lock");
+							_("Scroll Lock"));
 	purple_plugin_pref_frame_add(frame, ppref);
 	
 	
-	ppref = purple_plugin_pref_new_with_label("Flash Rate:");
+	ppref = purple_plugin_pref_new_with_label(_("Flash Rate:"));
 	purple_plugin_pref_frame_add(frame, ppref);
 	
 	ppref = purple_plugin_pref_new_with_name_and_label(
 							"/plugins/core/eionrobb-capsnot/flashcount",
-							"Number of flashes");
+							_("Number of flashes"));
 	purple_plugin_pref_set_bounds(ppref, 1, 10);
 	purple_plugin_pref_frame_add(frame, ppref);
 	ppref = purple_plugin_pref_new_with_name_and_label(
 							"/plugins/core/eionrobb-capsnot/flashseconds",
-							"Duration of flashes (seconds)");
+							_("Duration of flashes (seconds)"));
 	purple_plugin_pref_set_bounds(ppref, 1, 10);
 	purple_plugin_pref_frame_add(frame, ppref);
 	
@@ -266,6 +261,11 @@ plugin_config_frame(PurplePlugin *plugin)
 static void
 init_plugin(PurplePlugin *plugin)
 {
+#ifdef ENABLE_NLS
+	bindtextdomain(GETTEXT_PACKAGE, PP_LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+#endif
+
 	purple_prefs_add_none("/plugins/core/eionrobb-capsnot");
 	
 	purple_prefs_add_string("/plugins/core/eionrobb-capsnot/im", "always");
@@ -324,13 +324,13 @@ static PurplePluginInfo info = {
     PURPLE_PRIORITY_DEFAULT,
 
     "eionrobb-capsnot",
-    "Caps-notification",
-    VERSION,
+    N_("Caps-notification"),
+    PP_VERSION,
 
-    "Led notification on keyboards",
-    "Informs for new messages with the NumLock, CapsLock or ScrollLock LEDs",
+    N_("Led notification on keyboards"),
+    N_("Informs of new messages with the NumLock, CapsLock, or ScrollLock LEDs"),
     "Eion Robb <eionrobb@gmail.com>",
-    "", /* URL */
+    PP_WEBSITE, /* URL */
 
     plugin_load,   /* load */
     plugin_unload, /* unload */
