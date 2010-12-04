@@ -72,7 +72,7 @@ show_them(gpointer data)
 static void
 irc_receiving_text(PurpleConnection *gc, const char **incoming, gpointer null)
 {
-	char **splits;
+	char **splits, *str;
 	PurpleAccount *account = NULL;
 
 	if (!incoming || !*incoming || !**incoming)   /* oh the fun .. I can do this all day! */
@@ -85,7 +85,7 @@ irc_receiving_text(PurpleConnection *gc, const char **incoming, gpointer null)
 		return;
 
 	account = purple_connection_get_account(gc);
-	char *str = g_ascii_strdown(splits[1], -1);
+	str = g_ascii_strdown(splits[1], -1);
 
 	if (strcmp(str, "kick") == 0 && splits[2] && splits[3]) {
 		char *name = splits[2];
