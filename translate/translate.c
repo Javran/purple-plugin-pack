@@ -957,7 +957,13 @@ static PurplePluginInfo info = {
     NULL,
     NULL,
     &prefs_info,
-    NULL
+    NULL,
+
+	/* reserved */
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
 
 PURPLE_INIT_PLUGIN(translate, init_plugin, info);

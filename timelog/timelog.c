@@ -172,7 +172,7 @@ static PurplePluginInfo info =
 							/**  desc	*/
 	N_("Allows the viewing of Pidgin logs within a specific time range"),
 	"Jon Oberheide <jon@oberheide.org>",		/**< author	*/
-	"http://jon.oberheide.org/projects/gaim-timelog/",
+	PP_WEBSITE,
 							/**< homepage	*/
 	load_plugin,					/**< load	*/
 	unload_plugin,					/**< unload	*/
@@ -180,7 +180,11 @@ static PurplePluginInfo info =
 	NULL,						/**< ui_info	*/
 	NULL,						/**< extra_info	*/
 	NULL,						/**< pref info	*/
-	actions
+	actions,
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
 
 static void
