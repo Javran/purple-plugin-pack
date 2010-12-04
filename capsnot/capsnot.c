@@ -157,8 +157,8 @@ capsnot_conversation_updated(PurpleConversation *conv,
 		return;
 	}
 	
-	*im = purple_prefs_get_string("/plugins/core/eionrobb-capsnot/im");
-	*chat = purple_prefs_get_string("/plugins/core/eionrobb-capsnot/chat");
+	im = purple_prefs_get_string("/plugins/core/eionrobb-capsnot/im");
+	chat = purple_prefs_get_string("/plugins/core/eionrobb-capsnot/chat");
 	
 	if (im && purple_conversation_get_type(conv) == PURPLE_CONV_TYPE_IM)
 	{
