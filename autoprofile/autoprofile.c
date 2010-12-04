@@ -139,17 +139,12 @@ static PurplePluginInfo info =
   NULL,                                                   /* dependencies   */
   PURPLE_PRIORITY_DEFAULT,                                /* priority       */
 
-  N_("gtk-kluge-autoprofile"),                            /* id             */
-  N_("AutoProfile"),                                      /* name           */
+  "gtk-kluge-autoprofile",                                /* id             */
+  NULL,                                                   /* name           */
   PP_VERSION,                                             /* version        */
-  N_("User profile and status message content generator"),/* summary        */
-                                                          /* description    */
-  N_("Allows user to place dynamic text into profiles\n"
-     "and status messages, with the text automatically\n"
-     "updated whenever content changes"),
-                                                          /* author         */
-  N_("Casey Ho <casey at hkn-berkeley-edu>"
-     "\n\t\t\taim:caseyho"),
+  NULL,                                                   /* summary        */
+  NULL,                                                   /* description    */
+  NULL,                                                   /* author         */
   PP_WEBSITE,                                             /* homepage       */
   plugin_load,                                            /* load           */
   plugin_unload,                                          /* unload         */
@@ -855,6 +850,13 @@ static void ap_init_preferences () {
  *--------------------------------------------------------------------------*/
 static void init_plugin (PurplePlugin *plugin) 
 { 
+	info.name = _("AutoProfile");
+	info.summary = _("User profile and status message content generator");
+	info.description = _("Allows user to place dynamic text into profiles\n"
+			"and status messages, with the text automatically\n"
+			"updated whenever content changes");
+	info.author = _("Casey Ho <casey at hkn-berkeley-edu>\n\t\t\taim:caseyho");
+
   ap_debug ("general", "Initializing AutoProfile");
 
   ap_init_preferences ();

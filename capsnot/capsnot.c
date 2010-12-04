@@ -258,27 +258,6 @@ plugin_config_frame(PurplePlugin *plugin)
 	return frame;
 }
 
-static void
-init_plugin(PurplePlugin *plugin)
-{
-#ifdef ENABLE_NLS
-	bindtextdomain(GETTEXT_PACKAGE, PP_LOCALEDIR);
-	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
-#endif
-
-	purple_prefs_add_none("/plugins/core/eionrobb-capsnot");
-	
-	purple_prefs_add_string("/plugins/core/eionrobb-capsnot/im", "always");
-	purple_prefs_add_string("/plugins/core/eionrobb-capsnot/chat", "nick");
-	
-	purple_prefs_add_bool("/plugins/core/eionrobb-capsnot/numlock", FALSE);
-	purple_prefs_add_bool("/plugins/core/eionrobb-capsnot/capslock", FALSE);
-	purple_prefs_add_bool("/plugins/core/eionrobb-capsnot/scrolllock", TRUE);
-	
-	purple_prefs_add_int("/plugins/core/eionrobb-capsnot/flashcount", 8);
-	purple_prefs_add_int("/plugins/core/eionrobb-capsnot/flashseconds", 2);
-}
-
 static gboolean
 plugin_load(PurplePlugin *plugin)
 {
@@ -324,11 +303,11 @@ static PurplePluginInfo info = {
     PURPLE_PRIORITY_DEFAULT,
 
     "eionrobb-capsnot",
-    N_("Caps-notification"),
+    NULL,
     PP_VERSION,
 
-    N_("Led notification on keyboards"),
-    N_("Informs of new messages with the NumLock, CapsLock, or ScrollLock LEDs"),
+    NULL,
+    NULL,
     "Eion Robb <eionrobb@gmail.com>",
     PP_WEBSITE, /* URL */
 
@@ -345,5 +324,31 @@ static PurplePluginInfo info = {
     NULL,
     NULL
 };
+
+static void
+init_plugin(PurplePlugin *plugin)
+{
+#ifdef ENABLE_NLS
+	bindtextdomain(GETTEXT_PACKAGE, PP_LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+#endif
+	
+	info.name = _("Caps-notification");
+	info.summary = _("Led notification on keyboards");
+	info.description = _("Informs of new messages with the NumLock, CapsLock, or ScrollLock LEDs");
+
+
+	purple_prefs_add_none("/plugins/core/eionrobb-capsnot");
+	
+	purple_prefs_add_string("/plugins/core/eionrobb-capsnot/im", "always");
+	purple_prefs_add_string("/plugins/core/eionrobb-capsnot/chat", "nick");
+	
+	purple_prefs_add_bool("/plugins/core/eionrobb-capsnot/numlock", FALSE);
+	purple_prefs_add_bool("/plugins/core/eionrobb-capsnot/capslock", FALSE);
+	purple_prefs_add_bool("/plugins/core/eionrobb-capsnot/scrolllock", TRUE);
+	
+	purple_prefs_add_int("/plugins/core/eionrobb-capsnot/flashcount", 8);
+	purple_prefs_add_int("/plugins/core/eionrobb-capsnot/flashseconds", 2);
+}
 
 PURPLE_INIT_PLUGIN(capsnot, init_plugin, info);

@@ -132,15 +132,6 @@ plugin_unload(PurplePlugin *plugin)
 	return TRUE;
 }
 
-static void
-plugin_init(PurplePlugin *plugin)
-{
-#ifdef ENABLE_NLS
-	bindtextdomain(GETTEXT_PACKAGE, PP_LOCALEDIR);
-	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
-#endif
-}
-
 static PurplePluginInfo info = 
 {
 	PURPLE_PLUGIN_MAGIC,
@@ -153,10 +144,10 @@ static PurplePluginInfo info =
 	PURPLE_PRIORITY_LOWEST,
 
 	"eionrobb-icon-override",
-	N_("Protocol Icon Override"),
+	NULL,
 	PP_VERSION,
-	N_("Customise protocol icons"),
-	N_("Lets you change protocol icons per-account so that you can tell the difference between, say, a personal XMPP account and one used for work"),
+	NULL,
+	NULL,
 	"Eion Robb <eionrobb@gmail.com>",
 	PP_WEBSITE, //URL
 	
@@ -174,5 +165,20 @@ static PurplePluginInfo info =
 	NULL,
 	NULL
 };
+
+static void
+plugin_init(PurplePlugin *plugin)
+{
+#ifdef ENABLE_NLS
+	bindtextdomain(GETTEXT_PACKAGE, PP_LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+#endif
+
+	info.name = _("Protocol Icon Override");
+	info.summary = _("Customise protocol icons");
+	info.description = _("Lets you change protocol icons per-account so that "
+						"you can tell the difference between, say, a personal "
+						"XMPP account and one used for work");
+}
 
 PURPLE_INIT_PLUGIN(icon_override, plugin_init, info);
