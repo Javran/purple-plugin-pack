@@ -1,19 +1,31 @@
 /*
-http://eion.robbmob.com/purple-blist-sort.png
+ * Icon Override - Override prpl icon per account
+ * Copyright (C) 2010  Eion Robb
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02111-1301, USA.
 */
 
-#define PURPLE_PLUGINS
+#include "../common/pp_internal.h"
 
-#include <glib.h>
-#include <plugin.h>
 #include <account.h>
 #include <accountopt.h>
-
-#ifndef _
-#	define _(a) a
-#endif
+#include <plugin.h>
 
 #define NEW_ICON_ID "eionrobb_new_prpl_icon"
+
 static GHashTable *original_list_icon = NULL;
 
 const char *
@@ -123,6 +135,10 @@ plugin_unload(PurplePlugin *plugin)
 static void
 plugin_init(PurplePlugin *plugin)
 {
+#ifdef ENABLE_NLS
+	bindtextdomain(GETTEXT_PACKAGE, PP_LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+#endif
 }
 
 static PurplePluginInfo info = 
@@ -137,12 +153,12 @@ static PurplePluginInfo info =
 	PURPLE_PRIORITY_LOWEST,
 
 	"eionrobb-icon-override",
-	"Protocol Icon Override",
-	"0.1",
-	"Customise protocol icons",
-	"Lets you change protocol icons per-account so that you can tell the difference between, say, a personal XMPP account and one used for work",
+	N_("Protocol Icon Override"),
+	PP_VERSION,
+	N_("Customise protocol icons"),
+	N_("Lets you change protocol icons per-account so that you can tell the difference between, say, a personal XMPP account and one used for work"),
 	"Eion Robb <eionrobb@gmail.com>",
-	"http://pidgin-icon-override.googlecode.com/", //URL
+	PP_WEBSITE, //URL
 	
 	plugin_load,
 	plugin_unload,
