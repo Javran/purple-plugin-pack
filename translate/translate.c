@@ -28,11 +28,13 @@
 #include <debug.h>
 
 #define DEST_LANG_SETTING "eionrobb-translate-lang"
+#define LOCALE_PREF       "/plugins/core/eionrobb-libpurple-translate/locale"
+#define SERVICE_PREF      "/plugins/core/eionrobb-libpurple-translate/service"
 
 #define GOOGLE_TRANSLATE_URL "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&langpair=%s%%7C%s&q=%s"
 
-#define BING_APPID "0FFF5300CD157A2E748DFCCF6D67F8028E5B578D"
-#define BING_DETECT_URL "http://api.microsofttranslator.com/V2/Ajax.svc/Detect?appId=" BING_APPID "&text=%%22%s%%22"
+#define BING_APPID         "0FFF5300CD157A2E748DFCCF6D67F8028E5B578D"
+#define BING_DETECT_URL    "http://api.microsofttranslator.com/V2/Ajax.svc/Detect?appId=" BING_APPID "&text=%%22%s%%22"
 #define BING_TRANSLATE_URL "http://api.microsofttranslator.com/V2/Ajax.svc/Translate?appId=" BING_APPID "&text=%%22%s%%22&from=%s&to=%s"
 
 /** This is the list of languages we support, populated in plugin_init */
@@ -317,8 +319,8 @@ translate_receiving_im_msg(PurpleAccount *account, char **sender,
 	const gchar *service_to_use = "";
 	
 	buddy = purple_find_buddy(account, *sender);
-	service_to_use = purple_prefs_get_string("/plugins/core/eionrobb-libpurple-translate/service");
-	to_lang = purple_prefs_get_string("/plugins/core/eionrobb-libpurple-translate/locale");
+	service_to_use = purple_prefs_get_string(SERVICE_PREF);
+	to_lang = purple_prefs_get_string(LOCALE_PREF);
 	if (buddy)
 		stored_lang = purple_blist_node_get_string((PurpleBlistNode *)buddy, DEST_LANG_SETTING);
 	if (!stored_lang)
@@ -407,8 +409,8 @@ translate_receiving_chat_msg(PurpleAccount *account, char **sender,
 	const gchar *service_to_use = "";
 	
 	chat = purple_blist_find_chat(account, conv->name);
-	service_to_use = purple_prefs_get_string("/plugins/core/eionrobb-libpurple-translate/service");
-	to_lang = purple_prefs_get_string("/plugins/core/eionrobb-libpurple-translate/locale");
+	service_to_use = purple_prefs_get_string(SERVICE_PREF);
+	to_lang = purple_prefs_get_string(LOCALE_PREF);
 	if (chat)
 		stored_lang = purple_blist_node_get_string((PurpleBlistNode *)chat, DEST_LANG_SETTING);
 	if (!stored_lang)
@@ -488,8 +490,8 @@ translate_sending_im_msg(PurpleAccount *account, const char *receiver, char **me
 	struct TranslateConvMessage *convmsg;
 	gchar *stripped;
 
-	from_lang = purple_prefs_get_string("/plugins/core/eionrobb-libpurple-translate/locale");
-	service_to_use = purple_prefs_get_string("/plugins/core/eionrobb-libpurple-translate/service");
+	from_lang = purple_prefs_get_string(LOCALE_PREF);
+	service_to_use = purple_prefs_get_string(SERVICE_PREF);
 	buddy = purple_find_buddy(account, receiver);
 	if (buddy)
 		to_lang = purple_blist_node_get_string((PurpleBlistNode *)buddy, DEST_LANG_SETTING);
@@ -559,8 +561,8 @@ translate_sending_chat_msg(PurpleAccount *account, char **message, int chat_id)
 	struct TranslateConvMessage *convmsg;
 	gchar *stripped;
 
-	from_lang = purple_prefs_get_string("/plugins/core/eionrobb-libpurple-translate/locale");
-	service_to_use = purple_prefs_get_string("/plugins/core/eionrobb-libpurple-translate/service");
+	from_lang = purple_prefs_get_string(LOCALE_PREF);
+	service_to_use = purple_prefs_get_string(SERVICE_PREF);
 	conv = purple_find_chat(purple_account_get_connection(account), chat_id);
 	if (conv)
 		chat = purple_blist_find_chat(account, conv->name);
@@ -756,7 +758,7 @@ plugin_config_frame(PurplePlugin *plugin)
 	frame = purple_plugin_pref_frame_new();
 	
 	ppref = purple_plugin_pref_new_with_name_and_label(
-		"/plugins/core/eionrobb-libpurple-translate/locale",
+		LOCALE_PREF,
 		_("My language:"));
 	purple_plugin_pref_set_type(ppref, PURPLE_PLUGIN_PREF_CHOICE);
 	
@@ -770,7 +772,7 @@ plugin_config_frame(PurplePlugin *plugin)
 	
 	
 	ppref = purple_plugin_pref_new_with_name_and_label(
-		"/plugins/core/eionrobb-libpurple-translate/service",
+		SERVICE_PREF,
 		_("Use service:"));
 	purple_plugin_pref_set_type(ppref, PURPLE_PLUGIN_PREF_CHOICE);
 	
@@ -797,8 +799,8 @@ init_plugin(PurplePlugin *plugin)
 		language = "en";
 	
 	purple_prefs_add_none("/plugins/core/eionrobb-libpurple-translate");
-	purple_prefs_add_string("/plugins/core/eionrobb-libpurple-translate/locale", language);
-	purple_prefs_add_string("/plugins/core/eionrobb-libpurple-translate/service", "google");
+	purple_prefs_add_string(LOCALE_PREF, language);
+	purple_prefs_add_string(SERVICE_PREF, "google");
 	
 #define add_language(label, code) \
 	pair = g_new0(PurpleKeyValuePair, 1); \
