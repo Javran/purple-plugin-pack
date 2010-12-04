@@ -784,6 +784,105 @@ plugin_config_frame(PurplePlugin *plugin)
 	return frame;
 }
 
+static gboolean
+plugin_load(PurplePlugin *plugin)
+{
+	purple_signal_connect(purple_conversations_get_handle(),
+	                      "receiving-im-msg", plugin,
+	                      PURPLE_CALLBACK(translate_receiving_im_msg), NULL);
+	purple_signal_connect(purple_conversations_get_handle(),
+						  "sending-im-msg", plugin,
+						  PURPLE_CALLBACK(translate_sending_im_msg), NULL);
+	purple_signal_connect(purple_blist_get_handle(),
+						  "blist-node-extended-menu", plugin,
+						  PURPLE_CALLBACK(translate_blist_extended_menu), NULL);
+	purple_signal_connect(purple_conversations_get_handle(),
+						  "blist-node-extended-menu", plugin,
+						  PURPLE_CALLBACK(translate_conv_extended_menu), NULL);
+	purple_signal_connect(purple_conversations_get_handle(),
+						  "conversation-created", plugin,
+						  PURPLE_CALLBACK(translate_conversation_created), NULL);
+	purple_signal_connect(purple_conversations_get_handle(),
+	                      "receiving-chat-msg", plugin,
+	                      PURPLE_CALLBACK(translate_receiving_chat_msg), NULL);
+	purple_signal_connect(purple_conversations_get_handle(),
+	                      "sending-chat-msg", plugin,
+	                      PURPLE_CALLBACK(translate_sending_chat_msg), NULL);
+	return TRUE;
+}
+
+static gboolean
+plugin_unload(PurplePlugin *plugin)
+{
+	purple_signal_disconnect(purple_conversations_get_handle(),
+	                         "receiving-im-msg", plugin,
+	                         PURPLE_CALLBACK(translate_receiving_im_msg));
+	purple_signal_disconnect(purple_conversations_get_handle(),
+							 "sending-im-msg", plugin,
+							 PURPLE_CALLBACK(translate_sending_im_msg));
+	purple_signal_disconnect(purple_blist_get_handle(),
+							 "blist-node-extended-menu", plugin,
+							 PURPLE_CALLBACK(translate_blist_extended_menu));
+	purple_signal_disconnect(purple_conversations_get_handle(),
+							 "blist-node-extended-menu", plugin,
+							 PURPLE_CALLBACK(translate_conv_extended_menu));
+	purple_signal_disconnect(purple_conversations_get_handle(),
+							 "conversation-created", plugin,
+							 PURPLE_CALLBACK(translate_conversation_created));
+	purple_signal_disconnect(purple_conversations_get_handle(),
+	                         "receiving-chat-msg", plugin,
+	                         PURPLE_CALLBACK(translate_receiving_chat_msg));
+	purple_signal_disconnect(purple_conversations_get_handle(),
+	                         "sending-chat-msg", plugin,
+	                         PURPLE_CALLBACK(translate_sending_chat_msg));
+	return TRUE;
+}
+
+static PurplePluginUiInfo prefs_info = {
+	plugin_config_frame,
+	0,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
+static PurplePluginInfo info = {
+    PURPLE_PLUGIN_MAGIC,
+    2,
+    3,
+    PURPLE_PLUGIN_STANDARD,
+    NULL,
+    0,
+    NULL,
+    PURPLE_PRIORITY_DEFAULT,
+
+    "eionrobb-libpurple-translate",
+    NULL,
+    PP_VERSION,
+
+    NULL,
+    "",
+    "Eion Robb <eionrobb@gmail.com>",
+    PP_WEBSITE, /* URL */
+
+    plugin_load,   /* load */
+    plugin_unload, /* unload */
+    NULL,          /* destroy */
+
+    NULL,
+    NULL,
+    &prefs_info,
+    NULL,
+
+	/* reserved */
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
 static void
 init_plugin(PurplePlugin *plugin)
 {
@@ -791,7 +890,10 @@ init_plugin(PurplePlugin *plugin)
 	const gchar *language;
 	guint i = 0;
 	PurpleKeyValuePair *pair;
-	
+
+	info.name = _("Auto Translate");
+	info.summary = _("Translate incoming/outgoing messages");
+
 	while((language = languages[i++]))
 		if (language && strlen(language) == 2)
 			break;
@@ -868,104 +970,5 @@ init_plugin(PurplePlugin *plugin)
 	add_language(_("Welsh"), "cy");
 	add_language(_("Yiddish"), "yi");
 }
-
-static gboolean
-plugin_load(PurplePlugin *plugin)
-{
-	purple_signal_connect(purple_conversations_get_handle(),
-	                      "receiving-im-msg", plugin,
-	                      PURPLE_CALLBACK(translate_receiving_im_msg), NULL);
-	purple_signal_connect(purple_conversations_get_handle(),
-						  "sending-im-msg", plugin,
-						  PURPLE_CALLBACK(translate_sending_im_msg), NULL);
-	purple_signal_connect(purple_blist_get_handle(),
-						  "blist-node-extended-menu", plugin,
-						  PURPLE_CALLBACK(translate_blist_extended_menu), NULL);
-	purple_signal_connect(purple_conversations_get_handle(),
-						  "blist-node-extended-menu", plugin,
-						  PURPLE_CALLBACK(translate_conv_extended_menu), NULL);
-	purple_signal_connect(purple_conversations_get_handle(),
-						  "conversation-created", plugin,
-						  PURPLE_CALLBACK(translate_conversation_created), NULL);
-	purple_signal_connect(purple_conversations_get_handle(),
-	                      "receiving-chat-msg", plugin,
-	                      PURPLE_CALLBACK(translate_receiving_chat_msg), NULL);
-	purple_signal_connect(purple_conversations_get_handle(),
-	                      "sending-chat-msg", plugin,
-	                      PURPLE_CALLBACK(translate_sending_chat_msg), NULL);
-	return TRUE;
-}
-
-static gboolean
-plugin_unload(PurplePlugin *plugin)
-{
-	purple_signal_disconnect(purple_conversations_get_handle(),
-	                         "receiving-im-msg", plugin,
-	                         PURPLE_CALLBACK(translate_receiving_im_msg));
-	purple_signal_disconnect(purple_conversations_get_handle(),
-							 "sending-im-msg", plugin,
-							 PURPLE_CALLBACK(translate_sending_im_msg));
-	purple_signal_disconnect(purple_blist_get_handle(),
-							 "blist-node-extended-menu", plugin,
-							 PURPLE_CALLBACK(translate_blist_extended_menu));
-	purple_signal_disconnect(purple_conversations_get_handle(),
-							 "blist-node-extended-menu", plugin,
-							 PURPLE_CALLBACK(translate_conv_extended_menu));
-	purple_signal_disconnect(purple_conversations_get_handle(),
-							 "conversation-created", plugin,
-							 PURPLE_CALLBACK(translate_conversation_created));
-	purple_signal_disconnect(purple_conversations_get_handle(),
-	                         "receiving-chat-msg", plugin,
-	                         PURPLE_CALLBACK(translate_receiving_chat_msg));
-	purple_signal_disconnect(purple_conversations_get_handle(),
-	                         "sending-chat-msg", plugin,
-	                         PURPLE_CALLBACK(translate_sending_chat_msg));
-	return TRUE;
-}
-
-static PurplePluginUiInfo prefs_info = {
-	plugin_config_frame,
-	0,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
-
-static PurplePluginInfo info = {
-    PURPLE_PLUGIN_MAGIC,
-    2,
-    3,
-    PURPLE_PLUGIN_STANDARD,
-    NULL,
-    0,
-    NULL,
-    PURPLE_PRIORITY_DEFAULT,
-
-    "eionrobb-libpurple-translate",
-    N_("Auto Translate"),
-    PP_VERSION,
-
-    N_("Translate incoming/outgoing messages"),
-    "",
-    "Eion Robb <eionrobb@gmail.com>",
-    PP_WEBSITE, /* URL */
-
-    plugin_load,   /* load */
-    plugin_unload, /* unload */
-    NULL,          /* destroy */
-
-    NULL,
-    NULL,
-    &prefs_info,
-    NULL,
-
-	/* reserved */
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
 
 PURPLE_INIT_PLUGIN(translate, init_plugin, info);
