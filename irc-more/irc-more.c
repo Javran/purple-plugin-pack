@@ -73,6 +73,7 @@ static void
 irc_receiving_text(PurpleConnection *gc, const char **incoming, gpointer null)
 {
 	char **splits;
+	PurpleAccount *account = NULL;
 
 	if (!incoming || !*incoming || !**incoming)   /* oh the fun .. I can do this all day! */
 		return;
@@ -83,7 +84,7 @@ irc_receiving_text(PurpleConnection *gc, const char **incoming, gpointer null)
 	if(g_strv_length(splits) < 5)
 		return;
 
-	PurpleAccount *account = purple_connection_get_account(gc);
+	account = purple_connection_get_account(gc);
 	char *str = g_ascii_strdown(splits[1], -1);
 
 	if (strcmp(str, "kick") == 0 && splits[2] && splits[3]) {

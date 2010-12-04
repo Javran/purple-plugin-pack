@@ -785,8 +785,7 @@ plugin_config_frame(PurplePlugin *plugin)
 static void
 init_plugin(PurplePlugin *plugin)
 {
-	const gchar * const * languages;
-	languages = g_get_language_names();
+	const gchar * const * languages = g_get_language_names();
 	const gchar *language;
 	guint i = 0;
 	PurpleKeyValuePair *pair;
