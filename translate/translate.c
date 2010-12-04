@@ -816,7 +816,7 @@ init_plugin(PurplePlugin *plugin)
 	add_language(_("Belarusian"), "be");
 	add_language(_("Bulgarian"), "bg");
 	add_language(_("Catalan"), "ca");
-	add_language(_("Chinese (Simplified)",) "zh-CN");
+	add_language(_("Chinese (Simplified)"), "zh-CN");
 	add_language(_("Chinese (Traditional)"), "zh-TW");
 	add_language(_("Croatian"), "hr");
 	add_language(_("Czech"), "cs");
