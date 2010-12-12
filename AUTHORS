@@ -24,19 +24,6 @@ es_ES - Máximo Castañeda <antiswen@yahoo.es>
 fr    - Yannick LE NY <y.le.ny@ifrance.com>
 vi    - Nguyen Huu Phuoc
 
-Packagers
-=========
-Daniel Attallah <datallah@users.sourceforge.net>
-	- Windows
-Benjamin Seidenberg <benjamin@debian.org>
-	- Debian
-Stu Tomlinson <stu@nosnilmot.com>
-	- Source RPM
-	- Fedora Core 4
-	- Fedora Core 5
-	- Fedora Core 6
-	- Red Hat Enterprise Linux 4/CentOS 4
-
 Accepted Patches
 ================
 Chris Banal
@@ -54,9 +41,11 @@ Ivan Ponomarev
 Jérôme Poulin (TiCPU)
 pva
 qwert
+r7
 Lee Roach
 Elliott Sales de Andrade
 Ryan Seeber
+Renato Silva
 Ankit Singla
 Anthony Sofocleous
 William Thompson
