@@ -68,14 +68,27 @@ blist_node_for_conv(PurpleConversation *conv)
 }
 
 static void
+spell_set_language(PidginConversation *gtkconv, gchar *lang)
+{
+	GtkSpell *spell;
+	GError *error = NULL;
+	
+	spell = gtkspell_get_from_text_view(GTK_TEXT_VIEW(gtkconv->entry));
+	if (spell != NULL) {
+		if (!gtkspell_set_language(spell, lang, &error)) {
+			purple_debug_error("switchspell", "failed to set language %s: %s\n", lang, error->message);
+			g_error_free(error);
+		}
+	}
+}
+
+static void
 menu_conv_use_dict_cb(GObject *m, gpointer data)
 {
 	PidginWindow *win = g_object_get_data(m, "user_data");
 	gchar *lang = g_object_get_data(m, "lang");
 	PurpleConversation *conv;
 	PidginConversation *gtkconv;
-	GtkSpell *spell;
-	GError *error = NULL;
 	PurpleBlistNode *node;
 
 	if (!gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(m)))
@@ -84,13 +97,7 @@ menu_conv_use_dict_cb(GObject *m, gpointer data)
 	conv = pidgin_conv_window_get_active_conversation(win);
 
 	gtkconv = PIDGIN_CONVERSATION(conv);
-	spell = gtkspell_get_from_text_view(GTK_TEXT_VIEW(gtkconv->entry));
-	if (spell != NULL) {
-		if (!gtkspell_set_language(spell, lang, &error)) {
-			purple_debug_error("switchspell", "failed to set language %s: %s\n", lang, error->message);
-			g_error_free(error);
-		}
-	}
+	spell_set_language(gtkconv, lang);
 	g_object_set_data(G_OBJECT(gtkconv->entry), PROP_LANG, lang);
 
 	node = blist_node_for_conv(gtkconv->active_conv);
@@ -221,7 +228,11 @@ update_switchspell_selection(PidginConversation *gtkconv)
 	for (item = items; item; item = item->next) {
 		const char *lang = g_object_get_data(G_OBJECT(item->data), "lang");
 		if (lang && curlang && strcmp(lang, curlang) == 0) {
-			gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item->data), TRUE);
+			if (gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(item->data)))
+				// If menu item already selected just set current speller language
+				spell_set_language(gtkconv, curlang);
+			else
+				gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item->data), TRUE);
 			break;
 		}
 	}
