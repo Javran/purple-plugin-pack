@@ -4,8 +4,8 @@
 # Description: Makefile for switchspell plugin.
 #
 
-ASPELL_TOP = $(PIDGIN_TREE_TOP)/../win32-dev/aspell-dev-0-50-3-3
-GTKSPELL_TOP = $(PIDGIN_TREE_TOP)/../win32-dev/gtkspell-2.0.11-daa1
+ENCHANT_TOP = $(PIDGIN_TREE_TOP)/../win32-dev/enchant_1.5.0-2_win32
+GTKSPELL_TOP = $(PIDGIN_TREE_TOP)/../win32-dev/gtkspell-2.0.16
 PP_TOP :=		..
 
 PP = switchspell
@@ -13,14 +13,14 @@ PP = switchspell
 include $(PP_TOP)/win_pp.mak
 
 INCLUDE_PATHS += \
-	-I$(GTKSPELL_TOP) \
-	-I$(ASPELL_TOP)/include
+	-I$(GTKSPELL_TOP)/include/gtkspell-2.0 \
+	-I$(ENCHANT_TOP)/include/enchant
 
 LIB_PATHS += \
-	-L$(GTKSPELL_TOP)/gtkspell \
-	-L$(ASPELL_TOP)/lib
+	-L$(GTKSPELL_TOP)/lib \
+	-L$(ENCHANT_TOP)/lib
 
 PLUGIN_LIBS += \
-	-lgtkspell \
-	-laspell-15
+	-llibgtkspell \
+	-llibenchant
 

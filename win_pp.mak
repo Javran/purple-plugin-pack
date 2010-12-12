@@ -9,7 +9,7 @@ PP_CONFIG_H := $(PP_TOP)/pp_config.h
 
 include $(PIDGIN_TREE_TOP)/libpurple/win32/global.mak
 
-DEFINES += -DPP_VERSION=\"$(PP_VERSION)\"
+DEFINES += -DPP_VERSION=\"$(PP_VERSION)\" -DHAVE_ENCHANT
 
 ##
 ## INCLUDE PATHS
@@ -24,6 +24,7 @@ INCLUDE_PATHS +=	-I. \
 			-I$(GTK_TOP)/include/freetype2 \
 			-I$(GTK_TOP)/lib/glib-2.0/include \
 			-I$(GTK_TOP)/lib/gtk-2.0/include \
+			-I$(GTK_TOP)/include/cairo \
 			-I$(PURPLE_TOP) \
 			-I$(PURPLE_TOP)/win32 \
 			-I$(PIDGIN_TOP) \
