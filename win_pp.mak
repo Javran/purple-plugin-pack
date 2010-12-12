@@ -1,7 +1,7 @@
 -include $(PP_TOP)/local.mak
 
 PIDGIN_TREE_TOP ?=	$(PP_TOP)/../../..
-GTK_TOP :=		$(PIDGIN_TREE_TOP)/../win32-dev/gtk_2_0
+GTK_TOP :=		$(PIDGIN_TREE_TOP)/../win32-dev/gtk_2_0-2.14
 DLL_ZIP_DIR :=		$(PP_TOP)/win32-dist
 
 PP_VERSION := $(shell cat ${PP_TOP}/VERSION)
