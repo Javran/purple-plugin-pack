@@ -12,6 +12,7 @@ Version 2.7.0: ??/??/??
 	  identified messages.
 	* Updated website string to reflect project move from Trac to Redmine
 	* Changed package name from purple-plugin_pack to purple-plugin-pack.
+	* The Album plugin should no longer crash on non-buddies.
 
 Version 2.6.3: 03/28/10
 	* Add support for Spidernet to IRC Helper plugin.
