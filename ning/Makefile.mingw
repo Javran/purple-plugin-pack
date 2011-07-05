@@ -1,0 +1,16 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for ning plugin.
+#
+
+PP_TOP :=		..
+
+PP = ning
+
+PP_SRC := \
+	ning.c \
+	ning_chat.c \
+	ning_connection.c
+
+include $(PP_TOP)/win_pp.mak
