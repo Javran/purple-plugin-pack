@@ -11,7 +11,7 @@
 #ifndef NING_CHAT_H
 #define NING_CHAT_H
 
-#include "libning.h"
+#include "ning.h"
 #include "ning_connection.h"
 
 typedef struct _NingChat {

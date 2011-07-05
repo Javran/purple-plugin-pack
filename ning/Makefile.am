@@ -13,6 +13,7 @@ ningdir = $(PURPLE_LIBDIR)
 ning_la_LDFLAGS = -module -avoid-version
 
 if HAVE_PURPLE
+if HAVE_JSON_GLIB
 
 ning_LTLIBRARIES = ning.la
 
@@ -26,6 +27,7 @@ ning_la_SOURCES = \
 
 ning_la_LIBADD = \
 	$(GLIB_LIBS) \
+	$(JSON_GLIB_LIBS) \
 	$(PURPLE_LIBS)
 
 # uncomment the lines below if we get pixmaps
@@ -42,11 +44,13 @@ ning_la_LIBADD = \
 #endif
 
 endif
+endif
 
 AM_CPPFLAGS = \
 	-DLIBDIR=\"$(PURPLE_LIBDIR)\" \
 	-DDATADIR=\"$(PURPLE_DATADIR)\" \
 	$(DEBUG_CFLAGS) \
+	$(JSON_GLIB_CFLAGS) \
 	$(PURPLE_CFLAGS)
 
 bullshit:

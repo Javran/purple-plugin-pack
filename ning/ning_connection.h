@@ -21,7 +21,7 @@
 #ifndef NING_CONNECTION_H
 #define NING_CONNECTION_H
 
-#include "libning.h"
+#include "ning.h"
 
 typedef void (*NingProxyCallbackFunc)
 	(NingAccount *na, gchar *data, gsize data_len, gpointer user_data);

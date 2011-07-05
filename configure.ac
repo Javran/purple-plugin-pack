@@ -271,6 +271,23 @@ if test x"$HAVE_TALKFILTERS" = x"yes"; then
 fi
 
 dnl #######################################################################
+dnl # Check for libjson-glib
+dnl #######################################################################
+HAVE_JSON_GLIB="no"
+JSON_GLIB_CFLAGS=""
+JSON_GLIB_LIBS=""
+
+PKG_CHECK_MODULES(JSON_GLIB, [json-glib-1.0], HAVE_JSON_GLIB="yes", HAVE_JSON_GLIB="no")
+AC_SUBST(JSON_GLIB_CFLAGS)
+AC_SUBST(JSON_GLIB_LIBS)
+
+AM_CONDITIONAL(HAVE_JSON_GLIB, test x"$HAVE_JSON_GLIB" = x"yes")
+
+if test x"$HAVE_JSON_GLIB" = x"yes"; then
+	DEPENDENCIES="$DEPENDENCIES,json-glib"
+fi
+
+dnl #######################################################################
 dnl # Check for switchspell
 dnl #######################################################################
 gtkspell=yes
