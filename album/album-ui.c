@@ -826,6 +826,9 @@ static void view_buddy_icons_cb(PurpleBlistNode *node, gpointer data)
 
 	g_return_if_fail(node != NULL);
 
+	if(PURPLE_BLIST_NODE_HAS_FLAGS(node, PURPLE_BLIST_NODE_FLAG_NO_SAVE))
+		return;
+
 	contact_expanded = pidgin_blist_node_is_contact_expanded(node);
 
 	if (PURPLE_BLIST_NODE_IS_BUDDY(node))
