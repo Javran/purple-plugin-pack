@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "libokcupid.h"
+#include "okcupid.h"
 #include "okc_connection.h"
 #include "okc_messages.h"
 #include "okc_blist.h"

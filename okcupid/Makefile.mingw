@@ -1,0 +1,17 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for okcupid plugin.
+#
+
+PP_TOP :=		..
+
+PP = okcupid
+
+PP_SRC := \
+	okcupid.c \
+	okc_blist.c \
+	okc_connection.c \
+	okc_messages.c
+
+include $(PP_TOP)/win_pp.mak

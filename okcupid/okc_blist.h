@@ -21,7 +21,7 @@
 #ifndef OKCUPID_BLIST_H
 #define OKCUPID_BLIST_H
 
-#include "libokcupid.h"
+#include "okcupid.h"
 
 void okc_blist_wink_buddy(PurpleBlistNode *node, gpointer data);
 void okc_get_info(PurpleConnection *pc, const gchar *uid);

@@ -21,7 +21,7 @@
 #ifndef OKCUPID_CONNECTION_H
 #define OKCUPID_CONNECTION_H
 
-#include "libokcupid.h"
+#include "okcupid.h"
 #include <core.h>
 #include <zlib.h>
 

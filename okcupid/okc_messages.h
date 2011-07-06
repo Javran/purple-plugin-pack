@@ -21,7 +21,7 @@
 #ifndef OKCUPID_MESSAGES_H
 #define OKCUPID_MESSAGES_H
 
-#include "libokcupid.h"
+#include "okcupid.h"
 
 int okc_send_im(PurpleConnection *pc, const gchar *who, const gchar *message,
 		PurpleMessageFlags flags);
