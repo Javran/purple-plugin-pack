@@ -21,7 +21,8 @@
 #ifndef LIBOMEGLE_H
 #define LIBOMEGLE_H
 
-#define OMEGLE_PLUGIN_VERSION "0"
+#include "../common/pp_internal.h"
+
 #define OMEGLE_PLUGIN_ID "prpl-bigbrownchunx-omegle"
 
 #include <glib.h>

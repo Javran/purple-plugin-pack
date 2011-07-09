@@ -315,7 +315,10 @@ static gboolean plugin_unload(PurplePlugin *plugin)
 
 static void plugin_init(PurplePlugin *plugin)
 {
-
+#ifdef ENABLE_NLS
+	bindtextdomain(GETTEXT_PACKAGE, PP_LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+#endif
 }
 
 static PurplePluginProtocolInfo prpl_info = {
@@ -396,33 +399,31 @@ static PurplePluginProtocolInfo prpl_info = {
 
 static PurplePluginInfo info = {
 	PURPLE_PLUGIN_MAGIC,
-	2,						/* major_version */
-	3, 						/* minor version */
-	PURPLE_PLUGIN_PROTOCOL, 			/* type */
-	NULL, 						/* ui_requirement */
-	0, 						/* flags */
-	NULL, 						/* dependencies */
-	PURPLE_PRIORITY_DEFAULT, 			/* priority */
-	OMEGLE_PLUGIN_ID,				/* id */
-	"Omegle", 					/* name */
-	OMEGLE_PLUGIN_VERSION, 			/* version */
-	N_("Omegle Protocol Plugin"), 		/* summary */
-	N_("Omegle Protocol Plugin"), 		/* description */
-	"Eion Robb <eionrobb@gmail.com>", 		/* author */
-	"http://pidgin-omegle.googlecode.com/",	/* homepage */
-	plugin_load, 					/* load */
-	plugin_unload, 					/* unload */
-	NULL, 						/* destroy */
-	NULL, 						/* ui_info */
-	&prpl_info, 					/* extra_info */
-	NULL, 						/* prefs_info */
-	NULL, 					/* actions */
-
-							/* padding */
-	NULL,
-	NULL,
-	NULL,
-	NULL
+	2,                                   /* major_version  */
+	3,                                   /* minor version  */
+	PURPLE_PLUGIN_PROTOCOL,              /* type           */
+	NULL,                                /* ui_requirement */
+	0,                                   /* flags          */
+	NULL,                                /* dependencies   */
+	PURPLE_PRIORITY_DEFAULT,             /* priority       */
+	OMEGLE_PLUGIN_ID,                    /* id             */
+	"Omegle",                            /* name           */
+	PP_VERSION,                          /* version        */
+	N_("Omegle Protocol Plugin"),        /* summary        */
+	N_("Omegle Protocol Plugin"),        /* description    */
+	"Eion Robb <eionrobb@gmail.com>",    /* author         */
+	PP_WEBSITE,                          /* homepage       */
+	plugin_load,                         /* load           */
+	plugin_unload,                       /* unload         */
+	NULL,                                /* destroy        */
+	NULL,                                /* ui_info        */
+	&prpl_info,                          /* extra_info     */
+	NULL,                                /* prefs_info     */
+	NULL,                                /* actions        */
+	NULL,                                /* reserved 1     */
+	NULL,                                /* reserved 2     */
+	NULL,                                /* reserved 3     */
+	NULL                                 /* reserved 4     */
 };
 
 PURPLE_INIT_PLUGIN(facebook, plugin_init, info);
