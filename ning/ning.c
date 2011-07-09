@@ -435,6 +435,11 @@ static gboolean plugin_unload(PurplePlugin *plugin)
 
 static void plugin_init(PurplePlugin *plugin)
 {
+#ifdef ENABLE_NLS
+	bindtextdomain(GETTEXT_PACKAGE, PP_LOCALEDIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+#endif
+
 	PurpleAccountOption *option;
 	PurplePluginInfo *info = plugin->info;
 	PurplePluginProtocolInfo *prpl_info = info->extra_info;
@@ -523,27 +528,27 @@ static PurplePluginProtocolInfo prpl_info = {
 
 static PurplePluginInfo info = {
 	PURPLE_PLUGIN_MAGIC,
-	2, /* major_version */
-	3, /* minor version */
-	PURPLE_PLUGIN_PROTOCOL, /* type */
-	NULL, /* ui_requirement */
-	0, /* flags */
-	NULL, /* dependencies */
-	PURPLE_PRIORITY_DEFAULT, /* priority */
-	"prpl-bigbrownchunx-ning", /* id */
-	"Ning", /* name */
-	NING_PLUGIN_VERSION, /* version */
-	N_("Ning Protocol Plugin"), /* summary */
-	N_("Ning Protocol Plugin"), /* description */
-	"Eion Robb <eionrobb@gmail.com>", /* author */
-	"", /* homepage */
-	plugin_load, /* load */
-	plugin_unload, /* unload */
-	NULL, /* destroy */
-	NULL, /* ui_info */
-	&prpl_info, /* extra_info */
-	NULL, /* prefs_info */
-	NULL, /* actions */
+	2,                                  /* major_version  */
+	3,                                  /* minor version  */
+	PURPLE_PLUGIN_PROTOCOL,             /* type           */
+	NULL,                               /* ui_requirement */
+	0,                                  /* flags          */
+	NULL,                               /* dependencies   */
+	PURPLE_PRIORITY_DEFAULT,            /* priority       */
+	"prpl-bigbrownchunx-ning",          /* id             */
+	"Ning",                             /* name           */
+	PP_VERSION,                         /* version        */
+	N_("Ning Protocol Plugin"),         /* summary        */
+	N_("Ning Protocol Plugin"),         /* description    */
+	"Eion Robb <eionrobb@gmail.com>",   /* author         */
+	PP_WEBSITE,                         /* homepage       */
+	plugin_load,                        /* load           */
+	plugin_unload,                      /* unload         */
+	NULL,                               /* destroy        */
+	NULL,                               /* ui_info        */
+	&prpl_info,                         /* extra_info     */
+	NULL,                               /* prefs_info     */
+	NULL,                               /* actions        */
 
 	/* padding */
 	NULL,

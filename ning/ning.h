@@ -21,14 +21,14 @@
 #ifndef LIBNING_H
 #define LIBNING_H
 
-#define NING_PLUGIN_VERSION "0.01"
+#include "../common/pp_internal.h"
+
 #define NING_TEMP_GROUP_NAME "Ning Temp"
 
 #include <glib.h>
 
 #include <errno.h>
 #include <string.h>
-#include <glib/gi18n.h>
 #include <sys/types.h>
 #include <unistd.h>
 
