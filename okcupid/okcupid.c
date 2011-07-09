@@ -401,27 +401,27 @@ static PurplePluginProtocolInfo prpl_info = {
 
 static PurplePluginInfo info = {
 	PURPLE_PLUGIN_MAGIC,
-	2, /* major_version */
-	3, /* minor version */
-	PURPLE_PLUGIN_PROTOCOL, /* type */
-	NULL, /* ui_requirement */
-	0, /* flags */
-	NULL, /* dependencies */
-	PURPLE_PRIORITY_DEFAULT, /* priority */
-	"prpl-bigbrownchunx-okcupid", /* id */
-	"OkCupid", /* name */
-	OKCUPID_PLUGIN_VERSION, /* version */
-	N_("OkCupid Protocol Plugin"), /* summary */
-	N_("OkCupid Protocol Plugin"), /* description */
-	"Eion Robb <eionrobb@gmail.com>", /* author */
-	"", /* homepage */
-	plugin_load, /* load */
-	plugin_unload, /* unload */
-	NULL, /* destroy */
-	NULL, /* ui_info */
-	&prpl_info, /* extra_info */
-	NULL, /* prefs_info */
-	NULL, /* actions */
+	2,                                 /* major_version  */
+	3,                                 /* minor version  */
+	PURPLE_PLUGIN_PROTOCOL,            /* type           */
+	NULL,                              /* ui_requirement */
+	0,                                 /* flags          */
+	NULL,                              /* dependencies   */
+	PURPLE_PRIORITY_DEFAULT,           /* priority       */
+	"prpl-bigbrownchunx-okcupid",      /* id             */
+	"OkCupid",                         /* name           */
+	PP_VERSION,                        /* version        */
+	N_("OkCupid Protocol Plugin"),     /* summary        */
+	N_("OkCupid Protocol Plugin"),     /* description    */
+	"Eion Robb <eionrobb@gmail.com>",  /* author         */
+	PP_WEBSITE,                        /* homepage       */
+	plugin_load,                       /* load           */
+	plugin_unload,                     /* unload         */
+	NULL,                              /* destroy        */
+	NULL,                              /* ui_info        */
+	&prpl_info,                        /* extra_info     */
+	NULL,                              /* prefs_info     */
+	NULL,                              /* actions        */
 
 	/* padding */
 	NULL,

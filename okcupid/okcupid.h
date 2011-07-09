@@ -21,14 +21,14 @@
 #ifndef LIBOKCUPID_H
 #define LIBOKCUPID_H
 
-#define OKCUPID_PLUGIN_VERSION "2.03"
+#include "../common/pp_internal.h"
+
 #define OKC_MAX_CONNECTIONS 16
 
 #include <glib.h>
 
 #include <errno.h>
 #include <string.h>
-#include <glib/gi18n.h>
 #include <sys/types.h>
 #include <unistd.h>
 
