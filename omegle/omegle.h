@@ -29,7 +29,6 @@
 
 #include <errno.h>
 #include <string.h>
-#include <glib/gi18n.h>
 #include <sys/types.h>
 #include <unistd.h>
 
