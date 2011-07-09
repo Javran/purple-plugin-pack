@@ -1,0 +1,15 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for omegle plugin.
+#
+
+PP_TOP :=		..
+
+PP = omegle
+
+PP_SRC := \
+	omegle.c \
+	om_connection.c
+
+include $(PP_TOP)/win_pp.mak

@@ -21,7 +21,7 @@
 #ifndef OMEGLE_CONNECTION_H
 #define OMEGLE_CONNECTION_H
 
-#include "libomegle.h"
+#include "omegle.h"
 
 /*
  * This is a bitmask.

@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "libomegle.h"
+#include "omegle.h"
 #include "om_connection.h"
 
 #include <json-glib/json-glib.h>
