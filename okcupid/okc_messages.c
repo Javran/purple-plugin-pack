@@ -172,15 +172,18 @@ void got_new_messages(OkCupidAccount *oca, gchar *data,
 						obuddy->thumb_url = g_strdup(buddy_icon_url);
 					
 					pbuddy->proto_data = obuddy;				
-				}			
+				}
 				if (!obuddy->thumb_url || !g_str_equal(obuddy->thumb_url, buddy_icon))
 				{
 					gchar *host, *path, *path2;
+					gchar *large_image_url;
 					
 					g_free(obuddy->thumb_url);
-					obuddy->thumb_url = purple_strreplace(buddy_icon, "/60x60/", "/256x256/");
+					obuddy->thumb_url = g_strdup(buddy_icon);
+					large_image_url = purple_strreplace(buddy_icon, "/60x60/", "/256x256/");
 					
-					purple_url_parse(obuddy->thumb_url, &host, NULL, &path, NULL, NULL);
+					purple_url_parse(large_image_url, &host, NULL, &path, NULL, NULL);
+					g_free(large_image_url);
 					if (path[0] != '/')
 						path2 = g_strdup_printf("/%s", path);
 					else
@@ -190,6 +193,13 @@ void got_new_messages(OkCupidAccount *oca, gchar *data,
 					g_free(host);
 					g_free(path);
 					g_free(path2);
+				}
+				if (obuddy->status_cache == NULL && json_object_has_member(person, "age"))
+				{
+					gint age = json_node_get_int(json_object_get_member(person, "age"));
+					const gchar *gender = json_node_get_string(json_object_get_member(person, "gender"));
+					const gchar *location = json_node_get_string(json_object_get_member(person, "location"));
+					obuddy->status_cache = g_strdup_printf("%d / %s / %s", age, gender, location );
 				}
 			}
 		}
@@ -253,7 +263,7 @@ void got_new_messages(OkCupidAccount *oca, gchar *data,
 		g_list_free(event_list);
 	}
 	
-	if (unread_message_count != oca->last_message_count)
+	if (unread_message_count != oca->last_message_count && purple_account_get_check_mail(pc->account))
 	{
 		oca->last_message_count = unread_message_count;
 		if (unread_message_count > 0)

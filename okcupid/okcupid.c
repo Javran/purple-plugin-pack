@@ -291,8 +291,33 @@ static void okc_buddy_free(PurpleBuddy *buddy)
 	{
 		buddy->proto_data = NULL;
 
+		g_free(obuddy->status_cache);
 		g_free(obuddy->thumb_url);
 		g_free(obuddy);
+	}
+}
+
+void okc_fake_group_buddy(PurpleConnection *pc, const char *who, const char *old_group, const char *new_group)
+{
+	/* Do nuffink, so that buddies aren't deleted! */
+}
+
+gchar *okc_status_text(PurpleBuddy *buddy)
+{
+	OkCupidBuddy *obuddy = buddy->proto_data;
+	if (obuddy != NULL && obuddy->status_cache != NULL)
+	{
+		return g_strdup(obuddy->status_cache);
+	}
+	return NULL;
+}
+
+void okc_tooltip_text(PurpleBuddy *buddy, PurpleNotifyUserInfo *user_info, gboolean full)
+{
+	OkCupidBuddy *obuddy = buddy->proto_data;
+	if (obuddy != NULL && obuddy->status_cache != NULL)
+	{
+		purple_notify_user_info_add_pair(user_info, NULL, obuddy->status_cache);
 	}
 }
 
@@ -324,11 +349,14 @@ static void plugin_init(PurplePlugin *plugin)
 
 	option = purple_account_option_bool_new("Show people who visit your profile", "show_stalkers", TRUE);
 	prpl_info->protocol_options = g_list_append(prpl_info->protocol_options, option);
+
+	option = purple_account_option_bool_new("Always use HTTPS", "force_https", TRUE);
+	prpl_info->protocol_options = g_list_append(prpl_info->protocol_options, option);
 }
 
 static PurplePluginProtocolInfo prpl_info = {
 	/* options */
-	OPT_PROTO_UNIQUE_CHATNAME,
+	OPT_PROTO_MAIL_CHECK,
 
 	NULL,                   /* user_splits */
 	NULL,                   /* protocol_options */
@@ -336,8 +364,8 @@ static PurplePluginProtocolInfo prpl_info = {
 	/*{"jpg", 0, 0, 50, 50, -1, PURPLE_ICON_SCALE_SEND}*/, /* icon_spec */
 	okc_list_icon,          /* list_icon */
 	NULL,                   /* list_emblems */
-	NULL,                   /* status_text */
-	NULL,                   /* tooltip_text */
+	okc_status_text,        /* status_text */
+	okc_tooltip_text,       /* tooltip_text */
 	okc_statuses,           /* status_types */
 	okc_blist_node_menu,    /* blist_node_menu */
 	NULL,                   /* chat_info */
@@ -372,7 +400,7 @@ static PurplePluginProtocolInfo prpl_info = {
 	NULL,                   /* get_cb_info */
 	NULL,                   /* get_cb_away */
 	NULL,                   /* alias_buddy */
-	NULL,                   /* group_buddy */
+	okc_fake_group_buddy,   /* group_buddy */
 	NULL,                   /* rename_group */
 	okc_buddy_free,         /* buddy_free */
 	NULL,                   /* convo_closed */

@@ -3,6 +3,9 @@ Version 2.7.0: ??/??/??
 	* Added capsnot plugin (Eion Robb)
 	* Added icon-override plugin (Eion Robb)
 	* Added translate plugin (Eion Robb)
+	* Added Ning protocol plugin (Eion Robb)
+	* Added OkCupid protocol plugin (Eion Robb)
+	* Added Omegle protocol plugin (Eion Robb)
 	* Fix a use-after-free in IRC Helper.
 	* IRC Helper delays autojoins until after identifying with Purple 2.7.0 or
 	  newer.
