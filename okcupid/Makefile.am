@@ -1,12 +1,12 @@
-#PIXMAPS = \
-#	16/okcupid.png \
-#	22/okcupid.png \
-#	48/okcupid.png
+PIXMAPS = \
+	16/okcupid.png \
+	22/okcupid.png \
+	48/okcupid.png
 	
 EXTRA_DIST=\
 	Makefile.mingw \
-	plugins.cfg
-#	$(PIXMAPS) #add \ to the line above and uncomment this line if we get pixmaps
+	plugins.cfg \
+	$(PIXMAPS)
 
 okcupiddir = $(PURPLE_LIBDIR)
 
@@ -32,24 +32,23 @@ okcupid_la_LIBADD = \
 	$(JSON_GLIB_LIBS) \
 	$(PURPLE_LIBS)
 
-# uncomment the lines below if we get pixmaps
-#if HAVE_PIDGIN
-#okcupidpix16dir=$(PIDGIN_PIXMAPSDIR)/protocols/16
-#okcupidpix16_DATA=16/okcupid.png
-#
-#okcupidpix22dir=$(PIDGIN_PIXMAPSDIR)/protocols/22
-#okcupidpix22_DATA=22/okcupid.png
-#
-#okcupidpix48dir=$(PIDGIN_PIXMAPSDIR)/protocols/48
-#okcupidpix48_DATA=48/okcupid.png
-#
-#endif
+if HAVE_PIDGIN
+okcupidpix16dir=$(PIDGIN_PIXMAPSDIR)/protocols/16
+okcupidpix16_DATA=16/okcupid.png
+
+okcupidpix22dir=$(PIDGIN_PIXMAPSDIR)/protocols/22
+okcupidpix22_DATA=22/okcupid.png
+
+okcupidpix48dir=$(PIDGIN_PIXMAPSDIR)/protocols/48
+okcupidpix48_DATA=48/okcupid.png
+
+endif
 
 endif
 endif
 
 AM_CPPFLAGS = \
-			  -DLIBDIR=\"$(PURPLE_LIBDIR)\" \
+	-DLIBDIR=\"$(PURPLE_LIBDIR)\" \
 	-DDATADIR=\"$(PURPLE_DATADIR)\" \
 	$(DEBUG_CFLAGS) \
 	$(JSON_GLIB_CFLAGS) \
