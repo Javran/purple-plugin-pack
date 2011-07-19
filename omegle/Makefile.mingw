@@ -4,6 +4,7 @@
 # Description: Makefile for omegle plugin.
 #
 
+JSON_GLIB_TOP = $(PIDGIN_TREE_TOP)/../win32-dev/libjson-glib
 PP_TOP :=		..
 
 PP = omegle
@@ -13,3 +14,13 @@ PP_SRC := \
 	om_connection.c
 
 include $(PP_TOP)/win_pp.mak
+
+INCLUDE_PATHS += \
+	-I$(JSON_GLIB_TOP)/include/json-glib-1.0
+
+LIB_PATHS += \
+	-L$(JSON_GLIB_TOP)/lib
+
+PLUGIN_LIBS += \
+	-ljson-glib-1.0 \
+	-lz

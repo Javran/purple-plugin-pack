@@ -9,7 +9,7 @@ include $(PIDGIN_TREE_TOP)/libpurple/win32/global.mak
 
 VERSION := $(shell cat ./VERSION)
 
-ALL_PLUGINS_LIST := $(shell python plugin_pack.py build_dirs purple,pidgin,gtkspell,enchant,cairo,pango all)
+ALL_PLUGINS_LIST := $(shell python plugin_pack.py build_dirs purple,pidgin,gtkspell,enchant,cairo,pango,json-glib all)
 
 comma:= ,
 empty:=
