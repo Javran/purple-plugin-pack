@@ -10,10 +10,10 @@ PACKAGE = plugin_pack
 ##
 
 srcdir = .
-GAIM_TOP = ../../..
-GAIM_INSTALL_DIR = $(GAIM_TOP)/win32-install-dir
-LOCALEDIR = $(GAIM_INSTALL_DIR)/locale
-GTK_BIN = $(GAIM_TOP)/../win32-dev/gtk_2_0/bin
+PIDGIN_TOP = ../../..
+PIDGIN_INSTALL_DIR = $(PIDGIN_TOP)/win32-install-dir
+LOCALEDIR = $(PIDGIN_INSTALL_DIR)/locale
+GTK_BIN = $(PIDGIN_TOP)/../win32-dev/gtk_2_0-2.14/bin
 
 ##
 ## TOOLS
