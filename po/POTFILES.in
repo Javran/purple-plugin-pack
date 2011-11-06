@@ -71,8 +71,16 @@ msglen/msglen.c
 mystatusbox/mystatusbox.c
 napster/napster.c
 nicksaid/nicksaid.c
+ning/ning.c
+ning/ning_connection.c
 nomobility/nomobility.c
+okcupid/okc_blist.c
+okcupid/okc_connection.c
+okcupid/okc_messages.c
+okcupid/okcupid.c
 oldlogger/oldlogger.c
+omegle/om_connection.c
+omegle/omegle.c
 plonkers/plonkers.c
 schedule/pidgin-schedule.c
 schedule/schedule.c
