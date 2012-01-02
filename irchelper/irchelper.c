@@ -141,8 +141,8 @@
 /* The %c exists so we can tell if a match occurred. */
 #define PATTERN_WEIRD_LOGIN_CRUFT "o%c %*u ca %*u(%*u) ft %*u(%*u)"
 
-#define TIMEOUT_IDENTIFY 4000
-#define TIMEOUT_KILLING_GHOST 4000
+#define TIMEOUT_IDENTIFY 8000
+#define TIMEOUT_KILLING_GHOST 8000
 
 
 typedef enum {
