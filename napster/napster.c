@@ -393,7 +393,7 @@ nap_callback(gpointer data, gint source, PurpleInputCondition condition) {
 		res = g_strsplit(buf, " ", 3);
 		c = nap_find_chat(gc, res[0]);
 		if (c)
-			serv_got_chat_in(gc, purple_conv_chat_get_id(PURPLE_CONV_CHAT(c)), res[1], 0, res[2], time((time_t)NULL));
+			serv_got_chat_in(gc, purple_conv_chat_get_id(PURPLE_CONV_CHAT(c)), res[1], 0, res[2], time(NULL));
 		g_strfreev(res);
 		break;
 
