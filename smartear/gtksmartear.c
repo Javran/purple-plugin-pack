@@ -31,6 +31,7 @@
 #include <gtk/gtk.h>
 
 /* Pidgin headers */
+#include <gtkblist.h>
 #include <gtkplugin.h>
 
 static void
