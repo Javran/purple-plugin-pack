@@ -218,7 +218,11 @@ lh_aim_list_parse_and_add(gchar **strings, guint length, guint begin, guint end)
 
 	if(buddies && groups) {
 		lh_util_add_to_blist(buddies, groups);
+#if PURPLE_VERSION_CHECK(3,0,0)
+		purple_account_add_buddies(target_account, buddies, NULL);
+#else
 		purple_account_add_buddies(target_account, buddies);
+#endif
 	} else {
 		if(!buddies && !groups)
 			purple_debug_info("listhandler: import", "BOTH GLISTS NULL!!!!!\n");

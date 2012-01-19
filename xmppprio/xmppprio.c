@@ -73,7 +73,7 @@ set_account_priorities(PurpleAccount *account, const int avail_prio,
 			continue;
 
 		default_value = purple_status_attr_get_value(attr);
-		if (default_value->type == PURPLE_TYPE_INT) {
+		if (purple_value_get_type(default_value) == PURPLE_TYPE_INT) {
 			if (purple_status_type_is_available(type))
 				purple_value_set_int(default_value, avail_prio);
 			else

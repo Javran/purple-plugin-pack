@@ -95,10 +95,17 @@ irssi_datechange_timeout_cb(gpointer data) {
 				t);
 
 		if(new_year) {
-			if(conv->type == PURPLE_CONV_TYPE_IM)
-				purple_conv_im_send(PURPLE_CONV_IM(conv), new_year);
-			else if(conv->type == PURPLE_CONV_TYPE_CHAT)
-				purple_conv_chat_send(PURPLE_CONV_CHAT(conv), new_year);
+			switch (purple_conversation_get_type(conv))
+			{
+				case PURPLE_CONV_TYPE_IM:
+					purple_conv_im_send(PURPLE_CONV_IM(conv), new_year);
+					break;
+				case PURPLE_CONV_TYPE_CHAT:
+					purple_conv_chat_send(PURPLE_CONV_CHAT(conv), new_year);
+					break;
+				default:
+					break;
+			}
 		}
 	}
 

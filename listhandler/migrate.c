@@ -95,7 +95,11 @@ lh_migrate_target_request_cb(void *ignored, PurpleRequestFields *fields)
 	lh_util_add_to_blist(buddies, groups);
 
 	/* add the buddies to the server-side list */
+#if PURPLE_VERSION_CHECK(3,0,0)
+	purple_account_add_buddies(target_account, buddies, NULL);
+#else
 	purple_account_add_buddies(target_account, buddies);
+#endif
 
 	/* now free the lists that were created */
 	g_list_free(buddies);

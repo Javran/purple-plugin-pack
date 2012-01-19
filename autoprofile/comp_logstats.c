@@ -678,9 +678,9 @@ static void logstats_conv_created (PurpleConversation *conv)
   struct log_date *the_date;
   struct conversation_time *the_time;
   
-  if (conv->type == PURPLE_CONV_TYPE_IM) {
+  if (purple_conversation_get_type(conv) == PURPLE_CONV_TYPE_IM) {
     the_time = malloc (sizeof(struct conversation_time));
-    the_time->name = strdup (conv->name);
+    the_time->name = strdup (purple_conversation_get_name(conv));
     the_time->start_time = malloc (sizeof(time_t));
     time (the_time->start_time);
 

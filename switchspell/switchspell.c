@@ -49,17 +49,19 @@ static PurpleBlistNode *
 blist_node_for_conv(PurpleConversation *conv)
 {
 	PurpleBlistNode *node = NULL;
+	PurpleAccount *account = purple_conversation_get_account(conv);
+	const char *name = purple_conversation_get_name(conv);
 
 	switch (purple_conversation_get_type(conv)) {
 		case PURPLE_CONV_TYPE_IM:
 		{
-			PurpleBuddy *buddy = purple_find_buddy(conv->account, conv->name);
+			PurpleBuddy *buddy = purple_find_buddy(account, name);
 			if (buddy)
 				node = (PurpleBlistNode *)purple_buddy_get_contact(buddy);
 			break;
 		}
 		case PURPLE_CONV_TYPE_CHAT:
-			node = (PurpleBlistNode *)purple_blist_find_chat(conv->account, conv->name);
+			node = (PurpleBlistNode *)purple_blist_find_chat(account, name);
 			break;
 		default:
 			break;

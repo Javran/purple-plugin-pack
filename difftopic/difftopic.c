@@ -150,8 +150,14 @@ have_fun(GtkIMHtml *imhtml, const char *old, const char *new)
 static void
 topic_changed(PurpleConversation *conv, const char *who, const char *what)
 {
-	PidginConversation *gtkconv = conv->ui_data;
+	PidginConversation *gtkconv;
 	char *old;
+
+#if PURPLE_VERSION_CHECK(3,0,0)
+	gtkconv = purple_conversation_get_ui_data(conv);
+#else
+	gtkconv = conv->ui_data;
+#endif
 
 	old = g_object_get_data(G_OBJECT(gtkconv->imhtml), "difftopic");
 	if (old && what) {

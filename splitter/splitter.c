@@ -131,14 +131,18 @@ splitter_common_send(PurpleConversation *conv, const char *message,
 		return;
 
 	account = purple_conversation_get_account(conv);
+#if PURPLE_VERSION_CHECK(3,0,0)
+	gc = purple_conversation_get_connection(conv);
+#else
 	gc = purple_conversation_get_gc(conv);
+#endif
 
 	g_return_if_fail(account != NULL);
 	g_return_if_fail(gc != NULL);
 
 	type = purple_conversation_get_type(conv);
 
-	if ((conv->features & PURPLE_CONNECTION_HTML) &&
+	if ((purple_conversation_get_features(conv) & PURPLE_CONNECTION_HTML) &&
 		!(msgflags & PURPLE_MESSAGE_RAW))
 	{
 		sent = purple_markup_linkify(message);

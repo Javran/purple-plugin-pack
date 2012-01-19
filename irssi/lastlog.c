@@ -44,10 +44,16 @@ static PurpleCmdId irssi_lastlog_cmd = 0;
  *****************************************************************************/
 static void
 irssi_lastlog(PurpleConversation *c, const gchar *needle) {
-	PidginConversation *gtkconv = c->ui_data;
+	PidginConversation *gtkconv;
 	int i;
 	GString *result;
 	char **lines;
+
+#if PURPLE_VERSION_CHECK(3,0,0)
+	gtkconv = purple_conversation_get_ui_data(c);
+#else
+	gtkconv = c->ui_data;
+#endif
 
 	/* let's avoid some warnings on anal C compilers like mipspro cc */
 	result = g_string_new(NULL);

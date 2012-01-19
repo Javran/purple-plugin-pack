@@ -126,10 +126,17 @@ google_output_url(GoogleFetchUrlData *gfud) {
 
 	*url_e = '\0';
 
-	if(gfud->conv->type == PURPLE_CONV_TYPE_IM)
-		purple_conv_im_send(PURPLE_CONV_IM(gfud->conv), url_s);
-	else if(gfud->conv->type == PURPLE_CONV_TYPE_CHAT)
-		purple_conv_chat_send(PURPLE_CONV_CHAT(gfud->conv), url_s);
+	switch (purple_conversation_get_type(gfud->conv))
+	{
+		case PURPLE_CONV_TYPE_IM:
+			purple_conv_im_send(PURPLE_CONV_IM(gfud->conv), url_s);
+			break;
+		case PURPLE_CONV_TYPE_CHAT:
+			purple_conv_chat_send(PURPLE_CONV_CHAT(gfud->conv), url_s);
+			break;
+		default:
+			break;
+	}
 }
 
 /******************************************************************************

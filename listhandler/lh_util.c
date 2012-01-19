@@ -36,7 +36,11 @@ lh_util_add_buddy(const gchar *group, PurpleGroup *purple_group,
 	node = (PurpleBlistNode *)purple_buddy;
 
 	purple_blist_add_buddy(purple_buddy, NULL, purple_group, NULL);
+#if PURPLE_VERSION_CHECK(3,0,0)
+	purple_account_add_buddy(account, purple_buddy, NULL);
+#else
 	purple_account_add_buddy(account, purple_buddy);
+#endif
 
 	if(buddynotes)
 		purple_blist_node_set_string(node, "notes", buddynotes);
