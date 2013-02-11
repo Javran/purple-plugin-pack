@@ -1,22 +1,24 @@
 # German translations for purple-plugin_pack package.
-# Copyright (C) 2010 THE purple-plugin_pack'S COPYRIGHT HOLDER
+# Copyright (C) 2013 THE purple-plugin_pack'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the purple-plugin_pack package.
 # Translation was done by people on #pidgin-de. To name some:
 # blubby, Dirtsa, No_se, Siggi0904, SpeedProg
 #
-# Comments may be sent to Christoph Miebach <christoph.miebach@web.de>
-# 
+# Translators:
+# Christoph Miebach <christoph.miebach@web.de>, 2012.
+# Mario Siegmann <mario_siegmann@web.de>, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: purple-plugin_pack 2.6.3\n"
+"Project-Id-Version: Purple Plugin Pack\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-20 18:47+0200\n"
-"PO-Revision-Date: 2010-05-06 21:14+0100\n"
-"Last-Translator: Constantin Wenger <constantin.wenger@googlemail.com>\n"
-"Language-Team: German\n"
+"POT-Creation-Date: 2012-07-22 00:00+0200\n"
+"PO-Revision-Date: 2012-07-26 11:34+0000\n"
+"Last-Translator: Christoph Miebach <christoph.miebach@web.de>\n"
+"Language-Team: German (http://www.transifex.com/projects/p/purple-plugin_pack/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../album/album.c:269
@@ -36,10 +38,7 @@ msgid ""
 "<span size='larger' weight='bold'>Unrecognized file type</span>\n"
 "\n"
 "Defaulting to PNG."
-msgstr ""
-"<span size='larger' weight='bold'>Unbekannter Datei-Typ</span>\n"
-"\n"
-"Verwende Standard: PNG."
+msgstr "<span size='larger' weight='bold'>Unbekannter Datei-Typ</span>\n\nVerwende Standard: PNG."
 
 #: ../album/album-ui.c:316
 #, c-format
@@ -47,10 +46,7 @@ msgid ""
 "<span size='larger' weight='bold'>Error saving image</span>\n"
 "\n"
 "%s"
-msgstr ""
-"<span size='larger' weight='bold'>Fehler beim Speichern des Bildes</span>\n"
-"\n"
-"%s"
+msgstr "<span size='larger' weight='bold'>Fehler beim Speichern des Bildes</span>\n\n%s"
 
 #: ../album/album-ui.c:352
 msgid "Save Image"
@@ -62,66 +58,66 @@ msgstr "Bild speichern"
 msgid ""
 "%x\n"
 "%X"
-msgstr ""
-"%x\n"
-"%X"
+msgstr "%x\n%X"
 
 #. Label
 #: ../album/album-ui.c:721
 msgid "No icons were found."
 msgstr "Keine Icons gefunden."
 
-#: ../album/album-ui.c:964
+#: ../album/album-ui.c:967
 #, c-format
 msgid "Buddy Icons used by %s"
 msgstr "Buddy-Icons verwendet von %s"
 
-#: ../album/album-ui.c:1021
+#: ../album/album-ui.c:1024
 #, c-format
 msgid "Small (%1$ux%1$u)"
 msgstr "Klein (%1$ux%1$u)"
 
-#: ../album/album-ui.c:1025
+#: ../album/album-ui.c:1028
 #, c-format
 msgid "Medium (%1$ux%1$u)"
 msgstr "Mittel (%1$ux%1$u)"
 
-#: ../album/album-ui.c:1029
+#: ../album/album-ui.c:1032
 #, c-format
 msgid "Large (%1$ux%1$u)"
 msgstr "Groß (%1$ux%1$u)"
 
-#: ../album/album-ui.c:1133
+#: ../album/album-ui.c:1136
 msgid "_Name"
 msgstr "_Name"
 
-#: ../album/album-ui.c:1138
+#: ../album/album-ui.c:1141
 msgid "_Account"
 msgstr "_Konto"
 
-#: ../album/album-ui.c:1146
+#: ../album/album-ui.c:1149
 msgid "View Buddy Icons..."
 msgstr "Betrachte Buddy-Icons..."
 
-#: ../album/album-ui.c:1148
-msgid "Please enter the screen name or alias of the person whose icon album you want to view."
+#: ../album/album-ui.c:1151
+msgid ""
+"Please enter the screen name or alias of the person whose icon album you "
+"want to view."
 msgstr "Bitte den Bildschirm-Namen oder Alias eingeben, dessen Icon-Album betrachtet werden soll."
 
-#: ../album/album-ui.c:1150 ../autoprofile/comp_logstats_gtk.c:133
+#: ../album/album-ui.c:1153 ../autoprofile/comp_logstats_gtk.c:133
 msgid "OK"
-msgstr "Ok"
+msgstr "OK"
 
-#: ../album/album-ui.c:1151 ../autoprofile/comp_logstats_gtk.c:134
+#: ../album/album-ui.c:1154 ../autoprofile/comp_logstats_gtk.c:134
 #: ../autoprofile/comp_quotation.c:217 ../autoprofile/gtk_widget.c:322
 #: ../groupmsg/groupmsg.c:122 ../timelog/timelog.c:130
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: ../album/album-ui.c:1160
+#: ../album/album-ui.c:1163
 msgid "View Buddy Icons"
 msgstr "Betrachte Buddy-Icons"
 
-#: ../album/album-ui.c:1217
+#: ../album/album-ui.c:1220
 msgid "_View Buddy Icons"
 msgstr "_Betrachte Buddy-Icons"
 
@@ -130,65 +126,45 @@ msgid "This preference is disabled"
 msgstr "Diese Einstellung ist deaktiviert"
 
 #: ../autoprofile/autoaway.c:105 ../autoprofile/autoreply.c:282
-msgid "This preference currently has no effect because AutoProfile is in use.  To modify this behavior, use the AutoProfile configuration menu."
+msgid ""
+"This preference currently has no effect because AutoProfile is in use.  To "
+"modify this behavior, use the AutoProfile configuration menu."
 msgstr "Diese Einstellung hat momentan keine Auswirkungen, da Auto-Profil benutzt wird. Verwenden Sie das Auto-Profile-Konfigurationsmenü, um dieses Verhalten zu ändern."
 
-#. type
-#. ui_requirement
-#. flags
-#. dependencies
-#. priority
-#: ../autoprofile/autoprofile.c:142
-msgid "gtk-kluge-autoprofile"
-msgstr "GTK-Kluge-Auto-Profil"
+#: ../autoprofile/autoprofile.c:833
+msgid "Say the magic word if you want me to talk more!"
+msgstr "Sag das Zauberwort, wenn du weiter mit mir reden möchtest (alles klein)!"
 
-#. id
-#: ../autoprofile/autoprofile.c:143
+#: ../autoprofile/autoprofile.c:835
+msgid "please"
+msgstr "bitte"
+
+#: ../autoprofile/autoprofile.c:843
+msgid ""
+"Get AutoProfile for Purple at <a "
+"href=\"http://autoprofile.sourceforge.net/\">autoprofile.sourceforge.net</a><br><br>[Timestamp]"
+msgstr "Auto-Profil für Purple gibt es auf <a href=\"http://autoprofile.sourceforge.net/\">autoprofile.sourceforge.net</a><br><br>[Timestamp]"
+
+#: ../autoprofile/autoprofile.c:853
 msgid "AutoProfile"
 msgstr "Auto-Profil"
 
-#. name
-#. version
-#: ../autoprofile/autoprofile.c:145
+#: ../autoprofile/autoprofile.c:854
 msgid "User profile and status message content generator"
 msgstr "Nutzerprofil- und Statusnachrichten-Generator"
 
-#. summary
-#. description
-#: ../autoprofile/autoprofile.c:147
+#: ../autoprofile/autoprofile.c:855
 msgid ""
 "Allows user to place dynamic text into profiles\n"
 "and status messages, with the text automatically\n"
 "updated whenever content changes"
-msgstr ""
-"Erlaubt es dem Nutzer, dynamisch erstellten Text in seinem\n"
-" Profil zu verwenden, und Statusnachrichten zu haben,\n"
-"die automatisch aktualisiert werden, wenn sich der Inhalt ändert"
+msgstr "Erlaubt es dem Nutzer, dynamisch erstellten Text in seinem\n Profil zu verwenden, und Statusnachrichten zu haben,\ndie automatisch aktualisiert werden, wenn sich der Inhalt ändert"
 
-#. author
-#: ../autoprofile/autoprofile.c:151
+#: ../autoprofile/autoprofile.c:858
 msgid ""
 "Casey Ho <casey at hkn-berkeley-edu>\n"
 "\t\t\taim:caseyho"
-msgstr ""
-"Casey Ho <casey at hkn-berkeley-edu>\n"
-"\t\t\taim:caseyho"
-
-#: ../autoprofile/autoprofile.c:153
-msgid "http://autoprofile.sourceforge.net/"
-msgstr "http://autoprofile.sourceforge.net/"
-
-#: ../autoprofile/autoprofile.c:834
-msgid "Say the magic word if you want me to talk more!"
-msgstr "Sag das Zauberwort, wenn du weiter mit mir reden möchtest (alles klein)!"
-
-#: ../autoprofile/autoprofile.c:836
-msgid "please"
-msgstr "bitte"
-
-#: ../autoprofile/autoprofile.c:844
-msgid "Get AutoProfile for Purple at <a href=\"http://autoprofile.sourceforge.net/\">autoprofile.sourceforge.net</a><br><br>[Timestamp]"
-msgstr "Auto-Profil für Purple gibt es auf <a href=\"http://autoprofile.sourceforge.net/\">autoprofile.sourceforge.net</a><br><br>[Timestamp]"
+msgstr "Casey Ho <casey at hkn-berkeley-edu>\n\t\t\taim:caseyho"
 
 #: ../autoprofile/comp_countdownup.c:278
 msgid "Start/end time"
@@ -301,7 +277,7 @@ msgstr "Jetzt die Seite abrufen!"
 
 #: ../autoprofile/comp_http.c:176 ../autoprofile/preferences.c:656
 msgid "Delay"
-msgstr "Wartezeit von"
+msgstr "Verzögerung"
 
 #: ../autoprofile/comp_http.c:186
 msgid "minutes between page fetches"
@@ -369,7 +345,15 @@ msgid "What this list is for"
 msgstr "Wofür diese Liste da ist"
 
 #: ../autoprofile/comp_logstats_gtk.c:181
-msgid "Logs in Purple are stored verbatim with what you see on the screen.  The names of the people in the conversation (both yourself and your buddy) are shown with their given aliases as opposed to actual screen names.  If you have given yourself an alias in a conversation, list it using this dialog.  If you do not, messages written by you will be incorrectly identified as received instead of sent.<br><br>Correct capitalization and whitespace are not required for detection to work.<br><br>You must disable/re-enable log stats to refresh the database after an alias change."
+msgid ""
+"Logs in Purple are stored verbatim with what you see on the screen.  The "
+"names of the people in the conversation (both yourself and your buddy) are "
+"shown with their given aliases as opposed to actual screen names.  If you "
+"have given yourself an alias in a conversation, list it using this dialog.  "
+"If you do not, messages written by you will be incorrectly identified as "
+"received instead of sent.<br><br>Correct capitalization and whitespace are "
+"not required for detection to work.<br><br>You must disable/re-enable log "
+"stats to refresh the database after an alias change."
 msgstr "Mitschnitte in Purple werden wörtlich so gespeichert, wie sie angezeigt werden. Die Namen derer, die an der Unterhaltung teilgenommen haben (der eigene und die der Gesprächspartner), werden mit ihrem Alias angezeigt, nicht mit ihrem eigentlichen Benutzernamen. Jeder eigene, in einer Unterhaltung verwendete Alias sollte in diesem Dialog eingetragen werden. Sonst werden versendete Nachrichten fälschlicherweise als empfangen statt als gesendet erkannt.<br><br>Eine passende Großschreibung und Leerzeichen sind nicht nötig, damit die Erkennung funktioniert.<br><br>Die Mitschnitt-Statistik muss deaktiviert und wieder aktiviert werden, um die Datenbank zu aktualisieren, nachdem ein Alias verändert wurde."
 
 #: ../autoprofile/comp_logstats_gtk.c:233
@@ -415,48 +399,7 @@ msgid ""
 "%C\tNumber of conversations started in last week\n"
 "%E\tNumber of messages sent/received in last week\n"
 "%%\t%"
-msgstr ""
-"%R\tEmpfangene Nachrichten insgesamt\n"
-"%r\tEmpfangene Wörter insgesamt\n"
-"%S\tGesendete Nachrichten insgesamt\n"
-"%s\tGesendete Wörter insgesamt\n"
-"%T\tGesendete/Empfangene Nachrichten insgesamt\n"
-"%t\tGesendete/Empfangene Wörter insgesamt\n"
-"%D\tTage seit der ersten aufgezeichneten Unterhaltung\n"
-"%d\tAnzahl der Tage, an denen Unterhaltungen mitgeschnitten wurden\n"
-"%N\tAnzahl der mitgeschnittenen Unterhaltungen\n"
-"%n\tDurchschnittlich mitgeschnittene Unterhaltungen pro Tag\n"
-"%i\tHöchstzahl an Unterhaltungen am selben Tag\n"
-"%I\tTag mit den meisten Unterhaltungen\n"
-"%j\tHöchstzahl an Nachrichten, die an einem Tag gesendet wurden\n"
-"%J\tTag, an dem die meisten Nachrichten gesendet wurden\n"
-"%k\tHöchstzahl an Nachrichten, die an einem Tag empfangen wurden\n"
-"%K\tTag, an dem die meisten Nachrichten empfangen wurden\n"
-"%l\tHöchstzahl an Nachrichten, die an einem Tag ausgetauscht wurden\n"
-"%L\tTag, an dem die meisten Nachrichten ausgetauscht wurden\n"
-"%f\tTag, an dem die erste Unterhaltung mitgeschnitten wurde\n"
-"%u\tDurchschnittlich empfangene Wörter pro Nachricht\n"
-"%v\tDurchschnittlich gesendete Wörter pro Nachricht\n"
-"%w\tDurchschnitt der Wörter pro Nachricht\n"
-"%U\tDurchschnittlich empfangene Nachrichten pro Unterhaltung\n"
-"%V\tDurchschnittlich gesendete Nachrichten pro Unterhaltung\n"
-"%W\tDurchschnitt der Nachrichten pro Unterhaltung\n"
-"%x\tDurchschnittlich pro Tag mitgeschnittene empfangene Wörter\n"
-"%y\tDurchschnittlich pro Tag mitgeschnittene gesendete Wörter\n"
-"%z\tDurchschnittlich pro Tag mitgeschnittene Wörter\n"
-"%X\tDurchschnittlich pro Tag mitgeschnittene empfangene Nachrichten\n"
-"%Y\tDurchschnittlich pro Tag mitgeschnittene gesendete Nachrichten\n"
-"%Z\tDurchschnittlich pro Tag mitgeschnittene Nachrichten\n"
-"%p\tProzentsatz der Tage mit Mitschnitten\n"
-"%a\tAnzahl der heute empfangenen Nachrichten\n"
-"%b\tAnzahl der heute gesendeten Nachrichten\n"
-"%c\tAnzahl der heute gestarteten Unterhaltungen\n"
-"%e\tAnzahl der Nachrichten heute\n"
-"%A\tAnzahl der in der letzten Woche empfangenen Nachrichten\n"
-"%B\tAnzahl der in der letzten Woche gesendeten Nachrichten\n"
-"%C\tAnzahl der in der letzten Woche gestarteten Unterhaltungen\n"
-"%E\tAnzahl der in der letzten Woche ausgetauschten Nachrichten\n"
-"%%\t%"
+msgstr "%R\tEmpfangene Nachrichten insgesamt\n%r\tEmpfangene Wörter insgesamt\n%S\tGesendete Nachrichten insgesamt\n%s\tGesendete Wörter insgesamt\n%T\tGesendete/Empfangene Nachrichten insgesamt\n%t\tGesendete/Empfangene Wörter insgesamt\n%D\tTage seit der ersten aufgezeichneten Unterhaltung\n%d\tAnzahl der Tage, an denen Unterhaltungen mitgeschnitten wurden\n%N\tAnzahl der mitgeschnittenen Unterhaltungen\n%n\tDurchschnittlich mitgeschnittene Unterhaltungen pro Tag\n%i\tHöchstzahl an Unterhaltungen am selben Tag\n%I\tTag mit den meisten Unterhaltungen\n%j\tHöchstzahl an Nachrichten, die an einem Tag gesendet wurden\n%J\tTag, an dem die meisten Nachrichten gesendet wurden\n%k\tHöchstzahl an Nachrichten, die an einem Tag empfangen wurden\n%K\tTag, an dem die meisten Nachrichten empfangen wurden\n%l\tHöchstzahl an Nachrichten, die an einem Tag ausgetauscht wurden\n%L\tTag, an dem die meisten Nachrichten ausgetauscht wurden\n%f\tTag, an dem die erste Unterhaltung mitgeschnitten wurde\n%u\tDurchschnittlich empfangene Wörter pro Nachricht\n%v\tDurchschnittlich gesendete Wörter pro Nachricht\n%w\tDurchschnitt der Wörter pro Nachricht\n%U\tDurchschnittlich empfangene Nachrichten pro Unterhaltung\n%V\tDurchschnittlich gesendete Nachrichten pro Unterhaltung\n%W\tDurchschnitt der Nachrichten pro Unterhaltung\n%x\tDurchschnittlich pro Tag mitgeschnittene empfangene Wörter\n%y\tDurchschnittlich pro Tag mitgeschnittene gesendete Wörter\n%z\tDurchschnittlich pro Tag mitgeschnittene Wörter\n%X\tDurchschnittlich pro Tag mitgeschnittene empfangene Nachrichten\n%Y\tDurchschnittlich pro Tag mitgeschnittene gesendete Nachrichten\n%Z\tDurchschnittlich pro Tag mitgeschnittene Nachrichten\n%p\tProzentsatz der Tage mit Mitschnitten\n%a\tAnzahl der heute empfangenen Nachrichten\n%b\tAnzahl der heute gesendeten Nachrichten\n%c\tAnzahl der heute gestarteten Unterhaltungen\n%e\tAnzahl der Nachrichten heute\n%A\tAnzahl der in der letzten Woche empfangenen Nachrichten\n%B\tAnzahl der in der letzten Woche gesendeten Nachrichten\n%C\tAnzahl der in der letzten Woche gestarteten Unterhaltungen\n%E\tAnzahl der in der letzten Woche ausgetauschten Nachrichten\n%%\t%"
 
 #: ../autoprofile/comp_logstats_gtk.c:298
 msgid "Add alias"
@@ -479,7 +422,14 @@ msgid "A quick definition of a fortune file"
 msgstr "Kurzbeschreibung einer Spruch-Datei"
 
 #: ../autoprofile/comp_quotation.c:114
-msgid "A fortune file is a simple text file with a number of quotes. The following is an example:<br><br><b>\"Glory is fleeing, but obscurity is forver.\"<br>- Napoleon Bonaparte (1769-1821)<br>%<br>Blagggghhhh!<br>%<br>Yet another quote<br>%<br></b><br>Quotes can have any sort of text within them.  They end when there is a newline followed by a percent sign \"%\" on the next line.<br><br>Fortune files with pre-selected quotes can be found on theinternet."
+msgid ""
+"A fortune file is a simple text file with a number of quotes. The following "
+"is an example:<br><br><b>\"Glory is fleeing, but obscurity is forver.\"<br>-"
+" Napoleon Bonaparte (1769-1821)<br>%<br>Blagggghhhh!<br>%<br>Yet another "
+"quote<br>%<br></b><br>Quotes can have any sort of text within them.  They "
+"end when there is a newline followed by a percent sign \"%\" on the next "
+"line.<br><br>Fortune files with pre-selected quotes can be found on "
+"theinternet."
 msgstr "Eine Spruch-Datei ist eine einfache Textdatei mit Zitaten. Beispiel:<br><br><b>\"Ruhm ist flüchtig, aber die Vergessenheit ist für immer.\"<br>- Napoleon Bonaparte (1769-1821)<br>%<br>Blagggghhhh!<br>%<br>Noch ein Zitat:<br>%<br></b><br>Zitate können alle Arten von Text beinhalten. Sie enden, wenn ein Zeilenumbruch gefolgt von einem in der nächsten Zeile befindlichen Prozentzeichen \"%\" steht.<br><br>Spruch-Dateien mit vorgefertigten Zitaten kann man im Internet finden."
 
 #: ../autoprofile/comp_quotation.c:136
@@ -614,36 +564,7 @@ msgid ""
 "%Y\tyear with century\n"
 "%z\ttime zone name, if any\n"
 "%%\t%"
-msgstr ""
-"Die folgenden Optionen können mit einem nummerischen Platzhalter versehen werden\n"
-"(z.B. \"%e\" kann mit \"%1e\" oder \"%2e\" geschrieben werden).  Die optional mögliche\n"
-"Nummer gibt an, für welchen Eintrag die Daten abgefragt werden sollen. \"1\" steht für\n"
-"den neuesten Eintrag, \"2\" steht für den vorletzten Eintrag und so weiter\n"
-" \"1\" wird gewählt, wenn keine Nummer angegeben wurde.\n"
-"\n"
-"%e\tAnfangstext des Eintrages.\n"
-"%l\tLink zu dem gewählten Eintrag.\n"
-"%t\tÜberschrift des Eintrages (Xanga inkompatibel)\n"
-"\n"
-"Zeit, zu der der Eintrag geschrieben wurde:\n"
-"%H\tStunde des Zeitpunktes (24-Stunden-Uhr)\n"
-"%I\tStunde (12-Stunden-Uhr)\n"
-"%p\tAM oder PM\n"
-"%M\tMinute\n"
-"%S\tSekunde\n"
-"%a\tabgekürzter Wochentagsname\n"
-"%A\tganzer Wochentagsname\n"
-"%b\tabgekürzter Monatsname\n"
-"%B\tganzer Monatsname\n"
-"%m\tMonat (als Zahl)\n"
-"%d\tTag innerhalb des Monats\n"
-"%j\tTag innerhalb des Jahres\n"
-"%W\tWoche innerhalb des Jahres\n"
-"%w\tTag der Woche (als Zahl)\n"
-"%y\tJahr ohne Jahrhundert\n"
-"%Y\tJahr mit Jahrhundert\n"
-"%z\tZeitzone, wenn vorhanden\n"
-"%%\t%"
+msgstr "Die folgenden Optionen können mit einem nummerischen Platzhalter versehen werden\n(z.B. \"%e\" kann mit \"%1e\" oder \"%2e\" geschrieben werden).  Die optional mögliche\nNummer gibt an, für welchen Eintrag die Daten abgefragt werden sollen. \"1\" steht für\nden neuesten Eintrag, \"2\" steht für den vorletzten Eintrag und so weiter\n \"1\" wird gewählt, wenn keine Nummer angegeben wurde.\n\n%e\tAnfangstext des Eintrages.\n%l\tLink zu dem gewählten Eintrag.\n%t\tÜberschrift des Eintrages (Xanga inkompatibel)\n\nZeit, zu der der Eintrag geschrieben wurde:\n%H\tStunde des Zeitpunktes (24-Stunden-Uhr)\n%I\tStunde (12-Stunden-Uhr)\n%p\tAM oder PM\n%M\tMinute\n%S\tSekunde\n%a\tabgekürzter Wochentagsname\n%A\tganzer Wochentagsname\n%b\tabgekürzter Monatsname\n%B\tganzer Monatsname\n%m\tMonat (als Zahl)\n%d\tTag innerhalb des Monats\n%j\tTag innerhalb des Jahres\n%W\tWoche innerhalb des Jahres\n%w\tTag der Woche (als Zahl)\n%y\tJahr ohne Jahrhundert\n%Y\tJahr mit Jahrhundert\n%z\tZeitzone, wenn vorhanden\n%%\t%"
 
 #. Dropdown
 #: ../autoprofile/comp_rss.c:402
@@ -696,7 +617,15 @@ msgid "Current song in iTunes"
 msgstr "Aktuelles Lied in iTunes"
 
 #: ../autoprofile/comp_textfile.c:124
-msgid "Get TuneCam from <a href=\"http://www.soft-o-mat.com/productions.shtml\">http://www.soft-o-mat.com/productions.shtml</a> and start it.<br>Create a html file that contains the following text:<br><br>&lt;tc&gt;artist&lt;/tc&gt; - &lt;tc&gt;title&lt;/tc&gt;<br><br>and press the \"T\" button.  Import the html file as a template for the \"File Track\" and whatever else you see fit.  Then select the \"G\" button and choose the location of the output file which will be used in this component"
+msgid ""
+"Get TuneCam from <a "
+"href=\"http://www.soft-o-mat.com/productions.shtml\">http://www.soft-o-mat.com/productions.shtml</a>"
+" and start it.<br>Create a html file that contains the following "
+"text:<br><br>&lt;tc&gt;artist&lt;/tc&gt; - "
+"&lt;tc&gt;title&lt;/tc&gt;<br><br>and press the \"T\" button.  Import the "
+"html file as a template for the \"File Track\" and whatever else you see "
+"fit.  Then select the \"G\" button and choose the location of the output "
+"file which will be used in this component"
 msgstr "Installieren Sie TuneCam von <a href=\"http://www.soft-o-mat.com/productions.shtml\">http://www.soft-o-mat.com/productions.shtml</a>  und führen es aus.<br>Erstellen Sie eine HTML-Datei mit folgendem Inhalt:<br><br>&lt;tc&gt;artist&lt;/tc&gt; - &lt;tc&gt;title&lt;/tc&gt;<br><br>dann den \"T\" Button drücken. Importieren Sie die HTML-Datei als eine Vorlage für \"File Track\" und was immer Sie denken, das passt. Drücken Sie dann den \"G\" Button und wählen Sie den Speicherort der Ausgabedatei, die die Komponente benutzen soll."
 
 #: ../autoprofile/comp_textfile.c:135
@@ -709,7 +638,15 @@ msgstr "Aktuelles Lied in XMMS"
 
 #: ../autoprofile/comp_textfile.c:136
 #, c-format
-msgid "Included in the misc folder of AutoProfile is a script called \"xmms_currenttrack\".  Install this script in your $PATH and give it executable permissions, and specify the program using a pipe.<br><br>Alternatively, in XMMS, go to Options->Preferences->Effects/General Plugins.<br>Configure the \"Song Change\" plugin.  In the song change command box, put<br><br>echo \"%s\" > /path/to/output/file<br><br>and be sure to enable the plugin.  Select the file location in AutoProfile and you should be done"
+msgid ""
+"Included in the misc folder of AutoProfile is a script called "
+"\"xmms_currenttrack\".  Install this script in your $PATH and give it "
+"executable permissions, and specify the program using a "
+"pipe.<br><br>Alternatively, in XMMS, go to "
+"Options->Preferences->Effects/General Plugins.<br>Configure the \"Song "
+"Change\" plugin.  In the song change command box, put<br><br>echo \"%s\" > "
+"/path/to/output/file<br><br>and be sure to enable the plugin.  Select the "
+"file location in AutoProfile and you should be done"
 msgstr "Beinhaltet im sonstige-Ordner von Auto-Profil ein Skript namens \"xmms_currenttrack\". Installieren Sie dieses Skript in $PATH, geben Sie dem Skript Berechtigungen zum Ausführen, und spezifizieren Sie das das Programm eine Pipe nutzt.<br><br>Alternativ gehen Sie im XMMS zum Menü Optionen->Eigenschaften->Effekte/Allgemeine Plugins.<br>Konfigurieren Sie das \"Song Change\" -Plugin. In dem Eingabefeld für die Änderung eines Liedes fügen Sie<br><br>echo \"%s\" > /path/to/output/file<br><br> ein und stellen Sie sicher, dass das Plugin aktiviert ist. Wählen Sie den Speicherort der Datei in Auto-Profil aus und es sollte konfiguriert sein."
 
 #: ../autoprofile/comp_textfile.c:146
@@ -721,7 +658,11 @@ msgid "Current song in Windows Media Player"
 msgstr "Aktuelles Lied im Windows Media Player"
 
 #: ../autoprofile/comp_textfile.c:148
-msgid "Download NowPlaying, a plugin for WMP from <a href=\"http://www.wmplugins.com/ItemDetail.aspx?ItemID=357\">http://www.wmplugins.com/ItemDetail.aspx?ItemID=357</a> and follow the included installation instructions.<br>Set the output filename to the file you choose in this component"
+msgid ""
+"Download NowPlaying, a plugin for WMP from <a "
+"href=\"http://www.wmplugins.com/ItemDetail.aspx?ItemID=357\">http://www.wmplugins.com/ItemDetail.aspx?ItemID=357</a>"
+" and follow the included installation instructions.<br>Set the output "
+"filename to the file you choose in this component"
 msgstr "Laden Sie NowPlaying herunter, ein Plugin für den WMP von <a href=\"http://www.wmplugins.com/ItemDetail.aspx?ItemID=357\">http://www.wmplugins.com/ItemDetail.aspx?ItemID=357</a> und folgen Sie den enthaltenen Installationsanweisungen.<br>Setzen Sie die Ausgabedatei auf die Datei, die Sie in dieser Komponente gewählt haben."
 
 #: ../autoprofile/comp_textfile.c:155
@@ -733,7 +674,12 @@ msgid "Current song in iTunes/Winamp/Foobar/Apollo/QCD"
 msgstr "Aktuelles Lied in iTunes/Winamp/Foobar/Apollo/QCD"
 
 #: ../autoprofile/comp_textfile.c:157
-msgid "Get the version of AMIP associated with your player from <a href=\"http://amip.tools-for.net/\">http://amip.tools-for.net/</a> and install/enable it.<br>Check the box \"Write song info to file\", play with the settings, and set the file in this component to be the file in the AMIP options."
+msgid ""
+"Get the version of AMIP associated with your player from <a "
+"href=\"http://amip.tools-for.net/\">http://amip.tools-for.net/</a> and "
+"install/enable it.<br>Check the box \"Write song info to file\", play with "
+"the settings, and set the file in this component to be the file in the AMIP "
+"options."
 msgstr "Besorgen Sie sich die Version von AMIP, die zu Ihrem Spieler gehört von <a href=\"http://amip.tools-for.net/\">http://amip.tools-for.net/</a> und installieren/aktivieren Sie sie.<br>Wählen Sie die Auswahl \"Schreibe Liedinformationen in eine Datei\", probieren Sie die Einstellungen aus, und setzen Sie die Datei in diesen Einstellungen auf die Datei in den AMIP Optionen."
 
 #: ../autoprofile/comp_textfile.c:174
@@ -764,7 +710,9 @@ msgid "Text File / Songs"
 msgstr "Textdatei / Lieder"
 
 #: ../autoprofile/comp_textfile.c:258
-msgid "Copies text from file that external programs (e.g. XMMS, Winamp, iTunes) can modify on a regular basis"
+msgid ""
+"Copies text from file that external programs (e.g. XMMS, Winamp, iTunes) can"
+" modify on a regular basis"
 msgstr "Kopiert Text von einer Datei, die ein unabhängiges Programm (z.B. XMMS, Winamp, iTunes) bearbeiten kann, mit Hilfe von regulären Ausdrücken"
 
 #: ../autoprofile/comp_timestamp.c:102
@@ -789,27 +737,7 @@ msgid ""
 "%Y\tyear with century\n"
 "%z\ttime zone name, if any\n"
 "%%\t%"
-msgstr ""
-"Füge die folgenden Zeichen an der Stelle ein, wo die Zeit angezeigt werden soll:\n"
-"\n"
-"%H\tStunde (24-Stunden-Uhr)\n"
-"%I\tStunde (12-Stunden-Uhr)\n"
-"%p\tAM oder PM\n"
-"%M\tMinute\n"
-"%S\tSekunde\n"
-"%a\tabgekürzter Wochentagsname\n"
-"%A\tganzer Wochentagsname\n"
-"%b\tabgekürzter Monatsname\n"
-"%B\tganzer Monatsname\n"
-"%m\tMonat (als Zahl)\n"
-"%d\tTag innerhalb des Monats\n"
-"%j\tTag innerhalb des Jahres\n"
-"%W\tWoche innerhalb des Jahres\n"
-"%w\tTag der Woche (als Zahl)\n"
-"%y\tJahr ohne Jahrhundert\n"
-"%Y\tJahr mit Jahrhundert\n"
-"%z\tZeitzone, wenn vorhanden\n"
-"%%\t%"
+msgstr "Füge die folgenden Zeichen an der Stelle ein, wo die Zeit angezeigt werden soll:\n\n%H\tStunde (24-Stunden-Uhr)\n%I\tStunde (12-Stunden-Uhr)\n%p\tAM oder PM\n%M\tMinute\n%S\tSekunde\n%a\tabgekürzter Wochentagsname\n%A\tganzer Wochentagsname\n%b\tabgekürzter Monatsname\n%B\tganzer Monatsname\n%m\tMonat (als Zahl)\n%d\tTag innerhalb des Monats\n%j\tTag innerhalb des Jahres\n%W\tWoche innerhalb des Jahres\n%w\tTag der Woche (als Zahl)\n%y\tJahr ohne Jahrhundert\n%Y\tJahr mit Jahrhundert\n%z\tZeitzone, wenn vorhanden\n%%\t%"
 
 #: ../autoprofile/comp_timestamp.c:132
 msgid "Timestamp"
@@ -845,10 +773,7 @@ msgid ""
 " what accounts AutoProfile should set the profile for.  Until you\n"
 " check one of the boxes below, AutoProfile will effectively do\n"
 " nothing."
-msgstr ""
-"<b>Zur Zeit ist kein Konto aktiviert:</b> Bisher ist nicht angegeben,\n"
-" für welche Konten Auto-Profil das Profil setzen soll.\n"
-" Bis nicht mindestens eine der Auswahlboxen gewählt ist, wird Auto-Profil keinen Effekt haben."
+msgstr "<b>Zur Zeit ist kein Konto aktiviert:</b> Bisher ist nicht angegeben,\n für welche Konten Auto-Profil das Profil setzen soll.\n Bis nicht mindestens eine der Auswahlboxen gewählt ist, wird Auto-Profil keinen Effekt haben."
 
 #: ../autoprofile/gtk_actions.c:161 ../autoprofile/gtk_widget.c:137
 msgid "<b>Preview</b>"
@@ -859,7 +784,9 @@ msgid "Refresh"
 msgstr "Aktualisieren"
 
 #: ../autoprofile/gtk_actions.c:192
-msgid "<b>Edit</b> (Drag widgets into profile / Use shift+enter to insert a new line)"
+msgid ""
+"<b>Edit</b> (Drag widgets into profile / Use shift+enter to insert a new "
+"line)"
 msgstr "<b>Edit</b> (Widgets in das Profil ziehen / Shift+Enter benutzen, um eine neue Zeile einzufügen)"
 
 #: ../autoprofile/gtk_actions.c:209
@@ -977,19 +904,28 @@ msgid "<b><u>Basic info</u></b><br>"
 msgstr "<b><u>Kurzinformation</u></b><br>"
 
 #: ../autoprofile/gtk_widget.c:214
-msgid "A <b>widget</b> is a little piece/snippet of automatically generated text.  There are all sorts of widgets; each type has different content (i.e. a random quote, text from a blog, the song currently playing, etc).<br><br>"
+msgid ""
+"A <b>widget</b> is a little piece/snippet of automatically generated text.  "
+"There are all sorts of widgets; each type has different content (i.e. a "
+"random quote, text from a blog, the song currently playing, etc).<br><br>"
 msgstr "Ein <b>Widget</b> ist ein kleines, automatisch generiertes, Stück Text.  Es gibt alle möglichen Arten von Widgets mit den verschiedensten Inhalten (z.B.: Ein beliebiges Zitat/Quote, Text aus einem Blog, grade gespieltes Lied, etc).<br><br>"
 
 #: ../autoprofile/gtk_widget.c:220
-msgid "To use a widget, simply drag it from the list on the left and drop it into a profile or status message.  <i>It's that easy!</i><br><br>"
+msgid ""
+"To use a widget, simply drag it from the list on the left and drop it into a"
+" profile or status message.  <i>It's that easy!</i><br><br>"
 msgstr "Um ein Widget zu benutzen, wird es einfach aus der Liste auf der linken Seite in ein Profil oder eine Status-Nachricht gezogen (drag and drop).  <i>So einfach!</i><br><br>"
 
 #: ../autoprofile/gtk_widget.c:225
-msgid "<b>To edit your profile:</b> Use the \"Info/profile\" tab in this window.<br>"
+msgid ""
+"<b>To edit your profile:</b> Use the \"Info/profile\" tab in this "
+"window.<br>"
 msgstr "<b>Veränderung des eigenen Profils:</b> Mit dem \"Informationen/Profile\"-Tab in diesem Fenster.<br>"
 
 #: ../autoprofile/gtk_widget.c:230
-msgid "<b>To edit your available/away/status message:</b> Use the regular Purple interface built into the bottom of the buddy list.<br><br>"
+msgid ""
+"<b>To edit your available/away/status message:</b> Use the regular Purple "
+"interface built into the bottom of the buddy list.<br><br>"
 msgstr "<b>Ändern der Verfügbar-/Abwesend-/Status-Nachrichten:</b> Über das normale Interface unterhalb der Buddy-Liste.<br><br>"
 
 #: ../autoprofile/gtk_widget.c:235
@@ -997,7 +933,12 @@ msgid "<b><u>Advanced Tips</u></b><br>"
 msgstr "<b><u>Weiterführende Tipps</u></b><br>"
 
 #: ../autoprofile/gtk_widget.c:238
-msgid "You can insert a widget into a profile or status by typing its name.  To do this, just type \"[widget-name]\" wherever you want to place a widget (names of widgets are listed on the left).  <br><br><b>You type:</b> The song I am playing now is [iTunesInfo].<br><b>AutoProfile result:</b> The song I am playing now is The Beatles - Yellow Submarine.<br><br>"
+msgid ""
+"You can insert a widget into a profile or status by typing its name.  To do "
+"this, just type \"[widget-name]\" wherever you want to place a widget (names"
+" of widgets are listed on the left).  <br><br><b>You type:</b> The song I am"
+" playing now is [iTunesInfo].<br><b>AutoProfile result:</b> The song I am "
+"playing now is The Beatles - Yellow Submarine.<br><br>"
 msgstr "Sie können ein Widget in ein Profil oder einen Status einfügen, indem Sie seinen Namen eingeben.  Um dies zu verwenden, geben Sie einfach  \"[widget-namen]\" an der Stelle ein, an der Sie ein Widget verwenden wollen. (Die Namen der Widgets werden links aufgeführt).  <br><br><b>Eigene Eingabe:</b> Das Lied, das gerade abgespielt wird, ist [iTunesInfo].<br><b>Auto-Profil-Ergebnis:</b> Das Lied das gerade abgespielt wird, ist The Beatles - Yellow Submarine.<br><br>"
 
 #: ../autoprofile/gtk_widget.c:268 ../autoprofile/gtk_widget.c:285
@@ -1050,7 +991,10 @@ msgid "<span weight=\"bold\" size=\"larger\">AutoProfile %s</span>"
 msgstr "<span weight=\"bold\" size=\"larger\">Auto-Profil %s</span>"
 
 #: ../autoprofile/preferences.c:70
-msgid "Use the <b>Autoprofile</b> portion of the <b>Tools</b> menu in the <b>buddy list</b> to configure the actual content that will go in your status messages and profiles and set options.<br><br>"
+msgid ""
+"Use the <b>Autoprofile</b> portion of the <b>Tools</b> menu in the <b>buddy "
+"list</b> to configure the actual content that will go in your status "
+"messages and profiles and set options.<br><br>"
 msgstr "Benutzen Sie das <b>Auto-Profile</b>-Untermenü des <b>Werkzeuge</b>-Menüs in der <b>Buddy-Liste</b>, um den aktuellen Inhalt einzustellen, der in Ihrer Status-Nachricht und Ihrem Profil verwendet wird oder um die Optionen einzustellen.<br><br>"
 
 #: ../autoprofile/preferences.c:77
@@ -1058,7 +1002,9 @@ msgid "<u>DOCUMENTATION / HELP</u><br>"
 msgstr "<u>DOKUMENTATION / HILFE</u><br>"
 
 #: ../autoprofile/preferences.c:79
-msgid "Complete documentation can be found at:<br> <a href=\"http://hkn.eecs.berkeley.edu/~casey/autoprofile/documentation.php\">hkn.eecs.berkeley.edu/~casey/autoprofile/documentation.php</a><br>"
+msgid ""
+"Complete documentation can be found at:<br> <a "
+"href=\"http://hkn.eecs.berkeley.edu/~casey/autoprofile/documentation.php\">hkn.eecs.berkeley.edu/~casey/autoprofile/documentation.php</a><br>"
 msgstr "Die komplette Dokumentation befindet sich auf:<br> <a href=\"http://hkn.eecs.berkeley.edu/~casey/autoprofile/documentation.php\">hkn.eecs.berkeley.edu/~casey/autoprofile/documentation.php</a><br>"
 
 #: ../autoprofile/preferences.c:85
@@ -1075,7 +1021,7 @@ msgstr "Beitragende/Patchschreiber"
 
 #: ../autoprofile/preferences.c:103
 msgid "Website"
-msgstr "Webseite"
+msgstr "Web-Seite"
 
 #: ../autoprofile/preferences.c:296
 msgid "Screen Name"
@@ -1087,7 +1033,7 @@ msgstr "Auto-Profil legt die Benutzerinformationen fest"
 
 #: ../autoprofile/preferences.c:327
 msgid "Protocol"
-msgstr "Protokoll"
+msgstr "Protokoll:"
 
 #: ../autoprofile/preferences.c:490
 msgid "Accounts that do not support user-specified profiles are not shown"
@@ -1106,9 +1052,7 @@ msgstr "Minimale Anzahl an Sekunden zwischen Updates"
 msgid ""
 "WARNING: Using values below 60 seconds may increase the frequency\n"
 "of rate limiting errors"
-msgstr ""
-"WARNUNG: Werte unter 60 Sekunden können zu einer höheren\n"
-"Häufigkeit von Anfrage-Beschränkungs-Fehlern führen!"
+msgstr "WARNUNG: Werte unter 60 Sekunden können zu einer höheren\nHäufigkeit von Anfrage-Beschränkungs-Fehlern führen!"
 
 #. ----------- Auto-away stuff ------------
 #: ../autoprofile/preferences.c:548
@@ -1136,6 +1080,7 @@ msgid "Auto-reply:"
 msgstr "Automatische-Antwort"
 
 #: ../autoprofile/preferences.c:633 ../autoreply/autoreply.c:406
+#: ../capsnot/capsnot.c:212 ../capsnot/capsnot.c:221
 msgid "Never"
 msgstr "Nie"
 
@@ -1189,7 +1134,9 @@ msgid "Set Autoreply Message"
 msgstr "Setze automatische Antwort"
 
 #: ../autoreply/autoreply.c:233
-msgid "The following message will be sent to the buddy when the buddy sends you a message and autoreply is enabled."
+msgid ""
+"The following message will be sent to the buddy when the buddy sends you a "
+"message and autoreply is enabled."
 msgstr "Falls Automatisches Antworten (Plugin) aktiviert ist, bekommt dieser Buddy die folgende Mitteilung, wenn er eine Nachricht sendet."
 
 #: ../autoreply/autoreply.c:237
@@ -1236,9 +1183,7 @@ msgstr "_Standard-Antwort"
 msgid ""
 "Autoreply Prefix\n"
 "(only when necessary)"
-msgstr ""
-"Einleitung der Autoantwort\n"
-"(nur wenn notwendig)"
+msgstr "Einleitung der Autoantwort\n(nur wenn notwendig)"
 
 #: ../autoreply/autoreply.c:397
 msgid "Do not autoreply when invisible."
@@ -1285,11 +1230,18 @@ msgid "Autoreply for all the protocols"
 msgstr "Automatisches Antworten für alle Protokolle"
 
 #: ../autoreply/autoreply.c:487
-msgid "This plugin lets you set autoreply message for any protocol. You can set the global autoreply message from the plugin options dialog. To set some specific autoreply message for a particular buddy, right click on the buddy in the buddy-list window. To set autoreply messages for some accounts, go to the `Advanced' tab of the account edit dialog."
+msgid ""
+"This plugin lets you set autoreply message for any protocol. You can set the"
+" global autoreply message from the plugin options dialog. To set some "
+"specific autoreply message for a particular buddy, right click on the buddy "
+"in the buddy-list window. To set autoreply messages for some accounts, go to"
+" the `Advanced' tab of the account edit dialog."
 msgstr "Dieses Plugin ermöglicht automatische Antworten für alle Protokolle. Eine globale Antwort lässt sich über die Plugin-Konfiguration einstellen, Konto-spezifische unter `Konto bearbeiten' auf dem `Erweitert'-Tab. In der Buddy-Liste kann man per Rechtsklick spezielle, für einzelne Buddys verwendete, Nachrichten setzen."
 
 #: ../autoreply/autoreply.c:497
-msgid "I am currently not available. Please leave your message, and I will get back to you as soon as possible."
+msgid ""
+"I am currently not available. Please leave your message, and I will get back"
+" to you as soon as possible."
 msgstr "Ich bin momentan nicht verfügbar. Bitte hinterlassen Sie Ihre Nachricht und ich werde mich so bald wie möglich bei Ihnen melden."
 
 #: ../autoreply/autoreply.c:502
@@ -1311,15 +1263,20 @@ msgid "Away State Notification"
 msgstr "Abwesend-Melder"
 
 #: ../awaynotify/awaynotify.c:263
-msgid "Notifies in a conversation window when a buddy goes or returns from away"
+msgid ""
+"Notifies in a conversation window when a buddy goes or returns from away"
 msgstr "Benachrichtigt im Gesprächs-Fenster, wenn ein Buddy zu abwesend wechselt oder zurückkommt."
 
 #: ../bash/bash.c:97
-msgid "bash [n]: sends a link to a bash.org quote.  Specify a number for n and it will send a link to the quote with the specified number."
+msgid ""
+"bash [n]: sends a link to a bash.org quote.  Specify a number for n and it "
+"will send a link to the quote with the specified number."
 msgstr "bash [n]: sendet einen Link von einem bash.org Zitat. Die Zahl n definiert den Link zu einem bash.org Zitat mit dieser Nummer."
 
 #: ../bash/bash.c:101
-msgid "qdb [n]: sends a link to a qdb.us quote.  Specify a number for n and it will send a link to the quite with the specified number."
+msgid ""
+"qdb [n]: sends a link to a qdb.us quote.  Specify a number for n and it will"
+" send a link to the quite with the specified number."
 msgstr "qdb [n]: sendet einen Link von einem qdb.us Zitat. Die Zahl n definiert den Link zu einem qdb.us Zitat mit dieser Nummer."
 
 #: ../bash/bash.c:161
@@ -1331,7 +1288,9 @@ msgid "Generates links for quotes at bash.org"
 msgstr "Generiert Links zu Zitaten auf bash.org"
 
 #: ../bash/bash.c:165
-msgid "Generates links for quotes at bash.org or allows the user to specify a quote.  Provides the /bash command."
+msgid ""
+"Generates links for quotes at bash.org or allows the user to specify a "
+"quote.  Provides the /bash command."
 msgstr "Erstellt Links zu Zitaten auf bash.org oder erlaubt es dem Benutzer, ein Zitat anzugeben.  Stellt das /bash Kommando zur Verfügung."
 
 #: ../bit/bit.c:116
@@ -1379,7 +1338,10 @@ msgid "Tools to manipulate buddy icons. *DANGEROUS*"
 msgstr "Werkzeuge zum Manipulieren der Buddy-Icons. *GEFÄHRLICH*"
 
 #: ../bit/bit.c:232
-msgid "Whilst working on Purple 2.0.0, I found a need to destroy all my buddies' buddy icons.  There's nothing to do these functions in Purple, so here they are. Completely, thoroughly untested."
+msgid ""
+"Whilst working on Purple 2.0.0, I found a need to destroy all my buddies' "
+"buddy icons.  There's nothing to do these functions in Purple, so here they "
+"are. Completely, thoroughly untested."
 msgstr "Während ich an Purple 2.0.0 arbeitete, musste ich die Buddy-Icons all meiner Buddys zerstören. Es gibt keine Möglichkeiten für diese Funktionen in Purple, also sind sie hier. Durch und durch ungetestet."
 
 #: ../blistops/blistops.c:230
@@ -1440,12 +1402,8 @@ msgid ""
 msgid_plural ""
 "%s\n"
 "<b>Local Time:</b> %s (%.4g hours behind)"
-msgstr[0] ""
-"%s\r\n"
-"<b>Ortszeit:</b> %s (%.4g Stunde zurück)"
-msgstr[1] ""
-"%s\r\n"
-"<b>Ortszeit:</b> %s (%.4g Stunden zurück)"
+msgstr[0] "%s\r\n<b>Ortszeit:</b> %s (%.4g Stunde zurück)"
+msgstr[1] "%s\r\n<b>Ortszeit:</b> %s (%.4g Stunden zurück)"
 
 #: ../buddytime/gtkbuddytime.c:83
 #, c-format
@@ -1455,12 +1413,8 @@ msgid ""
 msgid_plural ""
 "%s\n"
 "<b>Local Time:</b> %s (%.4g hours ahead)"
-msgstr[0] ""
-"%s\r\n"
-"<b>Ortszeit:</b> %s (%.4g Stunde voraus)"
-msgstr[1] ""
-"%s\r\n"
-"<b>Ortszeit:</b> %s (%.4g Stunden voraus)"
+msgstr[0] "%s\r\n<b>Ortszeit:</b> %s (%.4g Stunde voraus)"
+msgstr[1] "%s\r\n<b>Ortszeit:</b> %s (%.4g Stunden voraus)"
 
 #: ../buddytime/gtkbuddytime.c:145
 msgid "Buddy Time (Pidgin UI)"
@@ -1469,6 +1423,70 @@ msgstr "Buddy-Zeit (Pidgin UI)"
 #: ../buddytime/gtkbuddytime.c:146 ../buddytime/gtkbuddytime.c:147
 msgid "Pidgin user interface for the Buddy Time plugin."
 msgstr "Pidgin Benutzeroberfläche für das Buddy-Zeit Plugin"
+
+#: ../capsnot/capsnot.c:205
+msgid "Inform about unread..."
+msgstr "Informiere über ungelesene…"
+
+#: ../capsnot/capsnot.c:210
+msgid "Instant Messages:"
+msgstr "Nachrichten"
+
+#: ../capsnot/capsnot.c:213
+msgid "In hidden conversations"
+msgstr "In versteckten Unterhaltungen"
+
+#: ../capsnot/capsnot.c:214 ../capsnot/capsnot.c:223
+msgid "Always"
+msgstr "Immer"
+
+#: ../capsnot/capsnot.c:219
+msgid "Chat Messages:"
+msgstr "Chatnachrichten:"
+
+#: ../capsnot/capsnot.c:222
+msgid "When my nick is said"
+msgstr "Wenn mein Nick erwähnt wurde"
+
+#: ../capsnot/capsnot.c:227
+msgid "Keyboard LEDs:"
+msgstr "Tastatur-LEDs"
+
+#: ../capsnot/capsnot.c:232
+msgid "Num Lock"
+msgstr "Num-Taste"
+
+#: ../capsnot/capsnot.c:236
+msgid "Caps Lock"
+msgstr "Feststelltaste"
+
+#: ../capsnot/capsnot.c:240
+msgid "Scroll Lock"
+msgstr "Rollen-Taste"
+
+#: ../capsnot/capsnot.c:244
+msgid "Flash Rate:"
+msgstr "Blink-Geschwindigkeit:"
+
+#: ../capsnot/capsnot.c:249
+msgid "Number of flashes"
+msgstr "Blinkanzahl"
+
+#: ../capsnot/capsnot.c:254
+msgid "Duration of flashes (seconds)"
+msgstr "Blinkdauer (in Sekunden)"
+
+#: ../capsnot/capsnot.c:336
+msgid "Caps-notification"
+msgstr "Feststell-Benachrichtigung"
+
+#: ../capsnot/capsnot.c:337
+msgid "Led notification on keyboards"
+msgstr "Benachrichtigung mit den Tastatur-LED's"
+
+#: ../capsnot/capsnot.c:338
+msgid "Informs of new messages with the NumLock, CapsLock, or ScrollLock LEDs"
+msgstr "Informiert über neue Nachrichten mit den LED's der Num-Taste, Feststelltaste oder Rollen-Taste"
 
 #: ../chronic/chronic.c:103
 msgid "Chronic"
@@ -1479,19 +1497,25 @@ msgid "Sound playing triggers"
 msgstr "Trigger zum Töne abspielen"
 
 #: ../chronic/chronic.c:105
-msgid "Allows buddies to remotely trigger sound playing in your instance of Purple with {S &lt;sound&gt;. Inspired by #guifications channel resident EvilDennisR and ancient versions of AOL.  THIS PLUGIN IS NOT YET FUNCTIONAL!  IT IS USELESS!"
+msgid ""
+"Allows buddies to remotely trigger sound playing in your instance of Purple "
+"with {S &lt;sound&gt;. Inspired by #guifications channel resident "
+"EvilDennisR and ancient versions of AOL.  THIS PLUGIN IS NOT YET FUNCTIONAL!"
+"  IT IS USELESS!"
 msgstr "Erlaubt Buddys das Abspielen von Tönen in deinem Purple über {S &lt;sound&gt;. Inspiriert vom Nutzer EvilDennisR des Channels #guifications und früheren AOL-Versionen.  DIESES PLUGIN FUNKTIONIERT NICHT! ES IST NUTZLOS!"
 
-#: ../colorize/colorize.c:272
+#: ../colorize/colorize.c:282
 msgid "Colorize"
 msgstr "Einfärben"
 
-#: ../colorize/colorize.c:273
+#: ../colorize/colorize.c:283
 msgid "Colorizes outgoing message text."
 msgstr "Färbt ausgehenden Nachrichtentext."
 
-#: ../colorize/colorize.c:274
-msgid "Colorizes outgoing message text to a gradient of specified starting and ending RGB values."
+#: ../colorize/colorize.c:284
+msgid ""
+"Colorizes outgoing message text to a gradient of specified starting and "
+"ending RGB values."
 msgstr "Färbt ausgehenden Nachrichtentext in einem Farbverlauf von der Startfarbe zur Endfarbe."
 
 #: ../common/gtk_template.c:84 ../common/purple_template.c:79
@@ -1523,16 +1547,16 @@ msgid "Lets you type in HTML without it being escaped to entities."
 msgstr "HTML eingeben, ohne dass es zu entitäten verändert wird."
 
 #: ../dewysiwygification/dewysiwygification.c:103
-msgid "Lets you type in HTML without it being escaped to entities. This will not work well for some protocols. Use \"&lt;\" for a literal \"<\"."
+msgid ""
+"Lets you type in HTML without it being escaped to entities. This will not "
+"work well for some protocols. Use \"&lt;\" for a literal \"<\"."
 msgstr "HTML eingeben, ohne dass es zu Entitäten verändert wird. Dies funktioniert mit manchen Protokollen nicht. Für ein \"<\" Zeichen benutze \"&lt;\"."
 
 #: ../dice/dice.c:310
 msgid ""
 "dice [dice] [sides]:  rolls dice number of sides sided dice OR\n"
 "dice [XdY+-Z]:  rolls X number of Y sided dice, giving a Z bonus/penalty to each.  e.g. 1d20+2"
-msgstr ""
-"dice [n] [s]:  Würfelt n Würfel mit s Seiten ODER\n"
-"dice [XdY+-Z]:  Würfelt X-mal einen Y-seitigen Würfel und addiert Z als Bonus/Strafe zum Ergebnis hinzu, z.B.: 1d20+2"
+msgstr "dice [n] [s]:  Würfelt n Würfel mit s Seiten ODER\ndice [XdY+-Z]:  Würfelt X-mal einen Y-seitigen Würfel und addiert Z als Bonus/Strafe zum Ergebnis hinzu, z.B.: 1d20+2"
 
 #: ../dice/dice.c:379
 msgid "Dice"
@@ -1543,7 +1567,9 @@ msgid "Rolls dice in a chat or im"
 msgstr "Würfelt in Chat oder Sofortnachricht"
 
 #: ../dice/dice.c:381
-msgid "Adds a command (/dice) to roll an arbitrary number of dice with an arbitrary number of sides. Now supports dice notation!  /help dice for details"
+msgid ""
+"Adds a command (/dice) to roll an arbitrary number of dice with an arbitrary"
+" number of sides. Now supports dice notation!  /help dice for details"
 msgstr "Bietet einen /dice-Befehl, der willkürlich viele Würfelwürfe mit ebenfalls willkürlich vielen Seiten simuliert. Unterstützt jetzt die Dice-Notation. Details unter /help dice"
 
 #: ../difftopic/difftopic.c:138
@@ -1584,7 +1610,10 @@ msgid "Provides Magic 8-ball like functionality"
 msgstr "Bietet die Magic-8-Ball Funktionalität"
 
 #: ../eight_ball/eight_ball.c:417
-msgid "Provides Magic 8-ball like functionality with the /8ball command, as well as similar functionality for common Stargate words or phrases with the /sg-ball command."
+msgid ""
+"Provides Magic 8-ball like functionality with the /8ball command, as well as"
+" similar functionality for common Stargate words or phrases with the /sg-"
+"ball command."
 msgstr "Bietet die Magic-8-Ball Funktionalität mit dem /8ball-Befehl, sowie einer ähnlichen Funktionalität für gängige Stargate-Wörter oder Ausdrücke mit dem /sgball-Befehl. Zufalls-Nachrichten können mit dem /fullcrap-Befehl eingefügt werden."
 
 #: ../enhancedhist/enhancedhist.c:250
@@ -1634,7 +1663,9 @@ msgid "An enhanced version of the history plugin."
 msgstr "Eine erweiterte Version des Verlaufsplugins"
 
 #: ../enhancedhist/enhancedhist.c:434
-msgid "An enhanced versoin of the history plugin. Grants ability to select the number of previous conversations to show instead of just one."
+msgid ""
+"An enhanced versoin of the history plugin. Grants ability to select the "
+"number of previous conversations to show instead of just one."
 msgstr "Eine erweiterte Version des Verlaufsplugins. Erlaubt es, die Anzahl der angezeigten vorherigen Unterhaltungen festzulegen, statt nur eine anzuzeigen."
 
 #: ../findip/findip.c:55
@@ -1649,7 +1680,7 @@ msgstr "Hey! Wie lautet deine IP?"
 msgid "Looking up the IP ...\n"
 msgstr "Auflösen der IP ...\n"
 
-#: ../findip/findip.c:91 ../findip/findip.c:170
+#: ../findip/findip.c:91 ../findip/findip.c:174
 msgid "Find IP"
 msgstr "Finde IP"
 
@@ -1657,11 +1688,11 @@ msgstr "Finde IP"
 msgid "Notify the user that you are trying to get the IP"
 msgstr "Benachrichtigt den Benutzer, dass Sie versuchst haben, die IP zu erhalten. "
 
-#: ../findip/findip.c:171
+#: ../findip/findip.c:175
 msgid "Find the IP of a person in the buddylist."
 msgstr "Findet die IP einer Person in der Buddy-Liste."
 
-#: ../findip/findip.c:172
+#: ../findip/findip.c:176
 msgid "Find the IP of a person in the buddylist. This doesn't really work."
 msgstr "Findet die IP einer Person in der Buddy-Liste. Funktioniert nicht wirklich."
 
@@ -1678,7 +1709,9 @@ msgid "Flips a coin and outputs the result"
 msgstr "Wirft eine Münze und gibt das Ergebnis aus."
 
 #: ../flip/flip.c:115
-msgid "Adds a command (/flip) to flip a coin and outputs the result in the active conversation"
+msgid ""
+"Adds a command (/flip) to flip a coin and outputs the result in the active "
+"conversation"
 msgstr "Bietet einen /flip-Befehl, der das Ergebnis eines Münzwurfes in der aktiven Unterhaltung ausgibt."
 
 #: ../google/google.c:273
@@ -1703,9 +1736,7 @@ msgstr "Gibt die URL für eine Google-\"auf gut Glück\"-Suche aus"
 msgid ""
 "gRIM: rim your pals\n"
 "/rim &lt;duration-in-secs&gt; &lt;filename&gt;"
-msgstr ""
-"gRIM: Belaste deine Freunde\n"
-"/rim &lt;Dauer-in-Sekunden&gt; &lt;filename&gt;"
+msgstr "gRIM: Belaste deine Freunde\n/rim &lt;Dauer-in-Sekunden&gt; &lt;filename&gt;"
 
 #: ../gRIM/gRIM.c:344
 msgid "gRIM"
@@ -1716,7 +1747,9 @@ msgid "A completely stupid and pointless plugin"
 msgstr "Ein vollkommen dummes und sinnloses Plugin"
 
 #: ../gRIM/gRIM.c:346
-msgid "Adds commands to annoy buddies with. Inspired by a dumb IRC convo and Red Dwarf."
+msgid ""
+"Adds commands to annoy buddies with. Inspired by a dumb IRC convo and Red "
+"Dwarf."
 msgstr "Fügt Befehle hinzu, um damit Buddys zu nerven. Inspiriert von einer dämlichen IRC-Unterhaltung und Red Dwarf."
 
 #: ../groupmsg/groupmsg.c:97
@@ -1729,7 +1762,9 @@ msgstr "Es sind keine Buddys der Gruppe %s online."
 #. * group, which should be multiple people anyway
 #: ../groupmsg/groupmsg.c:109
 #, c-format
-msgid "Your message will be sent to and probably annoy ALL %u PEOPLE in the group %s!"
+msgid ""
+"Your message will be sent to and probably annoy ALL %u PEOPLE in the group "
+"%s!"
 msgstr "Diese Nachricht wird ALLEN %u Leuten der Gruppe %s zugestellt und alle Leute ärgern!"
 
 #: ../groupmsg/groupmsg.c:113
@@ -1737,9 +1772,7 @@ msgstr "Diese Nachricht wird ALLEN %u Leuten der Gruppe %s zugestellt und alle L
 msgid ""
 "Your message will be sent to these buddies:\n"
 "%s"
-msgstr ""
-"Diese Nachricht wird an diese Buddys gesendet:\n"
-"%s"
+msgstr "Diese Nachricht wird an diese Buddys gesendet:\n%s"
 
 #: ../groupmsg/groupmsg.c:117
 msgid "Spam"
@@ -1803,20 +1836,13 @@ msgid ""
 "/highlight clear:   clears the history.\n"
 "/highlight +&lt;word&gt;:  adds &lt;word&gt; to the highlight word list for this conversation only.\n"
 "/highlight -&lt;word&gt;:  removes &lt;word&gt; from the highlight word list for this conversation only.\n"
-msgstr ""
-"/highlight history: Zeigt eine Liste der hervorgehoenen Texte aus dem Verlauf.\n"
-"/highlight clear:   Leert den Verlauf.\n"
-"/highlight +&lt;word&gt;:  Fügt &lt;word&gt; zur Liste der hervorgehoben Wörter für diese Unterhaltung hinzu.\n"
-"/highlight -&lt;word&gt;:  Entfernt removes &lt;word&gt; von Liste der hervorgehoben Wörter aus dieser Unterhaltung.\n"
-"\r\n"
+msgstr "/highlight history: Zeigt eine Liste der hervorgehoenen Texte aus dem Verlauf.\n/highlight clear:   Leert den Verlauf.\n/highlight +&lt;word&gt;:  Fügt &lt;word&gt; zur Liste der hervorgehoben Wörter für diese Unterhaltung hinzu.\n/highlight -&lt;word&gt;:  Entfernt removes &lt;word&gt; von Liste der hervorgehoben Wörter aus dieser Unterhaltung.\n\r\n"
 
 #: ../highlight/highlight.c:276
 msgid ""
 "Words to highlight on\n"
 "(separate words by space)"
-msgstr ""
-"Hervorzuhebende Wörter\n"
-"(Wörter durch Leerzeichen trennen) "
+msgstr "Hervorzuhebende Wörter\n(Wörter durch Leerzeichen trennen) "
 
 #: ../highlight/highlight.c:333 ../nicksaid/nicksaid.c:574
 msgid "Highlight"
@@ -1825,6 +1851,25 @@ msgstr "Hervorheben"
 #: ../highlight/highlight.c:334 ../highlight/highlight.c:335
 msgid "Support for highlighting words."
 msgstr "Unterstützung für das Hervorheben von Wörtern."
+
+#. Add in some protocol preferences
+#: ../icon-override/icon_override.c:77
+msgid "Protocol Icon"
+msgstr "Protokoll-Icon"
+
+#: ../icon-override/icon_override.c:177
+msgid "Protocol Icon Override"
+msgstr "Protokoll-Icon überschreiben"
+
+#: ../icon-override/icon_override.c:178
+msgid "Customise protocol icons"
+msgstr "Protokoll-Icon verändern"
+
+#: ../icon-override/icon_override.c:179
+msgid ""
+"Lets you change protocol icons per-account so that you can tell the "
+"difference between, say, a personal XMPP account and one used for work"
+msgstr "Ermöglicht das Ändern der Protokoll Icons für jedes Konto, so dass Sie den Unterschied z.B. zwischen einem persönlichen XMPP-Konto und geschäftlichen Konto erkennen können"
 
 #: ../ignorance/ignorance.c:391
 #, c-format
@@ -1851,7 +1896,9 @@ msgid "Ignorance"
 msgstr "Ignoranz"
 
 #: ../ignorance/ignorance.c:1204 ../ignorance/ignorance.c:1206
-msgid "Allows you to manage lists of users with various levels of allowable activity."
+msgid ""
+"Allows you to manage lists of users with various levels of allowable "
+"activity."
 msgstr "Ermöglicht Ihnen eine Liste von Benutzern mit unterschiedlichen Ebenen der zulässigen Tätigkeit zu verwalten."
 
 #: ../ignorance/interface.c:78
@@ -1913,7 +1960,7 @@ msgstr "Sound abspielen"
 
 #: ../ignorance/interface.c:198
 msgid "Browse"
-msgstr "Durchsuchen"
+msgstr "Durchsuchen "
 
 #: ../ignorance/interface.c:203
 msgid "Execute command"
@@ -1961,20 +2008,26 @@ msgid "(Dear God! You are not ignoring any one!)"
 msgstr "(Lieber Gott, du ignorierst niemanden!)"
 
 #: ../ignore/ignore.c:234
-msgid "ignore [-c] [+&lt;ignore&gt; -&lt;unignore&gt;]<br>Examples:<br>   'ignore +StupidBot -NotABot' \t - (in a chat) Starts ignoring StupidBot, and removes NotABot from ignore list.<br>   'ignore -c +AnotherBot' \t - (in a chat) Starts ignoring AnotherBot, but only in chats.<br>   'ignore +' \t - (in an IM) Starts ignoring this person.<br>   'ignore -' \t - (in an IM) Starts unignoring this person.<br>   'ignore' \t - Lists the current ignore rules."
+msgid ""
+"ignore [-c] [+&lt;ignore&gt; -&lt;unignore&gt;]<br>Examples:<br>   'ignore "
+"+StupidBot -NotABot' \t - (in a chat) Starts ignoring StupidBot, and removes"
+" NotABot from ignore list.<br>   'ignore -c +AnotherBot' \t - (in a chat) "
+"Starts ignoring AnotherBot, but only in chats.<br>   'ignore +' \t - (in an "
+"IM) Starts ignoring this person.<br>   'ignore -' \t - (in an IM) Starts "
+"unignoring this person.<br>   'ignore' \t - Lists the current ignore rules."
 msgstr "ignore [-c] [+&lt;ignore&gt; -&lt;unignore&gt;]<br>Beispiele:<br> 'ignore +StupidBot -NotABot' \t - (in einem Chat) Beginnt StupidBot zu ignorieren, und entfernt NotABot aus der Ingnorier-Liste.<br> 'ignore -c +AnotherBot' \t - (in einem Chat) Beginnt AnotherBot nur in Chats zu ignorieren.<br> 'ignore +' \t - (in einem IM) Beginnt diese Person zu ignorieren.<br> 'ignore -' \t - (in einem IM) Hebt das Ignorieren für diese Person wieder auf.<br> 'ignore' \t - Listet die aktuellen Ignorier-Regeln auf."
 
 #: ../ignore/ignore.c:305
-msgid "Flexible plugin to selectively ignore people. Please do not use if you have amnesia."
+msgid ""
+"Flexible plugin to selectively ignore people. Please do not use if you have "
+"amnesia."
 msgstr "Flexibles Plugin zum selektiven Ignorieren. Bei Erinnerungsverlust bitte nicht verwenden."
 
 #: ../ignore/ignore.c:307
 msgid ""
 "Flexible plugin to selectively ignore people. See '/help ignore' for more help.\n"
 "Please do not use if you have amnesia."
-msgstr ""
-"Plugin zum selektiven Ignorieren. '/help ignore' bietet weitere Hilfe.\n"
-"Bei Erinnerungsverlust bitte nicht verwenden."
+msgstr "Plugin zum selektiven Ignorieren. '/help ignore' bietet weitere Hilfe.\nBei Erinnerungsverlust bitte nicht verwenden."
 
 #: ../infopane/infopane.c:141 ../infopane/infopane.c:253
 msgid "Libpurple and Pidgin are too old!\n"
@@ -1989,7 +2042,9 @@ msgid "You need to update Pidgin!"
 msgstr "Pidgin muss aktualisiert werden!"
 
 #: ../infopane/infopane.c:144
-msgid "This plugin is incompatible with the running version of Pidgin and Libpurple because it is too old.  Please upgrade to the newest version of Pidgin."
+msgid ""
+"This plugin is incompatible with the running version of Pidgin and Libpurple"
+" because it is too old.  Please upgrade to the newest version of Pidgin."
 msgstr "Dieses Plugin ist nicht kompatibel zur laufenden Version von Pidgin und Libpurple. Bitte auf die neueste Version von Pidgin aktualisieren."
 
 #. XXX: Is there a better way than this? There really should be.
@@ -2092,54 +2147,57 @@ msgstr "Behandelt die Ecken und Kanten des IRC-Protokoll."
 msgid ""
 "- Transparent authentication with a variety of services.\n"
 "- Suppression of various useless messages"
-msgstr ""
-"-Transparente Authentifizierung mit einer Vielzahl an Dienstleistungen.\n"
-"-Unterdrückung verschiedener nutzloser Einträge"
+msgstr "-Transparente Authentifizierung mit einer Vielzahl an Dienstleistungen.\n-Unterdrückung verschiedener nutzloser Einträge"
 
 #. specify our help string and register our command
-#: ../irc-more/irc-more.c:272
+#: ../irc-more/irc-more.c:273
 msgid "notice target message:  Send a notice to the specified target."
 msgstr "Hinweis für Nachrichtenziel: Senden Sie eine Mitteilung an das angegebene Ziel."
 
 #. Alphabetize the option label strings
-#: ../irc-more/irc-more.c:293
+#: ../irc-more/irc-more.c:294
 msgid "Auto-Join Channels"
 msgstr "Automatisch mit Kanälen verbinden"
 
-#: ../irc-more/irc-more.c:296
+#: ../irc-more/irc-more.c:297
 msgid "CTCP Version reply"
 msgstr "CTCP-Version Antwort"
 
-#: ../irc-more/irc-more.c:299
+#: ../irc-more/irc-more.c:300
 msgid "Default Quit Message"
 msgstr "Standard verlassen-Nachricht"
 
-#: ../irc-more/irc-more.c:302
+#: ../irc-more/irc-more.c:303
 msgid "Default Part Message"
 msgstr "Standard Trennen-Nachricht"
 
-#: ../irc-more/irc-more.c:305
+#: ../irc-more/irc-more.c:306
 msgid "Set User Modes On Connect"
 msgstr "Setze Benutzer-Modus beim Verbinden"
 
-#: ../irc-more/irc-more.c:308
+#: ../irc-more/irc-more.c:309
 msgid "Unset User Modes On Connect"
 msgstr "Setze Benutzer-Modus beim Verbinden zurück"
 
-#: ../irc-more/irc-more.c:364
+#: ../irc-more/irc-more.c:365
 msgid "IRC More"
 msgstr "IRC-Erweiterung"
 
-#: ../irc-more/irc-more.c:365
+#: ../irc-more/irc-more.c:366
 msgid "Adds additional IRC features."
 msgstr "Fügt zusätzliche IRC-Funktionen hinzu."
 
-#: ../irc-more/irc-more.c:367
-msgid "Adds additional IRC features, including a customizable quit message, a customizable CTCP VERSION reply, a rudimentary channel autojoin list, and the /notice command for notices."
+#: ../irc-more/irc-more.c:368
+msgid ""
+"Adds additional IRC features, including a customizable quit message, a "
+"customizable CTCP VERSION reply, a rudimentary channel autojoin list, and "
+"the /notice command for notices."
 msgstr "Fügt zusätzliche IRC-Funktionen hinzu, darunter eine anpassbare Verlassen-Nachricht, eine anpassbare CTCP-VERSION Antwort, eine rudimentäre Liste für das automatische Verbinden zu Kanälen und die /notice Befehle für Bekanntmachungen."
 
-#: ../irc-more/irc-more.c:372
-msgid "Adds additional IRC features, including a customizable quit message, a customizable CTCP VERSION reply, and a rudimentary channel autojoin list."
+#: ../irc-more/irc-more.c:373
+msgid ""
+"Adds additional IRC features, including a customizable quit message, a "
+"customizable CTCP VERSION reply, and a rudimentary channel autojoin list."
 msgstr "Fügt zusätzliche IRC-Funktionen hinzu, darunter eine anpassbare Verlassen-Nachricht, eine anpassbare CTCP-VERSION Antwort und eine rudimentäre Liste für das automatische Verbinden zu Kanälen."
 
 #: ../irssi/datechange.c:85
@@ -2177,7 +2235,11 @@ msgid "Implements features of the irssi IRC client for use in Pidgin."
 msgstr "Implementiert Funktionen des irssi-IRC-Client für die Benutzung mit Pidgin."
 
 #: ../irssi/irssi.c:133
-msgid "Implements some features of the IRC client irssi to be used in Purple.  It lets you know in all open conversations when the day has changed, adds the lastlog command, adds the window command, etc.  The day changed message is not logged."
+msgid ""
+"Implements some features of the IRC client irssi to be used in Purple.  It "
+"lets you know in all open conversations when the day has changed, adds the "
+"lastlog command, adds the window command, etc.  The day changed message is "
+"not logged."
 msgstr "Implementiert Funktionen des irssi-IRC-Client für die Benutzung mit Pidgin. Es teilt Ihnen in allen offenen Unterhaltungen mit, wenn ein Tageswechsel stattfand, fügt den lastlog-Befehl den window-Befehl hinzu. Die Tageswechsel-Nachricht wird nicht mitgeschnitten."
 
 #. XXX: This should probably be moved into outputting directly in the
@@ -2193,7 +2255,10 @@ msgstr "Lastlog-Ausgabe"
 
 #. XXX: Translators: DO NOT TRANSLATE "lastlog" or the HTML tags below
 #: ../irssi/lastlog.c:102
-msgid "<pre>lastlog &lt;string&gt;: Shows, from the current conversation's history, all messages containing the word or words specified in string.  It will be an exact match, including whitespace and special characters."
+msgid ""
+"<pre>lastlog &lt;string&gt;: Shows, from the current conversation's history,"
+" all messages containing the word or words specified in string.  It will be "
+"an exact match, including whitespace and special characters."
 msgstr "<pre>lastlog &lt;string&gt;: Zeigt aus den Mitschnitten der aktuellen Unterhaltung alle Nachrichten, die das Wort oder die Wörter, die als Zeichenkette angegeben wurden, enthalten.  Es werden nur exakte Übereinstimmungen berücksichtigt, auch Leerzeichen und Sonderzeichen werden beachtet."
 
 #. * XXX: Translators: DO NOT TRANSLATE the first "layout" or the "\nsave"
@@ -2205,11 +2270,7 @@ msgid ""
 "save - saves the current layout\n"
 "reset - clears the current saved layout\n"
 "</pre>"
-msgstr ""
-"<pre>layout &lt;save|reset&gt;: Das Layout der aktuellen Gespräche merken, damit sie nach einem Purple-Neustart wieder genauso angezeigt werden können.\n"
-"save - speichert das aktuelle Aussehen\n"
-"reset - löscht das aktuell gespeicherte Aussehen\n"
-"</pre>"
+msgstr "<pre>layout &lt;save|reset&gt;: Das Layout der aktuellen Gespräche merken, damit sie nach einem Purple-Neustart wieder genauso angezeigt werden können.\nsave - speichert das aktuelle Aussehen\nreset - löscht das aktuell gespeicherte Aussehen\n</pre>"
 
 #: ../irssi/window.c:73
 msgid "Invalid window specified."
@@ -2239,19 +2300,13 @@ msgid ""
 "right - move one conversation to the right\n"
 "&lt;number&gt; - go to tab <number>\n"
 "</pre>"
-msgstr ""
-"<pre>window &lt;option&gt;: Operationen für Fenster (Tabs). Erlaubte Optionen sind:\n"
-"close - schließt die aktuelle Unterhaltung\n"
-"next - wechselt zur nächsten Unterhaltung\n"
-"previous - wechselt zur vorherigen Unterhaltung\n"
-"left - verschiebt eine Unterhaltung nach links\n"
-"right - verschiebt eine Unterhaltung nach rechts\n"
-"&lt;number&gt; - wechsele zum Tab <number>\n"
-"</pre>"
+msgstr "<pre>window &lt;option&gt;: Operationen für Fenster (Tabs). Erlaubte Optionen sind:\nclose - schließt die aktuelle Unterhaltung\nnext - wechselt zur nächsten Unterhaltung\nprevious - wechselt zur vorherigen Unterhaltung\nleft - verschiebt eine Unterhaltung nach links\nright - verschiebt eine Unterhaltung nach rechts\n&lt;number&gt; - wechsele zum Tab <number>\n</pre>"
 
 #. same thing as above, except for the /win command
 #: ../irssi/window.c:164
-msgid "<pre>win: THis command is synonymous with /window.  Try /help window for further details.</pre>"
+msgid ""
+"<pre>win: THis command is synonymous with /window.  Try /help window for "
+"further details.</pre>"
 msgstr "<pre>win: Dieser Befehl ist gleich dem /window-Befehl. Versuchen Sie /help window für weitere Details.</pre>"
 
 #. Last seen
@@ -2262,33 +2317,25 @@ msgstr "<pre>win: Dieser Befehl ist gleich dem /window-Befehl. Versuchen Sie /he
 msgid ""
 "\n"
 "<b>Last Seen</b>: "
-msgstr ""
-"\n"
-"<b>Zuletzt gesehen</b>: "
+msgstr "\n<b>Zuletzt gesehen</b>: "
 
 #: ../lastseen/lastseen.c:161
 msgid ""
 "\n"
 "<b>Last Said</b>: "
-msgstr ""
-"\n"
-"<b>Zuletzt gesagt</b>:"
+msgstr "\n<b>Zuletzt gesagt</b>:"
 
 #: ../lastseen/lastseen.c:162
 msgid ""
 "\n"
 "<b>Signed On</b>: "
-msgstr ""
-"\n"
-"<b>Angemeldet seit</b>: "
+msgstr "\n<b>Angemeldet seit</b>: "
 
 #: ../lastseen/lastseen.c:163
 msgid ""
 "\n"
 "<b>Signed Off</b>: "
-msgstr ""
-"\n"
-"<b>Abgemeldet seit</b>: "
+msgstr "\n<b>Abgemeldet seit</b>: "
 
 #: ../lastseen/lastseen.c:241
 msgid "Last Seen"
@@ -2299,7 +2346,9 @@ msgid "Record when a buddy was last seen."
 msgstr "Speichert, wann ein Buddy zuletzt gesehen wurde."
 
 #: ../lastseen/lastseen.c:243
-msgid "Logs the time of a last received message, what they said, when they logged in, and when they logged out, for buddies on your buddy list."
+msgid ""
+"Logs the time of a last received message, what they said, when they logged "
+"in, and when they logged out, for buddies on your buddy list."
 msgstr "Protokolliert die Zeiten Ihrer Freunde in der Kontaktliste für die zuletzt empfangene Nachricht, was sie sagten, wann sie sich angemeldet haben und wann sie sich abgemeldet haben."
 
 #. create a field
@@ -2413,7 +2462,11 @@ msgid "Provides numerous user-requested list-handling capabilities."
 msgstr "Bietet zahlreiche von Benutzern gewünschte Möglichkeiten zur Handhabung von Listen."
 
 #: ../listhandler/listhandler.c:119
-msgid "Provides numerous user-requested list-handling capabilities, such as importing and exporting of AIM .blt files and generic protocol-agnostic XML .blist files, as well as direct copying of buddies from one account to another."
+msgid ""
+"Provides numerous user-requested list-handling capabilities, such as "
+"importing and exporting of AIM .blt files and generic protocol-agnostic XML "
+".blist files, as well as direct copying of buddies from one account to "
+"another."
 msgstr "Bietet zahlreiche von Benutzern gewünschte Möglichkeiten zur Handhabung von Listen, wie den Im- und Export von AIM .blt-Dateien und allgemeinen protokollunabhängigen XML .blist-Dateien, sowie das direkte Kopieren von Buddys von einem Konto zum anderen."
 
 #. and finally we can create the request
@@ -2467,7 +2520,7 @@ msgstr "Alle"
 
 #: ../mystatusbox/mystatusbox.c:380 ../nicksaid/nicksaid.c:256
 msgid "None"
-msgstr "Keine"
+msgstr "Kein"
 
 #: ../mystatusbox/mystatusbox.c:383
 msgid "Out of sync ones"
@@ -2498,7 +2551,10 @@ msgid "Hide/Show the per-account statusboxes"
 msgstr "Aus- und einblenden der Statusauswahl für jedes Konto"
 
 #: ../mystatusbox/mystatusbox.c:561
-msgid "You can show all the per-account statusboxes, hide all of them, or just show the ones that are in a different status from the global status.  For ease of use, you can bind keyboard shortcuts for the menu items."
+msgid ""
+"You can show all the per-account statusboxes, hide all of them, or just show"
+" the ones that are in a different status from the global status.  For ease "
+"of use, you can bind keyboard shortcuts for the menu items."
 msgstr "Sie können für jedes Konto die Statusauswahl anzeigen, alle ausblenden oder einfach nur die Status anzeigen, die anders als der globale Status sind. Für die Benutzerfreundlichkeit können Sie Tastenkombinationen für die Menüpunkte vergeben."
 
 #: ../napster/napster.c:286
@@ -2507,7 +2563,8 @@ msgstr "Das Lesen des Headers vom Server nicht möglich"
 
 #: ../napster/napster.c:300
 #, c-format
-msgid "Unable to read message from server: %s.  Command is %hd, length is %hd."
+msgid ""
+"Unable to read message from server: %s.  Command is %hd, length is %hd."
 msgstr "Das Lesen der Nachricht vom Server: %s nicht möglich. Das Kommando ist %hd mit einer einer Länge von %hd."
 
 #: ../napster/napster.c:316
@@ -2557,7 +2614,7 @@ msgstr "%s hat einen PING angefordert"
 msgid "Unable to connect."
 msgstr "Verbindung nicht möglich."
 
-#: ../napster/napster.c:558
+#: ../napster/napster.c:558 ../okcupid/okcupid.c:221
 msgid "Connecting"
 msgstr "Verbinde"
 
@@ -2571,7 +2628,7 @@ msgstr "_Gruppe:"
 #. *< dependencies
 #. *< priority
 #. *< id
-#: ../napster/napster.c:715
+#: ../napster/napster.c:721
 msgid "Napster"
 msgstr "Napster"
 
@@ -2579,15 +2636,15 @@ msgstr "Napster"
 #. *< version
 #. *  summary
 #. *  description
-#: ../napster/napster.c:718 ../napster/napster.c:720
+#: ../napster/napster.c:724 ../napster/napster.c:726
 msgid "NAPSTER Protocol Plugin"
 msgstr "NAPSTER Protokoll-Plugin"
 
-#: ../napster/napster.c:747 ../snpp/snpp.c:586
+#: ../napster/napster.c:753 ../snpp/snpp.c:592
 msgid "Server"
 msgstr "Server"
 
-#: ../napster/napster.c:750 ../snpp/snpp.c:589
+#: ../napster/napster.c:756 ../snpp/snpp.c:595
 msgid "Port"
 msgstr "Port"
 
@@ -2603,13 +2660,13 @@ msgstr "Liste der hervorgehobenen Nachrichten:"
 #: ../nicksaid/nicksaid.c:264 ../xmmsremote/xmmsremote.c:399
 #: ../xmmsremote/xmmsremote.c:494
 msgid "Next"
-msgstr "Vor"
+msgstr "Nächstes"
 
 #. previous
 #: ../nicksaid/nicksaid.c:269 ../xmmsremote/xmmsremote.c:404
 #: ../xmmsremote/xmmsremote.c:514
 msgid "Previous"
-msgstr "Zurück"
+msgstr "Vorheriges"
 
 #: ../nicksaid/nicksaid.c:294
 msgid "Clear History"
@@ -2617,15 +2674,13 @@ msgstr "Verlauf löschen"
 
 #: ../nicksaid/nicksaid.c:299
 msgid "Show All"
-msgstr "Alle anzeigen"
+msgstr "Alle einblenden"
 
 #: ../nicksaid/nicksaid.c:578
 msgid ""
 "_Words to highlight on\n"
 "(separate the words with a blank space)"
-msgstr ""
-"_Wörter, die hervorgehoben werden\n"
-"(Wörter durch ein Leerzeichen trennen)"
+msgstr "_Wörter, die hervorgehoben werden\n(Wörter durch ein Leerzeichen trennen)"
 
 #: ../nicksaid/nicksaid.c:581
 msgid "Number of displayed characters"
@@ -2635,9 +2690,7 @@ msgstr "Anzahl der dargestellten Zeichen"
 msgid ""
 "_Set the number of characters displayed\n"
 "in the nicksaid menu"
-msgstr ""
-"Setze die Anzahl der dargestellten Zeichen\n"
-"im Nicksaid-Menü"
+msgstr "Setze die Anzahl der dargestellten Zeichen\nim Nicksaid-Menü"
 
 #: ../nicksaid/nicksaid.c:590
 msgid "Display who said your name in the nicksaid menu"
@@ -2658,6 +2711,68 @@ msgstr "Darstellung in einem seperaten Dialog erlauben"
 #: ../nicksaid/nicksaid.c:660 ../nicksaid/nicksaid.c:661
 msgid "Record when someone said your nick in a chat."
 msgstr "Zeichnet auf, wenn jemand Ihren Nick in einen Chat schreibt."
+
+#: ../ning/ning.c:130
+msgid "Could not log on"
+msgstr "Anmelden nicht möglich"
+
+#: ../ning/ning.c:133
+msgid "Joining public chat"
+msgstr "Öffentlichen Chat beitreten"
+
+#. Use our new domain to log into the chat servers
+#: ../ning/ning.c:164
+msgid "Logging into chat"
+msgstr "Am Chat anmelden"
+
+#: ../ning/ning.c:199
+msgid "NingID not found"
+msgstr "NingID nicht gefunden"
+
+#: ../ning/ning.c:218
+msgid "xgToken not found"
+msgstr "xgToken nicht gefunden"
+
+#. Now we should have everything we need to sign into chat
+#: ../ning/ning.c:227
+msgid "Fetching chat server"
+msgstr "Chat-Server abrufen"
+
+#: ../ning/ning.c:247
+msgid "Fetching token"
+msgstr "Token abrufen"
+
+#: ../ning/ning.c:286
+msgid "Logging in"
+msgstr "Anmelden"
+
+#: ../ning/ning.c:299
+msgid "Host not set"
+msgstr "Host nicht eingetragen"
+
+#: ../ning/ning.c:380
+msgid "Email Address..."
+msgstr "E-Mail-Adresse..."
+
+#. major_version
+#. minor version
+#. type
+#. ui_requirement
+#. flags
+#. dependencies
+#. priority
+#. id
+#. name
+#. version
+#. summary
+#: ../ning/ning.c:541 ../ning/ning.c:542
+msgid "Ning Protocol Plugin"
+msgstr "Ning Protokoll-Plugin"
+
+#: ../ning/ning_connection.c:221 ../okcupid/okc_connection.c:225
+#: ../omegle/om_connection.c:220
+msgid "Server closed the connection."
+msgstr "Server hat die Verbindung geschlossen."
 
 #: ../nomobility/nomobility.c:52
 msgid "There are no messages in the queue."
@@ -2691,12 +2806,7 @@ msgid ""
 "delete #  Deletes the message numbered #\n"
 "list      Lists all queued messages\n"
 "sendall   Sends all queued messages\n"
-msgstr ""
-"%s &lt;[clear][clear][delete][send]&gt;\n"
-"clear     Leert alle Nachrichten aus der Warteschlange\n"
-"delete #  Löscht die Nachricht mit der Nummer #\n"
-"list      Listet alle Nachrichten aus der Warteschlange auf\n"
-"sendall   Sendet alle Nachrichten aus der Warteschlange\n"
+msgstr "%s &lt;[clear][clear][delete][send]&gt;\nclear     Leert alle Nachrichten aus der Warteschlange\ndelete #  Löscht die Nachricht mit der Nummer #\nlist      Listet alle Nachrichten aus der Warteschlange auf\nsendall   Sendet alle Nachrichten aus der Warteschlange\n"
 
 #: ../nomobility/nomobility.c:308
 msgid "No Mobility"
@@ -2705,6 +2815,153 @@ msgstr "Keine Mobilität"
 #: ../nomobility/nomobility.c:309
 msgid "Stops you from messaging mobile users"
 msgstr "Verhindert das Versenden von Nachrichten an mobile Nutzer"
+
+#: ../okcupid/okc_blist.c:74
+msgid "View web profile"
+msgstr "Web-Profil anzeigen"
+
+#: ../okcupid/okc_blist.c:101
+msgid "Age"
+msgstr "Alter"
+
+#: ../okcupid/okc_blist.c:103
+msgid "Gender"
+msgstr "Geschlecht"
+
+#: ../okcupid/okc_blist.c:104
+msgid "Sexual Preference"
+msgstr "Sexuelle Vorlieben"
+
+#: ../okcupid/okc_blist.c:105
+msgid "Relationship Status"
+msgstr "Beziehungsstatus"
+
+#: ../okcupid/okc_blist.c:106
+msgid "Location"
+msgstr "Ort"
+
+#: ../okcupid/okc_blist.c:108
+msgid "Match"
+msgstr "Übereinstimmung"
+
+#: ../okcupid/okc_blist.c:111
+msgid "Friend"
+msgstr "Freund"
+
+#: ../okcupid/okc_blist.c:114
+msgid "Enemy"
+msgstr "Feind"
+
+#: ../okcupid/okc_blist.c:159
+msgid "The Skinny"
+msgstr "Der Dünne"
+
+#: ../okcupid/okc_blist.c:162
+msgid "Last Online"
+msgstr "Zuletzt Online"
+
+#: ../okcupid/okc_blist.c:163
+msgid "Join Date"
+msgstr "Beitrittsdatum"
+
+#: ../okcupid/okc_blist.c:164
+msgid "Ethnicity"
+msgstr "Staatsangehörigkeit"
+
+#: ../okcupid/okc_blist.c:165
+msgid "Height"
+msgstr "Höhe"
+
+#: ../okcupid/okc_blist.c:166
+msgid "Body Type"
+msgstr "Körper-Typ"
+
+#: ../okcupid/okc_blist.c:167
+msgid "Looking For"
+msgstr "Auf der Suche nach"
+
+#: ../okcupid/okc_blist.c:168
+msgid "Smokes"
+msgstr "Raucher"
+
+#: ../okcupid/okc_blist.c:169
+msgid "Drinks"
+msgstr "Getränke"
+
+#: ../okcupid/okc_blist.c:170
+msgid "Drugs"
+msgstr "Drogen"
+
+#: ../okcupid/okc_blist.c:175
+msgid "Religion"
+msgstr "Religion"
+
+#: ../okcupid/okc_blist.c:180
+msgid "Star sign"
+msgstr "Sternzeichen"
+
+#: ../okcupid/okc_blist.c:184
+msgid "Education"
+msgstr "Bildung"
+
+#: ../okcupid/okc_blist.c:186
+msgid "Job"
+msgstr "Beruf"
+
+#: ../okcupid/okc_blist.c:187
+msgid "Income"
+msgstr "Einkommen"
+
+#: ../okcupid/okc_blist.c:188
+msgid "Kids"
+msgstr "Kinder"
+
+#: ../okcupid/okc_blist.c:191
+msgid "Pets"
+msgstr "Haustiere"
+
+#: ../okcupid/okc_blist.c:193
+msgid "Languages"
+msgstr "Sprachen"
+
+#: ../okcupid/okc_blist.c:255
+msgid "_Wink"
+msgstr "_zwinkern"
+
+#: ../okcupid/okc_messages.c:440
+msgid "Recipient not online"
+msgstr "Empfänger ist nicht online"
+
+#: ../okcupid/okc_messages.c:443
+msgid "You cannot send an IM to yourself"
+msgstr "Du kannst dir selbst keine Nachrichten schicken"
+
+#: ../okcupid/okc_messages.c:446
+msgid "Recipient is 'missing'"
+msgstr "Empfänger wird \"vermisst\""
+
+#: ../okcupid/okc_messages.c:449
+msgid "Recipient turned IM off"
+msgstr "Empfänger schaltete den IM aus"
+
+#: ../okcupid/okcupid.c:164
+msgid "Authenticating"
+msgstr "Authentifizierung"
+
+#. major_version
+#. minor version
+#. type
+#. ui_requirement
+#. flags
+#. dependencies
+#. priority
+#. id
+#. name
+#. version
+#. summary
+#: ../okcupid/okcupid.c:442 ../okcupid/okcupid.c:443
+msgid "OkCupid Protocol Plugin"
+msgstr "OK-Cupido Protokoll-Plugin"
 
 #: ../oldlogger/oldlogger.c:272
 #, c-format
@@ -2723,12 +2980,16 @@ msgstr "IM-Sitzung mit %s"
 
 #: ../oldlogger/oldlogger.c:423
 #, c-format
-msgid "<FONT COLOR=\"#16569E\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> %s<BR>\n"
+msgid ""
+"<FONT COLOR=\"#16569E\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT>"
+" %s<BR>\n"
 msgstr "<FONT COLOR=\"#16569E\" sml=\"%s\">(%s) <B>%s &lt;Automatische Antwort&gt;:</B></FONT> %s<BR>\n"
 
 #: ../oldlogger/oldlogger.c:425
 #, c-format
-msgid "<FONT COLOR=\"#A82F2F\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT> %s<BR>\n"
+msgid ""
+"<FONT COLOR=\"#A82F2F\" sml=\"%s\">(%s) <B>%s &lt;AUTO-REPLY&gt;:</B></FONT>"
+" %s<BR>\n"
 msgstr "<FONT COLOR=\"#A82F2F\" sml=\"%s\">(%s) <B>%s &lt;Automatische Antwort&gt;:</B></FONT> %s<BR>\n"
 
 #: ../oldlogger/oldlogger.c:452
@@ -2746,6 +3007,25 @@ msgstr "Ursprünglicher Logger"
 #: ../oldlogger/oldlogger.c:516 ../oldlogger/oldlogger.c:517
 msgid "Re-implements the legacy, deficient, logging"
 msgstr "Reimplementiert das veraltete, mangelhafte/unzureichende Logging"
+
+#: ../omegle/omegle.c:236
+msgid "_Start random IM"
+msgstr "_Zufälligen Chat starten"
+
+#. major_version
+#. minor version
+#. type
+#. ui_requirement
+#. flags
+#. dependencies
+#. priority
+#. id
+#. name
+#. version
+#. summary
+#: ../omegle/omegle.c:412 ../omegle/omegle.c:413
+msgid "Omegle Protocol Plugin"
+msgstr "Omegle Protokoll-Plugin"
 
 #: ../plonkers/plonkers.c:228
 msgid "Ignored Plonkers"
@@ -2788,10 +3068,7 @@ msgid ""
 "<pre>plonkers;\n"
 "Tell people in a chat what you really think of them\n"
 "</pre>"
-msgstr ""
-"<pre>plonkers;\n"
-"Sagen Sie den Trotteln in einem Chat, was Sie wirklich über sie denken\n"
-"</pre>"
+msgstr "<pre>plonkers;\nSagen Sie den Trotteln in einem Chat, was Sie wirklich über sie denken\n</pre>"
 
 #: ../plonkers/plonkers.c:342
 msgid "/me has identified %N plonker: %P."
@@ -2814,7 +3091,11 @@ msgid "Tell plonkers what you really think."
 msgstr "Sagen Sie Trotteln, was Sie wirklich denken."
 
 #: ../plonkers/plonkers.c:353
-msgid "Plonkers is a small plugin that lets you announce to a chat room your current list of ignores, as well as providing other pointless ignore and privacy tools for dealing with idiots.  The name is inspired by the British/Irish word for 'idiots.'"
+msgid ""
+"Plonkers is a small plugin that lets you announce to a chat room your "
+"current list of ignores, as well as providing other pointless ignore and "
+"privacy tools for dealing with idiots.  The name is inspired by the "
+"British/Irish word for 'idiots.'"
 msgstr "Plonkers ist ein kleines Plugin, das es Ihnen erlaubt, Ihre momentane Ignore-Liste in einem Chat zu verkünden, und zusätzlich andere sinnlose Ignorier- und Privatsphäre-Werkzeuge zum Umgang mit Trotteln bereitstellt. Der Name ist von dem britischen/irischen Wort für \"Trottel\" inspiriert."
 
 #: ../schedule/pidgin-schedule.c:89
@@ -2970,7 +3251,7 @@ msgstr "Liste der Termine"
 
 #: ../schedule/pidgin-schedule.c:709 ../schedule/schedule.c:256
 msgid "Schedule"
-msgstr "Termin"
+msgstr "Zeitplan"
 
 #: ../schedule/pidgin-schedule.c:710 ../schedule/pidgin-schedule.c:711
 msgid "Schedule reminders at specified times."
@@ -3006,11 +3287,7 @@ msgid ""
 "\n"
 "One separates IMs and groups chats in tabs\n"
 "The other separates chats and groups IMs in tabs"
-msgstr ""
-"Fügt zwei neue Platzierungsfunktionen hinzu.\n"
-"\n"
-"Eine trennt IMs und Gruppen-Chats in Registerkarten,\n"
-"die andere trennt, Chats- und Gruppen-IMs in Tabs"
+msgstr "Fügt zwei neue Platzierungsfunktionen hinzu.\n\nEine trennt IMs und Gruppen-Chats in Registerkarten,\ndie andere trennt, Chats- und Gruppen-IMs in Tabs"
 
 #: ../showoffline/showoffline.c:72
 msgid "Hide when offline"
@@ -3043,7 +3320,9 @@ msgid "Show specific buddies while offline."
 msgstr "Zeigt bestimmte Benutzer, während sie offline sind"
 
 #: ../showoffline/showoffline.c:141
-msgid "Adds the option to show specific buddies in your buddy list when they are offline, even with \"Show Offline Buddies\" turned off."
+msgid ""
+"Adds the option to show specific buddies in your buddy list when they are "
+"offline, even with \"Show Offline Buddies\" turned off."
 msgstr "Fügt die Möglichkeit hinzu, bestimmte Benutzer in Ihrer Kontaktliste anzuzeigen, wenn diese offline sind, auch wenn \"Anzeigen: Offline-Buddys\" ausgestellt ist."
 
 #: ../simfix/simfix.c:134
@@ -3055,7 +3334,9 @@ msgid "Fix messages from broken SIM clients."
 msgstr "Korrigiert Nachrichten von kaputten SIM-Clients"
 
 #: ../simfix/simfix.c:136
-msgid "Fixes messages received from broken SIM clients by stripping HTML from them. The buddy must be on your list and set as a SIM user."
+msgid ""
+"Fixes messages received from broken SIM clients by stripping HTML from them."
+" The buddy must be on your list and set as a SIM user."
 msgstr "Korrigiert Nachrichten, die von kaputten SIM-Clients empfangen werden, indem das HTML entfernt wird. Der Benutzer muss sich auf der Buddy-Liste befinden und dort als SIM-Benutzer eingestellt sein."
 
 #: ../slashexec/slashexec.c:174
@@ -3093,9 +3374,7 @@ msgstr "Der folgende Text wurde gesendet: %s"
 msgid ""
 "exec [-o] &lt;command&gt;, runs the command.\n"
 "If the -o flag is used then output is sent to thecurrent conversation; otherwise it is printed to the current text box."
-msgstr ""
-"exec [-o] &lt;Befehl&gt;, führt den Befehl aus.\n"
-"Wenn die -o Steuerungsoption benutzt wird, dann wird die Ausgabe an die aktuelle Unterhaltung gesendet; andernfalls wird sie in das aktuelle Textfeld eingefügt."
+msgstr "exec [-o] &lt;Befehl&gt;, führt den Befehl aus.\nWenn die -o Steuerungsoption benutzt wird, dann wird die Ausgabe an die aktuelle Unterhaltung gesendet; andernfalls wird sie in das aktuelle Textfeld eingefügt."
 
 #: ../slashexec/slashexec.c:463
 msgid "Execute commands starting with: "
@@ -3114,7 +3393,10 @@ msgid "/exec a la UNIX IRC CLI"
 msgstr "/exec wie bei einer UNIX IRC CLI"
 
 #: ../slashexec/slashexec.c:530
-msgid "A plugin that adds the /exec command line interpreter like most UNIX/Linux IRC clients have.  Also included is the ability to execute commands with an exclamation point (!uptime, for instance).\n"
+msgid ""
+"A plugin that adds the /exec command line interpreter like most UNIX/Linux "
+"IRC clients have.  Also included is the ability to execute commands with an "
+"exclamation point (!uptime, for instance).\n"
 msgstr "Ein Plugin, das den /exec Kommandozeileninterpreten, wie ihn die meisten UNIX/Linux-IRC-Clients haben, hinzufügt. Es beinhaltet zusätzlich die Möglichkeit, einen Befehl mit einem Ausrufezeichen (z.B. !uptime) auszuführen (Gilt nur für UNIX/Linux-Betriebssysteme).\n"
 
 #: ../smartear/gtksmartear.c:51
@@ -3130,7 +3412,10 @@ msgid "The GTK+ (Pidgin) component of the SmartEar plugin suite"
 msgstr "Die Pidgin GTK+ - Komponente des SmartEar-Plugin-Packs"
 
 #: ../smartear/gtksmartear.c:114
-msgid "This plugin provides the Pidgin interface to the SmartEar plugin suite's functionality.  The suite allows you to specify sounds per-buddy, per-contact, or per-group for specific events."
+msgid ""
+"This plugin provides the Pidgin interface to the SmartEar plugin suite's "
+"functionality.  The suite allows you to specify sounds per-buddy, per-"
+"contact, or per-group for specific events."
 msgstr "Diese Plugin stellt in Pidgin eine Oberfläche für die Funktionen des SmartEar-Plugin-Paketes zur Verfügung. Das Paket erlaubt es, Klänge pro Benutzer, pro Kontakt oder pro Gruppe für ein bestimmtes Ereignis einzustellen."
 
 #: ../smartear/smartear.c:261
@@ -3145,16 +3430,18 @@ msgstr "Die Kern-Komponente des Smart Ear Plugins"
 msgid "Couldn't connect to SNPP server"
 msgstr "Konnte nicht mit dem SNPP-Server verbinden"
 
-#: ../snpp/snpp.c:594
+#: ../snpp/snpp.c:600
 msgid "SNPP"
 msgstr "SNPP"
 
-#: ../snpp/snpp.c:595
+#: ../snpp/snpp.c:601
 msgid "SNPP Plugin"
 msgstr "SNPP-Plugin"
 
-#: ../snpp/snpp.c:597
-msgid "Allows libpurple to send messages over the Simple Network Paging Protocol (SNPP)."
+#: ../snpp/snpp.c:603
+msgid ""
+"Allows libpurple to send messages over the Simple Network Paging Protocol "
+"(SNPP)."
 msgstr "Erlaubt es libpurple, Nachrichten über Simple Network Paging Protocol (SNPP) zu versenden."
 
 #: ../splitter/splitter.c:522
@@ -3162,7 +3449,8 @@ msgid "Message Splitter"
 msgstr "Nachrichten-Teiler"
 
 #: ../splitter/splitter.c:523
-msgid "Splits a large outgoing message into smaller messages of a specified size."
+msgid ""
+"Splits a large outgoing message into smaller messages of a specified size."
 msgstr "Teilt große ausgehende Nachrichten in kleinere Nachrichten mit einer festgelegten Größe auf."
 
 #: ../sslinfo/sslinfo.c:67
@@ -3205,7 +3493,9 @@ msgid "A stock ticker"
 msgstr "Ein Börsenticker"
 
 #: ../stocker/stocker.c:406
-msgid "Adds a stock ticker similar to the one in the Windows AIM client to the bottom of the buddy list."
+msgid ""
+"Adds a stock ticker similar to the one in the Windows AIM client to the "
+"bottom of the buddy list."
 msgstr "Fügt einen Börsenticker ähnlich dem in den Windows-AIM-Client unten in der Buddy-Liste hinzu."
 
 #. *********************************
@@ -3282,15 +3572,15 @@ msgstr "Minimale Nachrichten-Länge"
 msgid "Maxium message length"
 msgstr "Maximale Nachrichten-Länge"
 
-#: ../switchspell/switchspell.c:154
+#: ../switchspell/switchspell.c:161
 msgid "Spe_ll Check"
 msgstr "_Rechtschreibprüfung"
 
-#: ../switchspell/switchspell.c:352
+#: ../switchspell/switchspell.c:363
 msgid "Switch Spell"
 msgstr "Sprache umschalten"
 
-#: ../switchspell/switchspell.c:353 ../switchspell/switchspell.c:354
+#: ../switchspell/switchspell.c:364 ../switchspell/switchspell.c:365
 msgid "Switch Spell Checker Language"
 msgstr "Sprache der Rechtschreibprüfung ändern"
 
@@ -3319,7 +3609,13 @@ msgid "Translates text in outgoing messages into humorous dialects."
 msgstr "Übersetzt Text in gesendeten Nachrichten in lustige Dialekte."
 
 #: ../talkfilters/talkfilters.c:407
-msgid "The GNU Talk Filters are filter programs that convert ordinary English text into text that mimics a stereotyped or otherwise humorous dialect. These filters have been in the public domain for many years, and have been made available as a single integrated package. The filters include austro, b1ff, brooklyn, chef, cockney, drawl, dubya, fudd, funetak, jethro, jive, kraut, pansy, pirate, postmodern, redneck, valspeak, and warez."
+msgid ""
+"The GNU Talk Filters are filter programs that convert ordinary English text "
+"into text that mimics a stereotyped or otherwise humorous dialect. These "
+"filters have been in the public domain for many years, and have been made "
+"available as a single integrated package. The filters include austro, b1ff, "
+"brooklyn, chef, cockney, drawl, dubya, fudd, funetak, jethro, jive, kraut, "
+"pansy, pirate, postmodern, redneck, valspeak, and warez."
 msgstr "Die GNU Unterhaltungsfilter sind Filter-Programme, die gewöhnlichen Text in Text, der einen klischeehaften oder anderweitig lustigen Dialekt nachahmt, umwandeln. Diese Filter sind seit vielen Jahrenin der Public-Domain und wurden als ein integriertes Paket zur Verfügung gestellt. Die Filter sind austro, b1ff, brooklyn, chef, cockney, drawl, dubya, fudd, funetak, jethro, jive, kraut, pansy, pirate, postmodern, redneck, valspeak, and warez."
 
 #: ../timelog/log-widget.c:226
@@ -3339,7 +3635,7 @@ msgstr "Es wurden keine Mitschnitte gefunden"
 
 #: ../timelog/range-widget.c:231
 msgid "Start Time"
-msgstr "Startzeitpunkt"
+msgstr "Startzeit"
 
 #: ../timelog/range-widget.c:235
 msgid "End Time"
@@ -3379,6 +3675,280 @@ msgstr "Erlaubt es, Pidgin-Mitschnitte aus einem bestimmten Zeitraum anzuschauen
 msgid "TimeLog"
 msgstr "Zeitmitschnitt"
 
+#: ../translate/translate.c:660
+msgid "Auto"
+msgstr "Automatisch"
+
+#. Create the menu for the languages
+#: ../translate/translate.c:674
+msgid "Translate to..."
+msgstr "Übersetzen nach..."
+
+#: ../translate/translate.c:729
+#, c-format
+msgid "Now translating to %s"
+msgstr "Keine Übersetzung für %s"
+
+#: ../translate/translate.c:762
+msgid "My language:"
+msgstr "Meine Sprache"
+
+#: ../translate/translate.c:776
+msgid "Use service:"
+msgstr "Benutzer-Service:"
+
+#: ../translate/translate.c:779
+msgid "Google Translate"
+msgstr "Google-Übersetzer"
+
+#: ../translate/translate.c:780
+msgid "Microsoft Translator"
+msgstr "Microsoft-Übersetzer"
+
+#: ../translate/translate.c:894
+msgid "Auto Translate"
+msgstr "Automatisch übersetzen"
+
+#: ../translate/translate.c:895
+msgid "Translate incoming/outgoing messages"
+msgstr "Eingehende/ausgehende Nachrichten übersetzen"
+
+#: ../translate/translate.c:913
+msgid "Afrikaans"
+msgstr "Afrikanisch"
+
+#: ../translate/translate.c:914
+msgid "Albanian"
+msgstr "Albanisch"
+
+#: ../translate/translate.c:915
+msgid "Arabic"
+msgstr "Arabisch"
+
+#: ../translate/translate.c:916
+msgid "Armenian"
+msgstr "Armenisch"
+
+#: ../translate/translate.c:917
+msgid "Azerbaijani"
+msgstr "Aserbaidschanisch"
+
+#: ../translate/translate.c:918
+msgid "Basque"
+msgstr "Baskisch"
+
+#: ../translate/translate.c:919
+msgid "Belarusian"
+msgstr "Weißrussisch"
+
+#: ../translate/translate.c:920
+msgid "Bulgarian"
+msgstr "Bulgarisch"
+
+#: ../translate/translate.c:921
+msgid "Catalan"
+msgstr "Katalanisch"
+
+#: ../translate/translate.c:922
+msgid "Chinese (Simplified)"
+msgstr "Chinesisch (vereinfacht)"
+
+#: ../translate/translate.c:923
+msgid "Chinese (Traditional)"
+msgstr "Chinesisch (traditionellt)"
+
+#: ../translate/translate.c:924
+msgid "Croatian"
+msgstr "Kroatisch"
+
+#: ../translate/translate.c:925
+msgid "Czech"
+msgstr "Tschechisch"
+
+#: ../translate/translate.c:926
+msgid "Danish"
+msgstr "Dänisch"
+
+#: ../translate/translate.c:927
+msgid "Dutch"
+msgstr "Niederländisch"
+
+#: ../translate/translate.c:928
+msgid "English"
+msgstr "Englisch"
+
+#: ../translate/translate.c:929
+msgid "Estonian"
+msgstr "Estnisch"
+
+#: ../translate/translate.c:930
+msgid "Filipino"
+msgstr "Philippinisch"
+
+#: ../translate/translate.c:931
+msgid "Finnish"
+msgstr "Finnisch"
+
+#: ../translate/translate.c:932
+msgid "French"
+msgstr "Französisch"
+
+#: ../translate/translate.c:933
+msgid "Galician"
+msgstr "Galizisch"
+
+#: ../translate/translate.c:934
+msgid "Georgian"
+msgstr "Georgisch"
+
+#: ../translate/translate.c:935
+msgid "German"
+msgstr "Deutsch"
+
+#: ../translate/translate.c:936
+msgid "Greek"
+msgstr "Griechisch"
+
+#: ../translate/translate.c:937
+msgid "Haitian Creole"
+msgstr "Haiti-Kreolisch"
+
+#: ../translate/translate.c:938
+msgid "Hebrew"
+msgstr "Hebräisch"
+
+#: ../translate/translate.c:939
+msgid "Hindi"
+msgstr "Hindi"
+
+#: ../translate/translate.c:940
+msgid "Hungarian"
+msgstr "Ungarisch"
+
+#: ../translate/translate.c:941
+msgid "Icelandic"
+msgstr "Isländisch"
+
+#: ../translate/translate.c:942
+msgid "Indonesian"
+msgstr "Indonesisch"
+
+#: ../translate/translate.c:943
+msgid "Irish"
+msgstr "Irisch"
+
+#: ../translate/translate.c:944
+msgid "Italian"
+msgstr "Italienisch"
+
+#: ../translate/translate.c:945
+msgid "Japanese"
+msgstr "Japanisch"
+
+#: ../translate/translate.c:946
+msgid "Korean"
+msgstr "Koreanisch"
+
+#: ../translate/translate.c:947
+msgid "Latin"
+msgstr "Latein"
+
+#: ../translate/translate.c:948
+msgid "Latvian"
+msgstr "Lettisch"
+
+#: ../translate/translate.c:949
+msgid "Lithuanian"
+msgstr "Litauisch"
+
+#: ../translate/translate.c:950
+msgid "Macedonian"
+msgstr "Mazedonisch"
+
+#: ../translate/translate.c:951
+msgid "Malay"
+msgstr "Malay"
+
+#: ../translate/translate.c:952
+msgid "Maltese"
+msgstr "Maltesisch"
+
+#: ../translate/translate.c:953
+msgid "Norwegian"
+msgstr "Norwegisch"
+
+#: ../translate/translate.c:954
+msgid "Persian"
+msgstr "Persisch"
+
+#: ../translate/translate.c:955
+msgid "Polish"
+msgstr "Polnisch"
+
+#: ../translate/translate.c:956
+msgid "Portuguese"
+msgstr "Portugiesisch"
+
+#: ../translate/translate.c:957
+msgid "Romanian"
+msgstr "Rumänisch"
+
+#: ../translate/translate.c:958
+msgid "Russian"
+msgstr "Russisch"
+
+#: ../translate/translate.c:959
+msgid "Serbian"
+msgstr "Serbisch"
+
+#: ../translate/translate.c:960
+msgid "Slovak"
+msgstr "Slovakisch"
+
+#: ../translate/translate.c:961
+msgid "Slovenian"
+msgstr "Slowenisch"
+
+#: ../translate/translate.c:962
+msgid "Spanish"
+msgstr "Spanisch"
+
+#: ../translate/translate.c:963
+msgid "Swahili"
+msgstr "Swahili"
+
+#: ../translate/translate.c:964
+msgid "Swedish"
+msgstr "Schwedisch"
+
+#: ../translate/translate.c:965
+msgid "Thai"
+msgstr "Thai"
+
+#: ../translate/translate.c:966
+msgid "Turkish"
+msgstr "Türkisch"
+
+#: ../translate/translate.c:967
+msgid "Ukrainian"
+msgstr "Ukrainisch"
+
+#: ../translate/translate.c:968
+msgid "Urdu"
+msgstr "Urdū"
+
+#: ../translate/translate.c:969
+msgid "Vietnamese"
+msgstr "Vietnamesisch"
+
+#: ../translate/translate.c:970
+msgid "Welsh"
+msgstr "Walisisch"
+
+#: ../translate/translate.c:971
+msgid "Yiddish"
+msgstr "Jüdisch"
+
 #: ../xchat-chats/xchat-chats.c:490
 msgid "XChat Chats"
 msgstr "XChat-Unterhaltungen"
@@ -3398,7 +3968,7 @@ msgstr "Bitte starte XMMS"
 #. play
 #: ../xmmsremote/xmmsremote.c:376 ../xmmsremote/xmmsremote.c:509
 msgid "Play"
-msgstr "Abspielen"
+msgstr "Wiedergabe"
 
 #. pause
 #: ../xmmsremote/xmmsremote.c:383 ../xmmsremote/xmmsremote.c:504
@@ -3408,7 +3978,7 @@ msgstr "Pause"
 #. stop
 #: ../xmmsremote/xmmsremote.c:392 ../xmmsremote/xmmsremote.c:499
 msgid "Stop"
-msgstr "Stop"
+msgstr "Stopp"
 
 #. shuffle
 #: ../xmmsremote/xmmsremote.c:416
@@ -3418,7 +3988,7 @@ msgstr "Mischen"
 #. playlist
 #: ../xmmsremote/xmmsremote.c:424
 msgid "Playlist"
-msgstr "Abspielliste"
+msgstr "Wiedergabeliste"
 
 #. title
 #: ../xmmsremote/xmmsremote.c:434
@@ -3552,26 +4122,16 @@ msgid ""
 "hide     Hide the XMMS window\n"
 "info     Displays currently playing song in the conversation\n"
 "</pre>"
-msgstr ""
-"<pre>xmms &lt;[play][pause][stop][next][prev][repeat][shuffle][show][hide][info]&gt;\n"
-"play     Startet das Abspielen\n"
-"pause    Pausiert das Abspielen\n"
-"stop     Stoppt das Abspielen\n"
-"next     Springt zum nächsten Lied in der Abspielliste\n"
-"prev     Springt zum vorherigen Lied in der Abspielliste\n"
-"repeat   Ändert die Wiederholungsart\n"
-"shuffle  Ändert die Zufallswiedergabe\n"
-"show     Zeigt das XMMS-Fenster\n"
-"hide     Versteckt das XMMS-Fenster\n"
-"info     Zeigt das aktuell laufende Lied in der Unterhaltung\n"
-"</pre>"
+msgstr "<pre>xmms &lt;[play][pause][stop][next][prev][repeat][shuffle][show][hide][info]&gt;\nplay     Startet das Abspielen\npause    Pausiert das Abspielen\nstop     Stoppt das Abspielen\nnext     Springt zum nächsten Lied in der Abspielliste\nprev     Springt zum vorherigen Lied in der Abspielliste\nrepeat   Ändert die Wiederholungsart\nshuffle  Ändert die Zufallswiedergabe\nshow     Zeigt das XMMS-Fenster\nhide     Versteckt das XMMS-Fenster\ninfo     Zeigt das aktuell laufende Lied in der Unterhaltung\n</pre>"
 
 #: ../xmmsremote/xmmsremote.c:1146
 msgid "Control XMMS from Pidgin conversations"
 msgstr "Steuere XMMS aus Pidgin-Unterhaltung heraus"
 
 #: ../xmmsremote/xmmsremote.c:1147
-msgid "A small plugin that adds a menu or buttons to the menu bars of Pidgin conversation windows so that you can control XMMS from within Pidgin."
+msgid ""
+"A small plugin that adds a menu or buttons to the menu bars of Pidgin "
+"conversation windows so that you can control XMMS from within Pidgin."
 msgstr "Ein kleines Plugin, das ein Menü oder einen Button zur Menüleiste von Pidgin-Unterhaltungsfenstern hinzufügt, so dass sich XMMS aus Pidgin heraus steuern lässt."
 
 #: ../xmmsremote/xmmsremote.c:1155
@@ -3596,5 +4156,7 @@ msgid "Adjust the priorities of XMPP statuses"
 msgstr "Passt die XMPP-Status-Prioritäten an"
 
 #: ../xmppprio/xmppprio.c:230
-msgid "Adds account options that allow users to specify the priorities used for available and away priorities for XMPP accounts."
+msgid ""
+"Adds account options that allow users to specify the priorities used for "
+"available and away priorities for XMPP accounts."
 msgstr "Fügt Konto-Optionen hinzu, die es dem Benutzer erlauben, die Prioritäten, die für verfügbar und abwesend für XMPP-Konten benutzt werden, zu setzen."
