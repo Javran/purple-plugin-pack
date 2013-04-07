@@ -159,11 +159,11 @@ topic_changed(PurpleConversation *conv, const char *who, const char *what)
 	gtkconv = conv->ui_data;
 #endif
 
-	old = g_object_get_data(G_OBJECT(gtkconv->imhtml), "difftopic");
+	old = g_object_get_data(G_OBJECT(gtkconv->webview), "difftopic");
 	if (old && what) {
-		have_fun(GTK_IMHTML(gtkconv->imhtml), old, what);
+		have_fun(GTK_IMHTML(gtkconv->webview), old, what);
 	}
-	g_object_set_data_full(G_OBJECT(gtkconv->imhtml), "difftopic", g_strdup(what), (GDestroyNotify)g_free);
+	g_object_set_data_full(G_OBJECT(gtkconv->webview), "difftopic", g_strdup(what), (GDestroyNotify)g_free);
 }
 
 static gboolean
