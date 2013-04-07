@@ -35,19 +35,19 @@ new_list_icon(PurpleAccount *account, PurpleBuddy *buddy)
 	const char *prpl_id;
 	const char *new_icon;
 	PurpleAccount *acct;
-	
+
 	if (account != NULL)
 		acct = account;
 	else if (buddy != NULL)
 		acct = buddy->account;
 	else
 		return "";
-	
+
 	new_icon = purple_account_get_string(account, NEW_ICON_ID, NULL);
 	if (new_icon && *new_icon)
 		return new_icon;
-	
-	prpl_id = account->protocol_id;
+
+	prpl_id = acct->protocol_id;
 	list_icon_func = g_hash_table_lookup(original_list_icon, prpl_id);
 	return list_icon_func(account, buddy);
 }
