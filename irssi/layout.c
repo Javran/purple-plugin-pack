@@ -51,25 +51,21 @@ static PurpleCmdId irssi_layout_cmd_id = 0;
  *****************************************************************************/
 static PurpleBlistNode *
 irssi_layout_get_node_from_conv(PurpleConversation *conv) {
+	PurpleAccount *account = NULL;
 	PurpleBlistNode *node = NULL;
+	PurpleConversationType type = purple_conversation_get_type(conv);
+	const char *name = NULL;
+
+	account = purple_conversation_get_account(conv);
+	name = purple_conversation_get_name(conv);
 
 	/* this is overkill for now, but who knows, we _may_ need it later */
 
-	switch(conv->type) {
-		case PURPLE_CONV_TYPE_CHAT:
-			node = (PurpleBlistNode *)purple_blist_find_chat(conv->account,
-														 conv->name);
+	if(type == PURPLE_CONV_TYPE_CHAT)
+		node = (PurpleBlistNode *)purple_blist_find_chat(account, name);
+	else if(type == PURPLE_CONV_TYPE_IM)
+		node = (PurpleBlistNode *)purple_find_buddy(account, name);
 
-			break;
-		case PURPLE_CONV_TYPE_IM:
-			node = (PurpleBlistNode *)purple_find_buddy(conv->account, conv->name);
-
-			break;
-
-		default:
-			node = NULL;
-	}
-	
 	return node;
 }
 
@@ -93,7 +89,7 @@ irssi_layout_get_conv_from_node(PurpleBlistNode *node, gboolean create) {
 		}
 		case PURPLE_BLIST_BUDDY_NODE: {
 			PurpleBuddy *buddy = (PurpleBuddy *)node;
-		
+
 			ctype = PURPLE_CONV_TYPE_IM;
 			name = buddy->name;
 			account = buddy->account;
@@ -114,7 +110,7 @@ irssi_layout_get_conv_from_node(PurpleBlistNode *node, gboolean create) {
 		if(ctype == PURPLE_BLIST_CHAT_NODE) {
 			PurpleChat *chat = (PurpleChat *)node;
 
-			PURPLE_CONV_CHAT(conv)->left = TRUE;
+			purple_conv_chat_left(PURPLE_CONV_CHAT(conv));
 			serv_join_chat(account->gc, chat->components);
 		}
 	}
@@ -222,7 +218,7 @@ irssi_layout_load(void) {
 				continue;
 
 			conv = l1->data;
-			gtkconv = conv->ui_data;
+			gtkconv = PIDGIN_CONVERSATION(conv);
 
 			/* pop of the nodes we just handled but hold our places and update
 			 * the head pointers.

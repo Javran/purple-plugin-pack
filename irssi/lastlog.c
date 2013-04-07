@@ -47,7 +47,7 @@ irssi_lastlog(PurpleConversation *c, const gchar *needle) {
 	PidginConversation *gtkconv;
 	int i;
 	GString *result;
-	char **lines;
+	char **lines = { NULL };
 
 #if PURPLE_VERSION_CHECK(3,0,0)
 	gtkconv = purple_conversation_get_ui_data(c);
@@ -57,7 +57,10 @@ irssi_lastlog(PurpleConversation *c, const gchar *needle) {
 
 	/* let's avoid some warnings on anal C compilers like mipspro cc */
 	result = g_string_new(NULL);
+
+	/*
 	lines = gtk_imhtml_get_markup_lines(GTK_IMHTML(gtkconv->imhtml));
+	*/
 
 	/* XXX: This will include all messages, including the output of the
 	 * history plugin, system messages, timestamps etc. This might be
