@@ -116,9 +116,8 @@ autojoin_cb(gpointer data)
 	/* this hack courtesy irchelper -- don't use purple_conversation_set_account
 	 * because it will fire a signal that other plugins can use.  Instead do
 	 * this hack. This will break when struct hiding is complete and ABI breaks. */
-	PurpleConversation *conv = g_new0(PurpleConversation, 1);
-	conv->type = PURPLE_CONV_TYPE_IM;
-	conv->account = account;
+	PurpleConversation *conv = purple_conversation_new(PURPLE_CONV_TYPE_IM,
+	                                                   account, "None");
 
 	purple_debug_info("irc-more", "Executng command: %s\n", cmd);
 	result = purple_cmd_do_command(conv, cmd, esc, &error);
@@ -183,7 +182,7 @@ notice_cmd_cb(PurpleConversation *conv, const gchar *cmd, gchar **args,
 	if(!args && !args[0] && !args[1])
 		return PURPLE_CMD_RET_FAILED;
 
-	gc = purple_conversation_get_gc(conv);
+	gc = purple_conversation_get_connection(conv);
 
 	/* convenience to make the next comparison make more sense */
 	arg0len = strlen(args[0]);
