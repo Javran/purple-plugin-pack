@@ -262,7 +262,7 @@ rim(PurpleConversation *conv, const gchar *cmd, gchar **args,
 	/* XXX: make sure we stop when conv-is destroyed. */
 
 	source = g_timeout_add(info->gap, (GSourceFunc)timeout_func_cb, data);
-	g_object_set_data_full(G_OBJECT(gtkconv->imhtml), "gRim:timer",
+	g_object_set_data_full(G_OBJECT(gtkconv->entry), "gRim:timer",
 			GINT_TO_POINTER(source), (GDestroyNotify)g_source_remove);
 
 	return PURPLE_CMD_RET_OK;
