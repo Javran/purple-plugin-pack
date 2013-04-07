@@ -71,7 +71,7 @@ AC_SUBST(CFLAGS)
 dnl #######################################################################
 dnl # Check for purple
 dnl #######################################################################
-PKG_CHECK_MODULES(PURPLE, purple,
+PKG_CHECK_MODULES(PURPLE, purple-3,
 [
 	AC_DEFINE(HAVE_PURPLE, 1, [Define if we've found libpurple.])
 ])
@@ -115,7 +115,7 @@ AC_SUBST(PURPLE_PIXMAPSDIR)
 dnl #######################################################################
 dnl # Check for pidgin
 dnl #######################################################################
-PKG_CHECK_MODULES(PIDGIN, pidgin,
+PKG_CHECK_MODULES(PIDGIN, pidgin-3,
 [
 	AC_DEFINE(HAVE_PIDGIN, 1, [Define if we've found pidgin.])
 	HAVE_PIDGIN="yes"
