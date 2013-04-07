@@ -161,7 +161,6 @@ plonk_cmd_cb(PurpleConversation *c, const gchar *cmd, gchar **args, gchar **erro
  * gchar* g_strdelimit (gchar *string, const gchar *delimiters, gchar new_delimiter);
  * gchar** g_strsplit (const gchar *string, const gchar *delimiter, gint max_tokens);
  */
-	PurpleConversationUiOps *ops;
 	GSList *l;
 	char *room = NULL;
 	GList *plonks = NULL;
@@ -182,8 +181,6 @@ plonk_cmd_cb(PurpleConversation *c, const gchar *cmd, gchar **args, gchar **erro
 	purple_debug_info("plonkers", "Plonk strsplit length: %i\n", g_strv_length(tmp));
 	/* next step, remove duplicates in the array */
 
-	ops = purple_conversation_get_ui_ops(c);
-	
 	PurpleAccount *account = purple_conversation_get_account(c);
 	members = purple_conv_chat_get_users(PURPLE_CONV_CHAT(c));
 	for (l = account->deny; l != NULL; l = l->next) {
