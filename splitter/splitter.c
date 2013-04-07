@@ -231,15 +231,7 @@ splitter_create_pango_context(void) {
 #ifdef _WIN32
 	return pango_win32_get_context();
 #else
-	PangoContext *context = NULL;
-	PangoFontMap *fontmap = pango_cairo_font_map_get_default();
-
-	context =
-		pango_cairo_font_map_create_context(PANGO_CAIRO_FONT_MAP(fontmap));
-
-	g_object_unref(G_OBJECT(fontmap));
-
-	return context;
+	return pango_context_new();
 #endif
 }
 
@@ -339,10 +331,8 @@ create_message_queue(const char *message) {
 	GQueue *slices, *messages;
 	message_slice *slice;
 	char *stripped_message, *msg;
-	gint stripped_len;
 
 	stripped_message = purple_markup_strip_html(message);
-	stripped_len = strlen(stripped_message);
 
 	messages = g_queue_new();
 	slices   = get_message_slices(stripped_message);
