@@ -62,7 +62,7 @@ account_connecting_cb(PurpleAccount *account, void *data)
 	if (g_slist_find(connecting, account) == NULL)
 	{
 		connecting = g_slist_append(connecting, account);
-		gtk_timeout_add(10000, remove_connecting_account, account);
+		purple_timeout_add_seconds(10, remove_connecting_account, account);
 	}
 }
 
