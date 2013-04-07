@@ -81,15 +81,7 @@ menu_select_cb(GtkMenuItem * menuitem, GtkWidget * menu)
 
     if(label[0] == '<')
     {
-        GtkWidget *selection;
-        gchar *selstring;
-
-        if(strcmp(label, DEFAULT_STRING) == 0)
-            selstring = "";
-        else if(strcmp(label, DISABLED_STRING) == 0)
-            selstring = "none";
-
-        selection = menu_get_first_menuitem(GTK_MENU(menu));
+        GtkWidget *selection = menu_get_first_menuitem(GTK_MENU(menu));
         gtk_widget_hide(selection);
     }
     else
