@@ -271,7 +271,7 @@ add_send_message_fields(ScheduleWindow *win, GtkWidget *box)
 
 	win->accounts = optmenu = pidgin_account_option_menu_new(NULL, TRUE, NULL, NULL, NULL);
 	win->buddy = entry = gtk_entry_new();
-	pidgin_setup_screenname_autocomplete(entry, optmenu, FALSE);
+	pidgin_setup_screenname_autocomplete(entry, optmenu, NULL, NULL);
 	fr = pidgin_create_imhtml(TRUE, &imhtml, NULL, NULL);
 	win->imhtml = imhtml;
 	/* XXX: set the formatting to default send-message format */
