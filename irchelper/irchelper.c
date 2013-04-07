@@ -221,14 +221,12 @@ static PurpleConversation *get_conversation(PurpleAccount *account)
 {
 	PurpleConversation *conv;
 
-	conv = g_new0(PurpleConversation, 1);
-	conv->type = PURPLE_CONV_TYPE_IM;
+	conv = purple_conversation_new(PURPLE_CONV_TYPE_IM, account, "None");
 	/* If we use this then the conversation updated signal is fired and
 	 * other plugins might start doing things to our conversation, such as
 	 * setting data on it which we would then need to free etc. It's easier
 	 * just to be more hacky by setting account directly. */
 	/* purple_conversation_set_account(conv, account); */
-	conv->account = account;
 
 	return conv;
 }
@@ -1304,7 +1302,7 @@ static gboolean plugin_load(PurplePlugin *plugin)
 	prpl_info->protocol_options = g_list_append(prpl_info->protocol_options, option);
 
 	option = purple_account_option_string_new(_("Nick password"), PLUGIN_ID "_nickpassword", "");
-	purple_account_option_set_masked(option, TRUE);
+	purple_account_option_string_set_masked(option, TRUE);
 	prpl_info->protocol_options = g_list_append(prpl_info->protocol_options, option);
 
 	option = purple_account_option_bool_new(_("Disconnect ghosts (Duplicate nicknames)"),
@@ -1312,7 +1310,7 @@ static gboolean plugin_load(PurplePlugin *plugin)
 	prpl_info->protocol_options = g_list_append(prpl_info->protocol_options, option);
 
 	option = purple_account_option_string_new(_("Operator password"), PLUGIN_ID "_operpassword", "");
-	purple_account_option_set_masked(option, TRUE);
+	purple_account_option_string_set_masked(option, TRUE);
 	prpl_info->protocol_options = g_list_append(prpl_info->protocol_options, option);
 
 
