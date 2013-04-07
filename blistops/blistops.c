@@ -175,7 +175,7 @@ gtkblist_created_cb(PurpleBuddyList *blist)
 	PidginBuddyList *gtkblist = PIDGIN_BLIST(blist);
 
 	w_blist = gtkblist->window;
-	w_menubar = gtk_item_factory_get_widget(gtkblist->ift, "<PurpleMain>");
+	w_menubar = gtk_ui_manager_get_widget(gtkblist->ui, "/BList");
 
 	g_signal_connect(gtkblist->treemodel, "row_changed", G_CALLBACK(row_changed_cb), gtkblist);
 
