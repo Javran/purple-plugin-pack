@@ -118,7 +118,7 @@ list_ignore_rules()
 		*split++ = '\0';
 
 		if (rule && *rule != 'n') {
-			if (last == NULL || g_strcasecmp(last, pref)) {
+			if (last == NULL || g_ascii_strcasecmp(last, pref)) {
 				g_free(last);
 				last = g_strdup(pref);
 				g_string_append_printf(string, "Ignore rules for %s<br>", last);
