@@ -1,4 +1,4 @@
-INCLUDES = \
+HEADER_FILES = \
 	callbacks.h \
 	ignorance.h \
 	ignorance_denizen.h \
@@ -13,7 +13,7 @@ INCLUDES = \
 EXTRA_DIST = \
 	plugins.cfg \
 	ignorance.conf \
-	$(INCLUDES)
+	$(HEADER_FILES)
 
 ignorancedir = $(PIDGIN_LIBDIR)/pidgin
 

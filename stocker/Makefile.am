@@ -1,10 +1,10 @@
-INCLUDES = \
+HEADER_FILES = \
 	gtkticker.h \
 	stocker_prefs.h
 
 EXTRA_DIST = \
 	plugins.cfg \
-	$(INCLUDES)
+	$(HEADER_FILES)
 
 stockerdir = $(PIDGIN_LIBDIR)
 
